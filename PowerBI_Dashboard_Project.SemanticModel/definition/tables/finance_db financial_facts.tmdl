@@ -1,0 +1,139 @@
+table 'finance_db financial_facts'
+	lineageTag: 545ec1ab-057e-430e-a6a0-65ebe6469e17
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: f0fbad15-2a12-4370-9857-49792cf42342
+		summarizeBy: sum
+		sourceColumn: id
+
+		annotation SummarizationSetBy = Automatic
+
+	column cik
+		dataType: int64
+		formatString: 0
+		lineageTag: 993df89e-0dd6-4352-b017-5670d4ec8430
+		summarizeBy: none
+		sourceColumn: cik
+
+		annotation SummarizationSetBy = Automatic
+
+	column concept
+		dataType: string
+		lineageTag: 3f6602ee-c3dc-42b9-9ddb-5c1dfd15387a
+		summarizeBy: none
+		sourceColumn: concept
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit
+		dataType: string
+		lineageTag: e7776033-5377-4045-8548-970a48451bf1
+		summarizeBy: none
+		sourceColumn: unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column fiscal_year
+		dataType: int64
+		formatString: 0
+		lineageTag: d0e5dda7-4a12-4445-b906-9ea3e97c6188
+		summarizeBy: sum
+		sourceColumn: fiscal_year
+
+		annotation SummarizationSetBy = Automatic
+
+	column fiscal_period
+		dataType: string
+		lineageTag: 6b1f50a0-d07e-4c19-8f78-888226ba5ce4
+		summarizeBy: none
+		sourceColumn: fiscal_period
+
+		annotation SummarizationSetBy = Automatic
+
+	column period_start
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 9aa72d9a-e372-4b9c-a211-e31ed924fca5
+		summarizeBy: none
+		sourceColumn: period_start
+
+		variation Variation
+			isDefault
+			relationship: c4aae8c2-1410-4a9c-b790-7e0ca8445e1f
+			defaultHierarchy: LocalDateTable_9a4e82ba-2f6f-47ad-a8e6-05de33e7d76a.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column period_end
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 1ebc9b5e-2254-4eea-bf19-20bb333747f9
+		summarizeBy: none
+		sourceColumn: period_end
+
+		variation Variation
+			isDefault
+			relationship: cd1000b9-1716-44f4-9cd8-fec31714bcd2
+			defaultHierarchy: LocalDateTable_114e7e4b-4aa8-4bb5-9e17-8fc7883e4b61.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column value
+		dataType: double
+		lineageTag: d4e4886e-8e8f-4f8e-9dc0-dd6ec24393fd
+		summarizeBy: sum
+		sourceColumn: value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column filed_date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 300bb9f2-7cd2-4fcc-8631-282d6f44a113
+		summarizeBy: none
+		sourceColumn: filed_date
+
+		variation Variation
+			isDefault
+			relationship: b6656217-170d-4f8c-bad2-c4082a262b7f
+			defaultHierarchy: LocalDateTable_4be1b137-e04a-4ecb-b3b6-cfa3fb240757.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column form
+		dataType: string
+		lineageTag: 7b387287-fa85-4741-bd77-06f58cdd5da0
+		summarizeBy: none
+		sourceColumn: form
+
+		annotation SummarizationSetBy = Automatic
+
+	column accession_no
+		dataType: string
+		lineageTag: 33b35e9e-511f-4768-b8cc-e6bb635bd18c
+		summarizeBy: none
+		sourceColumn: accession_no
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'finance_db financial_facts' = m
+		mode: import
+		source =
+				let
+				    Source = MySQL.Database("127.0.0.1", "finance_db", [ReturnSingleDatabase=true]),
+				    finance_db_financial_facts = Source{[Schema="finance_db",Item="financial_facts"]}[Data]
+				in
+				    finance_db_financial_facts
+
+	annotation PBI_ResultType = Table
+

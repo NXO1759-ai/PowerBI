@@ -1,0 +1,47 @@
+table 'finance_db companies'
+	lineageTag: 2bb06119-5b02-4193-a597-02379611eeff
+
+	column cik
+		dataType: int64
+		formatString: 0
+		lineageTag: d5af7518-f116-4081-a11f-1f7bf39f62b9
+		summarizeBy: none
+		sourceColumn: cik
+
+		annotation SummarizationSetBy = Automatic
+
+	column ticker
+		dataType: string
+		lineageTag: 0af4d81b-57ba-4d23-aeb3-28ad7469f99a
+		summarizeBy: none
+		sourceColumn: ticker
+
+		annotation SummarizationSetBy = Automatic
+
+	column name
+		dataType: string
+		lineageTag: f91ca54f-5f61-4a0c-aec8-5403818a1c60
+		summarizeBy: none
+		sourceColumn: name
+
+		annotation SummarizationSetBy = Automatic
+
+	column exchange
+		dataType: string
+		lineageTag: 2a4bccbb-1379-4e59-bdef-1d9d5877398b
+		summarizeBy: none
+		sourceColumn: exchange
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'finance_db companies' = m
+		mode: import
+		source =
+				let
+				    Source = MySQL.Database("127.0.0.1", "finance_db", [ReturnSingleDatabase=true]),
+				    finance_db_companies = Source{[Schema="finance_db",Item="companies"]}[Data]
+				in
+				    finance_db_companies
+
+	annotation PBI_ResultType = Table
+

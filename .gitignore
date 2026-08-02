@@ -1,0 +1,5 @@
+loaders/db_config.json
+*.pbix
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+__pycache__/
