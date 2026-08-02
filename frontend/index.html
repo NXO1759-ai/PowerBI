@@ -23,19 +23,14 @@
       <div class="charts-col">
         <div class="card chart-panel">
           <h2>30 Day History</h2>
-          <div class="chart-body pending" id="chart-30d">
-            <div class="pending-title">Pending market-data API</div>
-            <div class="pending-note">Columns = OHLC average price · line = value
-              traded (USD) · last 30 trading days. Fed by the API data tab once
-              connected.</div>
+          <div class="chart-body" id="chart-30d-wrap">
+            <canvas id="chart-30d"></canvas>
           </div>
         </div>
         <div class="card chart-panel">
           <h2>6 Month History</h2>
-          <div class="chart-body pending" id="chart-6m">
-            <div class="pending-title">Pending market-data API</div>
-            <div class="pending-note">Columns = OHLC average price · line = value
-              traded (USD) · ~125 trading days. Same feed, longer window.</div>
+          <div class="chart-body" id="chart-6m-wrap">
+            <canvas id="chart-6m"></canvas>
           </div>
         </div>
       </div>
@@ -107,13 +102,17 @@
       <div class="col-stack">
         <div class="card col">
           <h2>Volume Statistics</h2>
-          <div class="pending vol-panel">
-            <div class="pending-title">Pending market-data API</div>
-            <div class="pending-note">30/60/90-day average daily volume ·
-              average daily dollar volume · min/max volume &amp; value · days
-              traded under $5k · days-to-liquidate tables. Computed from the
-              price-history feed once connected.</div>
-          </div>
+          <h3 class="table-title">Volume Stats</h3>
+          <table class="grid" id="tbl-vol">
+            <thead></thead><tbody></tbody>
+          </table>
+          <h3 class="table-title">Value Stats (US$)</h3>
+          <table class="grid" id="tbl-val">
+            <thead></thead><tbody></tbody>
+          </table>
+          <h3 class="table-title">Days to Liquidate
+            <span class="hint">(% of avg daily value)</span></h3>
+          <div id="liq-tables"></div>
         </div>
         <div class="card col">
           <h2>Share Information</h2>
@@ -127,6 +126,7 @@
     <footer id="footer">—</footer>
   </div>
 
+  <script src="vendor/chart.umd.min.js"></script>
   <script src="data/company-kblb.js"></script>
   <script src="app.js"></script>
 </body>

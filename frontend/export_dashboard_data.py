@@ -66,8 +66,17 @@ def fetch_all():
         "       value, filed_date, form"
         " FROM financial_facts WHERE cik = %s", (company["cik"],))
     facts = cur.fetchall()
+    prices = []
+    try:
+        cur.execute(
+            "SELECT trade_date, open, high, low, close, volume"
+            " FROM price_daily WHERE ticker = %s ORDER BY trade_date",
+            (TICKER,))
+        prices = cur.fetchall()
+    except mysql.connector.Error:
+        pass  # price_daily not created yet — charts stay pending
     conn.close()
-    return company, facts
+    return company, facts, prices
 
 
 def usd(facts, concept, year, period):
@@ -122,8 +131,76 @@ def shares_outstanding(facts):
     return float(rows[-1]["value"])
 
 
+def price_block(prices, shares):
+    """OHLC-average + value-traded series and all volume/value statistics,
+    using the debtsheet's own formulas."""
+    if not prices:
+        return None
+    series = []
+    for p in prices:
+        ohlc_avg = (float(p["open"]) + float(p["high"])
+                    + float(p["low"]) + float(p["close"])) / 4
+        vol = float(p["volume"])
+        series.append({
+            "date": p["trade_date"].isoformat(),
+            "ohlcAvg": round(ohlc_avg, 6),
+            "close": float(p["close"]),
+            "volume": vol,
+            "valueTraded": ohlc_avg * vol,
+        })
+    vols = [s["volume"] for s in series]
+    vals = [s["valueTraded"] for s in series]
+
+    def tail_avg(xs, n):
+        w = xs[-n:] if len(xs) >= n else xs
+        return sum(w) / len(w) if w else None
+
+    volume_stats = {
+        "avg30": tail_avg(vols, 30), "avg60": tail_avg(vols, 60),
+        "avg90": tail_avg(vols, 90),
+        "min30": min(vols[-30:]), "max30": max(vols[-30:]),
+    }
+    value_stats = {
+        "avg30": tail_avg(vals, 30), "avg60": tail_avg(vals, 60),
+        "avg90": tail_avg(vals, 90),
+        "min30": min(vals[-30:]), "max30": max(vals[-30:]),
+        "daysUnder5k30": sum(1 for v in vals[-30:] if v < 5000),
+    }
+
+    def liq(amount, pct, n):
+        a = tail_avg(vals, n)
+        if not a:
+            return None
+        days = amount / (pct * a)
+        return {"days": round(days, 1), "months": round(days / 21, 1)}
+
+    liquidation = [
+        {"pct": pct,
+         "rows": [{"amount": amount,
+                   "d30": liq(amount, pct, 30),
+                   "d60": liq(amount, pct, 60),
+                   "d90": liq(amount, pct, 90)}
+                  for amount in (100000, 50000, 25000)]}
+        for pct in (0.3, 0.2, 0.1)
+    ]
+
+    latest = series[-1]
+    price = latest["ohlcAvg"]
+    market = {
+        "asOf": latest["date"],
+        "currentPrice": price,
+        "close": latest["close"],
+        "marketCap": price * shares if shares else None,
+        "shares499": 0.0499 * shares if shares else None,
+        "value499": 0.0499 * shares * price if shares else None,
+    }
+    return {"series": series, "series30": series[-22:],
+            "volumeStats": volume_stats, "valueStats": value_stats,
+            "liquidation": liquidation, "market": market}
+
+
 def build():
-    company, facts = fetch_all()
+    company, facts, prices = fetch_all()
     yr, per = latest_quarter(facts)
     ly_yr = yr - 1 if yr else None
 
@@ -230,17 +307,12 @@ def build():
             "burnRate": {"q": burn("q"), "ly": burn("ly")},
         },
         "shares": {"outstanding": shares_outstanding(facts)},
+        "price": price_block(prices, shares_outstanding(facts)),
         "pending": {
-            "priceHistory": "30-day & 6-month charts — awaiting the "
-                            "market-data API (owner to provide)",
-            "volumeStats": "avg/min/max volume & value, days under $5k, "
-                           "days-to-liquidate — computed from the price "
-                           "history feed once it lands",
             "companyTexts": "description, management, major shareholders, "
                             "accountant / attorney / transfer agent",
             "analystOpinion": "free-text analysis stays in the debtsheet "
                               "until a notes feed exists",
-            "currentPrice": "needed for price, market cap, 4.99% values",
         },
     }
     return data

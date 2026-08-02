@@ -93,9 +93,8 @@ h3 { font-size: 13px; color: var(--ink); }
 .charts-col { display: flex; flex-direction: column; gap: 14px; }
 
 .chart-panel .chart-body {
-  height: 170px;
-  border: 1px dashed var(--line);
-  border-radius: 6px;
+  height: 190px;
+  position: relative;
 }
 
 .analyst-panel { display: flex; flex-direction: column; }
@@ -162,6 +161,9 @@ table.grid tr:last-child td { border-bottom: none; }
 
 .neg { color: var(--neg); }
 .mute { color: var(--ink-faint); }
+
+table.grid.liq { margin-bottom: 10px; }
+table.grid.liq td:first-child { white-space: nowrap; }
 
 /* ------------------------------ footer ------------------------------ */
 footer {
