@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "3abd5d46dc61bfe0b00e",
+  "position": {
+    "x": 1128,
+    "y": 646,
+    "z": 0,
+    "height": 22,
+    "width": 112,
+    "tabOrder": 80
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "finance_db financial_facts"
+                    }
+                  },
+                  "Property": "CF Ops Q LY"
+                }
+              },
+              "queryRef": "finance_db financial_facts.CF Ops Q LY",
+              "nativeQueryRef": "CF Ops Q LY"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "categoryLabels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

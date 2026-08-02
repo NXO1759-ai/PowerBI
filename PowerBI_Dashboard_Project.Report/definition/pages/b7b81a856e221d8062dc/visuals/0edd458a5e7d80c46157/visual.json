@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "0edd458a5e7d80c46157",
+  "position": {
+    "x": 568,
+    "y": 140,
+    "z": 0,
+    "height": 46,
+    "width": 220,
+    "tabOrder": 13
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "finance_db financial_facts"
+                    }
+                  },
+                  "Property": "fiscal_period"
+                }
+              },
+              "queryRef": "finance_db financial_facts.fiscal_period",
+              "nativeQueryRef": "fiscal_period"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Fiscal Period'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

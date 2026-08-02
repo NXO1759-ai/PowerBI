@@ -1,0 +1,49 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "639fecb041b62b78124a",
+  "position": {
+    "x": 848,
+    "y": 856,
+    "z": 0,
+    "height": 150,
+    "width": 416,
+    "tabOrder": 98
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Pending market-data feed",
+                    "textStyle": {
+                      "fontSize": "14px",
+                      "color": "#9ca3af"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "30/60/90-day average daily volume \u00b7 average daily dollar volume \u00b7 min/max volume & value \u00b7 days traded under $5k \u00b7 days-to-liquidate tables. All computed from the daily price/volume table once it lands in Power BI.",
+                    "textStyle": {
+                      "fontSize": "10px",
+                      "fontStyle": "italic",
+                      "color": "#6b7280"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

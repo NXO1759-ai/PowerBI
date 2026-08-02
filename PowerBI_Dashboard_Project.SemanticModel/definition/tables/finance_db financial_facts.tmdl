@@ -1,6 +1,45 @@
 table 'finance_db financial_facts'
 	lineageTag: 545ec1ab-057e-430e-a6a0-65ebe6469e17
 
+	measure 'Revenue FY' =
+			CALCULATE(
+				SUM('finance_db financial_facts'[value]),
+				'finance_db financial_facts'[concept] = "RevenueFromContractWithCustomerExcludingAssessedTax",
+				'finance_db financial_facts'[fiscal_period] = "FY",
+				'finance_db financial_facts'[unit] = "USD"
+			)
+		formatString: #,##0
+		lineageTag: 2f140ed0-746a-444f-8b8d-b908d59e359f
+
+	measure 'Net Income FY' =
+			CALCULATE(
+				SUM('finance_db financial_facts'[value]),
+				'finance_db financial_facts'[concept] = "NetIncomeLoss",
+				'finance_db financial_facts'[fiscal_period] = "FY",
+				'finance_db financial_facts'[unit] = "USD"
+			)
+		formatString: #,##0
+		lineageTag: 6fbf19cc-0a89-4b77-bc57-0360916cc1dd
+
+	measure 'Net Margin %' = DIVIDE([Net Income FY], [Revenue FY])
+		formatString: 0.0%
+		lineageTag: caee397c-0833-4a5c-9b7f-13c36637e992
+
+	measure 'Revenue Prev FY' =
+			VAR yr = MAX('finance_db financial_facts'[fiscal_year])
+			RETURN
+				CALCULATE(
+					[Revenue FY],
+					REMOVEFILTERS('finance_db financial_facts'[fiscal_year]),
+					'finance_db financial_facts'[fiscal_year] = yr - 1
+				)
+		formatString: #,##0
+		lineageTag: bf1bc758-3161-468b-8e79-6a76fb79b4a7
+
+	measure 'Revenue YoY %' = DIVIDE([Revenue FY] - [Revenue Prev FY], [Revenue Prev FY])
+		formatString: 0.0%
+		lineageTag: 178dfb92-14a3-40e1-a121-ca6b304a0aef
+
 	column id
 		dataType: int64
 		formatString: 0
@@ -126,41 +165,1020 @@ table 'finance_db financial_facts'
 
 		annotation SummarizationSetBy = Automatic
 
-	measure 'Revenue FY' =
-			CALCULATE(
-				SUM('finance_db financial_facts'[value]),
-				'finance_db financial_facts'[concept] = "RevenueFromContractWithCustomerExcludingAssessedTax",
-				'finance_db financial_facts'[fiscal_period] = "FY",
-				'finance_db financial_facts'[unit] = "USD"
-			)
-		formatString: #,##0
 
-	measure 'Net Income FY' =
-			CALCULATE(
-				SUM('finance_db financial_facts'[value]),
-				'finance_db financial_facts'[concept] = "NetIncomeLoss",
-				'finance_db financial_facts'[fiscal_period] = "FY",
-				'finance_db financial_facts'[unit] = "USD"
-			)
-		formatString: #,##0
 
-	measure 'Net Margin %' =
-			DIVIDE([Net Income FY], [Revenue FY])
-		formatString: 0.0%
 
-	measure 'Revenue Prev FY' =
-			VAR yr = MAX('finance_db financial_facts'[fiscal_year])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	measure 'Company Name' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
 			RETURN
-				CALCULATE(
-					[Revenue FY],
-					REMOVEFILTERS('finance_db financial_facts'[fiscal_year]),
+				CALCULATE (
+					MAX ( 'finance_db companies'[name] ),
+					'finance_db companies'[ticker] = t
+				)
+
+	measure 'Ticker' =
+			SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+
+	measure 'Exchange' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			RETURN
+				CALCULATE (
+					MAX ( 'finance_db companies'[exchange] ),
+					'finance_db companies'[ticker] = t
+				)
+
+	measure 'CIK' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			RETURN
+				CALCULATE (
+					MAX ( 'finance_db companies'[cik] ),
+					'finance_db companies'[ticker] = t
+				)
+		formatString: 0
+
+	measure 'Latest Filing Date' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			RETURN
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[filed_date] ),
+					'finance_db companies'[ticker] = t
+				)
+		formatString: Short Date
+
+	measure 'Latest Filing Form' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR d =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[filed_date] ),
+					'finance_db companies'[ticker] = t
+				)
+			RETURN
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[form] ),
+					'finance_db companies'[ticker] = t
+					'finance_db financial_facts'[filed_date] = d
+				)
+
+	measure 'Revenue Q' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			VAR per =
+				IF (
+					ISFILTERED ( 'finance_db financial_facts'[fiscal_period] ),
+					MAX ( 'finance_db financial_facts'[fiscal_period] ),
+					CALCULATE (
+						MAX ( 'finance_db financial_facts'[fiscal_period] ),
+						'finance_db companies'[ticker] = t,
+						'finance_db financial_facts'[fiscal_year] = yr,
+						'finance_db financial_facts'[fiscal_period] <> "FY"
+					)
+				)
+			VAR prevper =
+				SWITCH ( per, "Q2", "Q1", "Q3", "Q2" )
+			VAR cur =
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "RevenueFromContractWithCustomerExcludingAssessedTax",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = per
+				)
+			VAR prev =
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "RevenueFromContractWithCustomerExcludingAssessedTax",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = prevper
+				)
+			RETURN
+				cur - prev
+		formatString: #,##0
+
+	measure 'COGS Q' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			VAR per =
+				IF (
+					ISFILTERED ( 'finance_db financial_facts'[fiscal_period] ),
+					MAX ( 'finance_db financial_facts'[fiscal_period] ),
+					CALCULATE (
+						MAX ( 'finance_db financial_facts'[fiscal_period] ),
+						'finance_db companies'[ticker] = t,
+						'finance_db financial_facts'[fiscal_year] = yr,
+						'finance_db financial_facts'[fiscal_period] <> "FY"
+					)
+				)
+			VAR prevper =
+				SWITCH ( per, "Q2", "Q1", "Q3", "Q2" )
+			VAR cur =
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "CostOfRevenue",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = per
+				)
+			VAR prev =
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "CostOfRevenue",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = prevper
+				)
+			RETURN
+				cur - prev
+		formatString: #,##0
+
+	measure 'Gross Profit Q' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			VAR per =
+				IF (
+					ISFILTERED ( 'finance_db financial_facts'[fiscal_period] ),
+					MAX ( 'finance_db financial_facts'[fiscal_period] ),
+					CALCULATE (
+						MAX ( 'finance_db financial_facts'[fiscal_period] ),
+						'finance_db companies'[ticker] = t,
+						'finance_db financial_facts'[fiscal_year] = yr,
+						'finance_db financial_facts'[fiscal_period] <> "FY"
+					)
+				)
+			VAR prevper =
+				SWITCH ( per, "Q2", "Q1", "Q3", "Q2" )
+			VAR cur =
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "GrossProfit",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = per
+				)
+			VAR prev =
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "GrossProfit",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = prevper
+				)
+			RETURN
+				cur - prev
+		formatString: #,##0
+
+	measure 'Net Income Q' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			VAR per =
+				IF (
+					ISFILTERED ( 'finance_db financial_facts'[fiscal_period] ),
+					MAX ( 'finance_db financial_facts'[fiscal_period] ),
+					CALCULATE (
+						MAX ( 'finance_db financial_facts'[fiscal_period] ),
+						'finance_db companies'[ticker] = t,
+						'finance_db financial_facts'[fiscal_year] = yr,
+						'finance_db financial_facts'[fiscal_period] <> "FY"
+					)
+				)
+			VAR prevper =
+				SWITCH ( per, "Q2", "Q1", "Q3", "Q2" )
+			VAR cur =
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "NetIncomeLoss",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = per
+				)
+			VAR prev =
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "NetIncomeLoss",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = prevper
+				)
+			RETURN
+				cur - prev
+		formatString: #,##0
+
+	measure 'CF Ops Q' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			VAR per =
+				IF (
+					ISFILTERED ( 'finance_db financial_facts'[fiscal_period] ),
+					MAX ( 'finance_db financial_facts'[fiscal_period] ),
+					CALCULATE (
+						MAX ( 'finance_db financial_facts'[fiscal_period] ),
+						'finance_db companies'[ticker] = t,
+						'finance_db financial_facts'[fiscal_year] = yr,
+						'finance_db financial_facts'[fiscal_period] <> "FY"
+					)
+				)
+			VAR prevper =
+				SWITCH ( per, "Q2", "Q1", "Q3", "Q2" )
+			VAR cur =
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "NetCashProvidedByUsedInOperatingActivities",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = per
+				)
+			VAR prev =
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "NetCashProvidedByUsedInOperatingActivities",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = prevper
+				)
+			RETURN
+				cur - prev
+		formatString: #,##0
+
+	measure 'CF Inv Q' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			VAR per =
+				IF (
+					ISFILTERED ( 'finance_db financial_facts'[fiscal_period] ),
+					MAX ( 'finance_db financial_facts'[fiscal_period] ),
+					CALCULATE (
+						MAX ( 'finance_db financial_facts'[fiscal_period] ),
+						'finance_db companies'[ticker] = t,
+						'finance_db financial_facts'[fiscal_year] = yr,
+						'finance_db financial_facts'[fiscal_period] <> "FY"
+					)
+				)
+			VAR prevper =
+				SWITCH ( per, "Q2", "Q1", "Q3", "Q2" )
+			VAR cur =
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "NetCashProvidedByUsedInInvestingActivities",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = per
+				)
+			VAR prev =
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "NetCashProvidedByUsedInInvestingActivities",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = prevper
+				)
+			RETURN
+				cur - prev
+		formatString: #,##0
+
+	measure 'CF Fin Q' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			VAR per =
+				IF (
+					ISFILTERED ( 'finance_db financial_facts'[fiscal_period] ),
+					MAX ( 'finance_db financial_facts'[fiscal_period] ),
+					CALCULATE (
+						MAX ( 'finance_db financial_facts'[fiscal_period] ),
+						'finance_db companies'[ticker] = t,
+						'finance_db financial_facts'[fiscal_year] = yr,
+						'finance_db financial_facts'[fiscal_period] <> "FY"
+					)
+				)
+			VAR prevper =
+				SWITCH ( per, "Q2", "Q1", "Q3", "Q2" )
+			VAR cur =
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "NetCashProvidedByUsedInFinancingActivities",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = per
+				)
+			VAR prev =
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "NetCashProvidedByUsedInFinancingActivities",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = prevper
+				)
+			RETURN
+				cur - prev
+		formatString: #,##0
+
+	measure 'Cash Q' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			VAR per =
+				IF (
+					ISFILTERED ( 'finance_db financial_facts'[fiscal_period] ),
+					MAX ( 'finance_db financial_facts'[fiscal_period] ),
+					CALCULATE (
+						MAX ( 'finance_db financial_facts'[fiscal_period] ),
+						'finance_db companies'[ticker] = t,
+						'finance_db financial_facts'[fiscal_year] = yr,
+						'finance_db financial_facts'[fiscal_period] <> "FY"
+					)
+				)
+			RETURN
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "CashAndCashEquivalentsAtCarryingValue",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = per
+				)
+		formatString: #,##0
+
+	measure 'Current Assets Q' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			VAR per =
+				IF (
+					ISFILTERED ( 'finance_db financial_facts'[fiscal_period] ),
+					MAX ( 'finance_db financial_facts'[fiscal_period] ),
+					CALCULATE (
+						MAX ( 'finance_db financial_facts'[fiscal_period] ),
+						'finance_db companies'[ticker] = t,
+						'finance_db financial_facts'[fiscal_year] = yr,
+						'finance_db financial_facts'[fiscal_period] <> "FY"
+					)
+				)
+			RETURN
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "AssetsCurrent",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = per
+				)
+		formatString: #,##0
+
+	measure 'Current Liabilities Q' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			VAR per =
+				IF (
+					ISFILTERED ( 'finance_db financial_facts'[fiscal_period] ),
+					MAX ( 'finance_db financial_facts'[fiscal_period] ),
+					CALCULATE (
+						MAX ( 'finance_db financial_facts'[fiscal_period] ),
+						'finance_db companies'[ticker] = t,
+						'finance_db financial_facts'[fiscal_year] = yr,
+						'finance_db financial_facts'[fiscal_period] <> "FY"
+					)
+				)
+			RETURN
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "LiabilitiesCurrent",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = per
+				)
+		formatString: #,##0
+
+	measure 'Total Assets Q' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			VAR per =
+				IF (
+					ISFILTERED ( 'finance_db financial_facts'[fiscal_period] ),
+					MAX ( 'finance_db financial_facts'[fiscal_period] ),
+					CALCULATE (
+						MAX ( 'finance_db financial_facts'[fiscal_period] ),
+						'finance_db companies'[ticker] = t,
+						'finance_db financial_facts'[fiscal_year] = yr,
+						'finance_db financial_facts'[fiscal_period] <> "FY"
+					)
+				)
+			RETURN
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "Assets",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = per
+				)
+		formatString: #,##0
+
+	measure 'Total Liabilities Q' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			VAR per =
+				IF (
+					ISFILTERED ( 'finance_db financial_facts'[fiscal_period] ),
+					MAX ( 'finance_db financial_facts'[fiscal_period] ),
+					CALCULATE (
+						MAX ( 'finance_db financial_facts'[fiscal_period] ),
+						'finance_db companies'[ticker] = t,
+						'finance_db financial_facts'[fiscal_year] = yr,
+						'finance_db financial_facts'[fiscal_period] <> "FY"
+					)
+				)
+			RETURN
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "Liabilities",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = per
+				)
+		formatString: #,##0
+
+	measure 'Equity Q' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			VAR per =
+				IF (
+					ISFILTERED ( 'finance_db financial_facts'[fiscal_period] ),
+					MAX ( 'finance_db financial_facts'[fiscal_period] ),
+					CALCULATE (
+						MAX ( 'finance_db financial_facts'[fiscal_period] ),
+						'finance_db companies'[ticker] = t,
+						'finance_db financial_facts'[fiscal_year] = yr,
+						'finance_db financial_facts'[fiscal_period] <> "FY"
+					)
+				)
+			RETURN
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "StockholdersEquity",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = per
+				)
+		formatString: #,##0
+
+	measure 'Retained Earnings Q' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			VAR per =
+				IF (
+					ISFILTERED ( 'finance_db financial_facts'[fiscal_period] ),
+					MAX ( 'finance_db financial_facts'[fiscal_period] ),
+					CALCULATE (
+						MAX ( 'finance_db financial_facts'[fiscal_period] ),
+						'finance_db companies'[ticker] = t,
+						'finance_db financial_facts'[fiscal_year] = yr,
+						'finance_db financial_facts'[fiscal_period] <> "FY"
+					)
+				)
+			RETURN
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "RetainedEarningsAccumulatedDeficit",
+					'finance_db financial_facts'[unit] = "USD",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = per
+				)
+		formatString: #,##0
+
+	measure 'Shares Outstanding Q' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			VAR per =
+				IF (
+					ISFILTERED ( 'finance_db financial_facts'[fiscal_period] ),
+					MAX ( 'finance_db financial_facts'[fiscal_period] ),
+					CALCULATE (
+						MAX ( 'finance_db financial_facts'[fiscal_period] ),
+						'finance_db companies'[ticker] = t,
+						'finance_db financial_facts'[fiscal_year] = yr,
+						'finance_db financial_facts'[fiscal_period] <> "FY"
+					)
+				)
+			VAR dei =
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "EntityCommonStockSharesOutstanding",
+					'finance_db financial_facts'[unit] = "shares",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = per
+				)
+			VAR gaap =
+				CALCULATE (
+					SUM ( 'finance_db financial_facts'[value] ),
+					'finance_db financial_facts'[concept] = "CommonStockSharesOutstanding",
+					'finance_db financial_facts'[unit] = "shares",
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_period] ),
+					'finance_db financial_facts'[fiscal_year] = yr,
+					'finance_db financial_facts'[fiscal_period] = per
+				)
+			RETURN
+				COALESCE ( dei, gaap )
+		formatString: #,##0
+
+	measure 'Revenue Q LY' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			RETURN
+				CALCULATE (
+					[Revenue Q],
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
 					'finance_db financial_facts'[fiscal_year] = yr - 1
 				)
 		formatString: #,##0
 
-	measure 'Revenue YoY %' =
-			DIVIDE([Revenue FY] - [Revenue Prev FY], [Revenue Prev FY])
+	measure 'COGS Q LY' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			RETURN
+				CALCULATE (
+					[COGS Q],
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db financial_facts'[fiscal_year] = yr - 1
+				)
+		formatString: #,##0
+
+	measure 'Gross Profit Q LY' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			RETURN
+				CALCULATE (
+					[Gross Profit Q],
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db financial_facts'[fiscal_year] = yr - 1
+				)
+		formatString: #,##0
+
+	measure 'Net Income Q LY' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			RETURN
+				CALCULATE (
+					[Net Income Q],
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db financial_facts'[fiscal_year] = yr - 1
+				)
+		formatString: #,##0
+
+	measure 'CF Ops Q LY' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			RETURN
+				CALCULATE (
+					[CF Ops Q],
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db financial_facts'[fiscal_year] = yr - 1
+				)
+		formatString: #,##0
+
+	measure 'CF Inv Q LY' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			RETURN
+				CALCULATE (
+					[CF Inv Q],
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db financial_facts'[fiscal_year] = yr - 1
+				)
+		formatString: #,##0
+
+	measure 'CF Fin Q LY' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			RETURN
+				CALCULATE (
+					[CF Fin Q],
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db financial_facts'[fiscal_year] = yr - 1
+				)
+		formatString: #,##0
+
+	measure 'Cash Q LY' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			RETURN
+				CALCULATE (
+					[Cash Q],
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db financial_facts'[fiscal_year] = yr - 1
+				)
+		formatString: #,##0
+
+	measure 'Current Assets Q LY' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			RETURN
+				CALCULATE (
+					[Current Assets Q],
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db financial_facts'[fiscal_year] = yr - 1
+				)
+		formatString: #,##0
+
+	measure 'Current Liabilities Q LY' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			RETURN
+				CALCULATE (
+					[Current Liabilities Q],
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db financial_facts'[fiscal_year] = yr - 1
+				)
+		formatString: #,##0
+
+	measure 'Total Assets Q LY' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			RETURN
+				CALCULATE (
+					[Total Assets Q],
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db financial_facts'[fiscal_year] = yr - 1
+				)
+		formatString: #,##0
+
+	measure 'Total Liabilities Q LY' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			RETURN
+				CALCULATE (
+					[Total Liabilities Q],
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db financial_facts'[fiscal_year] = yr - 1
+				)
+		formatString: #,##0
+
+	measure 'Equity Q LY' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			RETURN
+				CALCULATE (
+					[Equity Q],
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db financial_facts'[fiscal_year] = yr - 1
+				)
+		formatString: #,##0
+
+	measure 'Retained Earnings Q LY' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			RETURN
+				CALCULATE (
+					[Retained Earnings Q],
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db financial_facts'[fiscal_year] = yr - 1
+				)
+		formatString: #,##0
+
+	measure 'Shares Outstanding Q LY' =
+			VAR t =
+				SELECTEDVALUE ( 'finance_db companies'[ticker], "KBLB" )
+			VAR yr =
+				CALCULATE (
+					MAX ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db companies'[ticker] = t
+				)
+			RETURN
+				CALCULATE (
+					[Shares Outstanding Q],
+					'finance_db companies'[ticker] = t,
+					REMOVEFILTERS ( 'finance_db financial_facts'[fiscal_year] ),
+					'finance_db financial_facts'[fiscal_year] = yr - 1
+				)
+		formatString: #,##0
+
+	measure 'Gross Margin % Q' =
+			DIVIDE ( [Gross Profit Q], [Revenue Q] )
 		formatString: 0.0%
+
+	measure 'Gross Margin % Q LY' =
+			DIVIDE ( [Gross Profit Q LY], [Revenue Q LY] )
+		formatString: 0.0%
+
+	measure 'Working Capital Q' =
+			[Current Assets Q] - [Current Liabilities Q]
+		formatString: #,##0
+
+	measure 'Working Capital Q LY' =
+			[Current Assets Q LY] - [Current Liabilities Q LY]
+		formatString: #,##0
+
+	measure 'Net Cash Change Q' =
+			[CF Ops Q] + [CF Inv Q] + [CF Fin Q]
+		formatString: #,##0
+
+	measure 'Net Cash Change Q LY' =
+			[CF Ops Q LY] + [CF Inv Q LY] + [CF Fin Q LY]
+		formatString: #,##0
+
+	measure 'Monthly Burn Q' =
+			DIVIDE ( [Net Cash Change Q], 3 )
+		formatString: #,##0
+
+	measure 'Monthly Burn Q LY' =
+			DIVIDE ( [Net Cash Change Q LY], 3 )
+		formatString: #,##0
+
+	measure 'Remaining Cash Days Q' =
+			VAR burn =
+				[Monthly Burn Q]
+			RETURN
+				IF (
+					ISBLANK ( burn ),
+					BLANK (),
+					IF (
+						burn >= 0,
+						"Infinite",
+						FORMAT ( DIVIDE ( [Cash Q], - burn ) * 30, "#,##0" )
+					)
+				)
+
+	measure 'Remaining Cash Days Q LY' =
+			VAR burn =
+				[Monthly Burn Q LY]
+			RETURN
+				IF (
+					ISBLANK ( burn ),
+					BLANK (),
+					IF (
+						burn >= 0,
+						"Infinite",
+						FORMAT ( DIVIDE ( [Cash Q LY], - burn ) * 30, "#,##0" )
+					)
+				)
 
 	partition 'finance_db financial_facts' = m
 		mode: import

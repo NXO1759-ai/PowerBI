@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "b6ecaa5d7b123265b8d5",
+  "position": {
+    "x": 16,
+    "y": 950,
+    "z": 0,
+    "height": 80,
+    "width": 400,
+    "tabOrder": 27
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Accountant \u00b7 Attorney \u00b7 Transfer Agent \u2014 pending.",
+                    "textStyle": {
+                      "fontSize": "10px",
+                      "fontStyle": "italic",
+                      "color": "#6b7280"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

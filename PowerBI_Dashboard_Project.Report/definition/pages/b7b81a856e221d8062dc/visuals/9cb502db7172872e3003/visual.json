@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "9cb502db7172872e3003",
+  "position": {
+    "x": 712,
+    "y": 694,
+    "z": 0,
+    "height": 22,
+    "width": 112,
+    "tabOrder": 40
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "finance_db financial_facts"
+                    }
+                  },
+                  "Property": "Current Liabilities Q LY"
+                }
+              },
+              "queryRef": "finance_db financial_facts.Current Liabilities Q LY",
+              "nativeQueryRef": "Current Liabilities Q LY"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "categoryLabels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

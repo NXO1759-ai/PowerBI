@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "75d337a48b520ea954f9",
+  "position": {
+    "x": 16,
+    "y": 1114,
+    "z": 0,
+    "height": 18,
+    "width": 800,
+    "tabOrder": 109
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Fundamentals: SEC EDGAR 10-K/10-Q via finance_db \u00b7 flows are single-quarter (derived from YTD) \u00b7 price/volume panels light up when the market feed lands.",
+                    "textStyle": {
+                      "fontSize": "9px",
+                      "fontStyle": "italic",
+                      "color": "#9ca3af"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

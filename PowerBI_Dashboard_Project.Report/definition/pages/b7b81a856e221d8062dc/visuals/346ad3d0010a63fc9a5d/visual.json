@@ -1,0 +1,53 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "346ad3d0010a63fc9a5d",
+  "position": {
+    "x": 1012,
+    "y": 800,
+    "z": 0,
+    "height": 22,
+    "width": 112,
+    "tabOrder": 95
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "finance_db financial_facts"
+                    }
+                  },
+                  "Property": "Remaining Cash Days Q"
+                }
+              },
+              "queryRef": "finance_db financial_facts.Remaining Cash Days Q",
+              "nativeQueryRef": "Remaining Cash Days Q"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "categoryLabels": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

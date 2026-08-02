@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "3c5de4a2b173b3c7ea5e",
+  "position": {
+    "x": 848,
+    "y": 578,
+    "z": 0,
+    "height": 22,
+    "width": 416,
+    "tabOrder": 74
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "CASH FLOW \u00b7 VOLUME \u00b7 SHARES",
+                    "textStyle": {
+                      "fontSize": "13px",
+                      "fontWeight": "bold",
+                      "color": "#111827"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

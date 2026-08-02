@@ -1,0 +1,61 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "2ccff0dbdadf47a279cb",
+  "position": {
+    "x": 792,
+    "y": 220,
+    "z": 0,
+    "height": 342,
+    "width": 472,
+    "tabOrder": 19
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Free-text field \u2014 pending",
+                    "textStyle": {
+                      "fontSize": "14px",
+                      "color": "#9ca3af"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "On the debtsheet this box carries Company Needs, Financing Activities and News Updates (e.g. convertible notes, SEPA agreements, warrants).",
+                    "textStyle": {
+                      "fontSize": "10px",
+                      "fontStyle": "italic",
+                      "color": "#6b7280"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "These paragraphs are researched from filings, not structured data. A notes table in finance_db can feed this panel later; until then it stays in the debtsheet workbook.",
+                    "textStyle": {
+                      "fontSize": "10px",
+                      "fontStyle": "italic",
+                      "color": "#6b7280"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

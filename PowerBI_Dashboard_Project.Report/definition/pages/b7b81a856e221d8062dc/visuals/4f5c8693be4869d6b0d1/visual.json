@@ -1,0 +1,39 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "4f5c8693be4869d6b0d1",
+  "position": {
+    "x": 868,
+    "y": 62,
+    "z": 0,
+    "height": 66,
+    "width": 140,
+    "tabOrder": 8
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "finance_db financial_facts"
+                    }
+                  },
+                  "Property": "Latest Filing Date"
+                }
+              },
+              "queryRef": "finance_db financial_facts.Latest Filing Date",
+              "nativeQueryRef": "Latest Filing Date"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {},
+    "drillFilterOtherVisuals": true
+  }
+}

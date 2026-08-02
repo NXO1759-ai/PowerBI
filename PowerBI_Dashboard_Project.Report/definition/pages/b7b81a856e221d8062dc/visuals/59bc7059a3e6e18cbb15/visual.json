@@ -1,0 +1,49 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "name": "59bc7059a3e6e18cbb15",
+  "position": {
+    "x": 16,
+    "y": 220,
+    "z": 0,
+    "height": 148,
+    "width": 760,
+    "tabOrder": 15
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Pending market-data feed",
+                    "textStyle": {
+                      "fontSize": "14px",
+                      "color": "#9ca3af"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Columns = OHLC average price \u00b7 line = value traded (USD) \u00b7 last 30 trading days. The debtsheet's Data tab will be replaced by a daily price/volume table served through Power BI.",
+                    "textStyle": {
+                      "fontSize": "10px",
+                      "fontStyle": "italic",
+                      "color": "#6b7280"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
