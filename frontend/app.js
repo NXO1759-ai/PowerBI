@@ -66,7 +66,16 @@
     : "—";
 
   var mkt = (D.price && D.price.market) || null;
-  var priceTxt = mkt ? "$" + mkt.currentPrice.toFixed(4) : "Pending API";
+  var earn = D.earnings || null;
+
+  function usd4(v) {
+    if (v === null || v === undefined) return "—";
+    return (v < 0 ? "-$" : "$") + Math.abs(v).toFixed(4);
+  }
+  function signedUsd4(v) {
+    if (v === null || v === undefined) return "—";
+    return (v < 0 ? "-$" : "+$") + Math.abs(v).toFixed(4);
+  }
 
   var facts = [
     ["Symbol", D.company.ticker, false],
@@ -75,10 +84,10 @@
     ["Latest Filing", filing, false],
     ["Filing Period", D.period.label || "—", false],
     ["Fiscal Year End", "Dec 31", false],
-    ["Current Price" + (mkt ? " · " + mkt.asOf : ""), priceTxt, !mkt],
-    ["Analyst", "—", true],
-    ["Domicile", "—", true],
-    ["Website", "—", true],
+    ["Website", D.company.website
+      ? '<a href="' + D.company.website + '" target="_blank" rel="noopener">' +
+        D.company.website.replace(/^https?:\/\//, "").replace(/\/$/, "") + "</a>"
+      : "—", !D.company.website],
   ];
 
   document.getElementById("header-facts").innerHTML = facts
@@ -90,6 +99,45 @@
       );
     })
     .join("");
+
+  /* ------------------------- header stats strip --------------------------- */
+  function stat(label, valueHtml, cls, sub) {
+    return (
+      '<div class="stat"><div class="stat-label">' + label +
+      '</div><div class="stat-value' + (cls ? " " + cls : "") + '">' +
+      valueHtml + "</div>" +
+      (sub ? '<div class="stat-sub">' + sub + "</div>" : "") + "</div>"
+    );
+  }
+
+  var stats = [];
+  if (mkt) {
+    stats.push(stat("Market Price", usd4(mkt.currentPrice), "",
+      "OHLC avg · " + mkt.asOf));
+    if (mkt.change2d) {
+      var ch = mkt.change2d;
+      stats.push(stat("2-Day Change", signedUsd4(ch.abs),
+        ch.abs >= 0 ? "stat-up" : "stat-down",
+        (ch.abs >= 0 ? "+" : "-") + Math.abs(ch.pct).toFixed(2) +
+        "% vs " + ch.vsDate));
+    }
+  } else {
+    stats.push(stat("Market Price", "Pending", "mute", "no price data"));
+  }
+  if (earn) {
+    var ef = earn.epsFiled;
+    stats.push(stat("EPS — last filing",
+      ef && ef.q !== null ? (ef.q < 0 ? "-$" : "$") + Math.abs(ef.q).toFixed(2) : "—",
+      "", D.period.label + " · as reported"));
+    var ec = earn.epsComputed;
+    stats.push(stat("EPS — computed",
+      ec ? usd4(ec.q) : "—", ec && ec.q < 0 ? "stat-down" : "",
+      "net income ÷ shares out."));
+    stats.push(stat("EPS vs Analyst Est.", "No coverage", "mute",
+      "no estimates for KBLB"));
+  }
+
+  document.getElementById("header-stats").innerHTML = stats.join("");
 
   /* --------------------------- fundamentals ----------------------------- */
   var bs = D.fundamentals.balanceSheet;
@@ -226,24 +274,24 @@
         datasets: [
           {
             type: "bar",
-            label: "OHLC Average",
-            data: rows.map(function (r) { return r.ohlcAvg; }),
-            backgroundColor: "rgba(29, 78, 216, 0.75)",
-            borderColor: "rgba(29, 78, 216, 1)",
+            label: "Value Traded (US$)",
+            data: rows.map(function (r) { return r.valueTraded; }),
+            backgroundColor: "rgba(220, 38, 38, 0.55)",
+            borderColor: "rgba(220, 38, 38, 0.9)",
             borderWidth: 1,
-            yAxisID: "y",
+            yAxisID: "y1",
             order: 2,
           },
           {
             type: "line",
-            label: "Value Traded (US$)",
-            data: rows.map(function (r) { return r.valueTraded; }),
-            borderColor: "rgba(220, 38, 38, 0.9)",
-            backgroundColor: "rgba(220, 38, 38, 0.9)",
+            label: "OHLC Average",
+            data: rows.map(function (r) { return r.ohlcAvg; }),
+            borderColor: "rgba(29, 78, 216, 0.95)",
+            backgroundColor: "rgba(29, 78, 216, 0.95)",
             borderWidth: 1.5,
             pointRadius: 0,
             tension: 0.25,
-            yAxisID: "y1",
+            yAxisID: "y",
             order: 1,
           },
         ],
@@ -287,6 +335,93 @@
     buildChart("chart-30d", D.price.series30);
     buildChart("chart-6m", D.price.series);
   }
+
+  /* ------------------------- company information -------------------------- */
+  (function () {
+    var box = document.getElementById("company-info");
+    if (!box) return;
+    var rows = [];
+    if (D.company.website) {
+      rows.push(["Website",
+        '<a href="' + D.company.website + '" target="_blank" rel="noopener">' +
+        D.company.website.replace(/^https?:\/\//, "").replace(/\/$/, "") +
+        "</a>"]);
+    }
+    if (D.company.phone) rows.push(["Phone", D.company.phone]);
+    if (D.company.industry) rows.push(["Industry", D.company.industry]);
+    if (D.company.ipo_date) rows.push(["IPO Date", D.company.ipo_date]);
+    if (D.company.float_shares) {
+      rows.push(["Float Shares", nf0.format(D.company.float_shares)]);
+    }
+    var html = "";
+    if (rows.length) {
+      html +=
+        '<div class="info-block"><h3>Profile</h3><table class="grid"><tbody>' +
+        rows.map(function (r) {
+          return "<tr><td>" + r[0] + '</td><td class="num">' + r[1] +
+            "</td></tr>";
+        }).join("") + "</tbody></table></div>";
+    }
+    html +=
+      '<div class="info-block"><h3>Company Description</h3>' +
+      '<p class="pending-note">Not available — SEC, Finnhub and Alpha ' +
+      "Vantage carry no business description for this OTC ticker.</p></div>" +
+      '<div class="info-block"><h3>Management</h3>' +
+      '<p class="pending-note">Not available — the officers endpoint is ' +
+      "Finnhub premium; SEC and Alpha Vantage have no list for KBLB.</p></div>" +
+      '<div class="info-block"><h3>Major Shareholders</h3>' +
+      '<p class="pending-note">Not available from SEC / Finnhub / Alpha ' +
+      "Vantage for KBLB.</p></div>" +
+      '<div class="info-block"><h3>Service Providers</h3>' +
+      '<p class="pending-note">Accountant · Attorney · Transfer Agent — ' +
+      "pending manual research from filings.</p></div>";
+    box.innerHTML = html;
+  })();
+
+  /* --------------------------- analyst insight ---------------------------- */
+  (function () {
+    var box = document.getElementById("analyst-body");
+    if (!box || !D.insight) return;
+    var ins = D.insight;
+    var html = "";
+
+    if (ins.spike_analysis && ins.spike_analysis.length) {
+      html += '<div class="insight-sec"><h3>Value-Traded Spikes</h3>';
+      html += ins.spike_analysis.map(function (s) {
+        var src = (s.sources && s.sources.length)
+          ? '<div class="insight-src">Sources: ' + s.sources.map(function (u) {
+              return '<a href="' + u + '" target="_blank" rel="noopener">' +
+                "link</a>";
+            }).join(" · ") + "</div>"
+          : '<div class="insight-src mute">No filing or news source ' +
+            "available for this date.</div>";
+        return (
+          '<div class="spike"><div class="spike-date">' + s.date + "</div>" +
+          "<p>" + s.observation + "</p>" +
+          "<ul>" + (s.drivers || []).map(function (d) {
+            return "<li>" + d + "</li>";
+          }).join("") + "</ul>" + src + "</div>"
+        );
+      }).join("");
+      html += "</div>";
+    }
+
+    if (ins.financing_narrative) {
+      html += '<div class="insight-sec"><h3>Financing Activities — 2 Years' +
+        "</h3><p>" + ins.financing_narrative + "</p></div>";
+    }
+    if (ins.company_needs) {
+      html += '<div class="insight-sec"><h3>Company Needs (Financing View)' +
+        "</h3><p>" + ins.company_needs + "</p></div>";
+    }
+    if (ins.caveats) {
+      html += '<div class="insight-caveats">' + ins.caveats + "</div>";
+    }
+    html +=
+      '<div class="insight-caveats">AI analysis (DeepSeek) built from ' +
+      "finance_db facts · generated " + D.generatedAt.slice(0, 10) + ".</div>";
+    box.innerHTML = html;
+  })();
 
   /* ------------------------------- footer ------------------------------- */
   document.getElementById("footer").textContent =

@@ -55,8 +55,14 @@ QUARTERS = ("Q1", "Q2", "Q3")
 def fetch_all():
     conn = mysql.connector.connect(**DB)
     cur = conn.cursor(dictionary=True)
+    cur.execute("SHOW COLUMNS FROM companies")
+    cols = {r["Field"] for r in cur.fetchall()}
+    extra = [c for c in ("website", "phone", "logo_url", "ipo_date",
+                         "industry", "float_shares") if c in cols]
     cur.execute(
-        "SELECT cik, ticker, name, exchange FROM companies WHERE ticker = %s",
+        "SELECT cik, ticker, name, exchange"
+        + (", " + ", ".join(extra) if extra else "")
+        + " FROM companies WHERE ticker = %s",
         (TICKER,))
     company = cur.fetchone()
     if not company:
@@ -75,8 +81,18 @@ def fetch_all():
         prices = cur.fetchall()
     except mysql.connector.Error:
         pass  # price_daily not created yet — charts stay pending
+    insight = None
+    try:
+        cur.execute(
+            "SELECT payload FROM analyst_insight WHERE ticker = %s"
+            " ORDER BY id DESC LIMIT 1", (TICKER,))
+        row = cur.fetchone()
+        if row:
+            insight = json.loads(row["payload"])
+    except mysql.connector.Error:
+        pass  # analyst_insight not created yet
     conn.close()
-    return company, facts, prices
+    return company, facts, prices, insight
 
 
 def usd(facts, concept, year, period):
@@ -186,10 +202,17 @@ def price_block(prices, shares):
 
     latest = series[-1]
     price = latest["ohlcAvg"]
+    base2 = series[-3] if len(series) >= 3 else (series[-2]
+                                                 if len(series) >= 2 else None)
     market = {
         "asOf": latest["date"],
         "currentPrice": price,
         "close": latest["close"],
+        "change2d": {
+            "abs": price - base2["ohlcAvg"] if base2 else None,
+            "pct": ((price / base2["ohlcAvg"]) - 1) * 100 if base2 else None,
+            "vsDate": base2["date"] if base2 else None,
+        },
         "marketCap": price * shares if shares else None,
         "shares499": 0.0499 * shares if shares else None,
         "value499": 0.0499 * shares * price if shares else None,
@@ -199,10 +222,31 @@ def price_block(prices, shares):
             "liquidation": liquidation, "market": market}
 
 
+def eps_filed(facts, year, period):
+    """Filed diluted EPS, single-quarter derived (like other flows)."""
+    concept = "EarningsPerShareDiluted"
+
+    def val(y, p):
+        rows = [f for f in facts if f["concept"] == concept
+                and f["unit"] == "USD/shares"
+                and f["fiscal_year"] == y and f["fiscal_period"] == p]
+        return float(rows[0]["value"]) if rows else None
+
+    cur = val(year, period)
+    pp = prev_period(period)
+    if pp is None:
+        return cur
+    prev = val(year, pp)
+    if cur is None and prev is None:
+        return None
+    return (cur or 0) - (prev or 0)
+
+
 def build():
-    company, facts, prices = fetch_all()
+    company, facts, prices, insight = fetch_all()
     yr, per = latest_quarter(facts)
     ly_yr = yr - 1 if yr else None
+    shares_val = shares_outstanding(facts)
 
     flows, instants = {}, {}
     for key, concept in FLOW.items():
@@ -306,8 +350,25 @@ def build():
             },
             "burnRate": {"q": burn("q"), "ly": burn("ly")},
         },
-        "shares": {"outstanding": shares_outstanding(facts)},
-        "price": price_block(prices, shares_outstanding(facts)),
+        "shares": {"outstanding": shares_val},
+        "price": price_block(prices, shares_val),
+        "earnings": {
+            "epsFiled": {"q": eps_filed(facts, yr, per),
+                         "ly": eps_filed(facts, ly_yr, per)},
+            "epsComputed": {
+                "q": (flows["netIncome"]["q"] / shares_val)
+                     if flows["netIncome"]["q"] is not None and shares_val
+                     else None,
+                "ly": (flows["netIncome"]["ly"] / shares_val)
+                      if flows["netIncome"]["ly"] is not None and shares_val
+                      else None,
+            },
+            "epsEstimate": None,
+            "estimateNote": "No analyst EPS estimates — Finnhub returns an "
+                            "empty set and Alpha Vantage has no coverage for "
+                            "this OTC ticker",
+        },
+        "insight": insight,
         "pending": {
             "companyTexts": "description, management, major shareholders, "
                             "accountant / attorney / transfer agent",

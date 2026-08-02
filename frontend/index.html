@@ -15,6 +15,7 @@
         <h1 id="company-name">—</h1>
         <div class="header-sub" id="header-sub">—</div>
       </div>
+      <div class="header-stats" id="header-stats"><!-- filled by app.js --></div>
       <div class="header-facts" id="header-facts"><!-- filled by app.js --></div>
     </header>
 
@@ -36,13 +37,7 @@
       </div>
       <div class="card analyst-panel">
         <h2>Analyst Opinion &amp; News</h2>
-        <div class="analyst-body pending">
-          <div class="pending-title">Free-text field — pending</div>
-          <div class="pending-note">On the debtsheet this panel carries Company
-            Needs, Financing Activities and News Updates (convertible notes,
-            SEPA agreements, warrants). Researched from filings — stays in the
-            workbook until a notes feed exists.</div>
-        </div>
+        <div class="analyst-body" id="analyst-body"><!-- filled by app.js --></div>
       </div>
     </section>
 
@@ -52,25 +47,7 @@
       <!-- column 1: company information -->
       <div class="card col">
         <h2>Company Information</h2>
-        <div class="info-block">
-          <h3>Company Description</h3>
-          <p class="pending-note">Business summary — pending (10-K / profile
-            text field).</p>
-        </div>
-        <div class="info-block">
-          <h3>Management</h3>
-          <p class="pending-note">Officers &amp; titles — pending.</p>
-        </div>
-        <div class="info-block">
-          <h3>Major Shareholders</h3>
-          <p class="pending-note">Holder, institution type, holding date,
-            % held — pending.</p>
-        </div>
-        <div class="info-block">
-          <h3>Service Providers</h3>
-          <p class="pending-note">Accountant · Attorney · Transfer Agent —
-            pending.</p>
-        </div>
+        <div id="company-info"><!-- filled by app.js --></div>
       </div>
 
       <!-- column 2: fundamental analysis -->
