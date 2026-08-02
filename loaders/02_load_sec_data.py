@@ -1,23 +1,20 @@
 """
 02_load_sec_data.py
 -------------------
-Pulls real financial data from the SEC EDGAR API (free, no key) and
-loads it into the finance_db MySQL database.
+Pulls financial facts from the SEC EDGAR API into finance_db.
 
-What it does, step by step:
-  1. Downloads the SEC's ticker -> CIK mapping file
-  2. For each company in WATCHLIST, looks up its CIK and inserts it
-     into the `companies` table
-  3. For each concept we care about (revenue, net income, ...), calls
-     the SEC "companyconcept" API and inserts every data point into
-     the `financial_facts` table
-  4. INSERT IGNORE skips rows that are already in the database, so
-     re-running this script never creates duplicates.
+Universe source: companies.in_fact_universe = 1 in the database
+(seeded by 04_seed_universe.py; a future frontend can set it too).
 
-Run:  python 02_load_sec_data.py
+Rolling window: keeps only the last 6 fiscal years. On every run,
+facts older than (current year - 6) are deleted, so the window
+slides forward automatically each year.
+
+Run:  python 02_load_sec_data.py [limit]   # optional company cap
 """
 
 import json
+import sys
 import time
 from datetime import date
 from pathlib import Path
@@ -38,10 +35,6 @@ DB_CONFIG = json.loads(
     (Path(__file__).parent / "db_config.json").read_text()
 )
 
-# The companies we'll load. Add more tickers here any time,
-# then just re-run the script.
-WATCHLIST = ["AAPL", "MSFT", "NVDA", "GOOG"]
-
 # The XBRL concepts we pull. The keys must match the
 # concepts_dictionary rows we inserted in 01_create_schema.sql.
 CONCEPTS = [
@@ -58,18 +51,6 @@ CONCEPTS = [
     "NetCashProvidedByUsedInOperatingActivities",
     "PaymentsToAcquirePropertyPlantAndEquipment",
 ]
-
-# ---------------------------------------------------------------------
-# Step 1: ticker -> CIK mapping
-# ---------------------------------------------------------------------
-def get_ticker_map():
-    """Return {ticker: (cik, company_name)} from the SEC's JSON file."""
-    url = "https://www.sec.gov/files/company_tickers.json"
-    data = requests.get(url, headers=HEADERS, timeout=30).json()
-    out = {}
-    for entry in data.values():
-        out[entry["ticker"].upper()] = (entry["cik_str"], entry["title"])
-    return out
 
 
 # ---------------------------------------------------------------------
@@ -147,30 +128,49 @@ def get_concept_facts(cik, concept):
 # Step 3: load everything into MySQL
 # ---------------------------------------------------------------------
 def main():
+    limit, offset = None, 0
+    if len(sys.argv) > 1:
+        limit = int(sys.argv[1])  # e.g. "python 02_load_sec_data.py 40"
+    if len(sys.argv) > 2:
+        offset = int(sys.argv[2])  # skip the first N companies
+
     conn = mysql.connector.connect(**DB_CONFIG)
     cur = conn.cursor()
 
-    ticker_map = get_ticker_map()
+    # Rolling 6-year window, enforced on EVERY run: when the calendar
+    # year ticks over, facts older than (current_year - 6) are deleted
+    # automatically. No manual maintenance needed.
+    min_year = date.today().year - 6
+    cur.execute("DELETE FROM financial_facts WHERE fiscal_year < %s",
+                (min_year,))
+    if cur.rowcount:
+        print(f"Rolling window: removed {cur.rowcount} facts "
+              f"older than FY{min_year}")
+        conn.commit()
 
-    for ticker in WATCHLIST:
-        if ticker not in ticker_map:
-            print(f"!! {ticker} not found in SEC mapping, skipping")
-            continue
-        cik, name = ticker_map[ticker]
+    # The universe lives in the DATABASE, not in this file:
+    # companies.in_fact_universe = 1 is set by 04_seed_universe.py
+    # (or by any future frontend "add company" action).
+    cur.execute(
+        "SELECT cik, ticker, name FROM companies "
+        "WHERE in_fact_universe = 1 ORDER BY sector, ticker"
+    )
+    universe = cur.fetchall()
+    if offset:
+        universe = universe[offset:]
+    if limit:
+        universe = universe[:limit]
+    print(f"Universe: {len(universe)} companies, window FY{min_year}+")
+
+    for cik, ticker, name in universe:
         print(f"\n== {ticker} ({name}) — CIK {cik}")
-
-        # INSERT IGNORE: if this CIK already exists, do nothing.
-        cur.execute(
-            "INSERT IGNORE INTO companies (cik, ticker, name) "
-            "VALUES (%s, %s, %s)",
-            (cik, ticker, name),
-        )
-
         total = 0
         for concept in CONCEPTS:
             facts = get_concept_facts(cik, concept)
             inserted = 0
             for f in facts:
+                if f["fiscal_year"] < min_year:
+                    continue  # outside the rolling window
                 cur.execute(
                     """
                     INSERT IGNORE INTO financial_facts
@@ -189,8 +189,17 @@ def main():
             print(f"   {concept:<55} +{inserted} rows")
             time.sleep(0.15)  # stay under SEC's 10 req/sec limit
 
+        # Mark whether this company actually yields facts, so the
+        # directory/frontend can hide empty shells (ETFs, SPACs...).
+        cur.execute(
+            "SELECT COUNT(*) FROM financial_facts WHERE cik = %s", (cik,))
+        has = 1 if cur.fetchone()[0] > 0 else 0
+        cur.execute("UPDATE companies SET has_facts = %s WHERE cik = %s",
+                    (has, cik))
+
         conn.commit()
-        print(f"   -> {total} new facts loaded for {ticker}")
+        print(f"   -> {total} new facts loaded for {ticker} "
+              f"(has_facts={has})")
 
     cur.close()
     conn.close()
