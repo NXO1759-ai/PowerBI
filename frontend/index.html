@@ -3,41 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Company Overview — KBLB</title>
+  <title>Company Overview — Research Terminal</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+
+  <!-- ============================== top bar ============================== -->
+  <nav class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-mark">RT</span>
+        <span>Research Terminal<br /><small>Corporate Finance</small></span>
+      </div>
+      <div class="nav-tabs">
+        <a class="nav-tab active" href="index.html">Company Overview</a>
+        <span class="nav-tab soon">Financial Statement Analysis <span class="soon-pill">Soon</span></span>
+        <span class="nav-tab soon">Private Credit Report <span class="soon-pill">Soon</span></span>
+        <span class="nav-tab soon">Strategy Analysis <span class="soon-pill">Soon</span></span>
+      </div>
+      <div class="search-box">
+        <input type="search" id="company-search"
+               placeholder="Search ticker, CIK, name…"
+               autocomplete="off" />
+        <button type="button" class="search-btn" id="search-btn"
+                title="Search companies">Search</button>
+        <div class="search-results" id="search-results"></div>
+      </div>
+      <div class="topbar-right" id="topbar-asof"></div>
+    </div>
+  </nav>
+
   <div class="page">
 
-    <!-- ============================ header strip ============================ -->
+    <!-- ========================== company header ========================== -->
     <header class="card header">
       <div class="header-left">
         <h1 id="company-name">—</h1>
         <div class="header-sub" id="header-sub">—</div>
-        <div class="search-box">
-          <input type="search" id="company-search"
-                 placeholder="Search ticker, CIK, or company name…"
-                 autocomplete="off" />
-          <button type="button" class="search-btn" id="search-btn"
-                  title="Search companies">Search</button>
-          <div class="search-results" id="search-results"></div>
-        </div>
       </div>
       <div class="header-stats" id="header-stats"><!-- filled by app.js --></div>
       <div class="header-facts" id="header-facts"><!-- filled by app.js --></div>
     </header>
 
-    <!-- ============================ charts row ============================== -->
+    <!-- ============================= charts row ============================ -->
     <section class="charts-row">
       <div class="charts-col">
         <div class="card chart-panel">
-          <h2>30 Day History</h2>
+          <div class="chart-head chart-rule">
+            <h2>Price &amp; Value Traded — 30 Trading Days</h2>
+            <span class="chart-note">OHLC average vs daily value traded</span>
+          </div>
           <div class="chart-body" id="chart-30d-wrap">
             <canvas id="chart-30d"></canvas>
           </div>
         </div>
         <div class="card chart-panel">
-          <h2>6 Month History</h2>
+          <div class="chart-head chart-rule">
+            <h2>Price &amp; Value Traded — 6 Months</h2>
+            <span class="chart-note">OHLC average vs daily value traded</span>
+          </div>
           <div class="chart-body" id="chart-6m-wrap">
             <canvas id="chart-6m"></canvas>
           </div>
@@ -49,7 +73,7 @@
       </div>
     </section>
 
-    <!-- ========================== three columns ============================= -->
+    <!-- ============================ three columns ========================== -->
     <section class="columns">
 
       <!-- column 1: company information -->
@@ -77,6 +101,11 @@
           <thead></thead><tbody></tbody>
         </table>
 
+        <h3 class="table-title">Key Ratios <span class="hint">(derived)</span></h3>
+        <table class="grid" id="tbl-ratios">
+          <thead></thead><tbody></tbody>
+        </table>
+
         <h3 class="table-title">Income Statement</h3>
         <table class="grid" id="tbl-is">
           <thead></thead><tbody></tbody>
@@ -91,7 +120,7 @@
       <!-- column 3: volume & shares -->
       <div class="col-stack">
         <div class="card col">
-          <h2>Volume Statistics</h2>
+          <h2>Volume &amp; Liquidity</h2>
           <h3 class="table-title">Volume Stats</h3>
           <table class="grid" id="tbl-vol">
             <thead></thead><tbody></tbody>

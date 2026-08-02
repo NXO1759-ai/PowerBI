@@ -20,9 +20,27 @@
     return nf0.format(Math.round(v));
   }
 
+  /* compact $ display for large magnitudes: $2.9M / $942.7k / $397 */
+  function compactMoney(v) {
+    if (v === null || v === undefined) return null;
+    var neg = v < 0;
+    var a = Math.abs(v);
+    var s;
+    if (a >= 1e9) s = "$" + (a / 1e9).toFixed(2) + "B";
+    else if (a >= 1e6) s = "$" + (a / 1e6).toFixed(2) + "M";
+    else if (a >= 1e4) s = "$" + (a / 1e3).toFixed(1) + "k";
+    else s = "$" + nf0.format(Math.round(a));
+    return neg ? "-" + s : s;
+  }
+
   function pct(v) {
     if (v === null || v === undefined) return null;
     return (v * 100).toFixed(1) + "%";
+  }
+
+  function ratio(v) {
+    if (v === null || v === undefined || !isFinite(v)) return null;
+    return v.toFixed(2) + "x";
   }
 
   function plain(v) {
@@ -32,17 +50,26 @@
   }
 
   function cell(v, fmt) {
-    var s = fmt === "pct" ? pct(v) : fmt === "plain" ? plain(v)
+    var s = fmt === "pct" ? pct(v)
+      : fmt === "plain" ? plain(v)
+      : fmt === "ratio" ? ratio(v)
       : fmt === "price" ? (v == null ? null : "$" + v.toFixed(4))
-      : money(v);
-    if (s === null) return '<td class="num mute">—</td>';
-    var neg = typeof v === "number" && v < 0 ? " neg" : "";
-    return '<td class="num' + neg + '">' + s + "</td>";
+      : fmt === "money" ? money(v)
+      : compactMoney(v);
+    if (s === null || s === "NaN%" || s.indexOf("NaN") !== -1) {
+      return '<td class="num mute">—</td>';
+    }
+    var cls = typeof v === "number" ? (v < 0 ? " neg" : "") : "";
+    var title = (fmt === "money" || fmt === undefined) && typeof v === "number"
+      ? ' title="' + (v < 0 ? "-" : "") + "$" + nf0.format(Math.round(Math.abs(v))) + '"'
+      : "";
+    return '<td class="num' + cls + '"' + title + ">" + s + "</td>";
   }
 
   function pctChange(q, c) {
     if (typeof q !== "number" || typeof c !== "number" || c === 0) return null;
     var v = ((q - c) / Math.abs(c)) * 100;
+    if (!isFinite(v)) return null;
     return (v >= 0 ? "+" : "") + v.toFixed(1) + "%";
   }
 
@@ -67,12 +94,12 @@
                 r[2] !== 0) {
               pv = ((r[1] / r[2]) * 100).toFixed(1) + "%";
             }
-          } else if (r[3] !== "pct") {
+          } else if (r[3] !== "pct" && r[3] !== "ratio") {
             pv = pctChange(r[1], r[2]);
           }
           pc = pv === null
             ? '<td class="num mute">—</td>'
-            : '<td class="num' + (pv.charAt(0) === "-" ? " neg" : "") +
+            : '<td class="num' + (pv.charAt(0) === "-" ? " neg" : " pos") +
               '">' + pv + "</td>";
         }
         return (
@@ -83,10 +110,25 @@
       .join("");
   }
 
+  /* ------------------------------- top bar ------------------------------ */
+  (function () {
+    var el = document.getElementById("topbar-asof");
+    if (!el) return;
+    var filing = D.latestFiling
+      ? D.latestFiling.form + " filed " + D.latestFiling.date
+      : null;
+    el.innerHTML =
+      (filing ? "Latest filing: <strong>" + filing + "</strong> · " : "") +
+      "Data as of <strong>" + D.generatedAt.slice(0, 10) + "</strong>";
+  })();
+
   /* ------------------------------- header ------------------------------- */
-  document.getElementById("company-name").textContent = D.company.name;
+  document.getElementById("company-name").innerHTML =
+    D.company.name +
+    ' <span class="ticker-chip">' + D.company.ticker +
+    " · " + (D.company.exchange || "—") + "</span>";
   document.getElementById("header-sub").textContent =
-    "Company Overview · debtsheet-style";
+    "Company Overview · Fundamentals from SEC EDGAR 10-K/10-Q filings";
 
   var filing = D.latestFiling
     ? D.latestFiling.form + " · " + D.latestFiling.date
@@ -98,10 +140,6 @@
   function usd4(v) {
     if (v === null || v === undefined) return "—";
     return (v < 0 ? "-$" : "$") + Math.abs(v).toFixed(4);
-  }
-  function signedUsd4(v) {
-    if (v === null || v === undefined) return "—";
-    return (v < 0 ? "-$" : "+$") + Math.abs(v).toFixed(4);
   }
 
   var facts = [
@@ -139,29 +177,32 @@
 
   var stats = [];
   if (mkt) {
-    stats.push(stat("Market Price", usd4(mkt.currentPrice), "",
-      "OHLC avg · " + mkt.asOf));
+    var priceHtml = usd4(mkt.currentPrice);
     if (mkt.change2d) {
       var ch = mkt.change2d;
-      stats.push(stat("2-Day Change", signedUsd4(ch.abs),
-        ch.abs >= 0 ? "stat-up" : "stat-down",
-        (ch.abs >= 0 ? "+" : "-") + Math.abs(ch.pct).toFixed(2) +
-        "% vs " + ch.vsDate));
+      var up = ch.abs >= 0;
+      priceHtml +=
+        '<span class="delta-chip ' + (up ? "up" : "down") + '">' +
+        (up ? "+" : "-") + Math.abs(ch.pct).toFixed(2) + "%</span>";
     }
+    stats.push(stat("Market Price", priceHtml, "", "OHLC avg · " + mkt.asOf));
+    stats.push(stat("Market Cap",
+      mkt.marketCap != null ? compactMoney(mkt.marketCap) : "—", "",
+      "price × shares outstanding"));
   } else {
     stats.push(stat("Market Price", "Pending", "mute", "no price data"));
   }
   if (earn) {
     var ef = earn.epsFiled;
-    stats.push(stat("EPS — last filing",
+    stats.push(stat("EPS — Last Filing",
       ef && ef.q !== null ? (ef.q < 0 ? "-$" : "$") + Math.abs(ef.q).toFixed(2) : "—",
-      "", D.period.label + " · as reported"));
+      ef && ef.q < 0 ? "stat-down" : "", D.period.label + " · as reported"));
     var ec = earn.epsComputed;
-    stats.push(stat("EPS — computed",
+    stats.push(stat("EPS — Computed",
       ec ? usd4(ec.q) : "—", ec && ec.q < 0 ? "stat-down" : "",
-      "net income ÷ shares out."));
-    stats.push(stat("EPS vs Analyst Est.", "No coverage", "mute",
-      "no estimates for KBLB"));
+      "net income ÷ shares outstanding"));
+    stats.push(stat("Analyst Coverage", "None", "mute",
+      "no published estimates"));
   }
 
   document.getElementById("header-stats").innerHTML = stats.join("");
@@ -171,6 +212,11 @@
   var is = D.fundamentals.incomeStatement;
   var cf = D.fundamentals.cashFlow;
   var burn = D.fundamentals.burnRate;
+
+  function safeDiv(a, b) {
+    if (typeof a !== "number" || typeof b !== "number" || b === 0) return null;
+    return a / b;
+  }
 
   function renderFundamentals() {
     fillTable("tbl-burn", [
@@ -190,6 +236,23 @@
       ["Total Liabilities", bs.totalLiabilities.q, bs.totalLiabilities.ly],
       ["Stockholders Equity", bs.equity.q, bs.equity.ly],
     ]);
+
+    /* derived ratios — computed in-browser from balance sheet values above */
+    fillTable("tbl-ratios", [
+      ["Current Ratio",
+       safeDiv(bs.currentAssets.q, bs.currentLiabilities.q),
+       safeDiv(bs.currentAssets.ly, bs.currentLiabilities.ly), "ratio"],
+      ["Cash / Current Liabilities",
+       safeDiv(bs.cash.q, bs.currentLiabilities.q),
+       safeDiv(bs.cash.ly, bs.currentLiabilities.ly), "pct"],
+      ["Liabilities / Total Assets",
+       safeDiv(bs.totalLiabilities.q, bs.totalAssets.q),
+       safeDiv(bs.totalLiabilities.ly, bs.totalAssets.ly), "pct"],
+      ["Debt-to-Equity",
+       bs.equity.q > 0 ? safeDiv(bs.totalLiabilities.q, bs.equity.q) : null,
+       bs.equity.ly > 0 ? safeDiv(bs.totalLiabilities.ly, bs.equity.ly) : null,
+       "ratio"],
+    ], [D.period.label, D.period.compareLabel], false);
 
     fillTable("tbl-is", [
       ["Revenue", is.revenue.q, is.revenue.fy],
@@ -235,11 +298,11 @@
     document.getElementById("tbl-vol").querySelector("thead").innerHTML =
       "<tr><th></th><th>Shares</th></tr>";
     document.getElementById("tbl-vol").querySelector("tbody").innerHTML = [
-      ["AVG per day — latest 30 trading days", vs.avg30],
-      ["AVG per day — latest 60 trading days", vs.avg60],
-      ["AVG per day — latest 90 trading days", vs.avg90],
-      ["Minimum volume — latest 30 trading days", vs.min30],
-      ["Maximum volume — latest 30 trading days", vs.max30],
+      ["Avg per day — last 30 trading days", vs.avg30],
+      ["Avg per day — last 60 trading days", vs.avg60],
+      ["Avg per day — last 90 trading days", vs.avg90],
+      ["Min volume — last 30 trading days", vs.min30],
+      ["Max volume — last 30 trading days", vs.max30],
     ]
       .map(function (r) {
         return "<tr><td>" + r[0] + "</td>" + cell(r[1], "money") + "</tr>";
@@ -249,11 +312,11 @@
     document.getElementById("tbl-val").querySelector("thead").innerHTML =
       "<tr><th></th><th>US$</th></tr>";
     document.getElementById("tbl-val").querySelector("tbody").innerHTML = [
-      ["AVG per day — latest 30 trading days", vl.avg30, "money"],
-      ["AVG per day — latest 60 trading days", vl.avg60, "money"],
-      ["AVG per day — latest 90 trading days", vl.avg90, "money"],
-      ["Minimum value — latest 30 trading days", vl.min30, "money"],
-      ["Maximum value — latest 30 trading days", vl.max30, "money"],
+      ["Avg per day — last 30 trading days", vl.avg30],
+      ["Avg per day — last 60 trading days", vl.avg60],
+      ["Avg per day — last 90 trading days", vl.avg90],
+      ["Min value — last 30 trading days", vl.min30],
+      ["Max value — last 30 trading days", vl.max30],
       ["Days traded under $5,000 — last 30 days", vl.daysUnder5k30, "plain"],
     ]
       .map(function (r) {
@@ -301,6 +364,7 @@
   function buildChart(canvasId, rows) {
     var ctx = document.getElementById(canvasId);
     if (!ctx || !window.Chart) return;
+    var priceColor = "#175cd3";
     new Chart(ctx, {
       data: {
         labels: rows.map(function (r) { return fmtDate(r.date); }),
@@ -309,9 +373,10 @@
             type: "bar",
             label: "Value Traded (US$)",
             data: rows.map(function (r) { return r.valueTraded; }),
-            backgroundColor: "rgba(220, 38, 38, 0.55)",
-            borderColor: "rgba(220, 38, 38, 0.9)",
+            backgroundColor: "rgba(102, 112, 133, 0.28)",
+            borderColor: "rgba(102, 112, 133, 0.45)",
             borderWidth: 1,
+            borderRadius: 2,
             yAxisID: "y1",
             order: 2,
           },
@@ -319,11 +384,13 @@
             type: "line",
             label: "OHLC Average",
             data: rows.map(function (r) { return r.ohlcAvg; }),
-            borderColor: "rgba(29, 78, 216, 0.95)",
-            backgroundColor: "rgba(29, 78, 216, 0.95)",
-            borderWidth: 1.5,
+            borderColor: priceColor,
+            backgroundColor: "rgba(23, 92, 211, 0.08)",
+            fill: true,
+            borderWidth: 2,
             pointRadius: 0,
-            tension: 0.25,
+            pointHoverRadius: 4,
+            tension: 0.3,
             yAxisID: "y",
             order: 1,
           },
@@ -334,8 +401,17 @@
         maintainAspectRatio: false,
         interaction: { mode: "index", intersect: false },
         plugins: {
-          legend: { position: "bottom", labels: { boxWidth: 12, font: { size: 10 } } },
+          legend: {
+            position: "bottom",
+            labels: { boxWidth: 10, boxHeight: 10, usePointStyle: true,
+                      font: { size: 10 }, color: "#667085" },
+          },
           tooltip: {
+            backgroundColor: "#0b1526",
+            titleFont: { size: 11 },
+            bodyFont: { size: 11 },
+            padding: 10,
+            cornerRadius: 8,
             callbacks: {
               label: function (item) {
                 return item.dataset.label + ": " +
@@ -347,16 +423,24 @@
           },
         },
         scales: {
-          x: { ticks: { maxTicksLimit: 10, font: { size: 9 } }, grid: { display: false } },
+          x: {
+            ticks: { maxTicksLimit: 10, font: { size: 9 }, color: "#98a2b3" },
+            grid: { display: false },
+          },
           y: {
             position: "left",
-            title: { display: true, text: "Price (US$)", font: { size: 9 } },
-            ticks: { callback: function (v) { return "$" + v.toFixed(3); }, font: { size: 9 } },
+            title: { display: true, text: "Price (US$)",
+                     font: { size: 9 }, color: "#98a2b3" },
+            ticks: { callback: function (v) { return "$" + v.toFixed(3); },
+                     font: { size: 9 }, color: "#98a2b3" },
+            grid: { color: "#eef0f3" },
           },
           y1: {
             position: "right",
-            title: { display: true, text: "Value Traded", font: { size: 9 } },
-            ticks: { callback: compactUsd, font: { size: 9 } },
+            title: { display: true, text: "Value Traded",
+                     font: { size: 9 }, color: "#98a2b3" },
+            ticks: { callback: compactUsd, font: { size: 9 },
+                     color: "#98a2b3" },
             grid: { drawOnChartArea: false },
           },
         },
@@ -369,7 +453,7 @@
     buildChart("chart-6m", D.price.series);
   }
 
-  /* ------------------------- company information -------------------------- */
+  /* ------------------------- company information ------------------------ */
   (function () {
     var box = document.getElementById("company-info");
     if (!box) return;
@@ -408,7 +492,7 @@
     box.innerHTML = html;
   })();
 
-  /* --------------------------- analyst insight ---------------------------- */
+  /* --------------------------- analyst insight -------------------------- */
   (function () {
     var box = document.getElementById("analyst-body");
     if (!box || !D.insight) return;
@@ -518,8 +602,8 @@
       html += '<div class="insight-caveats">' + ins.caveats + "</div>";
     }
     html +=
-      '<div class="insight-caveats">AI analysis (DeepSeek) built from ' +
-      "finance_db facts, SEC filing text and Marketaux news · generated " +
+      '<div class="insight-caveats">Analysis compiled from finance_db ' +
+      "fundamentals, SEC filing text and Marketaux news · generated " +
       D.generatedAt.slice(0, 10) + ".</div>";
     box.innerHTML = html;
   })();
