@@ -404,10 +404,7 @@
       "Finnhub premium; SEC and Alpha Vantage have no list for KBLB.</p></div>" +
       '<div class="info-block"><h3>Major Shareholders</h3>' +
       '<p class="pending-note">Not available from SEC / Finnhub / Alpha ' +
-      "Vantage for KBLB.</p></div>" +
-      '<div class="info-block"><h3>Service Providers</h3>' +
-      '<p class="pending-note">Accountant · Attorney · Transfer Agent — ' +
-      "pending manual research from filings.</p></div>";
+      "Vantage for KBLB.</p></div>";
     box.innerHTML = html;
   })();
 
@@ -476,43 +473,45 @@
         }).join("") + "</div>";
     }
 
-    /* 3 — News (value-traded spikes + Marketaux headlines) */
+    /* 3 — News (only headlines connected to value-traded spikes) */
     var spikes = ins.spike_analysis || [];
     var news = ins.news || [];
-    if (spikes.length || news.length) {
-      html += '<div class="insight-sec"><h3>News</h3>';
-      if (spikes.length) {
-        html += '<div class="news-sub">Value-Traded Spikes</div>' +
-          spikes.map(function (s) {
-            var links = (s.sources || []).map(srcLink)
-              .filter(function (x) { return !!x; });
-            var src = links.length
-              ? '<div class="insight-src">Sources: ' + links.join(" · ") +
-                "</div>"
-              : '<div class="insight-src mute">No filing or news source ' +
-                "available for this date.</div>";
-            return (
-              '<div class="spike"><div class="spike-date">' + s.date +
-              "</div><p>" + s.observation + "</p><ul>" +
-              (s.drivers || []).map(function (d) {
-                return "<li>" + d + "</li>";
-              }).join("") + "</ul>" + src + "</div>"
-            );
-          }).join("");
-      }
-      if (news.length) {
-        html += '<div class="news-sub">Headlines · Marketaux</div>' +
-          news.map(function (n) {
-            return (
-              '<div class="news-item"><div class="news-date">' +
-              String(n.date || "").slice(0, 10) + " · " + (n.source || "") +
-              '</div><a href="' + n.url + '" target="_blank" rel="noopener">' +
-              n.title + "</a>" +
-              (n.relevance ? "<p>" + n.relevance + "</p>" : "") + "</div>"
-            );
-          }).join("");
-      }
-      html += "</div>";
+    var byUrl = {};
+    news.forEach(function (n) { if (n.url) byUrl[n.url] = n; });
+    var connected = {};
+    spikes.forEach(function (s) {
+      (s.sources || []).forEach(function (src) {
+        if (src && src.url && src.title) {
+          if (!connected[src.url]) {
+            connected[src.url] = byUrl[src.url] || src;
+            connected[src.url]._spikes = [];
+          }
+          connected[src.url]._spikes.push(s.date);
+        }
+      });
+    });
+    var items = Object.keys(connected).map(function (u) { return connected[u]; });
+    items.sort(function (a, b) {
+      return String(b.date || "").localeCompare(String(a.date || ""));
+    });
+    if (items.length) {
+      html += '<div class="insight-sec"><h3>News</h3>' +
+        '<div class="news-sub">Headlines linked to value-traded spikes · ' +
+        "Marketaux</div>" +
+        items.map(function (n) {
+          return (
+            '<div class="news-item"><div class="news-date">' +
+            String(n.date || "").slice(0, 10) + " · " + (n.source || "") +
+            " · spike " + (n._spikes || []).join(", ") + "</div>" +
+            '<a href="' + n.url + '" target="_blank" rel="noopener">' +
+            n.title + "</a>" +
+            (n.relevance ? "<p>" + n.relevance + "</p>" : "") + "</div>"
+          );
+        }).join("") + "</div>";
+    } else {
+      html += '<div class="insight-sec"><h3>News</h3>' +
+        '<p class="pending-note">No headlines correlate with recent ' +
+        "value-traded spikes.</p></div>";
     }
 
     if (ins.caveats) {
