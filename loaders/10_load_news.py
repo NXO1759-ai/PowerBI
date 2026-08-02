@@ -5,6 +5,7 @@ financing/uplisting items not tagged with the ticker). Deduped by URL.
 Safe to re-run: rows are upserted on url.
 """
 import json
+from datetime import date, timedelta
 from pathlib import Path
 
 import mysql.connector
@@ -46,10 +47,18 @@ def main():
     cur = conn.cursor()
     cur.execute(DDL)
 
+    # always pull the last 6 months of company-name news so spikes in the
+    # price window can be matched to headlines
+    window_start = (date.today() - timedelta(days=183)).isoformat()
+
     batches = [
         ("symbol", fetch({"symbols": TICKER, "filter_entities": "true"})),
         ("search", fetch({"search": NAME})),
     ]
+    if window_start:
+        # windowed pull so spikes inside the price history can be matched
+        batches.append(("search", fetch({
+            "search": NAME, "published_after": window_start})))
     ins = 0
     for qtype, articles in batches:
         for a in articles:

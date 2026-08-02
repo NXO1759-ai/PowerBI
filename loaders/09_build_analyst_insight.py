@@ -115,11 +115,26 @@ def gather(cur, ticker):
     cur.execute(
         "SELECT published_at, title, source, url, snippet"
         " FROM news_articles WHERE ticker=%s ORDER BY published_at DESC"
-        " LIMIT 20", (ticker,))
+        " LIMIT 30", (ticker,))
     news = [{
         "date": p.isoformat(), "title": t, "source": s, "url": u,
         "snippet": (sn or "")[:400],
     } for p, t, s, u, sn in cur.fetchall()]
+
+    # attach news published within +/- 7 days of each spike so the model
+    # can connect headlines to value-traded spikes explicitly
+    def nearby(spike_date):
+        sd = date.fromisoformat(spike_date)
+        out = []
+        for n in news:
+            nd = date.fromisoformat(n["date"][:10])
+            if abs((nd - sd).days) <= 7:
+                out.append({k: n[k] for k in ("date", "title", "source",
+                                              "url")})
+        return out
+
+    for s in spike_out:
+        s["newsWithin7Days"] = nearby(s["date"])
 
     return {
         "company": {"ticker": ticker, "name": name, "cik": cik},
@@ -274,8 +289,12 @@ def build_prompt(evidence):
         "is one sentence of your own. Exclude duplicates.\n"
         "   spike_analysis: array of items {date, observation, drivers, "
         "sources} — one per topValueTradedDays entry; drivers is an array "
-        "of strings; sources cites any filing or news within 3 days, else "
-        "empty.\n"
+        "of strings that EXPLICITLY connect the spike to that entry's "
+        "newsWithin7Days headlines (or to a filing) when present; sources "
+        "MUST cite every newsWithin7Days item for that spike plus any "
+        "filing within 3 days; only when newsWithin7Days is empty and no "
+        "filing is near should sources be empty and the driver state no "
+        "correlated headline was found.\n"
         "   caveats: string listing what could NOT be sourced.\n"
         "4. Numbers in USD; round to whole dollars; percentages to 1 dp.\n"
         "5. Keep each company_needs field to 2-4 sentences; each "

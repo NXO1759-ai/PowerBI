@@ -46,7 +46,7 @@
     return (v >= 0 ? "+" : "") + v.toFixed(1) + "%";
   }
 
-  function fillTable(id, rows, labels) {
+  function fillTable(id, rows, labels, ratioMode) {
     var tbl = document.getElementById(id);
     var qLab = (labels && labels[0]) || D.period.label || "Last Qtr";
     var cLab = (labels && labels[1]) || D.period.compareLabel || "Same Qtr LY";
@@ -54,12 +54,22 @@
     var pctOn = !!(tgl && tgl.checked);
     tbl.querySelector("thead").innerHTML =
       "<tr><th></th><th>" + qLab + "</th><th>" + cLab + "</th>" +
-      (pctOn ? "<th>Δ %</th>" : "") + "</tr>";
+      (pctOn ? (ratioMode ? "<th>% of FY</th>" : "<th>Δ %</th>") : "") +
+      "</tr>";
     tbl.querySelector("tbody").innerHTML = rows
       .map(function (r) {
         var pc = "";
         if (pctOn) {
-          var pv = r[3] === "pct" ? null : pctChange(r[1], r[2]);
+          var pv = null;
+          if (ratioMode) {
+            // income statement: (3 months ended / last year annual) * 100
+            if (typeof r[1] === "number" && typeof r[2] === "number" &&
+                r[2] !== 0) {
+              pv = ((r[1] / r[2]) * 100).toFixed(1) + "%";
+            }
+          } else if (r[3] !== "pct") {
+            pv = pctChange(r[1], r[2]);
+          }
           pc = pv === null
             ? '<td class="num mute">—</td>'
             : '<td class="num' + (pv.charAt(0) === "-" ? " neg" : "") +
@@ -187,7 +197,7 @@
       ["Gross Profit", is.grossProfit.q, is.grossProfit.fy],
       ["Gross Margin %", is.grossMarginPct.q, is.grossMarginPct.fy, "pct"],
       ["Net Income (Loss)", is.netIncome.q, is.netIncome.fy],
-    ], [D.period.isLabel, D.period.isCompareLabel]);
+    ], [D.period.isLabel, D.period.isCompareLabel], true);
 
     fillTable("tbl-cf", [
       ["CF from Ops", cf.cfOps.q, cf.cfOps.ly],
@@ -513,6 +523,99 @@
       "finance_db facts, SEC filing text and Marketaux news · generated " +
       D.generatedAt.slice(0, 10) + ".</div>";
     box.innerHTML = html;
+  })();
+
+  /* ------------------------------ search -------------------------------- */
+  (function () {
+    var input = document.getElementById("company-search");
+    var results = document.getElementById("search-results");
+    if (!input || !results) return;
+    var index = null;
+    var loading = false;
+
+    function esc(s) {
+      return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    function ensureIndex(cb) {
+      if (index) return cb();
+      if (loading) return;
+      loading = true;
+      var s = document.createElement("script");
+      s.src = "data/company-index.js";
+      s.onload = function () {
+        index = window.COMPANY_INDEX || [];
+        cb();
+      };
+      s.onerror = function () {
+        results.innerHTML =
+          '<div class="search-empty">Company index unavailable</div>';
+        results.classList.add("open");
+      };
+      document.body.appendChild(s);
+    }
+
+    function render(q) {
+      q = q.trim().toLowerCase();
+      if (!q) {
+        results.innerHTML = "";
+        results.classList.remove("open");
+        return;
+      }
+      var matches = [];
+      for (var i = 0; i < index.length && matches.length < 12; i++) {
+        var t = index[i][0];
+        var c = String(index[i][1]);
+        var n = index[i][2];
+        if (t.toLowerCase().indexOf(q) === 0 ||
+            n.toLowerCase().indexOf(q) !== -1 ||
+            c.indexOf(q) === 0) {
+          matches.push(index[i]);
+        }
+      }
+      results.innerHTML = matches.length
+        ? matches.map(function (m) {
+            var avail = m[0] === D.company.ticker;
+            return (
+              '<div class="search-item' + (avail ? "" : " dim") +
+              '" data-ticker="' + esc(m[0]) + '">' +
+              '<span class="si-ticker">' + esc(m[0]) + "</span>" +
+              '<span class="si-name">' + esc(m[2]) + "</span>" +
+              '<span class="si-cik">CIK ' + esc(m[1]) + "</span>" +
+              (avail ? '<span class="si-tag loaded">loaded</span>'
+                     : '<span class="si-tag">no data yet</span>') +
+              "</div>"
+            );
+          }).join("")
+        : '<div class="search-empty">No matches</div>';
+      results.classList.add("open");
+    }
+
+    function go() {
+      ensureIndex(function () { render(input.value); });
+    }
+
+    input.addEventListener("focus", go);
+    input.addEventListener("input", go);
+    var btn = document.getElementById("search-btn");
+    if (btn) {
+      btn.addEventListener("click", function () {
+        input.focus();
+        go();
+      });
+    }
+    results.addEventListener("click", function (e) {
+      var item = e.target.closest(".search-item");
+      if (!item) return;
+      if (item.getAttribute("data-ticker") === D.company.ticker) {
+        results.classList.remove("open");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    });
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest(".search-box")) results.classList.remove("open");
+    });
   })();
 
   /* ------------------------------- footer ------------------------------- */
