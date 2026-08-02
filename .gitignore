@@ -3,3 +3,4 @@ loaders/db_config.json
 **/.pbi/localSettings.json
 **/.pbi/cache.abf
 __pycache__/
+loaders/filing_cache/

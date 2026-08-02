@@ -1,0 +1,10 @@
+{
+  "name": "company-overview-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Debtsheet-style company overview dashboard (KBLB layout), fed by finance_db",
+  "scripts": {
+    "dev": "node dev-server.js",
+    "export:data": "python export_dashboard_data.py"
+  }
+}
