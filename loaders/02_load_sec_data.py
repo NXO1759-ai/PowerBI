@@ -31,10 +31,9 @@ HEADERS = {"User-Agent": "SQL Learning Project contact@example.com"}
 
 # Database credentials live OUTSIDE this file in db_config.json,
 # which is listed in .gitignore so secrets never reach GitHub.
-_CFG = json.loads(
+DB_CONFIG = json.loads(
     (Path(__file__).parent / "db_config.json").read_text()
 )
-DB_CONFIG = {k: _CFG[k] for k in ("host", "port", "user", "password", "database")}
 
 # The XBRL concepts we pull. The keys must match the
 # concepts_dictionary rows we inserted in 01_create_schema.sql.
@@ -46,16 +45,10 @@ CONCEPTS = [
     "NetIncomeLoss",
     "EarningsPerShareDiluted",
     "Assets",
-    "AssetsCurrent",
     "Liabilities",
-    "LiabilitiesCurrent",
     "StockholdersEquity",
-    "RetainedEarningsAccumulatedDeficit",
     "CashAndCashEquivalentsAtCarryingValue",
-    "CommonStockSharesOutstanding",
     "NetCashProvidedByUsedInOperatingActivities",
-    "NetCashProvidedByUsedInInvestingActivities",
-    "NetCashProvidedByUsedInFinancingActivities",
     "PaymentsToAcquirePropertyPlantAndEquipment",
 ]
 
