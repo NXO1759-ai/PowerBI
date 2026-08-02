@@ -20,9 +20,10 @@ import mysql.connector
 from sic_sectors import sector_for_sic
 
 HEADERS = {"User-Agent": "SQL Learning Project contact@example.com"}
-DB_CONFIG = json.loads(
+_CFG = json.loads(
     (Path(__file__).parent / "db_config.json").read_text()
 )
+DB_CONFIG = {k: _CFG[k] for k in ("host", "port", "user", "password", "database")}
 
 UNIVERSE = {
     "Technology": ["AAPL","MSFT","NVDA","AVGO","ORCL","CRM","AMD","ADBE",

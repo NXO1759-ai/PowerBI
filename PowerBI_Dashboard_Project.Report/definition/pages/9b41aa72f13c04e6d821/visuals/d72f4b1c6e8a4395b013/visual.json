@@ -70,21 +70,6 @@
         }
       }
     },
-    "objects": {
-      "title": [
-        {
-          "properties": {
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Revenue YoY Growth % (Lesson 6)'"
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
     "drillFilterOtherVisuals": true
   }
 }

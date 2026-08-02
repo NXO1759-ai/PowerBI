@@ -24,9 +24,10 @@ import mysql.connector
 
 HEADERS = {"User-Agent": "SQL Learning Project contact@example.com"}
 BULK_URL = "https://www.sec.gov/files/company_tickers_exchange.json"
-DB_CONFIG = json.loads(
+_CFG = json.loads(
     (Path(__file__).parent / "db_config.json").read_text()
 )
+DB_CONFIG = {k: _CFG[k] for k in ("host", "port", "user", "password", "database")}
 
 # Name-based category heuristics. SIC codes (fetched separately for
 # universe companies) refine this later.

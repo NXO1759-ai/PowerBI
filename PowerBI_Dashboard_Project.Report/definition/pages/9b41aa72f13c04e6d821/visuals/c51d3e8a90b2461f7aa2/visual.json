@@ -70,21 +70,6 @@
         }
       }
     },
-    "objects": {
-      "title": [
-        {
-          "properties": {
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Net Margin % by Fiscal Year (Lesson 5)'"
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
     "drillFilterOtherVisuals": true
   }
 }
