@@ -260,6 +260,22 @@ def build():
             "ly": instant_value(facts, concept, ly_yr, per),
         }
 
+    # income statement compares the 3-month quarter against last-year ANNUAL
+    is_annual_yr = max((f["fiscal_year"] for f in facts
+                        if f["fiscal_period"] == "FY"), default=None)
+    is_fy = {k: (usd(facts, FLOW[k], is_annual_yr, "FY")
+                 if is_annual_yr else None)
+             for k in ("revenue", "cogs", "grossProfit", "netIncome")}
+    ends = [f["period_end"] for f in facts
+            if f["fiscal_year"] == yr and f["fiscal_period"] == per
+            and f["period_end"]]
+    q_end = max(ends) if ends else None
+    q_end_str = (f"{q_end.strftime('%b')} {q_end.day}, {q_end.year}"
+                 if q_end else None)
+    gm_fy = ((is_fy["grossProfit"] / is_fy["revenue"])
+             if is_fy["grossProfit"] is not None and is_fy["revenue"]
+             else None)
+
     def sub(a, b):
         return None if a["q"] is None or b["q"] is None else a["q"] - b["q"]
 
@@ -317,13 +333,17 @@ def build():
 
     data = {
         "generatedAt": datetime.now().isoformat(timespec="seconds"),
-        "source": "finance_db (SEC EDGAR 10-K/10-Q) — same database that "
+        "source": "finance_db (SEC EDGAR 10-K/10-Q); same database that "
                   "feeds the Power BI semantic model",
         "company": company,
         "latestFiling": latest_filing,
         "period": {"fiscalYear": yr, "fiscalPeriod": per,
                    "label": f"{per} {yr}" if yr else None,
-                   "compareLabel": f"{per} {ly_yr}" if yr else None},
+                   "compareLabel": f"{per} {ly_yr}" if yr else None,
+                   "isLabel": (f"3 mo ended {q_end_str}" if q_end_str
+                               else None),
+                   "isCompareLabel": (f"FY {is_annual_yr} (annual)"
+                                      if is_annual_yr else None)},
         "fundamentals": {
             "balanceSheet": {
                 "cash": instants["cash"],
@@ -336,11 +356,14 @@ def build():
                 "equity": instants["equity"],
             },
             "incomeStatement": {
-                "revenue": flows["revenue"],
-                "cogs": flows["cogs"],
-                "grossProfit": flows["grossProfit"],
-                "grossMarginPct": gross_margin,
-                "netIncome": flows["netIncome"],
+                "revenue": {"q": flows["revenue"]["q"],
+                            "fy": is_fy["revenue"]},
+                "cogs": {"q": flows["cogs"]["q"], "fy": is_fy["cogs"]},
+                "grossProfit": {"q": flows["grossProfit"]["q"],
+                                "fy": is_fy["grossProfit"]},
+                "grossMarginPct": {"q": gross_margin["q"], "fy": gm_fy},
+                "netIncome": {"q": flows["netIncome"]["q"],
+                              "fy": is_fy["netIncome"]},
             },
             "cashFlow": {
                 "cfOps": flows["cfOps"],

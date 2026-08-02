@@ -40,17 +40,34 @@
     return '<td class="num' + neg + '">' + s + "</td>";
   }
 
-  function fillTable(id, rows) {
+  function pctChange(q, c) {
+    if (typeof q !== "number" || typeof c !== "number" || c === 0) return null;
+    var v = ((q - c) / Math.abs(c)) * 100;
+    return (v >= 0 ? "+" : "") + v.toFixed(1) + "%";
+  }
+
+  function fillTable(id, rows, labels) {
     var tbl = document.getElementById(id);
-    var label = D.period.label || "Last Qtr";
-    var compare = D.period.compareLabel || "Same Qtr LY";
+    var qLab = (labels && labels[0]) || D.period.label || "Last Qtr";
+    var cLab = (labels && labels[1]) || D.period.compareLabel || "Same Qtr LY";
+    var tgl = document.getElementById("pct-toggle");
+    var pctOn = !!(tgl && tgl.checked);
     tbl.querySelector("thead").innerHTML =
-      "<tr><th></th><th>" + label + "</th><th>" + compare + "</th></tr>";
+      "<tr><th></th><th>" + qLab + "</th><th>" + cLab + "</th>" +
+      (pctOn ? "<th>Δ %</th>" : "") + "</tr>";
     tbl.querySelector("tbody").innerHTML = rows
       .map(function (r) {
+        var pc = "";
+        if (pctOn) {
+          var pv = r[3] === "pct" ? null : pctChange(r[1], r[2]);
+          pc = pv === null
+            ? '<td class="num mute">—</td>'
+            : '<td class="num' + (pv.charAt(0) === "-" ? " neg" : "") +
+              '">' + pv + "</td>";
+        }
         return (
           "<tr><td>" + r[0] + "</td>" +
-          cell(r[1], r[3]) + cell(r[2], r[3]) + "</tr>"
+          cell(r[1], r[3]) + cell(r[2], r[3]) + pc + "</tr>"
         );
       })
       .join("");
@@ -145,38 +162,44 @@
   var cf = D.fundamentals.cashFlow;
   var burn = D.fundamentals.burnRate;
 
-  fillTable("tbl-burn", [
-    ["Net Cash Change", burn.q.netCashChange, burn.ly.netCashChange],
-    ["Monthly Burn (÷ 3 mo)", burn.q.monthlyBurn, burn.ly.monthlyBurn],
-    ["Remaining Cash (Days)",
-     burn.q.remainingCashDays, burn.ly.remainingCashDays, "plain"],
-  ]);
+  function renderFundamentals() {
+    fillTable("tbl-burn", [
+      ["Net Cash Change", burn.q.netCashChange, burn.ly.netCashChange],
+      ["Monthly Burn (÷ 3 mo)", burn.q.monthlyBurn, burn.ly.monthlyBurn],
+      ["Remaining Cash (Days)",
+       burn.q.remainingCashDays, burn.ly.remainingCashDays, "plain"],
+    ]);
 
-  fillTable("tbl-bs", [
-    ["Cash", bs.cash.q, bs.cash.ly],
-    ["Current Assets", bs.currentAssets.q, bs.currentAssets.ly],
-    ["Current Liabilities", bs.currentLiabilities.q, bs.currentLiabilities.ly],
-    ["Working Capital", bs.workingCapital.q, bs.workingCapital.ly],
-    ["Retained Earnings (Deficit)", bs.retainedEarnings.q, bs.retainedEarnings.ly],
-    ["Total Assets", bs.totalAssets.q, bs.totalAssets.ly],
-    ["Total Liabilities", bs.totalLiabilities.q, bs.totalLiabilities.ly],
-    ["Stockholders Equity", bs.equity.q, bs.equity.ly],
-  ]);
+    fillTable("tbl-bs", [
+      ["Cash", bs.cash.q, bs.cash.ly],
+      ["Current Assets", bs.currentAssets.q, bs.currentAssets.ly],
+      ["Current Liabilities", bs.currentLiabilities.q, bs.currentLiabilities.ly],
+      ["Working Capital", bs.workingCapital.q, bs.workingCapital.ly],
+      ["Retained Earnings (Deficit)", bs.retainedEarnings.q, bs.retainedEarnings.ly],
+      ["Total Assets", bs.totalAssets.q, bs.totalAssets.ly],
+      ["Total Liabilities", bs.totalLiabilities.q, bs.totalLiabilities.ly],
+      ["Stockholders Equity", bs.equity.q, bs.equity.ly],
+    ]);
 
-  fillTable("tbl-is", [
-    ["Revenue", is.revenue.q, is.revenue.ly],
-    ["COGS", is.cogs.q, is.cogs.ly],
-    ["Gross Profit", is.grossProfit.q, is.grossProfit.ly],
-    ["Gross Margin %", is.grossMarginPct.q, is.grossMarginPct.ly, "pct"],
-    ["Net Income (Loss)", is.netIncome.q, is.netIncome.ly],
-  ]);
+    fillTable("tbl-is", [
+      ["Revenue", is.revenue.q, is.revenue.fy],
+      ["COGS", is.cogs.q, is.cogs.fy],
+      ["Gross Profit", is.grossProfit.q, is.grossProfit.fy],
+      ["Gross Margin %", is.grossMarginPct.q, is.grossMarginPct.fy, "pct"],
+      ["Net Income (Loss)", is.netIncome.q, is.netIncome.fy],
+    ], [D.period.isLabel, D.period.isCompareLabel]);
 
-  fillTable("tbl-cf", [
-    ["CF from Ops", cf.cfOps.q, cf.cfOps.ly],
-    ["CF from Inv", cf.cfInv.q, cf.cfInv.ly],
-    ["CF from Fin", cf.cfFin.q, cf.cfFin.ly],
-    ["Net Cash Change", cf.netCashChange.q, cf.netCashChange.ly],
-  ]);
+    fillTable("tbl-cf", [
+      ["CF from Ops", cf.cfOps.q, cf.cfOps.ly],
+      ["CF from Inv", cf.cfInv.q, cf.cfInv.ly],
+      ["CF from Fin", cf.cfFin.q, cf.cfFin.ly],
+      ["Net Cash Change", cf.netCashChange.q, cf.netCashChange.ly],
+    ]);
+  }
+
+  renderFundamentals();
+  var pctBox = document.getElementById("pct-toggle");
+  if (pctBox) pctBox.addEventListener("change", renderFundamentals);
 
   /* --------------------------- share information ------------------------ */
   var sh = D.shares.outstanding;
@@ -385,46 +408,114 @@
     var ins = D.insight;
     var html = "";
 
-    if (ins.spike_analysis && ins.spike_analysis.length) {
-      html += '<div class="insight-sec"><h3>Value-Traded Spikes</h3>';
-      html += ins.spike_analysis.map(function (s) {
-        var src = (s.sources && s.sources.length)
-          ? '<div class="insight-src">Sources: ' + s.sources.map(function (u) {
-              return '<a href="' + u + '" target="_blank" rel="noopener">' +
-                "link</a>";
-            }).join(" · ") + "</div>"
-          : '<div class="insight-src mute">No filing or news source ' +
-            "available for this date.</div>";
-        return (
-          '<div class="spike"><div class="spike-date">' + s.date + "</div>" +
-          "<p>" + s.observation + "</p>" +
-          "<ul>" + (s.drivers || []).map(function (d) {
-            return "<li>" + d + "</li>";
-          }).join("") + "</ul>" + src + "</div>"
-        );
-      }).join("");
+    function srcLink(s) {
+      if (!s) return "";
+      if (s.form) {
+        return '<a href="' + s.url + '" target="_blank" rel="noopener">' +
+          s.form + " · " + s.filedDate + "</a>";
+      }
+      if (s.title) {
+        return '<a href="' + s.url + '" target="_blank" rel="noopener">' +
+          (s.source || "news") + " · " + String(s.date || "").slice(0, 10) +
+          "</a>";
+      }
+      return "";
+    }
+
+    /* 1 — Company Needs */
+    var cn = ins.company_needs;
+    if (cn) {
+      var blocks = [
+        ["General Direction", cn.general_direction],
+        ["Plans — Coming Years", cn.plans],
+        ["Uses of Funds", cn.uses_of_funds],
+        ["Sources of Funds", cn.sources_of_funds],
+        ["Financing Need", cn.financing_need],
+      ];
+      html += '<div class="insight-sec"><h3>Company Needs</h3>' +
+        blocks.filter(function (b) { return !!b[1]; }).map(function (b) {
+          return '<div class="needs-block"><div class="needs-label">' +
+            b[0] + "</div><p>" + b[1] + "</p></div>";
+        }).join("") + "</div>";
+    }
+
+    /* 2 — Financing Activities */
+    var fa = ins.financing_activities;
+    if (fa && fa.length) {
+      html += '<div class="insight-sec"><h3>Financing Activities</h3>' +
+        fa.map(function (a) {
+          return (
+            '<div class="fin-act">' +
+            '<div class="fin-act-head"><span class="fin-type">' + a.type +
+            "</span>" +
+            (a.status
+              ? '<span class="fin-status">' + a.status + "</span>"
+              : "") +
+            "</div>" +
+            (a.counterparty
+              ? '<div class="fin-counter">Counterparty: ' + a.counterparty +
+                "</div>"
+              : "") +
+            "<p>" + (a.terms || "") + "</p>" +
+            (srcLink(a.source)
+              ? '<div class="insight-src">Source: ' + srcLink(a.source) +
+                "</div>"
+              : "") +
+            "</div>"
+          );
+        }).join("") + "</div>";
+    }
+
+    /* 3 — News (value-traded spikes + Marketaux headlines) */
+    var spikes = ins.spike_analysis || [];
+    var news = ins.news || [];
+    if (spikes.length || news.length) {
+      html += '<div class="insight-sec"><h3>News</h3>';
+      if (spikes.length) {
+        html += '<div class="news-sub">Value-Traded Spikes</div>' +
+          spikes.map(function (s) {
+            var links = (s.sources || []).map(srcLink)
+              .filter(function (x) { return !!x; });
+            var src = links.length
+              ? '<div class="insight-src">Sources: ' + links.join(" · ") +
+                "</div>"
+              : '<div class="insight-src mute">No filing or news source ' +
+                "available for this date.</div>";
+            return (
+              '<div class="spike"><div class="spike-date">' + s.date +
+              "</div><p>" + s.observation + "</p><ul>" +
+              (s.drivers || []).map(function (d) {
+                return "<li>" + d + "</li>";
+              }).join("") + "</ul>" + src + "</div>"
+            );
+          }).join("");
+      }
+      if (news.length) {
+        html += '<div class="news-sub">Headlines · Marketaux</div>' +
+          news.map(function (n) {
+            return (
+              '<div class="news-item"><div class="news-date">' +
+              String(n.date || "").slice(0, 10) + " · " + (n.source || "") +
+              '</div><a href="' + n.url + '" target="_blank" rel="noopener">' +
+              n.title + "</a>" +
+              (n.relevance ? "<p>" + n.relevance + "</p>" : "") + "</div>"
+            );
+          }).join("");
+      }
       html += "</div>";
     }
 
-    if (ins.financing_narrative) {
-      html += '<div class="insight-sec"><h3>Financing Activities — 2 Years' +
-        "</h3><p>" + ins.financing_narrative + "</p></div>";
-    }
-    if (ins.company_needs) {
-      html += '<div class="insight-sec"><h3>Company Needs (Financing View)' +
-        "</h3><p>" + ins.company_needs + "</p></div>";
-    }
     if (ins.caveats) {
       html += '<div class="insight-caveats">' + ins.caveats + "</div>";
     }
     html +=
       '<div class="insight-caveats">AI analysis (DeepSeek) built from ' +
-      "finance_db facts · generated " + D.generatedAt.slice(0, 10) + ".</div>";
+      "finance_db facts, SEC filing text and Marketaux news · generated " +
+      D.generatedAt.slice(0, 10) + ".</div>";
     box.innerHTML = html;
   })();
 
   /* ------------------------------- footer ------------------------------- */
   document.getElementById("footer").textContent =
-    "Source: " + D.source + " · generated " + D.generatedAt +
-    " · fundamentals are single-quarter values derived from SEC YTD figures";
+    "Source: " + D.source + " · generated " + D.generatedAt;
 })();
