@@ -1,0 +1,177 @@
+/* Company Overview — debtsheet-style frontend (KBLB tab layout) */
+
+:root {
+  --ink: #111827;
+  --ink-soft: #374151;
+  --ink-mute: #6b7280;
+  --ink-faint: #9ca3af;
+  --line: #e5e7eb;
+  --bg: #f3f4f6;
+  --card: #ffffff;
+  --accent: #1d4ed8;
+  --neg: #b91c1c;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.page {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+h2 {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+}
+
+h3 { font-size: 13px; color: var(--ink); }
+
+/* ------------------------------ header ------------------------------ */
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+  align-items: flex-start;
+}
+
+.header-left { min-width: 320px; }
+
+.header h1 { font-size: 24px; font-weight: 700; }
+
+.header-sub { color: var(--ink-mute); font-size: 12px; margin-top: 2px; }
+
+.header-facts {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 8px 20px;
+  min-width: 420px;
+}
+
+.fact .fact-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-mute);
+}
+
+.fact .fact-value { font-size: 15px; font-weight: 600; }
+
+.fact .fact-value.pending-value { color: var(--ink-faint); font-weight: 400; }
+
+/* ---------------------------- charts row ---------------------------- */
+.charts-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 14px;
+}
+
+.charts-col { display: flex; flex-direction: column; gap: 14px; }
+
+.chart-panel .chart-body {
+  height: 170px;
+  border: 1px dashed var(--line);
+  border-radius: 6px;
+}
+
+.analyst-panel { display: flex; flex-direction: column; }
+
+.analyst-body { flex: 1; border: 1px dashed var(--line); border-radius: 6px; }
+
+.pending {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+  padding: 14px;
+}
+
+.pending-title { color: var(--ink-faint); font-size: 15px; font-weight: 600; }
+
+.pending-note { color: var(--ink-mute); font-size: 11px; max-width: 420px; }
+
+/* ---------------------------- columns ------------------------------- */
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.col-stack { display: flex; flex-direction: column; gap: 14px; }
+
+.info-block { margin-bottom: 14px; }
+.info-block h3 { margin-bottom: 4px; }
+
+.vol-panel { min-height: 160px; }
+
+/* ---------------------------- data grids ---------------------------- */
+.table-title { margin: 14px 0 6px; }
+.table-title:first-of-type { margin-top: 4px; }
+.table-title .hint { color: var(--ink-faint); font-weight: 400; font-size: 11px; }
+
+table.grid { width: 100%; border-collapse: collapse; }
+
+table.grid th {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-mute);
+  text-align: right;
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--line);
+}
+
+table.grid th:first-child { text-align: left; }
+
+table.grid td {
+  padding: 5px 6px;
+  border-bottom: 1px solid var(--line);
+  font-variant-numeric: tabular-nums;
+}
+
+table.grid td.num { text-align: right; white-space: nowrap; }
+
+table.grid tr:last-child td { border-bottom: none; }
+
+.neg { color: var(--neg); }
+.mute { color: var(--ink-faint); }
+
+/* ------------------------------ footer ------------------------------ */
+footer {
+  color: var(--ink-faint);
+  font-size: 11px;
+  text-align: center;
+  padding: 4px 0 12px;
+}
+
+@media (max-width: 980px) {
+  .charts-row, .columns { grid-template-columns: 1fr; }
+  .header-facts { min-width: 0; }
+}
