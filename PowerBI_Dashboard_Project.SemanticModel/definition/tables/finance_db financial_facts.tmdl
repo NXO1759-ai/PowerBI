@@ -126,12 +126,6 @@ table 'finance_db financial_facts'
 
 		annotation SummarizationSetBy = Automatic
 
-	// ------------------------------------------------------------------
-	// DAX measures — Lesson 5 (net margin) and Lesson 6 (YoY growth)
-	// expressed as reusable model calculations.
-	// Each measure embeds its own filters, so visuals stay clean.
-	// ------------------------------------------------------------------
-
 	measure 'Revenue FY' =
 		CALCULATE(
 			SUM('finance_db financial_facts'[value]),
