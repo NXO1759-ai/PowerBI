@@ -21,14 +21,6 @@
         <span class="nav-tab soon">Private Credit Report <span class="soon-pill">Soon</span></span>
         <span class="nav-tab soon">Strategy Analysis <span class="soon-pill">Soon</span></span>
       </div>
-      <div class="search-box">
-        <input type="search" id="company-search"
-               placeholder="Search ticker, CIK, name…"
-               autocomplete="off" />
-        <button type="button" class="search-btn" id="search-btn"
-                title="Search companies">Search</button>
-        <div class="search-results" id="search-results"></div>
-      </div>
       <div class="topbar-right" id="topbar-asof"></div>
     </div>
   </nav>
@@ -37,6 +29,14 @@
 
     <!-- ========================== company header ========================== -->
     <header class="card header">
+      <div class="search-box">
+        <input type="search" id="company-search"
+               placeholder="Search ticker, CIK, or company name…"
+               autocomplete="off" />
+        <button type="button" class="search-btn" id="search-btn"
+                title="Search companies">Search</button>
+        <div class="search-results" id="search-results"></div>
+      </div>
       <div class="header-left">
         <h1 id="company-name">—</h1>
         <div class="header-sub" id="header-sub">—</div>

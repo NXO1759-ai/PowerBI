@@ -136,29 +136,15 @@ body {
 
 .topbar-right strong { color: #d3dcee; font-weight: 600; }
 
-/* search inside the dark topbar */
-.topbar .search-box {
+/* search sits above the company title inside the header card */
+.header .search-box {
+  flex: 0 0 100%;
+  max-width: none;
   margin-top: 0;
-  flex: 1;
-  max-width: 420px;
-  min-width: 180px;
+  margin-bottom: 12px;
 }
 
-.topbar .search-box input {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: #2b3c5c;
-  color: #e7ecf5;
-}
-
-.topbar .search-box input::placeholder { color: #8fa1bd; }
-
-.topbar .search-box input:focus {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: #2e6ff2;
-  box-shadow: 0 0 0 3px rgba(46, 111, 242, 0.25);
-}
-
-.topbar .search-results { top: 40px; }
+.header .search-box input { flex: 0 1 380px; }
 
 /* ================================ layout ================================= */
 .page {
