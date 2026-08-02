@@ -19,6 +19,7 @@ Run:  python 02_load_sec_data.py
 
 import json
 import time
+from datetime import date
 from pathlib import Path
 
 import requests
@@ -39,7 +40,7 @@ DB_CONFIG = json.loads(
 
 # The companies we'll load. Add more tickers here any time,
 # then just re-run the script.
-WATCHLIST = ["AAPL", "MSFT", "NVDA"]
+WATCHLIST = ["AAPL", "MSFT", "NVDA", "GOOG"]
 
 # The XBRL concepts we pull. The keys must match the
 # concepts_dictionary rows we inserted in 01_create_schema.sql.
@@ -97,6 +98,18 @@ def get_concept_facts(cik, concept):
             # skipping one-off instant disclosures without a year.
             if r.get("fy") is None or r.get("form") not in ("10-K", "10-Q"):
                 continue
+            # A row tagged "FY" must actually span ~a full year.
+            # The SEC feed also contains same-year fragments (9-month
+            # periods, restated comparatives) mislabeled as FY — those
+            # would double-count in any SUM. Balance-sheet instants
+            # have no start date and are exempt from this check.
+            if r.get("fp", "FY") == "FY" and r.get("start"):
+                span = (
+                    date.fromisoformat(r["end"])
+                    - date.fromisoformat(r["start"])
+                ).days
+                if span < 300:
+                    continue
             facts.append({
                 "concept": concept,
                 "unit": unit,
@@ -109,7 +122,25 @@ def get_concept_facts(cik, concept):
                 "form": r["form"],
                 "accession_no": r["accn"],
             })
-    return facts
+
+    # Deduplicate. The SEC tags every row in a filing with the FILING's
+    # fiscal year — so the FY2022 10-K contains rows fy=2022 covering
+    # 2020, 2021 AND 2022 (comparative columns). For each
+    # (unit, fiscal_year, fiscal_period) group we therefore:
+    #   1. keep only rows with the group's LATEST period_end
+    #      (the current period, dropping comparatives), then
+    #   2. among those keep the one from the latest filed_date
+    #      (newest restatement wins).
+    groups = {}
+    for f in facts:
+        key = (f["unit"], f["fiscal_year"], f["fiscal_period"])
+        groups.setdefault(key, []).append(f)
+    best = []
+    for rows in groups.values():
+        latest_end = max(r["period_end"] for r in rows)
+        current = [r for r in rows if r["period_end"] == latest_end]
+        best.append(max(current, key=lambda r: r["filed_date"]))
+    return best
 
 
 # ---------------------------------------------------------------------
