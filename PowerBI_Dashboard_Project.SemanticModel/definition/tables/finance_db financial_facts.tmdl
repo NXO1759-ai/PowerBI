@@ -127,39 +127,39 @@ table 'finance_db financial_facts'
 		annotation SummarizationSetBy = Automatic
 
 	measure 'Revenue FY' =
-		CALCULATE(
-			SUM('finance_db financial_facts'[value]),
-			'finance_db financial_facts'[concept] = "RevenueFromContractWithCustomerExcludingAssessedTax",
-			'finance_db financial_facts'[fiscal_period] = "FY",
-			'finance_db financial_facts'[unit] = "USD"
-		)
-		formatString: #,##0
-
-	measure 'Net Income FY' =
-		CALCULATE(
-			SUM('finance_db financial_facts'[value]),
-			'finance_db financial_facts'[concept] = "NetIncomeLoss",
-			'finance_db financial_facts'[fiscal_period] = "FY",
-			'finance_db financial_facts'[unit] = "USD"
-		)
-		formatString: #,##0
-
-	measure 'Net Margin %' =
-		DIVIDE([Net Income FY], [Revenue FY])
-		formatString: 0.0%
-
-	measure 'Revenue Prev FY' =
-		VAR yr = MAX('finance_db financial_facts'[fiscal_year])
-		RETURN
 			CALCULATE(
-				[Revenue FY],
-				REMOVEFILTERS('finance_db financial_facts'[fiscal_year]),
-				'finance_db financial_facts'[fiscal_year] = yr - 1
+				SUM('finance_db financial_facts'[value]),
+				'finance_db financial_facts'[concept] = "RevenueFromContractWithCustomerExcludingAssessedTax",
+				'finance_db financial_facts'[fiscal_period] = "FY",
+				'finance_db financial_facts'[unit] = "USD"
 			)
 		formatString: #,##0
 
+	measure 'Net Income FY' =
+			CALCULATE(
+				SUM('finance_db financial_facts'[value]),
+				'finance_db financial_facts'[concept] = "NetIncomeLoss",
+				'finance_db financial_facts'[fiscal_period] = "FY",
+				'finance_db financial_facts'[unit] = "USD"
+			)
+		formatString: #,##0
+
+	measure 'Net Margin %' =
+			DIVIDE([Net Income FY], [Revenue FY])
+		formatString: 0.0%
+
+	measure 'Revenue Prev FY' =
+			VAR yr = MAX('finance_db financial_facts'[fiscal_year])
+			RETURN
+				CALCULATE(
+					[Revenue FY],
+					REMOVEFILTERS('finance_db financial_facts'[fiscal_year]),
+					'finance_db financial_facts'[fiscal_year] = yr - 1
+				)
+		formatString: #,##0
+
 	measure 'Revenue YoY %' =
-		DIVIDE([Revenue FY] - [Revenue Prev FY], [Revenue Prev FY])
+			DIVIDE([Revenue FY] - [Revenue Prev FY], [Revenue Prev FY])
 		formatString: 0.0%
 
 	partition 'finance_db financial_facts' = m
