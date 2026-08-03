@@ -1,20 +1,24 @@
 """
 export_dashboard_data.py
 ------------------------
-Exports the Company Overview dashboard data for KBLB from finance_db
-(the MySQL database that also feeds the Power BI semantic model) into a
-static JavaScript data file the frontend can load from any web host.
+Exports the Company Overview dashboard data from finance_db (the MySQL
+database that also feeds the Power BI semantic model) into static
+JavaScript data files the frontend can load from any web host.
 
-Output:  data/company-kblb.js   (sets window.COMPANY_OVERVIEW_DATA)
+Output:  data/company-<ticker>.js  (one per covered company)
+         data/company-index.js     (search index)
+         data/coverage.js          (list of tickers with data files)
 
 Run from the repo root:
     python frontend/export_dashboard_data.py
 
 Scope notes:
-  * KBLB only — more companies get added when the owner asks.
-  * Price / volume history is NOT exported here. That feed comes from
-    a market-data API the owner will provide; the frontend shows those
-    panels as pending until then.
+  * Every company in the tracked universe (in_fact_universe=1,
+    has_facts=1) gets its own data file, so the frontend can populate
+    any searched company instantly.
+  * Price / volume history is exported only where a price_daily feed
+    exists (currently KBLB); other companies show price panels as
+    pending until a market-data feed covers them.
 """
 
 import json
@@ -28,33 +32,47 @@ ROOT = Path(__file__).resolve().parent.parent
 CFG = json.loads((ROOT / "loaders" / "db_config.json").read_text())
 DB = {k: CFG[k] for k in ("host", "port", "user", "password", "database")}
 
-TICKER = "KBLB"
-OUT = Path(__file__).resolve().parent / "data" / f"company-{TICKER.lower()}.js"
+OUT_DIR = Path(__file__).resolve().parent / "data"
 
 FLOW = {
-    "revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
-    "cogs": "CostOfRevenue",
-    "grossProfit": "GrossProfit",
-    "netIncome": "NetIncomeLoss",
-    "cfOps": "NetCashProvidedByUsedInOperatingActivities",
-    "cfInv": "NetCashProvidedByUsedInInvestingActivities",
-    "cfFin": "NetCashProvidedByUsedInFinancingActivities",
+    "revenue": ["RevenueFromContractWithCustomerExcludingAssessedTax",
+                "Revenues",
+                "RevenueFromContractWithCustomerIncludingAssessedTax",
+                "SalesRevenueNet"],
+    "cogs": ["CostOfRevenue", "CostOfGoodsAndServicesSold"],
+    "grossProfit": ["GrossProfit"],
+    "netIncome": ["NetIncomeLoss"],
+    "cfOps": ["NetCashProvidedByUsedInOperatingActivities"],
+    "cfInv": ["NetCashProvidedByUsedInInvestingActivities"],
+    "cfFin": ["NetCashProvidedByUsedInFinancingActivities"],
 }
 INSTANT = {
-    "cash": "CashAndCashEquivalentsAtCarryingValue",
-    "currentAssets": "AssetsCurrent",
-    "currentLiabilities": "LiabilitiesCurrent",
-    "totalAssets": "Assets",
-    "totalLiabilities": "Liabilities",
-    "equity": "StockholdersEquity",
-    "retainedEarnings": "RetainedEarningsAccumulatedDeficit",
+    "cash": ["CashAndCashEquivalentsAtCarryingValue"],
+    "currentAssets": ["AssetsCurrent"],
+    "currentLiabilities": ["LiabilitiesCurrent"],
+    "totalAssets": ["Assets"],
+    "totalLiabilities": ["Liabilities"],
+    "equity": ["StockholdersEquity"],
+    "retainedEarnings": ["RetainedEarningsAccumulatedDeficit"],
 }
 QUARTERS = ("Q1", "Q2", "Q3")
 
 
-def fetch_all():
+def universe_tickers():
+    """All tracked-universe tickers that have financial facts."""
     conn = mysql.connector.connect(**DB)
-    cur = conn.cursor(dictionary=True)
+    cur = conn.cursor()
+    cur.execute("SELECT ticker FROM companies"
+                " WHERE in_fact_universe = 1 AND has_facts = 1"
+                " AND ticker IS NOT NULL ORDER BY ticker")
+    rows = [r[0] for r in cur.fetchall()]
+    conn.close()
+    return rows
+
+
+def fetch_all(ticker):
+    conn = mysql.connector.connect(**DB)
+    cur = conn.cursor(dictionary=True, buffered=True)
     cur.execute("SHOW COLUMNS FROM companies")
     cols = {r["Field"] for r in cur.fetchall()}
     extra = [c for c in ("website", "phone", "logo_url", "ipo_date",
@@ -63,10 +81,10 @@ def fetch_all():
         "SELECT cik, ticker, name, exchange"
         + (", " + ", ".join(extra) if extra else "")
         + " FROM companies WHERE ticker = %s",
-        (TICKER,))
+        (ticker,))
     company = cur.fetchone()
     if not company:
-        sys.exit(f"{TICKER} not found in companies table")
+        raise ValueError(f"{ticker} not found in companies table")
     cur.execute(
         "SELECT concept, unit, fiscal_year, fiscal_period, period_end,"
         "       value, filed_date, form"
@@ -77,7 +95,7 @@ def fetch_all():
         cur.execute(
             "SELECT trade_date, open, high, low, close, volume"
             " FROM price_daily WHERE ticker = %s ORDER BY trade_date",
-            (TICKER,))
+            (ticker,))
         prices = cur.fetchall()
     except mysql.connector.Error:
         pass  # price_daily not created yet — charts stay pending
@@ -85,7 +103,7 @@ def fetch_all():
     try:
         cur.execute(
             "SELECT payload FROM analyst_insight WHERE ticker = %s"
-            " ORDER BY id DESC LIMIT 1", (TICKER,))
+            " ORDER BY id DESC LIMIT 1", (ticker,))
         row = cur.fetchone()
         if row:
             insight = json.loads(row["payload"])
@@ -103,6 +121,15 @@ def usd(facts, concept, year, period):
     return float(vals[0]["value"]) if vals else None
 
 
+def usd_any(facts, concepts, year, period):
+    """First available value across an ordered concept fallback list."""
+    for concept in concepts:
+        v = usd(facts, concept, year, period)
+        if v is not None:
+            return v
+    return None
+
+
 def latest_quarter(facts):
     """(year, period) of the most recent non-FY period with any fact."""
     pairs = {(f["fiscal_year"], f["fiscal_period"])
@@ -118,20 +145,20 @@ def prev_period(period):
     return {"Q2": "Q1", "Q3": "Q2"}.get(period)
 
 
-def flow_value(facts, concept, year, period):
+def flow_value(facts, concepts, year, period):
     """Single-quarter value derived from SEC YTD figures."""
-    cur = usd(facts, concept, year, period)
+    cur = usd_any(facts, concepts, year, period)
     pp = prev_period(period)
     if pp is None:  # Q1: YTD already is the single quarter
         return cur
-    prev = usd(facts, concept, year, pp)
+    prev = usd_any(facts, concepts, year, pp)
     if cur is None and prev is None:
         return None
     return (cur or 0) - (prev or 0)
 
 
-def instant_value(facts, concept, year, period):
-    return usd(facts, concept, year, period)
+def instant_value(facts, concepts, year, period):
+    return usd_any(facts, concepts, year, period)
 
 
 def shares_outstanding(facts):
@@ -242,8 +269,8 @@ def eps_filed(facts, year, period):
     return (cur or 0) - (prev or 0)
 
 
-def build():
-    company, facts, prices, insight = fetch_all()
+def build(ticker):
+    company, facts, prices, insight = fetch_all(ticker)
     yr, per = latest_quarter(facts)
     ly_yr = yr - 1 if yr else None
     shares_val = shares_outstanding(facts)
@@ -263,7 +290,7 @@ def build():
     # income statement compares the 3-month quarter against last-year ANNUAL
     is_annual_yr = max((f["fiscal_year"] for f in facts
                         if f["fiscal_period"] == "FY"), default=None)
-    is_fy = {k: (usd(facts, FLOW[k], is_annual_yr, "FY")
+    is_fy = {k: (usd_any(facts, FLOW[k], is_annual_yr, "FY")
                  if is_annual_yr else None)
              for k in ("revenue", "cogs", "grossProfit", "netIncome")}
     ends = [f["period_end"] for f in facts
@@ -387,9 +414,12 @@ def build():
                       else None,
             },
             "epsEstimate": None,
-            "estimateNote": "No analyst EPS estimates — Finnhub returns an "
-                            "empty set and Alpha Vantage has no coverage for "
-                            "this OTC ticker",
+            "estimateNote": (
+                "No analyst EPS estimates — Finnhub returns an empty set "
+                "and Alpha Vantage has no coverage for this OTC ticker"
+                if ticker == "KBLB" else
+                "No analyst EPS estimates available for this ticker."
+            ),
         },
         "insight": insight,
         "pending": {
@@ -411,7 +441,7 @@ def export_company_index():
                 " ORDER BY ticker")
     rows = [[t, c, n] for t, c, n in cur.fetchall()]
     conn.close()
-    out = OUT.parent / "company-index.js"
+    out = OUT_DIR / "company-index.js"
     payload = json.dumps(rows, separators=(",", ":"))
     out.write_text(
         "// Generated by frontend/export_dashboard_data.py — do not edit.\n"
@@ -419,16 +449,46 @@ def export_company_index():
     print(f"wrote {out} ({len(payload)} bytes, {len(rows)} companies)")
 
 
-def main():
-    data = build()
-    OUT.parent.mkdir(parents=True, exist_ok=True)
+def export_company(ticker):
+    """Write data/company-<ticker>.js; returns the output path."""
+    data = build(ticker)
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+    out = OUT_DIR / f"company-{ticker.lower()}.js"
     payload = json.dumps(data, indent=2, default=str)
-    OUT.write_text(
+    out.write_text(
         "// Generated by frontend/export_dashboard_data.py — do not edit.\n"
         f"window.COMPANY_OVERVIEW_DATA = {payload};\n",
         encoding="utf-8")
-    print(f"wrote {OUT} ({len(payload)} bytes)")
+    return out, len(payload)
+
+
+def export_coverage(tickers):
+    """Ticker list with exported data files — drives the frontend badge."""
+    payload = json.dumps(sorted(tickers), separators=(",", ":"))
+    out = OUT_DIR / "coverage.js"
+    out.write_text(
+        "// Generated by frontend/export_dashboard_data.py — do not edit.\n"
+        f"window.COMPANY_COVERAGE = {payload};\n", encoding="utf-8")
+    print(f"wrote {out} ({len(tickers)} covered tickers)")
+
+
+def main():
+    tickers = universe_tickers()
+    ok, failed = [], []
+    for i, tk in enumerate(tickers, 1):
+        try:
+            out, size = export_company(tk)
+            ok.append(tk)
+            print(f"[{i}/{len(tickers)}] wrote {out.name} ({size} bytes)")
+        except Exception as exc:  # keep the batch going; report at the end
+            failed.append((tk, str(exc)))
+            print(f"[{i}/{len(tickers)}] FAILED {tk}: {exc}")
+    export_coverage(ok)
     export_company_index()
+    print(f"done: {len(ok)} exported, {len(failed)} failed")
+    if failed:
+        for tk, err in failed:
+            print(f"  - {tk}: {err}")
 
 
 if __name__ == "__main__":
