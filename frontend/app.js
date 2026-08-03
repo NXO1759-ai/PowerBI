@@ -6,6 +6,21 @@
   try {
     var INDEX = Array.isArray(window.COMPANY_INDEX) ? window.COMPANY_INDEX : [];
     var COVERAGE = { KBLB: window.COMPANY_OVERVIEW_DATA || null };
+    /* tickers with an exported data file (from data/coverage.js) */
+    var COVERED = {};
+    (Array.isArray(window.COMPANY_COVERAGE) ? window.COMPANY_COVERAGE : ["KBLB"])
+      .forEach(function (t) { COVERED[t] = true; });
+    var BY_TICKER = {};
+    INDEX.forEach(function (row) { BY_TICKER[row[0]] = row; });
+    /* colloquial names whose official SEC name differs */
+    var ALIASES = {
+      GOOGLE: ["GOOGL", "GOOG"],
+      YOUTUBE: ["GOOGL", "GOOG"],
+      FACEBOOK: ["META"],
+      INSTAGRAM: ["META"],
+      WHATSAPP: ["META"]
+    };
+    var loading = {};
 
     var state = { ticker: "KBLB", range: "30d", pct: false };
 
@@ -106,7 +121,8 @@
       }).join("");
 
       var asof = $("topbar-asof");
-      if (asof) asof.textContent = m.asOf ? "Data as of " + fmtDate(m.asOf) : "";
+      if (asof) asof.textContent = m.asOf ? "Data as of " + fmtDate(m.asOf)
+        : (d.generatedAt ? "Fundamentals exported " + fmtDate(d.generatedAt.slice(0, 10)) : "");
     }
 
     /* ---------- KPI strip ---------- */
@@ -150,7 +166,16 @@
     }
     function renderChart(d) {
       var box = $("chart");
-      if (!box || !d || !d.price) return;
+      if (!box) return;
+      if (!d || !d.price) {
+        box.innerHTML = "";
+        var p = document.createElement("p");
+        p.className = "na";
+        p.style.cssText = "padding:28px 0;text-align:center;color:#8a8b92;font-size:12.5px";
+        p.textContent = "Price history is not available for this company yet — the market-data feed currently covers KBLB only.";
+        box.appendChild(p);
+        return;
+      }
       var series = state.range === "30d" ? (d.price.series30 || d.price.series) : d.price.series;
       if (!series || !series.length) { box.textContent = "No price history available."; return; }
 
@@ -337,6 +362,15 @@
 
     /* ---------- volume & liquidity ---------- */
     function renderLiquidity(d) {
+      if (!d.price) {
+        fillTable($("t-vol"), ["Activity", "30-Day", "60-Day", "90-Day"], [
+          [{ v: "No trading activity feed for this company yet", c: "na" }, "", "", ""]
+        ]);
+        fillTable($("t-liq"), ["Position", "30-Day Avg", "60-Day Avg", "90-Day Avg"], [
+          [{ v: "No liquidation estimates available", c: "na" }, "", "", ""]
+        ]);
+        return;
+      }
       var vs = d.price.volumeStats || {}, vals = d.price.valueStats || {};
       fillTable($("t-vol"), ["Activity", "30-Day", "60-Day", "90-Day"], [
         ["Avg Volume", count(vs.avg30), count(vs.avg60), count(vs.avg90)],
@@ -403,7 +437,39 @@
       $("coverage-title").textContent = meta.ticker + " — Coverage Pending";
       $("coverage-text").textContent =
         meta.name + " is in the tracked universe, but its fundamentals have not been exported from finance_db yet. " +
-        "Full overview coverage is currently available for KBLB; additional tickers are added as the export pipeline runs.";
+        "Coverage expands as the monthly refresh pipeline runs.";
+    }
+    function renderLoading(ticker) {
+      var meta = BY_TICKER[ticker];
+      if (meta) {
+        $("co-name").textContent = meta[2];
+        $("co-meta").innerHTML = "<span class='tk'>" + meta[0] + "</span> <span class='sep'>·</span> <span class='tk'>CIK " + meta[1] + "</span>";
+        $("co-logo").hidden = true;
+      }
+      setDataVisible(false);
+      $("coverage-title").textContent = ticker + " — Loading…";
+      $("coverage-text").textContent = "Fetching fundamentals exported from finance_db.";
+    }
+    function loadCompany(ticker) {
+      if (loading[ticker]) return;
+      loading[ticker] = true;
+      var s = document.createElement("script");
+      s.src = "data/company-" + ticker.toLowerCase() + ".js";
+      s.onload = function () {
+        delete loading[ticker];
+        COVERAGE[ticker] = window.COMPANY_OVERVIEW_DATA || null;
+        window.COMPANY_OVERVIEW_DATA = null;
+        if (state.ticker === ticker && COVERAGE[ticker]) renderAll(COVERAGE[ticker]);
+      };
+      s.onerror = function () {
+        delete loading[ticker];
+        COVERED[ticker] = false;
+        if (state.ticker === ticker) {
+          var meta = BY_TICKER[ticker];
+          if (meta) renderNoCoverage({ ticker: meta[0], cik: meta[1], name: meta[2] });
+        }
+      };
+      document.head.appendChild(s);
     }
     function renderAll(d) {
       setDataVisible(true);
@@ -419,12 +485,11 @@
     function select(ticker) {
       state.ticker = ticker;
       var d = COVERAGE[ticker];
-      if (d) renderAll(d);
-      else {
-        var hit = null;
-        for (var i = 0; i < INDEX.length; i++) if (INDEX[i][0] === ticker) { hit = INDEX[i]; break; }
-        if (hit) renderNoCoverage({ ticker: hit[0], cik: hit[1], name: hit[2] });
-      }
+      if (d) { renderAll(d); return; }
+      var meta = BY_TICKER[ticker];
+      if (!meta) return;
+      if (COVERED[ticker]) { renderLoading(ticker); loadCompany(ticker); }
+      else renderNoCoverage({ ticker: meta[0], cik: meta[1], name: meta[2] });
     }
 
     /* ---------- search ---------- */
@@ -433,6 +498,9 @@
       var t = text.trim().toUpperCase();
       if (!t) return [];
       var exactTicker = [], prefix = [], nameHit = [];
+      (ALIASES[t] || []).forEach(function (tk) {
+        if (BY_TICKER[tk]) exactTicker.push(BY_TICKER[tk]);
+      });
       for (var i = 0; i < INDEX.length; i++) {
         var tk = INDEX[i][0], nm = INDEX[i][2] || "", cik = String(INDEX[i][1]);
         if (tk === t) exactTicker.push(INDEX[i]);
@@ -447,7 +515,7 @@
         rList.innerHTML = "<li class='none'>No matching companies</li>";
       } else {
         rList.innerHTML = matches.map(function (m, i) {
-          var cov = COVERAGE[m[0]] ? "<span class='cov'>Data available</span>" : "";
+          var cov = COVERED[m[0]] ? "<span class='cov'>Data available</span>" : "";
           return "<li role='option' data-i='" + i + "' aria-selected='" + (i === activeIdx) + "'>" +
                  "<span class='tk'>" + m[0] + "</span><span class='nm'>" + m[2] + "</span>" + cov + "</li>";
         }).join("");

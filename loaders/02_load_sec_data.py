@@ -31,40 +31,73 @@ HEADERS = {"User-Agent": "SQL Learning Project contact@example.com"}
 
 # Database credentials live OUTSIDE this file in db_config.json,
 # which is listed in .gitignore so secrets never reach GitHub.
-DB_CONFIG = json.loads(
+# The file may also hold API keys for other loaders — keep only the
+# MySQL connection keys here.
+_cfg = json.loads(
     (Path(__file__).parent / "db_config.json").read_text()
 )
+DB_CONFIG = {k: _cfg[k] for k in ("host", "port", "user", "password",
+                                  "database")}
 
-# The XBRL concepts we pull. The keys must match the
-# concepts_dictionary rows we inserted in 01_create_schema.sql.
+# The XBRL concepts we pull, as (taxonomy namespace, concept) pairs.
+# Most facts live under us-gaap; cover-page share counts live under dei.
+# Alternate revenue/cost concepts cover filers that switched tags
+# (e.g. Alphabet moved to "Revenues" after Q1 2025).
 CONCEPTS = [
-    "RevenueFromContractWithCustomerExcludingAssessedTax",
-    "CostOfRevenue",
-    "GrossProfit",
-    "OperatingIncomeLoss",
-    "NetIncomeLoss",
-    "EarningsPerShareDiluted",
-    "Assets",
-    "Liabilities",
-    "StockholdersEquity",
-    "CashAndCashEquivalentsAtCarryingValue",
-    "NetCashProvidedByUsedInOperatingActivities",
-    "PaymentsToAcquirePropertyPlantAndEquipment",
+    ("us-gaap", "RevenueFromContractWithCustomerExcludingAssessedTax"),
+    ("us-gaap", "Revenues"),
+    ("us-gaap", "RevenueFromContractWithCustomerIncludingAssessedTax"),
+    ("us-gaap", "SalesRevenueNet"),
+    ("us-gaap", "CostOfRevenue"),
+    ("us-gaap", "CostOfGoodsAndServicesSold"),
+    ("us-gaap", "GrossProfit"),
+    ("us-gaap", "OperatingIncomeLoss"),
+    ("us-gaap", "NetIncomeLoss"),
+    ("us-gaap", "EarningsPerShareDiluted"),
+    ("us-gaap", "Assets"),
+    ("us-gaap", "AssetsCurrent"),
+    ("us-gaap", "Liabilities"),
+    ("us-gaap", "LiabilitiesCurrent"),
+    ("us-gaap", "StockholdersEquity"),
+    ("us-gaap", "RetainedEarningsAccumulatedDeficit"),
+    ("us-gaap", "CashAndCashEquivalentsAtCarryingValue"),
+    ("us-gaap", "NetCashProvidedByUsedInOperatingActivities"),
+    ("us-gaap", "NetCashProvidedByUsedInInvestingActivities"),
+    ("us-gaap", "NetCashProvidedByUsedInFinancingActivities"),
+    ("us-gaap", "PaymentsToAcquirePropertyPlantAndEquipment"),
+    ("us-gaap", "CommonStockSharesOutstanding"),
+    ("dei", "EntityCommonStockSharesOutstanding"),
+]
+
+# Concepts added after the initial schema seed — used by the one-off
+# backfill (11_backfill_concepts.py) so existing rows are not refetched.
+EXTRA_CONCEPTS = [
+    ("us-gaap", "Revenues"),
+    ("us-gaap", "RevenueFromContractWithCustomerIncludingAssessedTax"),
+    ("us-gaap", "SalesRevenueNet"),
+    ("us-gaap", "CostOfGoodsAndServicesSold"),
+    ("us-gaap", "AssetsCurrent"),
+    ("us-gaap", "LiabilitiesCurrent"),
+    ("us-gaap", "RetainedEarningsAccumulatedDeficit"),
+    ("us-gaap", "NetCashProvidedByUsedInInvestingActivities"),
+    ("us-gaap", "NetCashProvidedByUsedInFinancingActivities"),
+    ("us-gaap", "CommonStockSharesOutstanding"),
+    ("dei", "EntityCommonStockSharesOutstanding"),
 ]
 
 
 # ---------------------------------------------------------------------
 # Step 2: fetch one concept's full history for one company
 # ---------------------------------------------------------------------
-def get_concept_facts(cik, concept):
+def get_concept_facts(cik, concept, namespace="us-gaap"):
     """
-    Call https://data.sec.gov/api/xbrl/companyconcept/CIK.../concept.json
+    Call https://data.sec.gov/api/xbrl/companyconcept/CIK.../ns/concept.json
     and return a flat list of fact dicts across all units
     (USD, shares, USD/shares...).
     """
     url = (
         f"https://data.sec.gov/api/xbrl/companyconcept/"
-        f"CIK{cik:010d}/us-gaap/{concept}.json"
+        f"CIK{cik:010d}/{namespace}/{concept}.json"
     )
     resp = requests.get(url, headers=HEADERS, timeout=30)
     if resp.status_code == 404:
@@ -165,8 +198,8 @@ def main():
     for cik, ticker, name in universe:
         print(f"\n== {ticker} ({name}) — CIK {cik}")
         total = 0
-        for concept in CONCEPTS:
-            facts = get_concept_facts(cik, concept)
+        for namespace, concept in CONCEPTS:
+            facts = get_concept_facts(cik, concept, namespace)
             inserted = 0
             for f in facts:
                 if f["fiscal_year"] < min_year:
