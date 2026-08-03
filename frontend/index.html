@@ -1,152 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Company Overview — Research Terminal</title>
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Company Overview — Research Terminal</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- ============================== top bar ============================== -->
-  <nav class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <span class="brand-mark">RT</span>
-        <span>Research Terminal<br /><small>Corporate Finance</small></span>
-      </div>
-      <div class="nav-tabs">
-        <a class="nav-tab active" href="index.html">Company Overview</a>
-        <span class="nav-tab soon">Financial Statement Analysis <span class="soon-pill">Soon</span></span>
-        <span class="nav-tab soon">Private Credit Report <span class="soon-pill">Soon</span></span>
-        <span class="nav-tab soon">Strategy Analysis <span class="soon-pill">Soon</span></span>
-      </div>
-      <div class="topbar-right" id="topbar-asof"></div>
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">RT</span>
+      <span class="brand-title">Research Terminal</span>
     </div>
-  </nav>
-
-  <div class="page">
-
-    <!-- ========================== company header ========================== -->
-    <header class="card header">
-      <div class="search-box">
-        <input type="search" id="company-search"
-               placeholder="Search ticker, CIK, or company name…"
-               autocomplete="off" />
-        <button type="button" class="search-btn" id="search-btn"
-                title="Search companies">Search</button>
-        <div class="search-results" id="search-results"></div>
-      </div>
-      <div class="header-left">
-        <h1 id="company-name">—</h1>
-        <div class="header-sub" id="header-sub">—</div>
-      </div>
-      <div class="header-stats" id="header-stats"><!-- filled by app.js --></div>
-      <div class="header-facts" id="header-facts"><!-- filled by app.js --></div>
-    </header>
-
-    <!-- ============================= charts row ============================ -->
-    <section class="charts-row">
-      <div class="charts-col">
-        <div class="card chart-panel">
-          <div class="chart-head chart-rule">
-            <h2>Price &amp; Value Traded — 30 Trading Days</h2>
-            <span class="chart-note">OHLC average vs daily value traded</span>
-          </div>
-          <div class="chart-body" id="chart-30d-wrap">
-            <canvas id="chart-30d"></canvas>
-          </div>
-        </div>
-        <div class="card chart-panel">
-          <div class="chart-head chart-rule">
-            <h2>Price &amp; Value Traded — 6 Months</h2>
-            <span class="chart-note">OHLC average vs daily value traded</span>
-          </div>
-          <div class="chart-body" id="chart-6m-wrap">
-            <canvas id="chart-6m"></canvas>
-          </div>
-        </div>
-      </div>
-      <div class="card analyst-panel">
-        <h2>Analyst Opinion &amp; News</h2>
-        <div class="analyst-body" id="analyst-body"><!-- filled by app.js --></div>
-      </div>
-    </section>
-
-    <!-- ============================ three columns ========================== -->
-    <section class="columns">
-
-      <!-- column 1: company information -->
-      <div class="card col">
-        <h2>Company Information</h2>
-        <div id="company-info"><!-- filled by app.js --></div>
-      </div>
-
-      <!-- column 2: fundamental analysis -->
-      <div class="card col">
-        <div class="col-head">
-          <h2>Fundamental Analysis</h2>
-          <label class="pct-toggle" title="Show % change vs comparison period">
-            <input type="checkbox" id="pct-toggle" /> % change
-          </label>
-        </div>
-
-        <h3 class="table-title">Burn Rate</h3>
-        <table class="grid" id="tbl-burn">
-          <thead></thead><tbody></tbody>
-        </table>
-
-        <h3 class="table-title">Balance Sheet</h3>
-        <table class="grid" id="tbl-bs">
-          <thead></thead><tbody></tbody>
-        </table>
-
-        <h3 class="table-title">Key Ratios <span class="hint">(derived)</span></h3>
-        <table class="grid" id="tbl-ratios">
-          <thead></thead><tbody></tbody>
-        </table>
-
-        <h3 class="table-title">Income Statement</h3>
-        <table class="grid" id="tbl-is">
-          <thead></thead><tbody></tbody>
-        </table>
-
-        <h3 class="table-title">Cash Flow <span class="hint">(single quarter)</span></h3>
-        <table class="grid" id="tbl-cf">
-          <thead></thead><tbody></tbody>
-        </table>
-      </div>
-
-      <!-- column 3: volume & shares -->
-      <div class="col-stack">
-        <div class="card col">
-          <h2>Volume &amp; Liquidity</h2>
-          <h3 class="table-title">Volume Stats</h3>
-          <table class="grid" id="tbl-vol">
-            <thead></thead><tbody></tbody>
-          </table>
-          <h3 class="table-title">Value Stats (US$)</h3>
-          <table class="grid" id="tbl-val">
-            <thead></thead><tbody></tbody>
-          </table>
-          <h3 class="table-title">Days to Liquidate
-            <span class="hint">(% of avg daily value)</span></h3>
-          <div id="liq-tables"></div>
-        </div>
-        <div class="card col">
-          <h2>Share Information</h2>
-          <table class="grid" id="tbl-shares">
-            <thead></thead><tbody></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <footer id="footer">—</footer>
+    <nav class="nav-tabs" aria-label="Dashboards">
+      <a class="nav-tab active" href="index.html" aria-current="page">Company Overview</a>
+      <span class="nav-tab soon">Financial Statement Analysis <span class="soon-pill">Soon</span></span>
+      <span class="nav-tab soon">Private Credit Report <span class="soon-pill">Soon</span></span>
+      <span class="nav-tab soon">Strategy Analysis <span class="soon-pill">Soon</span></span>
+    </nav>
+    <div class="topbar-right" id="topbar-asof"></div>
   </div>
+</header>
 
-  <script src="vendor/chart.umd.min.js"></script>
-  <script src="data/company-kblb.js"></script>
-  <script src="app.js"></script>
+<main class="app" id="app">
+
+  <header class="top">
+    <div>
+      <h1>Company Overview</h1>
+      <p class="subtitle">Fundamentals, market activity &amp; analyst notes</p>
+    </div>
+    <div class="search">
+      <input type="search" id="q" role="combobox" aria-expanded="false" aria-controls="results"
+             aria-label="Search ticker, CIK, or company name"
+             placeholder="Search ticker, CIK, or company name…" autocomplete="off" />
+      <div class="search-results" id="results"><ul role="listbox" id="results-list" aria-label="Matching companies"></ul></div>
+    </div>
+  </header>
+
+  <section class="hero" aria-label="Selected company">
+    <div class="hero-id">
+      <img id="co-logo" alt="" referrerpolicy="no-referrer" hidden />
+      <div>
+        <h2 id="co-name">—</h2>
+        <p class="meta" id="co-meta"></p>
+      </div>
+    </div>
+    <div class="hero-price" id="hero-price" role="group" aria-label="Latest price and change">
+      <div class="px-row">
+        <output id="px" class="num">—</output>
+        <span class="delta flat" id="px-change">—</span>
+      </div>
+      <p class="asof" id="px-asof"></p>
+    </div>
+    <dl class="hero-facts" id="hero-facts"></dl>
+  </section>
+
+  <section class="kpis" id="kpis" aria-label="Key metrics"></section>
+
+  <section class="panel-card" id="chart-panel">
+    <div class="panel-head">
+      <h2>Price &amp; Value Traded</h2>
+      <div class="seg" role="group" aria-label="Chart range">
+        <button type="button" id="range-30" aria-pressed="true">30 Days</button>
+        <button type="button" id="range-6m" aria-pressed="false">6 Months</button>
+      </div>
+    </div>
+    <div id="chart" role="img" aria-label="Price and value traded chart"></div>
+  </section>
+
+  <section class="panels" id="panels">
+
+    <div class="panel-card" id="panel-fund">
+      <div class="toggle-row">
+        <h2>Fundamentals</h2>
+        <label class="pct-toggle"><input type="checkbox" id="pct" /> <span id="pct-lbl">% Change vs Comparison Period</span></label>
+      </div>
+      <h3>Balance Sheet</h3>
+      <table class="grid" id="t-bs"></table>
+      <h3 id="h-is">Income Statement</h3>
+      <table class="grid" id="t-is"></table>
+      <h3>Cash Flow</h3>
+      <table class="grid" id="t-cf"></table>
+      <h3>Burn Rate</h3>
+      <table class="grid" id="t-burn"></table>
+    </div>
+
+    <div class="panel-card" id="panel-ratios">
+      <h2>Key Ratios &amp; Earnings</h2>
+      <table class="grid" id="t-ratios" style="margin-top:10px"></table>
+      <h3>Earnings Per Share</h3>
+      <table class="grid" id="t-eps"></table>
+      <p class="caveat" id="eps-note" hidden></p>
+    </div>
+
+    <div class="panel-card" id="panel-liq">
+      <h2>Volume &amp; Liquidity</h2>
+      <h3>Trading Activity</h3>
+      <table class="grid" id="t-vol"></table>
+      <h3>Days to Liquidate</h3>
+      <table class="grid" id="t-liq"></table>
+    </div>
+
+    <div class="panel-card" id="panel-notes">
+      <h2>Analyst Notes &amp; News</h2>
+      <div id="notes-body"></div>
+      <h3>Recent News</h3>
+      <ul class="news" id="news"></ul>
+      <p class="caveat" id="caveats" hidden></p>
+    </div>
+
+  </section>
+
+  <section id="coverage" class="coverage" hidden>
+    <h3 id="coverage-title">Coverage Pending</h3>
+    <p id="coverage-text"></p>
+    <button type="button" id="coverage-back">View KBLB Overview</button>
+  </section>
+
+  <footer class="src-footer" id="src-footer"></footer>
+</main>
+
+<script src="data/company-index.js"></script>
+<script src="data/company-kblb.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
