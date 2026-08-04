@@ -28,7 +28,7 @@
     var CH_MUT = "#8a8b92";   /* axis labels, dates */
     var CH_BRD = "#e3e4e7";   /* gridlines, column outline */
     var CH_LINE = "#c07a08";  /* price line, amber/gold */
-    var CH_BAR = "#ffffff";   /* value-traded columns, pure white */
+    var CH_BAR = "#151515";   /* value-traded columns, near-black */
 
     function $(id) { return document.getElementById(id); }
 
@@ -105,10 +105,16 @@
       $("px").textContent = px !== null && px !== undefined ? "$" + Number(px).toFixed(px < 1 ? 4 : 2) : "—";
       var ch = $("px-change");
       if (m.change2d && m.change2d.pct !== null && m.change2d.pct !== undefined) {
-        ch.textContent = fmtPct(m.change2d.pct) + " vs " + fmtDate(m.change2d.vsDate);
+        ch.textContent = fmtPct(m.change2d.pct) +
+          (m.change2d.vsDate ? " vs " + fmtDate(m.change2d.vsDate) : " vs prev close");
         ch.className = "delta " + cls(m.change2d.pct);
       } else { ch.textContent = "—"; ch.className = "delta flat"; }
-      $("px-asof").textContent = m.asOf ? "As of " + fmtDate(m.asOf) + " · OHLC Avg $" + Number(m.currentPrice || px).toFixed(4) : "";
+      var asofPx = Number(m.currentPrice || px);
+      $("px-asof").textContent = m.asOf
+        ? (d.liveQuoteAt
+            ? "Live quote · As of " + fmtDate(m.asOf)
+            : "As of " + fmtDate(m.asOf) + " · OHLC Avg $" + asofPx.toFixed(asofPx < 1 ? 4 : 2))
+        : "";
 
       var facts = [
         ["Market Cap", money(m.marketCap)],
@@ -167,12 +173,14 @@
     function renderChart(d) {
       var box = $("chart");
       if (!box) return;
-      if (!d || !d.price) {
+      if (!d || !d.price || !d.price.series) {
         box.innerHTML = "";
         var p = document.createElement("p");
         p.className = "na";
         p.style.cssText = "padding:28px 0;text-align:center;color:#8a8b92;font-size:12.5px";
-        p.textContent = "Price history is not available for this company yet — the market-data feed currently covers KBLB only.";
+        p.textContent = liveLoading[state.ticker]
+          ? "Loading live price history…"
+          : "Price history is not available for this ticker from the connected market-data providers.";
         box.appendChild(p);
         return;
       }
@@ -362,9 +370,9 @@
 
     /* ---------- volume & liquidity ---------- */
     function renderLiquidity(d) {
-      if (!d.price) {
+      if (!d.price || !d.price.series) {
         fillTable($("t-vol"), ["Activity", "30-Day", "60-Day", "90-Day"], [
-          [{ v: "No trading activity feed for this company yet", c: "na" }, "", "", ""]
+          [{ v: liveLoading[state.ticker] ? "Loading live trading data…" : "No trading activity feed available for this ticker", c: "na" }, "", "", ""]
         ]);
         fillTable($("t-liq"), ["Position", "30-Day Avg", "60-Day Avg", "90-Day Avg"], [
           [{ v: "No liquidation estimates available", c: "na" }, "", "", ""]
@@ -394,32 +402,72 @@
 
     /* ---------- analyst notes & news ---------- */
     function renderNotes(d) {
-      var ins = d.insight || {}, needs = ins.company_needs || {};
-      var blocks = [];
-      if (needs.general_direction) blocks.push(["Direction", needs.general_direction]);
-      if (needs.financing_need) blocks.push(["Financing Need", needs.financing_need]);
-      if (needs.sources_of_funds) blocks.push(["Sources of Funds", needs.sources_of_funds]);
+      var blocks = [], news = [], live = d.liveInsight || null;
+
+      if (live) {
+        var a = live.analyst, pt = live.priceTarget;
+        if (a) blocks.push(["Analyst Consensus" + (a.period ? " · " + a.period.slice(0, 7) : ""),
+          "Strong Buy " + (a.strongBuy || 0) + "  ·  Buy " + (a.buy || 0) +
+          "  ·  Hold " + (a.hold || 0) + "  ·  Sell " + (a.sell || 0) +
+          "  ·  Strong Sell " + (a.strongSell || 0)]);
+        if (pt) blocks.push(["Analyst Price Target",
+          "Mean $" + Number(pt.mean).toFixed(2) +
+          (pt.low != null && pt.high != null
+            ? " · range $" + Number(pt.low).toFixed(2) + " – $" + Number(pt.high).toFixed(2) : "") +
+          (pt.analysts ? " · " + pt.analysts + " analysts" : "") +
+          (pt.updated ? " · updated " + fmtDate(String(pt.updated).slice(0, 10)) : "")]);
+        news = (live.news || []).slice(0, 5);
+      }
+
+      if (!blocks.length) {
+        var ins = d.insight || {}, needs = ins.company_needs || {};
+        if (needs.general_direction) blocks.push(["Direction", needs.general_direction]);
+        if (needs.financing_need) blocks.push(["Financing Need", needs.financing_need]);
+        if (needs.sources_of_funds) blocks.push(["Sources of Funds", needs.sources_of_funds]);
+        if (!news.length) news = (ins.news || []).slice(0, 5);
+      }
       $("notes-body").innerHTML = blocks.map(function (b) {
         return "<p class='note-block'><span class='tag'>" + b[0] + "</span>" + b[1] + "</p>";
-      }).join("") || "<p class='note-block na'>No analyst notes available for this period.</p>";
+      }).join("") || "<p class='note-block na'>" +
+        (liveLoading[state.ticker] ? "Loading live analyst data…"
+          : "No analyst coverage available for this ticker.") + "</p>";
 
-      var news = (ins.news || []).slice(0, 5);
       $("news").innerHTML = news.map(function (n) {
         return "<li><span class='n-meta'><span>" + fmtDate(n.date) + "</span><span>·</span><span>" + (n.source || "") + "</span></span>" +
                "<p class='n-title'>" + n.title + "</p></li>";
       }).join("") || "<li><p class='n-title na'>No recent news items.</p></li>";
 
       var cav = $("caveats");
-      if (ins.caveats) { cav.textContent = "Caveats: " + ins.caveats; cav.hidden = false; } else cav.hidden = true;
+      var candleLbl = d.liveCandleSource === "yahoo" ? "Yahoo Finance"
+        : d.liveCandleSource === "alphavantage" ? "Alpha Vantage"
+        : d.liveCandleSource === "finnhub" ? "Finnhub" : null;
+      if (!live && d.insight && d.insight.caveats) {
+        cav.textContent = "Caveats: " + d.insight.caveats; cav.hidden = false;
+      } else if (live) {
+        cav.textContent = "Live analyst & news feed: Finnhub" +
+          (candleLbl && candleLbl !== "Finnhub" ? " · prices: " + candleLbl : "") + ".";
+        cav.hidden = false;
+      } else cav.hidden = true;
     }
 
     /* ---------- footer ---------- */
     function renderFooter(d) {
       var gen = d.generatedAt ? fmtDate(d.generatedAt.slice(0, 10)) : "—";
       var asOf = d.price && d.price.market && d.price.market.asOf ? fmtDate(d.price.market.asOf) : "—";
-      $("src-footer").textContent =
+      var txt =
         "Source: " + (d.source || "finance_db") + ". Export generated " + gen +
         " · Prices as of " + asOf + ". Derived ratios are computed from reported figures.";
+      if (d.liveQuoteAt) {
+        var candleLbl = d.liveCandleSource === "yahoo" ? "Yahoo Finance"
+          : d.liveCandleSource === "alphavantage" ? "Alpha Vantage"
+          : d.liveCandleSource === "finnhub" ? "Finnhub" : null;
+        txt += " Live market data pulled " + fmtDate(d.liveQuoteAt) +
+          " (quote, analysts & news: Finnhub" +
+          (candleLbl && candleLbl !== "Finnhub" ? " · prices: " + candleLbl : "") + ").";
+      }
+      var span = $("src-footer-text");
+      if (span) span.textContent = txt;
+      else $("src-footer").textContent = txt;
     }
 
     /* ---------- coverage state ---------- */
@@ -459,7 +507,9 @@
         delete loading[ticker];
         COVERAGE[ticker] = window.COMPANY_OVERVIEW_DATA || null;
         window.COMPANY_OVERVIEW_DATA = null;
-        if (state.ticker === ticker && COVERAGE[ticker]) renderAll(COVERAGE[ticker]);
+        if (state.ticker !== ticker || !COVERAGE[ticker]) return;
+        if (LIVE[ticker]) applyLive(ticker, LIVE[ticker]);
+        else { renderAll(COVERAGE[ticker]); fetchLive(ticker); }
       };
       s.onerror = function () {
         delete loading[ticker];
@@ -485,11 +535,178 @@
     function select(ticker) {
       state.ticker = ticker;
       var d = COVERAGE[ticker];
-      if (d) { renderAll(d); return; }
+      if (d) { renderAll(d); fetchLive(ticker); return; }
       var meta = BY_TICKER[ticker];
       if (!meta) return;
-      if (COVERED[ticker]) { renderLoading(ticker); loadCompany(ticker); }
+      if (COVERED[ticker]) {
+        renderLoading(ticker);
+        loadCompany(ticker);
+        fetchLive(ticker);
+      }
       else renderNoCoverage({ ticker: meta[0], cik: meta[1], name: meta[2] });
+    }
+
+    /* ---------- live market data (per-company API pull) ---------- */
+    var LIVE = {}, liveLoading = {};
+
+    function tailAvg(xs, n) {
+      var w = xs.length >= n ? xs.slice(xs.length - n) : xs.slice();
+      if (!w.length) return null;
+      var s = 0; for (var i = 0; i < w.length; i++) s += w[i];
+      return s / w.length;
+    }
+    /* port of the exporter's price_block: same shape, same formulas */
+    function priceBlockFromCandles(candles, shares) {
+      var series = candles.map(function (p) {
+        var ohlcAvg = (p.open + p.high + p.low + p.close) / 4;
+        return { date: p.date, ohlcAvg: ohlcAvg, close: p.close,
+                 volume: p.volume, valueTraded: ohlcAvg * p.volume };
+      });
+      var vols = series.map(function (s) { return s.volume; });
+      var vals = series.map(function (s) { return s.valueTraded; });
+      var v30 = vols.slice(-30), val30 = vals.slice(-30);
+      var volumeStats = {
+        avg30: tailAvg(vols, 30), avg60: tailAvg(vols, 60), avg90: tailAvg(vols, 90),
+        min30: v30.length ? Math.min.apply(null, v30) : null,
+        max30: v30.length ? Math.max.apply(null, v30) : null
+      };
+      var valueStats = {
+        avg30: tailAvg(vals, 30), avg60: tailAvg(vals, 60), avg90: tailAvg(vals, 90),
+        min30: val30.length ? Math.min.apply(null, val30) : null,
+        max30: val30.length ? Math.max.apply(null, val30) : null,
+        daysUnder5k30: val30.filter(function (v) { return v < 5000; }).length
+      };
+      function liq(amount, pct, n) {
+        var a = tailAvg(vals, n);
+        if (!a) return null;
+        var days = amount / (pct * a);
+        return { days: Math.round(days * 10) / 10, months: Math.round(days / 21 * 10) / 10 };
+      }
+      var liquidation = [0.3, 0.2, 0.1].map(function (pct) {
+        return { pct: pct, rows: [100000, 50000, 25000].map(function (amount) {
+          return { amount: amount, d30: liq(amount, pct, 30),
+                   d60: liq(amount, pct, 60), d90: liq(amount, pct, 90) };
+        }) };
+      });
+      var latest = series[series.length - 1];
+      var base2 = series.length >= 3 ? series[series.length - 3]
+        : (series.length >= 2 ? series[series.length - 2] : null);
+      var price = latest.ohlcAvg;
+      return {
+        series: series, series30: series.slice(-22),
+        volumeStats: volumeStats, valueStats: valueStats,
+        liquidation: liquidation,
+        market: {
+          asOf: latest.date, currentPrice: price, close: latest.close,
+          change2d: base2 ? {
+            abs: price - base2.ohlcAvg,
+            pct: (price / base2.ohlcAvg - 1) * 100,
+            vsDate: base2.date
+          } : { abs: null, pct: null, vsDate: null },
+          marketCap: shares ? price * shares : null,
+          shares499: shares ? 0.0499 * shares : null,
+          value499: shares ? 0.0499 * shares * price : null
+        }
+      };
+    }
+
+    function applyLive(ticker, live) {
+      var d = COVERAGE[ticker];
+      if (!d) return;
+      var prof = live.profile || {};
+      var shares = prof.sharesOutstanding ||
+        (d.shares && d.shares.outstanding) || null;
+      var q = live.quote || null;
+
+      if (live.candles && live.candles.length) {
+        d.price = priceBlockFromCandles(live.candles, shares);
+        d.price.liveSource = live.candleSource || null;
+      }
+      if (d.price && q) {
+        var m = d.price.market = d.price.market || {};
+        m.currentPrice = q.price;
+        m.close = q.price;
+        m.asOf = q.time || (live.asOf || "").slice(0, 10) || m.asOf;
+        if (q.changePct !== null && q.changePct !== undefined) {
+          m.change2d = { abs: q.changeAbs, pct: q.changePct, vsDate: null };
+        }
+      }
+      if (d.price && d.price.market) {
+        if (prof.marketCap) d.price.market.marketCap = prof.marketCap;
+        else if (d.price.market.marketCap == null && shares &&
+                 d.price.market.close) {
+          d.price.market.marketCap = shares * d.price.market.close;
+        }
+      }
+      if (!d.price && q) {
+        d.price = { series: null, series30: null,
+                    market: { asOf: q.time || (live.asOf || "").slice(0, 10),
+                              currentPrice: q.price, close: q.price,
+                              change2d: { abs: q.changeAbs, pct: q.changePct, vsDate: null },
+                              marketCap: prof.marketCap ||
+                                (shares ? shares * q.price : null) } };
+      }
+      if (prof.floatShares) d.company.float_shares = prof.floatShares;
+      if (prof.sharesOutstanding) {
+        d.shares = d.shares || {};
+        d.shares.outstanding = prof.sharesOutstanding;
+      }
+      if (prof.logo && !d.company.logo_url) d.company.logo_url = prof.logo;
+      if (prof.industry && !d.company.industry) d.company.industry = prof.industry;
+      d.liveCandleSource = live.candleSource || null;
+      if (live.analyst || live.priceTarget || (live.news && live.news.length)) {
+        d.liveInsight = { analyst: live.analyst, priceTarget: live.priceTarget,
+                          news: live.news || [] };
+      }
+      d.liveQuoteAt = (live.asOf || "").slice(0, 10) || null;
+      if (state.ticker === ticker) renderAll(d);
+    }
+
+    function fetchLive(ticker, force) {
+      if (!force && LIVE[ticker]) { applyLive(ticker, LIVE[ticker]); return; }
+      if (liveLoading[ticker]) return;
+      liveLoading[ticker] = true;
+      var settle = function (payload) {
+        delete liveLoading[ticker];
+        if (payload && !payload.error && payload.ticker === ticker) {
+          LIVE[ticker] = payload;
+          applyLive(ticker, payload);
+        } else {
+          var d = COVERAGE[ticker];
+          if (d && state.ticker === ticker) {
+            renderChart(d); renderLiquidity(d); renderNotes(d);
+          }
+        }
+      };
+      fetch("/api/market?ticker=" + encodeURIComponent(ticker))
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(settle)
+        .catch(function () { settle(null); });
+    }
+
+    function refreshTicker(ticker) {
+      if (!ticker) return;
+      var btn = $("refresh-btn");
+      if (btn) { btn.disabled = true; btn.textContent = "Refreshing…"; }
+      var done = function () {
+        if (btn) { btn.disabled = false; btn.textContent = "Refresh"; }
+      };
+      delete LIVE[ticker];
+      delete COVERAGE[ticker];
+      renderLoading(ticker);
+      var s = document.createElement("script");
+      s.src = "data/company-" + ticker.toLowerCase() + ".js?v=" + Date.now();
+      s.onload = function () {
+        COVERAGE[ticker] = window.COMPANY_OVERVIEW_DATA || null;
+        window.COMPANY_OVERVIEW_DATA = null;
+        if (state.ticker === ticker && COVERAGE[ticker]) {
+          renderAll(COVERAGE[ticker]);
+        }
+        fetchLive(ticker, true);
+        setTimeout(done, 800);
+      };
+      s.onerror = function () { select(ticker); done(); };
+      document.head.appendChild(s);
     }
 
     /* ---------- search ---------- */
@@ -559,6 +776,8 @@
     /* ---------- controls ---------- */
     $("range-30").addEventListener("click", function () { setRange("30d"); });
     $("range-6m").addEventListener("click", function () { setRange("6m"); });
+    var refreshBtn = $("refresh-btn");
+    if (refreshBtn) refreshBtn.addEventListener("click", function () { refreshTicker(state.ticker); });
     function setRange(r) {
       state.range = r;
       $("range-30").setAttribute("aria-pressed", r === "30d" ? "true" : "false");

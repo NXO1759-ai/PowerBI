@@ -247,7 +247,17 @@ td.na, .na { color: var(--kimi-color-text-quaternary); }
   margin-top: 6px; padding-top: 10px;
   border-top: 1px solid var(--kimi-color-border);
   font-size: 11px; line-height: 1.6; color: var(--kimi-color-text-tertiary);
+  display: flex; justify-content: space-between; align-items: center; gap: 14px;
 }
+.src-footer #src-footer-text { flex: 1 1 auto; min-width: 0; }
+#refresh-btn {
+  flex: 0 0 auto; padding: 5px 14px; border-radius: 7px; cursor: pointer;
+  font-size: 11.5px; font-weight: 500; min-block-size: 28px;
+  background: #151515; color: #ffffff; border: 1px solid #151515;
+}
+#refresh-btn:hover { background: #000000; border-color: #000000; }
+#refresh-btn:disabled { opacity: 0.55; cursor: default; }
+#refresh-btn:focus-visible { outline: 2px solid var(--kimi-color-accent); outline-offset: 2px; }
 
 /* ---- responsive ---- */
 @media (max-width: 980px) {
