@@ -36,7 +36,8 @@
     function money(v) {
       if (v === null || v === undefined || isNaN(v)) return "—";
       var neg = v < 0, a = Math.abs(v), s;
-      if (a >= 1e9) s = (a / 1e9).toFixed(2) + "B";
+      if (a >= 1e12) s = (a / 1e12).toFixed(2) + "T";
+      else if (a >= 1e9) s = (a / 1e9).toFixed(2) + "B";
       else if (a >= 1e6) s = (a / 1e6).toFixed(2) + "M";
       else if (a >= 1e3) s = (a / 1e3).toFixed(1) + "K";
       else s = a.toFixed(a < 1 ? 4 : 2);
@@ -45,7 +46,8 @@
     function count(v) {
       if (v === null || v === undefined || isNaN(v)) return "—";
       var a = Math.abs(v), neg = v < 0, s;
-      if (a >= 1e9) s = (a / 1e9).toFixed(2) + "B";
+      if (a >= 1e12) s = (a / 1e12).toFixed(2) + "T";
+      else if (a >= 1e9) s = (a / 1e9).toFixed(2) + "B";
       else if (a >= 1e6) s = (a / 1e6).toFixed(1) + "M";
       else if (a >= 1e3) s = (a / 1e3).toFixed(1) + "K";
       else s = String(Math.round(a));
@@ -125,10 +127,6 @@
       $("hero-facts").innerHTML = facts.map(function (f) {
         return "<div><dt>" + f[0] + "</dt><dd class='num'>" + f[1] + "</dd></div>";
       }).join("");
-
-      var asof = $("topbar-asof");
-      if (asof) asof.textContent = m.asOf ? "Data as of " + fmtDate(m.asOf)
-        : (d.generatedAt ? "Fundamentals exported " + fmtDate(d.generatedAt.slice(0, 10)) : "");
     }
 
     /* ---------- KPI strip ---------- */
@@ -152,7 +150,7 @@
           raw: burn.q ? burn.q.monthlyBurn : null,
           s: { v: burn.q && burn.q.monthlyBurn < 0 ? "Net Outflow" : "Net Inflow (Financing)", c: burn.q && burn.q.monthlyBurn < 0 ? "down" : "" } },
         { lbl: "Current Ratio", val: currentRatio !== null ? currentRatio.toFixed(2) + "×" : "—",
-          s: { v: runway !== null ? "≈ " + runway.toFixed(1) + " mo runway on op. burn" : "Runway n/a (op. cash ≥ 0)", c: "" } }
+          s: { v: runway !== null ? "≈ " + runway.toFixed(1) + " mo runway on op. burn" : "Cash-positive — runway not applicable", c: "" } }
       ];
       $("kpis").innerHTML = kpis.map(function (k) {
         var val = k.lbl === "Monthly Burn" && k.raw !== null && k.raw !== undefined
@@ -221,7 +219,7 @@
         svg.appendChild(rv);
       }
 
-      /* value bars: pure white columns with a hairline outline */
+      /* value bars: near-black columns with a hairline outline */
       var bw = Math.max(2, Math.min(14, slot * 0.55));
       series.forEach(function (s, i) {
         var bh = (s.valueTraded || 0) / vTop * ih;
@@ -354,7 +352,7 @@
       var runway = (bs.cash.q !== null && cf.cfOps.q !== null && cf.cfOps.q < 0) ? bs.cash.q / (Math.abs(cf.cfOps.q) / 3) : null;
       rows.push(["Current Ratio", cr !== null ? cr.toFixed(2) + "×" : "—"]);
       rows.push(["Liabilities / Assets", la !== null ? la.toFixed(2) + "×" : "—"]);
-      rows.push(["Cash Runway (Op. Burn)", runway !== null ? "≈ " + runway.toFixed(1) + " months" : "n/a — op. cash ≥ 0"]);
+      rows.push(["Cash Runway (Op. Burn)", runway !== null ? "≈ " + runway.toFixed(1) + " months" : "Not applicable — operations generate cash"]);
       rows.push(["Working Capital", money(bs.workingCapital.q)]);
       rows.push(["Equity Position", money(bs.equity.q)]);
       fillTable($("t-ratios"), ["Ratio", d.period.label], rows);
@@ -386,13 +384,20 @@
         ["30-Day Volume Range", count(vs.min30) + " – " + count(vs.max30), { v: "", c: "" }, { v: "", c: "" }]
       ]);
       var rows = [];
+      function fmtDays(days) {
+        if (days === null || days === undefined || isNaN(days)) return "—";
+        if (days >= 1) return days.toFixed(1) + " days";
+        var hrs = days * 6.5; /* trading hours per day */
+        if (hrs >= 0.1) return hrs.toFixed(1) + " hrs";
+        return Math.max(1, Math.round(hrs * 60)) + " min";
+      }
       (d.price.liquidation || []).forEach(function (grp) {
         (grp.rows || []).forEach(function (r) {
           rows.push([
             money(r.amount).replace(".00", "") + " @ " + Math.round((grp.pct || 0) * 100) + "% Participation",
-            r.d30 ? r.d30.days.toFixed(1) + " days" : "—",
-            r.d60 ? r.d60.days.toFixed(1) + " days" : "—",
-            r.d90 ? r.d90.days.toFixed(1) + " days" : "—"
+            r.d30 ? fmtDays(r.d30.days) : "—",
+            r.d60 ? fmtDays(r.d60.days) : "—",
+            r.d90 ? fmtDays(r.d90.days) : "—"
           ]);
         });
       });
@@ -401,47 +406,108 @@
     }
 
     /* ---------- analyst notes & news ---------- */
+    function esc(s) {
+      return String(s === null || s === undefined ? "" : s)
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
     function renderNotes(d) {
-      var blocks = [], news = [], live = d.liveInsight || null;
+      var live = d.liveInsight || null;
+      var ds = d.deepseek || null;
+      var blocks = [], newsItems = [], spikesHtml = "";
 
-      if (live) {
-        var a = live.analyst, pt = live.priceTarget;
-        if (a) blocks.push(["Analyst Consensus" + (a.period ? " · " + a.period.slice(0, 7) : ""),
+      if (live && live.analyst) {
+        var a = live.analyst;
+        blocks.push(["Analyst Consensus" + (a.period ? " · " + a.period.slice(0, 7) : ""),
           "Strong Buy " + (a.strongBuy || 0) + "  ·  Buy " + (a.buy || 0) +
           "  ·  Hold " + (a.hold || 0) + "  ·  Sell " + (a.sell || 0) +
           "  ·  Strong Sell " + (a.strongSell || 0)]);
-        if (pt) blocks.push(["Analyst Price Target",
-          "Mean $" + Number(pt.mean).toFixed(2) +
-          (pt.low != null && pt.high != null
-            ? " · range $" + Number(pt.low).toFixed(2) + " – $" + Number(pt.high).toFixed(2) : "") +
-          (pt.analysts ? " · " + pt.analysts + " analysts" : "") +
-          (pt.updated ? " · updated " + fmtDate(String(pt.updated).slice(0, 10)) : "")]);
-        news = (live.news || []).slice(0, 5);
       }
 
-      if (!blocks.length) {
+      if (ds && ds.company_needs) {
+        var nd = ds.company_needs;
+        [["Direction", nd.general_direction], ["Plans", nd.plans],
+         ["Uses of Funds", nd.uses_of_funds],
+         ["Sources of Funds", nd.sources_of_funds],
+         ["Financing Need", nd.financing_need]].forEach(function (p) {
+          if (p[1]) blocks.push([p[0], p[1]]);
+        });
+        if (ds.spike_analysis && ds.spike_analysis.length) {
+          spikesHtml = "<h3>Value-Traded Spikes</h3>" +
+            ds.spike_analysis.slice(0, 3).map(function (s) {
+              var drivers = (s.drivers || []).filter(Boolean);
+              var linked = (s.news || []).map(function (n) { return n.title; }).filter(Boolean);
+              return "<p class='note-block'><span class='tag'>Spike · " + fmtDate(s.date) + "</span>" +
+                     esc(s.observation) +
+                     (drivers.length ? "<br><span class='spike-drivers'>" + esc(drivers.join(" · ")) + "</span>" : "") +
+                     (linked.length ? "<br><span class='spike-news'>Linked: " + esc(linked.join("  |  ")) + "</span>" : "") +
+                     "</p>";
+            }).join("");
+        }
+        newsItems = (ds.picked_news || []).map(function (n) {
+          return { date: n.date, source: n.source, title: n.title,
+                   relevance: n.relevance };
+        });
+      }
+
+      if (!ds) {
+        if (live && live.priceTarget) {
+          var pt = live.priceTarget;
+          blocks.push(["Analyst Price Target",
+            "Mean $" + Number(pt.mean).toFixed(2) +
+            (pt.low != null && pt.high != null
+              ? " · range $" + Number(pt.low).toFixed(2) + " – $" + Number(pt.high).toFixed(2) : "") +
+            (pt.analysts ? " · " + pt.analysts + " analysts" : "") +
+            (pt.updated ? " · updated " + fmtDate(String(pt.updated).slice(0, 10)) : "")]);
+        }
         var ins = d.insight || {}, needs = ins.company_needs || {};
         if (needs.general_direction) blocks.push(["Direction", needs.general_direction]);
         if (needs.financing_need) blocks.push(["Financing Need", needs.financing_need]);
         if (needs.sources_of_funds) blocks.push(["Sources of Funds", needs.sources_of_funds]);
-        if (!news.length) news = (ins.news || []).slice(0, 5);
+        newsItems = ((live && live.news) || ins.news || []).slice(0, 5);
       }
-      $("notes-body").innerHTML = blocks.map(function (b) {
-        return "<p class='note-block'><span class='tag'>" + b[0] + "</span>" + b[1] + "</p>";
-      }).join("") || "<p class='note-block na'>" +
-        (liveLoading[state.ticker] ? "Loading live analyst data…"
-          : "No analyst coverage available for this ticker.") + "</p>";
 
-      $("news").innerHTML = news.map(function (n) {
-        return "<li><span class='n-meta'><span>" + fmtDate(n.date) + "</span><span>·</span><span>" + (n.source || "") + "</span></span>" +
-               "<p class='n-title'>" + n.title + "</p></li>";
+      var bodyHtml = blocks.map(function (b) {
+        return "<p class='note-block'><span class='tag'>" + b[0] + "</span>" + esc(b[1]) + "</p>";
+      }).join("") + spikesHtml;
+      if (!bodyHtml) {
+        bodyHtml = "<p class='note-block na'>" +
+          (analysisLoading[state.ticker]
+            ? "Analyzing " + esc(state.ticker) + " with DeepSeek — this takes a few seconds…"
+            : liveLoading[state.ticker]
+            ? "Loading live analyst data…"
+            : "No analyst coverage available for this ticker.") + "</p>";
+      }
+      $("notes-body").innerHTML = bodyHtml;
+
+      var spikeLinked = {};
+      if (ds && ds.spike_analysis) {
+        ds.spike_analysis.forEach(function (s) {
+          (s.news || []).forEach(function (n) {
+            if (n.title) spikeLinked[n.title] = true;
+          });
+        });
+      }
+      $("news").innerHTML = newsItems.map(function (n) {
+        var tag = spikeLinked[n.title] ? "<span class='spike-tag'>Spike-linked</span>" : "";
+        return "<li>" + tag +
+               "<span class='n-meta'><span>" + fmtDate(n.date) + "</span><span>·</span><span>" + esc(n.source || "") + "</span></span>" +
+               "<p class='n-title'>" + esc(n.title) + "</p>" +
+               (n.relevance ? "<p class='n-rel'>" + esc(n.relevance) + "</p>" : "") + "</li>";
       }).join("") || "<li><p class='n-title na'>No recent news items.</p></li>";
 
       var cav = $("caveats");
       var candleLbl = d.liveCandleSource === "yahoo" ? "Yahoo Finance"
         : d.liveCandleSource === "alphavantage" ? "Alpha Vantage"
         : d.liveCandleSource === "finnhub" ? "Finnhub" : null;
-      if (!live && d.insight && d.insight.caveats) {
+      if (ds && ds.caveats) {
+        cav.textContent = "Analysis: DeepSeek, from exported fundamentals, " +
+          "market data and 6-month headlines. " + ds.caveats;
+        cav.hidden = false;
+      } else if (ds) {
+        cav.textContent = "Analysis: DeepSeek, from exported fundamentals, " +
+          "market data and 6-month headlines.";
+        cav.hidden = false;
+      } else if (!live && d.insight && d.insight.caveats) {
         cav.textContent = "Caveats: " + d.insight.caveats; cav.hidden = false;
       } else if (live) {
         cav.textContent = "Live analyst & news feed: Finnhub" +
@@ -482,10 +548,51 @@
       $("co-meta").innerHTML = "<span class='tk'>" + meta.ticker + "</span> <span class='sep'>·</span> <span class='tk'>CIK " + meta.cik + "</span>";
       $("co-logo").hidden = true;
       setDataVisible(false);
-      $("coverage-title").textContent = meta.ticker + " — Coverage Pending";
+      $("coverage-title").textContent = meta.ticker + " — No Data Pulled Yet";
       $("coverage-text").textContent =
-        meta.name + " is in the tracked universe, but its fundamentals have not been exported from finance_db yet. " +
-        "Coverage expands as the monthly refresh pipeline runs.";
+        meta.name + " is not in the exported coverage set. Pull its fundamentals directly from SEC EDGAR — " +
+        "it takes a few seconds, then the full overview renders like any covered company.";
+      var btn = $("pull-btn");
+      if (btn) {
+        btn.hidden = false;
+        btn.disabled = false;
+        btn.textContent = "Pull " + meta.ticker + " Data";
+      }
+    }
+    function pullTicker(ticker) {
+      var meta = BY_TICKER[ticker];
+      if (!meta) return;
+      var btn = $("pull-btn");
+      if (btn) { btn.disabled = true; btn.textContent = "Pulling from SEC EDGAR…"; }
+      $("coverage-title").textContent = ticker + " — Pulling Data…";
+      $("coverage-text").textContent =
+        "Fetching " + meta[2] + " fundamentals from SEC EDGAR (10-K/10-Q XBRL facts)…";
+      fetch("/api/pull?ticker=" + encodeURIComponent(ticker) +
+            "&cik=" + encodeURIComponent(meta[1]) +
+            "&name=" + encodeURIComponent(meta[2]))
+        .then(function (r) {
+          return r.json().then(function (body) {
+            if (!r.ok) {
+              throw new Error(body && body.error ? body.error
+                : "SEC pull failed (HTTP " + r.status + ")");
+            }
+            return body;
+          });
+        })
+        .then(function (d) {
+          if (btn) btn.hidden = true;
+          COVERAGE[ticker] = d;
+          COVERED[ticker] = true;
+          if (state.ticker === ticker) renderAll(d);
+          fetchLive(ticker);
+        })
+        .catch(function (err) {
+          $("coverage-title").textContent = ticker + " — Pull Failed";
+          $("coverage-text").textContent =
+            String(err && err.message ? err.message : err) +
+            " You can retry — SEC EDGAR rate-limits bursts.";
+          if (btn) { btn.disabled = false; btn.textContent = "Retry Pull"; }
+        });
     }
     function renderLoading(ticker) {
       var meta = BY_TICKER[ticker];
@@ -580,10 +687,17 @@
         var a = tailAvg(vals, n);
         if (!a) return null;
         var days = amount / (pct * a);
-        return { days: Math.round(days * 10) / 10, months: Math.round(days / 21 * 10) / 10 };
+        return { days: Math.round(days * 1000) / 1000, months: Math.round(days / 21 * 10) / 10 };
       }
+      /* position tiers scale with the company's liquidity — micro-cap
+         defaults (100K/50K/25K) are meaningless for mega-caps */
+      var avgV = tailAvg(vals, 90) || 0;
+      var amounts = avgV >= 1e9 ? [50e6, 25e6, 10e6]
+        : avgV >= 1e8 ? [10e6, 5e6, 2.5e6]
+        : avgV >= 1e7 ? [1e6, 5e5, 2.5e5]
+        : [1e5, 5e4, 2.5e4];
       var liquidation = [0.3, 0.2, 0.1].map(function (pct) {
-        return { pct: pct, rows: [100000, 50000, 25000].map(function (amount) {
+        return { pct: pct, rows: amounts.map(function (amount) {
           return { amount: amount, d30: liq(amount, pct, 30),
                    d60: liq(amount, pct, 60), d90: liq(amount, pct, 90) };
         }) };
@@ -659,7 +773,9 @@
                           news: live.news || [] };
       }
       d.liveQuoteAt = (live.asOf || "").slice(0, 10) || null;
+      if (ANALYSIS[ticker]) d.deepseek = ANALYSIS[ticker];
       if (state.ticker === ticker) renderAll(d);
+      fetchAnalysis(ticker);
     }
 
     function fetchLive(ticker, force) {
@@ -684,6 +800,91 @@
         .catch(function () { settle(null); });
     }
 
+    /* ---------- DeepSeek analysis (runs on every company change) ---------- */
+    var ANALYSIS = {}, analysisLoading = {};
+
+    /* top value-traded days with context — mirrors loaders/09 evidence */
+    function computeSpikes(series) {
+      if (!series || !series.length) return [];
+      return series.map(function (b, i) {
+        var prev = i ? series[i - 1] : null;
+        var win = series.slice(Math.max(0, i - 20), i)
+          .map(function (x) { return x.volume; });
+        var avg20 = win.length
+          ? win.reduce(function (s, v) { return s + v; }, 0) / win.length
+          : null;
+        return {
+          date: b.date,
+          valueTradedUsd: Math.round(b.valueTraded || 0),
+          volumeShares: b.volume,
+          ohlcAvgUsd: Math.round((b.ohlcAvg || 0) * 10000) / 10000,
+          dayChangePct: prev && prev.ohlcAvg
+            ? Math.round(((b.ohlcAvg / prev.ohlcAvg) - 1) * 1000) / 10 : null,
+          volumeVs20DayAvg: avg20
+            ? Math.round((b.volume / avg20) * 10) / 10 : null
+        };
+      }).sort(function (a, b) {
+        return b.valueTradedUsd - a.valueTradedUsd;
+      }).slice(0, 5);
+    }
+
+    function analysisBody(ticker) {
+      var d = COVERAGE[ticker], live = LIVE[ticker] || {};
+      var f = d.fundamentals || {};
+      var bs = f.balanceSheet || {}, is = f.incomeStatement || {};
+      var cf = f.cashFlow || {}, bn = (f.burnRate || {}).q || {};
+      var pick = function (o) { return o ? o.q : null; };
+      return {
+        ticker: ticker,
+        name: d.company && d.company.name,
+        industry: d.company && d.company.industry,
+        period: d.period && d.period.label,
+        fundamentals: {
+          cash: pick(bs.cash), workingCapital: pick(bs.workingCapital),
+          equity: pick(bs.equity),
+          revenue: pick(is.revenue), netIncome: pick(is.netIncome),
+          grossMarginPct: pick(is.grossMarginPct),
+          cfOps: pick(cf.cfOps), cfInv: pick(cf.cfInv), cfFin: pick(cf.cfFin),
+          monthlyBurn: bn.monthlyBurn
+        },
+        marketCap: d.price && d.price.market && d.price.market.marketCap,
+        sharesOutstanding: d.shares && d.shares.outstanding,
+        spikes: d.price && d.price.series ? computeSpikes(d.price.series) : [],
+        news: live.news || [],
+        consensus: live.analyst || null
+      };
+    }
+
+    function fetchAnalysis(ticker) {
+      var d = COVERAGE[ticker];
+      if (!d) return;
+      if (ANALYSIS[ticker]) {
+        d.deepseek = ANALYSIS[ticker];
+        if (state.ticker === ticker) renderNotes(d);
+        return;
+      }
+      if (analysisLoading[ticker]) return;
+      analysisLoading[ticker] = true;
+      if (state.ticker === ticker && !d.deepseek) renderNotes(d);
+      var settle = function (payload) {
+        delete analysisLoading[ticker];
+        var dd = COVERAGE[ticker];
+        if (payload && !payload.error && payload.ticker === ticker) {
+          ANALYSIS[ticker] = payload;
+          if (dd) dd.deepseek = payload;
+        }
+        if (dd && state.ticker === ticker) renderNotes(dd);
+      };
+      fetch("/api/analysis", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(analysisBody(ticker))
+      })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(settle)
+        .catch(function () { settle(null); });
+    }
+
     function refreshTicker(ticker) {
       if (!ticker) return;
       var btn = $("refresh-btn");
@@ -692,6 +893,7 @@
         if (btn) { btn.disabled = false; btn.textContent = "Refresh"; }
       };
       delete LIVE[ticker];
+      delete ANALYSIS[ticker];
       delete COVERAGE[ticker];
       renderLoading(ticker);
       var s = document.createElement("script");
@@ -790,10 +992,21 @@
       var d = COVERAGE[state.ticker];
       if (d) renderFundamentals(d);
     });
-    $("coverage-back").addEventListener("click", function () {
-      q.value = "KBLB — Kraig Biocraft Laboratories, Inc.";
-      select("KBLB");
-    });
+    var pullBtn = $("pull-btn");
+    if (pullBtn) pullBtn.addEventListener("click", function () { pullTicker(state.ticker); });
+
+    /* ---------- about modal ---------- */
+    var aboutModal = $("about-modal");
+    if ($("about-btn") && aboutModal) {
+      $("about-btn").addEventListener("click", function () { aboutModal.hidden = false; });
+      $("about-close").addEventListener("click", function () { aboutModal.hidden = true; });
+      aboutModal.addEventListener("click", function (ev) {
+        if (ev.target === aboutModal) aboutModal.hidden = true;
+      });
+      document.addEventListener("keydown", function (ev) {
+        if (ev.key === "Escape" && !aboutModal.hidden) aboutModal.hidden = true;
+      });
+    }
 
     /* ---------- resize ---------- */
     if (typeof ResizeObserver === "function") {

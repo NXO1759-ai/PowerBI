@@ -215,7 +215,20 @@ def price_block(prices, shares):
         if not a:
             return None
         days = amount / (pct * a)
-        return {"days": round(days, 1), "months": round(days / 21, 1)}
+        return {"days": round(days, 3), "months": round(days / 21, 1)}
+
+    # position tiers scale with the company's liquidity — micro-cap
+    # defaults (100K/50K/25K) are meaningless for mega-caps; keep in
+    # sync with the tier logic in frontend/app.js priceBlockFromCandles
+    avg_v = tail_avg(vals, 90) or 0
+    if avg_v >= 1e9:
+        amounts = (50e6, 25e6, 10e6)
+    elif avg_v >= 1e8:
+        amounts = (10e6, 5e6, 2.5e6)
+    elif avg_v >= 1e7:
+        amounts = (1e6, 5e5, 2.5e5)
+    else:
+        amounts = (1e5, 5e4, 2.5e4)
 
     liquidation = [
         {"pct": pct,
@@ -223,7 +236,7 @@ def price_block(prices, shares):
                    "d30": liq(amount, pct, 30),
                    "d60": liq(amount, pct, 60),
                    "d90": liq(amount, pct, 90)}
-                  for amount in (100000, 50000, 25000)]}
+                  for amount in amounts]}
         for pct in (0.3, 0.2, 0.1)
     ]
 

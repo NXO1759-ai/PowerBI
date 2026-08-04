@@ -8,7 +8,10 @@
  * Providers (keys live in Vercel env vars, never in client code):
  *   FINNHUB_API_KEY      quote, profile2, candles, recommendations, news
  *   ALPHAVANTAGE_API_KEY daily-series fallback (e.g. OTC tickers)
- *   MARKETAUX_API_KEY    news fallback
+ *   MARKETAUX_API_KEY    news fallback + spike-window historical headlines
+ *                        (Finnhub's free tier only returns the last few
+ *                        days of news, so headlines around each top
+ *                        value-traded day are pulled from Marketaux)
  *
  * Every provider call is isolated: a failure degrades that section to
  * null instead of failing the whole response.
@@ -16,7 +19,8 @@
 
 const DAY = 24 * 60 * 60;
 const CANDLE_DAYS = 220; // covers the 6-month chart with margin
-const NEWS_DAYS = 30;
+const NEWS_DAYS = 185;   // 6 months of headlines for spike matching
+const NEWS_CAP = 120;
 
 async function getJson(url, timeoutMs = 12000) {
   const ctrl = new AbortController();
@@ -88,6 +92,46 @@ async function alphaVantageDaily(ticker, key) {
     .sort((a, b) => a.date.localeCompare(b.date));
 }
 
+/* Top value-traded days from a candle series — same metric the frontend
+   uses for spike detection (OHLC-average x volume). */
+function topValueDays(candles, n = 5) {
+  if (!Array.isArray(candles) || !candles.length) return [];
+  return candles.map((c) => ({
+    date: c.date,
+    value: ((c.open + c.high + c.low + c.close) / 4) * (c.volume || 0),
+  })).sort((a, b) => b.value - a.value)
+    .slice(0, n).map((x) => x.date);
+}
+
+/* Headlines within +/-3 days of a spike date. Marketaux covers a full
+   6-month window (Finnhub's free tier does not), which is what lets the
+   analysis match news to historical value-traded spikes. */
+async function marketauxWindow(ticker, key, centerDate) {
+  const center = new Date(centerDate + "T00:00:00Z").getTime();
+  const after = new Date(center - 3 * DAY * 1000).toISOString().slice(0, 10);
+  const before = new Date(center + 3 * DAY * 1000).toISOString().slice(0, 10);
+  const raw = await getJson("https://api.marketaux.com/v1/news/all?" +
+    new URLSearchParams({
+      symbols: ticker, filter_entities: "true", language: "en",
+      published_after: after + "T00:00:00",
+      published_before: before + "T23:59:59",
+      limit: "3", api_token: key,
+    }));
+  return raw && Array.isArray(raw.data) ? raw.data.map((n) => ({
+    title: n.title,
+    date: n.published_at ? n.published_at.slice(0, 10) : null,
+    source: n.source || null,
+    url: n.url || null,
+  })) : [];
+}
+
+/* Per-ticker cache for spike-window headlines: each lookup costs up to 5
+   Marketaux requests and the free plan allows 100/day, so repeat views of
+   a ticker within 6h reuse the first result (per warm instance). */
+const SPIKE_NEWS_TTL_MS = 6 * 60 * 60 * 1000;
+const spikeNewsCache = globalThis.__spikeNewsCache ||
+  (globalThis.__spikeNewsCache = new Map());
+
 export default async function handler(req, res) {
   const ticker = String((req.query && req.query.ticker) || "")
     .toUpperCase().replace(/[^A-Z0-9.\-]/g, "").slice(0, 12);
@@ -135,7 +179,27 @@ export default async function handler(req, res) {
   // News: Finnhub first, Marketaux as fallback.
   let news = null;
   if (Array.isArray(fhNews) && fhNews.length) {
-    news = fhNews.slice(0, 8).map(n => ({
+    /* Finnhub returns most-recent-first; a plain slice would drop older
+       headlines for heavily covered tickers, leaving spike days from
+       weeks/months ago with nothing to match. Keep dense recency (40),
+       then spread the rest across the window at ~3 per ISO week. */
+    const mondayOf = (dateStr) => {
+      const d = new Date(dateStr + "T00:00:00Z");
+      d.setUTCDate(d.getUTCDate() - ((d.getUTCDay() + 6) % 7));
+      return d.toISOString().slice(0, 10);
+    };
+    const recent = fhNews.slice(0, 40);
+    const weekCount = {};
+    const spaced = [];
+    for (const n of fhNews.slice(40)) {
+      const dateStr = n.datetime ? isoDate(n.datetime) : null;
+      const wk = dateStr ? mondayOf(dateStr) : "?";
+      weekCount[wk] = (weekCount[wk] || 0) + 1;
+      if (weekCount[wk] > 3) continue;
+      spaced.push(n);
+      if (recent.length + spaced.length >= NEWS_CAP) break;
+    }
+    news = recent.concat(spaced).slice(0, NEWS_CAP).map(n => ({
       title: n.headline,
       date: n.datetime ? isoDate(n.datetime) : null,
       source: n.source || null,
@@ -146,7 +210,7 @@ export default async function handler(req, res) {
     const raw = await getJson("https://api.marketaux.com/v1/news/all?" +
       new URLSearchParams({
         symbols: ticker, filter_entities: "true",
-        language: "en", limit: "5", api_token: MA,
+        language: "en", limit: "50", api_token: MA,
       }));
     if (raw && Array.isArray(raw.data) && raw.data.length) {
       news = raw.data.map(n => ({
@@ -155,6 +219,31 @@ export default async function handler(req, res) {
         source: n.source || null,
         url: n.url || null,
       }));
+    }
+  }
+
+  /* Historical headlines around each top value-traded day. Without this
+     the analysis has nothing to match against spikes older than a few
+     days (Finnhub's free news window is very short). */
+  if (MA && candles && candles.length) {
+    let spikeNews = null;
+    const hit = spikeNewsCache.get(ticker);
+    if (hit && Date.now() - hit.at < SPIKE_NEWS_TTL_MS) {
+      spikeNews = hit.items;
+    } else {
+      const chunks = await Promise.all(
+        topValueDays(candles, 5).map((d) => marketauxWindow(ticker, MA, d)));
+      spikeNews = chunks.flat();
+      spikeNewsCache.set(ticker, { at: Date.now(), items: spikeNews });
+    }
+    if (spikeNews.length) {
+      const seen = new Set((news || []).map((n) =>
+        (n.title || "").toLowerCase()));
+      const extra = spikeNews.filter((n) =>
+        n.title && !seen.has(n.title.toLowerCase()));
+      news = (news || []).concat(extra)
+        .sort((a, b) => String(b.date).localeCompare(String(a.date)))
+        .slice(0, NEWS_CAP);
     }
   }
 
