@@ -218,7 +218,15 @@ export default async function handler(req, res) {
   }
 
   const facts = results;
-  const [yr, per] = latestQuarter(facts);
+  let [yr, per] = latestQuarter(facts);
+  /* Annual-only filers (20-F/40-F, no quarterly tags): fall back to the
+     latest FY so tables render annual figures instead of nulls. */
+  const fyYears = facts.filter((f) => f.fiscal_period === "FY")
+    .map((f) => f.fiscal_year);
+  if (yr === null && fyYears.length) {
+    yr = Math.max(...fyYears);
+    per = "FY";
+  }
   const lyYr = yr ? yr - 1 : null;
   const shares = sharesOutstanding(facts);
 
@@ -232,8 +240,6 @@ export default async function handler(req, res) {
                     ly: usdAny(facts, concepts, lyYr, per) };
   }
 
-  const fyYears = facts.filter((f) => f.fiscal_period === "FY")
-    .map((f) => f.fiscal_year);
   const isAnnualYr = fyYears.length ? Math.max(...fyYears) : null;
   const isFy = {};
   for (const k of ["revenue", "cogs", "grossProfit", "netIncome"]) {
@@ -258,13 +264,14 @@ export default async function handler(req, res) {
     return vals.every((v) => v === null) ? null
       : vals.reduce((s, v) => s + (v || 0), 0);
   };
+  const spanMonths = per === "FY" ? 12 : 3;
   const burn = (side) => {
     const nc = netChange(side);
     if (nc === null) {
       return { netCashChange: null, monthlyBurn: null,
                remainingCashDays: null };
     }
-    const monthly = nc / 3;
+    const monthly = nc / spanMonths;
     const cash = instants.cash[side];
     let remaining = null;
     if (monthly >= 0) remaining = "Infinite";
@@ -283,14 +290,17 @@ export default async function handler(req, res) {
   const gm = (side) => ratio(flows.grossProfit[side], flows.revenue[side]);
   const data = {
     generatedAt: new Date().toISOString().slice(0, 19),
-    source: "SEC EDGAR 10-K/10-Q (live pull)",
+    source: "SEC EDGAR 10-K/10-Q/20-F/40-F (live pull)",
     company: { ticker, cik, name, exchange: null },
     latestFiling,
     period: {
       fiscalYear: yr, fiscalPeriod: per,
       label: yr ? `${per} ${yr}` : null,
-      compareLabel: yr ? `${per} ${lyYr}` : null,
-      isLabel: qEndStr ? `3 mo ended ${qEndStr}` : null,
+      compareLabel: yr
+        ? (per === "FY" ? `FY ${lyYr}` : `${per} ${lyYr}`) : null,
+      isLabel: qEndStr
+        ? (per === "FY" ? `FY ended ${qEndStr}` : `3 mo ended ${qEndStr}`)
+        : null,
       isCompareLabel: isAnnualYr ? `FY ${isAnnualYr} (annual)` : null,
     },
     fundamentals: {

@@ -62,8 +62,9 @@ function buildPrompt(body) {
     "fundamentals, top value-traded days, numbered headlines, analyst " +
     "consensus). Never invent events, numbers, or articles.\n" +
     "2. Ground the company direction and financing analysis in the most " +
-    "recent SEC filing named in the evidence (10-K or 10-Q, with its " +
-    "filed date). Trace claims to the filing-derived fundamentals (cash, " +
+    "recent SEC filing named in the evidence (10-K, 10-Q, 20-F or 40-F, " +
+    "with its filed date). Trace claims to the filing-derived " +
+    "fundamentals (cash, " +
     "working capital, equity, revenue, margins, the three cash-flow " +
     "lines, monthly burn).\n" +
     "3. Reply as ONE JSON object with exactly these keys:\n" +
@@ -179,8 +180,11 @@ export default async function handler(req, res) {
       if (!resp.ok) return { error: `analysis provider returned ${resp.status}` };
       const raw = await resp.json();
       const parsed = JSON.parse(raw.choices[0].message.content);
-      if (!parsed || !parsed.company_needs ||
-          !parsed.company_needs.general_direction) {
+      const cn = parsed && parsed.company_needs;
+      const NEED = ["general_direction", "plans", "uses_of_funds",
+                    "sources_of_funds", "financing_need"];
+      if (!cn || NEED.some((k) =>
+            typeof cn[k] !== "string" || !cn[k].trim())) {
         return { error: "analysis returned without the mandatory company_needs block" };
       }
       return { payload: parsed };
@@ -191,9 +195,10 @@ export default async function handler(req, res) {
     }
   }
 
-  /* Retry once on any failure; 40s + 15s stays inside maxDuration. */
-  let result = await callDeepSeek(40000);
-  if (result.error) result = await callDeepSeek(15000);
+  /* Retry once on any failure; two balanced 28s attempts stay inside
+     maxDuration (60s) with margin for handler overhead. */
+  let result = await callDeepSeek(28000);
+  if (result.error) result = await callDeepSeek(28000);
   if (result.error) return res.status(502).json({ error: result.error });
   const payload = result.payload;
 

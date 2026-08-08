@@ -473,15 +473,17 @@
          blocks (analyst consensus, price target) rendered — otherwise a
          failed or pending analysis is silently masked by live data. */
       var statusHtml = "";
-      if (!ds) {
+      if (analysisError[state.ticker]) {
+        /* visible even when stale content (ds or live fallback) is on
+           screen — failures must never be masked */
+        statusHtml = "<p class='note-block na'>Analyst opinion could not be " +
+          "generated (" + esc(analysisError[state.ticker]) + "). " +
+          "<button type='button' class='retry-btn' " +
+          "data-act='retry-analysis'>Retry analysis</button></p>";
+      } else if (!ds) {
         if (analysisLoading[state.ticker]) {
           statusHtml = "<p class='note-block na'>Analyzing " + esc(state.ticker) +
             " with DeepSeek — this takes a few seconds…</p>";
-        } else if (analysisError[state.ticker]) {
-          statusHtml = "<p class='note-block na'>Analyst opinion could not be " +
-            "generated (" + esc(analysisError[state.ticker]) + "). " +
-            "<button type='button' class='retry-btn' " +
-            "data-act='retry-analysis'>Retry analysis</button></p>";
         } else if (liveLoading[state.ticker]) {
           statusHtml = "<p class='note-block na'>Loading live analyst data…</p>";
         } else if (!bodyHtml) {
