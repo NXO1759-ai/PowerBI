@@ -67,17 +67,19 @@ function spanDays(r) {
     : 0;
 }
 
-/* Same rules as loaders/02: 10-K/10-Q only, fy required, FY rows must
-   span ~a full year, then per (unit, fy, fp) keep the latest period_end;
-   ties prefer the LONGEST duration (YTD over single quarter, matching
-   the database), then the latest filed date. */
+/* Same rules as loaders/02, plus 20-F/40-F so foreign private issuers
+   with tagged facts are not dropped: fy required, FY rows must span ~a
+   full year, then per (unit, fy, fp) keep the latest period_end; ties
+   prefer the LONGEST duration (YTD over single quarter, matching the
+   database), then the latest filed date. */
+const REPORT_FORM = /^(10-K|10-Q|20-F|40-F)(\/A)?$/;
 function normalizeConcept(payload, concept) {
   const out = [];
   const units = payload && payload.units ? payload.units : {};
   for (const [unit, rows] of Object.entries(units)) {
     const groups = {};
     for (const r of rows) {
-      if (r.fy == null || !["10-K", "10-Q"].includes(r.form)) continue;
+      if (r.fy == null || !REPORT_FORM.test(r.form)) continue;
       const fp = r.fp || "FY";
       if (r.fy < MIN_YEAR) continue;
       if (fp === "FY" && r.start && spanDays(r) < 300) continue;
@@ -170,6 +172,27 @@ export default async function handler(req, res) {
   }
 
   const cikPadded = String(cik).padStart(10, "0");
+
+  /* Diagnose before pulling: if EDGAR lists no periodic reports at all
+     (10-K/10-Q/20-F/40-F), there is nothing to pull — say so precisely
+     instead of the generic "no facts" error. `filings.files` holds older
+     filings beyond the recent page, so only conclude when it is empty. */
+  const subs = await getJson(
+    `https://data.sec.gov/submissions/CIK${cikPadded}.json`);
+  if (subs && subs.filings && subs.filings.recent) {
+    const recentForms = subs.filings.recent.form || [];
+    const older = subs.filings.files || [];
+    if (!recentForms.some((f) => REPORT_FORM.test(f)) && !older.length) {
+      const only = [...new Set(recentForms)].slice(0, 6).join(", ") || "none";
+      return res.status(404).json({
+        error: `No periodic SEC reports on file for ${ticker} ` +
+               `(CIK ${cik}) — EDGAR lists only: ${only}. ` +
+               "Companies that report elsewhere (e.g. Canadian SEDAR+ " +
+               "filers trading OTC) have no XBRL fundamentals to pull.",
+      });
+    }
+  }
+
   const results = [];
   /* SEC allows ~10 req/s — fetch in batches of 6 */
   const calls = [
@@ -189,7 +212,8 @@ export default async function handler(req, res) {
   if (!results.length) {
     return res.status(404).json({
       error: `No SEC XBRL facts found for ${ticker} (CIK ${cik}). ` +
-             "It may be an ETF, SPAC, or a filer without tagged facts.",
+             "It may file without XBRL tagging (or SEC EDGAR rate-limited " +
+             "the pull — retry in a few seconds).",
     });
   }
 
