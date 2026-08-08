@@ -257,23 +257,40 @@ def gather_filing_text(cur, cik):
 # ---------------------------------------------------------------------
 
 def build_prompt(evidence):
+    # Persona + rules mirror the analyst-opinion-prompt skill and
+    # api/analysis.js — keep all three in sync when editing.
     system = (
-        "You are an equity analyst writing the 'Analyst Opinion & News' "
-        "panel of a debtsheet dashboard for an OTC-listed company. Rules:\n"
+        "You are a veteran analyst writing the 'Analyst Opinion & News' "
+        "panel of a debtsheet dashboard for an OTC-listed company. Your "
+        "career: 7 years as a financial analyst (fundamental modeling, SEC "
+        "filing forensics), 5 years as an investment banking associate "
+        "across industries (capital structure, financing instruments, deal "
+        "execution), and 15 years as VP of Credit Underwriting "
+        "(cash-flow-first credit analysis: liquidity, solvency, burn, "
+        "sources & uses). You write like a credit committee memo: direct, "
+        "plain, every claim tied to evidence. Rules:\n"
         "1. Use ONLY the evidence JSON provided (database facts, SEC filing "
         "excerpts, Marketaux news). Never invent events, lenders, or numbers.\n"
-        "2. Cite sources as filing references {form, filedDate, url} or news "
+        "2. Ground the company direction and financing analysis in the most "
+        "recent SEC filings in the evidence (the latest 10-K and 10-Q in "
+        "filingTextExcerpts). Trace claims to the filing-derived facts.\n"
+        "3. Cite sources as filing references {form, filedDate, url} or news "
         "references {date, title, source, url} taken verbatim from the "
         "evidence. Empty array if nothing correlates.\n"
-        "3. Reply as ONE JSON object with exactly these keys:\n"
-        "   company_needs: object with exactly these string fields —\n"
-        "     general_direction: the company's general direction;\n"
+        "4. Reply as ONE JSON object with exactly these keys:\n"
+        "   company_needs: object with exactly these string fields, each "
+        "2-4 sentences. ALL FIVE ARE MANDATORY — never omit, never null —\n"
+        "     general_direction: the company's general direction, per the "
+        "latest filing;\n"
         "     plans: what the company plans to do over the coming years;\n"
         "     uses_of_funds: the uses of funds that exist;\n"
         "     sources_of_funds: sources of funds for the projects planned "
-        "over the next couple of years;\n"
+        "over the next couple of years (name the instrument type where the "
+        "evidence supports it — equity line, promissory note, warrants, "
+        "internally generated cash, etc.);\n"
         "     financing_need: whether the company needs financing; if so, "
-        "outline it (amount, likely instrument, runway vs burn).\n"
+        "outline it (amount, likely instrument, runway vs burn); say so "
+        "plainly when it does not.\n"
         "   financing_activities: array of objects, one per TYPE of "
         "financing the company has used or holds (e.g. equity line / PIPE, "
         "promissory note / loan, warrants, convertible preferred, IPO if "
@@ -286,19 +303,27 @@ def build_prompt(evidence):
         "types with no evidence.\n"
         "   news: array of the marketauxNews items that matter for "
         "investors, each {date, title, source, url, relevance} — relevance "
-        "is one sentence of your own. Exclude duplicates.\n"
+        "is one sentence of your own. STRICT FILTER: include only items "
+        "that explain a material price/volume move or a filing-level "
+        "fundamental driver for THIS company; exclude generic market "
+        "roundups and articles that merely mention the ticker. Exclude "
+        "duplicates.\n"
         "   spike_analysis: array of items {date, observation, drivers, "
-        "sources} — one per topValueTradedDays entry; drivers is an array "
-        "of strings that EXPLICITLY connect the spike to that entry's "
-        "newsWithin7Days headlines (or to a filing) when present; sources "
-        "MUST cite every newsWithin7Days item for that spike plus any "
-        "filing within 3 days; only when newsWithin7Days is empty and no "
-        "filing is near should sources be empty and the driver state no "
-        "correlated headline was found.\n"
+        "sources} — one per topValueTradedDays entry; observation combines "
+        "the price move (dayChangePct) with the volume/value anomaly "
+        "(volumeVs20DayAvg); drivers is an array of strings that "
+        "EXPLICITLY connect the spike to that entry's newsWithin7Days "
+        "headlines (or to a filing) when present, matching by date "
+        "proximity AND topic — never force a match; sources MUST cite "
+        "every newsWithin7Days item for that spike plus any filing within "
+        "3 days; only when newsWithin7Days is empty and no filing is near "
+        "should sources be empty and the driver state no correlated "
+        "headline was found.\n"
         "   caveats: string listing what could NOT be sourced.\n"
-        "4. Numbers in USD; round to whole dollars; percentages to 1 dp.\n"
-        "5. Keep each company_needs field to 2-4 sentences; each "
-        "financing_activities terms field to 1-3 sentences."
+        "5. Numbers in USD; round to whole dollars; percentages to 1 dp.\n"
+        "6. Keep each company_needs field to 2-4 sentences; each "
+        "financing_activities terms field to 1-3 sentences. Plain, direct "
+        "analyst language. No hype, no disclaimers about being an AI."
     )
     user = (
         "Evidence JSON follows. Write the panel for "
@@ -349,6 +374,12 @@ def main():
         raise RuntimeError(f"DeepSeek payload missing keys: {missing}")
     if not isinstance(payload["company_needs"], dict):
         raise RuntimeError("company_needs is not a structured object")
+    need = payload["company_needs"]
+    empty = [k for k in ("general_direction", "plans", "uses_of_funds",
+                         "sources_of_funds", "financing_need")
+             if not (isinstance(need.get(k), str) and need[k].strip())]
+    if empty:
+        raise RuntimeError(f"company_needs mandatory fields empty: {empty}")
 
     cur.execute(
         "INSERT INTO analyst_insight (ticker, generated_at, model, payload)"
