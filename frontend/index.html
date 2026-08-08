@@ -75,43 +75,47 @@
 
   <section class="panels" id="panels">
 
-    <div class="panel-card" id="panel-fund">
-      <div class="toggle-row">
-        <h2>Fundamentals</h2>
-        <label class="pct-toggle"><input type="checkbox" id="pct" /> <span id="pct-lbl">% Change vs Comparison Period</span></label>
+    <div class="panel-col">
+      <div class="panel-card" id="panel-fund">
+        <div class="toggle-row">
+          <h2>Fundamentals</h2>
+          <label class="pct-toggle"><input type="checkbox" id="pct" /> <span id="pct-lbl">% Change vs Comparison Period</span></label>
+        </div>
+        <h3>Balance Sheet</h3>
+        <table class="grid" id="t-bs"></table>
+        <h3 id="h-is">Income Statement</h3>
+        <table class="grid" id="t-is"></table>
+        <h3>Cash Flow</h3>
+        <table class="grid" id="t-cf"></table>
+        <h3>Burn Rate</h3>
+        <table class="grid" id="t-burn"></table>
       </div>
-      <h3>Balance Sheet</h3>
-      <table class="grid" id="t-bs"></table>
-      <h3 id="h-is">Income Statement</h3>
-      <table class="grid" id="t-is"></table>
-      <h3>Cash Flow</h3>
-      <table class="grid" id="t-cf"></table>
-      <h3>Burn Rate</h3>
-      <table class="grid" id="t-burn"></table>
+
+      <div class="panel-card" id="panel-liq">
+        <h2>Volume &amp; Liquidity</h2>
+        <h3>Trading Activity</h3>
+        <table class="grid" id="t-vol"></table>
+        <h3>Days to Liquidate</h3>
+        <table class="grid" id="t-liq"></table>
+      </div>
     </div>
 
-    <div class="panel-card" id="panel-ratios">
-      <h2>Key Ratios &amp; Earnings</h2>
-      <table class="grid" id="t-ratios" style="margin-top:10px"></table>
-      <h3>Earnings Per Share</h3>
-      <table class="grid" id="t-eps"></table>
-      <p class="caveat" id="eps-note" hidden></p>
-    </div>
+    <div class="panel-col">
+      <div class="panel-card" id="panel-ratios">
+        <h2>Key Ratios &amp; Earnings</h2>
+        <table class="grid" id="t-ratios" style="margin-top:10px"></table>
+        <h3>Earnings Per Share</h3>
+        <table class="grid" id="t-eps"></table>
+        <p class="caveat" id="eps-note" hidden></p>
+      </div>
 
-    <div class="panel-card" id="panel-liq">
-      <h2>Volume &amp; Liquidity</h2>
-      <h3>Trading Activity</h3>
-      <table class="grid" id="t-vol"></table>
-      <h3>Days to Liquidate</h3>
-      <table class="grid" id="t-liq"></table>
-    </div>
-
-    <div class="panel-card" id="panel-notes">
-      <h2>Analyst Notes &amp; News</h2>
-      <div id="notes-body"></div>
-      <h3>Recent News</h3>
-      <ul class="news" id="news"></ul>
-      <p class="caveat" id="caveats" hidden></p>
+      <div class="panel-card" id="panel-notes">
+        <h2>Analyst Notes &amp; News</h2>
+        <div id="notes-body"></div>
+        <h3>Recent News</h3>
+        <ul class="news" id="news"></ul>
+        <p class="caveat" id="caveats" hidden></p>
+      </div>
     </div>
 
   </section>

@@ -470,12 +470,20 @@
         return "<p class='note-block'><span class='tag'>" + b[0] + "</span>" + esc(b[1]) + "</p>";
       }).join("") + spikesHtml;
       if (!bodyHtml) {
-        bodyHtml = "<p class='note-block na'>" +
-          (analysisLoading[state.ticker]
-            ? "Analyzing " + esc(state.ticker) + " with DeepSeek — this takes a few seconds…"
-            : liveLoading[state.ticker]
-            ? "Loading live analyst data…"
-            : "No analyst coverage available for this ticker.") + "</p>";
+        if (analysisLoading[state.ticker]) {
+          bodyHtml = "<p class='note-block na'>Analyzing " + esc(state.ticker) +
+            " with DeepSeek — this takes a few seconds…</p>";
+        } else if (analysisError[state.ticker]) {
+          bodyHtml = "<p class='note-block na'>Analyst opinion could not be " +
+            "generated (" + esc(analysisError[state.ticker]) + "). " +
+            "<button type='button' class='retry-btn' " +
+            "data-act='retry-analysis'>Retry analysis</button></p>";
+        } else if (liveLoading[state.ticker]) {
+          bodyHtml = "<p class='note-block na'>Loading live analyst data…</p>";
+        } else {
+          bodyHtml = "<p class='note-block na'>No analyst coverage available " +
+            "for this ticker.</p>";
+        }
       }
       $("notes-body").innerHTML = bodyHtml;
 
@@ -500,12 +508,18 @@
         : d.liveCandleSource === "alphavantage" ? "Alpha Vantage"
         : d.liveCandleSource === "finnhub" ? "Finnhub" : null;
       if (ds && ds.caveats) {
-        cav.textContent = "Analysis: DeepSeek, from exported fundamentals, " +
-          "market data and 6-month headlines. " + ds.caveats;
+        cav.textContent = "Analysis: DeepSeek, grounded in the latest " +
+          (d.latestFiling && d.latestFiling.form
+            ? d.latestFiling.form + " (filed " + fmtDate(d.latestFiling.date) + ")"
+            : "10-K/10-Q") +
+          ", market activity and 6-month headlines. " + ds.caveats;
         cav.hidden = false;
       } else if (ds) {
-        cav.textContent = "Analysis: DeepSeek, from exported fundamentals, " +
-          "market data and 6-month headlines.";
+        cav.textContent = "Analysis: DeepSeek, grounded in the latest " +
+          (d.latestFiling && d.latestFiling.form
+            ? d.latestFiling.form + " (filed " + fmtDate(d.latestFiling.date) + ")"
+            : "10-K/10-Q") +
+          ", market activity and 6-month headlines.";
         cav.hidden = false;
       } else if (!live && d.insight && d.insight.caveats) {
         cav.textContent = "Caveats: " + d.insight.caveats; cav.hidden = false;
@@ -792,6 +806,9 @@
           if (d && state.ticker === ticker) {
             renderChart(d); renderLiquidity(d); renderNotes(d);
           }
+          /* analyst opinion is mandatory — run it even when the live
+             market feed failed (evidence falls back to exported data) */
+          fetchAnalysis(ticker);
         }
       };
       fetch("/api/market?ticker=" + encodeURIComponent(ticker))
@@ -801,7 +818,7 @@
     }
 
     /* ---------- DeepSeek analysis (runs on every company change) ---------- */
-    var ANALYSIS = {}, analysisLoading = {};
+    var ANALYSIS = {}, analysisLoading = {}, analysisError = {};
 
     /* top value-traded days with context — mirrors loaders/09 evidence */
     function computeSpikes(series) {
@@ -839,6 +856,7 @@
         name: d.company && d.company.name,
         industry: d.company && d.company.industry,
         period: d.period && d.period.label,
+        latestFiling: d.latestFiling || null,
         fundamentals: {
           cash: pick(bs.cash), workingCapital: pick(bs.workingCapital),
           equity: pick(bs.equity),
@@ -855,23 +873,30 @@
       };
     }
 
-    function fetchAnalysis(ticker) {
+    function fetchAnalysis(ticker, force) {
       var d = COVERAGE[ticker];
       if (!d) return;
-      if (ANALYSIS[ticker]) {
+      if (ANALYSIS[ticker] && !force) {
         d.deepseek = ANALYSIS[ticker];
         if (state.ticker === ticker) renderNotes(d);
         return;
       }
       if (analysisLoading[ticker]) return;
       analysisLoading[ticker] = true;
+      delete analysisError[ticker];
       if (state.ticker === ticker && !d.deepseek) renderNotes(d);
-      var settle = function (payload) {
+      var settle = function (payload, errMsg) {
         delete analysisLoading[ticker];
         var dd = COVERAGE[ticker];
         if (payload && !payload.error && payload.ticker === ticker) {
           ANALYSIS[ticker] = payload;
+          delete analysisError[ticker];
           if (dd) dd.deepseek = payload;
+        } else {
+          /* surface the failure — the analyst opinion is mandatory, so a
+             silent fallback is not acceptable */
+          analysisError[ticker] = errMsg ||
+            (payload && payload.error) || "provider unavailable";
         }
         if (dd && state.ticker === ticker) renderNotes(dd);
       };
@@ -880,9 +905,18 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(analysisBody(ticker))
       })
-        .then(function (r) { return r.ok ? r.json() : null; })
-        .then(settle)
-        .catch(function () { settle(null); });
+        .then(function (r) {
+          return r.json()
+            .then(function (body) {
+              return r.ok ? body
+                : { error: (body && body.error) || ("HTTP " + r.status) };
+            })
+            .catch(function () {
+              return r.ok ? null : { error: "HTTP " + r.status };
+            });
+        })
+        .then(function (body) { settle(body); })
+        .catch(function (e) { settle(null, e && e.message); });
     }
 
     function refreshTicker(ticker) {
@@ -894,6 +928,7 @@
       };
       delete LIVE[ticker];
       delete ANALYSIS[ticker];
+      delete analysisError[ticker];
       delete COVERAGE[ticker];
       renderLoading(ticker);
       var s = document.createElement("script");
@@ -994,6 +1029,10 @@
     });
     var pullBtn = $("pull-btn");
     if (pullBtn) pullBtn.addEventListener("click", function () { pullTicker(state.ticker); });
+    $("notes-body").addEventListener("click", function (ev) {
+      var b = ev.target.closest("button[data-act='retry-analysis']");
+      if (b) { b.disabled = true; fetchAnalysis(state.ticker, true); }
+    });
 
     /* ---------- about modal ---------- */
     var aboutModal = $("about-modal");

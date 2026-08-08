@@ -207,6 +207,7 @@ h1, h2, h3, p, dl, dd, dt, table { margin: 0; }
   align-items: start;
 }
 .panels .panel-card { min-width: 0; }
+.panel-col { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
 .panel-card h2 { font-size: 14px; font-weight: 500; }
 .panel-card h3 {
   font-size: 11px; font-weight: 500; color: var(--kimi-color-text-tertiary);
@@ -234,6 +235,12 @@ td.na, .na { color: var(--kimi-color-text-quaternary); }
 .note-block .tag { font-size: 11px; font-weight: 500; color: var(--kimi-color-text-tertiary); display: block; margin-bottom: 2px; }
 .spike-drivers { color: var(--kimi-color-text-primary); font-size: 12px; }
 .spike-news { font-size: 11.5px; color: var(--kimi-color-text-tertiary); }
+.retry-btn {
+  margin-left: 8px; padding: 3px 12px; border-radius: 6px; cursor: pointer;
+  font-size: 11px; font-weight: 500;
+  background: #151515; color: #ffffff; border: 1px solid #151515;
+}
+.retry-btn:disabled { opacity: 0.5; cursor: default; }
 
 .news { list-style: none; margin: 6px 0 0; padding: 0; }
 .news li { padding: 7px 0; border-bottom: 1px solid var(--kimi-color-surface-muted); }

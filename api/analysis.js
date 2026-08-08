@@ -32,7 +32,8 @@ const money = (v) => {
 
 function buildPrompt(body) {
   const newsList = (body.news || []).slice(0, 120)
-    .map((n, i) => `${i}. [${n.date || "?"}] ${n.title} (${n.source || "?"})`)
+    .map((n, i) => `${i}. [${n.date || "?"}] ` +
+      `${String(n.title || "").slice(0, 160)} (${n.source || "?"})`)
     .join("\n");
   const spikes = (body.spikes || []).map((s) =>
     `- ${s.date}: value traded ${money(s.valueTradedUsd)}, ` +
@@ -42,47 +43,77 @@ function buildPrompt(body) {
   ).join("\n");
   const f = body.fundamentals || {};
   const cons = body.consensus;
+  const filing = body.latestFiling && body.latestFiling.form
+    ? `${body.latestFiling.form} filed ${body.latestFiling.date || "date unknown"}`
+    : null;
 
+  /* Persona + rules are the canonical prompt owned by the
+     analyst-opinion-prompt skill — keep the two in sync. */
   const system =
-    "You are an equity analyst writing the 'Analyst Notes & News' panel " +
-    "of a company-overview dashboard. Rules:\n" +
-    "1. Use ONLY the evidence provided below (fundamentals, top " +
-    "value-traded days, numbered headlines, analyst consensus). Never " +
-    "invent events, numbers, or articles.\n" +
-    "2. Reply as ONE JSON object with exactly these keys:\n" +
-    "   company_needs: object with exactly these string fields —\n" +
-    "     general_direction: the company's general direction (2-4 sentences);\n" +
-    "     plans: what the company appears to be executing on, based on the " +
-    "evidence (2-4 sentences);\n" +
+    "You are a veteran analyst writing the 'Analyst Notes & News' panel " +
+    "of a company-overview dashboard. Your career: 7 years as a financial " +
+    "analyst (fundamental modeling, SEC filing forensics), 5 years as an " +
+    "investment banking associate across industries (capital structure, " +
+    "financing instruments, deal execution), and 15 years as VP of Credit " +
+    "Underwriting (cash-flow-first credit analysis: liquidity, solvency, " +
+    "burn, sources & uses). You write like a credit committee memo: " +
+    "direct, plain, every claim tied to evidence. Rules:\n" +
+    "1. Use ONLY the evidence provided below (latest SEC filing metadata, " +
+    "fundamentals, top value-traded days, numbered headlines, analyst " +
+    "consensus). Never invent events, numbers, or articles.\n" +
+    "2. Ground the company direction and financing analysis in the most " +
+    "recent SEC filing named in the evidence (10-K or 10-Q, with its " +
+    "filed date). Trace claims to the filing-derived fundamentals (cash, " +
+    "working capital, equity, revenue, margins, the three cash-flow " +
+    "lines, monthly burn).\n" +
+    "3. Reply as ONE JSON object with exactly these keys:\n" +
+    "   company_needs: object with exactly these string fields, each 2-4 " +
+    "sentences. ALL FIVE ARE MANDATORY — never omit, never null —\n" +
+    "     general_direction: where the company is heading, per the filing;\n" +
+    "     plans: what the company appears to be executing on, per the " +
+    "evidence;\n" +
     "     uses_of_funds: how the company deploys capital, grounded in the " +
-    "cash-flow evidence (2-4 sentences);\n" +
+    "investing and operating cash-flow evidence;\n" +
     "     sources_of_funds: where the company's funding comes from, " +
-    "grounded in the financing/operating cash-flow evidence (2-4 sentences);\n" +
+    "grounded in the financing/operating cash-flow evidence (name the " +
+    "instrument type where the evidence supports it — equity issuance, " +
+    "debt, internally generated cash, etc.);\n" +
     "     financing_need: whether the company needs external financing " +
-    "given its cash, burn and flows; say so plainly when it does not " +
-    "(2-4 sentences).\n" +
+    "given its cash, burn and flows; say so plainly when it does not, " +
+    "and size the gap when it does.\n" +
     "   spike_analysis: array with ONE entry per top value-traded day " +
     "listed below, each {date, observation, drivers, matchedNews} — " +
-    "observation is one sentence on what happened that day; drivers is an " +
+    "observation is one sentence combining the price move (dayChangePct) " +
+    "and the volume/value anomaly (volumeVs20DayAvg); drivers is an " +
     "array of 1-3 short strings explaining the spike using the headlines; " +
     "matchedNews is an array of the INTEGER indices of the headlines (from " +
-    "the numbered list) that plausibly relate to that spike, by date " +
-    "proximity and topic. Use an empty array when nothing correlates — do " +
-    "not force matches.\n" +
-    "   picked_news: array of the most investor-relevant headlines overall " +
-    "(5-8 items), each {index, relevance} — index is the INTEGER headline " +
+    "the numbered list) that plausibly relate to that spike, matching by " +
+    "date proximity (within ±3 days, favoring same-day or the day " +
+    "before) AND by topic. Use an empty array when nothing correlates — " +
+    "do not force matches.\n" +
+    "   picked_news: array of the 5-8 most investor-relevant headlines " +
+    "overall, each {index, relevance} — index is the INTEGER headline " +
     "index, relevance is one sentence of your own explaining why it " +
-    "matters. Order: items that explain value-traded spikes first.\n" +
+    "matters. STRICT FILTER: include only items that explain a material " +
+    "price/volume move or a filing-level fundamental driver for THIS " +
+    "company; exclude generic market roundups, index commentary, and " +
+    "articles about other companies that merely mention the ticker. " +
+    "Order: items that explain value-traded spikes first.\n" +
     "   caveats: string listing what could NOT be sourced from the " +
     "evidence.\n" +
-    "3. Percentages to 1 decimal; money formatted like the evidence.\n" +
-    "4. Plain, direct analyst language. No hype, no disclaimers about " +
+    "4. Percentages to 1 decimal; money formatted like the evidence " +
+    "($1.23B, $45.6M, etc.).\n" +
+    "5. Plain, direct analyst language. No hype, no disclaimers about " +
     "being an AI.";
 
   const user =
     `Write the panel for ${body.name} (${body.ticker})` +
     (body.industry ? `, industry: ${body.industry}` : "") +
-    (body.period ? `. Latest reporting period: ${body.period}.` : ".") + "\n\n" +
+    (body.period ? `. Latest reporting period: ${body.period}.` : ".") + "\n" +
+    (filing
+      ? `Latest SEC filing: ${filing}. Ground the direction and financing ` +
+        `analysis in this filing.\n`
+      : "") + "\n" +
     "FUNDAMENTALS (latest quarter vs year-ago where given):\n" +
     `cash=${money(f.cash)} workingCapital=${money(f.workingCapital)} ` +
     `equity=${money(f.equity)}\n` +
@@ -125,36 +156,46 @@ export default async function handler(req, res) {
 
   const { system, user } = buildPrompt(body);
 
-  const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), 50000);
-  let payload;
-  try {
-    const resp = await fetch("https://api.deepseek.com/chat/completions", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${KEY}`,
-                 "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: MODEL,
-        messages: [{ role: "system", content: system },
-                   { role: "user", content: user }],
-        response_format: { type: "json_object" },
-        temperature: 0.2,
-        max_tokens: 4000,
-      }),
-      signal: ctrl.signal,
-    });
-    if (!resp.ok) {
-      return res.status(502).json({
-        error: `analysis provider returned ${resp.status}` });
+  /* One DeepSeek call with an abort timeout. company_needs is mandatory
+     for the dashboard, so a response without it counts as a failure. */
+  async function callDeepSeek(timeoutMs) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+    try {
+      const resp = await fetch("https://api.deepseek.com/chat/completions", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${KEY}`,
+                   "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: MODEL,
+          messages: [{ role: "system", content: system },
+                     { role: "user", content: user }],
+          response_format: { type: "json_object" },
+          temperature: 0.2,
+          max_tokens: 4000,
+        }),
+        signal: ctrl.signal,
+      });
+      if (!resp.ok) return { error: `analysis provider returned ${resp.status}` };
+      const raw = await resp.json();
+      const parsed = JSON.parse(raw.choices[0].message.content);
+      if (!parsed || !parsed.company_needs ||
+          !parsed.company_needs.general_direction) {
+        return { error: "analysis returned without the mandatory company_needs block" };
+      }
+      return { payload: parsed };
+    } catch (e) {
+      return { error: `analysis failed: ${e && e.message ? e.message : "unknown"}` };
+    } finally {
+      clearTimeout(timer);
     }
-    const raw = await resp.json();
-    payload = JSON.parse(raw.choices[0].message.content);
-  } catch (e) {
-    return res.status(502).json({
-      error: `analysis failed: ${e && e.message ? e.message : "unknown"}` });
-  } finally {
-    clearTimeout(timer);
   }
+
+  /* Retry once on any failure; 40s + 15s stays inside maxDuration. */
+  let result = await callDeepSeek(40000);
+  if (result.error) result = await callDeepSeek(15000);
+  if (result.error) return res.status(502).json({ error: result.error });
+  const payload = result.payload;
 
   /* Map headline indices back to full articles server-side so model
      output cannot mangle titles. */
