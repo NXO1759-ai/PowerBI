@@ -67,17 +67,19 @@ function spanDays(r) {
     : 0;
 }
 
-/* Same rules as loaders/02: 10-K/10-Q only, fy required, FY rows must
-   span ~a full year, then per (unit, fy, fp) keep the latest period_end;
-   ties prefer the LONGEST duration (YTD over single quarter, matching
-   the database), then the latest filed date. */
+/* Same rules as loaders/02, plus 20-F/40-F so foreign private issuers
+   with tagged facts are not dropped: fy required, FY rows must span ~a
+   full year, then per (unit, fy, fp) keep the latest period_end; ties
+   prefer the LONGEST duration (YTD over single quarter, matching the
+   database), then the latest filed date. */
+const REPORT_FORM = /^(10-K|10-Q|20-F|40-F)(\/A)?$/;
 function normalizeConcept(payload, concept) {
   const out = [];
   const units = payload && payload.units ? payload.units : {};
   for (const [unit, rows] of Object.entries(units)) {
     const groups = {};
     for (const r of rows) {
-      if (r.fy == null || !["10-K", "10-Q"].includes(r.form)) continue;
+      if (r.fy == null || !REPORT_FORM.test(r.form)) continue;
       const fp = r.fp || "FY";
       if (r.fy < MIN_YEAR) continue;
       if (fp === "FY" && r.start && spanDays(r) < 300) continue;
@@ -170,6 +172,27 @@ export default async function handler(req, res) {
   }
 
   const cikPadded = String(cik).padStart(10, "0");
+
+  /* Diagnose before pulling: if EDGAR lists no periodic reports at all
+     (10-K/10-Q/20-F/40-F), there is nothing to pull — say so precisely
+     instead of the generic "no facts" error. `filings.files` holds older
+     filings beyond the recent page, so only conclude when it is empty. */
+  const subs = await getJson(
+    `https://data.sec.gov/submissions/CIK${cikPadded}.json`);
+  if (subs && subs.filings && subs.filings.recent) {
+    const recentForms = subs.filings.recent.form || [];
+    const older = subs.filings.files || [];
+    if (!recentForms.some((f) => REPORT_FORM.test(f)) && !older.length) {
+      const only = [...new Set(recentForms)].slice(0, 6).join(", ") || "none";
+      return res.status(404).json({
+        error: `No periodic SEC reports on file for ${ticker} ` +
+               `(CIK ${cik}) — EDGAR lists only: ${only}. ` +
+               "Companies that report elsewhere (e.g. Canadian SEDAR+ " +
+               "filers trading OTC) have no XBRL fundamentals to pull.",
+      });
+    }
+  }
+
   const results = [];
   /* SEC allows ~10 req/s — fetch in batches of 6 */
   const calls = [
@@ -189,12 +212,21 @@ export default async function handler(req, res) {
   if (!results.length) {
     return res.status(404).json({
       error: `No SEC XBRL facts found for ${ticker} (CIK ${cik}). ` +
-             "It may be an ETF, SPAC, or a filer without tagged facts.",
+             "It may file without XBRL tagging (or SEC EDGAR rate-limited " +
+             "the pull — retry in a few seconds).",
     });
   }
 
   const facts = results;
-  const [yr, per] = latestQuarter(facts);
+  let [yr, per] = latestQuarter(facts);
+  /* Annual-only filers (20-F/40-F, no quarterly tags): fall back to the
+     latest FY so tables render annual figures instead of nulls. */
+  const fyYears = facts.filter((f) => f.fiscal_period === "FY")
+    .map((f) => f.fiscal_year);
+  if (yr === null && fyYears.length) {
+    yr = Math.max(...fyYears);
+    per = "FY";
+  }
   const lyYr = yr ? yr - 1 : null;
   const shares = sharesOutstanding(facts);
 
@@ -208,8 +240,6 @@ export default async function handler(req, res) {
                     ly: usdAny(facts, concepts, lyYr, per) };
   }
 
-  const fyYears = facts.filter((f) => f.fiscal_period === "FY")
-    .map((f) => f.fiscal_year);
   const isAnnualYr = fyYears.length ? Math.max(...fyYears) : null;
   const isFy = {};
   for (const k of ["revenue", "cogs", "grossProfit", "netIncome"]) {
@@ -234,13 +264,14 @@ export default async function handler(req, res) {
     return vals.every((v) => v === null) ? null
       : vals.reduce((s, v) => s + (v || 0), 0);
   };
+  const spanMonths = per === "FY" ? 12 : 3;
   const burn = (side) => {
     const nc = netChange(side);
     if (nc === null) {
       return { netCashChange: null, monthlyBurn: null,
                remainingCashDays: null };
     }
-    const monthly = nc / 3;
+    const monthly = nc / spanMonths;
     const cash = instants.cash[side];
     let remaining = null;
     if (monthly >= 0) remaining = "Infinite";
@@ -259,14 +290,17 @@ export default async function handler(req, res) {
   const gm = (side) => ratio(flows.grossProfit[side], flows.revenue[side]);
   const data = {
     generatedAt: new Date().toISOString().slice(0, 19),
-    source: "SEC EDGAR 10-K/10-Q (live pull)",
+    source: "SEC EDGAR 10-K/10-Q/20-F/40-F (live pull)",
     company: { ticker, cik, name, exchange: null },
     latestFiling,
     period: {
       fiscalYear: yr, fiscalPeriod: per,
       label: yr ? `${per} ${yr}` : null,
-      compareLabel: yr ? `${per} ${lyYr}` : null,
-      isLabel: qEndStr ? `3 mo ended ${qEndStr}` : null,
+      compareLabel: yr
+        ? (per === "FY" ? `FY ${lyYr}` : `${per} ${lyYr}`) : null,
+      isLabel: qEndStr
+        ? (per === "FY" ? `FY ended ${qEndStr}` : `3 mo ended ${qEndStr}`)
+        : null,
       isCompareLabel: isAnnualYr ? `FY ${isAnnualYr} (annual)` : null,
     },
     fundamentals: {

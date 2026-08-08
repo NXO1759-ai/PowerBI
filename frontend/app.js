@@ -469,23 +469,29 @@
       var bodyHtml = blocks.map(function (b) {
         return "<p class='note-block'><span class='tag'>" + b[0] + "</span>" + esc(b[1]) + "</p>";
       }).join("") + spikesHtml;
-      if (!bodyHtml) {
+      /* The DeepSeek panel status must be visible even when fallback
+         blocks (analyst consensus, price target) rendered — otherwise a
+         failed or pending analysis is silently masked by live data. */
+      var statusHtml = "";
+      if (analysisError[state.ticker]) {
+        /* visible even when stale content (ds or live fallback) is on
+           screen — failures must never be masked */
+        statusHtml = "<p class='note-block na'>Analyst opinion could not be " +
+          "generated (" + esc(analysisError[state.ticker]) + "). " +
+          "<button type='button' class='retry-btn' " +
+          "data-act='retry-analysis'>Retry analysis</button></p>";
+      } else if (!ds) {
         if (analysisLoading[state.ticker]) {
-          bodyHtml = "<p class='note-block na'>Analyzing " + esc(state.ticker) +
+          statusHtml = "<p class='note-block na'>Analyzing " + esc(state.ticker) +
             " with DeepSeek — this takes a few seconds…</p>";
-        } else if (analysisError[state.ticker]) {
-          bodyHtml = "<p class='note-block na'>Analyst opinion could not be " +
-            "generated (" + esc(analysisError[state.ticker]) + "). " +
-            "<button type='button' class='retry-btn' " +
-            "data-act='retry-analysis'>Retry analysis</button></p>";
         } else if (liveLoading[state.ticker]) {
-          bodyHtml = "<p class='note-block na'>Loading live analyst data…</p>";
-        } else {
-          bodyHtml = "<p class='note-block na'>No analyst coverage available " +
+          statusHtml = "<p class='note-block na'>Loading live analyst data…</p>";
+        } else if (!bodyHtml) {
+          statusHtml = "<p class='note-block na'>No analyst coverage available " +
             "for this ticker.</p>";
         }
       }
-      $("notes-body").innerHTML = bodyHtml;
+      $("notes-body").innerHTML = statusHtml + bodyHtml;
 
       var spikeLinked = {};
       if (ds && ds.spike_analysis) {

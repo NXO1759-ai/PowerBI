@@ -70,8 +70,8 @@ def gather(cur, ticker):
         prev = bars[i - 1] if i else None
         b["pctChange"] = (b["ohlcAvg"] / prev["ohlcAvg"] - 1) * 100 if prev else None
         window = [x["volume"] for x in bars[max(0, i - 20):i]]
-        b["volVsAvg20"] = (b["volume"] / (sum(window) / len(window))
-                           if window else None)
+        avg20 = sum(window) / len(window) if window else None
+        b["volVsAvg20"] = (b["volume"] / avg20) if avg20 else None
     spikes = sorted(bars, key=lambda b: b["valueTraded"], reverse=True)[:5]
     spike_out = [{
         "date": s["date"],
@@ -139,7 +139,8 @@ def gather(cur, ticker):
     return {
         "company": {"ticker": ticker, "name": name, "cik": cik},
         "priceEvidence": {
-            "window": f"{bars[0]['date']} to {bars[-1]['date']}",
+            "window": (f"{bars[0]['date']} to {bars[-1]['date']}"
+                       if bars else "no price history"),
             "topValueTradedDays": spike_out,
         },
         "secFilingsIndex": filings,
