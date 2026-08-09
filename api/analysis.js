@@ -69,10 +69,10 @@ function buildPrompt(body) {
     "lines, monthly burn).\n" +
     "3. Reply as ONE JSON object with exactly these keys:\n" +
     "   company_needs: object with exactly these string fields, each 2-4 " +
-    "sentences. ALL FIVE ARE MANDATORY — never omit, never null —\n" +
-    "     general_direction: where the company is heading, per the filing;\n" +
-    "     plans: what the company appears to be executing on, per the " +
-    "evidence;\n" +
+    "sentences. ALL FOUR ARE MANDATORY — never omit, never null —\n" +
+    "     company_overview: ONE cohesive narrative combining where the " +
+    "company is heading and what it is executing on, per the filing and " +
+    "the evidence — write it as a single flowing story, not two parts;\n" +
     "     uses_of_funds: how the company deploys capital, grounded in the " +
     "investing and operating cash-flow evidence;\n" +
     "     sources_of_funds: where the company's funding comes from, " +
@@ -181,7 +181,7 @@ export default async function handler(req, res) {
       const raw = await resp.json();
       const parsed = JSON.parse(raw.choices[0].message.content);
       const cn = parsed && parsed.company_needs;
-      const NEED = ["general_direction", "plans", "uses_of_funds",
+      const NEED = ["company_overview", "uses_of_funds",
                     "sources_of_funds", "financing_need"];
       if (!cn || NEED.some((k) =>
             typeof cn[k] !== "string" || !cn[k].trim())) {

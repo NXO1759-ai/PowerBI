@@ -413,7 +413,7 @@
     function renderNotes(d) {
       var live = d.liveInsight || null;
       var ds = d.deepseek || null;
-      var blocks = [], newsItems = [], spikesHtml = "";
+      var blocks = [], newsItems = [];
 
       if (live && live.analyst) {
         var a = live.analyst;
@@ -425,24 +425,16 @@
 
       if (ds && ds.company_needs) {
         var nd = ds.company_needs;
-        [["Direction", nd.general_direction], ["Plans", nd.plans],
+        /* Company Overview is one cohesive narrative (direction + plans);
+           fall back to joining the legacy two fields for cached payloads. */
+        var overview = nd.company_overview ||
+          [nd.general_direction, nd.plans].filter(Boolean).join(" ");
+        [["Company Overview", overview],
          ["Uses of Funds", nd.uses_of_funds],
          ["Sources of Funds", nd.sources_of_funds],
          ["Financing Need", nd.financing_need]].forEach(function (p) {
           if (p[1]) blocks.push([p[0], p[1]]);
         });
-        if (ds.spike_analysis && ds.spike_analysis.length) {
-          spikesHtml = "<h3>Value-Traded Spikes</h3>" +
-            ds.spike_analysis.slice(0, 3).map(function (s) {
-              var drivers = (s.drivers || []).filter(Boolean);
-              var linked = (s.news || []).map(function (n) { return n.title; }).filter(Boolean);
-              return "<p class='note-block'><span class='tag'>Spike · " + fmtDate(s.date) + "</span>" +
-                     esc(s.observation) +
-                     (drivers.length ? "<br><span class='spike-drivers'>" + esc(drivers.join(" · ")) + "</span>" : "") +
-                     (linked.length ? "<br><span class='spike-news'>Linked: " + esc(linked.join("  |  ")) + "</span>" : "") +
-                     "</p>";
-            }).join("");
-        }
         newsItems = (ds.picked_news || []).map(function (n) {
           return { date: n.date, source: n.source, title: n.title,
                    relevance: n.relevance };
@@ -460,7 +452,9 @@
             (pt.updated ? " · updated " + fmtDate(String(pt.updated).slice(0, 10)) : "")]);
         }
         var ins = d.insight || {}, needs = ins.company_needs || {};
-        if (needs.general_direction) blocks.push(["Direction", needs.general_direction]);
+        var insOverview = needs.company_overview ||
+          [needs.general_direction, needs.plans].filter(Boolean).join(" ");
+        if (insOverview) blocks.push(["Company Overview", insOverview]);
         if (needs.financing_need) blocks.push(["Financing Need", needs.financing_need]);
         if (needs.sources_of_funds) blocks.push(["Sources of Funds", needs.sources_of_funds]);
         newsItems = ((live && live.news) || ins.news || []).slice(0, 5);
@@ -468,7 +462,7 @@
 
       var bodyHtml = blocks.map(function (b) {
         return "<p class='note-block'><span class='tag'>" + b[0] + "</span>" + esc(b[1]) + "</p>";
-      }).join("") + spikesHtml;
+      }).join("");
       /* The DeepSeek panel status must be visible even when fallback
          blocks (analyst consensus, price target) rendered — otherwise a
          failed or pending analysis is silently masked by live data. */
