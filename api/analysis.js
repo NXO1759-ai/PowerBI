@@ -46,6 +46,9 @@ function buildPrompt(body) {
   const filing = body.latestFiling && body.latestFiling.form
     ? `${body.latestFiling.form} filed ${body.latestFiling.date || "date unknown"}`
     : null;
+  const filingAgeDays = body.latestFiling && body.latestFiling.date
+    ? (Date.now() - new Date(body.latestFiling.date + "T00:00:00Z").getTime()) / 864e5
+    : null;
 
   /* Persona + rules are the canonical prompt owned by the
      analyst-opinion-prompt skill — keep the two in sync. */
@@ -69,10 +72,10 @@ function buildPrompt(body) {
     "lines, monthly burn).\n" +
     "3. Reply as ONE JSON object with exactly these keys:\n" +
     "   company_needs: object with exactly these string fields, each 2-4 " +
-    "sentences. ALL FIVE ARE MANDATORY — never omit, never null —\n" +
-    "     general_direction: where the company is heading, per the filing;\n" +
-    "     plans: what the company appears to be executing on, per the " +
-    "evidence;\n" +
+    "sentences. ALL FOUR ARE MANDATORY — never omit, never null —\n" +
+    "     company_overview: ONE cohesive narrative combining where the " +
+    "company is heading and what it is executing on, per the filing and " +
+    "the evidence — write it as a single flowing story, not two parts;\n" +
     "     uses_of_funds: how the company deploys capital, grounded in the " +
     "investing and operating cash-flow evidence;\n" +
     "     sources_of_funds: where the company's funding comes from, " +
@@ -114,6 +117,13 @@ function buildPrompt(body) {
     (filing
       ? `Latest SEC filing: ${filing}. Ground the direction and financing ` +
         `analysis in this filing.\n`
+      : "") +
+    (filingAgeDays !== null && filingAgeDays > 400
+      ? `WARNING: the latest SEC filing (filed ${body.latestFiling.date}) ` +
+        "is over a year old — the company may no longer file periodic " +
+        "reports with the SEC. Flag the staleness explicitly at the start " +
+        "of company_overview and again in caveats; do not present these " +
+        "figures as current.\n"
       : "") + "\n" +
     "FUNDAMENTALS (latest quarter vs year-ago where given):\n" +
     `cash=${money(f.cash)} workingCapital=${money(f.workingCapital)} ` +
@@ -181,7 +191,7 @@ export default async function handler(req, res) {
       const raw = await resp.json();
       const parsed = JSON.parse(raw.choices[0].message.content);
       const cn = parsed && parsed.company_needs;
-      const NEED = ["general_direction", "plans", "uses_of_funds",
+      const NEED = ["company_overview", "uses_of_funds",
                     "sources_of_funds", "financing_need"];
       if (!cn || NEED.some((k) =>
             typeof cn[k] !== "string" || !cn[k].trim())) {

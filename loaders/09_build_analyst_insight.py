@@ -10,7 +10,7 @@ index, Marketaux news) and pulls filing text excerpts from SEC EDGAR
 prompt, and DeepSeek writes the analysis strictly from that evidence.
 
 Payload schema stored in finance_db.analyst_insight:
-  company_needs        {general_direction, plans, uses_of_funds,
+  company_needs        {company_overview, uses_of_funds,
                         sources_of_funds, financing_need}
   financing_activities [{type, counterparty, terms, status, source}]
   news                 [{date, title, source, url, relevance}]
@@ -280,10 +280,11 @@ def build_prompt(evidence):
         "evidence. Empty array if nothing correlates.\n"
         "4. Reply as ONE JSON object with exactly these keys:\n"
         "   company_needs: object with exactly these string fields, each "
-        "2-4 sentences. ALL FIVE ARE MANDATORY — never omit, never null —\n"
-        "     general_direction: the company's general direction, per the "
-        "latest filing;\n"
-        "     plans: what the company plans to do over the coming years;\n"
+        "2-4 sentences. ALL FOUR ARE MANDATORY — never omit, never null —\n"
+        "     company_overview: ONE cohesive narrative combining the "
+        "company's general direction and what it plans to do over the "
+        "coming years, per the latest filing — a single flowing story, "
+        "not two parts;\n"
         "     uses_of_funds: the uses of funds that exist;\n"
         "     sources_of_funds: sources of funds for the projects planned "
         "over the next couple of years (name the instrument type where the "
@@ -376,7 +377,7 @@ def main():
     if not isinstance(payload["company_needs"], dict):
         raise RuntimeError("company_needs is not a structured object")
     need = payload["company_needs"]
-    empty = [k for k in ("general_direction", "plans", "uses_of_funds",
+    empty = [k for k in ("company_overview", "uses_of_funds",
                          "sources_of_funds", "financing_need")
              if not (isinstance(need.get(k), str) and need[k].strip())]
     if empty:
