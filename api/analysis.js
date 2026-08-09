@@ -46,6 +46,9 @@ function buildPrompt(body) {
   const filing = body.latestFiling && body.latestFiling.form
     ? `${body.latestFiling.form} filed ${body.latestFiling.date || "date unknown"}`
     : null;
+  const filingAgeDays = body.latestFiling && body.latestFiling.date
+    ? (Date.now() - new Date(body.latestFiling.date + "T00:00:00Z").getTime()) / 864e5
+    : null;
 
   /* Persona + rules are the canonical prompt owned by the
      analyst-opinion-prompt skill — keep the two in sync. */
@@ -114,6 +117,13 @@ function buildPrompt(body) {
     (filing
       ? `Latest SEC filing: ${filing}. Ground the direction and financing ` +
         `analysis in this filing.\n`
+      : "") +
+    (filingAgeDays !== null && filingAgeDays > 400
+      ? `WARNING: the latest SEC filing (filed ${body.latestFiling.date}) ` +
+        "is over a year old — the company may no longer file periodic " +
+        "reports with the SEC. Flag the staleness explicitly at the start " +
+        "of company_overview and again in caveats; do not present these " +
+        "figures as current.\n"
       : "") + "\n" +
     "FUNDAMENTALS (latest quarter vs year-ago where given):\n" +
     `cash=${money(f.cash)} workingCapital=${money(f.workingCapital)} ` +

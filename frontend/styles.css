@@ -165,6 +165,12 @@ h1, h2, h3, p, dl, dd, dt, table { margin: 0; }
 .hero-facts dt { font-size: 11px; color: var(--kimi-color-text-tertiary); }
 .hero-facts dd { font-size: 13.5px; font-weight: 500; font-variant-numeric: tabular-nums; margin: 0; }
 
+.stale-warn {
+  margin: 0 0 14px; padding: 10px 14px; border-radius: 8px;
+  border: 1px solid #e8b23f; background: #fdf3d7; color: #7a5200;
+  font-size: 12.5px; line-height: 1.5;
+}
+
 /* ---- KPI strip ---- */
 .kpis {
   display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 12px;

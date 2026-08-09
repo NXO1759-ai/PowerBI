@@ -99,6 +99,28 @@
       if (d.latestFiling && d.latestFiling.form) meta.push("<span class='sep'>·</span><span>Latest Filing " + d.latestFiling.form + " · " + fmtDate(d.latestFiling.date) + "</span>");
       $("co-meta").innerHTML = meta.join(" ");
 
+      /* Staleness guard: a company filing periodic reports never goes more
+         than ~12 months between them. Older than 400 days means EDGAR's
+         data is stale (delisted, deregistered, or reporting elsewhere) —
+         say so loudly instead of presenting old fundamentals as current. */
+      var staleEl = $("stale-warn"), lf = d.latestFiling;
+      if (staleEl) {
+        var ageDays = lf && lf.date
+          ? (Date.now() - new Date(lf.date + "T00:00:00Z").getTime()) / 864e5
+          : NaN;
+        if (lf && lf.form && !isNaN(ageDays) && ageDays > 400) {
+          staleEl.textContent =
+            "⚠ Stale SEC data: the latest periodic report on EDGAR is a " +
+            lf.form + " filed " + fmtDate(lf.date) + " — over a year ago. " +
+            "The company may have deregistered or may report only " +
+            "elsewhere (e.g. OTC Markets). Fundamentals and the analyst " +
+            "opinion below reflect that old filing, not current reality.";
+          staleEl.hidden = false;
+        } else {
+          staleEl.hidden = true;
+        }
+      }
+
       var logo = $("co-logo");
       if (c.logo_url) { logo.src = c.logo_url; logo.hidden = false; logo.onerror = function () { logo.hidden = true; }; }
       else logo.hidden = true;
@@ -552,7 +574,7 @@
 
     /* ---------- coverage state ---------- */
     function setDataVisible(visible) {
-      ["kpis", "chart-panel", "panels", "src-footer", "hero-facts", "hero-price"].forEach(function (id) {
+      ["kpis", "chart-panel", "panels", "src-footer", "hero-facts", "hero-price", "stale-warn"].forEach(function (id) {
         var n = $(id); if (n) n.hidden = !visible;
       });
       $("coverage").hidden = visible;
