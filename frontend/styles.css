@@ -303,6 +303,17 @@ td.na, .na { color: var(--kimi-color-text-quaternary); }
   display: inline-block;
 }
 .modal p { font-size: 13px; line-height: 1.65; color: var(--kimi-color-text-secondary); margin: 10px 0 0; }
+.modal .about-tagline { font-weight: 600; color: var(--kimi-color-text-primary); margin-top: 4px; }
+.modal h4 {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--kimi-color-text-tertiary); margin: 16px 0 4px;
+}
+.modal .about-list { margin: 4px 0 0; padding-left: 18px; }
+.modal .about-list li {
+  font-size: 13px; line-height: 1.6; color: var(--kimi-color-text-secondary);
+  margin-top: 6px;
+}
+.modal .about-list li strong { color: var(--kimi-color-text-primary); font-weight: 600; }
 .modal-close {
   position: absolute; top: 10px; right: 10px;
   inline-size: 30px; block-size: 30px; border-radius: 7px;
