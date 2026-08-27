@@ -26,11 +26,19 @@
 
 /* ---------- income statement (duration) ---------- */
 export const INCOME = {
+  /* Ordered newest-taxonomy-first. Across a 19-year window a company
+     typically moves through three of these: SalesRevenueGoodsNet in the
+     early years, Revenues in the middle, then the ASC 606 tag from 2018.
+     Coca-Cola and Johnson & Johnson each lose nine years of history if
+     SalesRevenueGoodsNet is absent. */
   revenue: [
     "RevenueFromContractWithCustomerExcludingAssessedTax",
     "Revenues",
     "RevenueFromContractWithCustomerIncludingAssessedTax",
     "SalesRevenueNet",
+    "SalesRevenueGoodsNet",
+    "SalesRevenueServicesNet",
+    "TotalRevenuesAndOtherIncome",
   ],
   cogs: [
     "CostOfRevenue",
