@@ -219,8 +219,13 @@ export default async function handler(req, res) {
     .replace(/[^A-Z0-9.\-]/g, "").slice(0, 12);
   if (!ticker) return res.status(400).json({ error: "ticker required" });
 
+  /* The Refresh button sends force:true. It skips the cache READ but
+     still writes below, so a forced rewrite becomes the value everyone
+     else gets. Without this the button returns the cached note and looks
+     like it did nothing. The edge cache is bypassed too. */
+  const force = !!(body && body.force);
   const hit = cache.get(ticker);
-  if (hit && Date.now() - hit.at < CACHE_TTL_MS) {
+  if (!force && hit && Date.now() - hit.at < CACHE_TTL_MS) {
     res.setHeader("Cache-Control", "s-maxage=900");
     return res.status(200).json(hit.payload);
   }
@@ -310,6 +315,6 @@ export default async function handler(req, res) {
     caveats: typeof payload.caveats === "string" ? payload.caveats : null,
   };
   cache.set(ticker, { at: Date.now(), payload: out });
-  res.setHeader("Cache-Control", "s-maxage=900");
+  res.setHeader("Cache-Control", force ? "no-store" : "s-maxage=900");
   return res.status(200).json(out);
 }

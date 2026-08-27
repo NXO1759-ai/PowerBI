@@ -880,7 +880,7 @@
       };
     }
 
-    function applyLive(ticker, live) {
+    function applyLive(ticker, live, force) {
       var d = COVERAGE[ticker];
       if (!d) return;
       var prof = live.profile || {};
@@ -931,7 +931,9 @@
       d.liveQuoteAt = (live.asOf || "").slice(0, 10) || null;
       if (ANALYSIS[ticker]) d.researchNote = ANALYSIS[ticker];
       if (state.ticker === ticker) renderAll(d);
-      fetchAnalysis(ticker);
+      /* force propagates from the Refresh button: without it the note
+         comes back from a cache and the panel shows the same text. */
+      fetchAnalysis(ticker, force);
     }
 
     function fetchLive(ticker, force) {
@@ -942,15 +944,15 @@
         delete liveLoading[ticker];
         if (payload && !payload.error && payload.ticker === ticker) {
           LIVE[ticker] = payload;
-          applyLive(ticker, payload);
+          applyLive(ticker, payload, force);
         } else {
           var d = COVERAGE[ticker];
           if (d && state.ticker === ticker) {
             renderChart(d); renderLiquidity(d); renderNotes(d);
           }
-          /* analyst opinion is mandatory — run it even when the live
+          /* the research note is mandatory — run it even when the live
              market feed failed (evidence falls back to exported data) */
-          fetchAnalysis(ticker);
+          fetchAnalysis(ticker, force);
         }
       };
       fetch("/api/market?ticker=" + encodeURIComponent(ticker))
@@ -1026,6 +1028,13 @@
       if (analysisLoading[ticker]) return;
       analysisLoading[ticker] = true;
       delete analysisError[ticker];
+      /* on a forced refresh the panel must visibly go to work, otherwise
+         the old note sits there and the rewrite looks like nothing
+         happened */
+      if (force && d.researchNote) {
+        delete d.researchNote;
+        delete ANALYSIS[ticker];
+      }
       if (state.ticker === ticker && !d.researchNote) renderNotes(d);
       var settle = function (payload, errMsg) {
         delete analysisLoading[ticker];
@@ -1035,17 +1044,22 @@
           delete analysisError[ticker];
           if (dd) dd.researchNote = payload;
         } else {
-          /* surface the failure — the analyst opinion is mandatory, so a
+          /* surface the failure — the research note is mandatory, so a
              silent fallback is not acceptable */
           analysisError[ticker] = errMsg ||
-            (payload && payload.error) || "provider unavailable";
+            (payload && payload.error) || "temporarily unavailable";
         }
         if (dd && state.ticker === ticker) renderNotes(dd);
       };
+      /* force also has to reach the server: /api/analysis caches a note
+         per ticker for an hour, so without it the refresh returns the
+         same text it already had. */
+      var reqBody = analysisBody(ticker);
+      if (force) reqBody.force = true;
       fetch("/api/analysis", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(analysisBody(ticker))
+        body: JSON.stringify(reqBody)
       })
         .then(function (r) {
           return r.json()

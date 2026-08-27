@@ -214,14 +214,23 @@
     var tie = balanceSheetTie(pick(bs.totalAssets), pick(bs.totalLiabilities),
                               equityTotal);
     if (tie.checked && !tie.ok) {
-      /* Unverifiable without NCI is a warn; drift that survives WITH NCI
-         present is a real tagging error and blocks publication. */
+      /* Always a warning, never a publication block. A residual gap does
+         not make the reported figures wrong — it usually means a balance
+         sheet section this pull does not model, most often redeemable
+         noncontrolling interest, which sits in temporary equity between
+         liabilities and equity and is captured by neither tag. BlackRock
+         is the example: dropping its whole page over an unmodelled
+         mezzanine line would be a worse outcome than showing the figures
+         it actually filed. The gap is tracked in v_data_quality. */
       var nciKnown = isNum(pick(bs.minorityInterest)) ||
                      isNum(pick(bs.equityIncludingNci));
-      add(nciKnown ? "error" : "warn", "balance_sheet_tie",
+      add("warn", "balance_sheet_tie",
         "assets do not equal liabilities plus total equity — off by " +
         tie.driftPct.toFixed(2) + "% of total assets" +
-        (nciKnown ? "" : " (noncontrolling interest not reported)"));
+        (nciKnown
+          ? " (a balance sheet section outside the pulled concepts, " +
+            "typically redeemable noncontrolling interest)"
+          : " (noncontrolling interest not reported)"));
     }
 
     /* Working capital and net cash change are stored, not trusted: recompute
