@@ -15,30 +15,38 @@
 
 export const maxDuration = 60;
 
-const SEC_UA = { "User-Agent": "Research Terminal admin@example.com" };
+import { INCOME, BALANCE, CASHFLOW } from "../scripts/lib/concepts.mjs";
+import { SEC_UA } from "../scripts/lib/sec-pull.mjs";
+
 const DAY_MS = 24 * 60 * 60 * 1000;
 
-/* [namespace, concept] — mirrors loaders/02_load_sec_data.py CONCEPTS */
+/* The concept lists come from scripts/lib/concepts.mjs, which is the one
+   place they are defined. They used to be copied here, and the copy drifted:
+   it still ranked the ASC 606 revenue tag ahead of Revenues, so an
+   on-demand pull of a property trust or a lender returned a fraction of the
+   real top line — American Tower $0.9bn against $10.6bn, Capital One $8.1bn
+   against $53.4bn — while a company already in the exported set returned the
+   right number. Two paths, two answers, same company.
+   Order matters here because this endpoint takes the first tag a company
+   reports. Revenues leads, so a total is never passed over for one of its
+   own components. */
 const FLOW = {
-  revenue: ["RevenueFromContractWithCustomerExcludingAssessedTax",
-            "Revenues",
-            "RevenueFromContractWithCustomerIncludingAssessedTax",
-            "SalesRevenueNet"],
-  cogs: ["CostOfRevenue", "CostOfGoodsAndServicesSold"],
-  grossProfit: ["GrossProfit"],
-  netIncome: ["NetIncomeLoss"],
-  cfOps: ["NetCashProvidedByUsedInOperatingActivities"],
-  cfInv: ["NetCashProvidedByUsedInInvestingActivities"],
-  cfFin: ["NetCashProvidedByUsedInFinancingActivities"],
+  revenue: INCOME.revenue,
+  cogs: INCOME.cogs,
+  grossProfit: INCOME.grossProfit,
+  netIncome: INCOME.netIncome,
+  cfOps: CASHFLOW.cfOps,
+  cfInv: CASHFLOW.cfInv,
+  cfFin: CASHFLOW.cfFin,
 };
 const INSTANT = {
-  cash: ["CashAndCashEquivalentsAtCarryingValue"],
-  currentAssets: ["AssetsCurrent"],
-  currentLiabilities: ["LiabilitiesCurrent"],
-  totalAssets: ["Assets"],
-  totalLiabilities: ["Liabilities"],
-  equity: ["StockholdersEquity"],
-  retainedEarnings: ["RetainedEarningsAccumulatedDeficit"],
+  cash: BALANCE.cash,
+  currentAssets: BALANCE.currentAssets,
+  currentLiabilities: BALANCE.currentLiabilities,
+  totalAssets: BALANCE.totalAssets,
+  totalLiabilities: BALANCE.totalLiabilities,
+  equity: BALANCE.equity,
+  retainedEarnings: BALANCE.retainedEarnings,
 };
 const CONCEPTS = [
   ...new Set([...Object.values(FLOW).flat(), ...Object.values(INSTANT).flat(),
