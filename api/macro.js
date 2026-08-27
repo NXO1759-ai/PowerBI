@@ -1,23 +1,29 @@
 /**
  * /api/macro.js — Vercel serverless function.
  *
- * Macro backdrop for the company view: inflation, the policy rate and the
- * Treasury curve, from the Federal Reserve's public statistical service
- * (FRED, Federal Reserve Bank of St. Louis).
+ * Macro backdrop for the company view, grouped the way business-cycle
+ * analysis groups indicators:
+ *
+ *   LEADING     move before the economy does — the Treasury curve,
+ *               initial jobless claims, building permits, consumer
+ *               sentiment
+ *   COINCIDENT  move with it — payrolls, industrial production, retail
+ *               sales
+ *   LAGGING     confirm where it has been — inflation, unemployment,
+ *               and the policy rate that reacts to both
+ *
+ * Source is the Federal Reserve's public statistical service (FRED,
+ * Federal Reserve Bank of St. Louis).
  *
  *   GET /api/macro          — cached for six hours
  *   GET /api/macro?force=1  — skips the cache read, still writes it
  *
- * Requires FRED_API_KEY in the environment. Without it the endpoint says
- * so with a 503 rather than returning invented numbers, and the frontend
- * renders the absence honestly.
- *
- * Series, all monthly unless noted:
- *   CPIAUCSL  headline CPI level — served as a year-over-year rate
- *   CPILFESL  core CPI level     — served as a year-over-year rate
- *   FEDFUNDS  effective federal funds rate
- *   DGS10     10-year Treasury constant maturity (daily)
- *   DGS2      2-year Treasury constant maturity (daily)
+ * The key: FRED_API_KEY from the environment when set; otherwise the
+ * fallback below. The fallback is acceptable only while this repository
+ * is PRIVATE — it is a free-tier statistical key with no billing
+ * attached, and it never reaches the browser — but if the repository is
+ * ever made public, move it to a Vercel environment variable and rotate
+ * it first.
  */
 
 export const maxDuration = 30;
@@ -25,11 +31,27 @@ export const maxDuration = 30;
 const CACHE_TTL_MS = 6 * 60 * 60 * 1000;
 const cache = globalThis.__macroCache || (globalThis.__macroCache = { at: 0, payload: null });
 
-const SERIES = ["CPIAUCSL", "CPILFESL", "FEDFUNDS", "DGS10", "DGS2"];
+const FALLBACK_KEY = "c684f28f8275225c518a7b2686ec88ba";
+
+/* series id → how the observation is read */
+const SERIES = {
+  CPIAUCSL: "index",   // headline CPI level → YoY rate
+  CPILFESL: "index",   // core CPI level → YoY rate
+  FEDFUNDS: "rate",    // effective policy rate, monthly
+  DGS10: "rate",       // 10-year constant maturity, daily
+  DGS2: "rate",        // 2-year constant maturity, daily
+  ICSA: "level",       // initial jobless claims, weekly count
+  PERMIT: "level",     // building permits, thousands, annualised
+  UMCSENT: "level",    // consumer sentiment index
+  PAYEMS: "index",     // nonfarm payrolls, thousands → YoY rate
+  INDPRO: "index",     // industrial production index → YoY rate
+  RSAFS: "index",      // retail sales, $m nominal → YoY rate
+  UNRATE: "rate",      // unemployment rate, monthly
+};
 
 async function fredSeries(id, key) {
-  /* two years of observations is enough for a year-over-year rate with
-     room for publication lag */
+  /* two years of observations is enough for a year-over-year comparison
+     with room for publication lag */
   const start = new Date(Date.now() - 800 * 864e5).toISOString().slice(0, 10);
   const url = "https://api.stlouisfed.org/fred/series/observations" +
     "?series_id=" + id + "&api_key=" + key + "&file_type=json" +
@@ -50,13 +72,10 @@ async function fredSeries(id, key) {
   }
 }
 
-function latest(obs) {
-  return obs && obs.length ? obs[obs.length - 1] : null;
-}
+const latest = (obs) => (obs && obs.length ? obs[obs.length - 1] : null);
 
-/** Year-over-year change of an index level: latest against the reading
-    closest to twelve months before it. */
-function yoy(obs) {
+/** The observation closest to twelve months before the latest one. */
+function yearAgo(obs) {
   const now = latest(obs);
   if (!now) return null;
   const target = new Date(new Date(now.date) - 365.25 * 864e5).getTime();
@@ -65,13 +84,35 @@ function yoy(obs) {
     const gap = Math.abs(new Date(o.date).getTime() - target);
     if (gap < bestGap) { bestGap = gap; best = o; }
   }
-  if (!best || bestGap > 45 * 864e5 || best.value === 0) return null;
-  return { value: now.value / best.value - 1, period: now.date };
+  return best && bestGap <= 45 * 864e5 ? best : null;
+}
+
+/** An index level served as its year-over-year growth rate. */
+function asYoY(obs) {
+  const now = latest(obs), ago = yearAgo(obs);
+  if (!now || !ago || ago.value === 0) return null;
+  return { value: now.value / ago.value - 1, period: now.date };
+}
+
+/** A rate (already a percentage) with its change on a year ago in points. */
+function asRate(obs) {
+  const now = latest(obs), ago = yearAgo(obs);
+  if (!now) return null;
+  return { value: now.value / 100, period: now.date,
+           yoyPp: ago ? (now.value - ago.value) / 100 : null };
+}
+
+/** A raw level with its year-over-year percentage change. */
+function asLevel(obs) {
+  const now = latest(obs), ago = yearAgo(obs);
+  if (!now) return null;
+  return { value: now.value, period: now.date,
+           yoy: ago && ago.value !== 0 ? now.value / ago.value - 1 : null };
 }
 
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  const KEY = process.env.FRED_API_KEY;
+  const KEY = process.env.FRED_API_KEY || FALLBACK_KEY;
   if (!KEY) {
     res.setHeader("Cache-Control", "no-store");
     return res.status(503).json({ error: "not configured" });
@@ -82,31 +123,44 @@ export default async function handler(req, res) {
     return res.status(200).json(cache.payload);
   }
 
-  const [cpi, core, ff, t10, t2] = await Promise.all(SERIES.map((s) => fredSeries(s, KEY)));
-  const l = (obs) => {
-    const o = latest(obs);
-    return o ? { value: o.value / 100, period: o.date } : null;
-  };
-  const t10l = l(t10), t2l = l(t2);
+  const ids = Object.keys(SERIES);
+  const results = await Promise.all(ids.map((id) => fredSeries(id, KEY)));
+  const S = {};
+  ids.forEach((id, i) => { S[id] = results[i]; });
+
+  const t10 = asRate(S.DGS10), t2 = asRate(S.DGS2);
   const out = {
     asOf: new Date().toISOString().slice(0, 19),
     source: "Federal Reserve Bank of St. Louis, FRED",
-    cpiYoY: yoy(cpi),
-    coreCpiYoY: yoy(core),
-    fedFunds: l(ff),
-    treasury10y: t10l,
-    treasury2y: t2l,
-    curveSpread: (t10l && t2l)
-      ? { value: t10l.value - t2l.value, period: t10l.period } : null,
+    leading: {
+      curveSpread: (t10 && t2)
+        ? { value: t10.value - t2.value, period: t10.period } : null,
+      treasury10y: t10,
+      treasury2y: t2,
+      initialClaims: asLevel(S.ICSA),
+      buildingPermits: asLevel(S.PERMIT),
+      consumerSentiment: asLevel(S.UMCSENT),
+    },
+    coincident: {
+      payrollsYoY: asYoY(S.PAYEMS),
+      industrialProductionYoY: asYoY(S.INDPRO),
+      retailSalesYoY: asYoY(S.RSAFS),
+    },
+    lagging: {
+      cpiYoY: asYoY(S.CPIAUCSL),
+      coreCpiYoY: asYoY(S.CPILFESL),
+      unemployment: asRate(S.UNRATE),
+      fedFunds: asRate(S.FEDFUNDS),
+    },
   };
   /* Every series failing at once means the provider is down; serve the
      stale cache if one exists rather than a page of dashes. */
-  if (!out.cpiYoY && !out.fedFunds && !out.treasury10y && cache.payload) {
+  const dead = !out.lagging.cpiYoY && !out.lagging.fedFunds && !out.leading.treasury10y;
+  if (dead && cache.payload) {
     res.setHeader("Cache-Control", "no-store");
     return res.status(200).json(cache.payload);
   }
-  cache.at = Date.now();
-  cache.payload = out;
+  if (!dead) { cache.at = Date.now(); cache.payload = out; }
   res.setHeader("Cache-Control", force ? "no-store" : "s-maxage=21600, stale-while-revalidate=86400");
   return res.status(200).json(out);
 }

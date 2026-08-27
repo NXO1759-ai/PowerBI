@@ -65,15 +65,10 @@
   font-family: var(--rt-font-mono); font-size: 13px; font-weight: 600;
   color: var(--rt-gold); margin-inline-end: 8px;
 }
-/* What the filings genuinely cannot see gets said, not guessed. */
 .force .force-gap {
   font-size: 11.5px; line-height: 1.55; color: var(--kimi-color-text-tertiary);
   margin-top: 7px; padding-top: 7px;
   border-top: 1px solid var(--kimi-color-surface-muted);
-}
-.force .force-gap::before {
-  content: "Needs outside evidence — ";
-  color: var(--kimi-color-text-quaternary); font-weight: 600;
 }
 
 /* ---- sustainability tool ---- */
@@ -178,4 +173,25 @@ table.grid td.pool-you, table.grid td.pool-you:first-child {
   .src-footer { flex-direction: column; gap: 12px; }
   .refresh-btn { inline-size: 100%; min-block-size: 44px; }
   .meter { max-inline-size: none; }
+}
+
+/* risk register */
+#risk-register ol { margin: 6px 0 0; padding-inline-start: 22px; }
+#risk-register li {
+  font-size: 12px; line-height: 1.6; color: var(--kimi-color-text-secondary);
+  margin-bottom: 5px;
+}
+#risk-register details { margin-top: 8px; }
+#risk-register summary {
+  font-size: 11.5px; color: var(--rt-gold); cursor: pointer;
+  min-block-size: 32px; display: flex; align-items: center;
+}
+#risk-register .register-meta {
+  font-size: 11.5px; color: var(--kimi-color-text-tertiary); margin: 10px 0 0;
+}
+#risk-register .register-meta a { color: var(--rt-gold); }
+.cycle-group-label {
+  font-size: 10px; font-weight: 600; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--kimi-color-text-tertiary);
+  margin: 14px 0 6px;
 }

@@ -166,13 +166,13 @@
     <!-- ============ 6. FIVE FORCES EVIDENCE ============ -->
     <section class="panel-card fsa-section" aria-labelledby="h-forces">
       <div class="section-head">
-        <h2 id="h-forces">Five forces — what the filings can and cannot tell you</h2>
+        <h2 id="h-forces">Five forces — the evidence in the numbers</h2>
         <p class="section-blurb">
           The forces are tied to the income statements and balance sheets of an
           industry's participants: structure defines the gap between revenues
           and costs. Financial data can evidence some of that gap. It cannot
           observe buyer concentration, switching costs or entry barriers
-          directly, so those are marked as needing outside evidence rather than
+          directly; the open questions are named beneath each force rather than
           quietly guessed at.
         </p>
       </div>
@@ -265,7 +265,6 @@
       <div id="seg-block"></div>
       <h3>Geographic mix</h3>
       <div id="geo-block"></div>
-      <div class="force"><p class="force-gap" id="fin-gap" hidden></p></div>
     </section>
 
     <!-- ============ 3. MARKET AND COMPETITIVE POSITION ============ -->
@@ -282,7 +281,6 @@
       <div class="kpi-grid" id="mkt-cards"></div>
       <div class="scroll-x"><table class="grid" id="t-bench"></table></div>
       <p class="chart-caption" id="mkt-caption"></p>
-      <div class="force"><p class="force-gap" id="mkt-gap"></p></div>
     </section>
 
     <!-- ============ 4. CUSTOMER AND PRODUCT ============ -->
@@ -302,7 +300,6 @@
       <div id="product-block"></div>
       <div id="backlog-chart" role="img" aria-label="Contracted backlog"></div>
       <p class="chart-caption" id="cust-caption"></p>
-      <div class="force"><p class="force-gap" id="cust-gap"></p></div>
     </section>
 
     <!-- ============ 5. OPERATIONS ============ -->
@@ -317,7 +314,6 @@
       </div>
       <div class="kpi-grid" id="ops-cards"></div>
       <p class="chart-caption" id="ops-caption"></p>
-      <div class="force"><p class="force-gap" id="ops-gap"></p></div>
     </section>
 
     <!-- ============ 6. RISK AND MACRO ============ -->
@@ -334,24 +330,27 @@
       </div>
       <div class="kpi-grid" id="risk-cards"></div>
       <p class="chart-caption" id="risk-caption"></p>
+      <h3>The company's own risk register</h3>
+      <p class="hint">
+        A 10-K must name the material risks to the business in Item 1A, and
+        filers head that section with a title per risk. The register below
+        is those titles, in the company's own words — no scoring or
+        severity is added, because the filing carries none. Quarterly
+        updates, when material, arrive in the 10-Q's own Item 1A.
+      </p>
+      <div id="risk-register"></div>
       <h3>Macro backdrop</h3>
       <div id="macro-block"></div>
-      <div class="force"><p class="force-gap" id="risk-gap"></p></div>
+      <h3>Business-cycle indicators</h3>
+      <p class="hint">
+        Leading indicators move before the economy does, coincident ones
+        move with it, and lagging ones confirm where it has been. Read
+        them together: a strong lagging picture with deteriorating leading
+        indicators is late cycle, and the reverse is a recovery.
+      </p>
+      <div id="cycle-block"></div>
     </section>
 
-    <!-- ============ EVIDENCE REGISTER ============ -->
-    <section class="panel-card fsa-section" aria-labelledby="h-evidence">
-      <div class="section-head">
-        <h2 id="h-evidence">What this cannot tell you</h2>
-        <p class="section-blurb">
-          Every item requested for this view that a filing does not contain,
-          with what it would actually take to answer it. Listing these is
-          the point: a dashboard that quietly omits them reads as complete
-          when it is not.
-        </p>
-      </div>
-      <div class="scroll-x"><table class="grid evidence-table" id="t-evidence"></table></div>
-    </section>
 
   </div>
 
@@ -389,6 +388,7 @@
 <script src="data/industry-map.js"></script>
 <script src="data/strategy-panel.js"></script>
 <script src="data/segments.js"></script>
+<script src="data/risks.js"></script>
 <script src="strategy.js"></script>
 </body>
 </html>

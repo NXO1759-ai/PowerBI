@@ -278,20 +278,54 @@
     ["cfFin", "Financing cash flow", true],
   ];
 
+  /** The pair of shown periods the change column compares: the newest
+      against a year before it — four quarters back on the quarterly
+      basis, one period back on the annual — falling back to the previous
+      period when the year-ago one is not on screen. */
+  function comparePair(periods) {
+    if (periods.length < 2) return null;
+    var latest = periods.length - 1;
+    var back = state.basis === "quarterly" ? 4 : 1;
+    var base = latest - back >= 0 ? latest - back : latest - 1;
+    return { latest: latest, base: base,
+             label: state.basis === "quarterly" && back === latest - base ? "vs yr ago" : "change" };
+  }
+
+  /** Period-over-period change, refusing the cases where a percentage is
+      arithmetic but not information: a base at or below zero. */
+  function deltaCell(now, before, commonSizePair) {
+    if (commonSizePair) {
+      /* common-size: the SHARE moved, so points of revenue, not percent */
+      if (!isNum(now) || !isNum(before)) return "<td class='num delta na'>—</td>";
+      var d = now - before;
+      return "<td class='num delta " + (d >= 0 ? "pos" : "neg") + "'>" +
+        (d >= 0 ? "+" : "−") + Math.abs(d * 100).toFixed(1) + " pp</td>";
+    }
+    if (!isNum(now) || !isNum(before)) return "<td class='num delta na'>—</td>";
+    if (before <= 0) return "<td class='num delta na'>n/m</td>";
+    var g = now / before - 1;
+    return "<td class='num delta " + (g >= 0 ? "pos" : "neg") + "'>" +
+      (g >= 0 ? "+" : "−") + Math.abs(g * 100).toFixed(1) + "%</td>";
+  }
+
   function statementTable(el, rows, statement, periods, ratios) {
+    var pair = comparePair(periods);
     var head = "<thead><tr><th scope='col'>" +
       (statement === "balanceSheet" ? "Balance sheet"
         : statement === "cashFlow" ? "Cash flow" : "Income statement") + "</th>" +
       periods.map(function (p) {
         return "<th scope='col' class='num'>" + esc(p.label) +
           (p.derived ? "*" : "") + "</th>";
-      }).join("") + "</tr></thead>";
+      }).join("") +
+      (pair ? "<th scope='col' class='num'>" + esc(pair.label) + "</th>" : "") +
+      "</tr></thead>";
     var body = rows.map(function (row) {
-      if (!row[0]) return "<tr class='spacer'><td colspan='" + (periods.length + 1) + "'></td></tr>";
+      if (!row[0]) return "<tr class='spacer'><td colspan='" + (periods.length + 2) + "'></td></tr>";
+      var common = state.view === "common" && statement === "incomeStatement";
       var cells = periods.map(function (p, i) {
         var v = p[statement][row[0]];
         var text;
-        if (state.view === "common" && statement === "incomeStatement") {
+        if (common) {
           var rev = p.incomeStatement.revenue;
           text = (isNum(v) && isNum(rev) && rev !== 0) ? pct(v / rev) : "—";
         } else {
@@ -299,6 +333,19 @@
         }
         return "<td class='num" + (isNum(v) ? "" : " na") + "'>" + text + "</td>";
       }).join("");
+      if (pair) {
+        var a = periods[pair.latest][statement][row[0]];
+        var b = periods[pair.base][statement][row[0]];
+        if (common) {
+          var ra = periods[pair.latest].incomeStatement.revenue;
+          var rb = periods[pair.base].incomeStatement.revenue;
+          var sa = (isNum(a) && isNum(ra) && ra !== 0) ? a / ra : null;
+          var sb = (isNum(b) && isNum(rb) && rb !== 0) ? b / rb : null;
+          cells += deltaCell(sa, sb, true);
+        } else {
+          cells += deltaCell(a, b, false);
+        }
+      }
       return "<tr" + (row[2] ? " class='total'" : "") + "><td>" +
         esc(row[1]) + "</td>" + cells + "</tr>";
     }).join("");
@@ -319,16 +366,20 @@
       ["nopat", "NOPAT (operating profit after tax)", true],
       ["afterTaxNetInterestExpense", "After-tax net interest"],
     ];
+    var pair = comparePair(ratios);
     var head = "<thead><tr><th scope='col'>Reformulated</th>" +
       periods.map(function (p) {
         return "<th scope='col' class='num'>" + esc(p.label) + "</th>";
-      }).join("") + "</tr></thead>";
+      }).join("") +
+      (pair ? "<th scope='col' class='num'>" + esc(pair.label) + "</th>" : "") +
+      "</tr></thead>";
     var body = rows.map(function (row) {
-      if (!row[0]) return "<tr class='spacer'><td colspan='" + (periods.length + 1) + "'></td></tr>";
+      if (!row[0]) return "<tr class='spacer'><td colspan='" + (periods.length + 2) + "'></td></tr>";
       var cells = ratios.map(function (r) {
         var v = r[row[0]];
         return "<td class='num" + (isNum(v) ? "" : " na") + "'>" + money(v) + "</td>";
       }).join("");
+      if (pair) cells += deltaCell(ratios[pair.latest][row[0]], ratios[pair.base][row[0]], false);
       return "<tr" + (row[2] ? " class='total'" : "") + "><td>" +
         esc(row[1]) + "</td>" + cells + "</tr>";
     }).join("");
@@ -382,6 +433,135 @@
       "</div>";
   }
 
+
+  /* ---------- reading the period ----------
+     Horizontal analysis (what moved, how fast) and common-size analysis
+     (did the shape change) in prose, computed from the same periods the
+     tables show. The checks are the course's: operating leverage read
+     against revenue, inventory and receivables read against sales, and
+     profit read against the cash behind it. */
+  function renderReading(periods) {
+    var host = $("reading-body");
+    if (!host) return;
+    var pair = comparePair(periods);
+    if (!pair) { host.innerHTML = "<p>Not enough periods to compare.</p>"; return; }
+    var now = periods[pair.latest], before = periods[pair.base];
+    var cmpLabel = esc(before.label) + " to " + esc(now.label);
+    var g = function (a, b) {
+      return (isNum(a) && isNum(b) && b > 0) ? a / b - 1 : null;
+    };
+    var share = function (p, v) {
+      var rev = p.incomeStatement.revenue;
+      return (isNum(v) && isNum(rev) && rev !== 0) ? v / rev : null;
+    };
+    var sentences = [];
+
+    /* -- horizontal: what moved -- */
+    var is1 = now.incomeStatement, is0 = before.incomeStatement;
+    var revG = g(is1.revenue, is0.revenue);
+    var lines = [
+      ["cogs", "cost of sales"], ["grossProfit", "gross profit"],
+      ["researchDevelopment", "research and development"],
+      ["sellingGeneralAdmin", "selling, general and administrative"],
+      ["operatingIncome", "operating income"], ["netIncome", "net income"]
+    ];
+    var movers = lines.map(function (l) {
+      var gr = g(is1[l[0]], is0[l[0]]);
+      return isNum(gr) ? { name: l[1], g: gr, abs: Math.abs((is1[l[0]] || 0) - (is0[l[0]] || 0)) } : null;
+    }).filter(Boolean).sort(function (a, b) { return b.abs - a.abs; });
+    if (isNum(revG)) {
+      var p1 = "<strong>What moved.</strong> Revenue " +
+        (revG >= 0 ? "grew " : "fell ") + pct(Math.abs(revG)) + " from " + cmpLabel + ".";
+      if (movers.length) {
+        p1 += " The biggest dollar moves beneath it: " + movers.slice(0, 3).map(function (m) {
+          return m.name + " " + (m.g >= 0 ? "up " : "down ") + pct(Math.abs(m.g));
+        }).join(", ") + ".";
+      }
+      sentences.push(p1);
+    }
+
+    /* -- operating leverage -- */
+    var oiG = g(is1.operatingIncome, is0.operatingIncome);
+    if (isNum(revG) && isNum(oiG) && Math.abs(revG) > 0.005) {
+      var mult = oiG / revG;
+      var p2 = "<strong>Operating leverage.</strong> ";
+      if (revG > 0 && oiG > 0 && mult > 1.15) {
+        p2 += "Operating profit grew " + mult.toFixed(1) + "× as fast as revenue — the sign of a " +
+          "cost base that does not scale one-for-one with sales, so each extra dollar of revenue " +
+          "arrives at a better margin than the last.";
+      } else if (revG > 0 && oiG < revG) {
+        p2 += "Operating profit " + (oiG < 0 ? "fell while revenue grew" :
+          "grew slower than revenue") + " — costs are rising faster than sales, and the " +
+          "common-size view shows where.";
+      } else if (revG < 0 && isNum(oiG) && oiG < revG) {
+        p2 += "Revenue fell " + pct(Math.abs(revG)) + " but operating profit fell " +
+          pct(Math.abs(oiG)) + " — the fixed-cost base cuts both ways, amplifying the " +
+          "downside exactly as it amplified the upside.";
+      } else {
+        p2 += "Operating profit moved roughly in line with revenue over the period.";
+      }
+      sentences.push(p2);
+    }
+
+    /* -- common-size: did the shape change -- */
+    var gm1 = share(now, is1.grossProfit), gm0 = share(before, is0.grossProfit);
+    var oi1 = share(now, is1.operatingIncome), oi0 = share(before, is0.operatingIncome);
+    var rd1 = share(now, is1.researchDevelopment), rd0 = share(before, is0.researchDevelopment);
+    var ppf = function (d) { return (d >= 0 ? "+" : "−") + Math.abs(d * 100).toFixed(1) + " pp"; };
+    var shape = [];
+    if (isNum(gm1) && isNum(gm0) && Math.abs(gm1 - gm0) >= 0.003) shape.push("gross margin " + ppf(gm1 - gm0));
+    if (isNum(oi1) && isNum(oi0) && Math.abs(oi1 - oi0) >= 0.003) shape.push("operating margin " + ppf(oi1 - oi0));
+    if (isNum(rd1) && isNum(rd0) && Math.abs(rd1 - rd0) >= 0.003) shape.push("research intensity " + ppf(rd1 - rd0));
+    if (shape.length) {
+      sentences.push("<strong>The shape of a revenue dollar.</strong> In common-size terms, " +
+        shape.join(", ") + " — margin moves in points of revenue are the changes that persist, " +
+        "where dollar moves can be mere scale.");
+    }
+
+    /* -- working capital against sales -- */
+    var bs1 = now.balanceSheet, bs0 = before.balanceSheet;
+    var invG = g(bs1.inventory, bs0.inventory);
+    var recG = g(bs1.receivables, bs0.receivables);
+    if (isNum(revG)) {
+      var wc = [];
+      if (isNum(invG) && invG - revG > 0.08) {
+        wc.push("inventory grew " + pct(invG) + " against revenue's " + pct(revG) +
+          " — stock building faster than sales is the classic early sign of softening demand or a planned ramp; the filing's own commentary decides which");
+      }
+      if (isNum(recG) && recG - revG > 0.08) {
+        wc.push("receivables grew " + pct(recG) + " against revenue's " + pct(revG) +
+          " — customers are taking longer to pay, or revenue is being booked ahead of collection");
+      }
+      if (wc.length) {
+        sentences.push("<strong>Working capital against sales.</strong> " +
+          wc.join("; ") + ".");
+      }
+    }
+
+    /* -- profit against the cash behind it -- */
+    var cf1 = now.cashFlow, cf0 = before.cashFlow;
+    if (isNum(cf1.cfOps) && isNum(is1.netIncome) && is1.netIncome > 0) {
+      var conv = cf1.cfOps / is1.netIncome;
+      var p5 = "<strong>Profit against cash.</strong> The period's operating cash flow was " +
+        conv.toFixed(2) + "× reported net income";
+      p5 += conv >= 1
+        ? " — profit fully backed by cash, which is the quality check every accrual number must eventually pass."
+        : " — earnings ran ahead of the cash behind them this period; one period is timing, a trend is accrual risk.";
+      if (isNum(cf1.capex) && isNum(cf0.capex) && Math.abs(cf0.capex) > 0) {
+        var capG = Math.abs(cf1.capex) / Math.abs(cf0.capex) - 1;
+        if (Math.abs(capG) > 0.15) {
+          p5 += " Capital spending " + (capG > 0 ? "rose " : "fell ") + pct(Math.abs(capG)) +
+            ", which reaches cash today and earnings only through future depreciation.";
+        }
+      }
+      sentences.push(p5);
+    }
+
+    host.innerHTML =
+      "<p class='reading-head'>" + cmpLabel + "</p>" +
+      sentences.map(function (x) { return "<p>" + x + "</p>"; }).join("");
+  }
+
   /* ---------- orchestration ---------- */
   function renderAll() {
     var d = state.data;
@@ -405,6 +585,7 @@
     statementTable($("t-balance"), BALANCE_ROWS, "balanceSheet", show, showRatios);
     reformulatedTable($("t-reformulated"), show, showRatios);
     statementTable($("t-cashflow"), CASHFLOW_ROWS, "cashFlow", show, showRatios);
+    renderReading(show);
     renderQuality(periods, ratios);
 
     var anyDerived = show.some(function (p) { return p.derived; });

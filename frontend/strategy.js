@@ -43,6 +43,163 @@
 
   /* ---------- definitions on hover, same contract as the statements page ---------- */
   var DEFS = {
+    advantageSpread: { label: "Advantage spread", formula: "Company 5-yr average ROIC − peer median over the SAME years",
+      definition: "How much more (or less) this company earns on its capital than the typical firm it competes with, averaged over five matched years.",
+      interpretation: "A positive spread held for years is the financial signature of competitive advantage. One good year is noise; a decade is a moat.",
+      watch: "Both sides are measured over the same years — comparing a company's best five against a cohort's different five would not be a comparison." },
+    rankAmong: { label: "Peer rank", formula: "Position of this company's ROIC among all covered peers, 1 = best",
+      definition: "Where the return sits in the industry's pecking order this year.",
+      interpretation: "Rank moves faster than the spread, so it is the earlier warning. Watch for a stable spread with a slipping rank — peers improving underneath.",
+      watch: "Counted over listed peers only; the true field is larger." },
+    altmanZ: { label: "Distress score", formula: "1.2·WC/TA + 1.4·RE/TA + 3.3·EBIT/TA + 0.6·MVE/TL + 1.0·Sales/TA",
+      definition: "Altman's Z-score, a weighted blend of liquidity, retained profitability, earning power, leverage and asset productivity that predicts bankruptcy risk.",
+      interpretation: "Above 2.99 is the safe zone, below 1.81 the distress zone, and between them the zone of ignorance where the model refuses to call it.",
+      watch: "Designed for manufacturers; readings for banks, insurers and asset-light firms are not comparable." },
+    earningsQuality: { label: "Earnings quality", formula: "Operating cash flow ÷ net income",
+      definition: "How many dollars of actual cash each reported dollar of profit brought in.",
+      interpretation: "Sustained readings near or above 1 mean profit is real cash. Below 1 for long stretches means earnings run ahead of cash — accruals are doing the work.",
+      watch: "One weak year is often timing (working capital swings); a trend is the signal." },
+    fcf: { label: "Free cash flow", formula: "Operating cash flow − capital expenditure",
+      definition: "The cash the business generates after maintaining and expanding its asset base — what is genuinely available for dividends, buybacks, debt or acquisitions.",
+      interpretation: "The number the valuation ultimately rests on. Compare its trend with reported profit: diverging lines ask why.",
+      watch: "Capex lumps; a big build year depresses it without meaning deterioration." },
+    netDebtToEbitda: { label: "Net debt to profit", formula: "(Debt − cash and investments) ÷ EBITDA",
+      definition: "How many years of pre-depreciation operating profit it would take to repay net borrowings.",
+      interpretation: "Below 1× is conservative, 2–3× is common for stable cash generators, above 4× is leveraged territory where covenants and refinancing start to matter.",
+      watch: "EBITDA overstates debt capacity for capital-hungry businesses, since depreciation there is a real recurring cost." },
+    revenue: { label: "Revenue", formula: "Total revenue for the fiscal year, as filed",
+      definition: "The top line: everything customers paid for goods and services in the period.",
+      interpretation: "Scale on its own says little — read it with growth, margin and the return on the capital behind it.",
+      watch: "Resolved across the several XBRL tags companies use; banks report revenue net of interest expense." },
+    cagr: { label: "Compound growth", formula: "(End ÷ start)^(1/years) − 1",
+      definition: "The single steady annual rate that would take revenue from the start value to the end value.",
+      interpretation: "Smooths the path into one number. Compare the 5-year against the full window: faster recent growth means acceleration.",
+      watch: "Endpoint-sensitive — a start year in a trough manufactures growth. That is why both windows are shown." },
+    roe: { label: "Return on equity", formula: "Net income (incl. minority interests) ÷ average total equity",
+      definition: "The return earned on the shareholders' portion of the balance sheet.",
+      interpretation: "The headline profitability rate — but leverage inflates it, which is why the view pairs it with return on invested capital, which leverage cannot flatter.",
+      watch: "Buybacks shrink equity and mechanically raise ROE with no change in the business." },
+    peerShare: { label: "Share of covered peers", formula: "Company revenue ÷ combined revenue of covered industry peers",
+      definition: "This company's slice of the revenue earned by the large listed firms in its industry group.",
+      interpretation: "A position measure among major rivals — who is winning the visible fight.",
+      watch: "NOT market share: private, foreign and smaller competitors sit outside the panel, so the true denominator is larger and this is an upper bound." },
+    gmGap: { label: "Gross margin vs peers", formula: "Company gross margin − peer median gross margin",
+      definition: "How much more of each sales dollar survives direct costs here than at the typical peer.",
+      interpretation: "A wide positive gap is the price-and-mix route to advantage: charging more, selling richer product, or buying better.",
+      watch: "A filing cannot separate price from mix from input cost — the statements do not distinguish them." },
+    backlog: { label: "Contracted backlog", formula: "Remaining performance obligations, as disclosed",
+      definition: "Revenue customers have already signed for that has not yet been recognised — contracted, not forecast.",
+      interpretation: "The closest thing in a filing to a sales pipeline, and harder than one: every dollar is under contract.",
+      watch: "Disclosed under ASC 606 since 2018 and mainly by subscription and long-contract businesses; absence is a business-model fact, not a red flag." },
+    backlogCover: { label: "Backlog cover", formula: "Contracted backlog ÷ one year's revenue",
+      definition: "How much of a year's revenue is already signed before the year begins.",
+      interpretation: "Above 100% means the coming year is substantially pre-sold; the growth question shifts to what NEW business adds on top.",
+      watch: "Backlog recognises over multiple years, so cover above 100% does not mean next year is fully guaranteed." },
+    deferredRevenue: { label: "Deferred revenue growth", formula: "Change in customer prepayments over the year",
+      definition: "Money customers paid before receiving the product — demand already banked on the balance sheet.",
+      interpretation: "For subscription businesses this moves BEFORE recognised revenue does, making it the closest filed proxy for demand direction.",
+      watch: "Shrinking prepayments is the direction that accompanies weakening demand or shortening contract terms." },
+    acqSpend: { label: "Acquisition spend per new dollar", formula: "Selling & marketing expense ÷ revenue growth in the year",
+      definition: "How much selling effort it took to add each incremental dollar of revenue.",
+      interpretation: "The filed shadow of customer acquisition cost. Rising ratios mean growth is getting more expensive to buy.",
+      watch: "Only computable when the filer splits selling from overhead, and meaningless in a shrinking year." },
+    assetTurns: { label: "Asset turns", formula: "Revenue ÷ average total assets",
+      definition: "Revenue produced per dollar of assets — how hard the whole balance sheet works.",
+      interpretation: "The volume half of the return equation: return on assets is margin × turns. Retailers run high turns and thin margins; software the reverse.",
+      watch: "Only comparable within an industry; across industries it mostly measures business model." },
+    inventoryTurns: { label: "Inventory turns", formula: "Cost of sales ÷ average inventory",
+      definition: "How many times a year the shelf is sold through and replaced.",
+      interpretation: "The filed proxy for operational efficiency and capacity discipline. Falling turns with rising inventory is the classic early sign of demand softening.",
+      watch: "Uses cost of sales, not revenue, so margin changes cannot masquerade as efficiency changes." },
+    cashCycle: { label: "Cash conversion cycle", formula: "Days receivables + days inventory − days payables",
+      definition: "How many days cash is locked up between paying suppliers and being paid by customers.",
+      interpretation: "Negative is the elite outcome: customers fund the operation before suppliers are paid, so growth GENERATES cash instead of consuming it.",
+      watch: "Days payable uses purchases (cost of sales adjusted for inventory movement), not cost of sales alone." },
+    rndIntensity: { label: "R&D intensity", formula: "Research and development expense ÷ revenue",
+      definition: "The share of every sales dollar reinvested into the next product.",
+      interpretation: "A strategy variable, not a cost: read it against peers. Outspending the median while holding margin is investing from strength.",
+      watch: "US GAAP expenses R&D immediately, so heavy investors' current profits are understated relative to capitalising regimes." },
+    netDebt: { label: "Net debt", formula: "Short and long-term borrowings − cash and liquid investments",
+      definition: "What would remain owed if every liquid dollar were used to repay borrowings today.",
+      interpretation: "Negative net debt (net cash) removes refinancing risk from the story entirely and is itself a strategic weapon — the balance sheet to retaliate, acquire or outlast.",
+      watch: "Insurers' investment portfolios back policy liabilities and are not spare cash; their figures read differently." },
+    interestCover: { label: "Interest cover", formula: "Operating profit ÷ interest expense",
+      definition: "How many times over the year's operating profit pays the year's interest bill.",
+      interpretation: "Above 8× interest is an afterthought; below 3× debt is steering decisions; near 1× the lenders are effectively in charge.",
+      watch: "Computed on operating profit, so one bad operating year can crater it while cash reserves remain ample." },
+    marginVol: { label: "Margin volatility", formula: "Standard deviation of the operating margin across the window",
+      definition: "How widely profitability swings around its own average, year to year.",
+      interpretation: "A structural risk measure the statements genuinely evidence: high volatility means a single year is a poor guide to the next, and forecasts deserve wide error bars.",
+      watch: "Cyclicals are volatile by nature — read against the industry, not against zero." },
+    price: { label: "Price", formula: "Latest close from the market feed",
+      definition: "What the market currently pays for one share.",
+      interpretation: "Alone it means nothing — only against shares outstanding (market value) or per-share earnings does it say anything.",
+      watch: "Every other figure in this view is reported by the business; this one is voted on daily by strangers." },
+    priceChange: { label: "Change", formula: "Move on the latest session",
+      definition: "The day's percentage move.",
+      interpretation: "Noise on any given day. It appears here for orientation, not analysis.",
+      watch: "A one-day move answers no strategic question." },
+    marketValue: { label: "Market value", formula: "Share price × shares outstanding",
+      definition: "The price of the whole equity at today's quote.",
+      interpretation: "The market's verdict on everything this page measures. Compare with the filed figures: value is priced, performance is reported, and the gap between them is the debate.",
+      watch: "Moves daily; the filed figures move quarterly." },
+    priceRange: { label: "Trading range", formula: "Low to high across the sessions the feed returned",
+      definition: "Where the price has travelled in the returned window, and where it sits in that range now.",
+      interpretation: "A cheap read on momentum and drawdown without a chart.",
+      watch: "Labelled with the session count — a six-month window is not passed off as a year." },
+    cpi: { label: "Headline inflation", formula: "Consumer price index vs the same month a year ago",
+      definition: "How much more the average consumer basket costs than a year ago.",
+      interpretation: "Inflation flatters nominal revenue growth while the capital base reprices slowly, so reported returns rise mechanically — deflate before applauding.",
+      watch: "A lagging indicator: it confirms where the economy has been, not where it goes." },
+    coreCpi: { label: "Core inflation", formula: "CPI excluding food and energy, vs a year ago",
+      definition: "Inflation with the two most volatile components removed.",
+      interpretation: "The reading central banks steer by, because it is the persistent part.",
+      watch: "Lagging, like headline." },
+    fedFunds: { label: "Policy rate", formula: "Effective federal funds rate",
+      definition: "The overnight rate the central bank targets — the price of money at the shortest end.",
+      interpretation: "Sets the floor under every discount rate and the cost of floating-rate debt. Policy reacts to lagging data, which is why it is grouped as lagging.",
+      watch: "The level matters less than the direction and the market's expectation of it." },
+    treasury10: { label: "10-year Treasury", formula: "Constant-maturity 10-year yield",
+      definition: "The risk-free rate over a decade — the base of every discount rate applied to this company's future cash flows.",
+      interpretation: "When it rises, all future cash flows are worth less today; long-duration growth stories are hit hardest.",
+      watch: "A market price, so it embeds expectations — it moves before the economy does." },
+    treasury2: { label: "2-year Treasury", formula: "Constant-maturity 2-year yield",
+      definition: "The market's bet on where policy rates average over the next two years.",
+      interpretation: "The near end of the curve; read against the 10-year for the cycle signal.",
+      watch: "Tracks expected policy more than growth." },
+    curveSpread: { label: "Curve, 10y minus 2y", formula: "10-year yield − 2-year yield",
+      definition: "The slope of the yield curve between two and ten years.",
+      interpretation: "The most-watched leading indicator there is: inversions (negative readings) have preceded every US recession in the modern record, with a lag of a year or so.",
+      watch: "It has also fired early or stayed inverted for long stretches — a signal, not a timer." },
+    initialClaims: { label: "Initial jobless claims", formula: "New unemployment insurance claims, weekly",
+      definition: "How many people filed for unemployment for the first time last week.",
+      interpretation: "The fastest labour-market signal published — leading, weekly, and hard to spin. A sustained rise is the cycle turning.",
+      watch: "Noisy week to week; the four-week trend is the read." },
+    buildingPermits: { label: "Building permits", formula: "Housing units authorised, annualised",
+      definition: "Construction approved but not yet started — building activity that is committed to happen.",
+      interpretation: "A classic leading indicator: housing is the most rate-sensitive sector, so it turns first when money tightens or eases.",
+      watch: "Annualised monthly data; revisions are common." },
+    consumerSentiment: { label: "Consumer sentiment", formula: "University of Michigan survey index",
+      definition: "How households say they feel about their finances and the economy.",
+      interpretation: "Leading, because spending intentions precede spending. Depressed sentiment with resilient spending data is a tension that eventually resolves one way.",
+      watch: "A survey — it measures mood, and mood can detach from behaviour for a long time." },
+    payrolls: { label: "Payroll growth", formula: "Nonfarm payroll employment vs a year ago",
+      definition: "How fast the economy is adding jobs.",
+      interpretation: "The coincident indicator: it moves with the economy, not ahead of it. Growth near zero is stall speed.",
+      watch: "Heavily revised; the first print is an estimate." },
+    indProd: { label: "Industrial production", formula: "Output of factories, mines and utilities vs a year ago",
+      definition: "The physical-output pulse of the goods economy.",
+      interpretation: "Coincident, and the cleanest read on the industrial cycle specifically — services can grow while this contracts.",
+      watch: "A shrinking share of the modern economy, so weakness here is a sector story as much as a cycle one." },
+    retailSales: { label: "Retail sales", formula: "Retail and food-service sales vs a year ago, nominal",
+      definition: "What consumers actually spent, in dollars.",
+      interpretation: "Coincident. Compare against inflation: nominal growth below the inflation rate means real volumes are FALLING.",
+      watch: "Nominal — inflation is inside this number." },
+    unemployment: { label: "Unemployment rate", formula: "Unemployed share of the labour force",
+      definition: "The share of people who want work and cannot find it.",
+      interpretation: "Lagging: firms cut hours, then hiring, then people — so by the time this rises the downturn is established. Small rises from a cycle low matter more than the level.",
+      watch: "Discouraged workers leaving the labour force can hold the rate down in a weak market." },
+
     cr4: { label: "CR4", formula: "Combined revenue share of the four largest firms",
       definition: "How much of the industry's revenue the top four companies account for. A long-standing measure of how few hands the industry sits in.",
       interpretation: "Rising CR4 over time means consolidation. The course reads it by geography and across decades — US car makers fell from 98% in 1969 to 58% by 2024, which is a structural story, not a data artefact.",
@@ -162,16 +319,16 @@
       ? c.cr4 - first.concentration.cr4 : null;
 
     $("structure-cards").innerHTML =
-      card(null, "Firms covered", String(latest.firms),
+      card("cr4", "Firms covered", String(latest.firms),
         "Large listed US companies in this industry. Private and foreign rivals are outside the panel.") +
       card("cr4", "CR4", num(c.cr4, 0) + "%",
         isNum(crDelta) ? (crDelta >= 0 ? "Up " : "Down ") + Math.abs(crDelta).toFixed(0) +
           " points since " + first.year + " — " + (crDelta >= 0 ? "consolidating" : "fragmenting")
           : "Top four firms' combined revenue share") +
       card("hhi", "HHI", num(c.hhi, 0), c.band, "extension, not from the course") +
-      card(null, "Industry revenue", money(latest.totalRevenue),
+      card("revenue", "Industry revenue", money(latest.totalRevenue),
         isNum(revCagr) ? pct(revCagr) + " a year since " + first.year : "") +
-      card(null, "Industry margin", pct(latest.industryMargin),
+      card("marginSpread", "Industry margin", pct(latest.industryMargin),
         "Aggregate operating income over aggregate revenue") +
       card("marginSpread", "Margin spread", pp(latest.marginSpread),
         isNum(latest.marginSpread) && latest.marginSpread > 0.10
@@ -458,7 +615,7 @@
           ? (pool.poolCaptureRatio > 1
               ? "Takes a bigger share of profit than of revenue"
               : "Takes a smaller share of profit than of revenue") : "") +
-      card(null, "Revenue share", pool ? pct(pool.revenueShare) : "—",
+      card("peerShare", "Revenue share", pool ? pct(pool.revenueShare) : "—",
         "Of the covered peer group");
 
     /* firm against industry median, over the window */
@@ -552,12 +709,12 @@
       return;
     }
     host.innerHTML =
-      card(null, "Pre-tax margin", pct(d.pretaxMargin), "Profit before tax per dollar of sales") +
-      card(null, "Asset turnover", isNum(d.assetTurnover) ? d.assetTurnover.toFixed(2) + "×" : "—",
+      card("gmGap", "Pre-tax margin", pct(d.pretaxMargin), "Profit before tax per dollar of sales") +
+      card("assetTurns", "Asset turnover", isNum(d.assetTurnover) ? d.assetTurnover.toFixed(2) + "×" : "—",
         "Sales per dollar of average assets") +
-      card(null, "Equity multiplier", isNum(d.equityMultiplier) ? d.equityMultiplier.toFixed(2) + "×" : "—",
+      card("roe", "Equity multiplier", isNum(d.equityMultiplier) ? d.equityMultiplier.toFixed(2) + "×" : "—",
         "Average assets per dollar of average equity") +
-      card(null, "Pre-tax ROE", pct(d.pretaxRoe), "The three multiplied together");
+      card("roe", "Pre-tax ROE", pct(d.pretaxRoe), "The three multiplied together");
     if (S.isFinancial(me)) {
       $("dupont-caption").innerHTML =
         "In " + latestYear + ", " + esc(state.ticker) + "'s pre-tax return of " +
@@ -603,14 +760,14 @@
     var gq = S.growthQuality(periods);
 
     host.innerHTML =
-      card(null, "Revenue CAGR", decomp ? pct(decomp.firmCagr) : "—",
+      card("cagr", "Revenue CAGR", decomp ? pct(decomp.firmCagr) : "—",
         decomp ? "Over " + decomp.years + " years" : "") +
-      card(null, "Industry CAGR", decomp ? pct(decomp.industryCagr) : "—",
+      card("cagr", "Industry CAGR", decomp ? pct(decomp.industryCagr) : "—",
         "Same window, covered peers") +
       card("shareEffect", "Share effect", decomp ? pp(decomp.shareEffect) : "—",
         decomp && decomp.outgrewIndustry === true ? "Grew faster than the industry — gained share"
           : decomp && decomp.outgrewIndustry === false ? "Grew slower than the industry — lost share" : "") +
-      card(null, "Margin trajectory", gq ? pp(gq.marginChange) : "—",
+      card("marginSpread", "Margin trajectory", gq ? pp(gq.marginChange) : "—",
         gq ? gq.verdict : "",
         gq && gq.verdict && gq.verdict.indexOf("trap") !== -1 ? "growth trap" : null);
 
@@ -661,7 +818,7 @@
         evidence: "Financial statements cannot see outside the industry's own boundary, so nothing here " +
           "evidences substitution. What the panel can show is the consequence: if substitutes are " +
           "biting, industry revenue growth decays while margins compress.",
-        gap: "the price-performance trade-off offered by alternatives, and buyers' cost of switching to them. This force needs outside evidence entirely." }
+        gap: "the price-performance trade-off offered by alternatives, and buyers' cost of switching to them. Settling it needs evidence from beyond the filings." }
     ];
     $("forces-body").innerHTML = "<div class='force-list'>" + forces.map(function (f) {
       return "<div class='force'><h3>" + esc(f.name) + "</h3>" +
@@ -838,10 +995,10 @@
       card("advantageSpread", "Versus its peers",
         adv ? pp(adv.gap) : "—",
         adv ? ("peer median " + pct(adv.cohort) + " over the same years") : "") +
-      card(null, "Held above the median",
+      card("persistence", "Held above the median",
         pers ? (pers.yearsAbove + " of " + pers.years + " yrs") : "—",
         pers ? pers.verdict : "") +
-      card(null, "Rank this year", stRoic ? (stRoic.rank + " of " + stRoic.of) : "—",
+      card("rankAmong", "Rank this year", stRoic ? (stRoic.rank + " of " + stRoic.of) : "—",
         stRoic ? ("on return on capital, " + year) : "");
 
     var parts = [];
@@ -956,13 +1113,13 @@
     var fcf = latest && latest.freeCashFlow, nd = latest && latest.netDebt;
     var ebitda = latest && latest.ebitda;
     $("health-cards").innerHTML =
-      card(null, "Distress score", (z && isNum(z.score)) ? num(z.score, 2) : "—",
+      card("altmanZ", "Distress score", (z && isNum(z.score)) ? num(z.score, 2) : "—",
         (z && z.zone) ? z.zone : "Not applicable to this balance sheet") +
-      card(null, "Earnings quality", (eq && isNum(eq.ratio)) ? num(eq.ratio, 2) + "×" : "—",
+      card("earningsQuality", "Earnings quality", (eq && isNum(eq.ratio)) ? num(eq.ratio, 2) + "×" : "—",
         "Operating cash flow per dollar of reported profit") +
-      card(null, "Free cash flow", isNum(fcf) ? money(fcf) : "—",
+      card("fcf", "Free cash flow", isNum(fcf) ? money(fcf) : "—",
         "Operating cash flow after capital expenditure") +
-      card(null, "Net debt to profit",
+      card("netDebtToEbitda", "Net debt to profit",
         (isNum(nd) && isNum(ebitda) && ebitda > 0) ? num(nd / ebitda, 2) + "×" : "—",
         "Borrowings net of cash, against operating profit before depreciation");
     var bits = [];
@@ -1000,15 +1157,15 @@
     var fcf = (isNum(cf.cfOps) && isNum(cf.capex)) ? cf.cfOps - Math.abs(cf.capex) : null;
 
     $("fin-cards").innerHTML =
-      card(null, "Revenue", money(ctx.period.incomeStatement.revenue), "Fiscal " + year) +
-      card(null, "Growth, 5-yr", isNum(cagr5) ? pct(cagr5) : "—", "Compound annual") +
-      card(null, "Growth, full window", isNum(cagr10) ? pct(cagr10) : "—",
+      card("revenue", "Revenue", money(ctx.period.incomeStatement.revenue), "Fiscal " + year) +
+      card("cagr", "Growth, 5-yr", isNum(cagr5) ? pct(cagr5) : "—", "Compound annual") +
+      card("cagr", "Growth, full window", isNum(cagr10) ? pct(cagr10) : "—",
         revs.length ? (revs[0].year + "–" + revs[revs.length - 1].year) : "") +
       card("roic", "Return on invested capital", pct(roicNow),
         "Operating profit over the capital behind it",
         S.ebitIsSynthetic(ctx.period) ? "operating profit rebuilt" : null) +
-      card(null, "Return on equity", pct(roeNow), "On average total equity") +
-      card(null, "Free cash flow", isNum(fcf) ? money(fcf) : "—", "After capital expenditure");
+      card("roe", "Return on equity", pct(roeNow), "On average total equity") +
+      card("fcf", "Free cash flow", isNum(fcf) ? money(fcf) : "—", "After capital expenditure");
 
     renderMargins(ctx);
     renderCash(ctx);
@@ -1132,13 +1289,13 @@
     var route = ctx.revenueCredible ? S.marginRoute(ctx.period, gm.median, cohortOf(ctx.peers, year, "opexIntensity").median) : null;
 
     $("mkt-cards").innerHTML =
-      card(null, "Share of covered peers", mine ? pct(mine.revenueShare) : "—",
+      card("peerShare", "Share of covered peers", mine ? pct(mine.revenueShare) : "—",
         "Of " + (iy ? iy.poolFirms : 0) + " firms' combined revenue — an upper bound, not market share") +
       card("poolCapture", "Profit share", mine ? pct(mine.profitShare) : "—",
         "Share of the peer set's combined operating profit") +
       card("poolCapture", "Value capture", (mine && isNum(mine.poolCaptureRatio)) ? num(mine.poolCaptureRatio, 2) + "×" : "—",
         "Profit share divided by revenue share") +
-      card(null, "Gross margin vs peers", route ? pp(route.grossMarginGap) : "—",
+      card("gmGap", "Gross margin vs peers", route ? pp(route.grossMarginGap) : "—",
         "The price-minus-cost outcome, not a price index");
 
     var rowsHtml = (iy ? iy.pool : []).slice(0, 12).map(function (p) {
@@ -1174,12 +1331,6 @@
         "so the true denominator is larger and every share here is an upper bound.</span>"
       : "";
 
-    $("mkt-gap").innerHTML =
-      "share of a served market or of a total addressable market, a true pricing index, and " +
-      "share of voice. Market sizing needs an industry data source with private and foreign " +
-      "competitors in it; a pricing index needs published price lists or a producer price " +
-      "series, since a filing reports revenue and never unit prices; share of voice needs " +
-      "media and search measurement, which is not financial data at all.";
   }
 
   /* ---------- 4. customer and product ---------- */
@@ -1197,13 +1348,13 @@
       ? (deferredNow - deferredPrior) / deferredPrior : null;
 
     $("cust-cards").innerHTML =
-      card(null, "Contracted backlog", latest && isNum(latest.backlog) ? money(latest.backlog) : "—",
+      card("backlog", "Contracted backlog", latest && isNum(latest.backlog) ? money(latest.backlog) : "—",
         latest && isNum(latest.backlog) ? "Signed revenue not yet recognised" : "Not disclosed by this filer") +
-      card(null, "Backlog cover", latest && isNum(latest.coverage) ? pct(latest.coverage) : "—",
+      card("backlogCover", "Backlog cover", latest && isNum(latest.coverage) ? pct(latest.coverage) : "—",
         "Backlog as a share of one year's revenue") +
-      card(null, "Deferred revenue growth", isNum(deferredGrowth) ? pct(deferredGrowth) : "—",
+      card("deferredRevenue", "Deferred revenue growth", isNum(deferredGrowth) ? pct(deferredGrowth) : "—",
         "Customer prepayments — demand already banked") +
-      card(null, "Acquisition spend per new dollar", isNum(acquisition) ? num(acquisition, 2) + "×" : "—",
+      card("acqSpend", "Acquisition spend per new dollar", isNum(acquisition) ? num(acquisition, 2) + "×" : "—",
         isNum(sm) ? "Sales and marketing per dollar of revenue growth" : "Selling and marketing not reported separately");
 
     renderBacklog(ctx, bl);
@@ -1222,13 +1373,6 @@
     if (!bits.length) bits.push("This filer discloses neither a contracted backlog nor customer prepayments.");
     $("cust-caption").innerHTML = bits.join(" ");
 
-    $("cust-gap").innerHTML =
-      "customer acquisition cost, lifetime value, churn and net promoter score. None is a " +
-      "reporting requirement and none appears in any filing. Acquisition cost and lifetime " +
-      "value need the company's own cohort economics; churn and promoter score need its " +
-      "customer records or a survey. The backlog and prepayment figures above are what a " +
-      "filing genuinely carries in their place, and they answer a narrower question than " +
-      "the ones asked.";
   }
 
   function renderBacklog(ctx, bl) {
@@ -1267,13 +1411,13 @@
     var stRnd = standing(rnd, rndCohort), stAt = standing(assetT, atCohort);
 
     $("ops-cards").innerHTML =
-      card(null, "Asset turns", isNum(assetT) ? num(assetT, 2) + "×" : "—",
+      card("assetTurns", "Asset turns", isNum(assetT) ? num(assetT, 2) + "×" : "—",
         stAt ? ("Revenue per dollar of assets · " + rankNote(stAt)) : "Revenue per dollar of average assets") +
-      card(null, "Inventory turns", isNum(invTurns) ? num(invTurns, 1) + "×" : "—",
+      card("inventoryTurns", "Inventory turns", isNum(invTurns) ? num(invTurns, 1) + "×" : "—",
         isNum(invTurns) ? "Cost of sales over average inventory" : "No inventory reported") +
-      card(null, "Cash conversion cycle", isNum(wc.cashCycle) ? num(wc.cashCycle, 0) + " days" : "—",
+      card("cashCycle", "Cash conversion cycle", isNum(wc.cashCycle) ? num(wc.cashCycle, 0) + " days" : "—",
         "Days sales outstanding plus inventory days, less days payable") +
-      card(null, "R&D as share of sales", pct(rnd),
+      card("rndIntensity", "R&D as share of sales", pct(rnd),
         stRnd ? rankNote(stRnd) : "Not reported separately");
 
     var bits = [];
@@ -1291,13 +1435,6 @@
     }
     $("ops-caption").innerHTML = bits.join(" ");
 
-    $("ops-gap").innerHTML =
-      "capacity utilisation, headcount, employee turnover and project milestones. Headcount " +
-      "is the important one: it is not a tagged financial concept, so revenue per employee " +
-      "cannot be computed here at all — the denominator does not exist in the data. It appears " +
-      "as plain text on a filing's cover page and would need text extraction. Capacity " +
-      "utilisation is an operational measure companies rarely publish, and milestones are " +
-      "internal project data that never appears in a financial report.";
   }
 
   /* ---------- 6. risk ---------- */
@@ -1322,13 +1459,13 @@
     var z = latest && latest.altmanZ;
 
     $("risk-cards").innerHTML =
-      card(null, "Net debt", isNum(debt - cash) ? money(debt - cash) : "—",
+      card("netDebt", "Net debt", isNum(debt - cash) ? money(debt - cash) : "—",
         (debt - cash) < 0 ? "Net cash — more liquid assets than borrowings" : "Borrowings net of cash and investments") +
-      card(null, "Interest cover", isNum(cover) ? num(cover, 1) + "×" : "—",
+      card("interestCover", "Interest cover", isNum(cover) ? num(cover, 1) + "×" : "—",
         isNum(cover) ? "Operating profit per dollar of interest" : "No material interest expense") +
-      card(null, "Margin volatility", isNum(vol) ? pp(vol) : "—",
+      card("marginVol", "Margin volatility", isNum(vol) ? pp(vol) : "—",
         "Standard deviation of the operating margin across the window") +
-      card(null, "Distress score", (z && isNum(z.score)) ? num(z.score, 2) : "—",
+      card("altmanZ", "Distress score", (z && isNum(z.score)) ? num(z.score, 2) : "—",
         (z && z.zone) ? z.zone : "Not applicable to this balance sheet");
 
     var bits = [];
@@ -1346,12 +1483,6 @@
     }
     $("risk-caption").innerHTML = bits.join(" ");
 
-    $("risk-gap").innerHTML =
-      "strategic and operational risk severity, regulatory compliance status, and macro " +
-      "exposure. A filing does carry a risk-factor section and a legal-proceedings section in " +
-      "narrative text, and an internal-control conclusion, but none of those is a severity or " +
-      "a likelihood — placing them on a heat map would be plotting an opinion and calling it " +
-      "data. Compliance status is held by regulators, not published in financial statements.";
   }
 
   /* ---------- disaggregated revenue, from the annual filing ---------- */
@@ -1534,18 +1665,6 @@
     renderAxis("segment", "seg-block", true);
     renderAxis("geography", "geo-block", false);
     renderAxis("product", "product-block", false);
-    /* The financial-block gap note now only appears when the filing
-       genuinely tags nothing. */
-    var sd = segData();
-    var has = sd && sd.revenue &&
-      (Object.keys(sd.revenue.segment).length || Object.keys(sd.revenue.geography).length);
-    var gap = $("fin-gap");
-    if (gap) {
-      gap.hidden = !!has;
-      if (!has) gap.innerHTML =
-        "revenue by segment and by geography. This filer's latest annual filing tags " +
-        "neither, so the breakdown exists only as narrative text in the filing itself.";
-    }
   }
 
   /* ---------- macro backdrop ---------- */
@@ -1561,7 +1680,7 @@
         if (!r.ok) throw new Error(String(r.status));
         return r.json();
       })
-      .then(function (d) { MACRO.data = d; MACRO.failed = false; paintMacro(d); renderEvidence(); })
+      .then(function (d) { MACRO.data = d; MACRO.failed = false; paintMacro(d); })
       .catch(function (e) {
         MACRO.failed = true;
         host.innerHTML = "<p class='hint'>" +
@@ -1571,64 +1690,97 @@
               "and is unaffected."
             : "The macro series are unavailable right now. Every figure above comes from " +
               "filings and is unaffected.") + "</p>";
-        renderEvidence();
       });
   }
   function paintMacro(d) {
-    var host = $("macro-block");
+    var backdrop = $("macro-block"), cycle = $("cycle-block");
     var f = function (x, dp) { return x && isNum(x.value) ? pct(x.value, dp === undefined ? 1 : dp) : "—"; };
     var when = function (x) { return x && x.period ? "As of " + esc(x.period) : ""; };
-    host.innerHTML = "<div class='kpi-grid'>" +
-      card(null, "Inflation, headline", f(d.cpiYoY), "Consumer prices against a year earlier") +
-      card(null, "Inflation, core", f(d.coreCpiYoY), "Excluding food and energy") +
-      card(null, "Policy rate", f(d.fedFunds, 2), when(d.fedFunds)) +
-      card(null, "10-year Treasury", f(d.treasury10y, 2), "The base of every discount rate") +
-      card(null, "2-year Treasury", f(d.treasury2y, 2), when(d.treasury2y)) +
-      card(null, "Curve, 10y minus 2y", d.curveSpread && isNum(d.curveSpread.value)
-        ? pp(d.curveSpread.value) : "—",
-        d.curveSpread && d.curveSpread.value < 0 ? "Inverted — short money dearer than long" : "Term premium") +
+    var yoyNote = function (x, noun) {
+      return x && isNum(x.yoy) ? ((x.yoy >= 0 ? "Up " : "Down ") + pct(Math.abs(x.yoy)) + " on a year ago") : noun;
+    };
+    var L = d.leading || {}, C = d.coincident || {}, G = d.lagging || {};
+    backdrop.innerHTML = "<div class='kpi-grid'>" +
+      card("curveSpread", "Curve, 10y minus 2y",
+        L.curveSpread && isNum(L.curveSpread.value) ? pp(L.curveSpread.value) : "—",
+        L.curveSpread && L.curveSpread.value < 0
+          ? "Inverted — short money dearer than long" : "Term premium") +
+      card("treasury10", "10-year Treasury", f(L.treasury10y, 2), "The base of every discount rate") +
+      card("treasury2", "2-year Treasury", f(L.treasury2y, 2), when(L.treasury2y)) +
+      card("fedFunds", "Policy rate", f(G.fedFunds, 2), when(G.fedFunds)) +
+      card("cpi", "Inflation, headline", f(G.cpiYoY), "Consumer prices against a year earlier") +
+      card("coreCpi", "Inflation, core", f(G.coreCpiYoY), "Excluding food and energy") +
       "</div>" +
       "<p class='chart-caption'>Rates set the discount on every future dollar this company earns " +
       "and the price of its debt; inflation flatters nominal growth while the capital base lags. " +
       "<span class='soft'>Source: Federal Reserve Bank of St. Louis. These describe the environment, " +
       "not the company.</span></p>";
+    if (!cycle) return;
+    var claims = L.initialClaims, permits = L.buildingPermits, senti = L.consumerSentiment;
+    cycle.innerHTML =
+      "<p class='cycle-group-label'>Leading — move before the economy</p>" +
+      "<div class='kpi-grid'>" +
+      card("initialClaims", "Initial jobless claims",
+        claims && isNum(claims.value) ? num(claims.value / 1000, 0) + "k" : "—",
+        claims ? yoyNote(claims, "New claims, weekly") : "") +
+      card("buildingPermits", "Building permits",
+        permits && isNum(permits.value) ? num(permits.value / 1000, 2) + "M" : "—",
+        permits ? yoyNote(permits, "Housing units, annualised") : "") +
+      card("consumerSentiment", "Consumer sentiment",
+        senti && isNum(senti.value) ? num(senti.value, 1) : "—",
+        senti ? yoyNote(senti, "Survey index") : "") +
+      "</div>" +
+      "<p class='cycle-group-label'>Coincident — move with it</p>" +
+      "<div class='kpi-grid'>" +
+      card("payrolls", "Payroll growth", f(C.payrollsYoY), "Jobs added against a year ago") +
+      card("indProd", "Industrial production", f(C.industrialProductionYoY), "Output against a year ago") +
+      card("retailSales", "Retail sales", f(C.retailSalesYoY), "Nominal — inflation is inside this number") +
+      "</div>" +
+      "<p class='cycle-group-label'>Lagging — confirm where it has been</p>" +
+      "<div class='kpi-grid'>" +
+      card("unemployment", "Unemployment rate", f(G.unemployment),
+        G.unemployment && isNum(G.unemployment.yoyPp)
+          ? (G.unemployment.yoyPp >= 0 ? "Up " : "Down ") +
+            Math.abs(G.unemployment.yoyPp * 100).toFixed(1) + " pp on a year ago"
+          : "Share of the labour force") +
+      card("cpi", "Inflation, headline", f(G.cpiYoY), "Also lagging — shown with the backdrop above") +
+      card("fedFunds", "Policy rate", f(G.fedFunds, 2), "Policy reacts to lagging data") +
+      "</div>" +
+      "<p class='chart-caption'>A strong lagging picture with deteriorating leading indicators is " +
+      "late cycle; weak lagging data with improving leading indicators is a recovery forming. " +
+      "<span class='soft'>Source: Federal Reserve Bank of St. Louis.</span></p>";
   }
 
-  /* ---------- evidence register ---------- */
-  var EVIDENCE = [
-    ["Revenue by segment", "Financial performance", "Consolidated totals only; the company facts feed carries no segment dimension", "SEC financial statement data sets, which preserve the segment axis, or the filing exhibits"],
-    ["Geographic mix", "Financial performance", "Same — no regional dimension on any figure", "The entity-wide geographic tags, for the minority of filers that use them, or the data sets"],
-    ["Market share against a served market", "Market position", "The panel holds large listed companies only", "An industry source that includes private and foreign competitors"],
-    ["Pricing index", "Market position", "Filings report revenue, never unit prices", "Published price lists, or a producer price series for the category"],
-    ["Share of voice", "Market position", "Not financial data", "Media and search measurement"],
-    ["Customer acquisition cost and lifetime value", "Customer", "Never a reporting requirement", "The company's own cohort economics"],
-    ["Churn, promoter score, satisfaction", "Customer", "Internal or survey measures, never filed", "Customer records, or a commissioned survey"],
-    ["Revenue by product line", "Customer", "Stripped out with the segment dimension", "The segment disclosures in the filing itself"],
-    ["Headcount, turnover, employee sentiment", "Operations", "Headcount is not a tagged financial concept, so revenue per employee cannot be computed either", "Text extraction from the filing cover page; sentiment needs an employee survey"],
-    ["Capacity utilisation", "Operations", "Operational measure, rarely published", "Company disclosure or an industry survey"],
-    ["Project milestones", "Operations", "Internal project data", "Company planning records"],
-    ["Strategic and operational risk severity", "Risk", "Filings carry risk narrative, not severity or likelihood", "Assessment against an external framework, declared as judgement"],
-    ["Regulatory compliance status", "Risk", "Held by regulators, not in financial statements", "Regulator registers, and the filing's own legal-proceedings section"],
-    ["Macro indicators", "Risk", "Not company data", "A central bank statistical feed"]
-  ];
-
-  function renderEvidence() {
-    var sd = segData();
-    var shown = [];
-    if (sd && sd.revenue) {
-      if (Object.keys(sd.revenue.segment).length) shown.push("Revenue by segment");
-      if (Object.keys(sd.revenue.geography).length) shown.push("Geographic mix");
-      if (Object.keys(sd.revenue.product).length) shown.push("Revenue by product line");
+  /* ---------- the company's own risk register ---------- */
+  function renderRiskRegister() {
+    var host = $("risk-register");
+    if (!host) return;
+    var d = (window.RISK_DATA || {})[state.ticker];
+    if (!d) {
+      host.innerHTML = "<p class='hint'>No filing text is loaded for " + esc(state.ticker) + ".</p>";
+      return;
     }
-    if (MACRO.data) shown.push("Macro indicators");
-    var rows = EVIDENCE.filter(function (e) { return shown.indexOf(e[0]) === -1; });
-    $("t-evidence").innerHTML =
-      "<thead><tr><th scope='col'>Not shown</th><th scope='col'>Block</th>" +
-      "<th scope='col'>Why not</th><th scope='col'>What would settle it</th></tr></thead><tbody>" +
-      rows.map(function (e) {
-        return "<tr><td>" + esc(e[0]) + "</td><td>" + esc(e[1]) + "</td><td>" +
-          esc(e[2]) + "</td><td>" + esc(e[3]) + "</td></tr>";
-      }).join("") + "</tbody>";
+    var link = "<a href='" + esc(d.url) + "' target='_blank' rel='noopener'>open Item 1A in the filing itself</a>";
+    if (!d.extracted || !d.headings || !d.headings.length) {
+      host.innerHTML = "<p class='register-meta'>This filer lays Item 1A out in a form the " +
+        "extractor cannot read faithfully" +
+        (isNum(d.words) ? " (the section runs about " + num(d.words / 1000, 1) + " thousand words)" : "") +
+        ", so rather than show a wrong list — " + link + ".</p>";
+      return;
+    }
+    var first = d.headings.slice(0, 8);
+    var rest = d.headings.slice(8);
+    var li = function (t) { return "<li>" + esc(t) + "</li>"; };
+    host.innerHTML =
+      "<p class='register-meta'>The " + esc(String(d.reportDate).slice(0, 4)) +
+      " annual filing names <strong>" + d.headings.length + "</strong> risks across " +
+      (isNum(d.words) ? "about " + num(d.words / 1000, 0) + " thousand words of " : "") +
+      "Item 1A. Each line below is the company's own heading — " + link + ".</p>" +
+      "<ol>" + first.map(li).join("") + "</ol>" +
+      (rest.length
+        ? "<details><summary>All " + d.headings.length + " named risks</summary><ol start='9'>" +
+          rest.map(li).join("") + "</ol></details>"
+        : "");
   }
 
   /* ---------- stock performance ---------- */
@@ -1669,16 +1821,16 @@
     var pos = (isNum(lo) && isNum(hi) && hi > lo) ? (q.price - lo) / (hi - lo) : null;
     $("stock-block").innerHTML =
       "<div class=\"kpi-grid\">" +
-      card(null, "Price", "$" + num(q.price, 2),
+      card("price", "Price", "$" + num(q.price, 2),
         q.time ? "Close, " + esc(String(q.time)) : "Latest close") +
-      card(null, "Change", isNum(chg) ? pct(chg) : "—",
+      card("priceChange", "Change", isNum(chg) ? pct(chg) : "—",
         isNum(q.changeAbs) ? ("$" + num(q.changeAbs, 2) + " on the session") : "On the session") +
-      card(null, "Market value",
+      card("marketValue", "Market value",
         (prof && isNum(prof.marketCap)) ? money(prof.marketCap) : "—",
         (prof && isNum(prof.sharesOutstanding))
           ? (num(prof.sharesOutstanding / 1e9, 2) + "bn shares at the current price")
           : "Shares at the current price") +
-      card(null, "Range in the window",
+      card("priceRange", "Range in the window",
         (isNum(lo) && isNum(hi)) ? "$" + num(lo, 0) + "–$" + num(hi, 0) : "—",
         days ? (days + " sessions" + (isNum(pos) ? ", now " + pct(pos, 0) + " up that range" : "")) : "Trading range") +
       "</div>" +
@@ -1710,8 +1862,8 @@
     renderOps(ctx);
     renderRisk(ctx);
     renderDisaggregation();
+    renderRiskRegister();
     renderMacro(false);
-    renderEvidence();
     renderStock(state.ticker, false);
   }
 

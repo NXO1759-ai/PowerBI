@@ -214,3 +214,19 @@ table.stmt td.derived-cell::after {
   table.stmt th:first-child, table.stmt td:first-child { min-inline-size: 150px; }
   .quality-grid { grid-template-columns: 1fr; }
 }
+
+/* period-over-period change column */
+.stmt td.delta { font-size: 11px; }
+.stmt td.delta.pos { color: #59b87a; }
+.stmt td.delta.neg { color: #d4756b; }
+#reading-body p {
+  font-size: 12.5px; line-height: 1.65; color: var(--kimi-color-text-secondary);
+  margin: 0 0 12px; max-inline-size: 88ch;
+}
+#reading-body p strong { color: var(--kimi-color-text-primary); }
+#reading-body .reading-head {
+  font-size: 10px; font-weight: 600; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--kimi-color-text-tertiary);
+  margin: 16px 0 6px;
+}
+#reading-body .reading-head:first-child { margin-top: 0; }

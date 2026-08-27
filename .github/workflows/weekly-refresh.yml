@@ -53,6 +53,11 @@ jobs:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT || 'Research Terminal research@chineduokeke.mba' }}
         run: node scripts/build-segments.mjs
 
+      - name: Rebuild the risk registers from annual filings
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+        run: node scripts/build-risks.mjs
+
       - name: Rebuild the strategy panel
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT || 'Research Terminal research@chineduokeke.mba' }}
