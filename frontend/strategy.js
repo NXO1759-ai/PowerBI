@@ -1,28 +1,3 @@
-    var peers, d, latestYear = null;
-    /* Walk back to the newest year the decomposition actually resolves.
-       A company's most recent panel year is often a partial one — the
-       balance sheet is filed before the full-year income statement, so
-       Amazon's 2026 row carries assets and no revenue. Showing four
-       dashes there would report absence where a complete 2025 exists. */
-    var mine = Object.keys(me.years).map(Number).sort(function (a, b) { return b - a; });
-    for (var yi = 0; yi < mine.length && yi < 5; yi++) {
-      var y = mine[yi];
-      var cand = S.dupontThreeFactor(S.toPeriod(get, me.years[y], y),
-        me.years[y - 1] ? S.toPeriod(get, me.years[y - 1], y - 1) : null, panelRef(y));
-      if (isNum(cand.pretaxRoe)) { latestYear = y; d = cand; peers = panelRef(y); break; }
-    }
-    if (latestYear === null) {
-      /* Nothing resolved in five years — say so rather than showing a row
-         of dashes with no explanation. */
-      host.innerHTML = "";
-      $("dupont-caption").textContent = S.isFinancial(me)
-        ? "This split is not shown for banks, insurers and property trusts. It divides "
-          + "profit by sales and sales by assets, and neither ratio describes a business "
-          + "whose assets are its inventory."
-        : "Not available — " + esc(state.ticker) + " does not report the revenue and "
-          + "asset figures this split needs in a comparable form.";
-      return;
-    }
 /* Strategy Analysis — renderer.
    Reads the precomputed panel, computes with lib/strategy.js, and reuses
    the metric-card and popup patterns from the Statement Analysis page. */
@@ -229,8 +204,8 @@
     }
     if (latest.syntheticProfitFirms) {
       cov += " Operating profit is rebuilt from pre-tax income for " +
-        latest.syntheticProfitFirms + " of them, which no longer tag an operating income " +
-        "line at all.";
+        latest.syntheticProfitFirms + " of the " + latest.firms +
+        ", which no longer tag an operating income line at all.";
     }
     $("structure-note").innerHTML =
       "<strong>Concentration here is an upper bound.</strong> It is computed over the " +
@@ -548,21 +523,34 @@
     var me = PANEL[state.ticker];
     var host = $("dupont-cards");
     if (!me) { host.innerHTML = ""; $("dupont-caption").textContent = ""; return; }
-    var latestYear = data.series[data.series.length - 1].year;
-    var row = me.years[latestYear], prior = me.years[latestYear - 1];
-    if (!row) {
-      /* Fall back to the most recent year this company actually reported,
-         rather than showing nothing because its fiscal calendar differs. */
-      var mine = Object.keys(me.years).map(Number).sort(function (a, b) { return b - a; });
-      latestYear = mine[0]; row = me.years[latestYear]; prior = me.years[latestYear - 1];
-    }
-    if (!row) { host.innerHTML = ""; return; }
-    /* Compared against the whole panel rather than the handful of firms in
+    /* Walk back to the newest year the decomposition actually resolves.
+       A company's most recent panel year is often a partial one: the
+       balance sheet is filed before the full-year income statement, so
+       Amazon's 2026 row carries assets and no revenue. Showing four dashes
+       there would report absence where a complete 2025 exists.
+       The comparison set is the whole panel's nonfinancial companies, not
        this industry — with two or three peers the median is the company
-       itself, which would report Costco as unremarkable on asset turns. */
-    var peers = panelRef(latestYear);
-    var d = S.dupontThreeFactor(S.toPeriod(get, row, latestYear),
-      prior ? S.toPeriod(get, prior, latestYear - 1) : null, peers);
+       itself, which reported Costco as unremarkable on asset turns. */
+    var d = null, latestYear = null;
+    var mine = Object.keys(me.years).map(Number).sort(function (a, b) { return b - a; });
+    for (var yi = 0; yi < mine.length && yi < 5; yi++) {
+      var y = mine[yi];
+      var cand = S.dupontThreeFactor(S.toPeriod(get, me.years[y], y),
+        me.years[y - 1] ? S.toPeriod(get, me.years[y - 1], y - 1) : null, panelRef(y));
+      if (isNum(cand.pretaxRoe)) { latestYear = y; d = cand; break; }
+    }
+    if (latestYear === null) {
+      /* Nothing resolved in five years — say why rather than showing a row
+         of dashes with no explanation. */
+      host.innerHTML = "";
+      $("dupont-caption").innerHTML = S.isFinancial(me)
+        ? "Not shown for banks, insurers and property trusts. This split divides profit "
+          + "by sales and sales by assets, and neither ratio describes a business whose "
+          + "assets are its inventory."
+        : "Not available — " + esc(state.ticker) + " does not report revenue and asset "
+          + "figures this split can use on a comparable basis.";
+      return;
+    }
     host.innerHTML =
       card(null, "Pre-tax margin", pct(d.pretaxMargin), "Profit before tax per dollar of sales") +
       card(null, "Asset turnover", isNum(d.assetTurnover) ? d.assetTurnover.toFixed(2) + "×" : "—",
