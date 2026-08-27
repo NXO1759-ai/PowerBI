@@ -4,6 +4,20 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Company Overview — Research Terminal</title>
+<meta name="description" content="Independent equity research terminal — SEC EDGAR fundamentals, live market activity, liquidity analysis and filing-grounded analyst notes for 130+ U.S. companies." />
+<meta name="theme-color" content="#151515" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Research Terminal" />
+<meta property="og:title" content="Research Terminal — Company Overview" />
+<meta property="og:description" content="SEC EDGAR fundamentals, live market activity, liquidity analysis and filing-grounded analyst notes for 130+ U.S. companies." />
+<meta property="og:url" content="https://www.chineduokeke.mba/" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Research Terminal — Company Overview" />
+<meta name="twitter:description" content="SEC EDGAR fundamentals, live market activity, liquidity analysis and filing-grounded analyst notes for 130+ U.S. companies." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f5c518'/%3E%3Ctext x='32' y='43' font-family='Menlo,Consolas,monospace' font-size='26' font-weight='700' text-anchor='middle' fill='%23151515'%3ERT%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
 <link rel="stylesheet" href="styles.css" />
 <style>[hidden]{display:none!important}</style>
 </head>
@@ -22,7 +36,7 @@
       <span class="nav-tab soon">Strategy Analysis <span class="soon-pill">Soon</span></span>
     </nav>
     <div class="topbar-right">
-      <button type="button" id="about-btn">About Me</button>
+      <button type="button" id="about-btn">About</button>
     </div>
   </div>
 </header>
@@ -36,8 +50,10 @@
     </div>
     <div class="search">
       <input type="search" id="q" role="combobox" aria-expanded="false" aria-controls="results"
+             aria-autocomplete="list"
              aria-label="Search ticker, CIK, or company name"
              placeholder="Search ticker, CIK, or company name…" autocomplete="off" />
+      <kbd class="kbd-hint" aria-hidden="true">/</kbd>
       <div class="search-results" id="results"><ul role="listbox" id="results-list" aria-label="Matching companies"></ul></div>
     </div>
   </header>
@@ -90,6 +106,7 @@
         <h3>Cash Flow</h3>
         <table class="grid" id="t-cf"></table>
         <h3>Burn Rate</h3>
+        <p class="hint">Net cash change over the quarter, shown per month. Negative means the company is consuming cash; runway is how long the cash balance lasts at that pace.</p>
         <table class="grid" id="t-burn"></table>
       </div>
 
@@ -98,6 +115,7 @@
         <h3>Trading Activity</h3>
         <table class="grid" id="t-vol"></table>
         <h3>Days to Liquidate</h3>
+        <p class="hint">Estimated time to exit a position of each size when the sale makes up the stated share of the stock's average daily value traded.</p>
         <table class="grid" id="t-liq"></table>
       </div>
     </div>
@@ -135,10 +153,12 @@
 </main>
 
 <div class="modal-overlay" id="about-modal" hidden>
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="about-title">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="about-title" tabindex="-1">
     <button type="button" class="modal-close" id="about-close" aria-label="Close">×</button>
-    <h3 id="about-title">About Me</h3>
-    <p>The owner's story goes here. This section will be filled in soon — background, the vision behind this research terminal, and the work it supports.</p>
+    <h3 id="about-title">About This Terminal</h3>
+    <p>Research Terminal is an independent equity-research project built and maintained by Chinedu Okeke.</p>
+    <p>Fundamentals are pulled straight from SEC EDGAR XBRL filings into a Postgres warehouse, market activity comes from live exchange feeds, and every covered company gets a filing-grounded analyst brief generated on demand. The same database powers the Power BI semantic model behind this site.</p>
+    <p>More dashboards are on the way: financial statement analysis, private credit reports, and strategy analysis.</p>
   </div>
 </div>
 

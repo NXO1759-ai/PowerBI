@@ -1,6 +1,8 @@
-/* Research Terminal — Company Overview (v2)
+/* Research Terminal — Company Overview (v3)
    Renders the finance_db SEC EDGAR export (data/company-*.js).
-   No external dependencies; charts are hand-built SVG. */
+   No external dependencies; charts are hand-built SVG.
+   v3: fitted price axis + crosshair readout, ?t= deep links, combobox and
+   dialog accessibility, grouped liquidity table. */
 (function () {
   "use strict";
   try {
@@ -24,8 +26,8 @@
 
     var state = { ticker: "KBLB", range: "30d", pct: false };
 
-    /* chart palette (light theme) */
-    var CH_MUT = "#8a8b92";   /* axis labels, dates */
+    /* chart palette (light theme) — mirrors the styles.css tokens */
+    var CH_MUT = "#6b6d75";   /* axis labels, dates (text-tertiary) */
     var CH_BRD = "#e3e4e7";   /* gridlines, column outline */
     var CH_LINE = "#c07a08";  /* price line, amber/gold */
     var CH_BAR = "#151515";   /* value-traded columns, near-black */
@@ -73,10 +75,16 @@
     function fillTable(tbl, head, rows) {
       if (!tbl) return;
       var html = "<thead><tr>";
-      head.forEach(function (h, i) { html += "<th" + (i === 0 ? "" : " class='num'") + ">" + h + "</th>"; });
+      head.forEach(function (h, i) { html += "<th scope='col'" + (i === 0 ? "" : " class='num'") + ">" + h + "</th>"; });
       html += "</tr></thead><tbody>";
       rows.forEach(function (r) {
-        html += "<tr><td>" + r[0] + "</td>";
+        if (r && !Array.isArray(r) && r.group) {
+          html += "<tr class='tgroup'><td colspan='" + head.length + "'>" + r.group + "</td></tr>";
+          return;
+        }
+        var c0 = r[0];
+        if (c0 && typeof c0 === "object") html += "<tr><td class='" + (c0.c || "") + "'>" + c0.v + "</td>";
+        else html += "<tr><td>" + c0 + "</td>";
         for (var i = 1; i < r.length; i++) {
           var cell = r[i];
           if (cell && typeof cell === "object") html += "<td class='num " + (cell.c || "") + "'>" + cell.v + "</td>";
@@ -168,15 +176,18 @@
         { lbl: "Cash & Equivalents", val: money(bs.cash.q), s: sub(bs.cash.q, bs.cash.ly) },
         { lbl: "Working Capital", val: money(bs.workingCapital.q), s: sub(bs.workingCapital.q, bs.workingCapital.ly) },
         { lbl: "Operating Cash Flow", val: money(cf.cfOps.q), s: sub(cf.cfOps.q, cf.cfOps.ly) },
-        { lbl: "Monthly Burn", val: "—",
+        /* a positive month is not "burn" — say what the number actually is */
+        { lbl: burn.q && burn.q.monthlyBurn !== null && burn.q.monthlyBurn !== undefined && burn.q.monthlyBurn >= 0
+            ? "Monthly Net Cash" : "Monthly Burn",
+          val: "—", burnKpi: true,
           raw: burn.q ? burn.q.monthlyBurn : null,
           s: { v: burn.q && burn.q.monthlyBurn < 0 ? "Net Outflow" : "Net Inflow (Financing)", c: burn.q && burn.q.monthlyBurn < 0 ? "down" : "" } },
         { lbl: "Current Ratio", val: currentRatio !== null ? currentRatio.toFixed(2) + "×" : "—",
           s: { v: runway !== null ? "≈ " + runway.toFixed(1) + " mo runway on op. burn" : "Cash-positive — runway not applicable", c: "" } }
       ];
       $("kpis").innerHTML = kpis.map(function (k) {
-        var val = k.lbl === "Monthly Burn" && k.raw !== null && k.raw !== undefined
-          ? (k.raw < 0 ? "−$" : "$") + money(Math.abs(k.raw)).replace("$", "") : k.val;
+        var val = k.burnKpi && k.raw !== null && k.raw !== undefined
+          ? (k.raw < 0 ? "−$" : k.raw > 0 ? "+$" : "$") + money(Math.abs(k.raw)).replace("$", "") : k.val;
         return "<div class='kpi'><span class='lbl'>" + k.lbl + "</span>" +
                "<output class='val num'>" + val + "</output>" +
                "<span class='sub " + (k.s.c || "") + "'>" + k.s.v + "</span></div>";
@@ -190,14 +201,16 @@
       for (var k in attrs) n.setAttribute(k, attrs[k]);
       return n;
     }
+    function fmtAxisPrice(v, hi) {
+      return "$" + v.toFixed(hi < 1 ? 4 : hi < 100 ? 2 : 0);
+    }
     function renderChart(d) {
       var box = $("chart");
       if (!box) return;
       if (!d || !d.price || !d.price.series) {
         box.innerHTML = "";
         var p = document.createElement("p");
-        p.className = "na";
-        p.style.cssText = "padding:28px 0;text-align:center;color:#8a8b92;font-size:12.5px";
+        p.className = "chart-empty";
         p.textContent = liveLoading[state.ticker]
           ? "Loading live price history…"
           : "Price history is not available for this ticker from the connected market-data providers.";
@@ -208,27 +221,30 @@
       if (!series || !series.length) { box.textContent = "No price history available."; return; }
 
       var W = Math.max(280, box.clientWidth || 720);
-      var padL = 56, padR = 56, padT = 20;
+      var padL = 56, padR = 56, padT = 20, padB = 26;
       var n = series.length;
       var slot = (W - padL - padR) / n;
-      var rot = slot >= 30 ? 0 : slot >= 13 ? -45 : 90;
-      var padB = rot === 0 ? 26 : rot === -45 ? 42 : 50;
-      var H = (state.range === "30d" ? 220 : 240) + (padB - 26);
+      var H = state.range === "30d" ? 220 : 240;
       var iw = W - padL - padR, ih = H - padT - padB;
 
       var closes = series.map(function (s) { return s.close; });
       var vals = series.map(function (s) { return s.valueTraded || 0; });
       var maxP = Math.max.apply(null, closes) || 1;
+      var minP = Math.min.apply(null, closes);
       var maxV = Math.max.apply(null, vals) || 1;
-      /* zero-based dual scales sharing one grid: left = value traded, right = price */
-      var pTop = maxP * 1.08, vTop = maxV * 1.05;
+      /* price axis fits the traded range so the trend shape stays visible;
+         value-traded bars remain zero-based on the shared grid */
+      var span = maxP - minP;
+      var pPad = span > 0 ? span * 0.08 : (maxP || 1) * 0.02;
+      var pLo = Math.max(0, minP - pPad), pHi = maxP + pPad;
+      if (pHi <= pLo) pHi = pLo + 1;
+      var vTop = maxV * 1.05;
 
       var svg = el("svg", { viewBox: "0 0 " + W + " " + H, role: "presentation" });
       function X(i) { return padL + (n === 1 ? iw / 2 : (i / (n - 1)) * iw); }
-      function Y(p) { return padT + ih * (1 - p / pTop); }
-      function VY(v) { return padT + ih * (1 - v / vTop); }
+      function Y(p) { return padT + ih * (1 - (p - pLo) / (pHi - pLo)); }
 
-      /* shared gridlines with subdued dual-axis labels */
+      /* shared gridlines: left labels = value traded (zero-based), right = fitted price */
       var levels = 5;
       for (var g = 0; g <= levels; g++) {
         var f = g / levels, gy = padT + ih * (1 - f);
@@ -237,7 +253,7 @@
         lv.textContent = f === 0 ? "$0" : money(vTop * f);
         svg.appendChild(lv);
         var rv = el("text", { x: W - padR + 8, y: gy + 3, "text-anchor": "start", "font-size": "10", fill: CH_MUT });
-        rv.textContent = "$" + (pTop * f).toFixed(pTop < 1 ? 3 : pTop < 10 ? 2 : 0);
+        rv.textContent = fmtAxisPrice(pLo + (pHi - pLo) * f, pHi);
         svg.appendChild(rv);
       }
 
@@ -248,12 +264,14 @@
         svg.appendChild(el("rect", { x: X(i) - bw / 2, y: padT + ih - bh, width: bw, height: Math.max(0.5, bh), fill: CH_BAR, stroke: CH_BRD, "stroke-width": 1, rx: 1 }));
       });
 
-      /* price line with markers (amber/gold) */
+      /* price line (gold-ink); point markers only while they stay legible */
       var path = closes.map(function (p, i) { return (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(p).toFixed(1); }).join(" ");
       svg.appendChild(el("path", { d: path, fill: "none", stroke: CH_LINE, "stroke-width": 1.8, "stroke-linejoin": "round", "stroke-linecap": "round" }));
-      series.forEach(function (s, i) {
-        svg.appendChild(el("circle", { cx: X(i), cy: Y(s.close), r: 1.6, fill: CH_LINE, stroke: CH_LINE, "stroke-width": 1.2 }));
-      });
+      if (n <= 40) {
+        series.forEach(function (s, i) {
+          svg.appendChild(el("circle", { cx: X(i), cy: Y(s.close), r: 1.6, fill: CH_LINE, stroke: CH_LINE, "stroke-width": 1.2 }));
+        });
+      }
 
       /* last point + direct label (kept clear of the right axis) */
       var li = closes.length - 1, lx = X(li), ly = Y(closes[li]);
@@ -275,27 +293,90 @@
       lg2.textContent = "Value Traded (last " + money(lastV) + ")";
       svg.appendChild(lg2);
 
-      /* one date under every column; rotation adapts to column width */
+      /* horizontal date labels, thinned to fit; ticks mark the labeled days */
+      var step = Math.max(1, Math.ceil(56 / slot));
       series.forEach(function (s, i) {
+        if (i % step) return;
         var parts = String(s.date).split("-");
         if (parts.length < 3) return;
-        var tx = X(i), ty = padT + ih + 12;
-        var attrs = { x: tx, y: ty, "font-size": rot === 90 ? "8" : "9", fill: CH_MUT };
-        if (rot === 0) attrs["text-anchor"] = "middle";
-        else if (rot === -45) { attrs["text-anchor"] = "end"; attrs.transform = "rotate(-45 " + tx + " " + ty + ")"; }
-        else { attrs["text-anchor"] = "start"; attrs.transform = "rotate(90 " + tx + " " + ty + ")"; }
-        var dt = el("text", attrs);
+        var tx = X(i);
+        if (tx > W - padR - 14) return;
+        svg.appendChild(el("line", { x1: tx, x2: tx, y1: padT + ih, y2: padT + ih + 3, stroke: CH_BRD, "stroke-width": 1 }));
+        var dt = el("text", { x: tx, y: padT + ih + 14, "text-anchor": "middle", "font-size": "9", fill: CH_MUT });
         dt.textContent = Number(parts[1]) + "/" + Number(parts[2]);
         svg.appendChild(dt);
       });
 
       box.innerHTML = "";
       box.appendChild(svg);
+      attachChartHover(box, svg, series, {
+        X: X, Y: Y, W: W, padL: padL, padR: padR, padT: padT, ih: ih
+      });
       box.setAttribute("aria-label", "Close price " + fmtDate(series[0].date) + " to " + fmtDate(series[li].date) +
-        ", range $" + closes.reduce(function (a, b) { return Math.min(a, b); }).toFixed(4) +
-        " to $" + closes.reduce(function (a, b) { return Math.max(a, b); }).toFixed(4) +
-        ", last $" + closes[li].toFixed(4) +
-        "; daily value traded up to " + money(maxV) + ", last " + money(lastV));
+        ", range " + fmtAxisPrice(minP, pHi) + " to " + fmtAxisPrice(maxP, pHi) +
+        ", last $" + closes[li].toFixed(closes[li] < 1 ? 4 : 2) +
+        "; daily value traded up to " + money(maxV) + ", last " + money(lastV) +
+        ". Hover or tap the chart for daily values.");
+    }
+
+    /* the terminal readout: crosshair + ink chip following the pointer */
+    function attachChartHover(box, svg, series, gm) {
+      var n = series.length;
+      var xline = el("line", { y1: gm.padT, y2: gm.padT + gm.ih, stroke: CH_MUT, "stroke-width": 1, "stroke-dasharray": "3 3", visibility: "hidden" });
+      var dot = el("circle", { r: 3.4, fill: CH_LINE, stroke: "#ffffff", "stroke-width": 1.2, visibility: "hidden" });
+      svg.appendChild(xline);
+      svg.appendChild(dot);
+      var tip = document.createElement("div");
+      tip.className = "chart-tip";
+      tip.hidden = true;
+      box.appendChild(tip);
+      var lastIdx = -1;
+
+      function hide() {
+        lastIdx = -1;
+        tip.hidden = true;
+        xline.setAttribute("visibility", "hidden");
+        dot.setAttribute("visibility", "hidden");
+      }
+      function show(ev) {
+        var rect = svg.getBoundingClientRect();
+        if (!rect.width) return;
+        var scale = rect.width / gm.W;
+        var xv = (ev.clientX - rect.left) / scale;
+        var i = n === 1 ? 0 : Math.round((xv - gm.padL) / (gm.W - gm.padL - gm.padR) * (n - 1));
+        i = Math.max(0, Math.min(n - 1, i));
+        var s = series[i];
+        var sx = gm.X(i), sy = gm.Y(s.close);
+        xline.setAttribute("x1", sx); xline.setAttribute("x2", sx);
+        xline.setAttribute("visibility", "visible");
+        dot.setAttribute("cx", sx); dot.setAttribute("cy", sy);
+        dot.setAttribute("visibility", "visible");
+        if (i !== lastIdx) {
+          lastIdx = i;
+          var prev = i ? series[i - 1] : null;
+          var chg = prev && prev.close ? (s.close / prev.close - 1) * 100 : null;
+          tip.innerHTML =
+            "<div class='tip-date'>" + fmtDate(s.date) + "</div>" +
+            "<div class='tip-px'>$" + s.close.toFixed(s.close < 1 ? 4 : 2) +
+            (chg === null ? "" : "<span class='tip-chg " + cls(chg) + "'>" + fmtPct(chg) + "</span>") +
+            "</div>" +
+            "<div class='tip-row'><span>Value traded</span><span>" + money(s.valueTraded || 0) + "</span></div>" +
+            "<div class='tip-row'><span>Volume</span><span>" + count(s.volume) + "</span></div>";
+        }
+        tip.hidden = false;
+        var bx = sx * scale;
+        var tw = tip.offsetWidth, th = tip.offsetHeight;
+        var leftPx = bx + 12;
+        if (leftPx + tw > rect.width - 4) leftPx = bx - tw - 12;
+        if (leftPx < 4) leftPx = 4;
+        var topPx = sy * scale - th - 10;
+        if (topPx < 2) topPx = sy * scale + 14;
+        tip.style.left = leftPx + "px";
+        tip.style.top = topPx + "px";
+      }
+      svg.addEventListener("pointermove", show);
+      svg.addEventListener("pointerdown", show);
+      svg.addEventListener("pointerleave", hide);
     }
 
     /* ---------- fundamentals ---------- */
@@ -413,10 +494,16 @@
         if (hrs >= 0.1) return hrs.toFixed(1) + " hrs";
         return Math.max(1, Math.round(hrs * 60)) + " min";
       }
+      function posLabel(v) {
+        return money(v).replace(/\.(\d*?)0+([KMBT])$/, function (_, dgt, unit) {
+          return (dgt ? "." + dgt : "") + unit;
+        }).replace(".00", "");
+      }
       (d.price.liquidation || []).forEach(function (grp) {
+        rows.push({ group: Math.round((grp.pct || 0) * 100) + "% of daily value traded" });
         (grp.rows || []).forEach(function (r) {
           rows.push([
-            money(r.amount).replace(".00", "") + " @ " + Math.round((grp.pct || 0) * 100) + "% Participation",
+            posLabel(r.amount) + " position",
             r.d30 ? fmtDays(r.d30.days) : "—",
             r.d60 ? fmtDays(r.d60.days) : "—",
             r.d90 ? fmtDays(r.d90.days) : "—"
@@ -492,16 +579,16 @@
       if (analysisError[state.ticker]) {
         /* visible even when stale content (ds or live fallback) is on
            screen — failures must never be masked */
-        statusHtml = "<p class='note-block na'>Analyst opinion could not be " +
+        statusHtml = "<p class='note-block na' role='status'>Analyst opinion could not be " +
           "generated (" + esc(analysisError[state.ticker]) + "). " +
           "<button type='button' class='retry-btn' " +
           "data-act='retry-analysis'>Retry analysis</button></p>";
       } else if (!ds) {
         if (analysisLoading[state.ticker]) {
-          statusHtml = "<p class='note-block na'>Analyzing " + esc(state.ticker) +
+          statusHtml = "<p class='note-block na' role='status'>Analyzing " + esc(state.ticker) +
             " with DeepSeek — this takes a few seconds…</p>";
         } else if (liveLoading[state.ticker]) {
-          statusHtml = "<p class='note-block na'>Loading live analyst data…</p>";
+          statusHtml = "<p class='note-block na' role='status'>Loading live analyst data…</p>";
         } else if (!bodyHtml) {
           statusHtml = "<p class='note-block na'>No analyst coverage available " +
             "for this ticker.</p>";
@@ -675,8 +762,28 @@
       renderNotes(d);
       renderFooter(d);
     }
-    function select(ticker) {
+    /* ---------- URL + title state (shareable deep links) ---------- */
+    function urlTicker() {
+      var m = location.search.match(/[?&]t=([A-Za-z0-9.\-]+)/);
+      return m ? decodeURIComponent(m[1]).toUpperCase() : null;
+    }
+    function syncUrl(ticker, push) {
+      var url = location.pathname + "?t=" + encodeURIComponent(ticker);
+      try {
+        (push ? history.pushState : history.replaceState)
+          .call(history, { t: ticker }, "", url);
+      } catch (e) { /* file:// and sandboxed contexts */ }
+    }
+    function setTitle(ticker) {
+      var meta = BY_TICKER[ticker];
+      document.title = ticker + (meta ? " · " + meta[2] : "") + " — Research Terminal";
+    }
+
+    function select(ticker, opts) {
+      opts = opts || {};
       state.ticker = ticker;
+      setTitle(ticker);
+      if (opts.nav !== false) syncUrl(ticker, opts.push === true);
       var d = COVERAGE[ticker];
       if (d) { renderAll(d); fetchLive(ticker); return; }
       var meta = BY_TICKER[ticker];
@@ -688,6 +795,14 @@
       }
       else renderNoCoverage({ ticker: meta[0], cik: meta[1], name: meta[2] });
     }
+    window.addEventListener("popstate", function () {
+      var t = urlTicker() || "KBLB";
+      if (t !== state.ticker && (BY_TICKER[t] || COVERAGE[t])) {
+        var meta = BY_TICKER[t];
+        q.value = meta ? t + " — " + meta[2] : t;
+        select(t, { nav: false });
+      }
+    });
 
     /* ---------- live market data (per-company API pull) ---------- */
     var LIVE = {}, liveLoading = {};
@@ -992,16 +1107,19 @@
       } else {
         rList.innerHTML = matches.map(function (m, i) {
           var cov = COVERED[m[0]] ? "<span class='cov'>Data available</span>" : "";
-          return "<li role='option' data-i='" + i + "' aria-selected='" + (i === activeIdx) + "'>" +
+          return "<li role='option' id='co-opt-" + i + "' data-i='" + i + "' aria-selected='" + (i === activeIdx) + "'>" +
                  "<span class='tk'>" + m[0] + "</span><span class='nm'>" + m[2] + "</span>" + cov + "</li>";
         }).join("");
       }
       rBox.classList.add("open");
       q.setAttribute("aria-expanded", "true");
+      if (activeIdx >= 0 && matches.length) q.setAttribute("aria-activedescendant", "co-opt-" + activeIdx);
+      else q.removeAttribute("aria-activedescendant");
     }
     function closeResults() {
       rBox.classList.remove("open");
       q.setAttribute("aria-expanded", "false");
+      q.removeAttribute("aria-activedescendant");
       activeIdx = -1;
     }
     q.addEventListener("input", function () {
@@ -1029,8 +1147,17 @@
     function pick(m) {
       q.value = m[0] + " — " + m[2];
       closeResults();
-      select(m[0]);
+      select(m[0], { push: true });
     }
+    /* "/" or Ctrl/Cmd+K focuses search from anywhere */
+    document.addEventListener("keydown", function (ev) {
+      var inField = ev.target && ev.target.closest &&
+        ev.target.closest("input, textarea, select, [contenteditable]");
+      var cmdK = (ev.ctrlKey || ev.metaKey) && !ev.shiftKey && !ev.altKey &&
+        (ev.key === "k" || ev.key === "K");
+      var slash = !inField && !ev.ctrlKey && !ev.metaKey && !ev.altKey && ev.key === "/";
+      if (cmdK || slash) { ev.preventDefault(); q.focus(); q.select(); }
+    });
 
     /* ---------- controls ---------- */
     $("range-30").addEventListener("click", function () { setRange("30d"); });
@@ -1056,16 +1183,39 @@
       if (b) { b.disabled = true; fetchAnalysis(state.ticker, true); }
     });
 
-    /* ---------- about modal ---------- */
+    /* ---------- about modal (focus moves in, is trapped, and returns) ---------- */
     var aboutModal = $("about-modal");
     if ($("about-btn") && aboutModal) {
-      $("about-btn").addEventListener("click", function () { aboutModal.hidden = false; });
-      $("about-close").addEventListener("click", function () { aboutModal.hidden = true; });
+      var aboutPanel = aboutModal.querySelector(".modal");
+      var aboutOpener = null;
+      var openAbout = function () {
+        aboutOpener = document.activeElement;
+        aboutModal.hidden = false;
+        if (aboutPanel) aboutPanel.focus();
+      };
+      var closeAbout = function () {
+        aboutModal.hidden = true;
+        if (aboutOpener && aboutOpener.focus) aboutOpener.focus();
+        aboutOpener = null;
+      };
+      $("about-btn").addEventListener("click", openAbout);
+      $("about-close").addEventListener("click", closeAbout);
       aboutModal.addEventListener("click", function (ev) {
-        if (ev.target === aboutModal) aboutModal.hidden = true;
+        if (ev.target === aboutModal) closeAbout();
+      });
+      aboutModal.addEventListener("keydown", function (ev) {
+        if (ev.key !== "Tab") return;
+        var f = aboutModal.querySelectorAll("button, a[href]");
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (ev.shiftKey && (document.activeElement === first || document.activeElement === aboutPanel)) {
+          ev.preventDefault(); last.focus();
+        } else if (!ev.shiftKey && document.activeElement === last) {
+          ev.preventDefault(); first.focus();
+        }
       });
       document.addEventListener("keydown", function (ev) {
-        if (ev.key === "Escape" && !aboutModal.hidden) aboutModal.hidden = true;
+        if (ev.key === "Escape" && !aboutModal.hidden) closeAbout();
       });
     }
 
@@ -1078,9 +1228,13 @@
       ro.observe($("chart"));
     }
 
-    /* ---------- init ---------- */
-    q.value = "KBLB — Kraig Biocraft Laboratories, Inc.";
-    select("KBLB");
+    /* ---------- init (honor ?t= deep links) ---------- */
+    var initial = urlTicker();
+    if (!initial || !(BY_TICKER[initial] || COVERAGE[initial])) initial = "KBLB";
+    var initialMeta = BY_TICKER[initial];
+    q.value = initialMeta ? initial + " — " + initialMeta[2]
+      : "KBLB — Kraig Biocraft Laboratories, Inc.";
+    select(initial, { push: false });
   } catch (err) {
     var app = document.getElementById("app");
     if (app) {
