@@ -72,18 +72,49 @@ const QUARTERS = ["Q1", "Q2", "Q3"];
 const MIN_YEAR = new Date().getFullYear() - 6;
 const REPORT_FORM = /^(10-K|10-Q|20-F|40-F)(\/A)?$/;
 
-async function getJson(url, timeoutMs = 15000) {
-  const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), timeoutMs);
-  try {
-    const resp = await fetch(url, { headers: SEC_UA, signal: ctrl.signal });
-    if (!resp.ok) return null;
-    return await resp.json();
-  } catch {
-    return null;
-  } finally {
-    clearTimeout(timer);
+/* SEC publishes a 10 requests/second ceiling and answers 429 past it.
+   One gate across the whole run, not per company: 130 companies x 23
+   concepts is ~3,000 requests, and pacing them per-batch let the overall
+   rate reach ~23/s. Every request waits its turn here. */
+const MIN_INTERVAL_MS = Number(process.env.SEC_MIN_INTERVAL_MS || 125);
+let nextSlotAt = 0;
+async function paced() {
+  const now = Date.now();
+  const wait = Math.max(0, nextSlotAt - now);
+  /* reserve the slot synchronously so concurrent callers queue rather
+     than all reading the same timestamp and firing together */
+  nextSlotAt = Math.max(now, nextSlotAt) + MIN_INTERVAL_MS;
+  if (wait > 0) await new Promise((r) => setTimeout(r, wait));
+}
+
+export const rateLimitHits = { count: 0 };
+
+async function getJson(url, { timeoutMs = 15000, retries = 3 } = {}) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    await paced();
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+    try {
+      const resp = await fetch(url, { headers: SEC_UA, signal: ctrl.signal });
+      /* 404 is the normal answer for a concept this company never tags —
+         not a failure, and retrying it wastes the rate budget. */
+      if (resp.status === 404) return null;
+      if (resp.status === 429 || resp.status >= 500) {
+        rateLimitHits.count++;
+        if (attempt === retries) return null;
+        await new Promise((r) => setTimeout(r, 800 * Math.pow(2, attempt)));
+        continue;
+      }
+      if (!resp.ok) return null;
+      return await resp.json();
+    } catch {
+      if (attempt === retries) return null;
+      await new Promise((r) => setTimeout(r, 500 * (attempt + 1)));
+    } finally {
+      clearTimeout(timer);
+    }
   }
+  return null;
 }
 
 const spanDays = (r) =>
@@ -180,13 +211,15 @@ function epsFiled(facts, year, period) {
   return (cur || 0) - (prev || 0);
 }
 
-export async function fetchFacts(cik, { batchSize = 6, pauseMs = 120 } = {}) {
+export async function fetchFacts(cik, { batchSize = 4 } = {}) {
   const padded = String(cik).padStart(10, "0");
   const calls = [
     ...SEC_CONCEPTS.map((c) => ["us-gaap", c]),
     ["dei", "EntityCommonStockSharesOutstanding"],
   ];
   const results = [];
+  /* Pacing is handled globally in getJson, so this only bounds how many
+     requests are in flight at once. */
   for (let i = 0; i < calls.length; i += batchSize) {
     const batch = calls.slice(i, i + batchSize);
     const payloads = await Promise.all(batch.map(([ns, c]) =>
@@ -194,12 +227,6 @@ export async function fetchFacts(cik, { batchSize = 6, pauseMs = 120 } = {}) {
     payloads.forEach((p, j) => {
       if (p) results.push(...normalizeConcept(p, batch[j][1]));
     });
-    /* SEC publishes a 10 req/s ceiling. Bulk runs stay well under it —
-       a throttled refresh silently loses concepts, which is worse than
-       a slow one. */
-    if (pauseMs && i + batchSize < calls.length) {
-      await new Promise((r) => setTimeout(r, pauseMs));
-    }
   }
   return results;
 }
