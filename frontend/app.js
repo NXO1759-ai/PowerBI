@@ -1061,6 +1061,12 @@
         .catch(function (e) { settle(null, e && e.message); });
     }
 
+    /* Force a refresh ahead of the weekly cadence.
+       The committed data file only changes when the Sunday job runs, so
+       re-reading it would return the same figures. This goes to SEC EDGAR
+       for fundamentals, then re-pulls market data and the research note.
+       Falls back to the committed file if the live pull fails, so the
+       button still does something useful when EDGAR is rate-limiting. */
     function refreshTicker(ticker) {
       if (!ticker) return;
       var btn = $("refresh-btn");
@@ -1073,19 +1079,46 @@
       delete analysisError[ticker];
       delete COVERAGE[ticker];
       renderLoading(ticker);
-      var s = document.createElement("script");
-      s.src = "data/company-" + ticker.toLowerCase() + ".js?v=" + Date.now();
-      s.onload = function () {
-        COVERAGE[ticker] = window.COMPANY_OVERVIEW_DATA || null;
-        window.COMPANY_OVERVIEW_DATA = null;
-        if (state.ticker === ticker && COVERAGE[ticker]) {
-          renderAll(COVERAGE[ticker]);
-        }
-        fetchLive(ticker, true);
-        setTimeout(done, 800);
+      var title = $("coverage-title"), text = $("coverage-text");
+      if (title) title.textContent = ticker + " — Refreshing";
+      if (text) {
+        text.textContent = "Pulling the latest figures from SEC EDGAR. " +
+          "This bypasses the weekly update, so it takes a few seconds.";
+      }
+
+      /* the committed export, used when the live pull is unavailable */
+      var loadCommitted = function () {
+        var s = document.createElement("script");
+        s.src = "data/company-" + ticker.toLowerCase() + ".js?v=" + Date.now();
+        s.onload = function () {
+          COVERAGE[ticker] = window.COMPANY_OVERVIEW_DATA || null;
+          window.COMPANY_OVERVIEW_DATA = null;
+          if (state.ticker === ticker && COVERAGE[ticker]) {
+            renderAll(COVERAGE[ticker]);
+          }
+          fetchLive(ticker, true);
+          setTimeout(done, 800);
+        };
+        s.onerror = function () { select(ticker); done(); };
+        document.head.appendChild(s);
       };
-      s.onerror = function () { select(ticker); done(); };
-      document.head.appendChild(s);
+
+      var meta = BY_TICKER[ticker];
+      if (!meta) { loadCommitted(); return; }
+      fetch("/api/pull?ticker=" + encodeURIComponent(ticker) +
+            "&cik=" + encodeURIComponent(meta[1]) +
+            "&name=" + encodeURIComponent(meta[2]) +
+            "&t=" + Date.now())
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+          if (!d || d.error || !d.fundamentals) { loadCommitted(); return; }
+          COVERAGE[ticker] = d;
+          COVERED[ticker] = true;
+          if (state.ticker === ticker) renderAll(d);
+          fetchLive(ticker, true);
+          setTimeout(done, 800);
+        })
+        .catch(function () { loadCommitted(); });
     }
 
     /* ---------- search ---------- */
