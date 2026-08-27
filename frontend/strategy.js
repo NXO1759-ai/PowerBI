@@ -21,6 +21,94 @@
     (BY_INDUSTRY[c.industry] = BY_INDUSTRY[c.industry] || []).push(entry);
   });
 
+  /* The dev server has no serverless functions, so API calls from a
+     localhost session go to the deployed site instead of 404ing. */
+  var API_BASE = /^(localhost|127\.)/.test(location.hostname)
+    ? "https://www.chineduokeke.mba" : "";
+  var LIVE = {};   /* tickers merged from the on-demand endpoint */
+
+  function indexEntry(t) {
+    for (var i = 0; i < INDEX.length; i++) if (INDEX[i][0] === t) return INDEX[i];
+    return null;
+  }
+  function ensureIndustryOption(ind) {
+    var sel = $("industry-select");
+    for (var i = 0; i < sel.options.length; i++) {
+      if (sel.options[i].value === ind) return;
+    }
+    var o = document.createElement("option");
+    o.value = ind;
+    o.textContent = ind + " (live)";
+    sel.appendChild(o);
+  }
+  function addToCohorts(t) {
+    var c = PANEL[t];
+    var arr = (BY_INDUSTRY[c.industry] = BY_INDUSTRY[c.industry] || []);
+    var present = false;
+    for (var i = 0; i < arr.length; i++) if (arr[i].ticker === t) present = true;
+    if (!present) arr.push({ ticker: t, name: c.name, industry: c.industry,
+                             sector: c.sector, years: c.years });
+    ensureIndustryOption(c.industry);
+  }
+
+  /**
+   * A company outside the exported panel: pull it, and — when its
+   * industry is thin here — pull the largest listed filers sharing its
+   * SIC code as well, so structure, pools and ranks are computed over a
+   * real cohort instead of degrading.
+   */
+  function setCompanyLive(ticker, force) {
+    var row = indexEntry(ticker);
+    if (!row) {
+      $("status").textContent = ticker + " is not in the SEC company index.";
+      return;
+    }
+    $("status").textContent = "Pulling " + ticker +
+      " from SEC EDGAR — and its peer set if the covered panel runs thin …";
+    var base = API_BASE + "/api/panel?ticker=" + encodeURIComponent(ticker) +
+      "&cik=" + encodeURIComponent(row[1]);
+    fetch(base + (force ? "&force=1" : ""))
+      .then(function (r) {
+        if (!r.ok) return r.json().then(function (b) {
+          throw new Error(b && b.detail ? b.detail : "HTTP " + r.status);
+        });
+        return r.json();
+      })
+      .then(function (d) {
+        PANEL[ticker] = d.company;
+        LIVE[ticker] = true;
+        addToCohorts(ticker);
+        var members = BY_INDUSTRY[d.company.industry] || [];
+        if (members.length >= 4) return null;
+        /* thin cohort: second call brings the peers; the subject is
+           already cached server-side, so this costs only the peer pull */
+        $("status").textContent = "Only " + (members.length - 1) +
+          " covered peer" + (members.length === 2 ? "" : "s") + " in " +
+          d.company.industry + " — pulling the industry live …";
+        return fetch(base + "&peers=live").then(function (r) {
+          return r.ok ? r.json() : null;
+        }).then(function (d2) {
+          if (d2 && Array.isArray(d2.peers)) {
+            d2.peers.forEach(function (p) {
+              if (!PANEL[p.ticker]) {
+                PANEL[p.ticker] = p;
+                LIVE[p.ticker] = true;
+                addToCohorts(p.ticker);
+              }
+            });
+          }
+        });
+      })
+      .then(function () {
+        $("status").textContent = "";
+        setCompany(ticker);
+      })
+      .catch(function (e) {
+        $("status").textContent = "Could not pull " + ticker + ": " +
+          (e && e.message ? e.message : "SEC unavailable") + ".";
+      });
+  }
+
   var state = { ticker: "NVDA", industry: null, view: "industry" };
 
   function $(id) { return document.getElementById(id); }
@@ -147,6 +235,14 @@
       definition: "Where the price has travelled in the returned window, and where it sits in that range now.",
       interpretation: "A cheap read on momentum and drawdown without a chart.",
       watch: "Labelled with the session count — a six-month window is not passed off as a year." },
+    producerPricesYoY: { label: "Producer prices", formula: "Producer price index, all commodities, vs a year ago",
+      definition: "What producers charge at the factory gate — the input-cost pipeline that reaches consumer prices a quarter or two later.",
+      interpretation: "A leading cost signal: when it runs ahead of consumer inflation, margins are being squeezed from below and the hedge-or-renegotiate window is open.",
+      watch: "Commodity-heavy, so energy swings dominate single months." },
+    wageGrowthYoY: { label: "Wage growth", formula: "Average hourly earnings, private sector, vs a year ago",
+      definition: "How fast the price of labour is rising.",
+      interpretation: "The line to budget headcount costs and merit pools against, and a lagging confirmation of labour-market tightness.",
+      watch: "Mix effects distort it: laying off low-wage workers pushes the average up." },
     cpi: { label: "Headline inflation", formula: "Consumer price index vs the same month a year ago",
       definition: "How much more the average consumer basket costs than a year ago.",
       interpretation: "Inflation flatters nominal revenue growth while the capital base reprices slowly, so reported returns rise mechanically — deflate before applauding.",
@@ -1674,7 +1770,7 @@
     if (!host) return;
     if (MACRO.data && !force) { paintMacro(MACRO.data); return; }
     host.innerHTML = "<p class='hint' role='status'>Loading the macro series…</p>";
-    fetch("/api/macro" + (force ? "?force=1" : ""))
+    fetch(API_BASE + "/api/macro" + (force ? "?force=1" : ""))
       .then(function (r) {
         if (r.status === 503) throw new Error("unconfigured");
         if (!r.ok) throw new Error(String(r.status));
@@ -1692,6 +1788,373 @@
               "filings and is unaffected.") + "</p>";
       });
   }
+  /* =====================================================================
+     MACRO DRILL-DOWN
+
+     Clicking any backdrop or cycle card opens a detail: a decade of the
+     series, where today sits in that decade, which way it is trending,
+     and what the reading has historically meant for operating decisions
+     — tuned to the selected company's sector. Every sentence is
+     computed or templated from the series itself; nothing is forecast,
+     and the page says how each signal has failed before.
+     ===================================================================== */
+
+  var SECTOR_BUCKET = {
+    "Financials": "rate", "Real Estate": "rate", "Utilities": "rate",
+    "Consumer Discretionary": "consumer", "Consumer Staples": "consumer",
+    "Communication Services": "consumer",
+    "Industrials": "industrial", "Materials": "industrial", "Energy": "industrial",
+    "Information Technology": "growth", "Health Care": "growth"
+  };
+
+  /* Per-series: where it lives in the payload, how to print it, its
+     lead/lag horizon, the operating read, and the sector-specific note.
+     The horizons and action reads follow the standard business-cycle
+     playbook: leading indicators steer commitments you can still change,
+     lagging ones price the commitments you already made. */
+  var MACRO_META = {
+    curveSpread: { path: ["leading", "curveSpread"], kind: "pp", group: "Leading", horizon: "12–18 months",
+      read: function (v) {
+        return v < 0
+          ? "The curve is inverted. Inversions have preceded every US recession of the modern record by roughly a year, which is why an inverted curve argues for shifting capital allocation away from aggressive expansion and toward debt paydown and cash — optionality is cheap to hold and expensive to need."
+          : "The curve is positive. A steepening curve after a cut cycle is the classic recovery signature — historically the moment leverage and expansion started paying again.";
+      },
+      fail: "It has also fired early and stayed inverted for long stretches — a signal for positioning, never a timer.",
+      sector: { rate: "For a rate business this IS the operating environment: the spread between short funding and long lending is the gross margin of banking.",
+        consumer: "Consumer credit priced off the short end tightens fastest when the curve inverts — watch financed purchases (autos, homes, big tickets) before the rest of the basket.",
+        industrial: "Capex cycles follow the curve with a lag: an inversion today is the order-book softness of next year.",
+        growth: "Long-duration cash flows discount off the long end — the level of the 10-year moves this sector's valuations more than the spread does." } },
+    treasury10: { path: ["leading", "treasury10y"], kind: "pct2", group: "Leading", horizon: "immediate",
+      read: function (v) {
+        return "Every future dollar this company earns is discounted off this rate. At " + (v * 100).toFixed(2) + "%, a dollar a decade out is worth about " + (100 / Math.pow(1 + v, 10)).toFixed(0) + " cents today — when the rate rises, distant cash flows lose value first and fastest.";
+      },
+      fail: "A market price, not a policy: it embeds expectations and can reverse without warning.",
+      sector: { rate: "Reinvestment yield for insurers and the long side of every bank book — rising yields are earnings relief here even as they bruise bond portfolios.",
+        growth: "The denominator of every growth valuation: this sector's multiples move inversely with this number more than any other." } },
+    treasury2: { path: ["leading", "treasury2y"], kind: "pct2", group: "Leading", horizon: "9–18 months",
+      read: function (v) {
+        return "The market's average expectation for the policy rate over the next two years sits at " + (v * 100).toFixed(2) + "%. Read it against the policy rate itself: the gap is the easing or tightening the market has already priced.";
+      },
+      fail: "Expectations reprice violently around inflation surprises.",
+      sector: { rate: "Floating-rate books reprice off the short end — this is next year's funding cost, visible today." } },
+    producerPricesYoY: { path: ["leading", "producerPricesYoY"], kind: "pct", group: "Leading", horizon: "3–6 months",
+      read: function (v, d) {
+        var cpi = statOf(d, "cpi");
+        var gap = cpi && isNum(cpi.value) ? v - cpi.value : null;
+        var s = "Wholesale prices are " + (v >= 0 ? "rising " : "falling ") + pct(Math.abs(v)) + " a year — input costs that reach the shelf a quarter or two later.";
+        if (isNum(gap)) {
+          s += gap > 0.01
+            ? " Producer inflation is running " + pp(gap) + " AHEAD of consumer inflation: input costs are outrunning shelf prices, which is the margin-squeeze setup — the window to hedge inputs or renegotiate supply is before vendors move."
+            : gap < -0.01
+              ? " Producer inflation is running " + pp(gap) + " behind consumer inflation — the margin-friendly configuration, where costs fall faster than prices."
+              : " Producer and consumer inflation are moving together.";
+        }
+        return s;
+      },
+      fail: "Commodity-heavy, so energy swings dominate it; the trend matters more than any print.",
+      sector: { industrial: "The most direct cost line for this sector: what this index does, cost of sales does two quarters later.",
+        consumer: "The gap between this and consumer prices is the sector's gross-margin forecast: costs rising faster than shelf prices squeeze first here." } },
+    initialClaims: { path: ["leading", "initialClaims"], kind: "k", group: "Leading", horizon: "1–3 months",
+      read: function (v, d, stat) {
+        var s = "About " + num(v / 1000, 0) + " thousand people filed for unemployment for the first time last week — the fastest labour signal published.";
+        if (stat && isNum(stat.yoy)) {
+          s += stat.yoy > 0.10
+            ? " Claims are up " + pct(stat.yoy) + " on a year ago: a sustained 10–20% rise has historically been the early warning of a slowdown — the trigger point for slowing hiring and preserving cash before the downturn is visible anywhere else."
+            : stat.yoy < -0.05
+              ? " Claims are down " + pct(Math.abs(stat.yoy)) + " on a year ago — a labour market still absorbing people, which argues the expansion has room."
+              : " Claims are flat on a year ago — no early warning firing.";
+        }
+        return s;
+      },
+      fail: "Noisy week to week; act on the four-week trend, never one print.",
+      sector: { consumer: "Discretionary spending is the first casualty of layoffs — this series leads this sector's demand by a quarter.",
+        rate: "Rising claims become rising credit losses with a two-to-three-quarter lag — loan books feel this before earnings show it." } },
+    buildingPermits: { path: ["leading", "buildingPermits"], kind: "M", group: "Leading", horizon: "6–9 months",
+      read: function (v, d, stat) {
+        return "Builders hold permits for about " + num(v / 1000, 2) + " million homes (annualised) — construction committed but not yet started. Housing is the most rate-sensitive sector in the economy, so permits turn first when money tightens or eases" +
+          (stat && isNum(stat.yoy) ? ", and they are " + (stat.yoy >= 0 ? "up " : "down ") + pct(Math.abs(stat.yoy)) + " on a year ago." : ".");
+      },
+      fail: "Annualised monthly data with heavy revisions.",
+      sector: { industrial: "Everything sold into a new home — materials, equipment, freight — sees demand roughly two quarters after this series moves.",
+        consumer: "Housing turnover drives the big-ticket basket: furniture, appliances, improvement spend follow completions." } },
+    consumerSentiment: { path: ["leading", "consumerSentiment"], kind: "raw", group: "Leading", horizon: "3–6 months",
+      read: function (v) {
+        return "Households rate their financial mood at " + num(v, 1) + ". Spending intentions precede spending — but mood can detach from behaviour for long stretches, and the gap between depressed sentiment and resilient actual spending eventually resolves one way or the other.";
+      },
+      fail: "A survey of mood, not a measure of money; it has been wrong for years at a time.",
+      sector: { consumer: "The direct demand thermometer for this sector — sustained readings below the decade median usually precede trading-down behaviour and private-label shift." } },
+    payrolls: { path: ["coincident", "payrollsYoY"], kind: "pct", group: "Coincident", horizon: "now",
+      read: function (v) {
+        return "The economy is adding jobs at " + pct(v) + " a year. Growth near zero is stall speed: below roughly half a percent, income growth stops outrunning inflation and the expansion is living on borrowed time.";
+      },
+      fail: "First prints are estimates and revisions are large — direction over precision.",
+      sector: { consumer: "Payrolls are the paycheque base this sector sells into; the growth rate here is the ceiling on volume growth there." } },
+    indProd: { path: ["coincident", "industrialProductionYoY"], kind: "pct", group: "Coincident", horizon: "now",
+      read: function (v) {
+        return "Physical output of factories, mines and utilities is " + (v >= 0 ? "growing " : "contracting ") + pct(Math.abs(v)) + " a year. The operational use is as a benchmark: a company growing volumes slower than this is losing share of physical output, whatever its revenue says.";
+      },
+      fail: "A shrinking slice of a services economy — weakness here can be sectoral, not cyclical.",
+      sector: { industrial: "The sector's own pulse: benchmark this company's volume growth directly against it to separate share gains from a rising tide." } },
+    retailSales: { path: ["coincident", "retailSalesYoY"], kind: "pct", group: "Coincident", horizon: "now",
+      read: function (v, d) {
+        var cpi = statOf(d, "cpi");
+        var real = cpi && isNum(cpi.value) ? v - cpi.value : null;
+        return "Consumers are spending " + pct(v) + " more dollars than a year ago" +
+          (isNum(real)
+            ? real < 0
+              ? " — but inflation is " + pct(cpi.value) + ", so REAL volumes are falling " + pct(Math.abs(real)) + ". Dollar growth below inflation is contraction wearing a disguise."
+              : ", about " + pct(real) + " of it real after inflation."
+            : ".") +
+          " The operating read: this is the 30-to-60-day dial for marketing spend, product mix and inventory depth.";
+      },
+      fail: "Nominal and seasonal — always read against inflation.",
+      sector: { consumer: "This IS the sector's top line, published monthly and two quarters ahead of any 10-Q." } },
+    cpi: { path: ["lagging", "cpiYoY"], kind: "pct", group: "Lagging", horizon: "confirms the past",
+      read: function (v) {
+        return "Consumer prices are " + pct(v) + " above a year ago. For operators this sets the pricing ceiling and the escalator: B2B contracts with inflation clauses reprice off this, and price rises beyond it need real pricing power to stick. It also flatters every nominal growth rate on this page by exactly this much.";
+      },
+      fail: "Lagging by design — by the time it confirms a trend, the leading indicators have moved twice.",
+      sector: { consumer: "Above ~3%, trading down begins; the sector's mix shifts before its totals do.",
+        rate: "The series the policy rate answers to — persistent overshoots here keep funding costs high for longer." } },
+    coreCpi: { path: ["lagging", "coreCpiYoY"], kind: "pct", group: "Lagging", horizon: "confirms the past",
+      read: function (v) {
+        return "Excluding food and energy, inflation runs " + pct(v) + " — the persistent part policy steers by. The distance from the 2% target is the tightening still owed: readings near target open the door to cuts, readings above it keep the policy rate pinned.";
+      },
+      fail: "Shelter's weight makes it slow — it lags observed rents by about a year.",
+      sector: {} },
+    wageGrowthYoY: { path: ["lagging", "wageGrowthYoY"], kind: "pct", group: "Lagging", horizon: "confirms the past",
+      read: function (v, d) {
+        var cpi = statOf(d, "cpi");
+        var real = cpi && isNum(cpi.value) ? v - cpi.value : null;
+        return "Average hourly earnings are rising " + pct(v) + " a year — the number to budget next year's headcount costs and merit pool against" +
+          (isNum(real)
+            ? real > 0
+              ? ". Wages are outrunning inflation by " + pp(real) + ", which supports demand but compresses labour-heavy margins."
+              : ". Wages are trailing inflation — margin relief for employers, purchasing-power erosion for the customers they sell to."
+            : ".");
+      },
+      fail: "Mix effects distort it: layoffs of low-wage workers push the average UP.",
+      sector: { consumer: "Both sides of the ledger at once here: labour cost in the stores, purchasing power at the tills.",
+        growth: "Talent-cost inflation for the sector where compensation is the biggest line." } },
+    unemployment: { path: ["lagging", "unemployment"], kind: "pct", group: "Lagging", horizon: "confirms the past",
+      read: function (v, d, stat) {
+        return "Unemployment stands at " + pct(v) + ". Firms cut hours, then hiring, then people — so by the time this rises the downturn is established. The rule of thumb that has held for decades: a rise of half a point from the cycle low has never reversed without a recession" +
+          (stat && isNum(stat.yoyPp) ? "; it is " + (stat.yoyPp >= 0 ? "up " : "down ") + Math.abs(stat.yoyPp * 100).toFixed(1) + " pp on a year ago." : ".");
+      },
+      fail: "Participation moves can hold the rate down in a genuinely weak market.",
+      sector: {} },
+    fedFunds: { path: ["lagging", "fedFunds"], kind: "pct2", group: "Lagging", horizon: "sets the next 9–18 months",
+      read: function (v, d, stat) {
+        var dir = stat && isNum(stat.yoyPp)
+          ? (stat.yoyPp < -0.002 ? "cutting" : stat.yoyPp > 0.002 ? "hiking" : "holding")
+          : "holding";
+        return "The policy rate is " + (v * 100).toFixed(2) + "% and the central bank has been " + dir + " over the past year. The operating uses are mechanical: time refinancing against the cutting cycle, not after it; reset hurdle rates for new projects off this floor; and remember the economy feels a rate change nine to eighteen months after it happens" +
+          (dir === "cutting" ? " — cuts in train now are the easing of next year's demand." :
+           dir === "hiking" ? " — the tightening already done has not fully landed yet." : ".");
+      },
+      fail: "Policy reacts to lagging data, so it is usually late at both turns.",
+      sector: { rate: "Deposit betas, loan yields and the entire margin structure of this sector reprice off this single number.",
+        growth: "The discount-rate floor under every long-duration valuation in the sector." } },
+  };
+
+  function statOf(d, key) {
+    var m = MACRO_META[key];
+    if (!m || !d) return null;
+    return (d[m.path[0]] || {})[m.path[1]] || null;
+  }
+  function fmtKind(kind, v) {
+    if (!isNum(v)) return "—";
+    if (kind === "pct") return pct(v);
+    if (kind === "pct2") return pct(v, 2);
+    if (kind === "pp") return pp(v);
+    if (kind === "k") return num(v / 1000, 0) + "k";
+    if (kind === "M") return num(v / 1000, 2) + "M";
+    return num(v, 1);
+  }
+
+  function detailChart(hist, kind) {
+    if (!hist || hist.length < 8) return "";
+    var W = 720, H = 170, padL = 54, padR = 14, padT = 12, padB = 24;
+    var iw = W - padL - padR, ih = H - padT - padB;
+    var vals = hist.map(function (h) { return h[1]; });
+    var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
+    if (lo === hi) { lo -= 1; hi += 1; }
+    var span = hi - lo;
+    lo -= span * 0.06; hi += span * 0.06;
+    var X = function (i) { return padL + (i / (hist.length - 1)) * iw; };
+    var Y = function (v) { return padT + ih - ((v - lo) / (hi - lo)) * ih; };
+    var path = hist.map(function (h, i) {
+      return (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(h[1]).toFixed(1);
+    }).join(" ");
+    var out = "<svg viewBox='0 0 " + W + " " + H + "' preserveAspectRatio='xMidYMid meet' role='img'>";
+    [lo + (hi - lo) * 0.08, (lo + hi) / 2, hi - (hi - lo) * 0.08].forEach(function (g) {
+      out += "<line x1='" + padL + "' x2='" + (W - padR) + "' y1='" + Y(g).toFixed(1) +
+        "' y2='" + Y(g).toFixed(1) + "' stroke='rgba(255,255,255,.07)' stroke-width='1'/>" +
+        "<text x='" + (padL - 6) + "' y='" + (Y(g) + 3).toFixed(1) +
+        "' text-anchor='end' font-size='9' fill='#8b8f98'>" + esc(fmtKind(kind, g)) + "</text>";
+    });
+    if (lo < 0 && hi > 0) {
+      out += "<line x1='" + padL + "' x2='" + (W - padR) + "' y1='" + Y(0).toFixed(1) +
+        "' y2='" + Y(0).toFixed(1) + "' stroke='rgba(245,197,24,.4)' stroke-width='1' stroke-dasharray='3 3'/>";
+    }
+    var step = Math.max(1, Math.floor(hist.length / 6));
+    for (var i = 0; i < hist.length; i += step) {
+      out += "<text x='" + X(i).toFixed(1) + "' y='" + (H - 8) +
+        "' text-anchor='middle' font-size='9' fill='#8b8f98'>" + esc(hist[i][0].slice(0, 4)) + "</text>";
+    }
+    out += "<path d='" + path + "' fill='none' stroke='#f5c518' stroke-width='1.7' stroke-linejoin='round'/>";
+    var last = hist[hist.length - 1];
+    out += "<circle cx='" + X(hist.length - 1).toFixed(1) + "' cy='" + Y(last[1]).toFixed(1) +
+      "' r='3' fill='#f5c518'/>";
+    return out + "</svg>";
+  }
+
+  var MACRO_DETAIL_KEY = null;
+  function renderMacroDetail(key, card) {
+    var meta = MACRO_META[key];
+    var d = MACRO.data;
+    if (!meta || !d) return;
+    var old = document.getElementById("macro-detail");
+    if (old) old.parentNode.removeChild(old);
+    if (MACRO_DETAIL_KEY === key) { MACRO_DETAIL_KEY = null; return; }
+    MACRO_DETAIL_KEY = key;
+    var stat = statOf(d, key);
+    if (!stat || !isNum(stat.value)) return;
+    var hist = stat.history || [];
+    var vals = hist.map(function (h) { return h[1]; }).sort(function (a, b) { return a - b; });
+    var pctile = null;
+    if (vals.length > 20) {
+      var below = vals.filter(function (v) { return v < stat.value; }).length;
+      pctile = Math.round(100 * below / vals.length);
+    }
+    var minH = hist.length ? hist.reduce(function (a, h) { return h[1] < a[1] ? h : a; }) : null;
+    var maxH = hist.length ? hist.reduce(function (a, h) { return h[1] > a[1] ? h : a; }) : null;
+    var m6 = hist.length > 7 ? hist[hist.length - 7][1] : null;
+    var m24 = hist.length > 25 ? hist[hist.length - 25][1] : null;
+    var f = function (v) { return fmtKind(meta.kind, v); };
+    var def = DEFS[key] || {};
+    var trend = "";
+    if (isNum(m6) && isNum(m24)) {
+      var d6 = stat.value - m6, d24 = stat.value - m24;
+      var dirWord = Math.abs(d6) < Math.abs(d24) / 6 ? "flattening"
+        : (d6 > 0 === d24 > 0 ? (d6 > 0 ? "still climbing" : "still falling")
+          : (d6 > 0 ? "turning up" : "rolling over"));
+      trend = "Against its own path it is <strong>" + dirWord + "</strong>: " +
+        (d6 >= 0 ? "+" : "−") + f(Math.abs(d6)).replace(/^[+−]/, "") + " over six months, " +
+        (d24 >= 0 ? "+" : "−") + f(Math.abs(d24)).replace(/^[+−]/, "") + " over two years.";
+    }
+    var context = "";
+    if (minH && maxH && isNum(pctile)) {
+      context = "Over the decade shown it ranged from <strong>" + f(minH[1]) + "</strong> (" +
+        esc(minH[0].slice(0, 7)) + ") to <strong>" + f(maxH[1]) + "</strong> (" +
+        esc(maxH[0].slice(0, 7)) + "). Today's " + f(stat.value) + " sits in the <strong>" +
+        pctile + "th percentile</strong> of that history — " +
+        (pctile >= 80 ? "high by the standards of the period." :
+         pctile <= 20 ? "low by the standards of the period." : "mid-range for the period.") ;
+    }
+    var me = PANEL[state.ticker];
+    var bucket = me ? SECTOR_BUCKET[me.sector] : null;
+    var sectorLine = bucket && meta.sector[bucket]
+      ? "<p class='md-sector'><strong>For " + esc(me.sector) + ":</strong> " +
+        esc(meta.sector[bucket]) + "</p>"
+      : "";
+    var host = document.createElement("div");
+    host.id = "macro-detail";
+    host.innerHTML =
+      "<div class='md-head'><span class='md-title'>" + esc(def.label || key) + "</span>" +
+      "<span class='md-tag'>" + esc(meta.group) + " · " + esc(meta.horizon) + "</span>" +
+      "<button type='button' class='md-close' aria-label='Close detail'>×</button></div>" +
+      detailChart(hist, meta.kind) +
+      "<div class='md-stats'>" +
+        "<span>Now <strong>" + f(stat.value) + "</strong></span>" +
+        (isNum(m6) ? "<span>6 mo ago <strong>" + f(m6) + "</strong></span>" : "") +
+        (isNum(m24) ? "<span>2 yrs ago <strong>" + f(m24) + "</strong></span>" : "") +
+        (isNum(pctile) ? "<span>Decade percentile <strong>" + pctile + "</strong></span>" : "") +
+      "</div>" +
+      "<p class='md-para'>" + context + "</p>" +
+      (trend ? "<p class='md-para'>" + trend + "</p>" : "") +
+      "<p class='md-para'>" + meta.read(stat.value, d, stat) + "</p>" +
+      sectorLine +
+      "<p class='md-fail'>Where it misleads: " + esc(meta.fail) + "</p>";
+    var grid = card.closest(".kpi-grid");
+    grid.parentNode.insertBefore(host, grid.nextSibling);
+    host.querySelector(".md-close").addEventListener("click", function () {
+      MACRO_DETAIL_KEY = null;
+      host.parentNode.removeChild(host);
+    });
+    host.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  /* ---------- the cycle dial ---------- */
+  function cyclePhase(d) {
+    var L = d.leading || {}, C = d.coincident || {}, G = d.lagging || {};
+    var claims = L.initialClaims, curve = L.curveSpread;
+    var pay = C.payrollsYoY, ind = C.industrialProductionYoY;
+    var ff = G.fedFunds, cpi = G.cpiYoY;
+    var claimsRising = claims && isNum(claims.yoy) && claims.yoy > 0.10;
+    var inverted = curve && isNum(curve.value) && curve.value < 0;
+    var steepening = curve && isNum(curve.yearAgo) && (curve.value - curve.yearAgo) > 0.004;
+    var contracting = (pay && isNum(pay.value) && pay.value < 0.002) ||
+                      (ind && isNum(ind.value) && ind.value < -0.01);
+    var cutting = ff && isNum(ff.yoyPp) && ff.yoyPp < -0.004;
+    var hiking = ff && isNum(ff.yoyPp) && ff.yoyPp > 0.004;
+    var hot = cpi && isNum(cpi.value) && cpi.value > 0.03;
+    var signals = [];
+    if (inverted) signals.push("the curve is inverted");
+    if (steepening) signals.push("the curve is steepening");
+    if (claimsRising) signals.push("claims are rising " + pct(claims.yoy) + " on a year ago");
+    if (claims && isNum(claims.yoy) && !claimsRising) signals.push("claims are quiet");
+    if (contracting) signals.push("coincident output is stalling");
+    if (pay && isNum(pay.value) && !contracting) signals.push("payrolls are still growing " + pct(pay.value));
+    if (cutting) signals.push("policy has been cutting");
+    if (hiking) signals.push("policy has been hiking");
+    if (hot) signals.push("inflation is above 3%");
+    var phase, play;
+    if (claimsRising && contracting) {
+      phase = "Contraction";
+      play = ["Inventory: lean down hard — carrying stock into falling demand is how cash dies.",
+        "Capital: freeze discretionary spend; protect liquidity and the core customer base.",
+        "Hiring: freeze, and optimise the headcount already in place."];
+    } else if (cutting && steepening && !contracting) {
+      phase = "Trough / early recovery";
+      play = ["Inventory: begin rebuilding core stock while suppliers still want volume.",
+        "Capital: refinance at the cheap end of the cycle; distressed assets are on sale exactly now.",
+        "Hiring: selective re-hiring while the labour market still favours the buyer."];
+    } else if (inverted && (hot || hiking)) {
+      phase = "Peak";
+      play = ["Inventory: shift toward just-in-time; safety stock bought at peak prices is the stock written down later.",
+        "Capital: lock fixed-rate debt before the cycle turns; pause speculative long-dated projects.",
+        "Pricing: use the inflation window — escalation clauses and price moves stick now and will not later."];
+    } else {
+      phase = "Expansion";
+      play = ["Inventory: build ahead of demand — stockouts cost more than carry while the cycle runs.",
+        "Capital: fund capacity and expansion while credit is available and demand is confirmed.",
+        "Hiring: scale ahead of demand; capacity hired late is revenue missed."];
+    }
+    return { phase: phase, signals: signals, play: play };
+  }
+
+  function renderCycleDial(d) {
+    var me = PANEL[state.ticker];
+    var read = cyclePhase(d);
+    var bucket = me ? SECTOR_BUCKET[me.sector] : null;
+    var emphasis = {
+      rate: "Rate-sensitive sector: weight the curve, the policy rate and claims above everything else here.",
+      consumer: "Consumer-facing sector: retail sales, sentiment and claims are the lines that lead this company's demand.",
+      industrial: "Industrial sector: producer prices, industrial production and permits are the lines that lead this company's order book.",
+      growth: "Long-duration sector: the 10-year yield dominates valuation while wages set the cost base — cycle demand swings matter less than the discount rate."
+    }[bucket];
+    return "<div class='cycle-dial'>" +
+      "<div class='md-head'><span class='md-title'>Where the dial points: " + esc(read.phase) + "</span>" +
+      "<span class='md-tag'>rules, not judgement</span></div>" +
+      "<p class='md-para'>Read from the indicators below: " + esc(read.signals.join("; ")) + ". " +
+      "The label is a dial position, not a forecast — the same rules have mislabelled turning points before, which is why the individual series and their trends sit underneath it.</p>" +
+      "<ul class='cycle-play'>" + read.play.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ul>" +
+      (emphasis ? "<p class='md-sector'><strong>" + esc(me.sector) + " lens:</strong> " + esc(emphasis) + "</p>" : "") +
+      "<p class='md-fail'>The classic 6–9 month gauge — the purchasing managers' survey — is proprietary and absent from the public feed; permits and claims stand in for its new-orders signal here.</p>" +
+      "</div>";
+  }
+
   function paintMacro(d) {
     var backdrop = $("macro-block"), cycle = $("cycle-block");
     var f = function (x, dp) { return x && isNum(x.value) ? pct(x.value, dp === undefined ? 1 : dp) : "—"; };
@@ -1718,6 +2181,7 @@
     if (!cycle) return;
     var claims = L.initialClaims, permits = L.buildingPermits, senti = L.consumerSentiment;
     cycle.innerHTML =
+      renderCycleDial(d) +
       "<p class='cycle-group-label'>Leading — move before the economy</p>" +
       "<div class='kpi-grid'>" +
       card("initialClaims", "Initial jobless claims",
@@ -1726,6 +2190,8 @@
       card("buildingPermits", "Building permits",
         permits && isNum(permits.value) ? num(permits.value / 1000, 2) + "M" : "—",
         permits ? yoyNote(permits, "Housing units, annualised") : "") +
+      card("producerPricesYoY", "Producer prices",
+        f(L.producerPricesYoY), "Wholesale inflation — input costs, a quarter early") +
       card("consumerSentiment", "Consumer sentiment",
         senti && isNum(senti.value) ? num(senti.value, 1) : "—",
         senti ? yoyNote(senti, "Survey index") : "") +
@@ -1738,6 +2204,8 @@
       "</div>" +
       "<p class='cycle-group-label'>Lagging — confirm where it has been</p>" +
       "<div class='kpi-grid'>" +
+      card("wageGrowthYoY", "Wage growth", f(G.wageGrowthYoY),
+        "Average hourly earnings against a year ago") +
       card("unemployment", "Unemployment rate", f(G.unemployment),
         G.unemployment && isNum(G.unemployment.yoyPp)
           ? (G.unemployment.yoyPp >= 0 ? "Up " : "Down ") +
@@ -1789,7 +2257,7 @@
     var host = $("stock-block");
     if (!force && STOCK_CACHE[ticker]) { paintStock(ticker, STOCK_CACHE[ticker]); return; }
     host.innerHTML = "<p class='hint' id='stock-status' role='status'>Loading price history…</p>";
-    fetch("/api/market?ticker=" + encodeURIComponent(ticker) + (force ? "&force=1" : ""))
+    fetch(API_BASE + "/api/market?ticker=" + encodeURIComponent(ticker) + (force ? "&force=1" : ""))
       .then(function (r) { return r.ok ? r.json() : Promise.reject(new Error(String(r.status))); })
       .then(function (d) { STOCK_CACHE[ticker] = d; if (state.ticker === ticker) paintStock(ticker, d); })
       .catch(function () {
@@ -1910,6 +2378,7 @@
   }
 
   function setCompany(ticker) {
+    if (!PANEL[ticker]) { setCompanyLive(ticker, false); return; }
     state.ticker = ticker;
     var meta = PANEL[ticker] || MAP[ticker];
     $("co-name").textContent = meta ? meta.name : ticker;
@@ -1938,6 +2407,22 @@
     state.industry = this.value;
     render();
   });
+  /* Clicking a backdrop or cycle card opens the decade view for that
+     series. The hover glossary still works; the click goes deeper. */
+  ["macro-block", "cycle-block"].forEach(function (id) {
+    var el = $(id);
+    if (!el) return;
+    el.addEventListener("click", function (ev) {
+      var card = ev.target.closest ? ev.target.closest(".mcard") : null;
+      if (!card || !el.contains(card)) return;
+      var key = card.getAttribute("data-metric");
+      if (key && MACRO_META[key]) {
+        ev.preventDefault();
+        renderMacroDetail(key, card);
+      }
+    });
+  });
+
   $("view-industry").addEventListener("click", function () { setView("industry"); });
   $("view-company").addEventListener("click", function () { setView("company"); });
 
@@ -1951,6 +2436,12 @@
     var was = btn.textContent;
     btn.textContent = "Refreshing…";
     delete STOCK_CACHE[state.ticker];
+    if (LIVE[state.ticker]) {
+      /* a live company refreshes from SEC, then re-renders */
+      var t = state.ticker;
+      delete PANEL[t];
+      setCompanyLive(t, true);
+    }
     if (state.view === "company") renderStock(state.ticker, true);
     if (state.view === "company") { MACRO.data = null; renderMacro(true); }
     render();
@@ -1974,16 +2465,28 @@
     var out = [];
     Object.keys(PANEL).forEach(function (tk) {
       var nm = (PANEL[tk].name || "").toUpperCase();
-      if (tk === t) out.unshift([tk, PANEL[tk].name]);
-      else if (tk.indexOf(t) === 0 || nm.indexOf(t) !== -1) out.push([tk, PANEL[tk].name]);
+      if (tk === t) out.unshift([tk, PANEL[tk].name, false]);
+      else if (tk.indexOf(t) === 0 || nm.indexOf(t) !== -1) out.push([tk, PANEL[tk].name, false]);
     });
+    /* beyond the panel: the full SEC company index, marked as live */
+    if (out.length < 8 && t.length >= 2) {
+      for (var i = 0; i < INDEX.length && out.length < 8; i++) {
+        var tk2 = INDEX[i][0], nm2 = String(INDEX[i][2] || "");
+        if (PANEL[tk2]) continue;
+        if (tk2 === t) out.unshift([tk2, nm2, true]);
+        else if (tk2.indexOf(t) === 0 || nm2.toUpperCase().indexOf(t) !== -1) {
+          out.push([tk2, nm2, true]);
+        }
+      }
+    }
     return out.slice(0, 8);
   }
   function renderResults() {
     rList.innerHTML = matches.length ? matches.map(function (m, i) {
       return "<li role='option' id='st-opt-" + i + "' data-i='" + i + "' aria-selected='" +
         (i === activeIdx) + "'><span class='tk'>" + esc(m[0]) + "</span>" +
-        "<span class='nm'>" + esc(m[1]) + "</span></li>";
+        "<span class='nm'>" + esc(m[1]) +
+        (m[2] ? " <span class='live-tag'>live from SEC</span>" : "") + "</span></li>";
     }).join("") : "<li class='none'>No matching companies</li>";
     rBox.classList.add("open");
     q.setAttribute("aria-expanded", "true");

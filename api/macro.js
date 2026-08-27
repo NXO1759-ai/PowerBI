@@ -1,29 +1,31 @@
 /**
  * /api/macro.js — Vercel serverless function.
  *
- * Macro backdrop for the company view, grouped the way business-cycle
- * analysis groups indicators:
+ * Macro backdrop and business-cycle indicators for the company view,
+ * grouped the way cycle analysis groups them:
  *
- *   LEADING     move before the economy does — the Treasury curve,
- *               initial jobless claims, building permits, consumer
- *               sentiment
+ *   LEADING     move before the economy — the Treasury curve, initial
+ *               jobless claims, building permits, consumer sentiment,
+ *               producer prices (input costs arrive at the shelf a
+ *               quarter or two later)
  *   COINCIDENT  move with it — payrolls, industrial production, retail
  *               sales
- *   LAGGING     confirm where it has been — inflation, unemployment,
- *               and the policy rate that reacts to both
+ *   LAGGING     confirm where it has been — consumer inflation, wage
+ *               growth, unemployment, and the policy rate that reacts
+ *               to all three
  *
- * Source is the Federal Reserve's public statistical service (FRED,
- * Federal Reserve Bank of St. Louis).
+ * Every stat carries a decade of monthly HISTORY so the page can draw
+ * the trend and place today against it, not just print a number. Rates
+ * and year-over-year readings are fractions; levels are raw.
  *
  *   GET /api/macro          — cached for six hours
  *   GET /api/macro?force=1  — skips the cache read, still writes it
  *
- * The key: FRED_API_KEY from the environment when set; otherwise the
- * fallback below. The fallback is acceptable only while this repository
- * is PRIVATE — it is a free-tier statistical key with no billing
- * attached, and it never reaches the browser — but if the repository is
- * ever made public, move it to a Vercel environment variable and rotate
- * it first.
+ * Source: FRED, Federal Reserve Bank of St. Louis. The key comes from
+ * FRED_API_KEY when set; the fallback below is acceptable only while
+ * this repository is PRIVATE — a free statistical key, never sent to the
+ * browser — and must be rotated into an environment variable before the
+ * repository is ever made public.
  */
 
 export const maxDuration = 30;
@@ -33,31 +35,35 @@ const cache = globalThis.__macroCache || (globalThis.__macroCache = { at: 0, pay
 
 const FALLBACK_KEY = "c684f28f8275225c518a7b2686ec88ba";
 
-/* series id → how the observation is read */
+/* series id → how observations are read
+     index : a level served as its year-over-year rate, history in YoY
+     rate  : already a percentage, served /100
+     level : a raw count or index, served as-is with a YoY change */
 const SERIES = {
-  CPIAUCSL: "index",   // headline CPI level → YoY rate
-  CPILFESL: "index",   // core CPI level → YoY rate
-  FEDFUNDS: "rate",    // effective policy rate, monthly
-  DGS10: "rate",       // 10-year constant maturity, daily
-  DGS2: "rate",        // 2-year constant maturity, daily
-  ICSA: "level",       // initial jobless claims, weekly count
-  PERMIT: "level",     // building permits, thousands, annualised
-  UMCSENT: "level",    // consumer sentiment index
-  PAYEMS: "index",     // nonfarm payrolls, thousands → YoY rate
-  INDPRO: "index",     // industrial production index → YoY rate
-  RSAFS: "index",      // retail sales, $m nominal → YoY rate
-  UNRATE: "rate",      // unemployment rate, monthly
+  CPIAUCSL: "index",        // headline CPI
+  CPILFESL: "index",        // core CPI
+  PPIACO: "index",          // producer prices, all commodities
+  CES0500000003: "index",   // average hourly earnings, private
+  PAYEMS: "index",          // nonfarm payrolls
+  INDPRO: "index",          // industrial production
+  RSAFS: "index",           // retail sales, nominal
+  FEDFUNDS: "rate",
+  DGS10: "rate",
+  DGS2: "rate",
+  UNRATE: "rate",
+  ICSA: "level",            // initial claims, weekly
+  PERMIT: "level",          // building permits, thousands SAAR
+  UMCSENT: "level",         // consumer sentiment index
 };
 
 async function fredSeries(id, key) {
-  /* two years of observations is enough for a year-over-year comparison
-     with room for publication lag */
-  const start = new Date(Date.now() - 800 * 864e5).toISOString().slice(0, 10);
+  /* eleven years of raw data yields ten years of year-over-year */
+  const start = new Date(Date.now() - 4100 * 864e5).toISOString().slice(0, 10);
   const url = "https://api.stlouisfed.org/fred/series/observations" +
     "?series_id=" + id + "&api_key=" + key + "&file_type=json" +
     "&observation_start=" + start + "&sort_order=asc";
   const ctrl = new AbortController();
-  const t = setTimeout(() => ctrl.abort(), 10000);
+  const t = setTimeout(() => ctrl.abort(), 12000);
   try {
     const r = await fetch(url, { signal: ctrl.signal });
     if (!r.ok) return null;
@@ -72,42 +78,68 @@ async function fredSeries(id, key) {
   }
 }
 
+/** Last observation of each calendar month — daily and weekly series
+    downsampled so every history draws at the same monthly rhythm. */
+function monthly(obs) {
+  if (!obs) return null;
+  const by = new Map();
+  for (const o of obs) by.set(o.date.slice(0, 7), o);
+  return [...by.values()];
+}
+
 const latest = (obs) => (obs && obs.length ? obs[obs.length - 1] : null);
 
-/** The observation closest to twelve months before the latest one. */
-function yearAgo(obs) {
+function atMonthsBack(obs, months) {
   const now = latest(obs);
   if (!now) return null;
-  const target = new Date(new Date(now.date) - 365.25 * 864e5).getTime();
+  const target = new Date(new Date(now.date) - months * 30.44 * 864e5).getTime();
   let best = null, bestGap = Infinity;
   for (const o of obs) {
     const gap = Math.abs(new Date(o.date).getTime() - target);
     if (gap < bestGap) { bestGap = gap; best = o; }
   }
-  return best && bestGap <= 45 * 864e5 ? best : null;
+  return best && bestGap <= 50 * 864e5 ? best : null;
 }
 
-/** An index level served as its year-over-year growth rate. */
+const round = (v) => Math.round(v * 1e6) / 1e6;
+
+/** Index level → year-over-year rate, with a decade of the rate. */
 function asYoY(obs) {
-  const now = latest(obs), ago = yearAgo(obs);
-  if (!now || !ago || ago.value === 0) return null;
-  return { value: now.value / ago.value - 1, period: now.date };
+  const m = monthly(obs);
+  if (!m || m.length < 14) return null;
+  const hist = [];
+  for (let i = 12; i < m.length; i++) {
+    if (m[i - 12].value !== 0) {
+      hist.push([m[i].date, round(m[i].value / m[i - 12].value - 1)]);
+    }
+  }
+  if (!hist.length) return null;
+  const now = hist[hist.length - 1];
+  const ago = hist.length > 12 ? hist[hist.length - 13] : null;
+  return { value: now[1], period: now[0],
+           yearAgo: ago ? ago[1] : null, history: hist.slice(-120) };
 }
 
-/** A rate (already a percentage) with its change on a year ago in points. */
+/** A percentage series, as fractions, with its decade. */
 function asRate(obs) {
-  const now = latest(obs), ago = yearAgo(obs);
-  if (!now) return null;
+  const m = monthly(obs);
+  if (!m || !m.length) return null;
+  const hist = m.map((o) => [o.date, round(o.value / 100)]);
+  const now = latest(m), ago = atMonthsBack(m, 12);
   return { value: now.value / 100, period: now.date,
-           yoyPp: ago ? (now.value - ago.value) / 100 : null };
+           yoyPp: ago ? round((now.value - ago.value) / 100) : null,
+           history: hist.slice(-120) };
 }
 
-/** A raw level with its year-over-year percentage change. */
+/** A raw level, with its decade and a year-over-year change. */
 function asLevel(obs) {
-  const now = latest(obs), ago = yearAgo(obs);
-  if (!now) return null;
+  const m = monthly(obs);
+  if (!m || !m.length) return null;
+  const hist = m.map((o) => [o.date, o.value]);
+  const now = latest(m), ago = atMonthsBack(m, 12);
   return { value: now.value, period: now.date,
-           yoy: ago && ago.value !== 0 ? now.value / ago.value - 1 : null };
+           yoy: ago && ago.value !== 0 ? round(now.value / ago.value - 1) : null,
+           history: hist.slice(-120) };
 }
 
 export default async function handler(req, res) {
@@ -129,14 +161,27 @@ export default async function handler(req, res) {
   ids.forEach((id, i) => { S[id] = results[i]; });
 
   const t10 = asRate(S.DGS10), t2 = asRate(S.DGS2);
+  /* the curve is a computed series: month-aligned difference */
+  let curve = null;
+  if (t10 && t2) {
+    const short = new Map(t2.history);
+    const hist = t10.history
+      .filter((h) => short.has(h[0]))
+      .map((h) => [h[0], round(h[1] - short.get(h[0]))]);
+    const now = hist[hist.length - 1];
+    const ago = hist.length > 12 ? hist[hist.length - 13] : null;
+    if (now) curve = { value: now[1], period: now[0],
+                       yearAgo: ago ? ago[1] : null, history: hist };
+  }
+
   const out = {
     asOf: new Date().toISOString().slice(0, 19),
     source: "Federal Reserve Bank of St. Louis, FRED",
     leading: {
-      curveSpread: (t10 && t2)
-        ? { value: t10.value - t2.value, period: t10.period } : null,
+      curveSpread: curve,
       treasury10y: t10,
       treasury2y: t2,
+      producerPricesYoY: asYoY(S.PPIACO),
       initialClaims: asLevel(S.ICSA),
       buildingPermits: asLevel(S.PERMIT),
       consumerSentiment: asLevel(S.UMCSENT),
@@ -149,12 +194,11 @@ export default async function handler(req, res) {
     lagging: {
       cpiYoY: asYoY(S.CPIAUCSL),
       coreCpiYoY: asYoY(S.CPILFESL),
+      wageGrowthYoY: asYoY(S.CES0500000003),
       unemployment: asRate(S.UNRATE),
       fedFunds: asRate(S.FEDFUNDS),
     },
   };
-  /* Every series failing at once means the provider is down; serve the
-     stale cache if one exists rather than a page of dashes. */
   const dead = !out.lagging.cpiYoY && !out.lagging.fedFunds && !out.leading.treasury10y;
   if (dead && cache.payload) {
     res.setHeader("Cache-Control", "no-store");

@@ -22,6 +22,7 @@
  * order, which keeps the file near 400KB rather than several megabytes.
  */
 import { readFileSync, writeFileSync } from "node:fs";
+import { PANEL_FIELDS, STATEMENT_OF, panelYears } from "./lib/panel-row.mjs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { buildStatements } from "./lib/statements.mjs";
@@ -33,40 +34,10 @@ const UA = { "User-Agent": process.env.SEC_USER_AGENT ||
 const argv = process.argv.slice(2);
 const LIMIT = Number((argv[argv.indexOf("--limit") + 1]) || 0) || 0;
 
-/* The fields a strategy read actually needs. Stored positionally. */
-export const PANEL_FIELDS = [
-  "revenue", "cogs", "grossProfit", "researchDevelopment",
-  "sellingGeneralAdmin", "operatingIncome", "netIncome", "netIncomeIncludingNci",
-  "interestExpense", "incomeTax", "pretaxIncome",
-  "totalAssets", "currentAssets", "currentLiabilities", "inventory",
-  "receivables", "ppe", "goodwill", "intangibles", "cash",
-  "shortTermInvestments", "shortTermDebt", "longTermDebt",
-  "equity", "minorityInterest", "equityIncludingNci",
-  "cfOps", "cfInv", "cfFin", "capex", "depreciationAmortization",
-  "shareBasedComp", "dividendsPaid", "buybacks",
-  /* Added for the company case. sellingMarketing separates customer
-     acquisition spend from general overhead where a filer splits them;
-     payables completes the cash-conversion cycle; deferredRevenue and
-     remainingPerformanceObligation are the only forward-looking demand
-     figures a filing carries. */
-  "sellingMarketing", "payables", "deferredRevenue",
-  "remainingPerformanceObligation",
-];
-const WHERE = {
-  incomeStatement: ["revenue","cogs","grossProfit","researchDevelopment",
-    "sellingGeneralAdmin","operatingIncome","netIncome","netIncomeIncludingNci",
-    "interestExpense","incomeTax","pretaxIncome","sellingMarketing"],
-  balanceSheet: ["totalAssets","currentAssets","currentLiabilities","inventory",
-    "receivables","ppe","goodwill","intangibles","cash","shortTermInvestments",
-    "shortTermDebt","longTermDebt","equity","minorityInterest","equityIncludingNci",
-    "payables","deferredRevenue","remainingPerformanceObligation"],
-  cashFlow: ["cfOps","cfInv","cfFin","capex","depreciationAmortization",
-    "shareBasedComp","dividendsPaid","buybacks"],
-};
-const STATEMENT_OF = {};
-for (const [stmt, fields] of Object.entries(WHERE)) {
-  for (const f of fields) STATEMENT_OF[f] = stmt;
-}
+/* The field list and row mapping live in scripts/lib/panel-row.mjs —
+   one definition, shared with the on-demand peer endpoint. PANEL_FIELDS
+   is re-exported so existing importers keep working. */
+export { PANEL_FIELDS } from "./lib/panel-row.mjs";
 
 function loadUniverse() {
   const stub = {};
@@ -99,7 +70,6 @@ async function paced() {
 /* Thousands, not dollars: a strategy view never needs the last three
    digits of a multi-billion-dollar line, and dropping them cuts the file
    roughly in half. */
-const k = (v) => (typeof v === "number" && isFinite(v) ? Math.round(v / 1000) : null);
 
 const { list, map } = loadUniverse();
 console.log(`strategy panel: ${list.length} companies`);
@@ -131,13 +101,7 @@ for (const c of list) {
     const bucket = facts && facts.facts && facts.facts["us-gaap"];
     if (!bucket) { failures.push(`${c.ticker} no us-gaap`); continue; }
     const s = buildStatements(bucket, { annualLimit: 25, quarterLimit: 1 });
-    const years = {};
-    for (const p of s.annual) {
-      const row = PANEL_FIELDS.map((f) => k(p[STATEMENT_OF[f]][f]));
-      /* Skip a year with no revenue and no assets — nothing to analyse. */
-      if (row[0] === null && row[11] === null) continue;
-      years[p.fiscalYear] = row;
-    }
+    const years = panelYears(s);
     if (!Object.keys(years).length) { failures.push(`${c.ticker} no usable years`); continue; }
     const meta = map[c.ticker] || {};
     companies[c.ticker] = {
