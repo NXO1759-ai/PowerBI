@@ -60,6 +60,10 @@
       </div>
     </div>
     <div class="fsa-controls">
+      <div class="seg" role="group" aria-label="Analysis view">
+        <button type="button" id="view-industry" aria-pressed="true">Industry</button>
+        <button type="button" id="view-company" aria-pressed="false">Company</button>
+      </div>
       <label class="ind-picker">
         <span class="ind-picker-label">Industry</span>
         <select id="industry-select" aria-label="Industry"></select>
@@ -71,6 +75,7 @@
 
   <div id="strategy-body" hidden>
 
+    <div id="industry-view">
     <!-- ============ 1. INDUSTRY STRUCTURE ============ -->
     <section class="panel-card fsa-section" aria-labelledby="h-structure">
       <div class="section-head">
@@ -196,8 +201,156 @@
       </div>
     </section>
 
+    </div>
+
+  <div id="company-view" hidden>
+
+    <!-- ============ 1. EXECUTIVE SUMMARY ============ -->
+    <section class="panel-card fsa-section" aria-labelledby="h-exec">
+      <div class="section-head">
+        <h2 id="h-exec">Executive summary</h2>
+        <p class="section-blurb">
+          A filing never states a strategy in so many words, but it records
+          every capital decision behind one, and it reports the result. What
+          follows is read off the filings and off the company's peer set —
+          nothing here is an estimate.
+        </p>
+      </div>
+      <div class="kpi-grid" id="exec-cards"></div>
+      <p class="chart-caption" id="exec-caption"></p>
+
+      <h3>Where the money actually goes</h3>
+      <p class="hint">
+        Stated priorities are not observable in a filing; funded ones are.
+        Each bar is a year's operating cash flow and how it was spent. The
+        total can pass 100% — a company is allowed to outspend what it earns
+        — so the axis is not clamped and the shortfall is named.
+      </p>
+      <div id="pillars-chart" role="img" aria-label="Capital deployment by year"></div>
+      <p class="chart-caption" id="pillars-caption"></p>
+
+      <h3>Objectives against the peer set</h3>
+      <p class="hint">
+        There are no published corporate targets in a filing, so these are
+        not the company's own objectives. Each meter is a financial result
+        placed against the same industry peers used throughout, which is the
+        measurable half of the question.
+      </p>
+      <div id="okr-meters"></div>
+
+      <h3>Health index</h3>
+      <div class="kpi-grid" id="health-cards"></div>
+      <p class="chart-caption" id="health-caption"></p>
+
+      <h3>Stock performance</h3>
+      <div id="stock-block"><p class="hint" id="stock-status">Loading price history…</p></div>
+    </section>
+
+    <!-- ============ 2. FINANCIAL PERFORMANCE ============ -->
+    <section class="panel-card fsa-section" aria-labelledby="h-fin">
+      <div class="section-head">
+        <h2 id="h-fin">Financial performance and health</h2>
+        <p class="section-blurb">
+          Growth, margins, cash generation and the return earned on the
+          capital behind them — each against the same peer set, over the
+          full window the filings support.
+        </p>
+      </div>
+      <div class="kpi-grid" id="fin-cards"></div>
+      <div id="margin-chart" role="img" aria-label="Margins over time"></div>
+      <p class="chart-caption" id="margin-caption"></p>
+      <div id="cash-chart" role="img" aria-label="Operating cash flow against capital expenditure"></div>
+      <p class="chart-caption" id="cash-caption"></p>
+      <div class="force"><p class="force-gap" id="fin-gap"></p></div>
+    </section>
+
+    <!-- ============ 3. MARKET AND COMPETITIVE POSITION ============ -->
+    <section class="panel-card fsa-section" aria-labelledby="h-mkt">
+      <div class="section-head">
+        <h2 id="h-mkt">Market and competitive position</h2>
+        <p class="section-blurb">
+          Share here is of the covered listed peers, not of a served market.
+          Private companies, foreign entrants and smaller rivals sit outside
+          this panel, so every share below is an upper bound and is labelled
+          as one.
+        </p>
+      </div>
+      <div class="kpi-grid" id="mkt-cards"></div>
+      <div class="scroll-x"><table class="grid" id="t-bench"></table></div>
+      <p class="chart-caption" id="mkt-caption"></p>
+      <div class="force"><p class="force-gap" id="mkt-gap"></p></div>
+    </section>
+
+    <!-- ============ 4. CUSTOMER AND PRODUCT ============ -->
+    <section class="panel-card fsa-section" aria-labelledby="h-cust">
+      <div class="section-head">
+        <h2 id="h-cust">Customer and product</h2>
+        <p class="section-blurb">
+          This is the block a filing supports least. Acquisition cost,
+          lifetime value, churn and satisfaction are internal measures that
+          no company is required to publish, and none of them are invented
+          here. What a filing does carry is what customers have already
+          committed to pay.
+        </p>
+      </div>
+      <div class="kpi-grid" id="cust-cards"></div>
+      <div id="backlog-chart" role="img" aria-label="Contracted backlog"></div>
+      <p class="chart-caption" id="cust-caption"></p>
+      <div class="force"><p class="force-gap" id="cust-gap"></p></div>
+    </section>
+
+    <!-- ============ 5. OPERATIONS ============ -->
+    <section class="panel-card fsa-section" aria-labelledby="h-ops">
+      <div class="section-head">
+        <h2 id="h-ops">Operational execution</h2>
+        <p class="section-blurb">
+          How hard the asset base works, how much is put back into the
+          product, and how long cash is tied up between paying for inputs and
+          being paid for output.
+        </p>
+      </div>
+      <div class="kpi-grid" id="ops-cards"></div>
+      <p class="chart-caption" id="ops-caption"></p>
+      <div class="force"><p class="force-gap" id="ops-gap"></p></div>
+    </section>
+
+    <!-- ============ 6. RISK AND MACRO ============ -->
+    <section class="panel-card fsa-section" aria-labelledby="h-risk">
+      <div class="section-head">
+        <h2 id="h-risk">Risk</h2>
+        <p class="section-blurb">
+          Financial risk is measurable from the statements and is measured
+          here. Strategic, operational and regulatory risk are not — a
+          severity-and-likelihood grid drawn from financial data alone would
+          be a chart of an opinion, so what cannot be evidenced is listed
+          rather than plotted.
+        </p>
+      </div>
+      <div class="kpi-grid" id="risk-cards"></div>
+      <p class="chart-caption" id="risk-caption"></p>
+      <div class="force"><p class="force-gap" id="risk-gap"></p></div>
+    </section>
+
+    <!-- ============ EVIDENCE REGISTER ============ -->
+    <section class="panel-card fsa-section" aria-labelledby="h-evidence">
+      <div class="section-head">
+        <h2 id="h-evidence">What this cannot tell you</h2>
+        <p class="section-blurb">
+          Every item requested for this view that a filing does not contain,
+          with what it would actually take to answer it. Listing these is
+          the point: a dashboard that quietly omits them reads as complete
+          when it is not.
+        </p>
+      </div>
+      <div class="scroll-x"><table class="grid evidence-table" id="t-evidence"></table></div>
+    </section>
+
+  </div>
+
+
     <footer class="src-footer" id="src-footer">
       <span id="src-footer-text"></span>
+      <button type="button" id="refresh-btn" class="refresh-btn">Refresh</button>
     </footer>
   </div>
 </main>
