@@ -16,7 +16,9 @@
  */
 
 import { buildStatements } from "../scripts/lib/statements.mjs";
-import { computeRatios } from "../scripts/lib/ratios.mjs";
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
+const { computeRatios } = require("../frontend/lib/ratios.js");
 import { SEC_UA } from "../scripts/lib/sec-pull.mjs";
 
 export const maxDuration = 60;

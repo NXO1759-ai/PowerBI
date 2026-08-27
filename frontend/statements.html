@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Financial Statement Analysis — Research Terminal</title>
+<meta name="description" content="Reformulated financial statement analysis — operating return, DuPont decomposition, working capital, solvency and earnings quality, from SEC EDGAR filings." />
+<meta name="theme-color" content="#0b0d0f" />
+<meta name="color-scheme" content="dark" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Research Terminal" />
+<meta property="og:title" content="Financial Statement Analysis — Research Terminal" />
+<meta property="og:description" content="Reformulated statement analysis: operating return, DuPont decomposition, working capital, solvency and earnings quality." />
+<meta property="og:url" content="https://www.chineduokeke.mba/statements.html" />
+<meta name="twitter:card" content="summary" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f5c518'/%3E%3Ctext x='32' y='43' font-family='Menlo,Consolas,monospace' font-size='26' font-weight='700' text-anchor='middle' fill='%23151515'%3ERT%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="statements.css" />
+<style>[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">RT</span>
+      <span class="brand-title">Research Terminal</span>
+    </div>
+    <nav class="nav-tabs" aria-label="Dashboards">
+      <a class="nav-tab" href="index.html">Company Overview</a>
+      <a class="nav-tab active" href="statements.html" aria-current="page">Financial Statement Analysis</a>
+      <span class="nav-tab soon">Private Credit Report <span class="soon-pill">Soon</span></span>
+      <span class="nav-tab soon">Strategy Analysis <span class="soon-pill">Soon</span></span>
+    </nav>
+    <div class="search">
+      <input type="search" id="q" role="combobox" aria-expanded="false" aria-controls="results"
+             aria-autocomplete="list"
+             aria-label="Search ticker, CIK, or company name"
+             placeholder="Search ticker, CIK, or company…" autocomplete="off" />
+      <kbd class="kbd-hint" aria-hidden="true">/</kbd>
+      <div class="search-results" id="results"><ul role="listbox" id="results-list" aria-label="Matching companies"></ul></div>
+    </div>
+    <div class="topbar-right">
+      <button type="button" id="about-btn">About</button>
+    </div>
+  </div>
+</header>
+
+<main class="app" id="app">
+
+  <section class="fsa-hero" aria-label="Selected company">
+    <div class="hero-id">
+      <div>
+        <h1 id="co-name">—</h1>
+        <p class="meta" id="co-meta"></p>
+      </div>
+    </div>
+    <div class="fsa-controls">
+      <div class="seg" role="group" aria-label="Reporting basis">
+        <button type="button" id="basis-annual" aria-pressed="true">Annual</button>
+        <button type="button" id="basis-quarterly" aria-pressed="false">Quarterly</button>
+      </div>
+      <button type="button" id="refresh-btn" title="Pull the latest filings from SEC EDGAR now">Refresh</button>
+    </div>
+  </section>
+
+  <p class="fsa-status" id="status" role="status"></p>
+
+  <div id="fsa-body" hidden>
+
+    <!-- ========== the headline decomposition ========== -->
+    <section class="panel-card fsa-section" id="sec-dupont" aria-labelledby="h-dupont">
+      <div class="section-head">
+        <h2 id="h-dupont">Where the return comes from</h2>
+        <p class="section-blurb">
+          Return on equity blends two different things: how good the business is,
+          and how aggressively it is financed. Separating them is the first move in
+          statement analysis, because a rising return means opposite things
+          depending on which half produced it.
+        </p>
+      </div>
+      <div class="dupont-flow" id="dupont-flow"></div>
+      <p class="dupont-reading" id="dupont-reading"></p>
+    </section>
+
+    <!-- ========== KPI cards ========== -->
+    <section class="fsa-section" id="sec-kpis" aria-label="Key metrics">
+      <div id="kpi-groups"></div>
+    </section>
+
+    <!-- ========== statements ========== -->
+    <section class="panel-card fsa-section" id="sec-statements" aria-labelledby="h-statements">
+      <div class="section-head">
+        <h2 id="h-statements">The statements</h2>
+        <p class="section-blurb">
+          As filed, newest period last. The common-size view restates every line as
+          a share of revenue, which is how you compare a company with its own past
+          or with a rival of a different size.
+        </p>
+      </div>
+      <div class="stmt-controls">
+        <div class="seg" role="group" aria-label="Statement view">
+          <button type="button" id="view-dollars" aria-pressed="true">Reported</button>
+          <button type="button" id="view-common" aria-pressed="false">Common size</button>
+        </div>
+      </div>
+      <h3>Income statement</h3>
+      <div class="scroll-x"><table class="grid stmt" id="t-income"></table></div>
+      <h3>Balance sheet</h3>
+      <div class="scroll-x"><table class="grid stmt" id="t-balance"></table></div>
+      <h3>Reformulated balance sheet</h3>
+      <p class="hint">
+        The same balance sheet split into the operating business and the way it is
+        financed. Net operating assets are what the business actually uses; net debt
+        is borrowings less the cash held against them. The two always sum to equity.
+      </p>
+      <div class="scroll-x"><table class="grid stmt" id="t-reformulated"></table></div>
+      <h3>Cash flow</h3>
+      <div class="scroll-x"><table class="grid stmt" id="t-cashflow"></table></div>
+    </section>
+
+    <!-- ========== earnings quality ========== -->
+    <section class="panel-card fsa-section" id="sec-quality" aria-labelledby="h-quality">
+      <div class="section-head">
+        <h2 id="h-quality">Do the profits turn into cash?</h2>
+        <p class="section-blurb">
+          Over a long enough run, cumulative profit and cumulative free cash flow
+          should end up close together. A persistent gap is the most useful early
+          warning in financial analysis — companies have reported rising profits for
+          years while cash went the other way, and the divergence was visible long
+          before anything else broke.
+        </p>
+      </div>
+      <div id="quality-body"></div>
+    </section>
+
+    <footer class="src-footer" id="src-footer">
+      <span id="src-footer-text"></span>
+    </footer>
+  </div>
+</main>
+
+<!-- hover / focus definition popup -->
+<div class="metric-pop" id="metric-pop" role="tooltip" hidden></div>
+
+<div class="modal-overlay" id="about-modal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="about-title" tabindex="-1">
+    <button type="button" class="modal-close" id="about-close" aria-label="Close">×</button>
+    <h3 id="about-title">About Me</h3>
+    <p class="about-tagline">Finance Operator. Systems Builder. Duke MBA.</p>
+    <p>I specialize in building financial architecture for high-growth environments. With a background spanning payment tech, biotech, and financial advisory, I turn messy, manual processes into automated, audit-ready engines.</p>
+    <h4>What I do</h4>
+    <ul class="about-list">
+      <li><strong>Financial Infrastructure &amp; Automation:</strong> Built and scaled automated revenue calculations, treasury workflows, and TMS integrations across 400+ global bank accounts at Flutterwave.</li>
+      <li><strong>Strategic Finance &amp; Valuation:</strong> Experienced in financial modeling, working capital optimization, and corporate valuation, from Amgen&rsquo;s clinical supply spend to pre-revenue startup valuations.</li>
+      <li><strong>Cross-Functional Execution:</strong> A firm believer in radical collaboration, combining high emotional intelligence with technical tools (SQL, Power BI, Python/VBA, TMS) to bridge finance, product, and engineering teams.</li>
+    </ul>
+    <h4>Beyond the Numbers</h4>
+    <p>Duke Fuqua MBA &rsquo;26 | SIE (in view); Certified Treasury Professional (in view) | Amateur boxer &amp; nature enthusiast.</p>
+  </div>
+</div>
+
+<script src="lib/metrics.js"></script>
+<script src="lib/ratios.js"></script>
+<script src="lib/metric-catalog.js"></script>
+<script src="data/company-index.js"></script>
+<script src="data/coverage.js"></script>
+<script src="statements.js"></script>
+</body>
+</html>

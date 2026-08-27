@@ -31,7 +31,66 @@ const MIME = {
   ".ico": "image/x-icon",
 };
 
+/*
+ * /api/statements is served locally so the Statement Analysis page can be
+ * developed without deploying. It runs the same modules the Vercel
+ * function does, so what renders here is what renders in production.
+ * Other /api routes still need the real deployment.
+ */
+async function serveStatements(req, res, query) {
+  const ticker = String(query.get("ticker") || "").toUpperCase();
+  const cik = Number(String(query.get("cik") || "").replace(/\D/g, ""));
+  if (!ticker || !cik) {
+    res.writeHead(400, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify({ error: "ticker and cik required" }));
+  }
+  try {
+    const { buildStatements } = await import("../scripts/lib/statements.mjs");
+    const { createRequire } = await import("node:module");
+    const req2 = createRequire(__filename);
+    const { computeRatios } = req2("./lib/ratios.js");
+    const url = "https://data.sec.gov/api/xbrl/companyfacts/CIK" +
+      String(cik).padStart(10, "0") + ".json";
+    const resp = await fetch(url, {
+      headers: { "User-Agent": process.env.SEC_USER_AGENT ||
+        "Research Terminal research@chineduokeke.mba" },
+    });
+    if (!resp.ok) {
+      res.writeHead(502, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify({ error: `SEC EDGAR returned ${resp.status}` }));
+    }
+    const facts = await resp.json();
+    const bucket = facts && facts.facts && facts.facts["us-gaap"];
+    if (!bucket) {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      return res.end(JSON.stringify({ error: `${ticker} reports no US GAAP XBRL data.` }));
+    }
+    const statements = buildStatements(bucket);
+    const payload = {
+      ticker, cik,
+      entityName: facts.entityName || null,
+      generatedAt: new Date().toISOString(),
+      fiscalYearEndMonth: statements.fiscalYearEndMonth,
+      annual: statements.annual,
+      quarterly: statements.quarterly,
+      ratios: {
+        annual: computeRatios(statements.annual),
+        quarterly: computeRatios(statements.quarterly),
+      },
+    };
+    res.writeHead(200, { "Content-Type": "application/json", "Cache-Control": "no-store" });
+    res.end(JSON.stringify(payload));
+  } catch (e) {
+    res.writeHead(500, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ error: String((e && e.message) || e) }));
+  }
+}
+
 const server = http.createServer((req, res) => {
+  const parsed = new URL(req.url, "http://localhost");
+  if (parsed.pathname === "/api/statements") {
+    return serveStatements(req, res, parsed.searchParams);
+  }
   let urlPath = decodeURIComponent(req.url.split("?")[0]);
   if (urlPath === "/") urlPath = "/index.html";
   const file = path.join(ROOT, path.normalize(urlPath));

@@ -79,6 +79,7 @@ export const BALANCE = {
     "MarketableSecuritiesCurrent",
     "ShortTermInvestments",
     "AvailableForSaleSecuritiesDebtSecuritiesCurrent",
+    "MarketableSecurities",
   ],
   receivables: [
     "AccountsReceivableNetCurrent",
@@ -103,14 +104,26 @@ export const BALANCE = {
     "ContractWithCustomerLiabilityCurrent",
     "DeferredRevenueCurrent",
   ],
+  /* Debt tags drift. Coca-Cola reported under LongTermDebtNoncurrent
+     through 2023 and moved to LongTermDebtAndCapitalLeaseObligations
+     after; without the newer tags its recent years show no debt at all,
+     which flips net debt negative and makes a heavily-borrowed company
+     look like it is sitting on net cash.
+     Capital lease obligations belong here: they are interest-bearing
+     obligations to a capital provider, which is the test that separates
+     a financing liability from an operating one. */
   shortTermDebt: [
     "LongTermDebtCurrent",
+    "LongTermDebtAndCapitalLeaseObligationsCurrent",
     "ShortTermBorrowings",
+    "OtherShortTermBorrowings",
+    "NotesAndLoansPayable",
     "DebtCurrent",
   ],
   currentLiabilities: ["LiabilitiesCurrent"],
   longTermDebt: [
     "LongTermDebtNoncurrent",
+    "LongTermDebtAndCapitalLeaseObligations",
     "LongTermDebt",
   ],
   operatingLeaseLiability: [

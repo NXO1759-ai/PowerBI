@@ -464,6 +464,20 @@
     r.sbcToRevenue = div(cf.shareBasedComp, rev);
     r.lifeCycleStage = lifeCycleStage(p);
 
+    /* Asset age, from depreciation. Net property over the annual charge
+       says roughly how many years of book life remain, which is how soon
+       a replacement wave of capital spending is due. A short remaining
+       life beside weak free cash flow is a squeeze in the making. */
+    r.assetRemainingLifeYears = div(b.ppe, cf.depreciationAmortization);
+
+    /* Cash-flow cushion: how far operating cash could fall before it no
+       longer covers the interest bill. Expressed as the fraction of
+       headroom, so 0.17 means adjusted operating cash flow can drop 17%
+       before interest stops being serviceable. */
+    var adjustedCfo = add(cf.cfOps, r.afterTaxInterest);
+    r.cashFlowCushion = (isNum(adjustedCfo) && isNum(interest) && adjustedCfo > 0)
+      ? (adjustedCfo - interest) / adjustedCfo : null;
+
     /* --- the reformatted statement of cash flows ---
        Interest is moved out of operations and into debt service, so the
        operating subtotal is genuinely free of the financing decision. */
@@ -665,6 +679,46 @@
     };
   }
 
+  /**
+   * The level AND the volatility of the spread.
+   *
+   * Whether a company carries too much debt is not answered by how much
+   * it has borrowed. It is answered by how far the operating return
+   * exceeds the after-tax cost of that debt, and by how stable that gap
+   * is. A thin but steady spread supports far more leverage safely than
+   * a wide but erratic one, because the erratic one goes negative in the
+   * years the company can least afford it.
+   *
+   * Reported together for exactly that reason — a mean with no dispersion
+   * beside it invites the wrong conclusion.
+   */
+  function spreadStability(ratios) {
+    if (!ratios || !ratios.length) return null;
+    var values = [];
+    for (var i = 0; i < ratios.length; i++) {
+      if (isNum(ratios[i].spread)) values.push(ratios[i].spread);
+    }
+    if (values.length < 2) return null;
+    var sum = 0;
+    for (var j = 0; j < values.length; j++) sum += values[j];
+    var mean = sum / values.length;
+    var sq = 0;
+    for (var k = 0; k < values.length; k++) sq += Math.pow(values[k] - mean, 2);
+    var sd = Math.sqrt(sq / (values.length - 1));
+    var negatives = values.filter(function (v) { return v < 0; }).length;
+    return {
+      periods: values.length,
+      mean: mean,
+      standardDeviation: sd,
+      min: Math.min.apply(null, values),
+      max: Math.max.apply(null, values),
+      periodsNegative: negatives,
+      /* Mean divided by dispersion: how many standard deviations of
+         cushion sit between the average spread and zero. */
+      stability: sd > 0 ? mean / sd : null,
+    };
+  }
+
   /** Compound annual growth rate across an annual series. */
   function cagr(periods, pick, years) {
     if (!periods || periods.length < 2) return null;
@@ -694,6 +748,7 @@
     computePeriod: computePeriod,
     computeRatios: computeRatios,
     earningsQuality: earningsQuality,
+    spreadStability: spreadStability,
     altmanZ: altmanZ,
     residualIncome: residualIncome,
     commonEquity: commonEquity,
