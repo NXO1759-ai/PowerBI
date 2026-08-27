@@ -137,19 +137,35 @@ export function parseInstance(x) {
     const e = (body.match(/<(?:xbrli:)?endDate>([^<]+)</) || [])[1];
     ctx[m[1]] = { start: s, end: e, dims };
   }
-  const isFY = (c) => c.start && c.end &&
-    (new Date(c.end) - new Date(c.start)) / 864e5 > 300;
+  /* Duration class by span: a fiscal year runs longer than 300 days, a
+     discrete quarter 80 to 100 — the six- and nine-month year-to-date
+     durations a 10-Q also carries fall between and are ignored. */
+  const spanOf = (c) => {
+    if (!c.start || !c.end) return null;
+    const days = (new Date(c.end) - new Date(c.start)) / 864e5;
+    return days > 300 ? "fy" : (days >= 80 && days <= 100) ? "q" : null;
+  };
 
   const AXES = {
     segment: "us-gaap:StatementBusinessSegmentsAxis",
     product: "srt:ProductOrServiceAxis",
     geography: "srt:StatementGeographicalAxis",
   };
+  /* Ordered by priority; a member keeps the first tag that supplies it.
+     The last three come from probing the filers the general tags missed:
+     Chubb books segment revenue as earned premiums, Progressive under the
+     supplementary-insurance schedule, NextEra as regulated-and-unregulated
+     operating revenue. None of these overlaps a filer that uses the
+     general tags, so appending them recovers those companies without
+     touching anyone else's numbers. */
   const REV_TAGS = [
     "RevenueFromContractWithCustomerExcludingAssessedTax",
     "Revenues",
     "RevenueFromContractWithCustomerIncludingAssessedTax",
     "RevenuesNetOfInterestExpense",
+    "PremiumsEarnedNet",
+    "SupplementaryInsuranceInformationPremiumRevenue",
+    "RegulatedAndUnregulatedOperatingRevenue",
   ];
 
   /* Attributes are newline-separated in some filers' instances and
@@ -158,12 +174,14 @@ export function parseInstance(x) {
      for Microsoft. */
   function keep(rows, ref, val, signed) {
     const c = ctx[ref];
-    if (!c || !isFY(c)) return;
+    if (!c) return;
+    const span = spanOf(c);
+    if (!span) return;
     const dk = Object.keys(c.dims).filter((k) => k !== "srt:ConsolidationItemsAxis");
     if (dk.length !== 1) return;
     if (!isFinite(val)) return;
     if (!signed && val < 0) return;
-    rows.push({ end: c.end, dims: c.dims, val: val });
+    rows.push({ end: c.end, span: span, dims: c.dims, val: val });
   }
   function facts(tag, signed) {
     const rows = [];
@@ -196,29 +214,58 @@ export function parseInstance(x) {
   }
 
   const revenue = { segment: {}, product: {}, geography: {} };
+  const quarterly = { segment: {}, product: {}, geography: {} };
+  const bucketFor = (span) => (span === "q" ? quarterly : revenue);
   for (const tag of REV_TAGS) {
-    let any = false;
     for (const row of facts(tag, false)) {
       for (const [name, axis] of Object.entries(AXES)) {
         const mem = row.dims[axis];
         if (mem === undefined) continue;
-        any = true;
-        const byEnd = (revenue[name][row.end] = revenue[name][row.end] || {});
+        const byEnd = bucketFor(row.span)[name];
+        const o = (byEnd[row.end] = byEnd[row.end] || {});
         const k = short(mem);
-        if (!(k in byEnd)) byEnd[k] = row.val;
+        if (!(k in o)) o[k] = row.val;
       }
     }
-    if (any) break;
+  }
+  /* Banks tag no revenue line per segment at all: Truist's segments carry
+     net interest income and noninterest income as two separate concepts,
+     which together are what RevenuesNetOfInterestExpense means at the
+     company level. Summed only where BOTH are present for a member, and
+     only into periods the ordinary tags left empty, so a partial sum can
+     never displace a reported figure. */
+  for (const span of ["fy", "q"]) {
+    const target = bucketFor(span).segment;
+    const nii = {}, fee = {};
+    for (const row of facts("InterestIncomeExpenseNet", true)) {
+      const mem = row.dims["us-gaap:StatementBusinessSegmentsAxis"];
+      if (mem !== undefined && row.span === span)
+        (nii[row.end] = nii[row.end] || {})[short(mem)] = row.val;
+    }
+    for (const row of facts("NoninterestIncome", false)) {
+      const mem = row.dims["us-gaap:StatementBusinessSegmentsAxis"];
+      if (mem !== undefined && row.span === span)
+        (fee[row.end] = fee[row.end] || {})[short(mem)] = row.val;
+    }
+    for (const end of Object.keys(nii)) {
+      if (target[end] && Object.keys(target[end]).length) continue;
+      for (const k of Object.keys(nii[end])) {
+        if (fee[end] && k in fee[end]) {
+          (target[end] = target[end] || {})[k] = nii[end][k] + fee[end][k];
+        }
+      }
+    }
   }
   const segmentOperatingIncome = {};
   for (const row of facts("OperatingIncomeLoss", true)) {
+    if (row.span !== "fy") continue;
     const mem = row.dims["us-gaap:StatementBusinessSegmentsAxis"];
     if (mem === undefined) continue;
     const byEnd = (segmentOperatingIncome[row.end] = segmentOperatingIncome[row.end] || {});
     const k = short(mem);
     if (!(k in byEnd)) byEnd[k] = row.val;
   }
-  return { revenue, segmentOperatingIncome };
+  return { revenue, quarterly, segmentOperatingIncome };
 }
 
 /**
@@ -261,44 +308,70 @@ export function dropAggregates(byEnd) {
 }
 
 /* ---------- per company ---------- */
+async function fetchInstance(cik, accession) {
+  const accn = accession.replace(/-/g, "");
+  const base = "https://www.sec.gov/Archives/edgar/data/" + Number(cik) + "/" + accn;
+  const idx = await (await fetch200(base + "/index.json")).json();
+  const inst = idx.directory.item.find((f) => /_htm\.xml$/.test(f.name));
+  if (inst) return (await fetch200(base + "/" + inst.name)).text();
+  /* zip-only dissemination: the archive is the whole filing. Prefer an
+     extracted instance inside it; fall back to the inline-XBRL primary
+     document, which parseInstance also reads. */
+  const zip = idx.directory.item.find((f) => f.name.endsWith("-xbrl.zip"));
+  if (!zip) return null;
+  const buf = await (await fetch200(base + "/" + zip.name)).arrayBuffer();
+  return unzipMember(buf, /_htm[.]xml$/) || unzipMember(buf, /-[0-9]{8}[.]xml$/) ||
+         unzipMember(buf, /-[0-9]{8}[.]htm$/);
+}
+
 async function pull(ticker, cik) {
   const c10 = String(cik).padStart(10, "0");
   const sub = await (await fetch200("https://data.sec.gov/submissions/CIK" + c10 + ".json")).json();
   const r = sub.filings.recent;
-  let acc = null, form = null, rd = null;
+  let acc = null, form = null, rd = null, qAcc = null, qRd = null;
   for (let i = 0; i < r.form.length; i++) {
     /* 20-F and 40-F are the foreign-filer annual forms; their segment
-       notes tag the same way. */
-    if (/^(10-K|20-F|40-F)$/.test(r.form[i])) {
+       notes tag the same way. Foreign filers file no 10-Q, so the
+       quarterly side is simply absent for them. */
+    if (!acc && /^(10-K|20-F|40-F)$/.test(r.form[i])) {
       acc = r.accessionNumber[i]; form = r.form[i]; rd = r.reportDate[i];
-      break;
     }
+    if (!qAcc && r.form[i] === "10-Q") {
+      qAcc = r.accessionNumber[i]; qRd = r.reportDate[i];
+    }
+    if (acc && qAcc) break;
   }
   if (!acc) return { ticker, error: "no annual filing" };
-  const accn = acc.replace(/-/g, "");
-  const base = "https://www.sec.gov/Archives/edgar/data/" + Number(cik) + "/" + accn;
-  const idx = await (await fetch200(base + "/index.json")).json();
-  const inst = idx.directory.item.find((f) => /_htm\.xml$/.test(f.name));
-  let x = null;
-  if (inst) {
-    x = await (await fetch200(base + "/" + inst.name)).text();
-  } else {
-    /* zip-only dissemination: the archive is the whole filing */
-    const zip = idx.directory.item.find((f) => f.name.endsWith("-xbrl.zip"));
-    if (!zip) return { ticker, error: "no extracted instance", form, accession: acc };
-    const buf = await (await fetch200(base + "/" + zip.name)).arrayBuffer();
-    /* prefer an extracted instance; fall back to the inline-XBRL primary
-       document, which parseInstance also reads */
-    x = unzipMember(buf, /_htm[.]xml$/) || unzipMember(buf, /-[0-9]{8}[.]xml$/) ||
-        unzipMember(buf, /-[0-9]{8}[.]htm$/);
-    if (!x) return { ticker, error: "no instance in zip", form, accession: acc };
+  const x = await fetchInstance(cik, acc);
+  if (!x) return { ticker, error: "no extracted instance", form, accession: acc };
+  const parsed = parseInstance(x);
+  const revenue = parsed.revenue;
+  const quarterly = parsed.quarterly;
+  const segmentOperatingIncome = parsed.segmentOperatingIncome;
+  /* The latest 10-Q supplies the newest discrete quarter and its
+     prior-year comparative, so the segment tables can show the most
+     recent quarter and its growth without waiting for the next 10-K. */
+  if (qAcc) {
+    try {
+      const qx = await fetchInstance(cik, qAcc);
+      if (qx) {
+        const qp = parseInstance(qx);
+        for (const kind of Object.keys(quarterly)) {
+          for (const [end, members] of Object.entries(qp.quarterly[kind])) {
+            const o = (quarterly[kind][end] = quarterly[kind][end] || {});
+            for (const [k, v] of Object.entries(members)) if (!(k in o)) o[k] = v;
+          }
+        }
+      }
+    } catch (e) { /* the annual data stands on its own */ }
   }
-  const { revenue, segmentOperatingIncome } = parseInstance(x);
   for (const k of Object.keys(revenue)) dropAggregates(revenue[k]);
+  for (const k of Object.keys(quarterly)) dropAggregates(quarterly[k]);
   const n = (o) => Object.keys(o).length;
   return {
     ticker, form, accession: acc, reportDate: rd,
-    revenue, segmentOperatingIncome,
+    qReportDate: qRd || null,
+    revenue, quarterly, segmentOperatingIncome,
     empty: !n(revenue.segment) && !n(revenue.product) && !n(revenue.geography),
   };
 }
@@ -326,7 +399,8 @@ async function worker() {
       if (res.error) failures.push(u.ticker + ": " + res.error);
       else if (res.empty) failures.push(u.ticker + ": no tagged segment data");
       else out[u.ticker] = { form: res.form, accession: res.accession,
-        reportDate: res.reportDate, revenue: res.revenue,
+        reportDate: res.reportDate, qReportDate: res.qReportDate,
+        revenue: res.revenue, quarterly: res.quarterly,
         segmentOperatingIncome: res.segmentOperatingIncome };
     } catch (e) {
       failures.push(u.ticker + ": " + e.message);
