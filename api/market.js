@@ -133,6 +133,8 @@ const spikeNewsCache = globalThis.__spikeNewsCache ||
   (globalThis.__spikeNewsCache = new Map());
 
 export default async function handler(req, res) {
+  /* public market data; lets a localhost dev session use the deployed API */
+  res.setHeader("Access-Control-Allow-Origin", "*");
   const ticker = String((req.query && req.query.ticker) || "")
     .toUpperCase().replace(/[^A-Z0-9.\-]/g, "").slice(0, 12);
   if (!ticker) return res.status(400).json({ error: "ticker required" });

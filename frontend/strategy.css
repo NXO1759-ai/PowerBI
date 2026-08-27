@@ -195,3 +195,57 @@ table.grid td.pool-you, table.grid td.pool-you:first-child {
   text-transform: uppercase; color: var(--kimi-color-text-tertiary);
   margin: 14px 0 6px;
 }
+
+/* search results reaching beyond the covered panel */
+.live-tag {
+  font-size: 9.5px; font-weight: 600; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--rt-gold);
+  border: 1px solid var(--rt-gold-border); border-radius: 4px;
+  padding: 1px 5px; margin-inline-start: 6px; white-space: nowrap;
+}
+
+/* macro drill-down */
+#macro-detail, .cycle-dial {
+  border: 1px solid var(--rt-gold-border); border-radius: 10px;
+  background: var(--page-bg); padding: 14px 16px 12px; margin: 12px 0 4px;
+}
+.cycle-dial { margin: 0 0 16px; }
+.md-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+.md-title { font-size: 13px; font-weight: 600; color: var(--rt-gold); }
+.md-tag {
+  font-size: 9.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--kimi-color-text-tertiary);
+}
+.md-close {
+  margin-inline-start: auto; font: inherit; font-size: 16px; line-height: 1;
+  background: none; border: 0; color: var(--kimi-color-text-tertiary);
+  cursor: pointer; padding: 4px 8px; min-block-size: 32px;
+}
+.md-close:hover { color: var(--kimi-color-text-primary); }
+#macro-detail svg { display: block; inline-size: 100%; block-size: auto; margin: 4px 0 8px; }
+#macro-detail svg text { font-family: var(--rt-font-mono); }
+.md-stats {
+  display: flex; flex-wrap: wrap; gap: 14px; font-size: 11px;
+  color: var(--kimi-color-text-tertiary); margin: 0 0 10px;
+  font-family: var(--rt-font-mono);
+}
+.md-stats strong { color: var(--kimi-color-text-primary); font-weight: 600; }
+.md-para {
+  font-size: 12.5px; line-height: 1.65; color: var(--kimi-color-text-secondary);
+  margin: 0 0 9px; max-inline-size: 86ch;
+}
+.md-para strong { color: var(--kimi-color-text-primary); }
+.md-sector {
+  font-size: 12px; line-height: 1.6; color: var(--kimi-color-text-secondary);
+  border-inline-start: 2px solid var(--rt-gold-border);
+  padding-inline-start: 10px; margin: 0 0 9px;
+}
+.md-fail {
+  font-size: 11px; line-height: 1.55; color: var(--kimi-color-text-quaternary);
+  margin: 0;
+}
+.cycle-play { margin: 6px 0 10px; padding-inline-start: 20px; }
+.cycle-play li {
+  font-size: 12px; line-height: 1.6; color: var(--kimi-color-text-secondary);
+  margin-bottom: 4px;
+}
