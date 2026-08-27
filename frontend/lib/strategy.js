@@ -223,18 +223,51 @@
     return isNum(xs) ? ic - xs : ic;
   }
 
-  function ebitOf(period) {
+  function ebitOf(period, isLender) {
     var is = period.incomeStatement;
     if (isNum(is.operatingIncome)) return is.operatingIncome;
-    if (isNum(is.pretaxIncome) && isNum(is.interestExpense)) {
-      return is.pretaxIncome + Math.abs(is.interestExpense);
+    /* For a bank or other lender, interest paid is the cost of the product
+       rather than a charge for the capital being measured. Adding it back
+       reported JPMorgan at $168bn of operating income against $72.6bn of
+       pre-tax income, and a 92% margin. Pre-tax income is used as-is. */
+    if (isLender) return isNum(is.pretaxIncome) ? is.pretaxIncome : null;
+    /* Roughly a quarter of large filers no longer tag OperatingIncomeLoss
+       at all — Exxon, Chevron, J&J, Lilly and IBM among them. Pre-tax
+       income plus interest rebuilds the same figure, and it is what a
+       return on invested capital wants anyway: earnings before the cost of
+       the capital being measured.
+       A company reporting pre-tax income but no separate interest line has
+       interest too small to break out, not interest of unknown size, so
+       the absent tag is read as zero. Requiring both would discard the
+       whole figure over its smaller component. */
+    if (isNum(is.pretaxIncome)) {
+      return is.pretaxIncome + (isNum(is.interestExpense) ? Math.abs(is.interestExpense) : 0);
     }
     return null;
   }
 
+  /** Whether ebitOf returned a reported figure or a reconstructed one. */
+  function ebitIsSynthetic(period) {
+    var is = period.incomeStatement;
+    return !isNum(is.operatingIncome) && isNum(is.pretaxIncome);
+  }
+
+  /* A margin above 100% of sales is not a very profitable company; it is
+     a revenue line that failed to capture the whole top line. Capital One
+     reports $8.1bn of revenue against $13.8bn of pre-tax income, and
+     American Tower $0.9bn against $4.8bn, because this pull does not yet
+     read the interest-and-fee revenue tags lenders and property trusts
+     use. Such members are dropped from the pool and counted, rather than
+     being left to distort an industry aggregate. */
+  function marginIsCredible(revenue, profit) {
+    if (!isNum(revenue) || !isNum(profit) || revenue <= 0) return false;
+    var m = profit / revenue;
+    return m <= 1 && m >= -2;
+  }
+
   /** Porter ROIC for one year, averaging capital with the prior year. */
-  function porterRoic(period, priorPeriod, operatingCashRate) {
-    var e = ebitOf(period);
+  function porterRoic(period, priorPeriod, operatingCashRate, isLender) {
+    var e = ebitOf(period, isLender);
     var icNow = investedCapital(period, operatingCashRate);
     var icPrior = priorPeriod ? investedCapital(priorPeriod, operatingCashRate) : null;
     var avgIc = isNum(icNow)
@@ -263,7 +296,222 @@
       : roic >= b.median ? "Above median"
       : roic >= b.p25 ? "Below median"
       : roic >= b.p10 ? "Lower quartile" : "Bottom decile";
-    return { roic: roic, band: band, vsMedian: roic - b.median, bands: b };
+    /* Four of the six band names are noun phrases that take "in the", but
+       the two median ones are not; carrying a ready-made phrase avoids
+       "sits in the above median" at the call site. */
+    var phrase = (band === "Above median") ? "above the median"
+      : (band === "Below median") ? "below the median"
+      : "in the " + band.toLowerCase();
+    return { roic: roic, band: band, phrase: phrase, vsMedian: roic - b.median, bands: b };
+  }
+
+  /**
+   * Porter's own 1992-2006 ROIC by industry — the 31 he published.
+   *
+   * Percentile bands say where a number sits; a named comparable says what
+   * it resembles. "17% puts you between household furniture and grocery
+   * stores" is a more useful sentence than "above median", because the
+   * reader already knows what those businesses are like.
+   */
+  var PORTER_INDUSTRY_ROIC = [
+    ["Security Brokers and Dealers", 0.409], ["Soft Drinks", 0.376],
+    ["Prepackaged Software", 0.376], ["Pharmaceuticals", 0.317],
+    ["Perfume, Cosmetics, Toiletries", 0.286], ["Advertising Agencies", 0.273],
+    ["Distilled Spirits", 0.264], ["Semiconductors", 0.213],
+    ["Medical Instruments", 0.210], ["Men's and Boys' Clothing", 0.195],
+    ["Tires", 0.195], ["Household Appliances", 0.192],
+    ["Malt Beverages", 0.190], ["Child Day Care Services", 0.176],
+    ["Household Furniture", 0.170], ["Drug Stores", 0.165],
+    ["Grocery Stores", 0.160], ["Iron and Steel Foundries", 0.156],
+    ["Cookies and Crackers", 0.154], ["Mobile Homes", 0.150],
+    ["Wine and Brandy", 0.139], ["Bakery Products", 0.138],
+    ["Engines and Turbines", 0.137], ["Book Publishing", 0.134],
+    ["Laboratory Equipment", 0.134], ["Oil and Gas Machinery", 0.126],
+    ["Soft Drink Bottling", 0.117], ["Knitting Mills", 0.105],
+    ["Hotels", 0.104], ["Catalog, Mail-Order Houses", 0.059],
+    ["Airlines", 0.059]
+  ];
+  /** The two Porter industries a computed return falls between. */
+  function porterNeighbours(roic) {
+    if (!isNum(roic)) return null;
+    var above = null, below = null;
+    for (var i = 0; i < PORTER_INDUSTRY_ROIC.length; i++) {
+      var e = PORTER_INDUSTRY_ROIC[i];
+      if (e[1] >= roic) above = e;
+      if (e[1] <= roic && !below) below = e;
+    }
+    /* An exact hit on one of Porter's industries is a match, not a range. */
+    if (above && below && above[0] === below[0]) return { exact: above };
+    return { above: above, below: below };
+  }
+
+  /**
+   * Rolling average over a window of years.
+   *
+   * Porter is explicit that structure is read over a full business cycle —
+   * three to five years for most industries — and that it is "average
+   * profitability over this period, not profitability in any particular
+   * year, that should be the focus of analysis". A single year mixes the
+   * structural signal with the cycle, and one of the named pitfalls is
+   * "confusing cyclical or transient changes with true structural
+   * changes". The rolling series is therefore the one to read; the annual
+   * series is kept alongside so the cycle stays visible rather than
+   * smoothed out of sight.
+   */
+  function rollingAverage(series, valueKey, windowYears) {
+    var w = windowYears || 5;
+    return series.map(function (d, i) {
+      var start = Math.max(0, i - w + 1);
+      var slice = series.slice(start, i + 1)
+        .map(function (x) { return x[valueKey]; }).filter(isNum);
+      return {
+        year: d.year,
+        value: slice.length ? slice.reduce(function (a, b) { return a + b; }, 0) / slice.length : null,
+        years: slice.length,
+        complete: slice.length >= w
+      };
+    });
+  }
+
+  /**
+   * The three-factor DuPont the course teaches, on a PRE-TAX basis.
+   *
+   *   ROE(pre-tax) = PBT/Sales x Sales/avg Assets x avg Assets/avg Equity
+   *
+   * Pre-tax deliberately: it keeps tax-rate differences out of a
+   * comparison between competitors, the same reason Porter's ROIC uses
+   * EBIT. The course's demonstration is two brewers reaching near-identical
+   * ROE by opposite routes — one asset-light and levered at 5.7x asset
+   * turns on a 1% margin, the other capital-intensive at 0.77x turns on a
+   * 28% margin. Identical outcome, completely different business. ROE on
+   * its own hides that; this is what exposes it.
+   */
+  /**
+   * Which of the three factors the return actually rests on.
+   *
+   * Judged against the company's own industry rather than fixed cutoffs.
+   * A 65% margin is margin-led whatever the asset turns are, but no single
+   * absolute threshold catches that without miscategorising a business
+   * somewhere else in the panel. Measuring each factor as a multiple of its
+   * industry median puts a chipmaker and a grocer on the same scale, which
+   * is the comparison the decomposition exists to make.
+   */
+  /**
+   * Which of the three factors the return rests on.
+   *
+   * Measured against the whole panel, not the company's own industry. With
+   * two or three firms in a segment the median simply is the company, so a
+   * within-industry read tells Costco it is unremarkable at 3.8x asset
+   * turns. The course's own case was two brewers in ONE industry with
+   * opposite shapes — margin-fat and slow against margin-thin and fast —
+   * so the comparison that exposes shape has to be economy-wide.
+   */
+  function describeDriver(margin, turnover, ref) {
+    if (!isNum(margin) || !isNum(turnover)) return null;
+    if (!ref || !isNum(ref.margin) || !isNum(ref.turnover) ||
+        ref.margin <= 0 || ref.turnover <= 0) return null;
+    var mRel = margin / ref.margin, tRel = turnover / ref.turnover;
+    var HI = 1.25, LO = 0.8;
+    var mHi = mRel >= HI, mLo = mRel <= LO, tHi = tRel >= HI, tLo = tRel <= LO;
+    var m = mRel.toFixed(1) + "× the typical margin", t = tRel.toFixed(1) + "× the typical asset turns";
+    /* Strong on both is not "balanced" — it is a business out-earning the
+       economy on two independent dimensions, and saying so is the point. */
+    if (mHi && tHi) return "Strong on both — " + m + " and " + t;
+    if (mLo && tLo) return "Weak on both — " + m + " and " + t;
+    if (mHi && !tHi) return "Margin-led — " + m + ", " + t;
+    if (tHi && !mHi) return "Turnover-led — " + t + ", " + m;
+    /* One factor below and the other merely ordinary: the shortfall is the
+       finding, not a phantom "lead" in whichever fell less. */
+    if (mLo) return "Held back by margin — " + m + ", " + t;
+    if (tLo) return "Held back by asset intensity — " + t + ", " + m;
+    return "Unremarkable on both — " + m + " and " + t;
+  }
+
+  /** Whether the revenue/assets shape comparison applies to this company
+      at all. It does not for balance-sheet businesses. */
+  function isFinancial(company) {
+    return /financ/i.test(company && company.sector || "");
+  }
+
+  /** Median pre-tax margin and asset turnover across the NONFINANCIAL
+      companies reporting in a given year — the reference describeDriver
+      compares to. */
+  function panelReference(panel, fieldReader, year) {
+    var ms = [], ts = [];
+    Object.keys(panel).forEach(function (t) {
+      var c = panel[t], row = c.years[year]; if (!row) return;
+      /* Banks, insurers and REITs are excluded from the reference. Asset
+         turnover for a bank is a statement about balance-sheet size, not
+         about how the business converts assets into sales, and a quarter
+         of this panel is financial — leaving them in drags the median
+         turnover down and inflates every other company's multiple. */
+      if (isFinancial(c)) return;
+      var d = dupontThreeFactor(toPeriod(fieldReader, row, year),
+        c.years[year - 1] ? toPeriod(fieldReader, c.years[year - 1], year - 1) : null);
+      if (isNum(d.pretaxMargin)) ms.push(d.pretaxMargin);
+      if (isNum(d.assetTurnover)) ts.push(d.assetTurnover);
+    });
+    var med = function (a) {
+      if (!a.length) return null;
+      var v = a.slice().sort(function (x, y) { return x - y; }), h = Math.floor(v.length / 2);
+      return v.length % 2 ? v[h] : (v[h - 1] + v[h]) / 2;
+    };
+    return { margin: med(ms), turnover: med(ts), firms: ms.length };
+  }
+
+  function dupontThreeFactor(period, priorPeriod, peerMedians) {
+    var is = period.incomeStatement, b = period.balanceSheet;
+    var pb = priorPeriod ? priorPeriod.balanceSheet : null;
+    var pbt = is.pretaxIncome;
+    /* Pre-tax income is not always tagged; EBIT less interest is the same
+       thing by construction where it is not. */
+    if (!isNum(pbt)) {
+      var e = ebitOf(period);
+      if (isNum(e) && isNum(is.interestExpense)) pbt = e - Math.abs(is.interestExpense);
+    }
+    var avg = function (cur, prior) {
+      if (!isNum(cur)) return null;
+      return isNum(prior) ? (cur + prior) / 2 : cur;
+    };
+    var avgAssets = avg(b.totalAssets, pb ? pb.totalAssets : null);
+    var eqNow = isNum(b.equityIncludingNci) ? b.equityIncludingNci
+      : (isNum(b.equity) ? b.equity + (isNum(b.minorityInterest) ? b.minorityInterest : 0) : null);
+    var eqPrior = pb ? (isNum(pb.equityIncludingNci) ? pb.equityIncludingNci
+      : (isNum(pb.equity) ? pb.equity + (isNum(pb.minorityInterest) ? pb.minorityInterest : 0) : null)) : null;
+    var avgEquity = avg(eqNow, eqPrior);
+    var margin = div(pbt, is.revenue);
+    var turnover = div(is.revenue, avgAssets);
+    var leverage = div(avgAssets, avgEquity);
+    var product = (isNum(margin) && isNum(turnover) && isNum(leverage))
+      ? margin * turnover * leverage : null;
+    return {
+      pretaxMargin: margin, assetTurnover: turnover, equityMultiplier: leverage,
+      pretaxRoe: product,
+      driver: describeDriver(margin, turnover, peerMedians)
+    };
+  }
+
+  /**
+   * How an industry's profitability level and spread move together.
+   *
+   * The course's apparel panel shows the median margin falling from 12.4%
+   * to 8.4% across seventeen years while the spread between best and worst
+   * stayed roughly constant — competitive convergence pulling the whole
+   * distribution down without compressing it. Level and dispersion are two
+   * different findings and are reported separately.
+   */
+  function dispersionTrend(series) {
+    if (!series || series.length < 3) return null;
+    var first = series[0], last = series[series.length - 1];
+    return {
+      fromYear: first.year, toYear: last.year,
+      medianStart: first.marginMedian, medianEnd: last.marginMedian,
+      medianChange: (isNum(first.marginMedian) && isNum(last.marginMedian))
+        ? last.marginMedian - first.marginMedian : null,
+      spreadStart: first.marginSpread, spreadEnd: last.marginSpread,
+      spreadChange: (isNum(first.marginSpread) && isNum(last.marginSpread))
+        ? last.marginSpread - first.marginSpread : null
+    };
   }
 
   /* ---------- industry aggregation ---------- */
@@ -287,7 +535,11 @@
       rows.push({
         ticker: c.ticker, name: c.name,
         revenue: get(row, "revenue"),
-        operatingIncome: get(row, "operatingIncome"),
+        /* ebitOf, not the raw tag: with four of five refiners no longer
+           tagging operating income, the raw field divided one member's
+           profit by the whole industry's revenue and reported 1.0%. */
+        operatingIncome: ebitOf(toPeriod(get, row, year), isFinancial(c)),
+        operatingIncomeReported: get(row, "operatingIncome"),
         netIncome: get(row, "netIncome"),
         totalAssets: get(row, "totalAssets"),
         rnd: get(row, "researchDevelopment"),
@@ -301,10 +553,43 @@
 
     var revenues = rows.map(function (r) { return r.revenue; });
     var totalRevenue = sum(revenues);
-    var totalOperatingIncome = sum(rows.map(function (r) { return r.operatingIncome; }));
+    /* Disclosed rather than buried: a reader is entitled to know how much
+       of an industry total was rebuilt from pre-tax income. */
+    var synthetic = rows.filter(function (r) {
+      return !isNum(r.operatingIncomeReported) && isNum(r.operatingIncome);
+    });
+    var syntheticRevenue = sum(synthetic.map(function (r) { return r.revenue; }));
+    /* Members with no usable operating figure at all are counted, because
+       they would otherwise sit in one total and not the other. */
+    var missingProfit = rows.filter(function (r) {
+      return !isNum(r.operatingIncome) && isNum(r.revenue);
+    });
+
+    /* A margin is only meaningful over firms present in BOTH totals.
+       Members contributing revenue but no profit understate it — four of
+       five refiners no longer tag operating income, which reported the
+       industry at 1.0%. Members contributing profit but no revenue
+       overstate it — Wells Fargo, Goldman and Morgan Stanley report
+       pre-tax income with no revenue line this pull recognises, which put
+       Banks above 100%. Both are the same defect: an aggregate ratio whose
+       numerator and denominator cover different companies. The pool is
+       therefore built on matched members only, and how much of the
+       industry that leaves out is reported rather than hidden. */
+    var matched = rows.filter(function (r) {
+      return isNum(r.revenue) && isNum(r.operatingIncome) &&
+        marginIsCredible(r.revenue, r.operatingIncome);
+    });
+    var implausible = rows.filter(function (r) {
+      return isNum(r.revenue) && isNum(r.operatingIncome) &&
+        !marginIsCredible(r.revenue, r.operatingIncome);
+    });
+    var matchedRevenue = sum(matched.map(function (r) { return r.revenue; }));
+    var matchedProfit = sum(matched.map(function (r) { return r.operatingIncome; }));
+    var profitCoverage = div(matchedRevenue, totalRevenue);
+    var totalOperatingIncome = matchedProfit;
     var totalAssets = sum(rows.map(function (r) { return r.totalAssets; }));
 
-    var margins = rows.map(function (r) { return div(r.operatingIncome, r.revenue); });
+    var margins = matched.map(function (r) { return div(r.operatingIncome, r.revenue); });
     var grossMargins = rows.map(function (r) {
       var gp = isNum(r.grossProfit) ? r.grossProfit
         : (isNum(r.revenue) && isNum(r.cogs) ? r.revenue - r.cogs : null);
@@ -313,14 +598,15 @@
 
     /* Profit share against revenue share is the profit-pool read: a firm
        taking a materially bigger slice of the profit than of the revenue
-       is capturing more value per dollar sold than its rivals do. */
-    var pool = rows.map(function (r) {
+       is capturing more value per dollar sold than its rivals do. Shares
+       are taken over the matched subset so they sum to one. */
+    var pool = matched.map(function (r) {
       return {
         ticker: r.ticker, name: r.name,
         revenue: r.revenue,
-        revenueShare: div(r.revenue, totalRevenue),
+        revenueShare: div(r.revenue, matchedRevenue),
         operatingIncome: r.operatingIncome,
-        profitShare: div(r.operatingIncome, totalOperatingIncome),
+        profitShare: div(r.operatingIncome, matchedProfit),
         operatingMargin: div(r.operatingIncome, r.revenue),
         /* Profit share divided by revenue share. Above 1 means the firm
            takes a bigger slice of the industry's profit than of its
@@ -328,8 +614,8 @@
            market share". Ford earned nearly half its profit from
            financing on under a fifth of its revenue. */
         poolCaptureRatio: (function () {
-          var rs = div(r.revenue, totalRevenue);
-          var ps = div(r.operatingIncome, totalOperatingIncome);
+          var rs = div(r.revenue, matchedRevenue);
+          var ps = div(r.operatingIncome, matchedProfit);
           return (isNum(rs) && isNum(ps) && rs > 0) ? ps / rs : null;
         })()
       };
@@ -342,9 +628,18 @@
       memberCount: memberCount,
       coverage: memberCount ? rows.length / memberCount : null,
       totalRevenue: totalRevenue,
+      syntheticProfitFirms: synthetic.length,
+      syntheticProfitShare: div(syntheticRevenue, totalRevenue),
+      missingProfitFirms: missingProfit.length,
+      /* Share of industry revenue whose owners also report a usable
+         profit figure. The margin below describes only these firms. */
+      profitCoverage: profitCoverage,
+      poolFirms: matched.length,
+      poolRevenue: matchedRevenue,
+      implausibleFirms: implausible.map(function (r) { return r.ticker; }),
       totalOperatingIncome: totalOperatingIncome,
       totalAssets: totalAssets,
-      industryMargin: div(totalOperatingIncome, totalRevenue),
+      industryMargin: div(matchedProfit, matchedRevenue),
       concentration: concentration(revenues),
       pool: pool,
       marginMedian: median(margins),
@@ -566,6 +861,11 @@
     excessCash: excessCash, investedCapital: investedCapital, ebitOf: ebitOf,
     porterRoic: porterRoic, PORTER_ROIC_BANDS: PORTER_ROIC_BANDS,
     placeAgainstPorter: placeAgainstPorter,
+    PORTER_INDUSTRY_ROIC: PORTER_INDUSTRY_ROIC, porterNeighbours: porterNeighbours,
+    rollingAverage: rollingAverage, dupontThreeFactor: dupontThreeFactor,
+    dispersionTrend: dispersionTrend, describeDriver: describeDriver,
+    marginIsCredible: marginIsCredible,
+    panelReference: panelReference, isFinancial: isFinancial,
     OPERATING_CASH_RATE: OPERATING_CASH_RATE,
     industryYear: industryYear, industrySeries: industrySeries,
     cagr: cagr, growthDecomposition: growthDecomposition,

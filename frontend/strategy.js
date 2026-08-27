@@ -1,3 +1,28 @@
+    var peers, d, latestYear = null;
+    /* Walk back to the newest year the decomposition actually resolves.
+       A company's most recent panel year is often a partial one — the
+       balance sheet is filed before the full-year income statement, so
+       Amazon's 2026 row carries assets and no revenue. Showing four
+       dashes there would report absence where a complete 2025 exists. */
+    var mine = Object.keys(me.years).map(Number).sort(function (a, b) { return b - a; });
+    for (var yi = 0; yi < mine.length && yi < 5; yi++) {
+      var y = mine[yi];
+      var cand = S.dupontThreeFactor(S.toPeriod(get, me.years[y], y),
+        me.years[y - 1] ? S.toPeriod(get, me.years[y - 1], y - 1) : null, panelRef(y));
+      if (isNum(cand.pretaxRoe)) { latestYear = y; d = cand; peers = panelRef(y); break; }
+    }
+    if (latestYear === null) {
+      /* Nothing resolved in five years — say so rather than showing a row
+         of dashes with no explanation. */
+      host.innerHTML = "";
+      $("dupont-caption").textContent = S.isFinancial(me)
+        ? "This split is not shown for banks, insurers and property trusts. It divides "
+          + "profit by sales and sales by assets, and neither ratio describes a business "
+          + "whose assets are its inventory."
+        : "Not available — " + esc(state.ticker) + " does not report the revenue and "
+          + "asset figures this split needs in a comparable form.";
+      return;
+    }
 /* Strategy Analysis — renderer.
    Reads the precomputed panel, computes with lib/strategy.js, and reuses
    the metric-card and popup patterns from the Statement Analysis page. */
@@ -179,11 +204,39 @@
           : "Narrow — structure dominates, firms earn much alike");
 
     var caution = S.inflationCaution(data.years);
+    var disp = S.dispersionTrend(data.series);
+    var dispText = "";
+    if (disp && isNum(disp.medianChange) && isNum(disp.spreadChange)) {
+      dispText = " Between " + disp.fromYear + " and " + disp.toYear +
+        " the median operating margin moved " + pp(disp.medianChange) +
+        " while the gap between better and worse performers moved " +
+        pp(disp.spreadChange) + ". Level and spread are two separate findings: a whole " +
+        "distribution can slide down without compressing, which is what competitive " +
+        "convergence looks like.";
+    }
+    /* What the margin actually covers, said plainly. An aggregate built on
+       four of five members is a different claim from one built on all five. */
+    var cov = "";
+    if (latest.poolFirms < latest.firms) {
+      cov += " The margin and profit pool cover " + latest.poolFirms + " of the " +
+        latest.firms + " firms — " + pct(latest.profitCoverage, 0) + " of industry revenue. " +
+        "The rest do not report revenue and profit on a comparable basis";
+      cov += latest.implausibleFirms && latest.implausibleFirms.length
+        ? ", and " + latest.implausibleFirms.map(esc).join(", ") +
+          " report a profit larger than the revenue line this pull reads, which means the " +
+          "revenue is partial rather than the margin extraordinary."
+        : ".";
+    }
+    if (latest.syntheticProfitFirms) {
+      cov += " Operating profit is rebuilt from pre-tax income for " +
+        latest.syntheticProfitFirms + " of them, which no longer tag an operating income " +
+        "line at all.";
+    }
     $("structure-note").innerHTML =
       "<strong>Concentration here is an upper bound.</strong> It is computed over the " +
       latest.firms + " large listed companies this panel covers, so private firms, " +
       "foreign entrants and smaller rivals — all of which shape rivalry — are missing. " +
-      "Read the direction of travel rather than the level." +
+      "Read the direction of travel rather than the level." + cov + dispText +
       (caution ? "<div class='caution'>" + esc(caution.note) + "</div>" : "");
   }
 
@@ -212,7 +265,9 @@
     var padL = 52, padR = 92, padT = 16, padB = 30;
     var iw = W - padL - padR, ih = H - padT - padB;
     var B = S.PORTER_ROIC_BANDS;
-    var vals = series.map(function (d) { return d.median; });
+    var roll = S.rollingAverage(series, "median", 5);
+    var vals = series.map(function (d) { return d.median; })
+      .concat(roll.map(function (r) { return r.value; })).filter(isNum);
     var lo = Math.min(0, Math.min.apply(null, vals), B.p10);
     var hi = Math.max(Math.max.apply(null, vals), B.p90) * 1.08;
     var svg = el("svg", { viewBox: "0 0 " + W + " " + H, role: "presentation" });
@@ -235,14 +290,31 @@
       svg.appendChild(el("line", { x1: padL, x2: W - padR, y1: zero, y2: zero,
         stroke: "rgba(255,255,255,.2)", "stroke-width": 1 }));
     }
-    var path = series.map(function (d, i) {
+    /* Annual sits behind, thin and grey: the cycle stays visible rather
+       than being smoothed out of sight. The rolling average is the line
+       to read, because structure is a multi-year property and Porter
+       names "confusing cyclical or transient changes with true structural
+       changes" as a pitfall. */
+    var annual = series.map(function (d, i) {
       return (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(d.median).toFixed(1);
     }).join(" ");
-    svg.appendChild(el("path", { d: path, fill: "none", stroke: GOLD,
-      "stroke-width": 2, "stroke-linejoin": "round" }));
-    series.forEach(function (d, i) {
-      svg.appendChild(el("circle", { cx: X(i), cy: Y(d.median), r: 2.4, fill: GOLD }));
-    });
+    svg.appendChild(el("path", { d: annual, fill: "none", stroke: "#6b6f78",
+      "stroke-width": 1.2, "stroke-linejoin": "round" }));
+    var rollPts = roll.filter(function (r) { return isNum(r.value); });
+    if (rollPts.length > 1) {
+      var rollPath = rollPts.map(function (r, i) {
+        var idx = series.findIndex(function (d) { return d.year === r.year; });
+        return (i ? "L" : "M") + X(idx).toFixed(1) + " " + Y(r.value).toFixed(1);
+      }).join(" ");
+      svg.appendChild(el("path", { d: rollPath, fill: "none", stroke: GOLD,
+        "stroke-width": 2.2, "stroke-linejoin": "round" }));
+    }
+    var lg1 = el("text", { x: padL + 2, y: padT - 4, "font-size": "9", fill: GOLD });
+    lg1.textContent = "5-year average";
+    svg.appendChild(lg1);
+    var lg2 = el("text", { x: padL + 78, y: padT - 4, "font-size": "9", fill: "#6b6f78" });
+    lg2.textContent = "annual";
+    svg.appendChild(lg2);
     var step = Math.max(1, Math.ceil(series.length / 8));
     series.forEach(function (d, i) {
       if (i % step) return;
@@ -257,18 +329,39 @@
     svg.appendChild(yl);
     box.appendChild(svg);
 
-    var last = series[series.length - 1];
-    var place = S.placeAgainstPorter(last.median);
+    var lastRoll = rollPts.length ? rollPts[rollPts.length - 1] : null;
+    var headline = lastRoll ? lastRoll.value : series[series.length - 1].median;
+    var place = S.placeAgainstPorter(headline);
+    var nb = S.porterNeighbours(headline);
     var mk = S.MCKINSEY_ROIC_BAND;
+    var comparable = "";
+    if (nb && nb.exact) {
+      comparable = " That is the level Porter recorded for " +
+        esc(nb.exact[0].toLowerCase()) + " (" + pct(nb.exact[1]) + ").";
+    } else if (nb && nb.above && nb.below) {
+      comparable = " That places it between " + esc(nb.below[0].toLowerCase()) +
+        " (" + pct(nb.below[1]) + ") and " + esc(nb.above[0].toLowerCase()) +
+        " (" + pct(nb.above[1]) + ") on Porter's own list.";
+    } else if (nb && nb.above) {
+      comparable = " That is below every industry on Porter's list, the lowest of which " +
+        "was " + esc(nb.above[0].toLowerCase()) + " at " + pct(nb.above[1]) + ".";
+    } else if (nb && nb.below) {
+      comparable = " That is above every industry on Porter's list, the highest of which " +
+        "was " + esc(nb.below[0].toLowerCase()) + " at " + pct(nb.below[1]) + ".";
+    }
     $("roic-caption").innerHTML =
-      "<strong>" + esc(ind) + " sits in the " + esc(place.band.toLowerCase()) +
-      "</strong> of Porter's distribution — " + pct(last.median) + " in " + last.year +
-      " against a US industry median of " + pct(B.median) + " (1992–2006, Compustat). " +
+      "<strong>" + esc(ind) + " sits " + esc(place.phrase) +
+      "</strong> of Porter's distribution — a five-year average of " + pct(headline) +
+      " to " + (lastRoll ? lastRoll.year : series[series.length - 1].year) +
+      ", against a US industry median of " + pct(B.median) + " (1992–2006, Compustat)." +
+      comparable +
+      " The five-year line is the one to read: structure is a multi-year property, and " +
+      "reading a single year confuses the cycle with the structure. " +
       "A separate long-run reference puts US nonfinancial returns at " +
       pct(mk.low, 0) + "–" + pct(mk.high, 0) + " across 1963–2008; the two differ because " +
-      "one is pre-tax EBIT on invested capital and the other an after-tax return, so both " +
-      "are shown rather than one being treated as the benchmark. " +
-      "The point is to explain what drives the level, not to grade the industry.";
+      "one is pre-tax EBIT on invested capital net of excess cash and the other an " +
+      "after-tax return across a wider universe, so both are shown rather than either " +
+      "being treated as the benchmark.";
   }
 
   /* ---------- 3. profit pool ---------- */
@@ -436,10 +529,65 @@
       svg.appendChild(t);
     });
     box.appendChild(svg);
+    renderDupont(ind, data);
     $("position-caption").innerHTML = pers
       ? "<strong>" + esc(state.ticker) + " was above the industry median in " +
         pers.yearsAbove + " of " + pers.years + " years</strong> observed, longest unbroken run " +
         pers.longestStreak + ". A single good year is not an advantage; this is the test of whether one held."
+      : "";
+  }
+
+  /* One reference per year, computed once and reused. */
+  var PANEL_REF = {};
+  function panelRef(year) {
+    if (!(year in PANEL_REF)) PANEL_REF[year] = S.panelReference(PANEL, get, year);
+    return PANEL_REF[year];
+  }
+
+  function renderDupont(ind, data) {
+    var me = PANEL[state.ticker];
+    var host = $("dupont-cards");
+    if (!me) { host.innerHTML = ""; $("dupont-caption").textContent = ""; return; }
+    var latestYear = data.series[data.series.length - 1].year;
+    var row = me.years[latestYear], prior = me.years[latestYear - 1];
+    if (!row) {
+      /* Fall back to the most recent year this company actually reported,
+         rather than showing nothing because its fiscal calendar differs. */
+      var mine = Object.keys(me.years).map(Number).sort(function (a, b) { return b - a; });
+      latestYear = mine[0]; row = me.years[latestYear]; prior = me.years[latestYear - 1];
+    }
+    if (!row) { host.innerHTML = ""; return; }
+    /* Compared against the whole panel rather than the handful of firms in
+       this industry — with two or three peers the median is the company
+       itself, which would report Costco as unremarkable on asset turns. */
+    var peers = panelRef(latestYear);
+    var d = S.dupontThreeFactor(S.toPeriod(get, row, latestYear),
+      prior ? S.toPeriod(get, prior, latestYear - 1) : null, peers);
+    host.innerHTML =
+      card(null, "Pre-tax margin", pct(d.pretaxMargin), "Profit before tax per dollar of sales") +
+      card(null, "Asset turnover", isNum(d.assetTurnover) ? d.assetTurnover.toFixed(2) + "×" : "—",
+        "Sales per dollar of average assets") +
+      card(null, "Equity multiplier", isNum(d.equityMultiplier) ? d.equityMultiplier.toFixed(2) + "×" : "—",
+        "Average assets per dollar of average equity") +
+      card(null, "Pre-tax ROE", pct(d.pretaxRoe), "The three multiplied together");
+    if (S.isFinancial(me)) {
+      $("dupont-caption").innerHTML =
+        "In " + latestYear + ", " + esc(state.ticker) + "'s pre-tax return of " +
+        pct(d.pretaxRoe) + " came from a " + pct(d.pretaxMargin) + " margin on " +
+        (isNum(d.assetTurnover) ? d.assetTurnover.toFixed(2) : "—") + "× asset turns, geared " +
+        (isNum(d.equityMultiplier) ? d.equityMultiplier.toFixed(2) : "—") + "×. " +
+        "<strong>The margin-versus-turnover read is withheld here.</strong> For a bank, " +
+        "insurer or property trust the asset base is the business rather than the means " +
+        "of producing sales, so a low turnover says nothing about operating shape — and " +
+        "the comparison set is the panel's nonfinancial companies, which are not its peers.";
+      return;
+    }
+    $("dupont-caption").innerHTML = d.driver
+      ? "In " + latestYear + ", " + esc(state.ticker) + "'s pre-tax return of " +
+        pct(d.pretaxRoe) + " came from a " + pct(d.pretaxMargin) + " margin on " +
+        (isNum(d.assetTurnover) ? d.assetTurnover.toFixed(2) : "—") +
+        "× asset turns, geared " + (isNum(d.equityMultiplier) ? d.equityMultiplier.toFixed(2) : "—") +
+        "×. <strong>" + esc(d.driver) + ".</strong>"
       : "";
   }
 
