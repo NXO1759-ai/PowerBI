@@ -90,7 +90,7 @@
         revenue: f("revenue"), cogs: f("cogs"), grossProfit: f("grossProfit"),
         researchDevelopment: f("researchDevelopment"),
         sellingGeneralAdmin: f("sellingGeneralAdmin"),
-        sellingMarketing: null, operatingExpenses: null,
+        sellingMarketing: f("sellingMarketing"), operatingExpenses: null,
         operatingIncome: f("operatingIncome"),
         interestExpense: f("interestExpense"),
         pretaxIncome: f("pretaxIncome"), incomeTax: f("incomeTax"),
@@ -103,7 +103,8 @@
         currentAssets: f("currentAssets"), ppe: f("ppe"),
         goodwill: f("goodwill"), intangibles: f("intangibles"),
         operatingLeaseAsset: null, totalAssets: f("totalAssets"),
-        payables: null, deferredRevenue: null,
+        payables: f("payables"), deferredRevenue: f("deferredRevenue"),
+        remainingPerformanceObligation: f("remainingPerformanceObligation"),
         shortTermDebt: f("shortTermDebt"),
         currentLiabilities: f("currentLiabilities"),
         longTermDebt: f("longTermDebt"), operatingLeaseLiability: null,
@@ -587,6 +588,268 @@
     return null;
   }
 
+  /* ---------- company case ---------- */
+
+  /* A return outside 300% either way is a broken denominator, not a
+     business. Both sides of every comparison filter identically, so a
+     company and its peers are never screened on different rules. */
+  function sane(r) { return isNum(r) && Math.abs(r) < 3; }
+
+  /** Return on invested capital, per year, for one company. */
+  function companyRoicSeries(get, company, years, isLender) {
+    return years.map(function (y) {
+      var row = company.years[y]; if (!row) return null;
+      var prior = company.years[y - 1] ? toPeriod(get, company.years[y - 1], y - 1) : null;
+      var period = toPeriod(get, row, y);
+      var r = porterRoic(period, prior, undefined, isLender);
+      return sane(r) ? { year: y, roic: r, syntheticEbit: ebitIsSynthetic(period) } : null;
+    }).filter(Boolean);
+  }
+
+  /** Median return on invested capital, per year, across a peer set. */
+  function cohortRoicSeries(get, members, years) {
+    return years.map(function (y) {
+      var vals = [];
+      for (var i = 0; i < members.length; i++) {
+        var m = members[i], row = m.years[y]; if (!row) continue;
+        var prior = m.years[y - 1] ? toPeriod(get, m.years[y - 1], y - 1) : null;
+        var r = porterRoic(toPeriod(get, row, y), prior, undefined, isFinancial(m));
+        if (sane(r)) vals.push(r);
+      }
+      return { year: y, median: median(vals), n: vals.length };
+    }).filter(function (d) { return isNum(d.median); });
+  }
+
+  /**
+   * The gap between a company's return and its peers', averaged over a
+   * window and over the SAME years on both sides.
+   *
+   * Taking each side's own last five years would compare a company's good
+   * run against a cohort's different five, which is not a comparison.
+   */
+  function advantageSpread(coSeries, cohortSeries, windowYears) {
+    var w = windowYears || 5;
+    var byYear = {};
+    cohortSeries.forEach(function (d) { byYear[d.year] = d.median; });
+    var paired = coSeries.filter(function (d) { return isNum(byYear[d.year]); });
+    if (!paired.length) return null;
+    var use = paired.slice(-w);
+    var co = use.reduce(function (a, d) { return a + d.roic; }, 0) / use.length;
+    var ind = use.reduce(function (a, d) { return a + byYear[d.year]; }, 0) / use.length;
+    return {
+      years: use.length, complete: use.length >= w,
+      fromYear: use[0].year, toYear: use[use.length - 1].year,
+      co: co, cohort: ind, gap: co - ind,
+      syntheticYears: use.filter(function (d) { return d.syntheticEbit; }).length
+    };
+  }
+
+  /**
+   * Why the return differs from the peer median.
+   *
+   * Return on capital is margin times capital turns, so the gap splits
+   * exactly into a margin effect, a turns effect, and the interaction
+   * between them. The interaction is shown rather than folded into either
+   * one, because absorbing it silently overstates whichever absorbed it.
+   */
+  function advantageDecomposition(period, prior, cohortMargin, cohortTurns, isLender) {
+    var e = ebitOf(period, isLender), rev = period.incomeStatement.revenue;
+    var icNow = investedCapital(period), icPrior = prior ? investedCapital(prior) : null;
+    var avgIc = isNum(icNow) ? (isNum(icPrior) ? (icNow + icPrior) / 2 : icNow) : null;
+    if (!isNum(avgIc) || avgIc <= 0) return null;
+    var m = div(e, rev), t = div(rev, avgIc);
+    /* A cohort median at or below zero makes every relative reading
+       meaningless rather than merely large, so the split is withheld. */
+    if (!isNum(m) || !isNum(t) || !isNum(cohortMargin) || !isNum(cohortTurns)) return null;
+    if (cohortMargin <= 0 || cohortTurns <= 0) return null;
+    var marginEffect = (m - cohortMargin) * cohortTurns;
+    var turnsEffect = cohortMargin * (t - cohortTurns);
+    var interaction = (m - cohortMargin) * (t - cohortTurns);
+    return {
+      margin: m, turns: t, cohortMargin: cohortMargin, cohortTurns: cohortTurns,
+      marginEffect: marginEffect, turnsEffect: turnsEffect, interaction: interaction,
+      total: marginEffect + turnsEffect + interaction,
+      leadBy: Math.abs(marginEffect) >= Math.abs(turnsEffect) ? "margin" : "turns"
+    };
+  }
+
+  /**
+   * Whether a margin advantage comes from what a company charges or from
+   * what it spends running the business.
+   *
+   * Gross margin carries price, mix and input cost together. Operating
+   * expense intensity carries the cost of the activity set behind them. A
+   * filing cannot separate price from mix, and the page says so rather
+   * than implying it can.
+   */
+  function marginRoute(period, cohortGrossMargin, cohortOpexIntensity) {
+    var is = period.incomeStatement, rev = is.revenue;
+    if (!isNum(rev) || rev <= 0) return null;
+    var gp = isNum(is.grossProfit) ? is.grossProfit
+      : (isNum(is.cogs) ? rev - is.cogs : null);
+    var haveOpex = isNum(is.sellingGeneralAdmin) || isNum(is.researchDevelopment);
+    var opex = (isNum(is.sellingGeneralAdmin) ? is.sellingGeneralAdmin : 0) +
+               (isNum(is.researchDevelopment) ? is.researchDevelopment : 0);
+    var gm = div(gp, rev), oi = haveOpex ? opex / rev : null;
+    var gmGap = (isNum(gm) && isNum(cohortGrossMargin)) ? gm - cohortGrossMargin : null;
+    /* Spending less is an advantage, so the sign is flipped and both gaps
+       read the same way: positive means better than the peer set. */
+    var opexGap = (isNum(oi) && isNum(cohortOpexIntensity)) ? cohortOpexIntensity - oi : null;
+    var label = null;
+    if (isNum(gmGap) && isNum(opexGap)) {
+      var g = gmGap >= 0.02, o = opexGap >= 0.02;
+      var gl = gmGap <= -0.02, ol = opexGap <= -0.02;
+      label = (g && o) ? "Both routes at once: it earns more per sale and spends less to make it"
+        : (g && !gl) ? "Price and mix: a wider gross margin than its peers"
+        : (o && !ol) ? "The cost of the activity set: less overhead per dollar of sales"
+        : (gl && ol) ? "Neither: a narrower gross margin and heavier overhead than its peers"
+        : gl ? "Held back on gross margin"
+        : ol ? "Held back by overhead"
+        : "Neither route separates it from its peers";
+    }
+    return { grossMargin: gm, opexIntensity: oi, grossMarginGap: gmGap,
+             opexIntensityGap: opexGap, label: label };
+  }
+
+  /**
+   * Where each dollar of revenue ends up.
+   *
+   * Share-based compensation is deliberately absent as a slice: it is a
+   * cash-flow add-back, and the same expense already sits inside cost of
+   * sales, research and overhead. Showing it beside them would push the
+   * split past 100%. The slices are reconciled against revenue, and the
+   * section refuses to render when they do not close.
+   */
+  function valueSplit(period) {
+    var is = period.incomeStatement, rev = is.revenue;
+    if (!isNum(rev) || rev <= 0) return null;
+    var cogs = isNum(is.cogs) ? is.cogs
+      : (isNum(is.grossProfit) ? rev - is.grossProfit : null);
+    var net = is.netIncome;
+    if (!isNum(cogs) || !isNum(net)) return null;
+    var rnd = isNum(is.researchDevelopment) ? is.researchDevelopment : 0;
+    var sga = isNum(is.sellingGeneralAdmin) ? is.sellingGeneralAdmin : 0;
+    var interest = isNum(is.interestExpense) ? Math.abs(is.interestExpense) : 0;
+    var tax = isNum(is.incomeTax) ? is.incomeTax : 0;
+    /* Everything the income statement names, before the plug. */
+    var named = cogs + rnd + sga + interest + tax + net;
+    var other = rev - named;
+    var slices = [
+      { key: "cogs", label: "Suppliers and production", value: cogs },
+      { key: "rnd", label: "Research and development", value: rnd },
+      { key: "sga", label: "Selling and administration", value: sga },
+      { key: "other", label: "Other operating items", value: other },
+      { key: "interest", label: "Lenders", value: interest },
+      { key: "tax", label: "Tax", value: tax },
+      { key: "net", label: "Shareholders", value: net }
+    ].map(function (x) {
+      return { key: x.key, label: x.label, value: x.value, share: x.value / rev };
+    });
+    /* The residual is a plug, so the slices always sum to revenue and
+       checking that proves nothing. What is worth checking is the SIZE of
+       the plug: a large one means the statement is not being read
+       correctly, and a negative one means the company earned more outside
+       operations than the plug can represent as a cost — true of a
+       cash-rich business earning interest, and worth naming rather than
+       drawing as a negative bar. */
+    var residualShare = other / rev;
+    return {
+      revenue: rev, slices: slices, residualShare: residualShare,
+      residualIsIncome: other < 0,
+      usable: Math.abs(residualShare) < 0.25
+    };
+  }
+
+  /**
+   * What a company did with its operating cash.
+   *
+   * A filing never states a strategy, but it records every capital
+   * decision behind one. Shares are of operating cash flow and are allowed
+   * to exceed it, because a company can outspend what it earns; the
+   * residual is labelled rather than normalised away.
+   */
+  function reinvestmentMix(get, company, years) {
+    return years.map(function (y) {
+      var row = company.years[y]; if (!row) return null;
+      var p = toPeriod(get, row, y), cf = p.cashFlow;
+      var ops = cf.cfOps;
+      if (!isNum(ops) || ops <= 0) return null;
+      var v = function (x) { return isNum(x) ? Math.abs(x) : 0; };
+      var capex = v(cf.capex), rnd = v(p.incomeStatement.researchDevelopment);
+      var dividends = v(cf.dividendsPaid), buybacks = v(cf.buybacks);
+      return {
+        year: y, cfOps: ops,
+        capex: capex / ops, rnd: rnd / ops,
+        dividends: dividends / ops, buybacks: buybacks / ops,
+        deployed: (capex + rnd + dividends + buybacks) / ops
+      };
+    }).filter(Boolean);
+  }
+
+  /** How long cash is tied up between paying for stock and being paid for it. */
+  function workingCapitalDays(period, prior) {
+    var is = period.incomeStatement, b = period.balanceSheet;
+    var pb = prior ? prior.balanceSheet : null;
+    var avg = function (a, p) { return isNum(a) ? (isNum(p) ? (a + p) / 2 : a) : null; };
+    var dso = div(avg(b.receivables, pb && pb.receivables), is.revenue);
+    var dio = div(avg(b.inventory, pb && pb.inventory), is.cogs);
+    /* Days payable is measured against purchases, not cost of sales: what
+       was bought in the period, which is cost of sales plus the movement
+       in inventory. */
+    var purchases = (isNum(is.cogs) && isNum(b.inventory) && pb && isNum(pb.inventory))
+      ? is.cogs + (b.inventory - pb.inventory) : is.cogs;
+    var dpo = div(avg(b.payables, pb && pb.payables), purchases);
+    var d = function (x) { return isNum(x) ? x * 365 : null; };
+    var dsoD = d(dso), dioD = d(dio), dpoD = d(dpo);
+    return {
+      dso: dsoD, dio: dioD, dpo: dpoD,
+      cashCycle: (isNum(dsoD) && isNum(dioD) && isNum(dpoD)) ? dsoD + dioD - dpoD : null
+    };
+  }
+
+  /** Contracted but unrecognised revenue — the only signed forward demand a filing carries. */
+  function backlogTrend(get, company, years) {
+    var out = years.map(function (y) {
+      var row = company.years[y]; if (!row) return null;
+      var p = toPeriod(get, row, y);
+      var rpo = p.balanceSheet.remainingPerformanceObligation;
+      var deferred = p.balanceSheet.deferredRevenue;
+      if (!isNum(rpo) && !isNum(deferred)) return null;
+      return { year: y, backlog: rpo, deferred: deferred,
+               coverage: isNum(rpo) ? div(rpo, p.incomeStatement.revenue) : null };
+    }).filter(Boolean);
+    return out.length ? out : null;
+  }
+
+  /**
+   * Whether a company's standing depends on where the industry boundary
+   * was drawn. Where it moves a lot, the boundary is a strategic choice
+   * rather than a property of the data, and the page says so.
+   */
+  function scopeTest(get, company, narrow, wide, year, metricFn) {
+    var row = company.years[year]; if (!row) return null;
+    var n = cohortStats(get, narrow, year, metricFn);
+    var w = cohortStats(get, wide, year, metricFn);
+    if (!n.enoughForMedian || !w.enoughForMedian) return null;
+    var prior = company.years[year - 1] ? toPeriod(get, company.years[year - 1], year - 1) : null;
+    var v = metricFn(toPeriod(get, row, year), prior, company);
+    if (!isNum(v)) return null;
+    /* The subject is added to whichever set does not already contain it,
+       so both percentiles are measured over a set that includes it. */
+    var withSubject = function (vals) {
+      return vals.indexOf(v) === -1 ? vals.concat([v]) : vals;
+    };
+    var rn = rankAmong(v, withSubject(n.values));
+    var rw = rankAmong(v, withSubject(w.values));
+    if (!rn || !rw) return null;
+    return {
+      value: v, narrowN: n.n, wideN: w.n,
+      narrowPct: rn.percentile, widePct: rw.percentile,
+      shift: rw.percentile - rn.percentile,
+      material: Math.abs(rw.percentile - rn.percentile) >= 0.15
+    };
+  }
+
   /* ---------- industry aggregation ---------- */
 
   /**
@@ -944,6 +1207,11 @@
     dispersionTrend: dispersionTrend, describeDriver: describeDriver,
     cohortBySic: cohortBySic, cohortStats: cohortStats,
     latestResolvedYear: latestResolvedYear,
+    companyRoicSeries: companyRoicSeries, cohortRoicSeries: cohortRoicSeries,
+    advantageSpread: advantageSpread, advantageDecomposition: advantageDecomposition,
+    marginRoute: marginRoute, valueSplit: valueSplit,
+    reinvestmentMix: reinvestmentMix, workingCapitalDays: workingCapitalDays,
+    backlogTrend: backlogTrend, scopeTest: scopeTest,
     MIN_QUANTILE_COHORT: MIN_QUANTILE_COHORT, MIN_MEDIAN_COHORT: MIN_MEDIAN_COHORT,
     marginIsCredible: marginIsCredible, ebitIsSynthetic: ebitIsSynthetic,
     panelReference: panelReference, isFinancial: isFinancial,
