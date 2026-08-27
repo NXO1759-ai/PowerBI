@@ -167,7 +167,7 @@ table 'finance_db financial_facts'
 		source =
 				let
 				    Source = MySQL.Database("127.0.0.1", "finance_db", [ReturnSingleDatabase=true]),
-				    finance_db_financial_facts = Source{[Schema="finance_db",Item="financial_facts"]}[Data]
+				    finance_db_financial_facts = Source{[Schema="finance_db",Item="v_facts_canonical"]}[Data]
 				in
 				    finance_db_financial_facts
 
