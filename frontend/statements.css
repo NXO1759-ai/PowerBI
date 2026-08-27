@@ -185,8 +185,32 @@ table.stmt td.derived-cell::after {
   margin-top: 7px;
 }
 
+@media (max-width: 900px) {
+  /* The decomposition is an equation and has to keep reading as one.
+     Wrapped into a 2x2 grid with the operators hidden it became four
+     unrelated boxes, so at narrow widths it stacks into a single column
+     and the operators stay, turning it into a vertical equation. */
+  .dupont-flow { flex-direction: column; align-items: stretch; gap: 6px; }
+  .dp-term { flex: 1 1 auto; min-inline-size: 0; }
+  .dp-op { align-self: center; padding: 1px 0; font-size: 16px; }
+  .dp-term .dp-value { font-size: 19px; }
+}
 @media (max-width: 680px) {
-  .fsa-hero { flex-direction: column; align-items: stretch; }
-  .dp-op { display: none; }
-  .metric-pop { max-inline-size: calc(100vw - 32px); }
+  .fsa-hero { flex-direction: column; align-items: stretch; gap: 12px; }
+  .fsa-controls { justify-content: space-between; }
+  .fsa-controls .seg { flex: 1 1 auto; }
+  .fsa-controls .seg button { flex: 1 1 auto; }
+  .section-head h2 { font-size: 14px; }
+  .kpi-grid { grid-template-columns: 1fr; }
+  /* A popup anchored to a card would sit half off a phone screen, so at
+     this width it becomes a sheet pinned to the bottom of the viewport
+     with its own scroll. */
+  .metric-pop {
+    position: fixed; inset-inline: 8px; inset-block-end: 8px;
+    inset-block-start: auto; max-inline-size: none;
+    max-block-size: 62vh; overflow-y: auto;
+  }
+  #refresh-btn { min-block-size: 42px; }
+  table.stmt th:first-child, table.stmt td:first-child { min-inline-size: 150px; }
+  .quality-grid { grid-template-columns: 1fr; }
 }

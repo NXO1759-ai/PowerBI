@@ -1295,4 +1295,22 @@
       app.appendChild(p);
     }
   }
+
+  /* The edge fade appears only when the nav genuinely overflows. */
+  (function () {
+    var nav = document.querySelector(".nav-tabs");
+    if (!nav) return;
+    var sync = function () {
+      nav.classList.toggle("is-scrollable", nav.scrollWidth > nav.clientWidth + 1);
+    };
+    /* Measure on the frame AFTER the change. A resize observer fires
+       before the new layout has settled, so measuring inline compares the
+       new width against the old content and leaves the fade stuck on. */
+    var later = function () { requestAnimationFrame(sync); };
+    sync();
+    window.addEventListener("resize", later);
+    window.addEventListener("orientationchange", later);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(later);
+    if (typeof ResizeObserver === "function") new ResizeObserver(later).observe(nav);
+  })();
 })();
