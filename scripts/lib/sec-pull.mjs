@@ -211,15 +211,42 @@ function epsFiled(facts, year, period) {
   return (cur || 0) - (prev || 0);
 }
 
-export async function fetchFacts(cik, { batchSize = 4 } = {}) {
-  const padded = String(cik).padStart(10, "0");
+const WANTED = new Set(SEC_CONCEPTS);
+const DEI_WANTED = new Set(["EntityCommonStockSharesOutstanding"]);
+
+/* Preferred path: one companyfacts call returns every concept at once.
+   That is 1 request per company instead of 23, so the whole universe
+   costs ~130 requests rather than ~3,000, and it is the only path that
+   works for some filers — SEC's per-concept endpoint answers 200 with
+   "units":{"USD":{}} for Coca-Cola, Abbott, Capital One, NXP, S&P Global
+   and Welltower, which reads as "no data" while companyfacts holds the
+   full history. */
+async function fetchFromCompanyFacts(padded) {
+  const payload = await getJson(
+    `https://data.sec.gov/api/xbrl/companyfacts/CIK${padded}.json`,
+    { timeoutMs: 45000 });
+  if (!payload || !payload.facts) return null;
+  const results = [];
+  for (const [taxonomy, wanted] of [["us-gaap", WANTED], ["dei", DEI_WANTED]]) {
+    const bucket = payload.facts[taxonomy];
+    if (!bucket) continue;
+    for (const concept of Object.keys(bucket)) {
+      if (!wanted.has(concept)) continue;
+      results.push(...normalizeConcept(bucket[concept], concept));
+    }
+  }
+  return results;
+}
+
+/* Fallback: one request per concept. Kept because companyfacts is a large
+   response that can time out, and a slow pull beats no pull. */
+async function fetchFromCompanyConcept(padded, batchSize) {
   const calls = [
     ...SEC_CONCEPTS.map((c) => ["us-gaap", c]),
     ["dei", "EntityCommonStockSharesOutstanding"],
   ];
   const results = [];
-  /* Pacing is handled globally in getJson, so this only bounds how many
-     requests are in flight at once. */
+  /* Pacing is global in getJson, so this only bounds requests in flight. */
   for (let i = 0; i < calls.length; i += batchSize) {
     const batch = calls.slice(i, i + batchSize);
     const payloads = await Promise.all(batch.map(([ns, c]) =>
@@ -229,6 +256,13 @@ export async function fetchFacts(cik, { batchSize = 4 } = {}) {
     });
   }
   return results;
+}
+
+export async function fetchFacts(cik, { batchSize = 4 } = {}) {
+  const padded = String(cik).padStart(10, "0");
+  const bulk = await fetchFromCompanyFacts(padded);
+  if (bulk && bulk.length) return bulk;
+  return fetchFromCompanyConcept(padded, batchSize);
 }
 
 /* Builds the payload the dashboard renders. Shape is identical to the
