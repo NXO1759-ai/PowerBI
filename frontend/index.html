@@ -4,6 +4,21 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Company Overview — Research Terminal</title>
+<meta name="description" content="Independent equity research terminal — SEC EDGAR fundamentals, live market activity, liquidity analysis and filing-grounded analyst notes for 130+ U.S. companies." />
+<meta name="theme-color" content="#0b0d0f" />
+<meta name="color-scheme" content="dark" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Research Terminal" />
+<meta property="og:title" content="Research Terminal — Company Overview" />
+<meta property="og:description" content="SEC EDGAR fundamentals, live market activity, liquidity analysis and filing-grounded analyst notes for 130+ U.S. companies." />
+<meta property="og:url" content="https://www.chineduokeke.mba/" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Research Terminal — Company Overview" />
+<meta name="twitter:description" content="SEC EDGAR fundamentals, live market activity, liquidity analysis and filing-grounded analyst notes for 130+ U.S. companies." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f5c518'/%3E%3Ctext x='32' y='43' font-family='Menlo,Consolas,monospace' font-size='26' font-weight='700' text-anchor='middle' fill='%23151515'%3ERT%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" />
 <link rel="stylesheet" href="styles.css" />
 <style>[hidden]{display:none!important}</style>
 </head>
@@ -21,32 +36,27 @@
       <span class="nav-tab soon">Private Credit Report <span class="soon-pill">Soon</span></span>
       <span class="nav-tab soon">Strategy Analysis <span class="soon-pill">Soon</span></span>
     </nav>
+    <div class="search">
+      <input type="search" id="q" role="combobox" aria-expanded="false" aria-controls="results"
+             aria-autocomplete="list"
+             aria-label="Search ticker, CIK, or company name"
+             placeholder="Search ticker, CIK, or company…" autocomplete="off" />
+      <kbd class="kbd-hint" aria-hidden="true">/</kbd>
+      <div class="search-results" id="results"><ul role="listbox" id="results-list" aria-label="Matching companies"></ul></div>
+    </div>
     <div class="topbar-right">
-      <button type="button" id="about-btn">About Me</button>
+      <button type="button" id="about-btn">About</button>
     </div>
   </div>
 </header>
 
 <main class="app" id="app">
 
-  <header class="top">
-    <div>
-      <h1>Company Overview</h1>
-      <p class="subtitle">Fundamentals, market activity &amp; analyst notes</p>
-    </div>
-    <div class="search">
-      <input type="search" id="q" role="combobox" aria-expanded="false" aria-controls="results"
-             aria-label="Search ticker, CIK, or company name"
-             placeholder="Search ticker, CIK, or company name…" autocomplete="off" />
-      <div class="search-results" id="results"><ul role="listbox" id="results-list" aria-label="Matching companies"></ul></div>
-    </div>
-  </header>
-
   <section class="hero" aria-label="Selected company">
     <div class="hero-id">
       <img id="co-logo" alt="" referrerpolicy="no-referrer" hidden />
       <div>
-        <h2 id="co-name">—</h2>
+        <h1 id="co-name">—</h1>
         <p class="meta" id="co-meta"></p>
       </div>
     </div>
@@ -90,6 +100,7 @@
         <h3>Cash Flow</h3>
         <table class="grid" id="t-cf"></table>
         <h3>Burn Rate</h3>
+        <p class="hint">Net cash change over the quarter, shown per month. Negative means the company is consuming cash; runway is how long the cash balance lasts at that pace.</p>
         <table class="grid" id="t-burn"></table>
       </div>
 
@@ -98,6 +109,7 @@
         <h3>Trading Activity</h3>
         <table class="grid" id="t-vol"></table>
         <h3>Days to Liquidate</h3>
+        <p class="hint">Estimated time to exit a position of each size when the sale makes up the stated share of the stock's average daily value traded.</p>
         <table class="grid" id="t-liq"></table>
       </div>
     </div>
@@ -135,10 +147,19 @@
 </main>
 
 <div class="modal-overlay" id="about-modal" hidden>
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="about-title">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="about-title" tabindex="-1">
     <button type="button" class="modal-close" id="about-close" aria-label="Close">×</button>
     <h3 id="about-title">About Me</h3>
-    <p>The owner's story goes here. This section will be filled in soon — background, the vision behind this research terminal, and the work it supports.</p>
+    <p class="about-tagline">Finance Operator. Systems Builder. Duke MBA.</p>
+    <p>I specialize in building financial architecture for high-growth environments. With a background spanning payment tech, biotech, and financial advisory, I turn messy, manual processes into automated, audit-ready engines.</p>
+    <h4>What I do</h4>
+    <ul class="about-list">
+      <li><strong>Financial Infrastructure &amp; Automation:</strong> Built and scaled automated revenue calculations, treasury workflows, and TMS integrations across 400+ global bank accounts at Flutterwave.</li>
+      <li><strong>Strategic Finance &amp; Valuation:</strong> Experienced in financial modeling, working capital optimization, and corporate valuation, from Amgen&rsquo;s clinical supply spend to pre-revenue startup valuations.</li>
+      <li><strong>Cross-Functional Execution:</strong> A firm believer in radical collaboration, combining high emotional intelligence with technical tools (SQL, Power BI, Python/VBA, TMS) to bridge finance, product, and engineering teams.</li>
+    </ul>
+    <h4>Beyond the Numbers</h4>
+    <p>Duke Fuqua MBA &rsquo;26 | SIE (in view); Certified Treasury Professional (in view) | Amateur boxer &amp; nature enthusiast.</p>
   </div>
 </div>
 
