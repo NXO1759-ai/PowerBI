@@ -1405,22 +1405,40 @@
   }
 
   function paintStock(ticker, d) {
-    var q = d && d.quote, prof = d && d.profile;
+    var q = d && d.quote, prof = d && d.profile, candles = d && d.candles;
     if (!q || !isNum(q.price)) {
-      $("stock-block").innerHTML = "<p class='hint'>No price data for " + esc(ticker) + ".</p>";
+      $("stock-block").innerHTML = "<p class=\"hint\">No price data for " + esc(ticker) + ".</p>";
       return;
     }
-    var chg = isNum(q.changePercent) ? q.changePercent / 100 : null;
+    var chg = isNum(q.changePct) ? q.changePct / 100 : null;
+    /* The feed returns a window of daily candles rather than a 52-week
+       high and low, so the range is taken from what it actually sent and
+       labelled with the number of sessions behind it. */
+    var lo = null, hi = null, days = 0;
+    if (Array.isArray(candles) && candles.length) {
+      days = candles.length;
+      candles.forEach(function (c) {
+        if (isNum(c.low)) lo = (lo === null) ? c.low : Math.min(lo, c.low);
+        if (isNum(c.high)) hi = (hi === null) ? c.high : Math.max(hi, c.high);
+      });
+    }
+    var pos = (isNum(lo) && isNum(hi) && hi > lo) ? (q.price - lo) / (hi - lo) : null;
     $("stock-block").innerHTML =
-      "<div class='kpi-grid'>" +
-      card(null, "Price", "$" + num(q.price, 2), prof && prof.exchange ? esc(prof.exchange) : "Latest close") +
-      card(null, "Change", isNum(chg) ? pct(chg) : "—", "On the session") +
-      card(null, "Market value", isNum(q.marketCap) ? money(q.marketCap * 1e6) : "—", "Shares at the current price") +
-      card(null, "52-week range",
-        (isNum(q.low52) && isNum(q.high52)) ? "$" + num(q.low52, 0) + "–$" + num(q.high52, 0) : "—",
-        "Trading range over the year") +
+      "<div class=\"kpi-grid\">" +
+      card(null, "Price", "$" + num(q.price, 2),
+        q.time ? "Close, " + esc(String(q.time)) : "Latest close") +
+      card(null, "Change", isNum(chg) ? pct(chg) : "—",
+        isNum(q.changeAbs) ? ("$" + num(q.changeAbs, 2) + " on the session") : "On the session") +
+      card(null, "Market value",
+        (prof && isNum(prof.marketCap)) ? money(prof.marketCap) : "—",
+        (prof && isNum(prof.sharesOutstanding))
+          ? (num(prof.sharesOutstanding / 1e9, 2) + "bn shares at the current price")
+          : "Shares at the current price") +
+      card(null, "Range in the window",
+        (isNum(lo) && isNum(hi)) ? "$" + num(lo, 0) + "–$" + num(hi, 0) : "—",
+        days ? (days + " sessions" + (isNum(pos) ? ", now " + pct(pos, 0) + " up that range" : "")) : "Trading range") +
       "</div>" +
-      "<p class='chart-caption'>Market value is what the equity is priced at today; every " +
+      "<p class=\"chart-caption\">Market value is what the equity is priced at today; every " +
       "other figure in this view is what the business reported. The two answer different " +
       "questions and are deliberately not combined into one score.</p>";
   }
