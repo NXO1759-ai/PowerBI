@@ -261,7 +261,11 @@
       <p class="chart-caption" id="margin-caption"></p>
       <div id="cash-chart" role="img" aria-label="Operating cash flow against capital expenditure"></div>
       <p class="chart-caption" id="cash-caption"></p>
-      <div class="force"><p class="force-gap" id="fin-gap"></p></div>
+      <h3>Revenue by segment</h3>
+      <div id="seg-block"></div>
+      <h3>Geographic mix</h3>
+      <div id="geo-block"></div>
+      <div class="force"><p class="force-gap" id="fin-gap" hidden></p></div>
     </section>
 
     <!-- ============ 3. MARKET AND COMPETITIVE POSITION ============ -->
@@ -294,6 +298,8 @@
         </p>
       </div>
       <div class="kpi-grid" id="cust-cards"></div>
+      <h3>Product mix</h3>
+      <div id="product-block"></div>
       <div id="backlog-chart" role="img" aria-label="Contracted backlog"></div>
       <p class="chart-caption" id="cust-caption"></p>
       <div class="force"><p class="force-gap" id="cust-gap"></p></div>
@@ -380,6 +386,7 @@
 <script src="data/company-index.js"></script>
 <script src="data/industry-map.js"></script>
 <script src="data/strategy-panel.js"></script>
+<script src="data/segments.js"></script>
 <script src="strategy.js"></script>
 </body>
 </html>

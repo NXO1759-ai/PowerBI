@@ -45,6 +45,19 @@ jobs:
       - name: Verify metric parity between JavaScript and SQL
         run: node scripts/verify-parity.mjs
 
+      # Segment, product and geographic revenue come from each filing
+      # itself rather than the companyfacts feed, so a fresh 10-K shows
+      # up here the week after it is filed.
+      - name: Rebuild segment data from annual filings
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT || 'Research Terminal research@chineduokeke.mba' }}
+        run: node scripts/build-segments.mjs
+
+      - name: Rebuild the strategy panel
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT || 'Research Terminal research@chineduokeke.mba' }}
+        run: node scripts/build-strategy-panel.mjs
+
       - name: Summarise the run
         if: always()
         run: |

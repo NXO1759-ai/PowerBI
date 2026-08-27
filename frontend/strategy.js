@@ -1013,11 +1013,9 @@
     renderMargins(ctx);
     renderCash(ctx);
 
-    $("fin-gap").innerHTML =
-      "revenue by segment and by geography. Neither is in the company facts feed this " +
-      "dashboard reads — that feed carries only consolidated totals, with no segment or " +
-      "regional dimension on any figure. Answering it needs the SEC financial statement " +
-      "data sets, where the segment axis is preserved, or the individual filing exhibits.";
+    /* The segment and geography blocks below render from the annual
+       filing; renderDisaggregation owns the fallback note when a filer
+       tags neither. */
   }
 
   function renderMargins(ctx) {
@@ -1225,13 +1223,12 @@
     $("cust-caption").innerHTML = bits.join(" ");
 
     $("cust-gap").innerHTML =
-      "customer acquisition cost, lifetime value, churn, net promoter score and revenue by " +
-      "product line. None of these is a reporting requirement and none appears in any filing. " +
-      "Acquisition cost and lifetime value need the company's own cohort data; churn and " +
-      "promoter score need its customer records or a survey; product-line revenue needs the " +
-      "segment disclosures, which the company facts feed strips out. The backlog and " +
-      "prepayment figures above are what a filing genuinely carries in their place, and they " +
-      "answer a narrower question than the ones asked.";
+      "customer acquisition cost, lifetime value, churn and net promoter score. None is a " +
+      "reporting requirement and none appears in any filing. Acquisition cost and lifetime " +
+      "value need the company's own cohort economics; churn and promoter score need its " +
+      "customer records or a survey. The backlog and prepayment figures above are what a " +
+      "filing genuinely carries in their place, and they answer a narrower question than " +
+      "the ones asked.";
   }
 
   function renderBacklog(ctx, bl) {
@@ -1359,6 +1356,139 @@
       "bank feed rather than from any company's accounts.";
   }
 
+  /* ---------- disaggregated revenue, from the annual filing ---------- */
+
+  function segData() { return (window.SEGMENT_DATA || {})[state.ticker] || null; }
+
+  /* Member names arrive as XBRL camel case. A small map catches the ones
+     a splitter mangles; everything else is split on case boundaries. */
+  var MEMBER_NAMES = {
+    IPhone: "iPhone", IPad: "iPad", Mac: "Mac",
+    WearablesHomeandAccessories: "Wearables, Home and Accessories",
+    US: "United States", NonUs: "Outside the United States",
+    CN: "China", TW: "Taiwan", JP: "Japan", GB: "United Kingdom",
+    ChinaIncludingHongKong: "China (incl. Hong Kong)",
+    OtherCountries: "Other countries",
+    EuropeMiddleEastAfrica: "Europe, Middle East & Africa",
+    XBOX: "Xbox",
+    MicrosoftThreeSixFiveCommercialProductsAndCloudServices: "Microsoft 365 Commercial",
+    MicrosoftThreeSixFiveConsumerProductsAndCloudServices: "Microsoft 365 Consumer",
+    ServiceOther: "Service and other", Service: "Services", Product: "Products"
+  };
+  function humanMember(k) {
+    if (MEMBER_NAMES[k]) return MEMBER_NAMES[k];
+    return k
+      .replace(/([a-z])([A-Z])/g, "$1 $2")
+      .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
+      .replace(/\bAnd\b/g, "and").replace(/\bOf\b/g, "of").replace(/\bThe\b/g, "the");
+  }
+
+  /**
+   * One disaggregation axis as a table: latest year's members, their share
+   * of the disclosed total, growth across the years the filing shows, and
+   * — for business segments — the segment's own operating result.
+   *
+   * Shares are of the SUM OF THE DISCLOSED MEMBERS, not of consolidated
+   * revenue: after the builder drops aggregate members the two normally
+   * agree, and when a filer discloses only a partial split the shares
+   * still describe the split rather than silently understating it.
+   */
+  function renderAxis(kind, hostId, withOperating) {
+    var host = $(hostId);
+    if (!host) return;
+    var sd = segData();
+    var by = sd && sd.revenue && sd.revenue[kind];
+    var ends = by ? Object.keys(by).sort() : [];
+    if (!ends.length) {
+      host.innerHTML = "<p class='hint'>" +
+        (sd ? "The latest annual filing tags no " +
+          (kind === "geography" ? "geographic" : kind === "product" ? "product-level" : "segment") +
+          " revenue breakdown, so none is shown."
+        : "No annual-filing detail is loaded for " + esc(state.ticker) + ".") + "</p>";
+      return;
+    }
+    var latest = ends[ends.length - 1];
+    var earliest = ends[0];
+    var span = (new Date(latest) - new Date(earliest)) / (365.25 * 864e5);
+    var rows = Object.entries(by[latest]).sort(function (a, b) { return b[1] - a[1]; });
+    var total = rows.reduce(function (a, r) { return a + r[1]; }, 0);
+    var oi = (withOperating && sd.segmentOperatingIncome && sd.segmentOperatingIncome[latest]) || null;
+
+    var html = "<div class='scroll-x'><table class='grid'><thead><tr>" +
+      "<th scope='col'>FY ended " + esc(latest) + "</th>" +
+      "<th scope='col' class='num'>Revenue</th>" +
+      "<th scope='col' class='num'>Share</th>" +
+      (span >= 0.9 ? "<th scope='col' class='num'>Growth, " + Math.round(span) + "-yr</th>" : "") +
+      (oi ? "<th scope='col' class='num'>Op income</th><th scope='col' class='num'>Op margin</th>" : "") +
+      "</tr></thead><tbody>";
+    rows.forEach(function (r) {
+      var name = r[0], v = r[1];
+      var g = null;
+      if (span >= 0.9 && by[earliest] && isNum(by[earliest][name]) && by[earliest][name] > 0) {
+        g = Math.pow(v / by[earliest][name], 1 / span) - 1;
+      }
+      html += "<tr><td>" + esc(humanMember(name)) + "</td>" +
+        "<td class='num'>" + money(v) + "</td>" +
+        "<td class='num'>" + pct(total > 0 ? v / total : null) + "</td>" +
+        (span >= 0.9 ? "<td class='num'>" + (isNum(g) ? pct(g) : "—") + "</td>" : "");
+      if (oi) {
+        var o = oi[name];
+        html += "<td class='num'>" + (isNum(o) ? money(o) : "—") + "</td>" +
+          "<td class='num'>" + (isNum(o) && v > 0 ? pct(o / v) : "—") + "</td>";
+      }
+      html += "</tr>";
+    });
+    html += "</tbody></table></div>";
+
+    /* the finding, not just the table */
+    var top = rows[0];
+    var sentence = "";
+    if (top && total > 0) {
+      sentence = esc(humanMember(top[0])) + " is " + pct(top[1] / total) +
+        " of " + (kind === "geography" ? "revenue by destination" :
+                  kind === "product" ? "disclosed product revenue" : "segment revenue");
+      if (span >= 0.9 && by[earliest] && isNum(by[earliest][top[0]]) && by[earliest][top[0]] > 0) {
+        var tg = Math.pow(top[1] / by[earliest][top[0]], 1 / span) - 1;
+        sentence += ", growing " + pct(tg) + " a year over the filing's " +
+          Math.round(span) + "-year window";
+      }
+      sentence += ".";
+      if (oi && top && isNum(oi[top[0]]) && top[1] > 0) {
+        var margins = rows.filter(function (r) { return isNum(oi[r[0]]) && r[1] > 0; })
+          .map(function (r) { return { n: humanMember(r[0]), m: oi[r[0]] / r[1] }; })
+          .sort(function (a, b) { return b.m - a.m; });
+        if (margins.length >= 2) {
+          sentence += " Margins run from " + pct(margins[margins.length - 1].m) + " (" +
+            esc(margins[margins.length - 1].n) + ") to " + pct(margins[0].m) + " (" +
+            esc(margins[0].n) + ") — where the mix shifts is where the consolidated margin will go.";
+        }
+      }
+    }
+    html += "<p class='chart-caption'>" + sentence +
+      " <span class='soft'>From the segment and disaggregation notes of the " +
+      esc(sd.form) + " for the period ended " + esc(sd.reportDate) +
+      " — the same tables printed in the filing itself, read in their machine-readable form.</span></p>";
+    host.innerHTML = html;
+  }
+
+  function renderDisaggregation() {
+    renderAxis("segment", "seg-block", true);
+    renderAxis("geography", "geo-block", false);
+    renderAxis("product", "product-block", false);
+    /* The financial-block gap note now only appears when the filing
+       genuinely tags nothing. */
+    var sd = segData();
+    var has = sd && sd.revenue &&
+      (Object.keys(sd.revenue.segment).length || Object.keys(sd.revenue.geography).length);
+    var gap = $("fin-gap");
+    if (gap) {
+      gap.hidden = !!has;
+      if (!has) gap.innerHTML =
+        "revenue by segment and by geography. This filer's latest annual filing tags " +
+        "neither, so the breakdown exists only as narrative text in the filing itself.";
+    }
+  }
+
   /* ---------- evidence register ---------- */
   var EVIDENCE = [
     ["Revenue by segment", "Financial performance", "Consolidated totals only; the company facts feed carries no segment dimension", "SEC financial statement data sets, which preserve the segment axis, or the filing exhibits"],
@@ -1378,10 +1508,18 @@
   ];
 
   function renderEvidence() {
+    var sd = segData();
+    var shown = [];
+    if (sd && sd.revenue) {
+      if (Object.keys(sd.revenue.segment).length) shown.push("Revenue by segment");
+      if (Object.keys(sd.revenue.geography).length) shown.push("Geographic mix");
+      if (Object.keys(sd.revenue.product).length) shown.push("Revenue by product line");
+    }
+    var rows = EVIDENCE.filter(function (e) { return shown.indexOf(e[0]) === -1; });
     $("t-evidence").innerHTML =
       "<thead><tr><th scope='col'>Not shown</th><th scope='col'>Block</th>" +
       "<th scope='col'>Why not</th><th scope='col'>What would settle it</th></tr></thead><tbody>" +
-      EVIDENCE.map(function (e) {
+      rows.map(function (e) {
         return "<tr><td>" + esc(e[0]) + "</td><td>" + esc(e[1]) + "</td><td>" +
           esc(e[2]) + "</td><td>" + esc(e[3]) + "</td></tr>";
       }).join("") + "</tbody>";
@@ -1465,6 +1603,7 @@
     renderCustomer(ctx);
     renderOps(ctx);
     renderRisk(ctx);
+    renderDisaggregation();
     renderEvidence();
     renderStock(state.ticker, false);
   }
