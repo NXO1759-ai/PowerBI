@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Strategy Analysis — Research Terminal</title>
+<meta name="description" content="Industry structure and competitive position — concentration, profit pools, returns against Porter's benchmark distribution, and 19 years of positional persistence." />
+<meta name="theme-color" content="#0b0d0f" />
+<meta name="color-scheme" content="dark" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Research Terminal" />
+<meta property="og:title" content="Strategy Analysis — Research Terminal" />
+<meta property="og:description" content="Industry structure and competitive position across 130 companies and 19 years of SEC filings." />
+<meta property="og:url" content="https://www.chineduokeke.mba/strategy.html" />
+<meta name="twitter:card" content="summary" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f5c518'/%3E%3Ctext x='32' y='43' font-family='Menlo,Consolas,monospace' font-size='26' font-weight='700' text-anchor='middle' fill='%23151515'%3ERT%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="statements.css" />
+<link rel="stylesheet" href="strategy.css" />
+<style>[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">RT</span>
+      <span class="brand-title">Research Terminal</span>
+    </div>
+    <nav class="nav-tabs" aria-label="Dashboards">
+      <a class="nav-tab" href="index.html"><span class="tab-long">Company Overview</span><span class="tab-short">Overview</span></a>
+      <a class="nav-tab" href="statements.html"><span class="tab-long">Financial Statement Analysis</span><span class="tab-short">Statements</span></a>
+      <span class="nav-tab soon"><span class="tab-long">Private Credit Report</span><span class="tab-short">Credit</span> <span class="soon-pill">Soon</span></span>
+      <a class="nav-tab active" href="strategy.html" aria-current="page"><span class="tab-long">Strategy Analysis</span><span class="tab-short">Strategy</span></a>
+    </nav>
+    <div class="search">
+      <input type="search" id="q" role="combobox" aria-expanded="false" aria-controls="results"
+             aria-autocomplete="list"
+             aria-label="Search ticker, CIK, or company name"
+             placeholder="Search ticker or company…" autocomplete="off" />
+      <kbd class="kbd-hint" aria-hidden="true">/</kbd>
+      <div class="search-results" id="results"><ul role="listbox" id="results-list" aria-label="Matching companies"></ul></div>
+    </div>
+    <div class="topbar-right">
+      <button type="button" id="about-btn">About</button>
+    </div>
+  </div>
+</header>
+
+<main class="app" id="app">
+
+  <section class="fsa-hero" aria-label="Selected company">
+    <div class="hero-id">
+      <div>
+        <h1 id="co-name">—</h1>
+        <p class="meta" id="co-meta"></p>
+      </div>
+    </div>
+    <div class="fsa-controls">
+      <label class="ind-picker">
+        <span class="ind-picker-label">Industry</span>
+        <select id="industry-select" aria-label="Industry"></select>
+      </label>
+    </div>
+  </section>
+
+  <p class="fsa-status" id="status" role="status"></p>
+
+  <div id="strategy-body" hidden>
+
+    <!-- ============ 1. INDUSTRY STRUCTURE ============ -->
+    <section class="panel-card fsa-section" aria-labelledby="h-structure">
+      <div class="section-head">
+        <h2 id="h-structure">Industry structure</h2>
+        <p class="section-blurb">
+          Structure determines how the value an industry creates gets divided —
+          and it sets profitability over the medium and long run, where the
+          business cycle only moves the short run. The figures below are the
+          consistency check on a structural read, not a substitute for one.
+        </p>
+      </div>
+      <div class="kpi-grid" id="structure-cards"></div>
+      <div class="struct-note" id="structure-note"></div>
+    </section>
+
+    <!-- ============ 2. RETURNS VS THE BENCHMARK ============ -->
+    <section class="panel-card fsa-section" aria-labelledby="h-returns">
+      <div class="section-head">
+        <h2 id="h-returns">Where returns sit</h2>
+        <p class="section-blurb">
+          Return on invested capital is the measure strategy uses, because
+          margins and profit growth both ignore the capital a business needs to
+          compete. Industries are placed against Porter's published distribution
+          of US industry returns rather than scored — the point is to understand
+          what drives the number, not to grade it.
+        </p>
+      </div>
+      <div id="roic-chart" role="img" aria-label="Industry returns against the benchmark distribution"></div>
+      <p class="chart-caption" id="roic-caption"></p>
+    </section>
+
+    <!-- ============ 3. PROFIT POOL ============ -->
+    <section class="panel-card fsa-section" aria-labelledby="h-pool">
+      <div class="section-head">
+        <h2 id="h-pool">The profit pool</h2>
+        <p class="section-blurb">
+          Each firm is a rectangle: width is its share of industry revenue,
+          height its operating margin, so the <em>area</em> is the profit it
+          takes. Revenue and profit rarely concentrate in the same place, and
+          where they diverge is where the strategy question lives.
+        </p>
+      </div>
+      <div id="pool-chart" role="img" aria-label="Industry profit pool"></div>
+      <div class="scroll-x"><table class="grid" id="t-pool"></table></div>
+    </section>
+
+    <!-- ============ 4. COMPETITIVE POSITION ============ -->
+    <section class="panel-card fsa-section" aria-labelledby="h-position">
+      <div class="section-head">
+        <h2 id="h-position">Competitive position</h2>
+        <p class="section-blurb">
+          Where this company sits among its peers, and whether it stayed there.
+          A single good year is not an advantage; holding a position across a
+          cycle is.
+        </p>
+      </div>
+      <div class="kpi-grid" id="position-cards"></div>
+      <div id="position-chart" role="img" aria-label="Return versus industry median over time"></div>
+      <p class="chart-caption" id="position-caption"></p>
+    </section>
+
+    <!-- ============ 5. GROWTH ============ -->
+    <section class="panel-card fsa-section" aria-labelledby="h-growth">
+      <div class="section-head">
+        <h2 id="h-growth">Growth: the industry's, or its own?</h2>
+        <p class="section-blurb">
+          Reported growth cannot distinguish a firm riding a rising industry
+          from one taking share in a falling one. Splitting it does. Growth is
+          also not evidence of an attractive industry — some of the
+          fastest-growing have been among the least profitable.
+        </p>
+      </div>
+      <div class="kpi-grid" id="growth-cards"></div>
+      <div id="growth-chart" role="img" aria-label="Revenue growth against margin trajectory"></div>
+      <p class="chart-caption" id="growth-caption"></p>
+    </section>
+
+    <!-- ============ 6. FIVE FORCES EVIDENCE ============ -->
+    <section class="panel-card fsa-section" aria-labelledby="h-forces">
+      <div class="section-head">
+        <h2 id="h-forces">Five forces — what the filings can and cannot tell you</h2>
+        <p class="section-blurb">
+          The forces are tied to the income statements and balance sheets of an
+          industry's participants: structure defines the gap between revenues
+          and costs. Financial data can evidence some of that gap. It cannot
+          observe buyer concentration, switching costs or entry barriers
+          directly, so those are marked as needing outside evidence rather than
+          quietly guessed at.
+        </p>
+      </div>
+      <div id="forces-body"></div>
+    </section>
+
+    <!-- ============ 7. SUSTAINABILITY ============ -->
+    <section class="panel-card fsa-section" aria-labelledby="h-sustain">
+      <div class="section-head">
+        <h2 id="h-sustain">How hard is this to copy?</h2>
+        <p class="section-blurb">
+          A rival's chance of matching any single activity is usually below one,
+          and the probabilities compound across an interlocked system. Positions
+          built on systems of activities are far more durable than those built
+          on any one of them.
+        </p>
+      </div>
+      <div class="sustain-tool">
+        <label for="p-imitate">Chance of matching one activity
+          <output id="p-out" class="mono">0.90</output></label>
+        <input type="range" id="p-imitate" min="0.5" max="0.99" step="0.01" value="0.9" />
+        <label for="n-activities">Interlocked activities
+          <output id="n-out" class="mono">4</output></label>
+        <input type="range" id="n-activities" min="1" max="12" step="1" value="4" />
+        <p class="sustain-result" id="sustain-result"></p>
+      </div>
+    </section>
+
+    <footer class="src-footer" id="src-footer">
+      <span id="src-footer-text"></span>
+    </footer>
+  </div>
+</main>
+
+<div class="metric-pop" id="metric-pop" role="tooltip" hidden></div>
+
+<div class="modal-overlay" id="about-modal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="about-title" tabindex="-1">
+    <button type="button" class="modal-close" id="about-close" aria-label="Close">×</button>
+    <h3 id="about-title">About Me</h3>
+    <p class="about-tagline">Finance Operator. Systems Builder. Duke MBA.</p>
+    <p>I specialize in building financial architecture for high-growth environments. With a background spanning payment tech, biotech, and financial advisory, I turn messy, manual processes into automated, audit-ready engines.</p>
+    <h4>What I do</h4>
+    <ul class="about-list">
+      <li><strong>Financial Infrastructure &amp; Automation:</strong> Built and scaled automated revenue calculations, treasury workflows, and TMS integrations across 400+ global bank accounts at Flutterwave.</li>
+      <li><strong>Strategic Finance &amp; Valuation:</strong> Experienced in financial modeling, working capital optimization, and corporate valuation, from Amgen&rsquo;s clinical supply spend to pre-revenue startup valuations.</li>
+      <li><strong>Cross-Functional Execution:</strong> A firm believer in radical collaboration, combining high emotional intelligence with technical tools (SQL, Power BI, Python/VBA, TMS) to bridge finance, product, and engineering teams.</li>
+    </ul>
+    <h4>Beyond the Numbers</h4>
+    <p>Duke Fuqua MBA &rsquo;26 | SIE (in view); Certified Treasury Professional (in view) | Amateur boxer &amp; nature enthusiast.</p>
+  </div>
+</div>
+
+<script src="lib/metrics.js"></script>
+<script src="lib/ratios.js"></script>
+<script src="lib/strategy.js"></script>
+<script src="data/company-index.js"></script>
+<script src="data/industry-map.js"></script>
+<script src="data/strategy-panel.js"></script>
+<script src="strategy.js"></script>
+</body>
+</html>

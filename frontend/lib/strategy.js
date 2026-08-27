@@ -273,6 +273,13 @@
    * profit pool, and the spread of profitability across its members.
    */
   function industryYear(get, members, year) {
+    /* Coverage guards against a fake growth story. An industry total
+       built from 12 of 19 members understates the industry, and a CAGR
+       measured from such a base year reads as growth that never
+       happened. Every aggregate carries the fraction of members actually
+       reporting, so the caller can drop thin years rather than average
+       across them unknowingly. */
+    var memberCount = members.length;
     var rows = [];
     for (var i = 0; i < members.length; i++) {
       var c = members[i], row = c.years[year];
@@ -332,6 +339,8 @@
     return {
       year: year,
       firms: rows.length,
+      memberCount: memberCount,
+      coverage: memberCount ? rows.length / memberCount : null,
       totalRevenue: totalRevenue,
       totalOperatingIncome: totalOperatingIncome,
       totalAssets: totalAssets,
@@ -354,11 +363,15 @@
   }
 
   /** The full time series for one industry. */
-  function industrySeries(get, members, years) {
+  function industrySeries(get, members, years, minCoverage) {
+    var floor = isNum(minCoverage) ? minCoverage : 0.8;
     var out = [];
     for (var i = 0; i < years.length; i++) {
       var y = industryYear(get, members, years[i]);
-      if (y) out.push(y);
+      /* A year where most of the industry has not reported is dropped
+         rather than shown, because a partial total is not a smaller
+         industry — it is a missing measurement. */
+      if (y && (y.coverage === null || y.coverage >= floor)) out.push(y);
     }
     return out;
   }
@@ -403,6 +416,92 @@
       shareStart: share0, shareEnd: share1,
       shareChange: (isNum(share0) && isNum(share1)) ? share1 - share0 : null,
       outgrewIndustry: (isNum(firmCagr) && isNum(industryCagr)) ? firmCagr > industryCagr : null
+    };
+  }
+
+  /**
+   * McKinsey's long-run reference: ROIC for US nonfinancial companies ran
+   * 8-11% across 1963-2008. It sits alongside Porter's 14.9% rather than
+   * contradicting it — Porter measures EBIT before tax against invested
+   * capital net of excess cash, McKinsey measures an after-tax return
+   * across the whole nonfinancial universe. Two different questions, two
+   * different normals; both are shown so neither is mistaken for the only
+   * benchmark.
+   */
+  var MCKINSEY_ROIC_BAND = { low: 0.08, high: 0.11,
+    source: "McKinsey, US nonfinancial companies, 1963-2008" };
+
+  /**
+   * Inflation distorts every margin and return in a panel that spans a
+   * price shock, and the distortion runs one way.
+   *
+   * Assets are replaced only a fraction at a time, so the capital base and
+   * the depreciation charged against it lag inflation by years while
+   * revenue reprices almost immediately. Reported margins and returns on
+   * capital therefore RISE after an inflation spike even when nothing has
+   * changed in real terms. The historical check is that US returns stayed
+   * near 8-11% through the high-inflation 1970s and 80s: had companies
+   * genuinely passed inflation through, returns would have shown 25-30%.
+   *
+   * This panel spans the 2021-23 spike, so any read of improving returns
+   * across that window has to clear this bar before it counts as real.
+   * The flag is advisory — it marks years for interpretation rather than
+   * adjusting the figures, because a credible deflator needs
+   * industry-specific input prices this data does not carry.
+   */
+  var INFLATION_YEARS = { 2021: 0.047, 2022: 0.080, 2023: 0.041 };
+  function inflationCaution(years) {
+    var hits = (years || []).filter(function (y) { return INFLATION_YEARS[y]; });
+    if (!hits.length) return null;
+    return {
+      years: hits,
+      note: "Spans the " + hits[0] + "-" + hits[hits.length - 1] +
+        " inflation period. Reported margins and returns on capital rise " +
+        "mechanically after a price shock, because revenue reprices at once " +
+        "while the capital base and its depreciation lag by years. Treat " +
+        "improvement across this window as nominal until shown otherwise."
+    };
+  }
+
+  /**
+   * The shape of healthy organic growth, read off a long trajectory.
+   *
+   * The pattern to look for is earnings compounding faster than sales,
+   * and sales faster than assets — the business getting more profitable
+   * and more capital-efficient as it grows, rather than simply bigger.
+   * The inverse, sales outrunning earnings, is the growth trap: revenue
+   * bought at the cost of the returns that made the business worth
+   * growing. Maytag grew revenue fivefold while return on sales fell by
+   * an order of magnitude.
+   */
+  function growthQuality(periods) {
+    if (!periods || periods.length < 3) return null;
+    var first = periods[0], last = periods[periods.length - 1];
+    var n = last.fiscalYear - first.fiscalYear;
+    if (n < 2) return null;
+    var ebitFirst = ebitOf(first), ebitLast = ebitOf(last);
+    var salesCagr = cagr(first.incomeStatement.revenue, last.incomeStatement.revenue, n);
+    var earningsCagr = cagr(ebitFirst, ebitLast, n);
+    var assetCagr = cagr(first.balanceSheet.totalAssets, last.balanceSheet.totalAssets, n);
+    var marginFirst = div(ebitFirst, first.incomeStatement.revenue);
+    var marginLast = div(ebitLast, last.incomeStatement.revenue);
+    var marginChange = (isNum(marginFirst) && isNum(marginLast))
+      ? marginLast - marginFirst : null;
+    var verdict = null;
+    if (isNum(salesCagr) && isNum(marginChange)) {
+      if (salesCagr > 0.02 && marginChange > 0.01) verdict = "Compounding — growth with rising margin";
+      else if (salesCagr > 0.02 && marginChange < -0.02) verdict = "Growth trap — revenue up, margin down";
+      else if (salesCagr > 0.02) verdict = "Growing, margin roughly held";
+      else if (salesCagr <= 0.02 && marginChange > 0.01) verdict = "Harvesting — margin up, little growth";
+      else verdict = "Flat or declining";
+    }
+    return {
+      years: n, salesCagr: salesCagr, earningsCagr: earningsCagr,
+      assetCagr: assetCagr,
+      marginStart: marginFirst, marginEnd: marginLast, marginChange: marginChange,
+      earningsBeatSales: (isNum(earningsCagr) && isNum(salesCagr)) ? earningsCagr > salesCagr : null,
+      salesBeatAssets: (isNum(salesCagr) && isNum(assetCagr)) ? salesCagr > assetCagr : null,
+      verdict: verdict
     };
   }
 
@@ -470,6 +569,9 @@
     OPERATING_CASH_RATE: OPERATING_CASH_RATE,
     industryYear: industryYear, industrySeries: industrySeries,
     cagr: cagr, growthDecomposition: growthDecomposition,
+    MCKINSEY_ROIC_BAND: MCKINSEY_ROIC_BAND,
+    inflationCaution: inflationCaution, INFLATION_YEARS: INFLATION_YEARS,
+    growthQuality: growthQuality,
     rankAmong: rankAmong, persistence: persistence
   };
 });

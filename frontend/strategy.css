@@ -1,0 +1,107 @@
+/* ==========================================================================
+   strategy.css — Strategy Analysis.
+   Extends styles.css and statements.css; every colour comes from their
+   tokens so all three dashboards stay one system.
+   ========================================================================== */
+
+.ind-picker { display: flex; align-items: center; gap: 8px; }
+.ind-picker-label {
+  font-size: 10px; font-weight: 600; letter-spacing: .05em;
+  text-transform: uppercase; color: var(--kimi-color-text-tertiary);
+}
+#industry-select {
+  font: inherit; font-size: 12.5px;
+  color: var(--kimi-color-text-primary);
+  background: var(--input-bg);
+  border: 1px solid var(--kimi-color-border-strong);
+  border-radius: 7px; padding: 7px 10px; min-block-size: 34px;
+  max-inline-size: 260px;
+}
+#industry-select:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 2px; }
+
+.struct-note, .chart-caption {
+  font-size: 11.5px; line-height: 1.6; color: var(--kimi-color-text-tertiary);
+  margin: 12px 0 0; max-inline-size: 84ch;
+}
+.struct-note strong, .chart-caption strong { color: var(--kimi-color-text-secondary); }
+/* A caveat that changes how a number should be read is not a footnote. */
+.caution {
+  border-inline-start: 2px solid var(--rt-gold-border);
+  padding-inline-start: 11px; margin-top: 10px;
+  color: var(--kimi-color-text-secondary);
+}
+
+/* ---- charts ---- */
+#roic-chart, #pool-chart, #position-chart, #growth-chart {
+  inline-size: 100%; position: relative; margin-top: 4px;
+}
+#roic-chart svg, #pool-chart svg, #position-chart svg, #growth-chart svg {
+  display: block; inline-size: 100%; block-size: auto;
+}
+#roic-chart svg text, #pool-chart svg text,
+#position-chart svg text, #growth-chart svg text {
+  font-family: var(--rt-font-mono);
+}
+
+/* ---- five forces ---- */
+.force-list { display: grid; gap: 10px; }
+.force {
+  border: 1px solid var(--kimi-color-border); border-radius: 10px;
+  background: var(--page-bg); padding: 13px 15px 12px;
+}
+.force h3 {
+  font-size: 12px; font-weight: 600; margin: 0 0 3px;
+  color: var(--kimi-color-text-primary); text-transform: none; letter-spacing: 0;
+}
+.force .force-evidence {
+  font-size: 12px; line-height: 1.6; color: var(--kimi-color-text-secondary);
+  margin: 4px 0 0;
+}
+.force .force-metric {
+  font-family: var(--rt-font-mono); font-size: 13px; font-weight: 600;
+  color: var(--rt-gold); margin-inline-end: 8px;
+}
+/* What the filings genuinely cannot see gets said, not guessed. */
+.force .force-gap {
+  font-size: 11.5px; line-height: 1.55; color: var(--kimi-color-text-tertiary);
+  margin-top: 7px; padding-top: 7px;
+  border-top: 1px solid var(--kimi-color-surface-muted);
+}
+.force .force-gap::before {
+  content: "Needs outside evidence — ";
+  color: var(--kimi-color-text-quaternary); font-weight: 600;
+}
+
+/* ---- sustainability tool ---- */
+.sustain-tool { display: grid; gap: 6px; max-inline-size: 460px; }
+.sustain-tool label {
+  font-size: 11.5px; color: var(--kimi-color-text-secondary);
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-top: 6px;
+}
+.sustain-tool output {
+  font-family: var(--rt-font-mono); font-size: 13px; font-weight: 600;
+  color: var(--rt-gold);
+}
+.sustain-tool input[type="range"] { accent-color: var(--rt-gold); inline-size: 100%; }
+.sustain-result {
+  font-size: 12.5px; line-height: 1.6; color: var(--kimi-color-text-primary);
+  margin: 14px 0 0; padding-top: 12px;
+  border-top: 1px solid var(--kimi-color-surface-muted);
+}
+.sustain-result .big {
+  font-family: var(--rt-font-mono); font-size: 22px; font-weight: 600;
+  color: var(--rt-gold); display: block; margin-bottom: 5px;
+}
+
+/* ---- pool table ---- */
+table.grid td.pool-you, table.grid td.pool-you:first-child {
+  color: var(--rt-gold); font-weight: 600;
+}
+.mono { font-family: var(--rt-font-mono); }
+
+@media (max-width: 680px) {
+  .fsa-controls { flex-direction: column; align-items: stretch; }
+  #industry-select { max-inline-size: none; inline-size: 100%; min-block-size: 42px; }
+  .ind-picker { flex-direction: column; align-items: stretch; gap: 5px; }
+}
