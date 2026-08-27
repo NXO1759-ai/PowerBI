@@ -104,20 +104,35 @@ function sqlForCompany(company, payload) {
     ["NetCashProvidedByUsedInInvestingActivities", cf.cfInv?.q],
     ["NetCashProvidedByUsedInFinancingActivities", cf.cfFin?.q],
   ].filter(([, v]) => M.isNum(v));
-  if (!rows.length) return "";
-  const values = rows.map(([concept, value]) =>
+  /* Every column below is NOT NULL in financial_facts, accession_no
+     included, and the table's unique key is
+     (cik, concept, unit, period_end, form) — so each row carries the
+     provenance of its own figure rather than the company's newest
+     filing, or the upsert would collapse rows that are genuinely
+     distinct. A concept without provenance is skipped rather than
+     inserted with invented metadata. */
+  const prov = payload.provenance || {};
+  const usable = rows
+    .map(([concept, value]) => [concept, value, prov[concept]])
+    .filter(([, , pr]) => pr && pr.periodEnd && pr.filedDate && pr.form &&
+                          pr.accession);
+  if (!usable.length) return "";
+  const values = usable.map(([concept, value, pr]) =>
     `(${Number(company.cik)}, ${sqlStr(concept)}, 'USD', ${p.fiscalYear}, ` +
-    `${sqlStr(p.fiscalPeriod)}, ${sqlStr(payload.periodEnd || null)}, ` +
-    `${sqlNum(value)}, ${sqlStr(lf.date || null)}, ${sqlStr(lf.form || null)})`
+    `${sqlStr(p.fiscalPeriod)}, ${sqlStr(pr.periodEnd)}, ` +
+    `${sqlNum(value)}, ${sqlStr(pr.filedDate)}, ${sqlStr(pr.form)}, ` +
+    `${sqlStr(pr.accession)})`
   ).join(",\n  ");
   return (
     `-- ${company.ticker} (CIK ${company.cik}) ${p.label}\n` +
     "INSERT INTO financial_facts\n" +
-    "  (cik, concept, unit, fiscal_year, fiscal_period, period_end, value, filed_date, form)\n" +
+    "  (cik, concept, unit, fiscal_year, fiscal_period, period_end, value,\n" +
+    "   filed_date, form, accession_no)\n" +
     "VALUES\n  " + values + "\n" +
     "ON DUPLICATE KEY UPDATE\n" +
-    "  value = VALUES(value), period_end = VALUES(period_end),\n" +
-    "  filed_date = VALUES(filed_date), form = VALUES(form);\n"
+    "  value = VALUES(value), fiscal_year = VALUES(fiscal_year),\n" +
+    "  fiscal_period = VALUES(fiscal_period), filed_date = VALUES(filed_date),\n" +
+    "  accession_no = VALUES(accession_no);\n"
   );
 }
 
