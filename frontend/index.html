@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Company Overview — Research Terminal</title>
 <meta name="description" content="Independent equity research terminal — SEC EDGAR fundamentals, live market activity, liquidity analysis and filing-grounded analyst notes for 130+ U.S. companies." />
-<meta name="theme-color" content="#151515" />
+<meta name="theme-color" content="#0b0d0f" />
+<meta name="color-scheme" content="dark" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Research Terminal" />
 <meta property="og:title" content="Research Terminal — Company Overview" />
@@ -17,7 +18,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f5c518'/%3E%3Ctext x='32' y='43' font-family='Menlo,Consolas,monospace' font-size='26' font-weight='700' text-anchor='middle' fill='%23151515'%3ERT%3C/text%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" />
 <link rel="stylesheet" href="styles.css" />
 <style>[hidden]{display:none!important}</style>
 </head>
@@ -35,6 +36,14 @@
       <span class="nav-tab soon">Private Credit Report <span class="soon-pill">Soon</span></span>
       <span class="nav-tab soon">Strategy Analysis <span class="soon-pill">Soon</span></span>
     </nav>
+    <div class="search">
+      <input type="search" id="q" role="combobox" aria-expanded="false" aria-controls="results"
+             aria-autocomplete="list"
+             aria-label="Search ticker, CIK, or company name"
+             placeholder="Search ticker, CIK, or company…" autocomplete="off" />
+      <kbd class="kbd-hint" aria-hidden="true">/</kbd>
+      <div class="search-results" id="results"><ul role="listbox" id="results-list" aria-label="Matching companies"></ul></div>
+    </div>
     <div class="topbar-right">
       <button type="button" id="about-btn">About</button>
     </div>
@@ -43,26 +52,11 @@
 
 <main class="app" id="app">
 
-  <header class="top">
-    <div>
-      <h1>Company Overview</h1>
-      <p class="subtitle">Fundamentals, market activity &amp; analyst notes</p>
-    </div>
-    <div class="search">
-      <input type="search" id="q" role="combobox" aria-expanded="false" aria-controls="results"
-             aria-autocomplete="list"
-             aria-label="Search ticker, CIK, or company name"
-             placeholder="Search ticker, CIK, or company name…" autocomplete="off" />
-      <kbd class="kbd-hint" aria-hidden="true">/</kbd>
-      <div class="search-results" id="results"><ul role="listbox" id="results-list" aria-label="Matching companies"></ul></div>
-    </div>
-  </header>
-
   <section class="hero" aria-label="Selected company">
     <div class="hero-id">
       <img id="co-logo" alt="" referrerpolicy="no-referrer" hidden />
       <div>
-        <h2 id="co-name">—</h2>
+        <h1 id="co-name">—</h1>
         <p class="meta" id="co-meta"></p>
       </div>
     </div>

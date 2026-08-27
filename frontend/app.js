@@ -26,11 +26,13 @@
 
     var state = { ticker: "KBLB", range: "30d", pct: false };
 
-    /* chart palette (light theme) — mirrors the styles.css tokens */
-    var CH_MUT = "#6b6d75";   /* axis labels, dates (text-tertiary) */
-    var CH_BRD = "#e3e4e7";   /* gridlines, column outline */
-    var CH_LINE = "#c07a08";  /* price line, amber/gold */
-    var CH_BAR = "#151515";   /* value-traded columns, near-black */
+    /* chart palette (dark terminal) — mirrors the styles.css tokens */
+    var CH_MUT = "#8b8f98";              /* axis labels, dates (text-tertiary) */
+    var CH_BRD = "rgba(255,255,255,.08)"; /* gridlines */
+    var CH_LINE = "#f5c518";             /* price line — terminal gold */
+    var CH_BAR = "#6b6f78";              /* value-traded columns, graphite (≥3:1 on card) */
+    var CH_XHAIR = "rgba(255,255,255,.3)";
+    var CH_GROUND = "#16181c";           /* card surface behind the plot */
 
     function $(id) { return document.getElementById(id); }
 
@@ -142,11 +144,13 @@
         ch.className = "delta " + cls(m.change2d.pct);
       } else { ch.textContent = "—"; ch.className = "delta flat"; }
       var asofPx = Number(m.currentPrice || px);
-      $("px-asof").textContent = m.asOf
+      var asofEl = $("px-asof");
+      asofEl.textContent = m.asOf
         ? (d.liveQuoteAt
             ? "Live quote · As of " + fmtDate(m.asOf)
             : "As of " + fmtDate(m.asOf) + " · OHLC Avg $" + asofPx.toFixed(asofPx < 1 ? 4 : 2))
         : "";
+      asofEl.classList.toggle("live", !!(m.asOf && d.liveQuoteAt));
 
       var facts = [
         ["Market Cap", money(m.marketCap)],
@@ -210,7 +214,7 @@
       if (!d || !d.price || !d.price.series) {
         box.innerHTML = "";
         var p = document.createElement("p");
-        p.className = "chart-empty";
+        p.className = "chart-empty" + (liveLoading[state.ticker] ? " pulse" : "");
         p.textContent = liveLoading[state.ticker]
           ? "Loading live price history…"
           : "Price history is not available for this ticker from the connected market-data providers.";
@@ -261,7 +265,7 @@
       var bw = Math.max(2, Math.min(14, slot * 0.55));
       series.forEach(function (s, i) {
         var bh = (s.valueTraded || 0) / vTop * ih;
-        svg.appendChild(el("rect", { x: X(i) - bw / 2, y: padT + ih - bh, width: bw, height: Math.max(0.5, bh), fill: CH_BAR, stroke: CH_BRD, "stroke-width": 1, rx: 1 }));
+        svg.appendChild(el("rect", { x: X(i) - bw / 2, y: padT + ih - bh, width: bw, height: Math.max(0.5, bh), fill: CH_BAR, rx: 1 }));
       });
 
       /* price line (gold-ink); point markers only while they stay legible */
@@ -288,7 +292,7 @@
       lg1.textContent = "Close Price";
       svg.appendChild(lg1);
       var lg2x = padL + 88;
-      svg.appendChild(el("rect", { x: lg2x, y: padT - 11, width: 8, height: 8, fill: CH_BAR, stroke: CH_BRD, "stroke-width": 1, rx: 1 }));
+      svg.appendChild(el("rect", { x: lg2x, y: padT - 11, width: 8, height: 8, fill: CH_BAR, rx: 1 }));
       var lg2 = el("text", { x: lg2x + 12, y: padT - 3, "font-size": "10", fill: CH_MUT });
       lg2.textContent = "Value Traded (last " + money(lastV) + ")";
       svg.appendChild(lg2);
@@ -322,8 +326,8 @@
     /* the terminal readout: crosshair + ink chip following the pointer */
     function attachChartHover(box, svg, series, gm) {
       var n = series.length;
-      var xline = el("line", { y1: gm.padT, y2: gm.padT + gm.ih, stroke: CH_MUT, "stroke-width": 1, "stroke-dasharray": "3 3", visibility: "hidden" });
-      var dot = el("circle", { r: 3.4, fill: CH_LINE, stroke: "#ffffff", "stroke-width": 1.2, visibility: "hidden" });
+      var xline = el("line", { y1: gm.padT, y2: gm.padT + gm.ih, stroke: CH_XHAIR, "stroke-width": 1, "stroke-dasharray": "3 3", visibility: "hidden" });
+      var dot = el("circle", { r: 3.4, fill: CH_LINE, stroke: CH_GROUND, "stroke-width": 1.4, visibility: "hidden" });
       svg.appendChild(xline);
       svg.appendChild(dot);
       var tip = document.createElement("div");
@@ -585,10 +589,10 @@
           "data-act='retry-analysis'>Retry analysis</button></p>";
       } else if (!ds) {
         if (analysisLoading[state.ticker]) {
-          statusHtml = "<p class='note-block na' role='status'>Analyzing " + esc(state.ticker) +
+          statusHtml = "<p class='note-block na pulse' role='status'>Analyzing " + esc(state.ticker) +
             " with DeepSeek — this takes a few seconds…</p>";
         } else if (liveLoading[state.ticker]) {
-          statusHtml = "<p class='note-block na' role='status'>Loading live analyst data…</p>";
+          statusHtml = "<p class='note-block na pulse' role='status'>Loading live analyst data…</p>";
         } else if (!bodyHtml) {
           statusHtml = "<p class='note-block na'>No analyst coverage available " +
             "for this ticker.</p>";

@@ -99,6 +99,33 @@ exists and is kept.
   static-export data architecture, and all `api/`/loader behavior.
 - Power BI project files (`*.Report`, `*.SemanticModel`) — upstream artifacts.
 
+## Phase 2 addendum — full dark terminal (owner-directed)
+
+After phase 1 shipped to the PR, the owner directed a full redesign: "change
+the entire UI to SOTA level … don't just rely on what's there already." That
+overrides phase 1's identity-preservation constraint. Decisions:
+
+- **One designed theme: dark.** The brand was already gold-on-ink; the light
+  body was the compromise. Ground `#0f1114`, cards `#16181c`, text scale
+  `#e8eaed/#b6bac2/#8b8f98` (all ≥4.5:1), hairlines as white alphas.
+  A single committed theme is deliberate — recorded here, not an oversight.
+- **Gold becomes the accent everywhere; blue is retired.** Focus rings,
+  active states, selection, covered-ticker markers: gold. Positive/negative
+  stay mint `#5ecb8f` / coral `#ff8a80` (tuned for dark, ≥4.5:1).
+- **Command bar**: search moves into a sticky, blurred topbar — the page-title
+  row is gone; the company name is the `h1`. Mobile stacks brand/About,
+  scrollable tabs, full-width search.
+- **Instrument voice**: JetBrains Mono for the hero price, KPI values, chart
+  text, tickers, and the readout chip. Inter carries prose and tables.
+- **Chart on ink**: gold price line (10.8:1), graphite bars `#6b6f78`
+  (3.5:1 — passes non-text contrast), faint white gridlines, gold-edged
+  readout chip.
+- **Motion budget** (per ui-motion): loading pulse only, reduced-motion
+  guarded. Hovers, toggles, the readout, and the dialog are instant on
+  purpose. The live-quote indicator is a static dot, not a pulse.
+- Section headers and table headers become uppercase micro-eyebrows —
+  the same voice as the liquidation group rows.
+
 ## Verification
 
 `node frontend/dev-server.js` → http://127.0.0.1:7100. Check at 1280px and
