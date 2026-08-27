@@ -147,6 +147,9 @@ function normalizeConcept(payload, concept) {
         concept, unit,
         fiscal_year: r.fy, fiscal_period: r.fp || "FY",
         period_end: r.end, value: r.val, filed_date: r.filed, form: r.form,
+        /* the filing this figure came from — financial_facts.accession_no
+           is NOT NULL, and it is the provenance link back to EDGAR */
+        accession_no: r.accn || null,
       });
     }
   }
@@ -304,7 +307,21 @@ export function buildPayload(company, facts, { source } = {}) {
   const newest = [...facts].sort((a, b) =>
     String(b.filed_date).localeCompare(String(a.filed_date)))[0];
   const latestFiling = newest
-    ? { form: newest.form, date: newest.filed_date } : null;
+    ? { form: newest.form, date: newest.filed_date,
+        accession: newest.accession_no || null } : null;
+
+  /* Per-concept provenance for the SQL sync: financial_facts is keyed on
+     (cik, concept, unit, period_end, form), so each row needs the filing
+     its own figure came from, not the company's newest filing. */
+  const provenance = {};
+  for (const f of facts) {
+    if (f.fiscal_year === yr && f.fiscal_period === per && f.unit === "USD") {
+      provenance[f.concept] = {
+        periodEnd: f.period_end, filedDate: f.filed_date,
+        form: f.form, accession: f.accession_no || null,
+      };
+    }
+  }
 
   /* Every derived number below comes from metrics.js. */
   const side = (k) => (s) => instants[k][s];
@@ -328,6 +345,7 @@ export function buildPayload(company, facts, { source } = {}) {
     },
     latestFiling,
     periodEnd,
+    provenance,
     period: {
       fiscalYear: yr, fiscalPeriod: per,
       label: `${per} ${yr}`,
