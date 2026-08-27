@@ -12,6 +12,7 @@
  */
 
 import { createRequire } from "node:module";
+import { INCOME, BALANCE, CASHFLOW } from "./concepts.mjs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -31,34 +32,34 @@ const DAY_MS = 86400000;
 /* Duration concepts: measured over a period. Alternates are ordered by
    taxonomy preference — the ASC 606 tag first, older ones after, so a
    company that switched tags keeps a continuous series. */
+/* The concept lists come from concepts.mjs, the one place they are
+   defined. They were copied here once and the copy drifted: it still
+   ranked the ASC 606 revenue tag ahead of Revenues, so the weekly refresh
+   — which writes the data the Company Overview serves — resolved a
+   property trust or a lender to a fraction of its real top line. American
+   Tower $0.9bn against $10.6bn, Capital One $8.1bn against $53.4bn.
+   pullCompany takes the first tag a company reports, so ordering carries
+   the fix on this path: Revenues leads, and a total is never passed over
+   for one of its own components. */
 export const FLOW = {
-  revenue: ["RevenueFromContractWithCustomerExcludingAssessedTax",
-            "Revenues",
-            "RevenueFromContractWithCustomerIncludingAssessedTax",
-            "SalesRevenueNet"],
-  cogs: ["CostOfRevenue", "CostOfGoodsAndServicesSold"],
-  grossProfit: ["GrossProfit"],
-  netIncome: ["NetIncomeLoss"],
-  cfOps: ["NetCashProvidedByUsedInOperatingActivities"],
-  cfInv: ["NetCashProvidedByUsedInInvestingActivities"],
-  cfFin: ["NetCashProvidedByUsedInFinancingActivities"],
+  revenue: INCOME.revenue,
+  cogs: INCOME.cogs,
+  grossProfit: INCOME.grossProfit,
+  netIncome: INCOME.netIncome,
+  cfOps: CASHFLOW.cfOps,
+  cfInv: CASHFLOW.cfInv,
+  cfFin: CASHFLOW.cfFin,
 };
-
-/* Instant concepts: measured at a point in time.
-   minorityInterest and equityIncludingNci are required for the balance
-   sheet to tie at all for any company with consolidated subsidiaries it
-   does not wholly own. Without them FCX FY2021 is off by $9.04B. */
 export const INSTANT = {
-  cash: ["CashAndCashEquivalentsAtCarryingValue"],
-  currentAssets: ["AssetsCurrent"],
-  currentLiabilities: ["LiabilitiesCurrent"],
-  totalAssets: ["Assets"],
-  totalLiabilities: ["Liabilities"],
-  equity: ["StockholdersEquity"],
-  minorityInterest: ["MinorityInterest"],
-  equityIncludingNci:
-    ["StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"],
-  retainedEarnings: ["RetainedEarningsAccumulatedDeficit"],
+  cash: BALANCE.cash,
+  currentAssets: BALANCE.currentAssets,
+  currentLiabilities: BALANCE.currentLiabilities,
+  totalAssets: BALANCE.totalAssets,
+  totalLiabilities: BALANCE.totalLiabilities,
+  equity: BALANCE.equity,
+  minorityInterest: BALANCE.minorityInterest,
+  equityIncludingNci: BALANCE.equityIncludingNci,
+  retainedEarnings: BALANCE.retainedEarnings,
 };
 
 export const SEC_CONCEPTS = [...new Set([

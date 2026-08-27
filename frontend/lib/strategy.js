@@ -514,6 +514,79 @@
     };
   }
 
+  /* ---------- cohorts ---------- */
+
+  /* Below five members a quartile is not a quartile; below three a median
+     is not a distribution. The cross-section degrades rather than
+     pretending, because "top quartile of four" reads as a finding and is
+     not one. */
+  var MIN_QUANTILE_COHORT = 5, MIN_MEDIAN_COHORT = 3;
+
+  /** Members sharing the first n digits of a SIC code. */
+  function cohortBySic(panel, sic, digits) {
+    if (!sic) return [];
+    var pre = String(sic).slice(0, digits || 3);
+    return Object.keys(panel).map(function (t) {
+      var c = panel[t];
+      return { ticker: t, name: c.name, industry: c.industry, sector: c.sector,
+               sic: c.sic, years: c.years };
+    }).filter(function (c) { return String(c.sic || "").slice(0, digits || 3) === pre; });
+  }
+
+  /**
+   * One metric measured across a cohort for one year.
+   *
+   * Every "versus its peers" figure on the page goes through here, so the
+   * count behind a comparison is always known and always the same on both
+   * sides of it. The industry aggregates broke once because a numerator and
+   * a denominator covered different companies; a single path is how that
+   * stops being possible.
+   */
+  function cohortStats(get, members, year, metricFn) {
+    var values = [], tickers = [], synthetic = 0;
+    for (var i = 0; i < members.length; i++) {
+      var c = members[i], row = c.years[year];
+      if (!row) continue;
+      var period = toPeriod(get, row, year);
+      var prior = c.years[year - 1] ? toPeriod(get, c.years[year - 1], year - 1) : null;
+      var v = metricFn(period, prior, c);
+      if (!isNum(v)) continue;
+      if (ebitIsSynthetic(period)) synthetic++;
+      values.push(v); tickers.push(c.ticker);
+    }
+    var n = values.length;
+    return {
+      values: values, tickers: tickers, n: n, of: members.length,
+      syntheticCount: synthetic,
+      syntheticShare: n ? synthetic / n : null,
+      median: n >= MIN_MEDIAN_COHORT ? median(values) : null,
+      p25: n >= MIN_QUANTILE_COHORT ? quantile(values, 0.25) : null,
+      p75: n >= MIN_QUANTILE_COHORT ? quantile(values, 0.75) : null,
+      enoughForMedian: n >= MIN_MEDIAN_COHORT,
+      enoughForQuantiles: n >= MIN_QUANTILE_COHORT
+    };
+  }
+
+  /**
+   * The newest year a given figure actually resolves for a company.
+   *
+   * A company's most recent panel year is often partial — the balance
+   * sheet is filed before the full-year income statement, so Amazon's 2026
+   * row carries assets and no revenue. Every headline figure in a case
+   * resolves through this so that the sections cannot silently report
+   * different years from one another.
+   */
+  function latestResolvedYear(get, company, resolver, maxBack) {
+    var years = Object.keys(company.years).map(Number).sort(function (a, b) { return b - a; });
+    var back = maxBack || 5;
+    for (var i = 0; i < years.length && i < back; i++) {
+      var y = years[i];
+      var prior = company.years[y - 1] ? toPeriod(get, company.years[y - 1], y - 1) : null;
+      if (isNum(resolver(toPeriod(get, company.years[y], y), prior, company))) return y;
+    }
+    return null;
+  }
+
   /* ---------- industry aggregation ---------- */
 
   /**
@@ -812,10 +885,15 @@
     var peers = peerValues.filter(isNum);
     if (peers.length < 2) return null;
     var below = peers.filter(function (v) { return v < value; }).length;
-    var sorted = peers.slice().sort(function (a, b) { return b - a; });
     var med = median(peers);
+    /* Counted, not looked up. indexOf returned -1 for a value absent from
+       the array, so the rank came out 0 — an impossible rank — whenever
+       the subject was not itself one of the peers. That is the normal case
+       once a company can be compared against a cohort it does not belong
+       to. Counting how many beat it is correct either way, and it gives
+       tied values the same rank instead of ordering them arbitrarily. */
     return {
-      rank: sorted.indexOf(value) + 1,
+      rank: peers.filter(function (v) { return v > value; }).length + 1,
       of: peers.length,
       percentile: below / (peers.length - 1),
       median: med,
@@ -864,7 +942,10 @@
     PORTER_INDUSTRY_ROIC: PORTER_INDUSTRY_ROIC, porterNeighbours: porterNeighbours,
     rollingAverage: rollingAverage, dupontThreeFactor: dupontThreeFactor,
     dispersionTrend: dispersionTrend, describeDriver: describeDriver,
-    marginIsCredible: marginIsCredible,
+    cohortBySic: cohortBySic, cohortStats: cohortStats,
+    latestResolvedYear: latestResolvedYear,
+    MIN_QUANTILE_COHORT: MIN_QUANTILE_COHORT, MIN_MEDIAN_COHORT: MIN_MEDIAN_COHORT,
+    marginIsCredible: marginIsCredible, ebitIsSynthetic: ebitIsSynthetic,
     panelReference: panelReference, isFinancial: isFinancial,
     OPERATING_CASH_RATE: OPERATING_CASH_RATE,
     industryYear: industryYear, industrySeries: industrySeries,

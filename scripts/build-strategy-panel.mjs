@@ -44,14 +44,22 @@ export const PANEL_FIELDS = [
   "equity", "minorityInterest", "equityIncludingNci",
   "cfOps", "cfInv", "cfFin", "capex", "depreciationAmortization",
   "shareBasedComp", "dividendsPaid", "buybacks",
+  /* Added for the company case. sellingMarketing separates customer
+     acquisition spend from general overhead where a filer splits them;
+     payables completes the cash-conversion cycle; deferredRevenue and
+     remainingPerformanceObligation are the only forward-looking demand
+     figures a filing carries. */
+  "sellingMarketing", "payables", "deferredRevenue",
+  "remainingPerformanceObligation",
 ];
 const WHERE = {
   incomeStatement: ["revenue","cogs","grossProfit","researchDevelopment",
     "sellingGeneralAdmin","operatingIncome","netIncome","netIncomeIncludingNci",
-    "interestExpense","incomeTax","pretaxIncome"],
+    "interestExpense","incomeTax","pretaxIncome","sellingMarketing"],
   balanceSheet: ["totalAssets","currentAssets","currentLiabilities","inventory",
     "receivables","ppe","goodwill","intangibles","cash","shortTermInvestments",
-    "shortTermDebt","longTermDebt","equity","minorityInterest","equityIncludingNci"],
+    "shortTermDebt","longTermDebt","equity","minorityInterest","equityIncludingNci",
+    "payables","deferredRevenue","remainingPerformanceObligation"],
   cashFlow: ["cfOps","cfInv","cfFin","capex","depreciationAmortization",
     "shareBasedComp","dividendsPaid","buybacks"],
 };

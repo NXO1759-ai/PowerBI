@@ -176,6 +176,11 @@ export const BALANCE = {
     "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
   ],
   retainedEarnings: ["RetainedEarningsAccumulatedDeficit"],
+  /* Revenue already contracted but not yet recognised — the closest thing
+     in a filing to a sales pipeline, and unlike a pipeline it is signed.
+     Disclosed under ASC 606, so it exists from 2018 and only for filers
+     with performance obligations that outlast the period. */
+  remainingPerformanceObligation: ["RevenueRemainingPerformanceObligation"],
   treasuryStock: ["TreasuryStockValue"],
 };
 
