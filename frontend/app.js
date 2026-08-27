@@ -14,10 +14,10 @@
     if (!MX) throw new Error("lib/metrics.js failed to load");
 
     var INDEX = Array.isArray(window.COMPANY_INDEX) ? window.COMPANY_INDEX : [];
-    var COVERAGE = { KBLB: window.COMPANY_OVERVIEW_DATA || null };
+    var COVERAGE = { NVDA: window.COMPANY_OVERVIEW_DATA || null };
     /* tickers with an exported data file (from data/coverage.js) */
     var COVERED = {};
-    (Array.isArray(window.COMPANY_COVERAGE) ? window.COMPANY_COVERAGE : ["KBLB"])
+    (Array.isArray(window.COMPANY_COVERAGE) ? window.COMPANY_COVERAGE : ["NVDA"])
       .forEach(function (t) { COVERED[t] = true; });
     var BY_TICKER = {};
     INDEX.forEach(function (row) { BY_TICKER[row[0]] = row; });
@@ -31,7 +31,7 @@
     };
     var loading = {};
 
-    var state = { ticker: "KBLB", range: "30d", pct: false };
+    var state = { ticker: "NVDA", range: "30d", pct: false };
 
     /* chart palette (dark terminal) — mirrors the styles.css tokens */
     var CH_MUT = "#8b8f98";              /* axis labels, dates (text-tertiary) */
@@ -801,7 +801,7 @@
       else renderNoCoverage({ ticker: meta[0], cik: meta[1], name: meta[2] });
     }
     window.addEventListener("popstate", function () {
-      var t = urlTicker() || "KBLB";
+      var t = urlTicker() || "NVDA";
       if (t !== state.ticker && (BY_TICKER[t] || COVERAGE[t])) {
         var meta = BY_TICKER[t];
         q.value = meta ? t + " — " + meta[2] : t;
@@ -1282,10 +1282,10 @@
 
     /* ---------- init (honor ?t= deep links) ---------- */
     var initial = urlTicker();
-    if (!initial || !(BY_TICKER[initial] || COVERAGE[initial])) initial = "KBLB";
+    if (!initial || !(BY_TICKER[initial] || COVERAGE[initial])) initial = "NVDA";
     var initialMeta = BY_TICKER[initial];
     q.value = initialMeta ? initial + " — " + initialMeta[2]
-      : "KBLB — Kraig Biocraft Laboratories, Inc.";
+      : "NVDA — NVIDIA CORP";
     select(initial, { push: false });
   } catch (err) {
     var app = document.getElementById("app");
