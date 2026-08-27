@@ -1,0 +1,68 @@
+{
+  "startedAt": "2026-08-27T12:35:35.398Z",
+  "definitionsVersion": 2,
+  "companiesAttempted": 130,
+  "companiesWritten": 124,
+  "companiesFailed": [
+    {
+      "ticker": "ABT",
+      "reason": "no XBRL facts returned"
+    },
+    {
+      "ticker": "COF",
+      "reason": "no XBRL facts returned"
+    },
+    {
+      "ticker": "KO",
+      "reason": "no XBRL facts returned"
+    },
+    {
+      "ticker": "NXPI",
+      "reason": "no XBRL facts returned"
+    },
+    {
+      "ticker": "SPGI",
+      "reason": "no XBRL facts returned"
+    },
+    {
+      "ticker": "WELL",
+      "reason": "no XBRL facts returned"
+    }
+  ],
+  "findings": [
+    {
+      "ticker": "AMT",
+      "severity": "warn",
+      "code": "stale_filing",
+      "message": "latest periodic filing is more than 400 days old"
+    },
+    {
+      "ticker": "BLK",
+      "severity": "warn",
+      "code": "balance_sheet_tie",
+      "message": "assets do not equal liabilities plus total equity — off by 3.81% of total assets (a balance sheet section outside the pulled concepts, typically redeemable noncontrolling interest)"
+    },
+    {
+      "ticker": "CB",
+      "severity": "warn",
+      "code": "stale_filing",
+      "message": "latest periodic filing is more than 400 days old"
+    },
+    {
+      "ticker": "SPG",
+      "severity": "warn",
+      "code": "balance_sheet_tie",
+      "message": "assets do not equal liabilities plus total equity — off by 0.68% of total assets (a balance sheet section outside the pulled concepts, typically redeemable noncontrolling interest)"
+    },
+    {
+      "ticker": "V",
+      "severity": "warn",
+      "code": "stale_filing",
+      "message": "latest periodic filing is more than 400 days old"
+    }
+  ],
+  "errorCount": 0,
+  "warnCount": 5,
+  "finishedAt": "2026-08-27T12:43:16.463Z",
+  "durationSeconds": 461
+}
