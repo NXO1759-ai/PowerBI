@@ -83,11 +83,20 @@ body {
   border-radius: 6px; padding: 3px 7px;
 }
 .brand-title { font-size: 14px; font-weight: 500; color: var(--kimi-color-text-primary); white-space: nowrap; }
-.nav-tabs { display: flex; align-items: center; gap: 2px; }
+.nav-tabs { display: flex; align-items: center; gap: 2px; flex-wrap: wrap; }
+.nav-tabs.is-scrollable {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 28px), transparent);
+}
 .nav-tab {
   font-size: 13px; color: var(--kimi-color-text-tertiary);
   text-decoration: none; padding: 7px 12px; border-radius: 7px;
   white-space: nowrap;
+  /* Never shrink below the label. As a flex child the default is
+     flex-shrink:1, which squeezed each tab under its own text width and,
+     with nowrap, clipped it — "Financial Statement Analysis" rendered
+     into 92px of a needed 188px. */
+  flex: 0 0 auto;
 }
 .nav-tab:hover { color: var(--kimi-color-text-primary); }
 .nav-tab:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 2px; }
@@ -98,6 +107,7 @@ body {
   border: 1px solid var(--kimi-color-border-strong); border-radius: 999px;
   padding: 1px 7px; margin-left: 6px;
 }
+.tab-short { display: none; }
 .topbar-right { margin-inline-start: auto; flex: none; }
 #about-btn {
   font: inherit; font-size: 12px; font-weight: 500;
@@ -428,17 +438,57 @@ td.na, .na { color: var(--kimi-color-text-tertiary); }
   .kpis { grid-template-columns: repeat(3, minmax(0,1fr)); }
 }
 @media (max-width: 900px) {
-  .topbar-inner { padding: 8px 14px; gap: 8px 14px; }
-  .nav-tabs { order: 3; flex: 1 1 100%; overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; }
+  .topbar-inner { padding: 8px 14px; gap: 8px 12px; }
+  /* The nav takes its own line and scrolls if it still cannot fit.
+     Snap points stop a swipe mid-label. */
+  .nav-tabs {
+    order: 3; flex: 1 1 100%;
+    flex-wrap: nowrap; overflow-x: auto;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+  }
   .nav-tabs::-webkit-scrollbar { display: none; }
+  .nav-tab { scroll-snap-align: start; }
   .search { order: 4; flex: 1 1 100%; max-inline-size: none; }
+}
+@media (max-width: 760px) {
+  /* Full labels need about 690px of nav width. Below that they were
+     being cut in half, so the shorter names take over and the whole menu
+     fits on one line without scrolling. */
+  .tab-long { display: none; }
+  .tab-short { display: inline; }
+  .soon-pill { font-size: 9px; margin-left: 4px; padding: 1px 4px; }
+  .nav-tab { font-size: 12.5px; padding: 7px 7px; }
 }
 @media (max-width: 680px) {
   .app { padding: 12px 14px 20px; }
-  /* 16px keeps iOS Safari from zooming into the focused field */
-  .search input { font-size: 16px; padding-inline-end: 12px; }
+  /* 16px keeps iOS Safari from zooming into the focused field; 44px is
+     the minimum comfortable touch target. */
+  .search input { font-size: 16px; padding-inline-end: 12px; min-block-size: 44px; }
   .search .kbd-hint { display: none; }
+  /* 44px of touch target without 44px of padding: the box is tall
+     enough to hit, the text stays compact enough that four tabs fit. */
+  .nav-tab {
+    display: inline-flex; align-items: center;
+    min-block-size: 44px; padding: 6px 7px;
+  }
+  .topbar-inner { padding: 5px 14px; gap: 4px 10px; min-height: 0; }
+  #about-btn { min-block-size: 44px; padding: 8px 16px; }
+  .seg button { min-block-size: 42px; padding: 8px 14px; }
+  #refresh-btn, .coverage button, .retry-btn { min-block-size: 42px; }
+  .modal-close { inline-size: 40px; block-size: 40px; }
   .hero { grid-template-columns: 1fr; gap: 12px; }
   .hero-facts { grid-template-columns: repeat(2, minmax(0,1fr)); }
   .kpis { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .hero-price output { font-size: 30px; }
+  /* Wide data tables scroll inside their own box rather than pushing the
+     page sideways. */
+  .panel-card { padding: 13px 14px 11px; }
+  table.grid { font-size: 12px; }
+  .src-footer { flex-direction: column; align-items: stretch; gap: 10px; }
+}
+@media (max-width: 400px) {
+  .kpis { grid-template-columns: 1fr; }
+  .hero-facts { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .brand-title { display: none; }
 }
