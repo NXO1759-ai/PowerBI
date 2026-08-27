@@ -114,6 +114,19 @@ export const COMPOSITES = {
 /* ---------- balance sheet (instant) ---------- */
 export const BALANCE = {
   cash: ["CashAndCashEquivalentsAtCarryingValue"],
+  /* Current balances only, deliberately.
+     NVIDIA moved off MarketableSecuritiesCurrent after the year ended
+     January 2025 and now reports AvailableForSaleSecuritiesDebtSecurities,
+     so its latest year carries no investments here and its net cash is
+     understated by roughly forty billion. That tag was tried and removed:
+     it is a TOTAL, and for an insurer the total is the whole bond
+     portfolio backing policy liabilities — Aflac $64bn, Chubb $79bn,
+     Allstate $57bn — which is an operating asset, not spare cash. Feeding
+     it to excess cash drives invested capital negative and drops those
+     companies out of the return calculation altogether.
+     Understating one company's cash makes its return look lower than it
+     is, which is conservative. Overstating an insurer's spare cash makes
+     its capital base vanish, which is not. */
   shortTermInvestments: [
     "MarketableSecuritiesCurrent",
     "ShortTermInvestments",
