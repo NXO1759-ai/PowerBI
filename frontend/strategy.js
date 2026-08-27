@@ -1351,9 +1351,7 @@
       "exposure. A filing does carry a risk-factor section and a legal-proceedings section in " +
       "narrative text, and an internal-control conclusion, but none of those is a severity or " +
       "a likelihood — placing them on a heat map would be plotting an opinion and calling it " +
-      "data. Compliance status is held by regulators, not published in financial statements. " +
-      "Macro series such as inflation and policy rates are public but come from a central " +
-      "bank feed rather than from any company's accounts.";
+      "data. Compliance status is held by regulators, not published in financial statements.";
   }
 
   /* ---------- disaggregated revenue, from the annual filing ---------- */
@@ -1414,12 +1412,51 @@
     var total = rows.reduce(function (a, r) { return a + r[1]; }, 0);
     var oi = (withOperating && sd.segmentOperatingIncome && sd.segmentOperatingIncome[latest]) || null;
 
+    /* The newest discrete quarter, from the 10-Q, with its prior-year
+       comparative for growth. */
+    var qBy = sd.quarterly && sd.quarterly[kind];
+    var qEnds = qBy ? Object.keys(qBy).sort() : [];
+    var qLatest = qEnds.length ? qEnds[qEnds.length - 1] : null;
+    var qPrev = null;
+    if (qLatest) {
+      var target = new Date(qLatest) - 365.25 * 864e5, bestGap = Infinity;
+      qEnds.forEach(function (e) {
+        var gap = Math.abs(new Date(e) - target);
+        if (gap < bestGap) { bestGap = gap; qPrev = e; }
+      });
+      if (bestGap > 45 * 864e5) qPrev = null;
+    }
+    var hasQ = qLatest && rows.some(function (r) { return isNum(qBy[qLatest][r[0]]); });
+
+    /* Some filers tag only part of the total — NextEra's annual note tags
+       one segment of two. Shares of a partial split read as findings and
+       are not, so the shortfall is measured against the company's own
+       consolidated revenue and said out loud. */
+    var covNote = "";
+    var me = PANEL[state.ticker];
+    if (me && total > 0) {
+      var endYear = Number(latest.slice(0, 4));
+      var cons = null;
+      [endYear, endYear - 1].some(function (y) {
+        var row = me.years[y];
+        var v = row ? get(row, "revenue") : null;
+        if (isNum(v) && v > 0) { cons = v; return true; }
+        return false;
+      });
+      if (isNum(cons) && total / cons < 0.7 && kind !== "product") {
+        covNote = " The filing tags only " + pct(total / cons) +
+          " of consolidated revenue on this axis, so the shares describe the disclosed portion, not the whole company.";
+      }
+    }
+
     var html = "<div class='scroll-x'><table class='grid'><thead><tr>" +
       "<th scope='col'>FY ended " + esc(latest) + "</th>" +
       "<th scope='col' class='num'>Revenue</th>" +
       "<th scope='col' class='num'>Share</th>" +
       (span >= 0.9 ? "<th scope='col' class='num'>Growth, " + Math.round(span) + "-yr</th>" : "") +
       (oi ? "<th scope='col' class='num'>Op income</th><th scope='col' class='num'>Op margin</th>" : "") +
+      (hasQ ? "<th scope='col' class='num'>3 mo to " + esc(qLatest.slice(5)) + "</th>" +
+              "<th scope='col' class='num'>vs yr ago</th>" : "") +
       "</tr></thead><tbody>";
     rows.forEach(function (r) {
       var name = r[0], v = r[1];
@@ -1436,11 +1473,17 @@
         html += "<td class='num'>" + (isNum(o) ? money(o) : "—") + "</td>" +
           "<td class='num'>" + (isNum(o) && v > 0 ? pct(o / v) : "—") + "</td>";
       }
+      if (hasQ) {
+        var qv = qBy[qLatest][name];
+        var qg = (isNum(qv) && qPrev && isNum(qBy[qPrev][name]) && qBy[qPrev][name] > 0)
+          ? qv / qBy[qPrev][name] - 1 : null;
+        html += "<td class='num'>" + (isNum(qv) ? money(qv) : "—") + "</td>" +
+          "<td class='num'>" + (isNum(qg) ? pct(qg) : "—") + "</td>";
+      }
       html += "</tr>";
     });
     html += "</tbody></table></div>";
 
-    /* the finding, not just the table */
     var top = rows[0];
     var sentence = "";
     if (top && total > 0) {
@@ -1453,6 +1496,21 @@
           Math.round(span) + "-year window";
       }
       sentence += ".";
+      if (hasQ && qPrev) {
+        var movers = rows.map(function (r) {
+          var qv = qBy[qLatest][r[0]], pv = qBy[qPrev][r[0]];
+          return (isNum(qv) && isNum(pv) && pv > 0)
+            ? { n: humanMember(r[0]), g: qv / pv - 1 } : null;
+        }).filter(Boolean).sort(function (a, b) { return b.g - a.g; });
+        if (movers.length) {
+          sentence += " In the latest quarter, " + esc(movers[0].n) + " " +
+            (movers[0].g >= 0 ? "grew " : "shrank ") + pct(Math.abs(movers[0].g)) +
+            " on a year earlier" +
+            (movers.length > 1 ? ", " + esc(movers[movers.length - 1].n) + " " +
+              (movers[movers.length - 1].g >= 0 ? "grew " : "shrank ") +
+              pct(Math.abs(movers[movers.length - 1].g)) : "") + ".";
+        }
+      }
       if (oi && top && isNum(oi[top[0]]) && top[1] > 0) {
         var margins = rows.filter(function (r) { return isNum(oi[r[0]]) && r[1] > 0; })
           .map(function (r) { return { n: humanMember(r[0]), m: oi[r[0]] / r[1] }; })
@@ -1464,10 +1522,11 @@
         }
       }
     }
-    html += "<p class='chart-caption'>" + sentence +
+    html += "<p class='chart-caption'>" + sentence + covNote +
       " <span class='soft'>From the segment and disaggregation notes of the " +
       esc(sd.form) + " for the period ended " + esc(sd.reportDate) +
-      " — the same tables printed in the filing itself, read in their machine-readable form.</span></p>";
+      (hasQ && sd.qReportDate ? ", and the 10-Q for the quarter ended " + esc(sd.qReportDate) : "") +
+      " — the same tables printed in the filings, read in their machine-readable form.</span></p>";
     host.innerHTML = html;
   }
 
@@ -1487,6 +1546,52 @@
         "revenue by segment and by geography. This filer's latest annual filing tags " +
         "neither, so the breakdown exists only as narrative text in the filing itself.";
     }
+  }
+
+  /* ---------- macro backdrop ---------- */
+  var MACRO = { data: null, failed: false };
+  function renderMacro(force) {
+    var host = $("macro-block");
+    if (!host) return;
+    if (MACRO.data && !force) { paintMacro(MACRO.data); return; }
+    host.innerHTML = "<p class='hint' role='status'>Loading the macro series…</p>";
+    fetch("/api/macro" + (force ? "?force=1" : ""))
+      .then(function (r) {
+        if (r.status === 503) throw new Error("unconfigured");
+        if (!r.ok) throw new Error(String(r.status));
+        return r.json();
+      })
+      .then(function (d) { MACRO.data = d; MACRO.failed = false; paintMacro(d); renderEvidence(); })
+      .catch(function (e) {
+        MACRO.failed = true;
+        host.innerHTML = "<p class='hint'>" +
+          (String(e.message) === "unconfigured"
+            ? "The macro feed is not configured on this deployment — it needs a key for the " +
+              "Federal Reserve's statistical service. Every figure above comes from filings " +
+              "and is unaffected."
+            : "The macro series are unavailable right now. Every figure above comes from " +
+              "filings and is unaffected.") + "</p>";
+        renderEvidence();
+      });
+  }
+  function paintMacro(d) {
+    var host = $("macro-block");
+    var f = function (x, dp) { return x && isNum(x.value) ? pct(x.value, dp === undefined ? 1 : dp) : "—"; };
+    var when = function (x) { return x && x.period ? "As of " + esc(x.period) : ""; };
+    host.innerHTML = "<div class='kpi-grid'>" +
+      card(null, "Inflation, headline", f(d.cpiYoY), "Consumer prices against a year earlier") +
+      card(null, "Inflation, core", f(d.coreCpiYoY), "Excluding food and energy") +
+      card(null, "Policy rate", f(d.fedFunds, 2), when(d.fedFunds)) +
+      card(null, "10-year Treasury", f(d.treasury10y, 2), "The base of every discount rate") +
+      card(null, "2-year Treasury", f(d.treasury2y, 2), when(d.treasury2y)) +
+      card(null, "Curve, 10y minus 2y", d.curveSpread && isNum(d.curveSpread.value)
+        ? pp(d.curveSpread.value) : "—",
+        d.curveSpread && d.curveSpread.value < 0 ? "Inverted — short money dearer than long" : "Term premium") +
+      "</div>" +
+      "<p class='chart-caption'>Rates set the discount on every future dollar this company earns " +
+      "and the price of its debt; inflation flatters nominal growth while the capital base lags. " +
+      "<span class='soft'>Source: Federal Reserve Bank of St. Louis. These describe the environment, " +
+      "not the company.</span></p>";
   }
 
   /* ---------- evidence register ---------- */
@@ -1515,6 +1620,7 @@
       if (Object.keys(sd.revenue.geography).length) shown.push("Geographic mix");
       if (Object.keys(sd.revenue.product).length) shown.push("Revenue by product line");
     }
+    if (MACRO.data) shown.push("Macro indicators");
     var rows = EVIDENCE.filter(function (e) { return shown.indexOf(e[0]) === -1; });
     $("t-evidence").innerHTML =
       "<thead><tr><th scope='col'>Not shown</th><th scope='col'>Block</th>" +
@@ -1604,6 +1710,7 @@
     renderOps(ctx);
     renderRisk(ctx);
     renderDisaggregation();
+    renderMacro(false);
     renderEvidence();
     renderStock(state.ticker, false);
   }
@@ -1693,6 +1800,7 @@
     btn.textContent = "Refreshing…";
     delete STOCK_CACHE[state.ticker];
     if (state.view === "company") renderStock(state.ticker, true);
+    if (state.view === "company") { MACRO.data = null; renderMacro(true); }
     render();
     window.setTimeout(function () {
       btn.disabled = false;
