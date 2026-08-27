@@ -6,6 +6,13 @@
 (function () {
   "use strict";
   try {
+    /* Derived figures come from lib/metrics.js — the same file the weekly
+       refresh and /api/pull use, and the definitions the SQL views in
+       sql/06_canonical_views.sql restate for Power BI. Computing a ratio
+       inline here is what let the four surfaces disagree. */
+    var MX = window.RTMetrics;
+    if (!MX) throw new Error("lib/metrics.js failed to load");
+
     var INDEX = Array.isArray(window.COMPANY_INDEX) ? window.COMPANY_INDEX : [];
     var COVERAGE = { KBLB: window.COMPANY_OVERVIEW_DATA || null };
     /* tickers with an exported data file (from data/coverage.js) */
@@ -166,10 +173,9 @@
     /* ---------- KPI strip ---------- */
     function renderKpis(d) {
       var bs = d.fundamentals.balanceSheet, cf = d.fundamentals.cashFlow, burn = d.fundamentals.burnRate;
-      var cur = bs.currentAssets.q, cl = bs.currentLiabilities.q;
-      var currentRatio = (cur !== null && cl) ? cur / cl : null;
-      var runway = null;
-      if (bs.cash.q !== null && cf.cfOps.q !== null && cf.cfOps.q < 0) runway = bs.cash.q / (Math.abs(cf.cfOps.q) / 3);
+      var per = d.period && d.period.fiscalPeriod;
+      var currentRatio = MX.currentRatio(bs.currentAssets.q, bs.currentLiabilities.q);
+      var runway = MX.runwayMonths(bs.cash.q, cf.cfOps.q, per);
 
       function sub(curV, prevV) {
         var p = pctChange(curV, prevV);
@@ -454,9 +460,10 @@
     function renderRatios(d) {
       var bs = d.fundamentals.balanceSheet, cf = d.fundamentals.cashFlow, e = d.earnings || {};
       var rows = [];
-      var cr = (bs.currentAssets.q !== null && bs.currentLiabilities.q) ? bs.currentAssets.q / bs.currentLiabilities.q : null;
-      var la = (bs.totalLiabilities.q !== null && bs.totalAssets.q) ? bs.totalLiabilities.q / bs.totalAssets.q : null;
-      var runway = (bs.cash.q !== null && cf.cfOps.q !== null && cf.cfOps.q < 0) ? bs.cash.q / (Math.abs(cf.cfOps.q) / 3) : null;
+      var per = d.period && d.period.fiscalPeriod;
+      var cr = MX.currentRatio(bs.currentAssets.q, bs.currentLiabilities.q);
+      var la = MX.liabilitiesToAssets(bs.totalLiabilities.q, bs.totalAssets.q);
+      var runway = MX.runwayMonths(bs.cash.q, cf.cfOps.q, per);
       rows.push(["Current Ratio", cr !== null ? cr.toFixed(2) + "×" : "—"]);
       rows.push(["Liabilities / Assets", la !== null ? la.toFixed(2) + "×" : "—"]);
       rows.push(["Cash Runway (Op. Burn)", runway !== null ? "≈ " + runway.toFixed(1) + " months" : "Not applicable — operations generate cash"]);
@@ -525,7 +532,7 @@
     }
     function renderNotes(d) {
       var live = d.liveInsight || null;
-      var ds = d.deepseek || null;
+      var ds = d.researchNote || null;
       var blocks = [], newsItems = [];
 
       if (live && live.analyst) {
@@ -576,25 +583,26 @@
       var bodyHtml = blocks.map(function (b) {
         return "<p class='note-block'><span class='tag'>" + b[0] + "</span>" + esc(b[1]) + "</p>";
       }).join("");
-      /* The DeepSeek panel status must be visible even when fallback
-         blocks (analyst consensus, price target) rendered — otherwise a
-         failed or pending analysis is silently masked by live data. */
+      /* The panel status must stay visible even when fallback blocks
+         (consensus, price target) rendered — otherwise a failed or
+         pending note is silently masked by live data. */
       var statusHtml = "";
       if (analysisError[state.ticker]) {
-        /* visible even when stale content (ds or live fallback) is on
-           screen — failures must never be masked */
-        statusHtml = "<p class='note-block na' role='status'>Analyst opinion could not be " +
-          "generated (" + esc(analysisError[state.ticker]) + "). " +
+        /* visible even when stale content is on screen — failures must
+           never be masked */
+        statusHtml = "<p class='note-block na' role='status'>The research note for " +
+          esc(state.ticker) + " could not be prepared (" +
+          esc(analysisError[state.ticker]) + "). " +
           "<button type='button' class='retry-btn' " +
-          "data-act='retry-analysis'>Retry analysis</button></p>";
+          "data-act='retry-analysis'>Try again</button></p>";
       } else if (!ds) {
         if (analysisLoading[state.ticker]) {
-          statusHtml = "<p class='note-block na pulse' role='status'>Analyzing " + esc(state.ticker) +
-            " with DeepSeek — this takes a few seconds…</p>";
+          statusHtml = "<p class='note-block na pulse' role='status'>Preparing the " +
+            esc(state.ticker) + " research note from its latest filing…</p>";
         } else if (liveLoading[state.ticker]) {
-          statusHtml = "<p class='note-block na pulse' role='status'>Loading live analyst data…</p>";
+          statusHtml = "<p class='note-block na pulse' role='status'>Loading market data…</p>";
         } else if (!bodyHtml) {
-          statusHtml = "<p class='note-block na'>No analyst coverage available " +
+          statusHtml = "<p class='note-block na'>No research note available " +
             "for this ticker.</p>";
         }
       }
@@ -616,29 +624,26 @@
                (n.relevance ? "<p class='n-rel'>" + esc(n.relevance) + "</p>" : "") + "</li>";
       }).join("") || "<li><p class='n-title na'>No recent news items.</p></li>";
 
+      /* Methodology line. Names the filing the note is built on and the
+         period covered — what a reader needs to judge it — without naming
+         any upstream vendor. */
       var cav = $("caveats");
-      var candleLbl = d.liveCandleSource === "yahoo" ? "Yahoo Finance"
-        : d.liveCandleSource === "alphavantage" ? "Alpha Vantage"
-        : d.liveCandleSource === "finnhub" ? "Finnhub" : null;
-      if (ds && ds.caveats) {
-        cav.textContent = "Analysis: DeepSeek, grounded in the latest " +
-          (d.latestFiling && d.latestFiling.form
-            ? d.latestFiling.form + " (filed " + fmtDate(d.latestFiling.date) + ")"
-            : "10-K/10-Q") +
-          ", market activity and 6-month headlines. " + ds.caveats;
-        cav.hidden = false;
-      } else if (ds) {
-        cav.textContent = "Analysis: DeepSeek, grounded in the latest " +
-          (d.latestFiling && d.latestFiling.form
-            ? d.latestFiling.form + " (filed " + fmtDate(d.latestFiling.date) + ")"
-            : "10-K/10-Q") +
-          ", market activity and 6-month headlines.";
+      var basis = d.latestFiling && d.latestFiling.form
+        ? d.latestFiling.form + " filed " + fmtDate(d.latestFiling.date)
+        : "the latest 10-K/10-Q";
+      if (ds) {
+        cav.textContent = "Method: prepared from the company's " + basis +
+          ", its trading activity, and six months of headlines. Figures are " +
+          "as reported; derived ratios are computed from them. Not " +
+          "investment advice." +
+          (ds.caveats ? " Limitations: " + ds.caveats : "");
         cav.hidden = false;
       } else if (!live && d.insight && d.insight.caveats) {
-        cav.textContent = "Caveats: " + d.insight.caveats; cav.hidden = false;
+        cav.textContent = "Limitations: " + d.insight.caveats;
+        cav.hidden = false;
       } else if (live) {
-        cav.textContent = "Live analyst & news feed: Finnhub" +
-          (candleLbl && candleLbl !== "Finnhub" ? " · prices: " + candleLbl : "") + ".";
+        cav.textContent = "Market data and headlines update through the " +
+          "trading day. Not investment advice.";
         cav.hidden = false;
       } else cav.hidden = true;
     }
@@ -648,15 +653,11 @@
       var gen = d.generatedAt ? fmtDate(d.generatedAt.slice(0, 10)) : "—";
       var asOf = d.price && d.price.market && d.price.market.asOf ? fmtDate(d.price.market.asOf) : "—";
       var txt =
-        "Source: " + (d.source || "finance_db") + ". Export generated " + gen +
-        " · Prices as of " + asOf + ". Derived ratios are computed from reported figures.";
+        "Fundamentals from SEC EDGAR filings · updated " + gen +
+        " · prices as of " + asOf +
+        ". Derived ratios are computed from reported figures.";
       if (d.liveQuoteAt) {
-        var candleLbl = d.liveCandleSource === "yahoo" ? "Yahoo Finance"
-          : d.liveCandleSource === "alphavantage" ? "Alpha Vantage"
-          : d.liveCandleSource === "finnhub" ? "Finnhub" : null;
-        txt += " Live market data pulled " + fmtDate(d.liveQuoteAt) +
-          " (quote, analysts & news: Finnhub" +
-          (candleLbl && candleLbl !== "Finnhub" ? " · prices: " + candleLbl : "") + ").";
+        txt += " Market data refreshed " + fmtDate(d.liveQuoteAt) + ".";
       }
       var span = $("src-footer-text");
       if (span) span.textContent = txt;
@@ -928,7 +929,7 @@
                           news: live.news || [] };
       }
       d.liveQuoteAt = (live.asOf || "").slice(0, 10) || null;
-      if (ANALYSIS[ticker]) d.deepseek = ANALYSIS[ticker];
+      if (ANALYSIS[ticker]) d.researchNote = ANALYSIS[ticker];
       if (state.ticker === ticker) renderAll(d);
       fetchAnalysis(ticker);
     }
@@ -958,7 +959,7 @@
         .catch(function () { settle(null); });
     }
 
-    /* ---------- DeepSeek analysis (runs on every company change) ---------- */
+    /* ---------- research note (prepared on every company change) ---------- */
     var ANALYSIS = {}, analysisLoading = {}, analysisError = {};
 
     /* top value-traded days with context — mirrors loaders/09 evidence */
@@ -1018,21 +1019,21 @@
       var d = COVERAGE[ticker];
       if (!d) return;
       if (ANALYSIS[ticker] && !force) {
-        d.deepseek = ANALYSIS[ticker];
+        d.researchNote = ANALYSIS[ticker];
         if (state.ticker === ticker) renderNotes(d);
         return;
       }
       if (analysisLoading[ticker]) return;
       analysisLoading[ticker] = true;
       delete analysisError[ticker];
-      if (state.ticker === ticker && !d.deepseek) renderNotes(d);
+      if (state.ticker === ticker && !d.researchNote) renderNotes(d);
       var settle = function (payload, errMsg) {
         delete analysisLoading[ticker];
         var dd = COVERAGE[ticker];
         if (payload && !payload.error && payload.ticker === ticker) {
           ANALYSIS[ticker] = payload;
           delete analysisError[ticker];
-          if (dd) dd.deepseek = payload;
+          if (dd) dd.researchNote = payload;
         } else {
           /* surface the failure — the analyst opinion is mandatory, so a
              silent fallback is not acceptable */
