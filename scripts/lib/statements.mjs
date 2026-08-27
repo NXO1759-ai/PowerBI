@@ -17,7 +17,7 @@
  * each period end.
  */
 
-import { INCOME, BALANCE, CASHFLOW, PERSHARE, SHARE_COUNTS } from "./concepts.mjs";
+import { INCOME, BALANCE, CASHFLOW, PERSHARE, SHARE_COUNTS, COMPOSITES } from "./concepts.mjs";
 
 const DAY_MS = 86400000;
 const REPORT_FORM = /^(10-K|10-Q|20-F|40-F)(\/A)?$/;
@@ -93,6 +93,40 @@ function pickRows(bucket, tags, reader) {
 }
 
 /* ---------- period extraction ---------- */
+
+/* Largest candidate per period rather than first-tag-wins. Used for
+   revenue, where the alternates are a mix of totals and components of
+   totals and no fixed ordering separates them for every filer. */
+function maxDurationSeries(bucket, tags, opts) {
+  const out = new Map();
+  for (const tag of tags) {
+    for (const [end, row] of durationSeries(bucket, [tag], opts)) {
+      const prev = out.get(end);
+      if (!prev || row.value > prev.value) out.set(end, row);
+    }
+  }
+  return out;
+}
+
+/* Fill periods the primary tags missed by summing disclosed components.
+   Every component must be present for the period, and an existing value is
+   never overwritten. */
+function fillFromComposites(series, bucket, field, opts) {
+  const groups = COMPOSITES[field];
+  if (!groups) return series;
+  for (const parts of groups) {
+    const partSeries = parts.map((t) => durationSeries(bucket, [t], opts));
+    const ends = new Set(partSeries.flatMap((m) => [...m.keys()]));
+    for (const end of ends) {
+      if (series.has(end)) continue;
+      const rows = partSeries.map((m) => m.get(end));
+      if (rows.some((r) => !r)) continue;
+      const total = rows.reduce((a, r) => a + r.value, 0);
+      series.set(end, { ...rows[0], value: total, composite: parts.slice() });
+    }
+  }
+  return series;
+}
 
 function durationSeries(bucket, tags, { annual }) {
   const rows = pickRows(bucket, tags, usdRows)
@@ -221,7 +255,10 @@ export function buildStatementSeries(bucket, { annual, limit = 20, fyEndMonth } 
 
   const income = {};
   for (const [k, tags] of Object.entries(INCOME)) {
-    income[k] = durationSeries(bucket, tags, opts);
+    income[k] = k === "revenue"
+      ? maxDurationSeries(bucket, tags, opts)
+      : durationSeries(bucket, tags, opts);
+    fillFromComposites(income[k], bucket, k, opts);
   }
   const cash = {};
   for (const [k, tags] of Object.entries(CASHFLOW)) {

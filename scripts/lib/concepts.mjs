@@ -26,14 +26,27 @@
 
 /* ---------- income statement (duration) ---------- */
 export const INCOME = {
-  /* Ordered newest-taxonomy-first. Across a 19-year window a company
-     typically moves through three of these: SalesRevenueGoodsNet in the
-     early years, Revenues in the middle, then the ASC 606 tag from 2018.
-     Coca-Cola and Johnson & Johnson each lose nine years of history if
-     SalesRevenueGoodsNet is absent. */
+  /* Revenue is resolved by TAKING THE LARGEST candidate per period, not
+     by first-tag-wins. A component can never exceed the total it belongs
+     to, so the largest is the total.
+     Ordering alone cannot get this right. The ASC 606 tag is the whole top
+     line for most operating companies after 2018, but only a slice of it
+     wherever revenue arises outside a contract with a customer:
+       - American Tower reports $0.9bn under ASC 606 against $10.6bn of
+         Revenues, because a property trust's lease income is not a
+         contract-with-customer item at all
+       - Capital One reports $8.1bn against $53.4bn, the rest being
+         interest income
+     Ranking Revenues first instead would break the companies that stopped
+     filing it once ASC 606 arrived. Taking the maximum needs no knowledge
+     of which kind of company it is looking at.
+     RevenuesNetOfInterestExpense is the bank convention for total net
+     revenue and is the only total Goldman files; Wells Fargo and Morgan
+     Stanley moved to it from Revenues mid-history. */
   revenue: [
-    "RevenueFromContractWithCustomerExcludingAssessedTax",
     "Revenues",
+    "RevenuesNetOfInterestExpense",
+    "RevenueFromContractWithCustomerExcludingAssessedTax",
     "RevenueFromContractWithCustomerIncludingAssessedTax",
     "SalesRevenueNet",
     "SalesRevenueGoodsNet",
@@ -78,6 +91,24 @@ export const INCOME = {
      ProfitLoss is the XBRL tag for the total; where a filer omits it the
      company has no material NCI and the two figures coincide. */
   netIncomeIncludingNci: ["ProfitLoss", "NetIncomeLoss"],
+};
+
+/* Totals that some filers stop reporting while continuing to report every
+   component of them. Applied ONLY where the primary tags found nothing for
+   a period, and only when every component is present, so a partial sum can
+   never masquerade as a total.
+   Phillips 66 dropped the consolidated pre-tax line after 2020 and files
+   only the domestic and foreign halves; without this it reports revenue
+   and assets but no profit for five straight years. */
+export const COMPOSITES = {
+  pretaxIncome: [[
+    "IncomeLossFromContinuingOperationsBeforeIncomeTaxesDomestic",
+    "IncomeLossFromContinuingOperationsBeforeIncomeTaxesForeign",
+  ]],
+  revenue: [[
+    "InterestAndDividendIncomeOperating",
+    "NoninterestIncome",
+  ]],
 };
 
 /* ---------- balance sheet (instant) ---------- */
@@ -188,6 +219,7 @@ export const SHARE_COUNTS = {
    requests — the constraint is the response, not the concept count. */
 export const ALL_CONCEPTS = [...new Set([
   ...Object.values(INCOME).flat(),
+  ...Object.values(COMPOSITES).flat(2),
   ...Object.values(BALANCE).flat(),
   ...Object.values(CASHFLOW).flat(),
   ...Object.values(PERSHARE).flat(),
