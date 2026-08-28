@@ -274,18 +274,29 @@ export function extractItem1A(html) {
        text so tags and page numbers cannot hide the difference. */
     const head = strip(html.slice(start, start + 400));
     if (!/^item\s*1\s*a\s*[.:\-]*\s*risk\s*factors/i.test(head)) continue;
+    /* A cross-reference quotes the heading verbatim and then continues
+       the sentence — "Item 1A. Risk Factors OF THIS Annual Report",
+       "...FOR more information". A real heading is followed by prose
+       that starts fresh, which may legitimately open with a preposition
+       ("In addition to the other information…"), so only the specific
+       reference continuations are rejected. */
+    if (/^item\s*1\s*a\s*[.:\-]*\s*risk\s*factors\s*[,"']*\s*(of\s+(this|our|the)|in\s+(this|part|item)|for\s+(more|additional|information|a\s+discussion)|to\s+this)\b/i.test(head)) continue;
     const endRe = /item\s*(?:&nbsp;|&#160;|\s)*(?:1\s*b|2)\b/gi;
     endRe.lastIndex = start + 40;
     const e = endRe.exec(html);
     if (!e) continue;
     const span = e.index - start;
     /* A contents row dies on the floor: its next-item reference arrives
-       within a line. Among the survivors the SMALLEST span wins, because
-       the genuine heading is the latest start before the terminator — an
-       earlier cross-reference that happens to read like the heading
-       necessarily spans further to reach the same Item 1B. */
+       within a line. Among the survivors the FIRST in document order
+       wins. Not the smallest: filers that repeat "Item 1A. Risk Factors"
+       as a page-continuation header create many later candidates whose
+       spans shrink toward the section's end, and the smallest of those is
+       the last page, not the section. The first qualifying start IS the
+       section — everything before it was a contents row (too small) or a
+       cross-reference (fails the heading pattern or has no terminator). */
     if (span < 8000 || span > 1500000) continue;
-    if (!best || span < best.span) best = { start: start, end: e.index, span: span };
+    best = { start: start, end: e.index, span: span };
+    break;
   }
   if (!best) return null;
   return html.slice(best.start, best.end);
