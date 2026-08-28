@@ -15,6 +15,7 @@ export const MAJOR_GROUP = {
   28: ["Pharmaceuticals & Chemicals", "Health Care"],
   29: ["Petroleum Refining", "Energy"],
   30: ["Rubber & Plastics", "Materials"],
+  31: ["Footwear & Leather Goods", "Consumer Discretionary"],
   32: ["Building Materials", "Materials"],
   33: ["Primary Metals", "Materials"],
   34: ["Fabricated Metal", "Industrials"],
@@ -65,6 +66,13 @@ export const MAJOR_GROUP = {
    customers have nothing in common. Same for chemicals versus
    pharmaceuticals in 28, and autos versus aerospace in 37. */
 export const INDUSTRY_GROUP = {
+  /* Footwear spans two SIC neighbourhoods — rubber footwear under 302
+     (Nike, Crocs) and everything-else footwear under 314 (Deckers,
+     Steven Madden, Wolverine). Without both, the industry cannot see
+     its own members: Crocs classified into Rubber & Plastics and its
+     real rivals into an unmapped group. */
+  302: ["Footwear", "Consumer Discretionary"],
+  314: ["Footwear", "Consumer Discretionary"],
   283: ["Pharmaceuticals", "Health Care"],
   281: ["Chemicals", "Materials"], 282: ["Chemicals", "Materials"],
   284: ["Household & Personal Products", "Consumer Staples"],

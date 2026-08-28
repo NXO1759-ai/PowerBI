@@ -28,6 +28,7 @@ import { buildStatements } from "../scripts/lib/statements.mjs";
 import { PANEL_FIELDS, panelYears } from "../scripts/lib/panel-row.mjs";
 import { classify } from "../scripts/lib/sic-map.mjs";
 import { SEC_UA } from "../scripts/lib/sec-pull.mjs";
+import { peerHint } from "../scripts/lib/peer-hints.mjs";
 
 export const maxDuration = 60;
 
@@ -60,11 +61,62 @@ async function tickers() {
   if (tickerByCik) return tickerByCik;
   const j = await (await getSec("https://www.sec.gov/files/company_tickers.json")).json();
   const map = new Map();
+  const byTicker = new Map();
   for (const row of Object.values(j)) {
     if (!map.has(row.cik_str)) map.set(row.cik_str, { ticker: row.ticker, name: row.title });
+    if (!byTicker.has(row.ticker)) byTicker.set(row.ticker, { cik: row.cik_str, name: row.title });
   }
+  map.byTicker = byTicker;
   tickerByCik = globalThis.__panelTickers = map;
   return map;
+}
+
+/**
+ * Peer nomination by the research model, used when no curated list
+ * exists. The model only NAMES companies — every number still comes from
+ * SEC filings, and any name that fails validation against the SEC
+ * registrant file is dropped with a reason rather than trusted.
+ */
+async function nominatePeers(name, ticker) {
+  const KEY = process.env.DEEPSEEK_API_KEY;
+  if (!KEY) return null;
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 14000);
+  try {
+    const resp = await fetch("https://api.deepseek.com/chat/completions", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + KEY, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "deepseek-chat",
+        messages: [
+          { role: "system", content:
+            "You are an equity research assistant building a comparable-company set. " +
+            "Name the closest publicly listed competitors an analyst would put in this " +
+            "company's comp set — same customers, same economics, same competitive arena. " +
+            "Prefer US-listed operating companies with SEC filings. Respond ONLY with JSON: " +
+            '{"peers":[{"ticker":"XXX","name":"Company Name"}]} — eight to twelve entries, ' +
+            "closest first. No commentary." },
+          { role: "user", content: "Company: " + name + " (" + ticker + ")" },
+        ],
+        response_format: { type: "json_object" },
+        temperature: 0.1,
+        max_tokens: 600,
+      }),
+      signal: ctrl.signal,
+    });
+    if (!resp.ok) return null;
+    const raw = await resp.json();
+    const parsed = JSON.parse(raw.choices[0].message.content);
+    if (!parsed || !Array.isArray(parsed.peers)) return null;
+    const out = parsed.peers
+      .map((p) => String(p.ticker || "").toUpperCase().replace(/[^A-Z0-9.\-]/g, ""))
+      .filter((x) => x && x !== ticker);
+    return out.length ? out.slice(0, 12) : null;
+  } catch (e) {
+    return null;
+  } finally {
+    clearTimeout(t);
+  }
 }
 
 /** One company, panel-row shaped. Returns null when the filer has no
@@ -97,31 +149,79 @@ async function companyRow(cik, fallbackName) {
   };
 }
 
-/** The largest 10-K filers sharing a SIC code, excluding one CIK. */
-async function livePeers(sic, excludeCik) {
-  const key = String(sic);
-  const hit = peerCache.get(key);
-  if (hit && Date.now() - hit.at < PEER_TTL) {
-    return hit.peers.filter((p) => p.cik !== Number(excludeCik));
-  }
+/** 10-K filers sharing a SIC code — the last-resort peer source. */
+async function sicCandidates(sic, excludeCik, tk) {
   const atom = await (await getSec(
-    "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&SIC=" + key +
+    "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&SIC=" + String(sic) +
     "&type=10-K&count=40&output=atom")).text();
   const ciks = [];
   let m;
   const re = /<CIK>(\d+)<\/CIK>/gi;
   while ((m = re.exec(atom))) ciks.push(Number(m[1]));
-  const tk = await tickers();
   /* listed operating companies only: a registrant with no ticker is a
      shell, a fund, or somebody's financing subsidiary */
-  const candidates = [...new Set(ciks)]
+  return [...new Set(ciks)]
     .filter((c) => c !== Number(excludeCik) && tk.has(c))
-    .slice(0, 14);
-  const rows = [];
-  for (const c of candidates) {
+    .map((c) => ({ cik: c, ticker: tk.get(c).ticker, name: tk.get(c).name }));
+}
+
+/**
+ * The peer set, in strict preference order:
+ *   1. the curated list — compiled from the peer groups companies
+ *      themselves disclose in their proxy statements
+ *   2. the research model's nomination, validated name by name
+ *   3. EDGAR's listing of filers under the same SIC code
+ * Whatever the source, every candidate is validated against the SEC
+ * registrant file and its numbers come from its own filings; candidates
+ * that fail are reported with the reason, not silently dropped.
+ */
+async function livePeers(company, subjectTicker, excludeCik) {
+  const cacheKey = subjectTicker + "|" + String(company.sic || "");
+  const hit = peerCache.get(cacheKey);
+  if (hit && Date.now() - hit.at < PEER_TTL) return hit.result;
+
+  const tk = await tickers();
+  const notes = [];
+  let method = null;
+  let named = peerHint(subjectTicker);
+  if (named) method = "disclosed comparables";
+  if (!named) {
+    named = await nominatePeers(company.name, subjectTicker);
+    if (named) method = "model-nominated";
+  }
+
+  const candidates = [];
+  const seen = new Set([Number(excludeCik)]);
+  if (named) {
+    for (const t of named) {
+      const rec = tk.byTicker.get(t);
+      if (!rec) { notes.push(t + " — not an SEC registrant, so its filings cannot be read"); continue; }
+      if (seen.has(rec.cik)) continue;
+      seen.add(rec.cik);
+      candidates.push({ cik: rec.cik, ticker: t, name: rec.name });
+    }
+  }
+  /* supplement from the industry code when the named set runs thin */
+  if (candidates.length < 6 && company.sic) {
     try {
-      const row = await companyRow(c, tk.get(c).name);
-      if (!row) continue;
+      for (const c of await sicCandidates(company.sic, excludeCik, tk)) {
+        if (seen.has(c.cik)) continue;
+        seen.add(c.cik);
+        candidates.push(c);
+        if (candidates.length >= 14) break;
+      }
+      if (!method) method = "industry code";
+    } catch (e) { /* the named set stands alone */ }
+  }
+
+  const rows = [];
+  for (const c of candidates.slice(0, 14)) {
+    try {
+      const row = await companyRow(c.cik, c.name);
+      if (!row) {
+        notes.push(c.ticker + " — files without US-GAAP facts (typically an IFRS filer), so its statements cannot be compared like-for-like");
+        continue;
+      }
       const yrs = Object.keys(row.years).map(Number).sort((a, b) => b - a);
       let latestRev = null;
       for (const y of yrs.slice(0, 3)) {
@@ -130,13 +230,20 @@ async function livePeers(sic, excludeCik) {
       }
       /* thousands: 50000 = $50m — below that a "peer" mostly adds noise */
       if (latestRev === null || latestRev < 50000) continue;
-      rows.push({ ticker: tk.get(c).ticker, rev: latestRev, row: row });
+      /* Peers cohort with the SUBJECT whatever their own code says —
+         Deckers files two SIC codes away from Crocs and the whole point
+         of a curated set is that the codes are wrong about them. */
+      row.ownIndustry = row.industry;
+      row.industry = company.industry;
+      row.sector = company.sector;
+      rows.push({ ticker: c.ticker, rev: latestRev, row: row });
     } catch (e) { /* a missing peer is not an error */ }
   }
   rows.sort((a, b) => b.rev - a.rev);
   const peers = rows.slice(0, 8).map((r) => Object.assign({ ticker: r.ticker }, r.row));
-  peerCache.set(key, { at: Date.now(), peers: peers });
-  return peers;
+  const result = { peers: peers, method: method || "industry code", notes: notes };
+  peerCache.set(cacheKey, { at: Date.now(), result: result });
+  return result;
 }
 
 export default async function handler(req, res) {
@@ -166,8 +273,12 @@ export default async function handler(req, res) {
        pulled live. */
     const wantLive = q.peers === "live";
     let peers = "panel";
-    if (wantLive && company.sic) {
-      peers = await livePeers(company.sic, cik);
+    let peerMethod = null, peerNotes = [];
+    if (wantLive) {
+      const got = await livePeers(company, ticker, cik);
+      peers = got.peers;
+      peerMethod = got.method;
+      peerNotes = got.notes;
     }
     res.setHeader("Cache-Control",
       force ? "no-store" : "s-maxage=3600, stale-while-revalidate=86400");
@@ -176,6 +287,8 @@ export default async function handler(req, res) {
       fields: PANEL_FIELDS,
       company: company,
       peers: peers,
+      peerMethod: peerMethod,
+      peerNotes: peerNotes,
       classification: {
         sic: company.sic, sicName: company.sicName,
         industry: company.industry, sector: company.sector,
