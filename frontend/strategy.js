@@ -2611,7 +2611,14 @@
   /* ---------- init ---------- */
   var urlT = (location.search.match(/[?&]t=([A-Za-z0-9.\-]+)/) || [])[1];
   var initial = urlT ? decodeURIComponent(urlT).toUpperCase() : "NVDA";
-  if (!PANEL[initial]) initial = "NVDA";
+  /* A deep link to a company outside the panel starts the live pull the
+     search box would have started; the panel default renders meanwhile
+     so the page is never blank. */
+  var liveStart = null;
+  if (!PANEL[initial]) {
+    if (indexEntry(initial)) liveStart = initial;
+    initial = "NVDA";
+  }
   var m0 = PANEL[initial];
   q.value = m0 ? initial + " — " + m0.name : initial;
   /* A shared link that opened the company view reopens it there. Set
@@ -2624,4 +2631,5 @@
     $("company-view").hidden = false;
   }
   setCompany(initial);
+  if (liveStart) { q.value = liveStart; setCompanyLive(liveStart, false); }
 })();
