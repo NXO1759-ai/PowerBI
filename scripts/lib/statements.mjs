@@ -437,9 +437,16 @@ function deriveFromYearToDate(bucket, quarterly, fyEndMonth) {
     const derivedEnd = ends[missingAt];
     if (byEnd.has(derivedEnd)) continue;
     /* subtract the known quarters from the span, statement by statement */
-    const period = { periodEnd: derivedEnd, label: null, fiscalYear: null,
-      fiscalPeriod: null, derived: true,
-      incomeStatement: {}, balanceSheet: {}, cashFlow: {} };
+    /* Every consumer of a period reads the same shape, so a derived one
+       carries every group a reported one does — per-share figures and
+       share counts null, since neither is a flow that can be subtracted
+       out of a year-to-date span. */
+    const period = { periodEnd: derivedEnd, periodStart: null, label: null,
+      fiscalYear: null, fiscalPeriod: null, derived: true,
+      incomeStatement: {}, balanceSheet: {}, cashFlow: {},
+      perShare: {}, shares: {} };
+    for (const k of Object.keys(span.perShare || {})) period.perShare[k] = null;
+    for (const k of Object.keys(span.shares || {})) period.shares[k] = null;
     let anyValue = false;
     for (const stmt of ["incomeStatement", "cashFlow"]) {
       for (const key of Object.keys(span[stmt] || {})) {
