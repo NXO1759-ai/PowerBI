@@ -33,34 +33,51 @@ export default async function handler(req, res) {
   }
   const body = req.body || {};
   const ticker = String(body.ticker || "").toUpperCase().replace(/[^A-Z0-9.\-]/g, "").slice(0, 12);
-  const period = String(body.periodLabel || "").slice(0, 40);
+  const period = String(body.periodLabel || "").slice(0, 60);
+  const kind = body.kind === "strategy" ? "strategy" : "statements";
   const facts = Array.isArray(body.facts)
-    ? body.facts.map((f) => String(f).slice(0, 400)).slice(0, 30) : [];
+    ? body.facts.map((f) => String(f).slice(0, 400)).slice(0, 40) : [];
   if (!ticker || !period || facts.length < 3) {
     return res.status(400).json({ error: "ticker, periodLabel and facts required" });
   }
   const force = !!body.force;
-  const key = ticker + "|" + period;
+  const key = kind + "|" + ticker + "|" + period;
   const hit = cache.get(key);
   if (!force && hit && Date.now() - hit.at < TTL) {
     res.setHeader("Cache-Control", "s-maxage=86400");
     return res.status(200).json(hit.payload);
   }
 
-  const system =
-    "You are a sell-side analyst writing the reading notes on a set of financial " +
-    "statements for a bright reader with a finance degree but no professional " +
-    "training. Rules, all hard: use ONLY the figures provided — never invent, " +
+  const RULES =
+    "Rules, all hard: use ONLY the figures provided — never invent, " +
     "estimate or recall a number from anywhere else; never name any AI system, " +
     "model or vendor; write in plain confident prose, no headers, no bullet " +
-    "points, no hedging boilerplate. Structure: exactly three paragraphs. " +
-    "First — the story of the period: what actually happened to the business, " +
-    "connecting the figures rather than listing them. Second — quality and " +
-    "durability: whether the reported result is backed by cash and mix, and " +
-    "which figure deserves the most scepticism. Third — the watch list: the " +
-    "two or three specific figures whose NEXT reading would confirm or break " +
-    "the story, and what each would mean. Respond ONLY as JSON: " +
-    '{"note": "<the three paragraphs, separated by \\n\\n>"}';
+    "points, no hedging boilerplate. ";
+  const system = kind === "strategy"
+    ? "You are an equity strategist writing the closing note on a competitive-" +
+      "position dashboard for a bright reader with a finance degree but no " +
+      "professional training. " + RULES +
+      "Structure: exactly three paragraphs. " +
+      "First — the position: where this company sits in its arena and WHY, " +
+      "arguing from the figures (returns against peers, margin versus turns, " +
+      "mix, share) rather than listing them. Second — durability: what the " +
+      "figures say protects the position, what is eroding it, and which single " +
+      "number is doing the most work in the bull case. Third — the tests: the " +
+      "two or three figures whose next readings would confirm or break the " +
+      "position, and what each outcome would mean for how the company should " +
+      "deploy capital. Respond ONLY as JSON: " +
+      '{"note": "<the three paragraphs, separated by \\n\\n>"}'
+    : "You are a sell-side analyst writing the reading notes on a set of financial " +
+      "statements for a bright reader with a finance degree but no professional " +
+      "training. " + RULES +
+      "Structure: exactly three paragraphs. " +
+      "First — the story of the period: what actually happened to the business, " +
+      "connecting the figures rather than listing them. Second — quality and " +
+      "durability: whether the reported result is backed by cash and mix, and " +
+      "which figure deserves the most scepticism. Third — the watch list: the " +
+      "two or three specific figures whose NEXT reading would confirm or break " +
+      "the story, and what each would mean. Respond ONLY as JSON: " +
+      '{"note": "<the three paragraphs, separated by \\n\\n>"}';
   const user = "Company: " + ticker + ". Period: " + period + ".\nComputed facts:\n- " +
     facts.join("\n- ");
 

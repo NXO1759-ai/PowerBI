@@ -249,3 +249,13 @@ table.grid td.pool-you, table.grid td.pool-you:first-child {
   font-size: 12px; line-height: 1.6; color: var(--kimi-color-text-secondary);
   margin-bottom: 4px;
 }
+
+/* the strategist's note */
+#strategy-note-body p {
+  font-size: 13px; line-height: 1.7; color: var(--kimi-color-text-secondary);
+  margin: 0 0 13px; max-inline-size: 86ch;
+}
+#strategy-note-body .note-meta {
+  font-size: 10.5px; color: var(--kimi-color-text-quaternary);
+  font-family: var(--rt-font-mono); margin-top: 4px;
+}

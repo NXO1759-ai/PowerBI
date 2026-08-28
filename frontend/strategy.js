@@ -2354,6 +2354,154 @@
       "questions and are deliberately not combined into one score.</p>";
   }
 
+  /* ---------- the strategist's note ----------
+     The page's own computed figures, restated as plain facts and sent to
+     the research model, which is instructed to use them and nothing
+     else. Facts are recomputed from the same library calls the sections
+     use, so the note can never know something the page does not show. */
+  function collectStrategyFacts() {
+    var facts = [];
+    var me = PANEL[state.ticker];
+    if (!me) return facts;
+    var f = function (t) { if (t) facts.push(t); };
+    var ind = state.industry;
+    var members = BY_INDUSTRY[ind] || [];
+    f(me.name + " (" + state.ticker + ") in " + ind + ", " + members.length +
+      " covered peers, sector " + me.sector);
+
+    var data = null;
+    try { data = industryData(ind); } catch (e) { data = null; }
+    if (data && data.series.length) {
+      var last = data.series[data.series.length - 1];
+      if (isNum(last.cr4)) f("Industry concentration: CR4 " + pct(last.cr4) +
+        (isNum(last.hhi) ? ", HHI " + Math.round(last.hhi) : ""));
+      if (isNum(last.industryMargin)) f("Industry operating margin " + pct(last.industryMargin) +
+        (isNum(last.marginSpread) ? ", spread between quartiles " + pp(last.marginSpread) : ""));
+    }
+
+    var years = Object.keys(me.years).map(Number).sort(function (a, b) { return a - b; });
+    var co = S.companyRoicSeries(get, me, years, S.isFinancial(me));
+    var coh = S.cohortRoicSeries(get, members, years);
+    var adv = S.advantageSpread(co, coh, 5);
+    if (adv) {
+      f("Return on invested capital, 5-yr avg to " + adv.toYear + ": company " + pct(adv.co) +
+        " vs peer median " + pct(adv.cohort) + " over the same years (gap " + pp(adv.gap) + ")");
+      var mine = {}; co.forEach(function (d) { mine[d.year] = d.roic; });
+      var med = {}; coh.forEach(function (d) { med[d.year] = d.median; });
+      var pers = S.persistence(mine, med);
+      if (pers) f("Above the peer median in " + pers.yearsAbove + " of " + pers.years + " years");
+    }
+
+    var year = S.latestResolvedYear(get, me, function (p) { return p.incomeStatement.revenue; }, 5);
+    if (year !== null) {
+      var period = S.toPeriod(get, me.years[year], year);
+      var prior = me.years[year - 1] ? S.toPeriod(get, me.years[year - 1], year - 1) : null;
+      var mFn = function (p) { return S.div(S.ebitOf(p, false), p.incomeStatement.revenue); };
+      var gmFn = function (p) {
+        var is = p.incomeStatement;
+        var gp = isNum(is.grossProfit) ? is.grossProfit : (isNum(is.cogs) ? is.revenue - is.cogs : null);
+        return S.div(gp, is.revenue);
+      };
+      var oiFn = function (p) {
+        var is = p.incomeStatement;
+        if (!isNum(is.sellingGeneralAdmin) && !isNum(is.researchDevelopment)) return null;
+        return S.div((is.sellingGeneralAdmin || 0) + (is.researchDevelopment || 0), is.revenue);
+      };
+      var cg = S.cohortStats(get, members, year, gmFn);
+      var coi = S.cohortStats(get, members, year, oiFn);
+      var route = S.marginRoute(period, cg.median, coi.median);
+      if (route && route.label) {
+        f("Margin route vs peers (" + year + "): gross margin gap " + pp(route.grossMarginGap) +
+          ", overhead advantage " + pp(route.opexIntensityGap) + " — " + route.label);
+      }
+      var wc = S.workingCapitalDays(period, prior);
+      if (isNum(wc.cashCycle)) f("Cash conversion cycle " + Math.round(wc.cashCycle) + " days");
+      var revs = years.map(function (y) {
+        var row = me.years[y]; return row ? { y: y, v: get(row, "revenue") } : null;
+      }).filter(function (d) { return d && isNum(d.v); });
+      if (revs.length >= 2) {
+        var lastR = revs[revs.length - 1], f5 = revs[Math.max(0, revs.length - 6)];
+        var cagr5 = S.cagr(f5.v, lastR.v, lastR.y - f5.y);
+        if (isNum(cagr5)) f("Revenue " + money(lastR.v) + " in " + lastR.y +
+          ", growing " + pct(cagr5) + " a year over five years");
+      }
+      var mix = S.reinvestmentMix(get, me, years);
+      if (mix.length) {
+        var m = mix[mix.length - 1];
+        f("Capital deployment " + m.year + ": capex " + pct(m.capex) + ", R&D " + pct(m.rnd) +
+          ", dividends " + pct(m.dividends) + ", buybacks " + pct(m.buybacks) +
+          " of operating cash flow");
+      }
+    }
+
+    var sd = (window.SEGMENT_DATA || {})[state.ticker];
+    if (sd && sd.revenue) {
+      ["segment", "geography"].forEach(function (kind) {
+        var by = sd.revenue[kind];
+        var ends = by ? Object.keys(by).sort() : [];
+        if (!ends.length) return;
+        var latest = ends[ends.length - 1];
+        var rows = Object.entries(by[latest]).sort(function (a, b) { return b[1] - a[1]; });
+        var total = rows.reduce(function (a, r) { return a + r[1]; }, 0);
+        if (rows.length && total > 0) {
+          f((kind === "segment" ? "Largest segment: " : "Largest geography: ") +
+            humanMember(rows[0][0]) + " at " + pct(rows[0][1] / total) +
+            " of the disclosed split (FY ended " + latest + ")");
+        }
+      });
+    }
+    var rk = (window.RISK_DATA || {})[state.ticker];
+    if (rk && rk.extracted) f("The annual filing names " + rk.headings.length + " risks in Item 1A");
+
+    var pi = LIVE_PEER_INFO[state.ticker];
+    if (pi && pi.peers.length) f("Peer set (" + pi.method + "): " + pi.peers.join(", "));
+    return facts;
+  }
+
+  var STRATEGY_NOTE = { cache: {}, force: false };
+  function renderStrategyNote() {
+    var host = $("strategy-note-body");
+    var section = document.getElementById("sec-strategy-note");
+    if (!host || !section) return;
+    var facts = collectStrategyFacts();
+    if (facts.length < 4) { section.hidden = true; return; }
+    var label = state.industry + " · " + state.view;
+    var key = state.ticker + "|" + label;
+    if (STRATEGY_NOTE.cache[key] && !STRATEGY_NOTE.force) {
+      paint(STRATEGY_NOTE.cache[key]);
+      return;
+    }
+    var wantForce = STRATEGY_NOTE.force;
+    STRATEGY_NOTE.force = false;
+    section.hidden = false;
+    host.innerHTML = "<p class='hint' role='status'>Writing the note from the figures above…</p>";
+    fetch(API_BASE + "/api/fsa-note", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ kind: "strategy", ticker: state.ticker,
+        periodLabel: label, facts: facts, force: wantForce })
+    }).then(function (r) {
+      if (r.status === 503) throw new Error("unconfigured");
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }).then(function (d) {
+      STRATEGY_NOTE.cache[key] = d;
+      if (state.ticker + "|" + state.industry + " · " + state.view === key) paint(d);
+    }).catch(function (e) {
+      if (String(e.message) === "unconfigured") { section.hidden = true; return; }
+      host.innerHTML = "<p class='hint'>The note could not be written just now. " +
+        "Every figure above stands on its own.</p>";
+    });
+    function paint(d) {
+      section.hidden = false;
+      host.innerHTML = String(d.note || "").split("\n\n").map(function (p) {
+        return "<p>" + esc(p) + "</p>";
+      }).join("") +
+      "<p class='note-meta'>Written from the figures on this page and nothing else; " +
+      "regenerated when the page refreshes or the company changes.</p>";
+    }
+  }
+
   /* ---------- view dispatch ---------- */
   function renderCompanyView() {
     var ctx = companyContext();
@@ -2422,6 +2570,7 @@
       "so the window reaches back roughly 19 years rather than to 2002. " +
       "Industry grouping is the SEC's own SIC classification, refined to three digits where " +
       "the two-digit group mixes businesses that do not compete. Not investment advice.";
+    renderStrategyNote();
   }
 
   function setCompany(ticker) {
@@ -2483,6 +2632,7 @@
     var was = btn.textContent;
     btn.textContent = "Refreshing…";
     delete STOCK_CACHE[state.ticker];
+    STRATEGY_NOTE.force = true;
     if (LIVE[state.ticker]) {
       /* a live company refreshes from SEC, then re-renders */
       var t = state.ticker;

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Private Credit Report — Research Terminal</title>
+<meta name="description" content="The credit view of the same filings: leverage, coverage, maturities, liquidity runway and covenant headroom. In build." />
+<meta name="theme-color" content="#0b0d0f" />
+<meta name="color-scheme" content="dark" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Research Terminal" />
+<meta property="og:title" content="Private Credit Report — Research Terminal" />
+<meta property="og:description" content="The credit view of the same filings: leverage, coverage, maturities, liquidity runway and covenant headroom. In build." />
+<meta property="og:url" content="https://www.chineduokeke.mba/credit.html" />
+<meta name="twitter:card" content="summary" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f5c518'/%3E%3Ctext x='32' y='43' font-family='Menlo,Consolas,monospace' font-size='26' font-weight='700' text-anchor='middle' fill='%23151515'%3ERT%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="statements.css" />
+<style>[hidden]{display:none!important}
+.credit-hero { max-inline-size: 78ch; }
+.credit-hero h1 { font-size: 22px; margin: 0 0 10px; }
+.credit-hero .lede {
+  font-size: 13.5px; line-height: 1.7; color: var(--kimi-color-text-secondary);
+  margin: 0 0 8px;
+}
+.credit-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px; margin-top: 18px;
+}
+.credit-card {
+  border: 1px solid var(--kimi-color-border); border-radius: 10px;
+  background: var(--page-bg); padding: 14px 16px 12px;
+}
+.credit-card h3 {
+  font-size: 12.5px; font-weight: 600; margin: 0 0 5px;
+  color: var(--rt-gold);
+}
+.credit-card p {
+  font-size: 12px; line-height: 1.6; color: var(--kimi-color-text-secondary);
+  margin: 0;
+}
+.credit-spine {
+  font-size: 12px; line-height: 1.65; color: var(--kimi-color-text-tertiary);
+  border-inline-start: 2px solid var(--rt-gold-border);
+  padding-inline-start: 12px; margin-top: 20px; max-inline-size: 78ch;
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-mark">RT</span>
+      <span class="brand-title">Research Terminal</span>
+    </div>
+    <nav class="nav-tabs" aria-label="Dashboards">
+      <a class="nav-tab" href="index.html"><span class="tab-long">Company Overview</span><span class="tab-short">Overview</span></a>
+      <a class="nav-tab" href="statements.html"><span class="tab-long">Financial Statement Analysis</span><span class="tab-short">Statements</span></a>
+      <a class="nav-tab active" href="credit.html" aria-current="page"><span class="tab-long">Private Credit Report</span><span class="tab-short">Credit</span> <span class="soon-pill">Soon</span></a>
+      <a class="nav-tab" href="strategy.html"><span class="tab-long">Strategy Analysis</span><span class="tab-short">Strategy</span></a>
+    </nav>
+    <div class="topbar-right"></div>
+  </div>
+</header>
+
+<main class="app">
+  <section class="panel-card fsa-section credit-hero" aria-labelledby="h-credit">
+    <h1 id="h-credit">The credit view is in build</h1>
+    <p class="lede">
+      Equity analysis asks what a business is worth; credit analysis asks
+      whether it can pay. Same filings, different question — and the data
+      spine this terminal already runs (fundamentals refreshed weekly from
+      SEC EDGAR, statements parsed to the line item, segment and risk
+      detail read from each filing) is the spine a credit report needs.
+      What follows is what this page will compute when it opens.
+    </p>
+  </section>
+
+  <section class="panel-card fsa-section" aria-label="Planned coverage">
+    <div class="credit-grid">
+      <div class="credit-card">
+        <h3>Leverage &amp; coverage</h3>
+        <p>Gross and net leverage through EBITDA and through free cash flow,
+        interest cover on both, and the trend of each across the cycle —
+        the four numbers every credit committee reads first.</p>
+      </div>
+      <div class="credit-card">
+        <h3>Maturity wall</h3>
+        <p>When the debt actually comes due, from the filings' own maturity
+        schedules — refinancing risk is a calendar before it is a ratio.</p>
+      </div>
+      <div class="credit-card">
+        <h3>Liquidity runway</h3>
+        <p>Cash, undrawn capacity where disclosed, and the burn or build
+        against it — how long the company operates if markets shut.</p>
+      </div>
+      <div class="credit-card">
+        <h3>Covenant headroom</h3>
+        <p>Where reported figures sit against the covenant levels filers
+        disclose, and how much deterioration the headroom absorbs.</p>
+      </div>
+      <div class="credit-card">
+        <h3>Priority &amp; recovery</h3>
+        <p>What ranks ahead of what — secured, unsecured, leases,
+        pensions — and what the asset side suggests each layer recovers.</p>
+      </div>
+      <div class="credit-card">
+        <h3>The credit cycle</h3>
+        <p>The same macro feed the strategy page reads — policy rate, curve,
+        claims — pointed at the question credit cares about: what happens
+        to this borrower when refinancing costs what the curve says next.</p>
+      </div>
+    </div>
+    <p class="credit-spine">
+      Everything above will be computed from filings and stated sources the
+      way the rest of the terminal works: every figure traceable, every gap
+      named rather than filled, and an analyst's note arguing what the
+      numbers mean together. Until it opens, the Overview, Statements and
+      Strategy pages already carry the balance-sheet, cash-flow and
+      coverage figures a credit read starts from.
+    </p>
+  </section>
+</main>
+</body>
+</html>
