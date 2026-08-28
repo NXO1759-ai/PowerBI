@@ -455,6 +455,8 @@
       return (isNum(v) && isNum(rev) && rev !== 0) ? v / rev : null;
     };
     var sentences = [];
+    var factLines = [];
+    var fact = function (t) { factLines.push(t); };
 
     /* -- horizontal: what moved -- */
     var is1 = now.incomeStatement, is0 = before.incomeStatement;
@@ -478,6 +480,11 @@
         }).join(", ") + ".";
       }
       sentences.push(p1);
+      fact("Revenue " + (revG >= 0 ? "grew " : "fell ") + pct(Math.abs(revG)) +
+        " (" + cmpLabel.replace(/<[^>]*>/g, "") + "); largest moves: " +
+        movers.slice(0, 3).map(function (m) {
+          return m.name + " " + (m.g >= 0 ? "+" : "−") + pct(Math.abs(m.g));
+        }).join(", "));
     }
 
     /* -- operating leverage -- */
@@ -501,6 +508,8 @@
         p2 += "Operating profit moved roughly in line with revenue over the period.";
       }
       sentences.push(p2);
+      fact("Operating income moved " + (oiG >= 0 ? "+" : "−") + pct(Math.abs(oiG)) +
+        " against revenue " + (revG >= 0 ? "+" : "−") + pct(Math.abs(revG)));
     }
 
     /* -- common-size: did the shape change -- */
@@ -516,6 +525,7 @@
       sentences.push("<strong>The shape of a revenue dollar.</strong> In common-size terms, " +
         shape.join(", ") + " — margin moves in points of revenue are the changes that persist, " +
         "where dollar moves can be mere scale.");
+      fact("Common-size shifts: " + shape.join(", "));
     }
 
     /* -- working capital against sales -- */
@@ -535,6 +545,7 @@
       if (wc.length) {
         sentences.push("<strong>Working capital against sales.</strong> " +
           wc.join("; ") + ".");
+        fact("Working-capital flags: " + wc.join("; "));
       }
     }
 
@@ -555,12 +566,146 @@
         }
       }
       sentences.push(p5);
+      fact("Operating cash flow was " + conv.toFixed(2) + "x reported net income");
+    }
+
+    /* -- effective tax rate, per the statement-review checklist -- */
+    var tax1 = is1.incomeTax, pre1 = is1.pretaxIncome;
+    var tax0 = is0.incomeTax, pre0 = is0.pretaxIncome;
+    if (isNum(tax1) && isNum(pre1) && pre1 > 0) {
+      var etr1 = tax1 / pre1;
+      var etr0 = (isNum(tax0) && isNum(pre0) && pre0 > 0) ? tax0 / pre0 : null;
+      var p6 = "<strong>Tax.</strong> The effective tax rate was " + pct(etr1);
+      if (isNum(etr0) && Math.abs(etr1 - etr0) >= 0.005) {
+        p6 += ", " + (etr1 > etr0 ? "up" : "down") + " from " + pct(etr0) +
+          " — a move worth attributing before it is extrapolated, since rate " +
+          "changes, one-off items and jurisdiction mix all land in this line.";
+        fact("Effective tax rate " + pct(etr1) + " vs " + pct(etr0) + " in the base period");
+      } else {
+        p6 += ", in line with the base period.";
+        fact("Effective tax rate steady at " + pct(etr1));
+      }
+      sentences.push(p6);
     }
 
     host.innerHTML =
       "<p class='reading-head'>" + cmpLabel + "</p>" +
       sentences.map(function (x) { return "<p>" + x + "</p>"; }).join("");
+    var flagged = renderVariances(now, before, pair);
+    if (flagged.length) {
+      fact("Material variances flagged: " + flagged.join("; "));
+    }
+    renderAnalystNote(factLines, now.label);
   }
+
+  /**
+   * Material-variance summary. Thresholds scale with the size of the
+   * line, and a flag requires BOTH the percentage and the dollar move —
+   * a big line drifting 2% is noise, a small line doubling off nothing
+   * is also noise. Direction reads favourable the way the statement
+   * does: more revenue and profit good, more cost bad, balance-sheet
+   * builds neutral until read against sales.
+   */
+  function renderVariances(now, before, pair) {
+    var FAV_UP = { revenue: 1, grossProfit: 1, operatingIncome: 1, netIncome: 1,
+      netIncomeIncludingNci: 1, cfOps: 1 };
+    var FAV_DOWN = { cogs: 1, researchDevelopment: 1, sellingGeneralAdmin: 1,
+      interestExpense: 1, incomeTax: 1 };
+    var SCAN = [
+      ["incomeStatement", INCOME_ROWS], ["balanceSheet", BALANCE_ROWS],
+      ["cashFlow", CASHFLOW_ROWS]
+    ];
+    var rows = [];
+    SCAN.forEach(function (grp) {
+      grp[1].forEach(function (r) {
+        if (!r[0]) return;
+        var a = now[grp[0]][r[0]], b = before[grp[0]][r[0]];
+        if (!isNum(a) || !isNum(b) || b === 0) return;
+        var dAbs = a - b, dPct = Math.abs(b) > 0 ? dAbs / Math.abs(b) : null;
+        if (!isNum(dPct)) return;
+        var size = Math.abs(b);
+        var needPct = size > 10e9 ? 0.05 : size > 1e9 ? 0.10 : 0.15;
+        var needAbs = size > 10e9 ? 500e6 : size > 1e9 ? 100e6 : 50e6;
+        var material = Math.abs(dPct) >= needPct && Math.abs(dAbs) >= needAbs;
+        if (!material) return;
+        var dir = FAV_UP[r[0]] ? (dAbs >= 0 ? "Favourable" : "Unfavourable")
+          : FAV_DOWN[r[0]] ? (dAbs <= 0 ? "Favourable" : "Unfavourable") : "—";
+        rows.push({ label: r[1], a: a, b: b, dAbs: dAbs, dPct: dPct, dir: dir });
+      });
+    });
+    rows.sort(function (x, y) { return Math.abs(y.dAbs) - Math.abs(x.dAbs); });
+    var el = $("t-variance");
+    if (!el) return [];
+    if (!rows.length) {
+      el.innerHTML = "<tbody><tr><td>No line crossed its materiality threshold " +
+        "against " + esc(before.label) + " — the period moved, but within the noise " +
+        "bands a reviewer would accept without a question.</td></tr></tbody>";
+      return [];
+    }
+    el.innerHTML = "<thead><tr><th scope='col'>Line</th>" +
+      "<th scope='col' class='num'>" + esc(now.label) + "</th>" +
+      "<th scope='col' class='num'>" + esc(before.label) + "</th>" +
+      "<th scope='col' class='num'>Δ $</th><th scope='col' class='num'>Δ %</th>" +
+      "<th scope='col'>Direction</th></tr></thead><tbody>" +
+      rows.map(function (r) {
+        return "<tr><td>" + esc(r.label) + "</td>" +
+          "<td class='num'>" + money(r.a) + "</td>" +
+          "<td class='num'>" + money(r.b) + "</td>" +
+          "<td class='num flag'>" + (r.dAbs >= 0 ? "+" : "−") + money(Math.abs(r.dAbs)) + "</td>" +
+          "<td class='num flag'>" + (r.dPct >= 0 ? "+" : "−") + pct(Math.abs(r.dPct)) + "</td>" +
+          "<td>" + esc(r.dir) + "</td></tr>";
+      }).join("") + "</tbody>";
+    return rows.slice(0, 5).map(function (r) {
+      return r.label + " " + (r.dPct >= 0 ? "+" : "−") + pct(Math.abs(r.dPct)) +
+        (r.dir !== "—" ? " (" + r.dir.toLowerCase() + ")" : "");
+    });
+  }
+
+  /* ---------- the analyst's note ---------- */
+  var NOTE_BASE = /^(localhost|127[.])/.test(location.hostname)
+    ? "https://www.chineduokeke.mba" : "";
+  var NOTE_CACHE = {};
+  function renderAnalystNote(factLines, periodLabel) {
+    var host = $("analyst-note-body");
+    var section = document.getElementById("sec-analyst");
+    if (!host || !section) return;
+    if (!factLines || factLines.length < 3) { section.hidden = true; return; }
+    var key = state.ticker + "|" + state.basis + "|" + periodLabel;
+    if (NOTE_CACHE[key] && !state.noteForce) {
+      paintNote(NOTE_CACHE[key]);
+      return;
+    }
+    section.hidden = false;
+    host.innerHTML = "<p class='hint' role='status'>Writing the note from the figures above…</p>";
+    var wantForce = !!state.noteForce;
+    state.noteForce = false;
+    fetch(NOTE_BASE + "/api/fsa-note", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ticker: state.ticker, periodLabel: periodLabel,
+        facts: factLines, force: wantForce })
+    }).then(function (r) {
+      if (r.status === 503) throw new Error("unconfigured");
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }).then(function (d) {
+      NOTE_CACHE[key] = d;
+      paintNote(d);
+    }).catch(function (e) {
+      if (String(e.message) === "unconfigured") { section.hidden = true; return; }
+      host.innerHTML = "<p class='hint'>The note could not be written just now. " +
+        "Every figure above stands on its own.</p>";
+    });
+    function paintNote(d) {
+      section.hidden = false;
+      host.innerHTML = String(d.note || "").split("\n\n").map(function (p) {
+        return "<p>" + esc(p) + "</p>";
+      }).join("") +
+      "<p class='note-meta'>Written from the computed figures above and nothing else; " +
+      "regenerated when the statements refresh.</p>";
+    }
+  }
+
 
   /* ---------- orchestration ---------- */
   function renderAll() {
@@ -600,6 +745,7 @@
   }
 
   function setCompany(ticker, force) {
+    state.noteForce = !!force;
     state.ticker = ticker;
     var meta = BY_TICKER[ticker];
     $("co-name").textContent = meta ? meta[2] : ticker;

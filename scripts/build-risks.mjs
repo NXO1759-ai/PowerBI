@@ -24,6 +24,7 @@
  * the filing itself so a reader can verify every line.
  */
 import { readFileSync, writeFileSync } from "node:fs";
+import { strip, extractItem1A, extractHeadings } from "./lib/filing-parse.mjs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -63,83 +64,8 @@ async function fetch200(url) {
   throw new Error("retries exhausted");
 }
 
-/* ---------- Item 1A isolation ---------- */
-const strip = (h) => h
-  .replace(/<[^>]*>/g, " ")
-  .replace(/&nbsp;|&#160;|&#xa0;/gi, " ")
-  .replace(/&amp;/gi, "&").replace(/&#8217;|&rsquo;/gi, "'")
-  .replace(/&#8220;|&#8221;|&ldquo;|&rdquo;/gi, '"')
-  .replace(/&#8211;|&ndash;/gi, "-").replace(/&#8212;|&mdash;/gi, "-")
-  .replace(/\s+/g, " ").trim();
-
-export function extractItem1A(html) {
-  /* "Item 1A" appears several times: the contents page, the section
-     heading, and cross-references from the MD&A ("the factors described
-     in Item 1A"). Three facts separate the real section from the rest:
-     it is always followed by an Item 1B or Item 2 heading, because that
-     is the fixed order of Part I; it runs for pages; and a contents
-     entry's terminator arrives within a line. A cross-reference in Part
-     II has NO 1B or 2 after it at all, so requiring the terminator
-     removes it without any formatting assumption. The section may
-     mention Item 7A or Item 8 internally, which is why the terminator is
-     specifically 1B-or-2 rather than any item number. */
-  const oneARe = /item\s*(?:&nbsp;|&#160;|\s)*1\s*a\b/gi;
-  const starts = [];
-  let m;
-  while ((m = oneARe.exec(html))) starts.push(m.index);
-  if (!starts.length) return null;
-  let best = null;
-  for (const start of starts) {
-    /* The real heading announces itself — "Item 1A. Risk Factors" — and
-       is followed by prose, where a contents entry runs into the next
-       item's line within a few dozen characters. Checked on stripped
-       text so tags and page numbers cannot hide the difference. */
-    const head = strip(html.slice(start, start + 400));
-    if (!/^item\s*1\s*a\s*[.:\-]*\s*risk\s*factors/i.test(head)) continue;
-    const endRe = /item\s*(?:&nbsp;|&#160;|\s)*(?:1\s*b|2)\b/gi;
-    endRe.lastIndex = start + 40;
-    const e = endRe.exec(html);
-    if (!e) continue;
-    const span = e.index - start;
-    /* A contents row dies on the floor: its next-item reference arrives
-       within a line. Among the survivors the SMALLEST span wins, because
-       the genuine heading is the latest start before the terminator — an
-       earlier cross-reference that happens to read like the heading
-       necessarily spans further to reach the same Item 1B. */
-    if (span < 8000 || span > 1500000) continue;
-    if (!best || span < best.span) best = { start: start, end: e.index, span: span };
-  }
-  if (!best) return null;
-  return html.slice(best.start, best.end);
-}
-
-export function extractHeadings(sectionHtml) {
-  const out = [];
-  const seen = new Set();
-  const push = (raw) => {
-    let t = strip(raw).replace(/[.;:]\s*$/, "");
-    /* bullets and stray page numbers travel inside the styled run */
-    t = t.replace(/&#8226;|&bull;/gi, " ").replace(/^[•·▪◦\s]+/, "")
-         .replace(/^\d{1,3}\s+(?=[A-Z])/, "").replace(/\s+/g, " ").trim();
-    if (t.length < 25 || t.length > 300) return;
-    if (!/[a-z]/.test(t) || !/\s/.test(t)) return;
-    /* page furniture and cross-references */
-    if (/^(item|table of contents|part\s+[ivx]+|risk factors?|summary)/i.test(t)) return;
-    if (/^\d+$/.test(t)) return;
-    const key = t.toLowerCase();
-    if (seen.has(key)) return;
-    seen.add(key);
-    out.push(t);
-  };
-  /* bold and italic elements */
-  let m;
-  const tagRe = /<(b|strong|i|em)\b[^>]*>([\s\S]{10,2000}?)<\/\1>/gi;
-  while ((m = tagRe.exec(sectionHtml))) push(m[2]);
-  /* spans styled bold or italic inline */
-  const spanRe = /<(span|p|div)\b[^>]*style="[^"]*(?:font-weight\s*:\s*(?:bold|[7-9]00)|font-style\s*:\s*italic)[^"]*"[^>]*>([\s\S]{10,2000}?)<\/\1>/gi;
-  while ((m = spanRe.exec(sectionHtml))) push(m[2]);
-  return out;
-}
+/* Parsers live in scripts/lib/filing-parse.mjs, shared with the
+   on-demand endpoints. */
 
 /* ---------- per company ---------- */
 async function pull(ticker, cik) {

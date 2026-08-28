@@ -761,8 +761,8 @@ window.INDUSTRY_MAP = {
   "name": "NIKE, Inc.",
   "sic": "3021",
   "sicName": "Rubber & Plastics Footwear",
-  "industry": "Rubber & Plastics",
-  "sector": "Materials",
+  "industry": "Footwear",
+  "sector": "Consumer Discretionary",
   "exchange": "NYSE"
  },
  "NOW": {
@@ -1361,7 +1361,7 @@ window.INDUSTRY_MEMBERS = {
  "Motion Pictures": [
   "NFLX"
  ],
- "Rubber & Plastics": [
+ "Footwear": [
   "NKE"
  ],
  "Auto Retail": [

@@ -51,6 +51,39 @@
     ensureIndustryOption(c.industry);
   }
 
+  var LIVE_PEER_INFO = {};
+
+  /**
+   * Segment tables and the risk register come from weekly builds for
+   * covered companies; a live company gets both parsed on demand from
+   * its own filings — same parsers, same shape — and the blocks redraw
+   * when the data lands.
+   */
+  function pullFilingDetail(ticker, cik, force) {
+    var qs = "?ticker=" + encodeURIComponent(ticker) + "&cik=" + encodeURIComponent(cik) +
+      (force ? "&force=1" : "");
+    if (force || !(window.SEGMENT_DATA || {})[ticker]) {
+      fetch(API_BASE + "/api/segments" + qs)
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (p) {
+          if (!p) return;
+          window.SEGMENT_DATA = window.SEGMENT_DATA || {};
+          window.SEGMENT_DATA[ticker] = p;
+          if (state.ticker === ticker && state.view === "company") renderDisaggregation();
+        }).catch(function () {});
+    }
+    if (force || !(window.RISK_DATA || {})[ticker]) {
+      fetch(API_BASE + "/api/risks?cik=" + encodeURIComponent(cik) + (force ? "&force=1" : ""))
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (p) {
+          if (!p) return;
+          window.RISK_DATA = window.RISK_DATA || {};
+          window.RISK_DATA[ticker] = p;
+          if (state.ticker === ticker && state.view === "company") renderRiskRegister();
+        }).catch(function () {});
+    }
+  }
+
   /**
    * A company outside the exported panel: pull it, and — when its
    * industry is thin here — pull the largest listed filers sharing its
@@ -78,6 +111,7 @@
         PANEL[ticker] = d.company;
         LIVE[ticker] = true;
         addToCohorts(ticker);
+        pullFilingDetail(ticker, row[1], !!force);
         var members = BY_INDUSTRY[d.company.industry] || [];
         if (members.length >= 4) return null;
         /* thin cohort: second call brings the peers; the subject is
@@ -96,6 +130,11 @@
                 addToCohorts(p.ticker);
               }
             });
+            LIVE_PEER_INFO[ticker] = {
+              method: d2.peerMethod || "industry code",
+              peers: d2.peers.map(function (p) { return p.ticker; }),
+              notes: d2.peerNotes || []
+            };
           }
         });
       })
@@ -1115,6 +1154,14 @@
     } else {
       parts.push("Not enough matched years to compare " + esc(state.ticker) +
         " against its peers on return on capital.");
+    }
+    var pi = LIVE_PEER_INFO[state.ticker];
+    if (pi && pi.peers.length) {
+      parts.push("<span class='soft'>Peer set (" + esc(pi.method) + "): " +
+        pi.peers.map(esc).join(", ") +
+        ". Every figure comes from each company's own SEC filings." +
+        (pi.notes.length ? " Named but not comparable: " + esc(pi.notes.join("; ")) + "." : "") +
+        "</span>");
     }
     $("exec-caption").innerHTML = parts.join(" ");
 

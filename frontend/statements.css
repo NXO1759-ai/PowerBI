@@ -230,3 +230,13 @@ table.stmt td.derived-cell::after {
   margin: 16px 0 6px;
 }
 #reading-body .reading-head:first-child { margin-top: 0; }
+
+#analyst-note-body p {
+  font-size: 13px; line-height: 1.7; color: var(--kimi-color-text-secondary);
+  margin: 0 0 13px; max-inline-size: 86ch;
+}
+#analyst-note-body .note-meta {
+  font-size: 10.5px; color: var(--kimi-color-text-quaternary);
+  font-family: var(--rt-font-mono); margin-top: 4px;
+}
+#t-variance td.flag { color: #d4a13c; font-weight: 600; }
