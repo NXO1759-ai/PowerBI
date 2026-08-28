@@ -128,10 +128,11 @@ function fillFromComposites(series, bucket, field, opts) {
   return series;
 }
 
-function durationSeries(bucket, tags, { annual }) {
+function durationSeries(bucket, tags, { annual, spanTest }) {
+  const test = spanTest || (annual ? isAnnualSpan : isQuarterSpan);
   const rows = pickRows(bucket, tags, usdRows)
     .filter((r) => REPORT_FORM.test(r.form || "") && r.end)
-    .filter((r) => (annual ? isAnnualSpan(spanDays(r)) : isQuarterSpan(spanDays(r))));
+    .filter((r) => test(spanDays(r)));
   const out = new Map();
   for (const r of keepLatestFiled(rows)) {
     out.set(r.end, { value: r.val, end: r.end, start: r.start,
@@ -250,8 +251,8 @@ function midpoint(start, end) {
  *
  * Returns newest-last, so charts and trend arithmetic read left to right.
  */
-export function buildStatementSeries(bucket, { annual, limit = 20, fyEndMonth } = {}) {
-  const opts = { annual };
+export function buildStatementSeries(bucket, { annual, limit = 20, fyEndMonth, spanTest } = {}) {
+  const opts = { annual, spanTest };
 
   const income = {};
   for (const [k, tags] of Object.entries(INCOME)) {
@@ -388,14 +389,100 @@ function deriveFourthQuarters(annual, quarterly) {
 }
 
 /** Both grains from one bucket, with Q4 filled in. */
-export function buildStatements(bucket, { annualLimit = 10, quarterLimit = 20 } = {}) {
+/**
+ * Quarters recovered from a year-to-date span.
+ *
+ * A 10-Q reports the quarter AND the year to date, so a half-year of
+ * $418.5m alongside a second quarter of $201.8m states the first quarter
+ * at $216.7m as surely as if it were tagged. The subtraction is only
+ * made when exactly one quarter of the span is missing and the rest are
+ * present, so a gap of two quarters never collapses into one overstated
+ * period.
+ *
+ * This matters most for a company whose facts feed carries a single
+ * filing: a recent listing has no annual report for deriveFourthQuarters
+ * to work from, and without this its dashboard shows two quarters where
+ * the filing supports four.
+ */
+function deriveFromYearToDate(bucket, quarterly, fyEndMonth) {
+  const ytdSpan = (d) => d !== null &&
+    ((d >= 150 && d <= 200) || (d >= 240 && d <= 290));
+  const ytd = buildStatementSeries(bucket, { spanTest: ytdSpan, limit: 40, fyEndMonth });
+  const byEnd = new Map(quarterly.map((p) => [p.periodEnd, p]));
+  const out = [];
+  for (const span of ytd) {
+    const days = Math.round(
+      (new Date(span.periodEnd) - new Date(span.periodStart || span.periodEnd)) / DAY_MS);
+    const quartersInSpan = days > 220 ? 3 : 2;
+    /* the quarter ends this span covers, walking back from its own end */
+    const ends = [];
+    let cur = new Date(span.periodEnd + "T00:00:00");
+    for (let i = 0; i < quartersInSpan; i++) {
+      ends.push(cur.toISOString().slice(0, 10));
+      cur = new Date(cur.getTime() - 91 * DAY_MS);
+    }
+    /* match loosely: 52/53-week filers close a few days either side */
+    const matched = ends.map((e) => {
+      let best = null, bestGap = Infinity;
+      for (const p of quarterly) {
+        const gap = Math.abs(new Date(p.periodEnd) - new Date(e));
+        if (gap < bestGap) { bestGap = gap; best = p; }
+      }
+      return bestGap <= 20 * DAY_MS ? best : null;
+    });
+    const missingAt = matched.indexOf(null);
+    if (missingAt === -1) continue;
+    if (matched.filter((x) => x === null).length !== 1) continue;
+    const known = matched.filter(Boolean);
+    const derivedEnd = ends[missingAt];
+    if (byEnd.has(derivedEnd)) continue;
+    /* subtract the known quarters from the span, statement by statement */
+    const period = { periodEnd: derivedEnd, label: null, fiscalYear: null,
+      fiscalPeriod: null, derived: true,
+      incomeStatement: {}, balanceSheet: {}, cashFlow: {} };
+    let anyValue = false;
+    for (const stmt of ["incomeStatement", "cashFlow"]) {
+      for (const key of Object.keys(span[stmt] || {})) {
+        const total = span[stmt][key];
+        if (typeof total !== "number") { period[stmt][key] = null; continue; }
+        let rest = 0, complete = true;
+        for (const q of known) {
+          const v = q[stmt][key];
+          if (typeof v !== "number") { complete = false; break; }
+          rest += v;
+        }
+        if (!complete) { period[stmt][key] = null; continue; }
+        period[stmt][key] = total - rest;
+        anyValue = true;
+      }
+    }
+    /* A balance sheet is a point in time and cannot be subtracted; the
+       derived quarter carries none rather than a wrong one. */
+    for (const key of Object.keys(span.balanceSheet || {})) period.balanceSheet[key] = null;
+    if (!anyValue || period.incomeStatement.revenue === null) continue;
+    period.fiscalYear = fiscalYearFor(derivedEnd, fyEndMonth);
+    period.fiscalPeriod = "Q" + fiscalQuarterFor(derivedEnd, fyEndMonth, null);
+    period.label = period.fiscalPeriod + " " + period.fiscalYear;
+    out.push(period);
+    byEnd.set(derivedEnd, period);
+  }
+  return out;
+}
+
+export function buildStatements(bucket, { annualLimit = 10, quarterLimit = 20, fyEndMonth: fyOverride } = {}) {
   const annualEnds = [...durationSeries(bucket, INCOME.revenue, { annual: true }).keys()];
-  const fyEndMonth = fiscalYearEndMonth(annualEnds);
+  /* A company with no annual filing yet gives fiscalYearEndMonth nothing
+     to read, so an override from the registrant's own cover page is used
+     when the caller has one. */
+  const fyEndMonth = fyOverride || fiscalYearEndMonth(annualEnds);
   const annual = buildStatementSeries(bucket, { annual: true, limit: annualLimit, fyEndMonth });
   let quarterly = buildStatementSeries(bucket, { annual: false, limit: quarterLimit, fyEndMonth });
 
   quarterly = quarterly
     .concat(deriveFourthQuarters(annual, quarterly))
+    .sort((a, b) => String(a.periodEnd).localeCompare(String(b.periodEnd)));
+  quarterly = quarterly
+    .concat(deriveFromYearToDate(bucket, quarterly, fyEndMonth))
     .sort((a, b) => String(a.periodEnd).localeCompare(String(b.periodEnd)));
 
   return { annual, quarterly, fiscalYearEndMonth: fyEndMonth };

@@ -713,8 +713,26 @@
     if (!d) return;
     var periods = d[state.basis] || [];
     var ratios = (d.ratios && d.ratios[state.basis]) || [];
+    /* A company that listed recently has filed quarters but no annual
+       report yet — its first 10-K is a year away. Showing an empty
+       annual page states a true fact uselessly, so the page moves to the
+       basis that has data and says why it moved. */
+    if (!periods.length && state.basis === "annual" &&
+        (d.quarterly || []).length) {
+      state.basis = "quarterly";
+      $("basis-annual").setAttribute("aria-pressed", "false");
+      $("basis-quarterly").setAttribute("aria-pressed", "true");
+      $("basis-annual").setAttribute("title", "No annual report filed yet");
+      periods = d.quarterly;
+      ratios = (d.ratios && d.ratios.quarterly) || [];
+      state.annualMissing = true;
+    }
     if (!periods.length) {
-      $("status").textContent = "No " + state.basis + " periods available for this company.";
+      $("status").textContent = (d.quarterly || []).length || (d.annual || []).length
+        ? "No " + state.basis + " periods available for this company."
+        : "This company reports no statements the terminal can read yet — " +
+          "typically a filer whose first financial data has not reached the " +
+          "SEC's structured feed.";
       $("fsa-body").hidden = true;
       return;
     }
@@ -734,13 +752,18 @@
     renderQuality(periods, ratios);
 
     var anyDerived = show.some(function (p) { return p.derived; });
+    $("status").textContent = state.annualMissing
+      ? d.ticker + " has not filed an annual report yet, so this is the quarterly view."
+      : "";
     $("src-footer-text").textContent =
       "Source: SEC EDGAR XBRL filings for " + d.ticker + " (CIK " + d.cik + "). " +
       periods.length + " " + state.basis + " periods. " +
       "Balance sheet figures in returns use the average of opening and closing " +
       "balances. " +
-      (anyDerived ? "* Fourth quarters are derived as the year less the first " +
-        "three quarters, since most filers do not report them separately. " : "") +
+      (anyDerived ? "* Derived periods: a fourth quarter is the year less the " +
+        "first three, and a quarter missing from the facts feed is the " +
+        "year-to-date span less the quarters reported inside it — the filing " +
+        "states both, so the subtraction adds no assumption. " : "") +
       "Not investment advice.";
   }
 

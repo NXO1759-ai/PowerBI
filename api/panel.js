@@ -260,9 +260,28 @@ export default async function handler(req, res) {
     if (!company) {
       company = await companyRow(cik, ticker);
       if (!company) {
-        return res.status(404).json({ error: "no usable filings",
-          detail: "This registrant reports no US-GAAP facts the panel can read — " +
-            "typically a fund, a trust, or a filer on IFRS only." });
+        /* Two different absences, and telling them apart matters: a
+           company that files nothing readable, versus one that files
+           quarters but has not reached its first annual report — the
+           strategy panel is built on fiscal years, so a recent listing
+           has nothing to place against peers even though its statements
+           are perfectly readable elsewhere in the terminal. */
+        let quarters = 0, entity = "";
+        try {
+          const f = await (await getSec("https://data.sec.gov/api/xbrl/companyfacts/CIK" +
+            String(cik).padStart(10, "0") + ".json", 45000)).json();
+          entity = f.entityName || "";
+          const b = f.facts && f.facts["us-gaap"];
+          if (b) quarters = buildStatements(b, { annualLimit: 1, quarterLimit: 8 }).quarterly.length;
+        } catch (e) { /* fall through to the general message */ }
+        return res.status(404).json({ error: "no annual periods",
+          detail: quarters
+            ? (entity || ticker) + " reports " + quarters + " quarter" +
+              (quarters === 1 ? "" : "s") + " but has not filed an annual report yet, " +
+              "and industry comparison here is built on fiscal years. Its statements " +
+              "are readable on the Financial Statement Analysis page."
+            : "This registrant reports no US-GAAP facts the panel can read — " +
+              "typically a fund, a trust, or a filer on IFRS only." });
       }
       companyCache.set(cik, { at: Date.now(), company: company });
     }
