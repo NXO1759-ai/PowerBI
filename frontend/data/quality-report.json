@@ -1,5 +1,5 @@
 {
-  "startedAt": "2026-08-27T19:11:40.613Z",
+  "startedAt": "2026-08-30T12:32:20.342Z",
   "definitionsVersion": 2,
   "companiesAttempted": 130,
   "companiesWritten": 130,
@@ -26,6 +26,6 @@
   ],
   "errorCount": 0,
   "warnCount": 3,
-  "finishedAt": "2026-08-27T19:12:20.669Z",
-  "durationSeconds": 40
+  "finishedAt": "2026-08-30T12:32:45.109Z",
+  "durationSeconds": 25
 }
