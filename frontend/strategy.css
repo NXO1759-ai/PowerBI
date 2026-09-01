@@ -259,3 +259,24 @@ table.grid td.pool-you, table.grid td.pool-you:first-child {
   font-size: 10.5px; color: var(--kimi-color-text-quaternary);
   font-family: var(--rt-font-mono); margin-top: 4px;
 }
+
+/* valuation: where today sits in the company's own decade */
+.decade-bar { position: relative; block-size: 6px; border-radius: 3px;
+  background: var(--kimi-color-surface-muted); margin: 6px 0 2px; }
+.decade-bar i { position: absolute; inset-block: -3px; inline-size: 3px; border-radius: 2px;
+  background: var(--rt-gold); }
+.decade-bar b { position: absolute; inset-block: 0; inline-size: 1px; background: var(--kimi-color-text-quaternary); }
+.decade-note { font-size: 10.5px; color: var(--kimi-color-text-tertiary); font-family: var(--rt-font-mono); }
+.val-card { display: grid; gap: 2px; padding: 10px 12px; border: 1px solid var(--kimi-color-border);
+  border-radius: 9px; background: var(--page-bg); }
+.val-card .m-label { font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--kimi-color-text-tertiary); }
+.val-card .m-value { font-family: var(--rt-font-mono); font-size: 17px; font-weight: 600; color: var(--kimi-color-text-primary); }
+.val-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
+/* said-versus-did */
+.said-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.said-quote { font-size: 12.5px; line-height: 1.65; color: var(--kimi-color-text-secondary);
+  border-inline-start: 2px solid var(--rt-gold-border); padding-inline-start: 11px; margin: 0 0 8px; }
+.said-src { font-size: 11px; color: var(--kimi-color-text-tertiary); margin-top: 6px; }
+.said-src a { color: var(--rt-gold); }
+.beat { color: #59b87a; } .miss { color: #d4756b; }
+table.grid.recon td { font-size: 11px; }
