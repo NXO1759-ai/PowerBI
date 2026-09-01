@@ -1671,6 +1671,15 @@
     var sd = segData();
     var by = sd && sd.revenue && sd.revenue[kind];
     var ends = by ? Object.keys(by).sort() : [];
+    /* No fiscal years disclosed — a new listing's filings carry only
+       quarters — so the quarterly split becomes the table itself. */
+    var quarterlyAsPrimary = false;
+    if (!ends.length && sd && sd.quarterly && sd.quarterly[kind] &&
+        Object.keys(sd.quarterly[kind]).length) {
+      by = sd.quarterly[kind];
+      ends = Object.keys(by).sort();
+      quarterlyAsPrimary = true;
+    }
     if (!ends.length) {
       host.innerHTML = "<p class='hint'>" +
         (sd ? "The latest annual filing tags no " +
@@ -1682,6 +1691,15 @@
     var latest = ends[ends.length - 1];
     var earliest = ends[0];
     var span = (new Date(latest) - new Date(earliest)) / (365.25 * 864e5);
+    if (quarterlyAsPrimary) {
+      /* compare the latest quarter with the one a year before it */
+      var yearBack = ends.filter(function (e) {
+        var gap = (new Date(latest) - new Date(e)) / 864e5;
+        return gap > 330 && gap < 400;
+      });
+      earliest = yearBack.length ? yearBack[yearBack.length - 1] : ends[0];
+      span = (new Date(latest) - new Date(earliest)) / (365.25 * 864e5);
+    }
     var rows = Object.entries(by[latest]).sort(function (a, b) { return b[1] - a[1]; });
     var total = rows.reduce(function (a, r) { return a + r[1]; }, 0);
     var oi = (withOperating && sd.segmentOperatingIncome && sd.segmentOperatingIncome[latest]) || null;
@@ -1700,7 +1718,7 @@
       });
       if (bestGap > 45 * 864e5) qPrev = null;
     }
-    var hasQ = qLatest && rows.some(function (r) { return isNum(qBy[qLatest][r[0]]); });
+    var hasQ = !quarterlyAsPrimary && qLatest && rows.some(function (r) { return isNum(qBy[qLatest][r[0]]); });
 
     /* Some filers tag only part of the total — NextEra's annual note tags
        one segment of two. Shares of a partial split read as findings and
@@ -1724,7 +1742,7 @@
     }
 
     var html = "<div class='scroll-x'><table class='grid'><thead><tr>" +
-      "<th scope='col'>FY ended " + esc(latest) + "</th>" +
+      "<th scope='col'>" + (quarterlyAsPrimary ? "3 mo to " : "FY ended ") + esc(latest) + "</th>" +
       "<th scope='col' class='num'>Revenue</th>" +
       "<th scope='col' class='num'>Share</th>" +
       (span >= 0.9 ? "<th scope='col' class='num'>Growth, " + Math.round(span) + "-yr</th>" : "") +
@@ -2276,6 +2294,8 @@
       return;
     }
     var link = "<a href='" + esc(d.url) + "' target='_blank' rel='noopener'>open Item 1A in the filing itself</a>";
+    var filingWord = d.form === "10-Q" ? "quarterly report (no annual report filed yet)"
+      : /^(424B|S-1|F-1)/.test(String(d.form || "")) ? "listing prospectus (no annual report filed yet)" : "annual filing";
     if (!d.extracted || !d.headings || !d.headings.length) {
       host.innerHTML = "<p class='register-meta'>This filer lays Item 1A out in a form the " +
         "extractor cannot read faithfully" +
@@ -2287,8 +2307,8 @@
     var rest = d.headings.slice(8);
     var li = function (t) { return "<li>" + esc(t) + "</li>"; };
     host.innerHTML =
-      "<p class='register-meta'>The " + esc(String(d.reportDate).slice(0, 4)) +
-      " annual filing names <strong>" + d.headings.length + "</strong> risks across " +
+      "<p class='register-meta'>The " + esc(String(d.reportDate).slice(0, 4)) + " " + filingWord +
+      " names <strong>" + d.headings.length + "</strong> risks across " +
       (isNum(d.words) ? "about " + num(d.words / 1000, 0) + " thousand words of " : "") +
       "Item 1A. Each line below is the company's own heading — " + link + ".</p>" +
       "<ol>" + first.map(li).join("") + "</ol>" +

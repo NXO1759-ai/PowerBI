@@ -302,6 +302,119 @@ export function extractItem1A(html) {
   return html.slice(best.start, best.end);
 }
 
+/**
+ * Every dimensionless us-gaap fact in a filing instance, shaped like the
+ * companyfacts feed — { tag: { units: { USD: [rows] } } } — so it can be
+ * merged into the feed and read by the same statement builder.
+ *
+ * The facts feed lags the filings it is built from and sometimes carries
+ * only the latest one: AEVEX's feed held a single 10-Q. The filing itself
+ * always has the whole set, in the same tags, so reading it directly
+ * backstops the feed without a second definition of anything. Only
+ * facts with NO dimension are taken — the dimensional ones are segment
+ * slices, and would double-count against the consolidated line.
+ *
+ * `meta` supplies what the instance does not carry about itself: the
+ * form, filing date, accession number and the filer's fy/fp naming.
+ */
+export function instanceToBucket(x, meta) {
+  const inline = x.indexOf("<ix:nonFraction") !== -1 || x.indexOf("<ix:header") !== -1;
+  const ctx = {};
+  let m;
+  const cre = /<(?:xbrli:)?context id="([^"]+)">([\s\S]*?)<\/(?:xbrli:)?context>/g;
+  while ((m = cre.exec(x))) {
+    const body = m[2];
+    const hasDim = /<xbrldi:(?:explicit|typed)Member/i.test(body);
+    const s = (body.match(/<(?:xbrli:)?startDate>([^<]+)</) || [])[1];
+    const e = (body.match(/<(?:xbrli:)?endDate>([^<]+)</) || [])[1] ||
+              (body.match(/<(?:xbrli:)?instant>([^<]+)</) || [])[1];
+    ctx[m[1]] = { start: s || null, end: e || null, dim: hasDim };
+  }
+  const bucket = {};
+  const push = (tag, ref, val, unit) => {
+    const c = ctx[ref];
+    if (!c || c.dim || !c.end || !isFinite(val)) return;
+    const b = (bucket[tag] = bucket[tag] || { units: {} });
+    const u = (b.units[unit] = b.units[unit] || []);
+    u.push({ start: c.start, end: c.end, val: val, form: meta.form,
+      filed: meta.filed, accn: meta.accession, fy: meta.fy, fp: meta.fp });
+  };
+  if (inline) {
+    const re = /<ix:nonFraction([^>]*)>([\s\S]*?)<\/ix:nonFraction>/g;
+    while ((m = re.exec(x))) {
+      const attrs = m[1];
+      const name = (attrs.match(/name="us-gaap:([A-Za-z0-9]+)"/) || [])[1];
+      const ref = (attrs.match(/contextRef="([^"]+)"/) || [])[1];
+      if (!name || !ref) continue;
+      const raw = m[2].replace(/<[^>]*>/g, "").replace(/[^0-9.]/g, "");
+      if (!raw) continue;
+      let v = Number(raw);
+      const scale = (attrs.match(/scale="(-?[0-9]+)"/) || [])[1];
+      if (scale) v *= Math.pow(10, Number(scale));
+      if (/sign="-"/.test(attrs)) v = -v;
+      const unitRef = (attrs.match(/unitRef="([^"]+)"/) || [])[1] || "";
+      const unit = /shares/i.test(unitRef) && !/usd/i.test(unitRef) ? "shares"
+        : /usd.*shares|shares.*usd|persh/i.test(unitRef) ? "USD/shares" : "USD";
+      push(name, ref, v, unit);
+    }
+  } else {
+    const re = /<us-gaap:([A-Za-z0-9]+)(?![A-Za-z0-9])([^>]*)>\s*(-?[0-9.]+)\s*<\/us-gaap:\1>/g;
+    while ((m = re.exec(x))) {
+      const attrs = m[2];
+      const ref = (attrs.match(/contextRef="([^"]+)"/) || [])[1];
+      if (!ref) continue;
+      const unitRef = (attrs.match(/unitRef="([^"]+)"/) || [])[1] || "";
+      const unit = /shares/i.test(unitRef) && !/usd/i.test(unitRef) ? "shares"
+        : /usd.*shares|shares.*usd|persh/i.test(unitRef) ? "USD/shares" : "USD";
+      push(m[1], ref, Number(m[3]), unit);
+    }
+  }
+  return bucket;
+}
+
+/**
+ * The Risk Factors section of a prospectus (424B4 / S-1).
+ *
+ * A company's first 10-Qs usually answer Item 1A with "no material
+ * changes from the risk factors in our prospectus", so for a new listing
+ * the register lives in the prospectus. Prospectuses set their section
+ * headings in CAPITALS — "RISK FACTORS", "USE OF PROCEEDS" — while every
+ * cross-reference in the text is title-case ("see Risk Factors"), and a
+ * case-sensitive match on the capitals separates the heading from the
+ * hundred mentions of it. The section runs to the next capitalised
+ * standard heading. The contents row and the summary's short "SUMMARY
+ * RISK FACTORS" both terminate within a few hundred characters and fall
+ * under the size floor; among what survives, the largest span is the
+ * section.
+ */
+export function extractProspectusRisks(html) {
+  const W = "(?:\\s|&nbsp;|&#160;)+";
+  const startRe = new RegExp("RISK" + W + "FACTORS", "g");
+  const endRe = new RegExp(
+    "(USE" + W + "OF" + W + "PROCEEDS|SPECIAL" + W + "NOTE|CAUTIONARY" + W + "NOTE|" +
+    "FORWARD-LOOKING" + W + "STATEMENTS|MARKET" + W + "AND" + W + "INDUSTRY|DIVIDEND" + W + "POLICY|" +
+    "CAPITALIZATION|DILUTION|THE" + W + "OFFERING|SUMMARY" + W + "(?:CONSOLIDATED|HISTORICAL|FINANCIAL))", "g");
+  const starts = [];
+  let m;
+  while ((m = startRe.exec(html))) starts.push(m.index);
+  if (!starts.length) return null;
+  let best = null;
+  for (const start of starts) {
+    /* the summary's overview announces itself */
+    const before = strip(html.slice(Math.max(0, start - 60), start)).toUpperCase();
+    if (/SUMMARY\s*(OF\s*)?$/.test(before)) continue;
+    const head = strip(html.slice(start, start + 200)).toUpperCase();
+    if (/^RISK\s*FACTORS\s*(SUMMARY|OVERVIEW)/.test(head)) continue;
+    endRe.lastIndex = start + 40;
+    const e = endRe.exec(html);
+    if (!e) continue;
+    const span = e.index - start;
+    if (span < 20000 || span > 2500000) continue;
+    if (!best || span > best.span) best = { start, end: e.index, span };
+  }
+  return best ? html.slice(best.start, best.end) : null;
+}
+
 export function extractHeadings(sectionHtml) {
   const out = [];
   const seen = new Set();

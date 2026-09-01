@@ -142,6 +142,67 @@ function durationSeries(bucket, tags, { annual, spanTest }) {
   return out;
 }
 
+/**
+ * What every filing said about a period, before the latest one wins.
+ *
+ * Two things live only in the earlier rows. The company's OWN name for
+ * the period: a 10-K's fy field is the fiscal year the FILING covers, so
+ * the FY2024 comparative inside the FY2025 10-K carries fy=2025 — the
+ * original filing is the one whose fy names the period as the company
+ * does (Microsoft's year to June 2026 is its FY2026; Target's year to
+ * February 2025 is its fiscal 2024). And restatements: when the latest
+ * filing reports a different value for a period than the original did,
+ * that revision is a fact a reader should see, not a silent overwrite.
+ */
+function provenance(bucket, tags, { annual, spanTest, instant }) {
+  const test = spanTest || (annual ? isAnnualSpan : isQuarterSpan);
+  const rows = pickRows(bucket, tags, usdRows)
+    .filter((r) => REPORT_FORM.test(r.form || "") && r.end)
+    .filter((r) => (instant ? !r.start : test(spanDays(r))));
+  const byKey = new Map();
+  /* A filing's fy and fp describe the filing's OWN period, and every
+     filing also carries comparatives from a year earlier under the same
+     fy. The filing's own period is the latest end among its rows, so a
+     row is trusted for naming only when its end is that latest end. */
+  const ownEnd = new Map();
+  for (const r of rows) {
+    const key = instant ? r.end : `${r.start || ""}|${r.end}`;
+    (byKey.get(key) || byKey.set(key, []).get(key)).push(r);
+    const a = r.accn || "";
+    if (!ownEnd.has(a) || r.end > ownEnd.get(a)) ownEnd.set(a, r.end);
+  }
+  const out = new Map();
+  for (const [, list] of byKey) {
+    list.sort((a, b) => String(a.filed).localeCompare(String(b.filed)));
+    const first = list[0], last = list[list.length - 1];
+    const revised = list.length > 1 && first.val !== last.val &&
+      Math.abs(last.val - first.val) > Math.abs(first.val || 1) * 0.005;
+    const isQ = (r) => /^Q[1-4]$/.test(r.fp || "");
+    const isOwn = (r) => ownEnd.get(r.accn || "") === r.end;
+    let named = list.find((r) => isOwn(r) && (annual ? r.fp === "FY" : isQ(r)));
+    let fy = named ? named.fy : null, fp = named ? named.fp : null;
+    /* A period reported only as a comparative — a new listing's first
+       year — takes the naming of the filing it appears in, one year
+       back, since a comparative sits exactly a fiscal year behind. */
+    if (!named) {
+      const carrier = list.find((r) => (annual ? r.fp === "FY" : isQ(r)) && r.fy);
+      if (carrier && ownEnd.get(carrier.accn || "")) {
+        const gap = (new Date(ownEnd.get(carrier.accn || "")) - new Date(carrier.end)) / DAY_MS;
+        if (gap > 300 && gap < 430) { fy = carrier.fy - 1; fp = carrier.fp; }
+      }
+    }
+    out.set(first.end, {
+      fy: fy,
+      fp: fp,
+      restated: revised ? {
+        original: { value: first.val, filed: first.filed, form: first.form },
+        latest: { value: last.val, filed: last.filed, form: last.form },
+      } : null,
+    });
+  }
+  return out;
+}
+
 function instantSeries(bucket, tags) {
   const rows = pickRows(bucket, tags, usdRows)
     .filter((r) => REPORT_FORM.test(r.form || "") && r.end && !r.start);
@@ -292,18 +353,37 @@ export function buildStatementSeries(bucket, { annual, limit = 20, fyEndMonth, s
   ]);
   const anchors = [...anchorSet].sort();
   const fyEnd = fyEndMonth || fiscalYearEndMonth(anchors);
+  /* the filer's own names, and every revision, read from all filings */
+  const naming = provenance(bucket, INCOME.revenue, opts);
+  const namingAlt = provenance(bucket, INCOME.netIncome, opts);
+  const revisions = {};
+  for (const [k, tags] of Object.entries(INCOME)) revisions["incomeStatement." + k] = provenance(bucket, tags, opts);
+  for (const [k, tags] of Object.entries(CASHFLOW)) revisions["cashFlow." + k] = provenance(bucket, tags, opts);
+  for (const [k, tags] of Object.entries(BALANCE)) revisions["balanceSheet." + k] = provenance(bucket, tags, { instant: true });
+
   const periods = anchors.slice(-limit).map((end) => {
     /* Period metadata comes from whichever core item reported it. */
     const rev = income.revenue.get(end) || income.netIncome.get(end) ||
                 income.operatingIncome.get(end) || cash.cfOps.get(end);
     const fy = fiscalYearFor(end, fyEnd);
     const fq = fiscalQuarterFor(end, fyEnd, rev.start);
+    const own = naming.get(end) || namingAlt.get(end) || {};
+    /* The company's own label where the filing states it; the derived
+       calendar-aligned year otherwise. The aligned year is kept for
+       cross-company work, since a June year-end and a December one can
+       only be compared on a shared calendar. */
+    const filerFy = own.fy || null;
+    const filerFp = annual ? "FY" : (own.fp && /^Q[1-4]$/.test(own.fp) ? own.fp : `Q${fq}`);
     const period = {
       periodEnd: end,
       periodStart: rev.start || null,
       fiscalYear: fy,
       fiscalPeriod: annual ? "FY" : `Q${fq}`,
-      label: annual ? `FY ${fy}` : `Q${fq} ${fy}`,
+      filerFiscalYear: filerFy,
+      filerPeriod: filerFp,
+      label: filerFy
+        ? (annual ? `FY${filerFy}` : `${filerFp} FY${filerFy}`)
+        : (annual ? `FY ${fy}` : `Q${fq} ${fy}`),
       form: rev.form,
       filed: rev.filed,
       accession: rev.accn,
@@ -312,12 +392,17 @@ export function buildStatementSeries(bucket, { annual, limit = 20, fyEndMonth, s
       cashFlow: {},
       perShare: {},
       shares: {},
+      restated: {},
     };
     for (const k of Object.keys(income)) period.incomeStatement[k] = val(income[k].get(end));
     for (const k of Object.keys(cash)) period.cashFlow[k] = val(cash[k].get(end));
     for (const k of Object.keys(balance)) period.balanceSheet[k] = val(nearest(balance[k], end));
     for (const k of Object.keys(perShare)) period.perShare[k] = val(perShare[k].get(end));
     for (const k of Object.keys(shares)) period.shares[k] = val(nearest(shares[k], end, 40));
+    for (const [path, map] of Object.entries(revisions)) {
+      const p = map.get(end);
+      if (p && p.restated) period.restated[path] = p.restated;
+    }
     return period;
   });
 
@@ -363,10 +448,13 @@ function deriveFourthQuarters(annual, quarterly) {
       periodStart: q3.periodEnd,
       fiscalYear: year.fiscalYear,
       fiscalPeriod: "Q4",
-      label: `Q4 ${year.fiscalYear}`,
+      filerFiscalYear: year.filerFiscalYear || null,
+      filerPeriod: "Q4",
+      label: year.filerFiscalYear ? `Q4 FY${year.filerFiscalYear}` : `Q4 ${year.fiscalYear}`,
       form: year.form,
       filed: year.filed,
       accession: year.accession,
+      restated: {},
       derived: true,
       incomeStatement: {},
       balanceSheet: { ...year.balanceSheet },
@@ -469,7 +557,12 @@ function deriveFromYearToDate(bucket, quarterly, fyEndMonth) {
     if (!anyValue || period.incomeStatement.revenue === null) continue;
     period.fiscalYear = fiscalYearFor(derivedEnd, fyEndMonth);
     period.fiscalPeriod = "Q" + fiscalQuarterFor(derivedEnd, fyEndMonth, null);
-    period.label = period.fiscalPeriod + " " + period.fiscalYear;
+    /* the span's own filing names the year the derived quarter sits in */
+    period.filerFiscalYear = span.filerFiscalYear || null;
+    period.filerPeriod = period.fiscalPeriod;
+    period.label = span.filerFiscalYear
+      ? period.fiscalPeriod + " FY" + span.filerFiscalYear
+      : period.fiscalPeriod + " " + period.fiscalYear;
     out.push(period);
     byEnd.set(derivedEnd, period);
   }
@@ -492,5 +585,64 @@ export function buildStatements(bucket, { annualLimit = 10, quarterLimit = 20, f
     .concat(deriveFromYearToDate(bucket, quarterly, fyEndMonth))
     .sort((a, b) => String(a.periodEnd).localeCompare(String(b.periodEnd)));
 
-  return { annual, quarterly, fiscalYearEndMonth: fyEndMonth };
+  return { annual, quarterly, ltm: buildLtm(quarterly), fiscalYearEndMonth: fyEndMonth };
+}
+
+/**
+ * Trailing twelve months at every quarter end: the four most recent
+ * consecutive quarters summed for flows, the latest quarter's balance
+ * sheet taken as it stands.
+ *
+ * LTM is the working basis of professional analysis because it is the
+ * most recent full year at every point in time — a fiscal year is nine
+ * months stale by its third quarter, and a single quarter carries the
+ * season. A window is built only where all four quarters are present and
+ * consecutive (each end within 100 days of the last), so a missing
+ * quarter yields no window rather than a three-quarter figure dressed as
+ * a year. Per-share figures sum across the four quarters; share counts
+ * are the latest quarter's.
+ */
+function buildLtm(quarterly) {
+  const out = [];
+  for (let i = 3; i < quarterly.length; i++) {
+    const win = quarterly.slice(i - 3, i + 1);
+    let consecutive = true;
+    for (let j = 1; j < 4; j++) {
+      const gap = (new Date(win[j].periodEnd) - new Date(win[j - 1].periodEnd)) / DAY_MS;
+      if (gap < 80 || gap > 100) { consecutive = false; break; }
+    }
+    if (!consecutive) continue;
+    const last = win[3];
+    const sum = (stmt, key) => {
+      let total = 0;
+      for (const q of win) {
+        const v = q[stmt][key];
+        if (typeof v !== "number") return null;
+        total += v;
+      }
+      return total;
+    };
+    const period = {
+      periodEnd: last.periodEnd,
+      periodStart: win[0].periodStart || null,
+      fiscalYear: last.fiscalYear,
+      fiscalPeriod: "LTM",
+      filerFiscalYear: last.filerFiscalYear,
+      filerPeriod: "LTM",
+      label: "LTM " + last.label.replace(/^Q\d\s*/, "").replace(/^(FY)?\s*/, (m) => m),
+      basis: "ltm",
+      derived: win.some((q) => q.derived),
+      form: last.form, filed: last.filed, accession: last.accession,
+      incomeStatement: {}, balanceSheet: {}, cashFlow: {}, perShare: {}, shares: {},
+      restated: {},
+    };
+    period.label = "LTM " + last.label;
+    for (const k of Object.keys(last.incomeStatement)) period.incomeStatement[k] = sum("incomeStatement", k);
+    for (const k of Object.keys(last.cashFlow)) period.cashFlow[k] = sum("cashFlow", k);
+    for (const k of Object.keys(last.balanceSheet)) period.balanceSheet[k] = last.balanceSheet[k];
+    for (const k of Object.keys(last.perShare)) period.perShare[k] = sum("perShare", k);
+    for (const k of Object.keys(last.shares)) period.shares[k] = last.shares[k];
+    out.push(period);
+  }
+  return out;
 }

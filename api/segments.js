@@ -77,7 +77,12 @@ export default async function handler(req, res) {
       }
       if (acc && qAcc) break;
     }
-    if (!acc) return res.status(404).json({ error: "no annual filing" });
+    /* No annual report yet: the latest 10-Q becomes the primary
+       instance. Its segment note carries the quarter and the year to
+       date rather than fiscal years, so the annual axes stay empty and
+       the quarterly ones fill — the page reads whichever it has. */
+    if (!acc && qAcc) { acc = qAcc; form = "10-Q"; rd = qRd; qAcc = null; }
+    if (!acc) return res.status(404).json({ error: "no periodic filing" });
     const x = await fetchInstance(cik, acc);
     if (!x) return res.status(404).json({ error: "no readable instance" });
     const parsed = parseInstance(x);
