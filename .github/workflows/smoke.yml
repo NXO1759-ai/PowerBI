@@ -1,0 +1,37 @@
+name: Smoke — awkward companies against every endpoint
+
+# Runs the real serverless handlers in-process against the companies
+# that break naive code (a new listing, a bank, a property trust, an IFRS
+# filer, a shell) plus one control, before a change can merge. The
+# weekly parity check compares builder output; this exercises the live
+# API paths, ratio layer included.
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: smoke-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Frontend scripts parse
+        run: |
+          for f in frontend/*.js frontend/lib/*.js; do
+            node -e "new Function(require('fs').readFileSync('$f','utf8'))" || { echo "parse failure: $f"; exit 1; }
+          done
+
+      - name: Endpoints against awkward companies
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT || 'Research Terminal research@chineduokeke.mba' }}
+        run: node scripts/smoke.mjs

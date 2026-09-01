@@ -73,6 +73,7 @@ async function serveStatements(req, res, query) {
       fiscalYearEndMonth: statements.fiscalYearEndMonth,
       annual: statements.annual,
       quarterly: statements.quarterly,
+      ltm: statements.ltm,
       ratios: {
         annual: computeRatios(statements.annual),
         quarterly: computeRatios(statements.quarterly),

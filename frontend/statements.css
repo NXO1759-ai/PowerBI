@@ -240,3 +240,14 @@ table.stmt td.derived-cell::after {
   font-family: var(--rt-font-mono); margin-top: 4px;
 }
 #t-variance td.flag { color: #d4a13c; font-weight: 600; }
+
+/* period end beneath each column label */
+.stmt th .th-end, .grid th .th-end {
+  display: block; font-weight: 400; font-size: 9.5px; letter-spacing: 0;
+  text-transform: none; color: var(--kimi-color-text-quaternary); margin-top: 2px;
+}
+/* a figure revised by a later filing */
+sup.restated {
+  font-size: 8.5px; color: #d4a13c; margin-inline-start: 2px; cursor: help;
+  font-family: var(--rt-font-mono);
+}

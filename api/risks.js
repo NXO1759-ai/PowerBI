@@ -10,7 +10,7 @@
  *   GET /api/risks?cik=1334036[&force=1]
  */
 
-import { strip, extractItem1A, extractHeadings } from "../scripts/lib/filing-parse.mjs";
+import { strip, extractItem1A, extractHeadings, extractProspectusRisks } from "../scripts/lib/filing-parse.mjs";
 import { SEC_UA } from "../scripts/lib/sec-pull.mjs";
 
 export const maxDuration = 60;
@@ -51,26 +51,63 @@ export default async function handler(req, res) {
     const c10 = cik.padStart(10, "0");
     const sub = await (await getSec("https://data.sec.gov/submissions/CIK" + c10 + ".json")).json();
     const r = sub.filings.recent;
-    let acc = null, rd = null, doc = null;
+    let acc = null, rd = null, doc = null, form = null;
     for (let i = 0; i < r.form.length; i++) {
       if (/^(10-K|20-F|40-F)$/.test(r.form[i])) {
-        acc = r.accessionNumber[i]; rd = r.reportDate[i]; doc = r.primaryDocument[i];
+        acc = r.accessionNumber[i]; rd = r.reportDate[i]; doc = r.primaryDocument[i]; form = r.form[i];
         break;
       }
     }
-    if (!acc || !doc) return res.status(404).json({ error: "no annual filing" });
-    const url = "https://www.sec.gov/Archives/edgar/data/" + Number(cik) + "/" +
+    /* A company with no annual report yet still files Item 1A in Part II
+       of each 10-Q — a new listing typically repeats its prospectus risk
+       factors there in full. The register reads from the latest 10-Q in
+       that case and says so. */
+    if (!acc) {
+      for (let i = 0; i < r.form.length; i++) {
+        if (r.form[i] === "10-Q") {
+          acc = r.accessionNumber[i]; rd = r.reportDate[i]; doc = r.primaryDocument[i]; form = "10-Q";
+          break;
+        }
+      }
+    }
+    if (!acc || !doc) return res.status(404).json({ error: "no periodic filing" });
+    let url = "https://www.sec.gov/Archives/edgar/data/" + Number(cik) + "/" +
       acc.replace(/-/g, "") + "/" + doc;
-    const html = await (await getSec(url, 45000)).text();
-    const section = extractItem1A(html);
+    let html = await (await getSec(url, 45000)).text();
+    let section = extractItem1A(html);
+    let headings = section ? extractHeadings(section) : [];
+    /* A 10-Q's Item 1A that only points back to the prospectus yields no
+       headings. The prospectus itself carries the full register under a
+       plain "Risk Factors" heading, so it is read next. */
+    if (headings.length < 5) {
+      let pAcc = null, pDoc = null, pForm = null;
+      for (const want of ["424B4", "424B3", "S-1/A", "S-1", "F-1"]) {
+        for (let i = 0; i < r.form.length; i++) {
+          if (r.form[i] === want) { pAcc = r.accessionNumber[i]; pDoc = r.primaryDocument[i]; pForm = want; break; }
+        }
+        if (pAcc) break;
+      }
+      if (pAcc && pDoc) {
+        const pUrl = "https://www.sec.gov/Archives/edgar/data/" + Number(cik) + "/" +
+          pAcc.replace(/-/g, "") + "/" + pDoc;
+        try {
+          const pHtml = await (await getSec(pUrl, 45000)).text();
+          const pSection = extractProspectusRisks(pHtml);
+          const pHeadings = pSection ? extractHeadings(pSection) : [];
+          if (pHeadings.length >= 5) {
+            section = pSection; headings = pHeadings; form = pForm;
+            url = pUrl;
+          }
+        } catch (e) { /* the periodic filing's answer stands */ }
+      }
+    }
     let payload;
     if (!section) {
-      payload = { reportDate: rd, url: url, words: null, headings: [], extracted: false };
+      payload = { form: form, reportDate: rd, url: url, words: null, headings: [], extracted: false };
     } else {
       const words = strip(section).split(" ").length;
-      let headings = extractHeadings(section);
       if (headings.length > 40) headings = headings.slice(0, 40);
-      payload = { reportDate: rd, url: url, words: words,
+      payload = { form: form, reportDate: rd, url: url, words: words,
         headings: headings.length >= 5 ? headings : [],
         extracted: headings.length >= 5 };
     }

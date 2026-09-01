@@ -282,13 +282,24 @@
       against a year before it — four quarters back on the quarterly
       basis, one period back on the annual — falling back to the previous
       period when the year-ago one is not on screen. */
+
+  /* "FY2026" is the filer's own name for the year; the date beneath it is
+     what the name actually means, so June and December year-ends read
+     without a footnote. */
+  function periodHead(p) {
+    var end = p.periodEnd ? String(p.periodEnd) : "";
+    var d = end ? new Date(end + "T00:00:00") : null;
+    var pretty = d && !isNaN(d) ? d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : end;
+    return esc(p.label) + (p.derived ? "*" : "") +
+      (pretty ? "<span class='th-end'>to " + esc(pretty) + "</span>" : "");
+  }
   function comparePair(periods) {
     if (periods.length < 2) return null;
     var latest = periods.length - 1;
-    var back = state.basis === "quarterly" ? 4 : 1;
+    var back = (state.basis === "quarterly" || state.basis === "ltm") ? 4 : 1;
     var base = latest - back >= 0 ? latest - back : latest - 1;
     return { latest: latest, base: base,
-             label: state.basis === "quarterly" && back === latest - base ? "vs yr ago" : "change" };
+             label: back === 4 && back === latest - base ? "vs yr ago" : "change" };
   }
 
   /** Period-over-period change, refusing the cases where a percentage is
@@ -314,8 +325,7 @@
       (statement === "balanceSheet" ? "Balance sheet"
         : statement === "cashFlow" ? "Cash flow" : "Income statement") + "</th>" +
       periods.map(function (p) {
-        return "<th scope='col' class='num'>" + esc(p.label) +
-          (p.derived ? "*" : "") + "</th>";
+        return "<th scope='col' class='num'>" + periodHead(p) + "</th>";
       }).join("") +
       (pair ? "<th scope='col' class='num'>" + esc(pair.label) + "</th>" : "") +
       "</tr></thead>";
@@ -331,7 +341,13 @@
         } else {
           text = money(v);
         }
-        return "<td class='num" + (isNum(v) ? "" : " na") + "'>" + text + "</td>";
+        var rs = p.restated && p.restated[statement + "." + row[0]];
+        var mark = rs
+          ? "<sup class='restated' title='Revised in a later filing: " +
+            esc(money(rs.original.value)) + " as filed " + esc(rs.original.filed) +
+            ", now " + esc(money(rs.latest.value)) + " per the filing of " +
+            esc(rs.latest.filed) + "'>r</sup>" : "";
+        return "<td class='num" + (isNum(v) ? "" : " na") + "'>" + text + mark + "</td>";
       }).join("");
       if (pair) {
         var a = periods[pair.latest][statement][row[0]];
@@ -369,7 +385,7 @@
     var pair = comparePair(ratios);
     var head = "<thead><tr><th scope='col'>Reformulated</th>" +
       periods.map(function (p) {
-        return "<th scope='col' class='num'>" + esc(p.label) + "</th>";
+        return "<th scope='col' class='num'>" + periodHead(p) + "</th>";
       }).join("") +
       (pair ? "<th scope='col' class='num'>" + esc(pair.label) + "</th>" : "") +
       "</tr></thead>";
@@ -591,7 +607,12 @@
     host.innerHTML =
       "<p class='reading-head'>" + cmpLabel + "</p>" +
       sentences.map(function (x) { return "<p>" + x + "</p>"; }).join("");
-    var flagged = renderVariances(now, before, pair);
+    var beforeBefore = null;
+    if (pair) {
+      var back = pair.latest - pair.base;
+      if (pair.base - back >= 0) beforeBefore = periods[pair.base - back];
+    }
+    var flagged = renderVariances(now, before, pair, beforeBefore);
     if (flagged.length) {
       fact("Material variances flagged: " + flagged.join("; "));
     }
@@ -606,7 +627,7 @@
    * does: more revenue and profit good, more cost bad, balance-sheet
    * builds neutral until read against sales.
    */
-  function renderVariances(now, before, pair) {
+  function renderVariances(now, before, pair, beforeBefore) {
     var FAV_UP = { revenue: 1, grossProfit: 1, operatingIncome: 1, netIncome: 1,
       netIncomeIncludingNci: 1, cfOps: 1 };
     var FAV_DOWN = { cogs: 1, researchDevelopment: 1, sellingGeneralAdmin: 1,
@@ -615,7 +636,7 @@
       ["incomeStatement", INCOME_ROWS], ["balanceSheet", BALANCE_ROWS],
       ["cashFlow", CASHFLOW_ROWS]
     ];
-    var rows = [];
+    var rows = [], inLine = 0;
     SCAN.forEach(function (grp) {
       grp[1].forEach(function (r) {
         if (!r[0]) return;
@@ -626,36 +647,64 @@
         var size = Math.abs(b);
         var needPct = size > 10e9 ? 0.05 : size > 1e9 ? 0.10 : 0.15;
         var needAbs = size > 10e9 ? 500e6 : size > 1e9 ? 100e6 : 50e6;
-        var material = Math.abs(dPct) >= needPct && Math.abs(dAbs) >= needAbs;
-        if (!material) return;
+        if (!(Math.abs(dPct) >= needPct && Math.abs(dAbs) >= needAbs)) return;
+        /* Surprise: how far this move departs from the line's own prior
+           move. A line growing 60% after growing 60% is a trend, not a
+           variance; the same move after flat is the thing to ask about.
+           Without a third period every material move is a surprise. */
+        var surprise = null;
+        if (beforeBefore) {
+          var c = beforeBefore[grp[0]][r[0]];
+          if (isNum(c) && Math.abs(c) > 0) {
+            var gPrior = (b - c) / Math.abs(c);
+            surprise = dPct - gPrior;
+            var flipped = (dPct >= 0) !== (gPrior >= 0);
+            if (!flipped && Math.abs(surprise) < 0.10) { inLine++; return; }
+          }
+        }
         var dir = FAV_UP[r[0]] ? (dAbs >= 0 ? "Favourable" : "Unfavourable")
           : FAV_DOWN[r[0]] ? (dAbs <= 0 ? "Favourable" : "Unfavourable") : "—";
-        rows.push({ label: r[1], a: a, b: b, dAbs: dAbs, dPct: dPct, dir: dir });
+        rows.push({ label: r[1], a: a, b: b, dAbs: dAbs, dPct: dPct, dir: dir, surprise: surprise });
       });
     });
     rows.sort(function (x, y) { return Math.abs(y.dAbs) - Math.abs(x.dAbs); });
+    var shown = rows.slice(0, 8);
     var el = $("t-variance");
     if (!el) return [];
-    if (!rows.length) {
+    var note = inLine
+      ? "<p class='hint'>" + inLine + " further line" + (inLine === 1 ? "" : "s") +
+        " crossed the size thresholds but moved in line with " +
+        (inLine === 1 ? "its" : "their") + " own prior trend, and " +
+        (inLine === 1 ? "is" : "are") + " not listed — a continuing trend is not a variance.</p>"
+      : "";
+    if (!shown.length) {
       el.innerHTML = "<tbody><tr><td>No line crossed its materiality threshold " +
-        "against " + esc(before.label) + " — the period moved, but within the noise " +
-        "bands a reviewer would accept without a question.</td></tr></tbody>";
+        "against " + esc(before.label) + " with a move that departs from its own trend.</td></tr></tbody>";
+      el.insertAdjacentHTML("afterend", "");
       return [];
     }
     el.innerHTML = "<thead><tr><th scope='col'>Line</th>" +
       "<th scope='col' class='num'>" + esc(now.label) + "</th>" +
       "<th scope='col' class='num'>" + esc(before.label) + "</th>" +
       "<th scope='col' class='num'>Δ $</th><th scope='col' class='num'>Δ %</th>" +
+      "<th scope='col' class='num'>vs own trend</th>" +
       "<th scope='col'>Direction</th></tr></thead><tbody>" +
-      rows.map(function (r) {
+      shown.map(function (r) {
         return "<tr><td>" + esc(r.label) + "</td>" +
           "<td class='num'>" + money(r.a) + "</td>" +
           "<td class='num'>" + money(r.b) + "</td>" +
           "<td class='num flag'>" + (r.dAbs >= 0 ? "+" : "−") + money(Math.abs(r.dAbs)) + "</td>" +
           "<td class='num flag'>" + (r.dPct >= 0 ? "+" : "−") + pct(Math.abs(r.dPct)) + "</td>" +
+          "<td class='num'>" + (isNum(r.surprise)
+            ? (r.surprise >= 0 ? "+" : "−") + Math.abs(r.surprise * 100).toFixed(0) + " pp"
+            : "—") + "</td>" +
           "<td>" + esc(r.dir) + "</td></tr>";
-      }).join("") + "</tbody>";
-    return rows.slice(0, 5).map(function (r) {
+      }).join("") + "</tbody>" +
+      (rows.length > 8 ? "<tfoot><tr><td colspan='7'>" + (rows.length - 8) +
+        " more material lines ranked below these by dollar size.</td></tr></tfoot>" : "");
+    var host = document.getElementById("variance-note");
+    if (host) host.innerHTML = note;
+    return shown.slice(0, 5).map(function (r) {
       return r.label + " " + (r.dPct >= 0 ? "+" : "−") + pct(Math.abs(r.dPct)) +
         (r.dir !== "—" ? " (" + r.dir.toLowerCase() + ")" : "");
     });
@@ -713,6 +762,12 @@
     if (!d) return;
     var periods = d[state.basis] || [];
     var ratios = (d.ratios && d.ratios[state.basis]) || [];
+    /* The ratio library ships with the page, so a basis the endpoint did
+       not pre-compute — or a stale endpoint that predates one — is
+       computed here rather than left blank. */
+    if (!ratios.length && periods.length && R.computeRatios) {
+      try { ratios = R.computeRatios(periods); } catch (e) { ratios = []; }
+    }
     /* A company that listed recently has filed quarters but no annual
        report yet — its first 10-K is a year away. Showing an empty
        annual page states a true fact uselessly, so the page moves to the
@@ -725,6 +780,9 @@
       $("basis-annual").setAttribute("title", "No annual report filed yet");
       periods = d.quarterly;
       ratios = (d.ratios && d.ratios.quarterly) || [];
+      if (!ratios.length && R.computeRatios) {
+        try { ratios = R.computeRatios(periods); } catch (e) { ratios = []; }
+      }
       state.annualMissing = true;
     }
     if (!periods.length) {
@@ -760,6 +818,10 @@
       periods.length + " " + state.basis + " periods. " +
       "Balance sheet figures in returns use the average of opening and closing " +
       "balances. " +
+      (state.basis === "ltm" ? "LTM sums the four most recent consecutive quarters for " +
+        "flows and takes the latest balance sheet as it stands. " : "") +
+      (show.some(function (p) { return p.restated && Object.keys(p.restated).length; })
+        ? "Figures marked r were revised in a later filing; hover for the original. " : "") +
       (anyDerived ? "* Derived periods: a fourth quarter is the year less the " +
         "first three, and a quarter missing from the facts feed is the " +
         "year-to-date span less the quarters reported inside it — the filing " +
@@ -830,12 +892,15 @@
 
   function setBasis(basis) {
     state.basis = basis;
-    $("basis-annual").setAttribute("aria-pressed", basis === "annual" ? "true" : "false");
-    $("basis-quarterly").setAttribute("aria-pressed", basis === "quarterly" ? "true" : "false");
+    ["annual", "quarterly", "ltm"].forEach(function (b) {
+      var el = $("basis-" + b);
+      if (el) el.setAttribute("aria-pressed", basis === b ? "true" : "false");
+    });
     renderAll();
   }
   $("basis-annual").addEventListener("click", function () { setBasis("annual"); });
   $("basis-quarterly").addEventListener("click", function () { setBasis("quarterly"); });
+  $("basis-ltm").addEventListener("click", function () { setBasis("ltm"); });
 
   function setView(view) {
     state.view = view;

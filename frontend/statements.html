@@ -62,6 +62,7 @@
       <div class="seg" role="group" aria-label="Reporting basis">
         <button type="button" id="basis-annual" aria-pressed="true">Annual</button>
         <button type="button" id="basis-quarterly" aria-pressed="false">Quarterly</button>
+        <button type="button" id="basis-ltm" aria-pressed="false" title="Trailing twelve months at each quarter end">LTM</button>
       </div>
       <button type="button" id="refresh-btn" title="Pull the latest filings from SEC EDGAR now">Refresh</button>
     </div>
@@ -136,12 +137,13 @@
       <div id="reading-body"></div>
       <h3>Material variances</h3>
       <p class="hint">
-        Flagged on scaled thresholds, the way a close review works: a line
-        above $10B must move 5% and $500M to flag, $1–10B lines 10% and
-        $100M, smaller lines 15% and $50M. A flag is a question to ask,
-        not a verdict.
+        Flagged on scaled thresholds — a line above $10B must move 5% and
+        $500M, $1–10B lines 10% and $100M, smaller lines 15% and $50M —
+        and only when the move departs from the line's own prior trend.
+        Ranked by dollar size, capped at eight.
       </p>
       <div class="scroll-x"><table class="grid" id="t-variance"></table></div>
+      <div id="variance-note"></div>
     </section>
 
     <!-- ========== analyst note ========== -->
