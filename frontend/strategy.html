@@ -196,8 +196,8 @@
       <p class="chart-caption" id="health-caption"></p>
 
       <h3>Valuation</h3>
-      <p class="hint">Trailing multiples from the market-data feed, placed against the company's own decade.</p>
-      <details class="how-to-read"><summary>How to read this</summary><p>Multiples are the market-data feed's trailing figures; everything else on this page is from the filings. A multiple low in its own range is only cheap if the earnings behind it hold.</p></details>
+      <p class="hint">What the equity and the whole business are priced at, from the filings and the feed, against the company's own decade and a peer set chosen for it.</p>
+      <details class="how-to-read"><summary>How to read this</summary><p>Enterprise value is market value plus debt and minority interest less cash and securities, so a company with net cash is worth less than its equity. Multiples come two ways: from the filings on the trailing twelve months, and from the market-data feed; the peers' multiples are the feed's. The course's evidence (Liu, Nissim and Thomas) ranks forward earnings as the most reliable driver and sales as the least, and prefers the harmonic mean of a peer set to its average. The last two blocks turn the price around — the growth it assumes at a CAPM cost of equity — and set the return on invested capital against the cost of capital.</p></details>
       <div id="valuation-block"><p class="hint" role="status">Loading valuation…</p></div>
       <h3>Stock performance</h3>
       <div id="stock-block"><p class="hint" id="stock-status">Loading price history…</p></div>
@@ -241,8 +241,8 @@
     <section class="panel-card fsa-section" aria-labelledby="h-mkt">
       <div class="section-head">
         <h2 id="h-mkt">Market and competitive position</h2>
-        <p class="section-blurb">Share of revenue, rank and the comp sheet across the covered listed peers.</p>
-        <details class="how-to-read"><summary>How to read this</summary><p>Share here is of the covered listed peers, not of a served market. Private companies, foreign entrants and smaller rivals sit outside this panel, so every share below is an upper bound and is labelled as one.</p></details>
+        <p class="section-blurb">Share of revenue and profit among the covered peers, and the comp sheet for a peer set chosen for this company by the course rule.</p>
+        <details class="how-to-read"><summary>How to read this</summary><p>Share here is of the covered listed peers, not of a served market: private companies, foreign entrants and smaller rivals sit outside this panel, so every share below is an upper bound. The comp sheet does not use the industry cohort; it uses Alford's rule — the same industry by SIC, widened until at least six other firms, then the closest on total assets and return on equity — because that selection priced stocks most accurately in the course's evidence. The footer rows aggregate the peers by median and by harmonic mean, negatives excluded.</p></details>
       </div>
       <div class="kpi-grid" id="mkt-cards"></div>
       <div class="scroll-x"><table class="grid" id="t-bench"></table></div>
@@ -349,6 +349,7 @@
 <script src="lib/ratios.js"></script>
 <script src="lib/export.js"></script>
 <script src="lib/strategy.js"></script>
+<script src="lib/valuation.js"></script>
 <script src="data/industry-map.js"></script>
 <script src="strategy-boot.js"></script>
 </body>

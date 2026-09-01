@@ -3,7 +3,7 @@
  *
  * The multiples column-set of a comparable-company sheet, for a peer set
  * in one call: market cap, enterprise value, EV/Sales, EV/EBITDA, P/E,
- * forward P/E, P/FCF, dividend yield and the vendor's trailing margins,
+ * forward P/E, P/B, P/FCF, dividend yield and the vendor's trailing margins,
  * per ticker. The operating fundamentals beside them on the page —
  * growth, return on capital, leverage — come from the filings and are
  * computed there, not here; this endpoint supplies only what a filing
@@ -49,6 +49,7 @@ async function one(ticker, key) {
     evEbitdaTTM: num(m.evEbitdaTTM),
     peTTM: num(m.peTTM),
     forwardPE: num(m.forwardPE),
+    pb: num(m.pb),
     pfcfTTM: num(m.pfcfShareTTM),
     fcfYieldTTM: num(m.pfcfShareTTM) && m.pfcfShareTTM > 0 ? 1 / m.pfcfShareTTM : null,
     dividendYieldTTM: num(m.currentDividendYieldTTM) !== null ? m.currentDividendYieldTTM / 100 : null,

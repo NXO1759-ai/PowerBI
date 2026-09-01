@@ -822,6 +822,8 @@
         "flows and takes the latest balance sheet as it stands. " : "") +
       (show.some(function (p) { return p.restated && Object.keys(p.restated).length; })
         ? "Figures marked r were revised in a later filing; hover for the original. " : "") +
+      (show.some(function (p) { return p.derivedFields && p.derivedFields.length; })
+        ? "Cash flow for quarters after the first is the year-to-date statement the 10-Q reports less the quarters before it. " : "") +
       (anyDerived ? "* Derived periods: a fourth quarter is the year less the " +
         "first three, and a quarter missing from the facts feed is the " +
         "year-to-date span less the quarters reported inside it — the filing " +
