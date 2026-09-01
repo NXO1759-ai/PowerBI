@@ -76,10 +76,10 @@
     pop.innerHTML =
       "<h4>" + esc(m.label) + (m.subtitle ? " — " + esc(m.subtitle) : "") + "</h4>" +
       "<p class='pop-formula'>" + esc(m.formula) + "</p>" +
+      (m.watch ? "<p class='pop-watch'><span class='pop-tag'>Caveat</span>" +
+        esc(m.watch) + "</p>" : "") +
       "<p>" + esc(m.definition) + "</p>" +
-      "<p><span class='pop-tag'>How to read it</span>" + esc(m.interpretation) + "</p>" +
-      (m.watch ? "<p class='pop-watch'><span class='pop-tag'>Watch for</span>" +
-        esc(m.watch) + "</p>" : "");
+      "<p><span class='pop-tag'>How to read it</span>" + esc(m.interpretation) + "</p>";
     pop.hidden = false;
     /* Below this width the popup is a bottom sheet positioned entirely by
        CSS. Inline left/top would beat the stylesheet and strand it
@@ -1019,5 +1019,16 @@
     window.addEventListener("orientationchange", later);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(later);
     if (typeof ResizeObserver === "function") new ResizeObserver(later).observe(nav);
+  })();
+
+  /* ---------- export ---------- */
+  (function () {
+    var xb = document.getElementById("export-xlsx"), pb = document.getElementById("export-print");
+    var ctx = function () { return { company: (state.data && state.data.entityName) || state.ticker, page: "Financial Statement Analysis", source: (document.getElementById("src-footer-text") || {}).textContent || "" }; };
+    if (xb && window.RTExport) xb.addEventListener("click", function () {
+      var tables = document.querySelectorAll("main table.grid");
+      if (!window.RTExport.xlsx(tables, ctx())) xb.textContent = "Nothing to export";
+    });
+    if (pb && window.RTExport) pb.addEventListener("click", function () { window.RTExport.print(ctx()); });
   })();
 })();

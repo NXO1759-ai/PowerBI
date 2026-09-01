@@ -30,6 +30,7 @@ import { classify } from "../scripts/lib/sic-map.mjs";
 import { SEC_UA } from "../scripts/lib/sec-pull.mjs";
 import { peerHint } from "../scripts/lib/peer-hints.mjs";
 
+import { gate } from "../scripts/lib/ratelimit.mjs";
 export const maxDuration = 60;
 
 const companyCache = globalThis.__panelCoCache || (globalThis.__panelCoCache = new Map());
@@ -247,6 +248,7 @@ async function livePeers(company, subjectTicker, excludeCik) {
 }
 
 export default async function handler(req, res) {
+  { const g = gate(req, { burst: 20, ratePerMin: 10, dailyCap: 2000, cost: (req.query && req.query.peers === "live") ? 1 : 0, sameOrigin: false }); if (g) return res.status(g.status).json(g.body); }
   res.setHeader("Access-Control-Allow-Origin", "*");
   const q = req.query || {};
   const ticker = String(q.ticker || "").toUpperCase().replace(/[^A-Z0-9.\-]/g, "").slice(0, 12);
