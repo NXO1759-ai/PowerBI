@@ -1,15 +1,13 @@
 /* export.js — take any table on the page out of the page.
  *
  * Analysts drop tables into models and decks; a dashboard that cannot be
- * extracted is a demo. Three routes, no dependencies:
+ * extracted is a demo. Two routes, no dependencies:
  *
  *   xlsx   a real workbook, one sheet per table, built here: a zip
  *          archive with stored (uncompressed) members, which needs only
  *          a CRC-32 and the SpreadsheetML XML — about a hundred lines
  *          and no library
  *   csv    the same rows as text, for anything that reads a file
- *   print  the browser's own PDF, through a print stylesheet, with a
- *          dated header naming the company and the sources
  *
  * Every export carries its provenance: the company, the page, the date
  * generated, and the source line the page prints in its footer, so a
@@ -34,7 +32,7 @@
 
   /* ---------- numbers stay numbers in the workbook ---------- */
   function cellValue(text) {
-    var t = String(text).replace(/[,$]/g, "").replace(/−/g, "-").trim();
+    var t = String(text).replace(/[,$]/g, "").replace(/−/g, "-").replace(/^\+/, "").trim();
     var mult = 1;
     if (/T$/.test(t)) { mult = 1e12; t = t.slice(0, -1); }
     else if (/B$/.test(t)) { mult = 1e9; t = t.slice(0, -1); }
@@ -77,9 +75,9 @@
       var local = [].concat(le32(0x04034b50), le16(20), le16(0x0800), le16(0), le16(dosTime), le16(dosDate),
         le32(crc), le32(data.length), le32(data.length), le16(name.length), le16(0));
       parts.push(new Uint8Array(local), name, data);
-      central.push([].concat(le32(0x02014b50), le16(20), le16(20), le16(0x0800), le16(0), le16(dosTime), le16(dosDate),
+      central.push([[].concat(le32(0x02014b50), le16(20), le16(20), le16(0x0800), le16(0), le16(dosTime), le16(dosDate),
         le32(crc), le32(data.length), le32(data.length), le16(name.length), le16(0), le16(0), le16(0), le16(0),
-        le32(0), le32(offset)), name);
+        le32(0), le32(offset)), name]);
       offset += local.length + name.length + data.length;
     });
     var cdStart = offset, cdSize = 0;
@@ -101,7 +99,8 @@
   }
   function sheetXml(rows) {
     var out = ['<?xml version="1.0" encoding="UTF-8" standalone="yes"?>',
-      '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>'];
+      '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">' +
+      '<cols><col min="1" max="1" width="38" customWidth="1"/><col min="2" max="40" width="15" customWidth="1"/></cols><sheetData>'];
     rows.forEach(function (row, r) {
       out.push('<row r="' + (r + 1) + '">');
       row.forEach(function (cell, c) {
@@ -119,11 +118,25 @@
     out.push("</sheetData></worksheet>");
     return out.join("");
   }
+  function sheetNames(sheets) {
+    var used = {};
+    sheets.forEach(function (s) {
+      var base = String(s.name || "Table").replace(/[\\/?*\[\]:]/g, " ").replace(/\s+/g, " ").trim().slice(0, 31) || "Table";
+      var name = base, n = 2;
+      while (used[name.toLowerCase()]) {
+        var suffix = " " + n++;
+        name = base.slice(0, 31 - suffix.length) + suffix;
+      }
+      used[name.toLowerCase()] = true;
+      s.name = name;
+    });
+  }
   function workbook(sheets) {
+    sheetNames(sheets);
     var wb = ['<?xml version="1.0" encoding="UTF-8" standalone="yes"?>',
       '<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>'];
     sheets.forEach(function (s, i) {
-      wb.push('<sheet name="' + xmlEsc(s.name.slice(0, 31)) + '" sheetId="' + (i + 1) + '" r:id="rId' + (i + 1) + '"/>');
+      wb.push('<sheet name="' + xmlEsc(s.name) + '" sheetId="' + (i + 1) + '" r:id="rId' + (i + 1) + '"/>');
     });
     wb.push("</sheets></workbook>");
     var rels = ['<?xml version="1.0" encoding="UTF-8" standalone="yes"?>',
@@ -135,12 +148,18 @@
     rels.push("</Relationships>");
     var styles = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
       '<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">' +
-      '<numFmts count="2"><numFmt numFmtId="164" formatCode="#,##0.0%"/><numFmt numFmtId="165" formatCode="0.0&quot;×&quot;"/></numFmts>' +
-      '<fonts count="2"><font><sz val="10"/><name val="Calibri"/></font><font><b/><sz val="10"/><name val="Calibri"/></font></fonts>' +
+      '<numFmts count="2"><numFmt numFmtId="164" formatCode="0.0%"/><numFmt numFmtId="165" formatCode="0.0&quot;×&quot;"/></numFmts>' +
+      '<fonts count="2"><font><sz val="10"/><name val="Calibri"/><family val="2"/></font>' +
+      '<font><b/><sz val="10"/><name val="Calibri"/><family val="2"/></font></fonts>' +
       '<fills count="2"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill></fills>' +
-      '<borders count="1"><border/></borders>' +
-      '<cellXfs count="5"><xf numFmtId="0"/><xf numFmtId="3" applyNumberFormat="1"/><xf numFmtId="164" applyNumberFormat="1"/>' +
-      '<xf numFmtId="165" applyNumberFormat="1"/><xf fontId="1" applyFont="1"/></cellXfs></styleSheet>';
+      '<borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders>' +
+      '<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>' +
+      '<cellXfs count="5"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>' +
+      '<xf numFmtId="3" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>' +
+      '<xf numFmtId="164" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>' +
+      '<xf numFmtId="165" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/>' +
+      '<xf numFmtId="0" fontId="1" fillId="0" borderId="0" xfId="0" applyFont="1"/></cellXfs>' +
+      '<cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
     var types = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' +
       '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">' +
       '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>' +
@@ -164,6 +183,16 @@
       members.push({ name: "xl/worksheets/sheet" + (i + 1) + ".xml", data: utf8(sheetXml(s.rows)) });
     });
     return zipStored(members);
+  }
+
+  /** The nearest h2/h3 above a table in document order. */
+  function precedingHeading(el) {
+    var heads = document.querySelectorAll("main h2, main h3, main h4"), best = null;
+    for (var i = 0; i < heads.length; i++) {
+      if (heads[i].compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING) best = heads[i];
+      else break;
+    }
+    return best ? best.textContent.replace(/\s+/g, " ").trim() : null;
   }
 
   /* ---------- provenance ---------- */
@@ -198,9 +227,7 @@
       list.forEach(function (t, i) {
         var rows = tableRows(t);
         if (!rows.length) return;
-        var name = (t.getAttribute("data-export-name") ||
-          (t.closest("section") && t.closest("section").querySelector("h2, h3") || {}).textContent || ("Table " + (i + 1)))
-          .replace(/[\\/?*\[\]:]/g, " ").trim().slice(0, 31);
+        var name = t.getAttribute("data-export-name") || precedingHeading(t) || ("Table " + (i + 1));
         sheets.push({ name: name, rows: provenanceRows(ctx).concat(rows) });
       });
       if (!sheets.length) return false;
@@ -214,19 +241,6 @@
       }).join("\r\n");
       download(new Blob(["﻿" + text], { type: "text/csv;charset=utf-8" }),
         safe(ctx.company) + "-" + safe((table.getAttribute("data-export-name") || "table")) + "-" + stamp() + ".csv");
-    },
-    /** The page as the browser prints it, with a dated provenance banner. */
-    print: function (ctx) {
-      var banner = document.getElementById("print-banner");
-      if (!banner) {
-        banner = document.createElement("div");
-        banner.id = "print-banner";
-        document.body.insertBefore(banner, document.body.firstChild);
-      }
-      banner.textContent = (ctx.company ? ctx.company + " — " : "") + (ctx.page || document.title) +
-        " — snapshot " + new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC" +
-        (ctx.source ? " — " + ctx.source : "");
-      window.print();
     },
   };
 })();

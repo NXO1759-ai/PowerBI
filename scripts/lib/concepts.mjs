@@ -131,6 +131,8 @@ export const BALANCE = {
     "MarketableSecuritiesCurrent",
     "ShortTermInvestments",
     "AvailableForSaleSecuritiesDebtSecuritiesCurrent",
+    /* NVIDIA moved its marketable securities to this tag in FY2026 */
+    "DebtSecuritiesCurrent",
     "MarketableSecurities",
   ],
   receivables: [
@@ -178,9 +180,11 @@ export const BALANCE = {
     "LongTermDebtAndCapitalLeaseObligations",
     "LongTermDebt",
   ],
+  /* the whole obligation first; the non-current part alone is a floor
+     for filers that never tag a total */
   operatingLeaseLiability: [
-    "OperatingLeaseLiabilityNoncurrent",
     "OperatingLeaseLiability",
+    "OperatingLeaseLiabilityNoncurrent",
   ],
   totalLiabilities: ["Liabilities"],
   equity: ["StockholdersEquity"],

@@ -3145,12 +3145,11 @@
 
   /* ---------- export ---------- */
   (function () {
-    var xb = document.getElementById("export-xlsx"), pb = document.getElementById("export-print");
+    var xb = document.getElementById("export-xlsx");
     var ctx = function () { return { company: (PANEL[state.ticker] && PANEL[state.ticker].name) || state.ticker, page: "Strategy Analysis (" + state.view + ")", source: (document.getElementById("src-footer-text") || {}).textContent || "" }; };
     if (xb && window.RTExport) xb.addEventListener("click", function () {
       var tables = document.querySelectorAll("main table.grid");
       if (!window.RTExport.xlsx(tables, ctx())) xb.textContent = "Nothing to export";
     });
-    if (pb && window.RTExport) pb.addEventListener("click", function () { window.RTExport.print(ctx()); });
   })();
 })();

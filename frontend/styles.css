@@ -495,20 +495,6 @@ td.na, .na { color: var(--kimi-color-text-tertiary); }
 
 /* ---- export ---- */
 .footer-actions { display: inline-flex; gap: 8px; flex: 0 0 auto; flex-wrap: wrap; }
-#print-banner { display: none; }
-@media print {
-  .topbar, .search, .footer-actions, #refresh-btn, .seg, #metric-pop, .modal-overlay, .md-close { display: none !important; }
-  body { background: #fff !important; color: #111 !important; }
-  .panel-card, .fsa-section, .credit-card, .force, .cycle-dial, #macro-detail { border-color: #ccc !important; background: #fff !important; break-inside: avoid; }
-  .mcard, .val-card { border-color: #ddd !important; background: #fff !important; }
-  .m-value, .md-title, .meter-val, .val-card .m-value { color: #111 !important; }
-  .m-label, .m-gloss, .chart-caption, .hint, .section-blurb, p, td, th, li { color: #222 !important; }
-  table.grid { font-size: 10px; }
-  #print-banner { display: block; font: 600 11px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    border-bottom: 1px solid #999; padding: 6px 0 8px; margin: 0 0 14px; color: #111; }
-  a[href]::after { content: ""; }
-  svg text { fill: #333 !important; }
-}
 
 /* ---- collapsed reading guides beneath section headings ---- */
 details.how-to-read { margin: 2px 0 0; }
@@ -519,4 +505,3 @@ details.how-to-read > summary::before { content: "\25B8"; font-size: 10px; line-
 details.how-to-read[open] > summary::before { content: "\25BE"; }
 details.how-to-read > summary:hover { color: #d0d3d9; }
 details.how-to-read > p { margin: 6px 0 2px; font-size: 13px; line-height: 1.55; color: #a0a4ad; max-width: 74ch; }
-@media print { details.how-to-read { display: none; } }
