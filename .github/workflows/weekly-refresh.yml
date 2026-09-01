@@ -63,6 +63,11 @@ jobs:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT || 'Research Terminal research@chineduokeke.mba' }}
         run: node scripts/build-strategy-panel.mjs
 
+      # The pages fetch the panel by industry and segments and risks by
+      # company, so the monolithic files are split after every rebuild.
+      - name: Chunk the data files for lazy loading
+        run: node scripts/chunk-data.mjs
+
       - name: Summarise the run
         if: always()
         run: |

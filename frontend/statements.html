@@ -76,12 +76,8 @@
     <section class="panel-card fsa-section" id="sec-dupont" aria-labelledby="h-dupont">
       <div class="section-head">
         <h2 id="h-dupont">Where the return comes from</h2>
-        <p class="section-blurb">
-          Return on equity blends two different things: how good the business is,
-          and how aggressively it is financed. Separating them is the first move in
-          statement analysis, because a rising return means opposite things
-          depending on which half produced it.
-        </p>
+        <p class="section-blurb">Return on equity split into what the business earns and how it is financed.</p>
+        <details class="how-to-read"><summary>How to read this</summary><p>Return on equity blends two different things: how good the business is, and how aggressively it is financed. Separating them is the first move in statement analysis, because a rising return means opposite things depending on which half produced it.</p></details>
       </div>
       <div class="dupont-flow" id="dupont-flow"></div>
       <p class="dupont-reading" id="dupont-reading"></p>
@@ -96,11 +92,8 @@
     <section class="panel-card fsa-section" id="sec-statements" aria-labelledby="h-statements">
       <div class="section-head">
         <h2 id="h-statements">The statements</h2>
-        <p class="section-blurb">
-          As filed, newest period last. The common-size view restates every line as
-          a share of revenue, which is how you compare a company with its own past
-          or with a rival of a different size.
-        </p>
+        <p class="section-blurb">The three statements as filed, newest period last, with the change between periods and a common-size view.</p>
+        <details class="how-to-read"><summary>How to read this</summary><p>The common-size view restates every line as a share of revenue, which is how you compare a company with its own past or with a rival of a different size. A superscript marks a figure the company later revised.</p></details>
       </div>
       <div class="stmt-controls">
         <div class="seg" role="group" aria-label="Statement view">
@@ -113,11 +106,8 @@
       <h3>Balance sheet</h3>
       <div class="scroll-x"><table class="grid stmt" id="t-balance"></table></div>
       <h3>Reformulated balance sheet</h3>
-      <p class="hint">
-        The same balance sheet split into the operating business and the way it is
-        financed. Net operating assets are what the business actually uses; net debt
-        is borrowings less the cash held against them. The two always sum to equity.
-      </p>
+      <p class="hint">The balance sheet split into net operating assets and net debt, which sum to equity.</p>
+      <details class="how-to-read"><summary>How to read this</summary><p>Net operating assets are what the business actually uses; net debt is borrowings less the cash held against them. Splitting them separates the return the business earns from the way it is financed.</p></details>
       <div class="scroll-x"><table class="grid stmt" id="t-reformulated"></table></div>
       <h3>Cash flow</h3>
       <div class="scroll-x"><table class="grid stmt" id="t-cashflow"></table></div>
@@ -127,21 +117,13 @@
     <section class="panel-card fsa-section" id="sec-reading" aria-labelledby="h-reading">
       <div class="section-head">
         <h2 id="h-reading">Reading the period</h2>
-        <p class="section-blurb">
-          Horizontal analysis asks what moved and how fast; common-size
-          analysis asks whether the shape of the business changed. Together
-          they are the first pass any statement analysis makes, and every
-          sentence below is computed from the tables above.
-        </p>
+        <p class="section-blurb">What moved, how fast, and whether the shape of the business changed — every sentence computed from the tables above.</p>
+        <details class="how-to-read"><summary>How to read this</summary><p>Horizontal analysis asks what moved and how fast; common-size analysis asks whether the shape of the business changed. Together they are the first pass any statement analysis makes.</p></details>
       </div>
       <div id="reading-body"></div>
       <h3>Material variances</h3>
-      <p class="hint">
-        Flagged on scaled thresholds — a line above $10B must move 5% and
-        $500M, $1–10B lines 10% and $100M, smaller lines 15% and $50M —
-        and only when the move departs from the line's own prior trend.
-        Ranked by dollar size, capped at eight.
-      </p>
+      <p class="hint">Lines whose move exceeds a size-scaled threshold and departs from their own trend, ranked by dollar size and capped at eight.</p>
+      <details class="how-to-read"><summary>How to read this</summary><p>A line above $10B must move 5% and $500M, a $1–10B line 10% and $100M, a smaller line 15% and $50M. A move that matches the line's own prior trend is not a flag, however large.</p></details>
       <div class="scroll-x"><table class="grid" id="t-variance"></table></div>
       <div id="variance-note"></div>
     </section>
@@ -163,19 +145,19 @@
     <section class="panel-card fsa-section" id="sec-quality" aria-labelledby="h-quality">
       <div class="section-head">
         <h2 id="h-quality">Do the profits turn into cash?</h2>
-        <p class="section-blurb">
-          Over a long enough run, cumulative profit and cumulative free cash flow
-          should end up close together. A persistent gap is the most useful early
-          warning in financial analysis — companies have reported rising profits for
-          years while cash went the other way, and the divergence was visible long
-          before anything else broke.
-        </p>
+        <p class="section-blurb">Cumulative profit against cumulative free cash flow over the full window.</p>
+        <details class="how-to-read"><summary>How to read this</summary><p>Over a long enough run the two should end up close together. A persistent gap is the most useful early warning in financial analysis — companies have reported rising profits for years while cash went the other way, and the divergence was visible long before anything else broke.</p></details>
       </div>
       <div id="quality-body"></div>
     </section>
 
     <footer class="src-footer" id="src-footer">
       <span id="src-footer-text"></span>
+      <span class="footer-actions">
+        <button type="button" id="export-xlsx" class="refresh-btn" title="Every table on this page as a workbook, with provenance">Workbook</button>
+        <button type="button" id="export-print" class="refresh-btn" title="Print or save as PDF with a dated snapshot header">Print / PDF</button>
+        
+      </span>
     </footer>
   </div>
 </main>
@@ -200,11 +182,12 @@
   </div>
 </div>
 
-<script src="lib/metrics.js"></script>
-<script src="lib/ratios.js"></script>
-<script src="lib/metric-catalog.js"></script>
-<script src="data/company-index.js"></script>
-<script src="data/coverage.js"></script>
-<script src="statements.js"></script>
+<script src="lib/metrics.js" defer></script>
+<script src="lib/ratios.js" defer></script>
+<script src="lib/export.js" defer></script>
+<script src="lib/metric-catalog.js" defer></script>
+<script src="data/company-index.js" defer></script>
+<script src="data/coverage.js" defer></script>
+<script src="statements.js" defer></script>
 </body>
 </html>

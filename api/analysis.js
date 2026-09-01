@@ -13,6 +13,7 @@
  * Requires DEEPSEEK_API_KEY in the Vercel environment.
  */
 
+import { gate } from "../scripts/lib/ratelimit.mjs";
 export const maxDuration = 60;
 
 const MODEL = "deepseek-chat";
@@ -203,6 +204,9 @@ function buildPrompt(body) {
 }
 
 export default async function handler(req, res) {
+  /* origin and per-caller rate at the door; the daily budget is charged
+     only when a request actually reaches the model */
+  { const g = gate(req, { burst: 10, ratePerMin: 4, cost: 0 }); if (g) return res.status(g.status).json(g.body); }
   if (req.method !== "POST") {
     return res.status(405).json({ error: "POST required" });
   }
@@ -272,6 +276,9 @@ export default async function handler(req, res) {
 
   /* Retry once on any failure; two balanced 28s attempts stay inside
      maxDuration (60s) with margin for handler overhead. */
+  /* a cache miss is about to spend money: charge the daily budget now */
+  { const g = gate(req, { burst: 1e6, ratePerMin: 1e6, dailyCap: 400, cost: 1, sameOrigin: false });
+    if (g) { res.setHeader("Cache-Control", "no-store"); return res.status(g.status).json(g.body); } }
   let result = await callDeepSeek(28000);
   if (result.error) result = await callDeepSeek(28000);
   if (result.error) return res.status(502).json({ error: result.error });

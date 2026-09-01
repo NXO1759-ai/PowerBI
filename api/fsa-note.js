@@ -15,6 +15,7 @@
  * ticker+period; a forced refresh rewrites the cached note for everyone.
  */
 
+import { gate } from "../scripts/lib/ratelimit.mjs";
 export const maxDuration = 60;
 
 const MODEL = "deepseek-chat";
@@ -22,6 +23,9 @@ const cache = globalThis.__fsaNoteCache || (globalThis.__fsaNoteCache = new Map(
 const TTL = 7 * 24 * 60 * 60 * 1000;
 
 export default async function handler(req, res) {
+  /* origin and per-caller rate at the door; the daily budget is charged
+     only when a request actually reaches the model, below */
+  { const g = gate(req, { burst: 10, ratePerMin: 4, cost: 0 }); if (g) return res.status(g.status).json(g.body); }
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   if (req.method === "OPTIONS") return res.status(204).end();
@@ -113,6 +117,9 @@ export default async function handler(req, res) {
     }
   }
 
+  /* a cache miss is about to spend money: charge the daily budget now */
+  { const g = gate(req, { burst: 1e6, ratePerMin: 1e6, dailyCap: 400, cost: 1, sameOrigin: false });
+    if (g) { res.setHeader("Cache-Control", "no-store"); return res.status(g.status).json(g.body); } }
   let out = await call(40000);
   if (out.error) out = await call(40000);
   if (out.error) {

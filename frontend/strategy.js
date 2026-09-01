@@ -7,9 +7,15 @@
   var PANEL = window.STRATEGY_PANEL, FIELDS = window.PANEL_FIELDS;
   var MAP = window.INDUSTRY_MAP || {};
   if (!S || !PANEL) throw new Error("strategy.js or the panel failed to load");
+  /* The index lists every covered company and industry; the panel holds
+     only the industries fetched so far (strategy-boot.js loads the first). */
+  var PIDX = window.PANEL_INDEX || { companies: {}, industries: [], reference: {} };
+  var LOADED = window.PANEL_LOADED || (window.PANEL_LOADED = {});
+  var STATIC_DETAIL = window.STATIC_DETAIL || (window.STATIC_DETAIL = {});
 
   var get = S.makeReader(FIELDS);
-  var INDEX = Array.isArray(window.COMPANY_INDEX) ? window.COMPANY_INDEX : [];
+  /* the SEC company index arrives after first paint, so it is read late */
+  function INDEX_() { return Array.isArray(window.COMPANY_INDEX) ? window.COMPANY_INDEX : []; }
   var isNum = S.isNum;
 
   /* Companies grouped by industry, once. */
@@ -28,8 +34,49 @@
   var LIVE = {};   /* tickers merged from the on-demand endpoint */
 
   function indexEntry(t) {
-    for (var i = 0; i < INDEX.length; i++) if (INDEX[i][0] === t) return INDEX[i];
+    var IX = INDEX_();
+    for (var i = 0; i < IX.length; i++) if (IX[i][0] === t) return IX[i];
+    var c = PIDX.companies[t];
+    return c ? [t, c.cik, c.name] : null;
+  }
+  function industryFile(ind) {
+    for (var i = 0; i < PIDX.industries.length; i++) {
+      if (PIDX.industries[i].label === ind) return PIDX.industries[i].file;
+    }
     return null;
+  }
+  /** Fetch an industry's panel rows on first use and merge them in. */
+  function ensureIndustry(ind) {
+    var file = industryFile(ind);
+    if (!file || LOADED[ind]) return Promise.resolve(false);
+    return fetch("data/panel/" + file).then(function (r) {
+      if (!r.ok) throw new Error("panel chunk " + r.status);
+      return r.json();
+    }).then(function (ch) {
+      Object.keys(ch.companies || {}).forEach(function (k) {
+        if (!PANEL[k]) { PANEL[k] = ch.companies[k]; addToCohorts(k); }
+      });
+      LOADED[ind] = true;
+      PANEL_REF = {};
+      return true;
+    });
+  }
+  /** A covered company's segment tables and risk register, split per
+      company by the weekly build; fetched once, before the first draw,
+      so the note and the blocks see them together. */
+  function pullStaticDetail(ticker) {
+    if (STATIC_DETAIL[ticker] || !PIDX.companies[ticker]) return Promise.resolve();
+    STATIC_DETAIL[ticker] = true;
+    var opt = function (url) {
+      return fetch(url).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+    };
+    return Promise.all([opt("data/segments/" + ticker + ".json"), opt("data/risks/" + ticker + ".json")])
+      .then(function (d) {
+        window.SEGMENT_DATA = window.SEGMENT_DATA || {};
+        window.RISK_DATA = window.RISK_DATA || {};
+        if (d[0]) window.SEGMENT_DATA[ticker] = d[0];
+        if (d[1]) window.RISK_DATA[ticker] = d[1];
+      });
   }
   function ensureIndustryOption(ind) {
     var sel = $("industry-select");
@@ -401,11 +448,13 @@
     var m = DEFS[key];
     if (!m) return;
     popFor = el;
+    /* formula first — the line a professional scans for — then the caveat
+       that qualifies it, then what it is and how to read it */
     pop.innerHTML = "<h4>" + esc(m.label) + "</h4>" +
       "<p class='pop-formula'>" + esc(m.formula) + "</p>" +
+      (m.watch ? "<p class='pop-watch'><span class='pop-tag'>Caveat</span>" + esc(m.watch) + "</p>" : "") +
       "<p>" + esc(m.definition) + "</p>" +
-      "<p><span class='pop-tag'>How to read it</span>" + esc(m.interpretation) + "</p>" +
-      "<p class='pop-watch'><span class='pop-tag'>Watch for</span>" + esc(m.watch) + "</p>";
+      "<p><span class='pop-tag'>How to read it</span>" + esc(m.interpretation) + "</p>";
     pop.hidden = false;
     if (window.matchMedia("(max-width: 680px)").matches) {
       pop.style.left = ""; pop.style.top = ""; return;
@@ -832,14 +881,17 @@
     $("position-caption").innerHTML = pers
       ? "<strong>" + esc(state.ticker) + " was above the industry median in " +
         pers.yearsAbove + " of " + pers.years + " years</strong> observed, longest unbroken run " +
-        pers.longestStreak + ". A single good year is not an advantage; this is the test of whether one held."
+        pers.longestStreak + "."
       : "";
   }
 
   /* One reference per year, computed once and reused. */
   var PANEL_REF = {};
   function panelRef(year) {
-    if (!(year in PANEL_REF)) PANEL_REF[year] = S.panelReference(PANEL, get, year);
+    if (!(year in PANEL_REF)) {
+      var pre = PIDX.reference && PIDX.reference[year];
+      PANEL_REF[year] = pre || S.panelReference(PANEL, get, year);
+    }
     return PANEL_REF[year];
   }
 
@@ -1176,7 +1228,7 @@
         " peers reporting in " + esc(me.industry) + " — a gap of " + pp(adv.gap) + ".");
       if (pers) {
         parts.push("It sat above the peer median in " + pers.yearsAbove + " of " +
-          pers.years + " years. A single good year is not an advantage; holding one across a cycle is.");
+          pers.years + " years.");
       }
       if (adv.syntheticYears) {
         parts.push("<span class='soft'>Operating profit is rebuilt from pre-tax income in " +
@@ -2825,7 +2877,7 @@
     }
     var span = data.years[0] + "–" + data.years[data.years.length - 1];
     $("src-footer-text").textContent =
-      "Source: SEC EDGAR XBRL, " + Object.keys(PANEL).length + " large listed US companies, " +
+      "Source: SEC EDGAR XBRL, " + Math.max(Object.keys(PIDX.companies).length, Object.keys(PANEL).length) + " large listed US companies, " +
       span + ". SEC XBRL begins around 2007–2009 because the mandate phased in from 2009, " +
       "so the window reaches back roughly 19 years rather than to 2002. " +
       "Industry grouping is the SEC's own SIC classification, refined to three digits where " +
@@ -2834,7 +2886,25 @@
   }
 
   function setCompany(ticker) {
-    if (!PANEL[ticker]) { setCompanyLive(ticker, false); return; }
+    if (!PANEL[ticker]) {
+      var cov = PIDX.companies[ticker];
+      if (!cov) { setCompanyLive(ticker, false); return; }
+      /* covered, but its industry is not loaded yet */
+      $("status").textContent = "Loading " + cov.industry + " …";
+      ensureIndustry(cov.industry).then(function () {
+        return pullStaticDetail(ticker);
+      }).then(function () {
+        $("status").textContent = "";
+        if (PANEL[ticker]) setCompany(ticker); else setCompanyLive(ticker, false);
+      }).catch(function (e) {
+        $("status").textContent = "Could not load " + cov.industry + ": " + (e && e.message ? e.message : e);
+      });
+      return;
+    }
+    if (!STATIC_DETAIL[ticker] && PIDX.companies[ticker]) {
+      pullStaticDetail(ticker).then(function () { if (state.ticker === ticker) setCompany(ticker); });
+      return;
+    }
     state.ticker = ticker;
     var meta = PANEL[ticker] || MAP[ticker];
     $("co-name").textContent = meta ? meta.name : ticker;
@@ -2854,14 +2924,28 @@
     render();
   }
 
-  /* industry picker */
-  var industries = Object.keys(BY_INDUSTRY).sort();
+  /* industry picker: every industry the weekly build covers, whether or
+     not its rows are loaded yet */
+  var industryCounts = {};
+  PIDX.industries.forEach(function (i) { industryCounts[i.label] = i.members; });
+  Object.keys(BY_INDUSTRY).forEach(function (i) {
+    industryCounts[i] = Math.max(industryCounts[i] || 0, BY_INDUSTRY[i].length);
+  });
+  var industries = Object.keys(industryCounts).sort();
   $("industry-select").innerHTML = industries.map(function (i) {
-    return "<option value='" + esc(i) + "'>" + esc(i) + " (" + BY_INDUSTRY[i].length + ")</option>";
+    return "<option value='" + esc(i) + "'>" + esc(i) + " (" + industryCounts[i] + ")</option>";
   }).join("");
   $("industry-select").addEventListener("change", function () {
-    state.industry = this.value;
-    render();
+    var ind = this.value;
+    state.industry = ind;
+    if (LOADED[ind] || !industryFile(ind)) { render(); return; }
+    $("status").textContent = "Loading " + ind + " …";
+    ensureIndustry(ind).then(function () {
+      $("status").textContent = "";
+      if (state.industry === ind) render();
+    }).catch(function (e) {
+      $("status").textContent = "Could not load " + ind + ": " + (e && e.message ? e.message : e);
+    });
   });
   /* Clicking a backdrop or cycle card opens the decade view for that
      series. The hover glossary still works; the click goes deeper. */
@@ -2919,17 +3003,22 @@
   function findMatches(text) {
     var t = text.trim().toUpperCase();
     if (!t) return [];
-    var out = [];
-    Object.keys(PANEL).forEach(function (tk) {
-      var nm = (PANEL[tk].name || "").toUpperCase();
-      if (tk === t) out.unshift([tk, PANEL[tk].name, false]);
-      else if (tk.indexOf(t) === 0 || nm.indexOf(t) !== -1) out.push([tk, PANEL[tk].name, false]);
-    });
+    var out = [], seen = {};
+    var consider = function (tk, name) {
+      if (seen[tk]) return;
+      seen[tk] = true;
+      var nm = (name || "").toUpperCase();
+      if (tk === t) out.unshift([tk, name, false]);
+      else if (tk.indexOf(t) === 0 || nm.indexOf(t) !== -1) out.push([tk, name, false]);
+    };
+    Object.keys(PIDX.companies).forEach(function (tk) { consider(tk, PIDX.companies[tk].name); });
+    Object.keys(PANEL).forEach(function (tk) { consider(tk, PANEL[tk].name); });
     /* beyond the panel: the full SEC company index, marked as live */
+    var IX = INDEX_();
     if (out.length < 8 && t.length >= 2) {
-      for (var i = 0; i < INDEX.length && out.length < 8; i++) {
-        var tk2 = INDEX[i][0], nm2 = String(INDEX[i][2] || "");
-        if (PANEL[tk2]) continue;
+      for (var i = 0; i < IX.length && out.length < 8; i++) {
+        var tk2 = IX[i][0], nm2 = String(IX[i][2] || "");
+        if (PANEL[tk2] || seen[tk2]) continue;
         if (tk2 === t) out.unshift([tk2, nm2, true]);
         else if (tk2.indexOf(t) === 0 || nm2.toUpperCase().indexOf(t) !== -1) {
           out.push([tk2, nm2, true]);
@@ -3025,11 +3114,11 @@
      search box would have started; the panel default renders meanwhile
      so the page is never blank. */
   var liveStart = null;
-  if (!PANEL[initial]) {
+  if (!PANEL[initial] && !PIDX.companies[initial]) {
     if (indexEntry(initial)) liveStart = initial;
     initial = "NVDA";
   }
-  var m0 = PANEL[initial];
+  var m0 = PANEL[initial] || PIDX.companies[initial];
   q.value = m0 ? initial + " — " + m0.name : initial;
   /* A shared link that opened the company view reopens it there. Set
      before the first render so the view is not drawn twice. */
@@ -3042,4 +3131,26 @@
   }
   setCompany(initial);
   if (liveStart) { q.value = liveStart; setCompanyLive(liveStart, false); }
+  else if (urlT && !PANEL[decodeURIComponent(urlT).toUpperCase()] &&
+           !PIDX.companies[decodeURIComponent(urlT).toUpperCase()]) {
+    /* the SEC index had not arrived when this ran; try once it has */
+    var want = decodeURIComponent(urlT).toUpperCase(), tries = 0;
+    var waitIndex = window.setInterval(function () {
+      if (INDEX_().length || ++tries > 50) {
+        window.clearInterval(waitIndex);
+        if (indexEntry(want)) { q.value = want; setCompanyLive(want, false); }
+      }
+    }, 200);
+  }
+
+  /* ---------- export ---------- */
+  (function () {
+    var xb = document.getElementById("export-xlsx"), pb = document.getElementById("export-print");
+    var ctx = function () { return { company: (PANEL[state.ticker] && PANEL[state.ticker].name) || state.ticker, page: "Strategy Analysis (" + state.view + ")", source: (document.getElementById("src-footer-text") || {}).textContent || "" }; };
+    if (xb && window.RTExport) xb.addEventListener("click", function () {
+      var tables = document.querySelectorAll("main table.grid");
+      if (!window.RTExport.xlsx(tables, ctx())) xb.textContent = "Nothing to export";
+    });
+    if (pb && window.RTExport) pb.addEventListener("click", function () { window.RTExport.print(ctx()); });
+  })();
 })();
