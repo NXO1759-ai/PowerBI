@@ -3,7 +3,7 @@
    the metric-card and popup patterns from the Statement Analysis page. */
 (function () {
   "use strict";
-  var S = window.RTStrategy;
+  var S = window.RTStrategy, V = window.RTValuation;
   var PANEL = window.STRATEGY_PANEL, FIELDS = window.PANEL_FIELDS;
   var MAP = window.INDUSTRY_MAP || {};
   if (!S || !PANEL) throw new Error("strategy.js or the panel failed to load");
@@ -313,7 +313,7 @@
       definition: "The day's percentage move.",
       interpretation: "Noise on any given day. It appears here for orientation, not analysis.",
       watch: "A one-day move answers no strategic question." },
-    marketValue: { label: "Market value", formula: "Share price × shares outstanding",
+    marketValue: { label: "Market value", formula: "Share price × shares outstanding on the latest cover page",
       definition: "The price of the whole equity at today's quote.",
       interpretation: "The market's verdict on everything this page measures. Compare with the filed figures: value is priced, performance is reported, and the gap between them is the debate.",
       watch: "Moves daily; the filed figures move quarterly." },
@@ -438,6 +438,70 @@
       definition: "The part of growth that came from taking share rather than from the industry expanding.",
       interpretation: "Positive means outgrowing peers. A firm growing 8% in an industry growing 8% has gained nothing competitively.",
       watch: "Share of the covered peer group, not of the true served market." },
+    enterpriseValue: { label: "Enterprise value", formula: "Market value + debt + minority interest + preferred − cash and short-term investments",
+      definition: "What it would cost to own the whole business free of its financing: the equity plus the claims that rank ahead of it, less the cash that would come with it.",
+      interpretation: "Below market value means net cash; above means net debt. It is the numerator for every multiple on sales, EBITDA or EBIT, because those are earned before financing.",
+      watch: "Debt is at book, not fair value. Operating lease liabilities count as debt in the course's definition; here they are shown but left out of the multiples so the figure matches the feed's and the peers'." },
+    evEbit: { label: "EV / EBIT", formula: "Enterprise value ÷ trailing-twelve-month operating income",
+      definition: "Years of operating profit, after depreciation, the whole business is priced at.",
+      interpretation: "Stricter than EV/EBITDA for asset-heavy businesses, because depreciation is a real cost of staying in business. The course prefers a measure after amortisation of acquired intangibles (EBITA) where it can be had.",
+      watch: "Computed from the filings only; the feed and the peers do not carry it." },
+    pb: { label: "Price to book", formula: "Market value ÷ book equity",
+      definition: "The premium the market pays over the accounting value of shareholders' capital.",
+      interpretation: "Theory says P/B = 1 + (ROE − r) ÷ (r − g): a company earning above its cost of equity trades above book, and the gap widens with growth.",
+      watch: "Buybacks and write-offs shrink book equity, so a high P/B can reflect a thin book rather than a rich price." },
+    peerMedian: { label: "Peer median", formula: "Middle value of the peers' multiples, negatives excluded",
+      definition: "The typical multiple in the comparable set.",
+      interpretation: "Robust to one strange peer; the course found the median prices slightly worse than the harmonic mean and much better than the simple mean.",
+      watch: "With eight peers the median is the average of the fourth and fifth values, so it moves in steps." },
+    peerHarmonic: { label: "Peer harmonic mean", formula: "n ÷ Σ(1 ÷ multiple), positive multiples only",
+      definition: "The course's headline aggregate for a peer multiple (Liu, Nissim and Thomas): the average of the earnings yields, inverted.",
+      interpretation: "It weights a high multiple less than a simple mean does, which is why it prices better. A superscript shows how many peers were used after negatives were dropped.",
+      watch: "A single peer with a tiny multiple — often a data mismatch — drags the harmonic mean down hard; the course's JNJ exercise shows exactly that." },
+    impliedPrice: { label: "Implied price", formula: "Peer harmonic-mean multiple × the company's own driver per share (− net debt per share for enterprise multiples)",
+      definition: "What the stock would sell for if the market priced it like its peers on that one driver.",
+      interpretation: "Read the earnings rows first: the course's evidence ranks forward earnings best, then trailing earnings, EBITDA, book value and sales last. The reliability column is the interquartile range of pricing error in that study.",
+      watch: "Only the average comparable has to be priced correctly for the method to work — but a peer set chosen badly moves every row together." },
+    peerRule: { label: "Peer selection", formula: "Same industry by SIC, widened until ≥ 6 other firms; then the closest on total assets and return on equity",
+      definition: "Alford (1992): industry plus the nearest firms on size or ROE gave the most accurate P/E comparables; three SIC digits carry all the information a fourth would.",
+      interpretation: "Every company gets its own set; the industry cohort in the sections above is the Porter cohort and stays as it is.",
+      watch: "Size is total assets from the filings; ROE is net income over average equity. A candidate missing either ranks last." },
+    totalAssets: { label: "Total assets", formula: "As reported on the latest annual balance sheet",
+      definition: "The size measure the course's comparable rule matches on.",
+      interpretation: "A doubling of assets counts as one unit of distance in the peer ranking; two firms of similar size and return face similar risk and growth.",
+      watch: "Balance-sheet businesses (banks, insurers) carry assets that are their inventory, so size comparisons across sectors mean little." },
+    roeBook: { label: "Return on equity", formula: "Net income ÷ average book equity, latest fiscal year",
+      definition: "The profitability measure the comparable rule matches on — its stand-in for growth.",
+      interpretation: "Firms with similar ROE tend to grow book value at similar rates, which is why matching on it improves a P/E comparison.",
+      watch: "Buybacks shrink equity and inflate ROE; a negative equity makes the figure meaningless and it is withheld." },
+    costOfEquity: { label: "Cost of equity", formula: "10-year Treasury + β × equity risk premium (CAPM)",
+      definition: "The return shareholders require for bearing this stock's market risk.",
+      interpretation: "It is the r in every equity multiple's theory: P/E ≈ 1 ÷ (r − g). The premium is set at 5%, inside the course's 4–5.5% range; the beta is the feed's.",
+      watch: "A regression beta over five years of monthly returns is noisy; the course's adjusted beta (0.67 × raw + 0.33) pulls it toward one." },
+    wacc: { label: "Cost of capital", formula: "w_E × r_E + w_D × (1 − τ) × r_D + w_NCI × (1 − τ) × r_E, at market weights",
+      definition: "The blended return the whole business must earn on its capital.",
+      interpretation: "The hurdle for return on invested capital: a business earning above it adds value with every dollar it reinvests. Debt is cheap after tax, but weights are at market, so a large equity value keeps WACC close to the cost of equity.",
+      watch: "Cost of debt is interest expense over debt from the filings, floored at the Treasury rate; the tax rate is the effective rate over the trailing year." },
+    impliedGrowthPE: { label: "Growth the P/E assumes", formula: "g = (P/E × r − 1) ÷ (P/E + 1), from trailing P/E = (1 + g) ÷ (r − g)",
+      definition: "The perpetual earnings growth that would justify today's trailing multiple at the cost of equity.",
+      interpretation: "Compare it with the long-run economy (inflation plus real GDP, about 4%): a figure above that assumes the company outgrows the economy for ever, which is the claim to test.",
+      watch: "The steady-state identity ignores the high-growth years before steady state, so a young company's implied g overstates what is needed." },
+    impliedGrowthFcf: { label: "Growth the EV assumes", formula: "g = (EV × WACC − FCF) ÷ (EV + FCF), from EV = FCF × (1 + g) ÷ (WACC − g)",
+      definition: "The perpetual growth in free cash flow that would justify today's enterprise value at the cost of capital.",
+      interpretation: "Reverse-engineering the price: the course's way to negotiate with the market rather than forecast against it.",
+      watch: "Free cash flow is operating cash flow less capital expenditure over the trailing year; a heavy investment year depresses it and inflates the implied growth." },
+    theoryPB: { label: "P/B the theory expects", formula: "1 + (ROE − r) ÷ (r − g)",
+      definition: "The price-to-book a company earning this return on equity should command at its cost of equity and long-run growth.",
+      interpretation: "Actual above theory means the market expects returns to stay above the cost of equity longer, or growth to run faster, than the steady-state formula allows.",
+      watch: "Undefined when r ≤ g; computed with g at the 4% long-run economy rate." },
+    roicLtm: { label: "Return on invested capital", formula: "NOPAT ÷ beginning invested capital; NOPAT = operating income × (1 − effective tax rate)",
+      definition: "The after-tax return the operations earn on all the capital financing them — debt, leases, equity and minority interest — over the trailing twelve months.",
+      interpretation: "Set against the cost of capital: the spread times the capital is the value the business adds in a year. The net-of-cash view subtracts cash and securities from capital.",
+      watch: "Capital at the start of the window where a balance sheet a year earlier exists, otherwise the latest one. The section above computes ROIC the Porter way, with excess cash removed; the two differ by construction." },
+    eva: { label: "Economic value added", formula: "(ROIC − WACC) × beginning invested capital",
+      definition: "The dollar profit left after every provider of capital has been paid its required return.",
+      interpretation: "The course's preferred residual measure: positive means the business created value in the period, whatever the share price did.",
+      watch: "Sensitive to the WACC estimate: a one-point change in the cost of capital moves EVA by one percent of capital." },
     persistence: { label: "Persistence", formula: "Years above the industry median ÷ years observed",
       definition: "How often the company sat above its industry's median return across the whole window.",
       interpretation: "Strategy is about durable position. Ahead in 15 of 19 years is a different claim from managing it three times.",
@@ -1543,64 +1607,156 @@
   /* The standard comp sheet: market multiples from the feed, operating
      fundamentals from the filings, side by side, subject first. */
   var COMPS_CACHE = {};
-  function renderCompSheet(ctx, iy) {
-    var el = $("t-bench");
-    var members = (iy ? iy.pool : []).slice(0, 10);
-    var tickers = members.map(function (p) { return p.ticker; });
-    if (tickers.indexOf(state.ticker) === -1) tickers.unshift(state.ticker);
+  var PEER_CACHE = {}, STMT_CACHE = {}, VAL_STATE = {}, VAL_PENDING = {};
+  function bn(v) {
+    return isNum(v) ? (v < 0 ? "−$" : "$") +
+      Math.abs(v / 1e9).toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + "B" : "—";
+  }
+  /* ---------- comparable companies, the course way ----------
+     Alford (1992): the same industry by SIC, widened a digit at a time
+     until at least six other firms, then the firms closest to the
+     subject on size and return on equity. Every company gets its own
+     set here; the industry cohort used above stays the Porter cohort. */
+  function comparableFacts(t) {
+    var c = PANEL[t];
+    if (!c) return null;
+    var yl = S.latestResolvedYear(get, c, function (p) { return p.incomeStatement.revenue; }, 5);
+    var size = null, roe = null;
+    if (yl !== null) {
+      var row = c.years[yl], prev = c.years[yl - 1];
+      size = get(row, "totalAssets");
+      var ni = get(row, "netIncome"), eq = get(row, "equity"), eq0 = prev ? get(prev, "equity") : null;
+      var avgEq = isNum(eq) ? (isNum(eq0) ? (eq + eq0) / 2 : eq) : null;
+      roe = (isNum(ni) && isNum(avgEq) && avgEq > 0) ? ni / avgEq : null;
+    }
+    return { ticker: t, name: c.name, sic: c.sic || null, industry: c.industry, sector: c.sector,
+      size: isNum(size) ? size : null, roe: roe, year: yl };
+  }
+  function sectorIndustries(sector) {
+    var out = {};
+    Object.keys(PIDX.companies).forEach(function (t) {
+      var c = PIDX.companies[t]; if (c.sector === sector) out[c.industry] = true;
+    });
+    return Object.keys(out);
+  }
+  function selectPeers(ticker) {
+    var subject = comparableFacts(ticker);
+    if (!subject || !V) return null;
+    var cands = Object.keys(PANEL).map(comparableFacts).filter(Boolean);
+    return V.selectComparables(subject, cands, { minPool: 6, keep: 8 });
+  }
+  /** The peer set; the rest of the sector is loaded first when the
+      industries in hand cannot supply six candidates. */
+  function peerSetFor(ticker) {
+    if (PEER_CACHE[ticker]) return Promise.resolve(PEER_CACHE[ticker]);
+    var me = PANEL[ticker];
+    if (!me) return Promise.resolve(null);
+    var first = selectPeers(ticker);
+    var thin = !first || first.pool.count < 6 || /^(sector|every)/.test(first.pool.level);
+    var inds = thin ? sectorIndustries(me.sector).filter(function (i) { return !LOADED[i] && industryFile(i); }) : [];
+    var p = inds.length
+      ? Promise.all(inds.map(function (i) { return ensureIndustry(i).catch(function () { return false; }); }))
+          .then(function () { return selectPeers(ticker); })
+      : Promise.resolve(first);
+    return p.then(function (sel) { if (sel) PEER_CACHE[ticker] = sel; return sel; });
+  }
+  /** The feed's multiples for a list of tickers, cached by list. */
+  function compsFor(tickers, force) {
     var key = tickers.join(",");
-    var draw = function (rows) {
-      var byT = {};
-      (rows || []).forEach(function (r) { byT[r.ticker] = r; });
-      var xf = function (v) { return isNum(v) ? num(v, 1) + "×" : "—"; };
-      el.innerHTML = "<thead><tr><th scope='col'>" + esc(String(ctx.year)) + "</th>" +
-        "<th scope='col' class='num'>Mkt cap</th><th scope='col' class='num'>EV/Sales</th>" +
-        "<th scope='col' class='num'>EV/EBITDA</th><th scope='col' class='num'>P/E</th>" +
-        "<th scope='col' class='num'>Fwd P/E</th><th scope='col' class='num'>FCF yield</th>" +
-        "<th scope='col' class='num'>Rev growth 5y</th><th scope='col' class='num'>Op margin</th>" +
-        "<th scope='col' class='num'>ROIC</th><th scope='col' class='num'>Net debt/EBITDA</th></tr></thead><tbody>" +
-        tickers.map(function (t) {
-          var c = PANEL[t]; var v = byT[t] || {};
-          var self = t === state.ticker;
-          var cls = self ? " class='pool-you'" : "";
-          var g5 = null, opm = null, roic = null, nde = null;
-          if (c) {
-            var ys = Object.keys(c.years).map(Number).sort(function (a, b) { return a - b; });
-            var yl = S.latestResolvedYear(get, c, function (p) { return p.incomeStatement.revenue; }, 5);
-            if (yl !== null) {
-              var per = S.toPeriod(get, c.years[yl], yl);
-              var pri = c.years[yl - 1] ? S.toPeriod(get, c.years[yl - 1], yl - 1) : null;
-              opm = M.ebitMargin(per);
-              roic = M.roic(per, pri, c);
-              var e = S.ebitOf(per, S.isFinancial(c)), da = per.cashFlow.depreciationAmortization;
-              var ebitda = isNum(e) ? e + (isNum(da) ? Math.abs(da) : 0) : null;
-              var b = per.balanceSheet;
-              var debt = (isNum(b.shortTermDebt) ? b.shortTermDebt : 0) + (isNum(b.longTermDebt) ? b.longTermDebt : 0);
-              var cash = (isNum(b.cash) ? b.cash : 0) + (isNum(b.shortTermInvestments) ? b.shortTermInvestments : 0);
-              nde = (isNum(ebitda) && ebitda > 0) ? (debt - cash) / ebitda : null;
-              var y0 = ys[Math.max(0, ys.indexOf(yl) - 5)];
-              var r0 = get(c.years[y0], "revenue"), r1 = per.incomeStatement.revenue;
-              if (isNum(r0) && isNum(r1) && r0 > 0 && yl > y0) g5 = S.cagr(r0, r1, yl - y0);
-            }
-          }
-          return "<tr><td" + cls + ">" + esc(t) + "</td>" +
-            "<td class='num'>" + (isNum(v.marketCap) ? money(v.marketCap) : "—") + "</td>" +
-            "<td class='num'>" + xf(v.evRevenueTTM) + "</td><td class='num'>" + xf(v.evEbitdaTTM) + "</td>" +
-            "<td class='num'>" + xf(v.peTTM) + "</td><td class='num'>" + xf(v.forwardPE) + "</td>" +
-            "<td class='num'>" + (isNum(v.fcfYieldTTM) ? pct(v.fcfYieldTTM) : "—") + "</td>" +
-            "<td class='num'>" + (isNum(g5) ? pct(g5) : "—") + "</td>" +
-            "<td class='num'>" + (isNum(opm) ? pct(opm) : "—") + "</td>" +
-            "<td class='num'>" + (isNum(roic) ? pct(roic) : "—") + "</td>" +
-            "<td class='num'>" + (isNum(nde) ? num(nde, 1) + "×" : "—") + "</td></tr>";
-        }).join("") + "</tbody>" +
-        "<tfoot><tr><td colspan='11'>Market cap and multiples: market-data feed, trailing twelve months. Growth, margin, return and leverage: computed from each company's filings.</td></tr></tfoot>";
-    };
-    if (COMPS_CACHE[key]) { draw(COMPS_CACHE[key]); return; }
-    draw([]);
-    fetch(API_BASE + "/api/comps?tickers=" + encodeURIComponent(key))
+    if (!force && COMPS_CACHE[key]) return Promise.resolve(COMPS_CACHE[key]);
+    return fetch(API_BASE + "/api/comps?tickers=" + encodeURIComponent(key))
       .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (d) { if (d && d.rows) { COMPS_CACHE[key] = d.rows; if (state.ticker === tickers[0]) draw(d.rows); } })
-      .catch(function () {});
+      .then(function (d) { var rows = d && d.rows ? d.rows : []; COMPS_CACHE[key] = rows; return rows; })
+      .catch(function () { return []; });
+  }
+  /** Growth, margin, return and leverage from a company's filings. */
+  function fundamentalsFor(t) {
+    var c = PANEL[t], out = { g5: null, opm: null, roic: null, nde: null };
+    if (!c) return out;
+    var ys = Object.keys(c.years).map(Number).sort(function (a, b) { return a - b; });
+    var yl = S.latestResolvedYear(get, c, function (p) { return p.incomeStatement.revenue; }, 5);
+    if (yl === null) return out;
+    var per = S.toPeriod(get, c.years[yl], yl);
+    var pri = c.years[yl - 1] ? S.toPeriod(get, c.years[yl - 1], yl - 1) : null;
+    out.opm = M.ebitMargin(per);
+    out.roic = M.roic(per, pri, c);
+    var e = S.ebitOf(per, S.isFinancial(c)), da = per.cashFlow.depreciationAmortization;
+    var ebitda = isNum(e) ? e + (isNum(da) ? Math.abs(da) : 0) : null;
+    var b = per.balanceSheet;
+    var debt = (isNum(b.shortTermDebt) ? b.shortTermDebt : 0) + (isNum(b.longTermDebt) ? b.longTermDebt : 0);
+    var cash = (isNum(b.cash) ? b.cash : 0) + (isNum(b.shortTermInvestments) ? b.shortTermInvestments : 0);
+    out.nde = (isNum(ebitda) && ebitda > 0) ? (debt - cash) / ebitda : null;
+    var y0 = ys[Math.max(0, ys.indexOf(yl) - 5)];
+    var r0 = get(c.years[y0], "revenue"), r1 = per.incomeStatement.revenue;
+    if (isNum(r0) && isNum(r1) && r0 > 0 && yl > y0) out.g5 = S.cagr(r0, r1, yl - y0);
+    return out;
+  }
+  function peerSentence(sel) {
+    if (!sel) return "";
+    var steps = sel.pool.steps.map(function (st) { return esc(st.level) + " (" + st.count + ")"; }).join(" → ");
+    return "Peers chosen by the course rule — the same industry by SIC, widened until at least six other firms: " +
+      steps + "; then the " + sel.peers.length + " closest to " + esc(state.ticker) +
+      " on total assets and return on equity (Alford 1992)." +
+      (sel.passedOver.length ? " Passed over: " + sel.passedOver.slice(0, 6).map(function (p) { return esc(p.ticker); }).join(", ") +
+        (sel.passedOver.length > 6 ? " and " + (sel.passedOver.length - 6) + " more" : "") + "." : "");
+  }
+  function renderCompSheet(ctx, iy) {
+    var el = $("t-bench"), ticker = state.ticker;
+    el.innerHTML = "<tbody><tr><td class='soft'>Choosing the peer set…</td></tr></tbody>";
+    peerSetFor(ticker).then(function (sel) {
+      if (state.ticker !== ticker) return;
+      if (!sel) { el.innerHTML = ""; return; }
+      var tickers = [ticker].concat(sel.peers.map(function (p) { return p.ticker; }));
+      var facts = {};
+      sel.peers.forEach(function (p) { facts[p.ticker] = p; });
+      facts[ticker] = comparableFacts(ticker);
+      var draw = function (rows) {
+        var byT = {};
+        (rows || []).forEach(function (r) { byT[r.ticker] = r; });
+        var xf = function (v) { return isNum(v) ? num(v, 1) + "×" : "—"; };
+        var peerRows = sel.peers.map(function (p) { return byT[p.ticker] || {}; });
+        var agg = function (k) { return V.aggregate(peerRows.map(function (r) { return r[k]; })); };
+        var A = { evRevenueTTM: agg("evRevenueTTM"), evEbitdaTTM: agg("evEbitdaTTM"), peTTM: agg("peTTM"),
+          forwardPE: agg("forwardPE"), pb: agg("pb") };
+        var foot = function (label, key) {
+          return "<tr class='agg'><td>" + label + "</td><td></td><td></td><td></td>" +
+            ["evRevenueTTM", "evEbitdaTTM", "peTTM", "forwardPE", "pb"].map(function (k) {
+              return "<td class='num'>" + xf(A[k][key]) + (key === "harmonic" && A[k].excluded ? "<sup>" + A[k].n + "/" + (A[k].n + A[k].excluded) + "</sup>" : "") + "</td>";
+            }).join("") + "<td></td><td></td><td></td><td></td><td></td></tr>";
+        };
+        el.innerHTML = "<thead><tr><th scope='col'>Company</th>" +
+          "<th scope='col' class='num'><span data-metric='totalAssets'>Total assets</span></th>" +
+          "<th scope='col' class='num'><span data-metric='roeBook'>ROE</span></th>" +
+          "<th scope='col' class='num'>Mkt cap</th><th scope='col' class='num'>EV/Sales</th>" +
+          "<th scope='col' class='num'>EV/EBITDA</th><th scope='col' class='num'>P/E</th>" +
+          "<th scope='col' class='num'>Fwd P/E</th><th scope='col' class='num'>P/B</th><th scope='col' class='num'>FCF yield</th>" +
+          "<th scope='col' class='num'>Rev growth 5y</th><th scope='col' class='num'>Op margin</th>" +
+          "<th scope='col' class='num'>ROIC</th><th scope='col' class='num'>Net debt/EBITDA</th></tr></thead><tbody>" +
+          tickers.map(function (t) {
+            var v = byT[t] || {}, fx = facts[t] || {}, fu = fundamentalsFor(t);
+            var self = t === ticker;
+            return "<tr><td" + (self ? " class='pool-you'" : "") + " title='" + esc((PANEL[t] || {}).name || t) + "'>" + esc(t) + "</td>" +
+              "<td class='num'>" + (isNum(fx.size) ? money(fx.size) : "—") + "</td>" +
+              "<td class='num'>" + (isNum(fx.roe) ? pct(fx.roe) : "—") + "</td>" +
+              "<td class='num'>" + (isNum(v.marketCap) ? money(v.marketCap) : "—") + "</td>" +
+              "<td class='num'>" + xf(v.evRevenueTTM) + "</td><td class='num'>" + xf(v.evEbitdaTTM) + "</td>" +
+              "<td class='num'>" + xf(v.peTTM) + "</td><td class='num'>" + xf(v.forwardPE) + "</td>" +
+              "<td class='num'>" + xf(v.pb) + "</td>" +
+              "<td class='num'>" + (isNum(v.fcfYieldTTM) ? pct(v.fcfYieldTTM) : "—") + "</td>" +
+              "<td class='num'>" + (isNum(fu.g5) ? pct(fu.g5) : "—") + "</td>" +
+              "<td class='num'>" + (isNum(fu.opm) ? pct(fu.opm) : "—") + "</td>" +
+              "<td class='num'>" + (isNum(fu.roic) ? pct(fu.roic) : "—") + "</td>" +
+              "<td class='num'>" + (isNum(fu.nde) ? num(Math.abs(fu.nde) < 0.05 ? 0 : fu.nde, 1) + "×" : "—") + "</td></tr>";
+          }).join("") + "</tbody><tfoot>" +
+          foot("<span data-metric='peerMedian'>Peer median</span>", "median") +
+          foot("<span data-metric='peerHarmonic'>Peer harmonic mean</span>", "harmonic") +
+          "<tr><td colspan='14'>" + peerSentence(sel) +
+          " Market cap and multiples: market-data feed, trailing twelve months. Total assets, ROE, growth, margin, return and leverage: each company's filings. " +
+          "The harmonic mean and median leave out negative multiples; a superscript gives the count used.</td></tr></tfoot>";
+      };
+      draw(COMPS_CACHE[tickers.join(",")] || []);
+      compsFor(tickers, false).then(function (rows) { if (state.ticker === ticker) draw(rows); });
+    });
   }
 
   /* ---------- 4. customer and product ---------- */
@@ -1968,7 +2124,11 @@
         if (!r.ok) throw new Error(String(r.status));
         return r.json();
       })
-      .then(function (d) { MACRO.data = d; MACRO.failed = false; paintMacro(d); })
+      .then(function (d) {
+        MACRO.data = d; MACRO.failed = false; paintMacro(d);
+        /* the discount rate in the valuation block reads the Treasury */
+        if (VAL_STATE[state.ticker] && state.view === "company") paintValuation(state.ticker, VAL_STATE[state.ticker]);
+      })
       .catch(function (e) {
         MACRO.failed = true;
         host.innerHTML = "<p class='hint'>" +
@@ -2460,21 +2620,62 @@
 
   /* ---------- valuation ---------- */
   var VAL_CACHE = {};
+  function statementsFor(ticker, force) {
+    if (!force && STMT_CACHE[ticker]) return Promise.resolve(STMT_CACHE[ticker]);
+    var me = PANEL[ticker], cik = me && me.cik;
+    if (!cik) { var ie = indexEntry(ticker); cik = ie && ie[1]; }
+    if (!cik) return Promise.resolve(null);
+    return fetch(API_BASE + "/api/statements?ticker=" + encodeURIComponent(ticker) + "&cik=" + encodeURIComponent(cik) + (force ? "&force=1" : ""))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { if (d) STMT_CACHE[ticker] = d; return d; })
+      .catch(function () { return null; });
+  }
+  function marketFor(ticker, force) {
+    if (!force && STOCK_CACHE[ticker]) return Promise.resolve(STOCK_CACHE[ticker]);
+    return fetch(API_BASE + "/api/market?ticker=" + encodeURIComponent(ticker) + (force ? "&force=1" : ""))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { if (d) STOCK_CACHE[ticker] = d; return d; })
+      .catch(function () { return null; });
+  }
+  function vendorValuationFor(ticker, force) {
+    if (!force && VAL_CACHE[ticker]) return Promise.resolve(VAL_CACHE[ticker]);
+    return fetch(API_BASE + "/api/valuation?ticker=" + encodeURIComponent(ticker) + (force ? "&force=1" : ""))
+      .then(function (r) { if (r.status === 503) return { unconfigured: true }; return r.ok ? r.json() : null; })
+      .then(function (d) { if (d && !d.unconfigured) VAL_CACHE[ticker] = d; return d; })
+      .catch(function () { return null; });
+  }
+
+  /**
+   * The valuation block gathers four sources — the filings (LTM and the
+   * latest balance sheet, with the cover-page share count), the feed's
+   * quote, the feed's multiples and history, and the course peer set
+   * with its multiples — and paints once everything that will arrive
+   * has. Each part is optional; the block shows what it has.
+   */
   function renderValuation(ticker, force) {
     var host = $("valuation-block");
     if (!host) return;
-    if (!force && VAL_CACHE[ticker]) { paintValuation(ticker, VAL_CACHE[ticker]); return; }
+    if (force) { delete STMT_CACHE[ticker]; delete PEER_CACHE[ticker]; delete VAL_STATE[ticker]; delete VAL_CACHE[ticker]; }
+    if (!force && VAL_STATE[ticker]) { paintValuation(ticker, VAL_STATE[ticker]); paintSaid(ticker, VAL_STATE[ticker].vendor || {}); renderRelease(ticker, false); return; }
     host.innerHTML = "<p class='hint' role='status'>Loading valuation…</p>";
-    fetch(API_BASE + "/api/valuation?ticker=" + encodeURIComponent(ticker) + (force ? "&force=1" : ""))
-      .then(function (r) { if (r.status === 503) throw new Error("unconfigured"); return r.ok ? r.json() : Promise.reject(new Error(String(r.status))); })
-      .then(function (d) { VAL_CACHE[ticker] = d; if (state.ticker === ticker) { paintValuation(ticker, d); paintSaid(ticker, d); } })
-      .catch(function (e) {
-        if (state.ticker !== ticker) return;
-        host.innerHTML = "<p class='hint'>" + (String(e.message) === "unconfigured"
-          ? "The market-data feed is not configured on this deployment."
-          : "Valuation is unavailable right now. Every filed figure above stands on its own.") + "</p>";
-        var sb = $("said-block"); if (sb) sb.innerHTML = "<p class='hint'>Consensus and calendar are unavailable right now.</p>";
+    var peersAndComps = peerSetFor(ticker).then(function (sel) {
+      if (!sel) return { peers: null, comps: [] };
+      var tickers = [ticker].concat(sel.peers.map(function (p) { return p.ticker; }));
+      return compsFor(tickers, force).then(function (rows) { return { peers: sel, comps: rows }; });
+    });
+    var all = Promise.all([vendorValuationFor(ticker, force), statementsFor(ticker, force), marketFor(ticker, force), peersAndComps])
+      .then(function (r) {
+        var st = { vendor: r[0] && !r[0].unconfigured ? r[0] : null, unconfigured: !!(r[0] && r[0].unconfigured),
+          stmt: r[1], market: r[2], peers: r[3].peers, comps: r[3].comps };
+        VAL_STATE[ticker] = st;
+        if (state.ticker === ticker) { paintValuation(ticker, st); paintSaid(ticker, st.vendor || {}); }
+        return st;
       });
+    VAL_PENDING[ticker] = all;
+    all.catch(function () {
+      if (state.ticker !== ticker) return;
+      host.innerHTML = "<p class='hint'>Valuation is unavailable right now. Every filed figure above stands on its own.</p>";
+    });
     renderRelease(ticker, force);
   }
   function decadeBar(hist) {
@@ -2486,49 +2687,235 @@
       num(hist.high.value, 1) + "× (" + esc(String(hist.high.period).slice(0, 4)) + ") · median " +
       num(hist.median, 1) + "×</span>";
   }
-  function valCard(key, label, value, sub, hist) {
-    return "<button type='button' class='mcard val-card' data-metric='" + esc(key) + "'>" +
-      "<span class='m-label'>" + esc(label) + "</span>" +
-      "<span class='m-value" + (value === "—" ? " na" : "") + "'>" + esc(value) + "</span>" +
-      (sub ? "<span class='m-gloss'>" + esc(sub) + "</span>" : "") +
-      decadeBar(hist) + "</button>";
+  function riskFree() {
+    var t10 = MACRO.data && MACRO.data.leading && MACRO.data.leading.treasury10y;
+    var v = t10 && isNum(t10.value) ? t10.value : null;
+    if (v === null) return { value: 0.042, assumed: true };
+    return { value: v > 1 ? v / 100 : v, assumed: false };
   }
-  function paintValuation(ticker, d) {
+  function paintValuation(ticker, st) {
     var host = $("valuation-block");
-    var m = d.multiples || {}, H = d.history || {};
+    if (!host) return;
+    var vendor = st.vendor || {}, m = vendor.multiples || {}, H = vendor.history || {};
+    var stmt = st.stmt, ltm = stmt && stmt.ltm && stmt.ltm.length ? stmt.ltm[stmt.ltm.length - 1] : null;
+    var bs = ltm ? ltm.balanceSheet : null, is = ltm ? ltm.incomeStatement : null;
+    var mk = st.market || {}, q = mk.quote, prof = mk.profile;
+    var price = q && isNum(q.price) ? q.price : null;
+    var shares = null, sharesBasis = "";
+    if (stmt && stmt.cover && isNum(stmt.cover.value)) { shares = stmt.cover.value; sharesBasis = "cover page of the " + (stmt.cover.form || "latest report") + ", " + stmt.cover.asOf; }
+    else if (prof && isNum(prof.sharesOutstanding)) { shares = prof.sharesOutstanding; sharesBasis = "market-data feed"; }
+    else if (ltm && isNum(ltm.shares.dilutedShares)) { shares = ltm.shares.dilutedShares; sharesBasis = "diluted average, " + ltm.label; }
     var xf = function (v) { return isNum(v) ? num(v, 1) + "×" : "—"; };
-    host.innerHTML = "<div class='val-grid'>" +
-      valCard("marketValue", "Market value", isNum(m.marketCap) ? money(m.marketCap) : "—",
-        isNum(m.enterpriseValue) ? "Enterprise value " + money(m.enterpriseValue) : "") +
-      valCard("evEbitda", "EV / EBITDA", xf(m.evEbitdaTTM), "Trailing twelve months", H.evEbitda) +
-      valCard("peTTM", "P/E, trailing", xf(m.peTTM), isNum(m.pegTTM) ? "PEG " + num(m.pegTTM, 2) : "", H.pe) +
-      valCard("forwardPE", "P/E, forward", xf(m.forwardPE), "On consensus next-twelve-month earnings") +
-      valCard("evRevenue", "EV / Sales", xf(m.evRevenueTTM), "Trailing twelve months", H.evRevenue) +
-      valCard("fcfYield", "Free cash flow yield", isNum(m.fcfYieldTTM) ? pct(m.fcfYieldTTM) : "—",
-        isNum(m.dividendYieldTTM) ? "Dividend yield " + pct(m.dividendYieldTTM, 2) : "") +
-      "</div>";
-    /* the read */
-    var bits = [];
+    var facts = [];
+    var html = "";
+
+    /* ---- 1. the bridge ---- */
+    var bridge = (price !== null && shares !== null && bs && V)
+      ? V.evBridge({ price: price, shares: shares, cash: bs.cash, shortTermInvestments: bs.shortTermInvestments,
+          shortTermDebt: bs.shortTermDebt, longTermDebt: bs.longTermDebt,
+          operatingLeaseLiability: bs.operatingLeaseLiability, minorityInterest: bs.minorityInterest })
+      : null;
+    var own = bridge && ltm && V ? V.ownMultiples(bridge, ltm, shares) : null;
+    html += "<h4 class='val-h'>What the equity is priced at</h4>";
+    if (bridge) {
+      var bsLabel = ltm.label.replace(/^LTM /, "") + (ltm.periodEnd ? ", " + ltm.periodEnd : "");
+      html += "<div class='scroll-x'><table class='grid bridge' data-export-name='EV bridge'><thead><tr>" +
+        "<th scope='col'>Line</th><th scope='col' class='num'>Amount</th><th scope='col'>Basis</th></tr></thead><tbody>" +
+        "<tr><td>Share price</td><td class='num'>$" + num(price, 2) + "</td><td>market-data feed" + (q.time ? ", " + esc(String(q.time)) : "") + "</td></tr>" +
+        "<tr><td>× Shares outstanding</td><td class='num'>" + num(shares / 1e9, 2) + "B</td><td>" + esc(sharesBasis) + "</td></tr>" +
+        "<tr class='total'><td><span data-metric='marketValue'>= Market value</span></td><td class='num'>" + bn(bridge.marketCap) + "</td><td></td></tr>" +
+        "<tr><td>+ Debt</td><td class='num'>" + bn(bridge.debt) + "</td><td>short and long term, balance sheet " + esc(bsLabel) + "</td></tr>" +
+        (bridge.nci ? "<tr><td>+ Minority interest</td><td class='num'>" + bn(bridge.nci) + "</td><td>book</td></tr>" : "") +
+        "<tr><td>− Cash and short-term investments</td><td class='num'>" + bn(bridge.financialAssets) + "</td><td>" + bn(bridge.cash) + " cash, " + bn(bridge.shortTermInvestments) + " securities</td></tr>" +
+        "<tr class='total'><td><span data-metric='enterpriseValue'>= Enterprise value</span></td><td class='num'>" + bn(bridge.ev) + "</td><td>" +
+          (bridge.netDebt < 0 ? "net cash " + bn(-bridge.netDebt) : "net debt " + bn(bridge.netDebt)) + "</td></tr>" +
+        (bridge.leases ? "<tr><td>Operating lease liabilities</td><td class='num'>" + bn(bridge.leases) + "</td><td>debt in the course's definition, giving " + bn(bridge.evWithLeases) + "; left out of the multiples so they match the feed's and the peers'</td></tr>" : "") +
+        (isNum(m.marketCap) ? "<tr><td>Feed's market value / enterprise value</td><td class='num'>" + bn(m.marketCap) + " / " + bn(m.enterpriseValue) + "</td><td>the vendor's own share count and price</td></tr>" : "") +
+        "</tbody></table></div>";
+      var gapPct = isNum(m.marketCap) && isNum(m.enterpriseValue) ? (m.marketCap - m.enterpriseValue) / m.marketCap : null;
+      html += "<p class='chart-caption'><strong>Enterprise value is " + bn(Math.abs(bridge.marketCap - bridge.ev)) + (bridge.ev < bridge.marketCap ? " below" : " above") +
+        " market value</strong>: " + bn(bridge.financialAssets) + " of cash and securities against " + bn(bridge.debt) + " of debt" +
+        (bridge.nci ? " and " + bn(bridge.nci) + " of minority interest" : "") + "." +
+        (gapPct !== null ? " The feed's two figures differ by " + bn(Math.abs(m.marketCap - m.enterpriseValue)) + " (" + pct(Math.abs(gapPct), 1) + "), which rounds to the same " + money(m.marketCap) + " at three figures." : "") + "</p>";
+      facts.push("Market value " + bn(bridge.marketCap) + " (price $" + num(price, 2) + " × " + num(shares / 1e9, 2) + "B shares); enterprise value " + bn(bridge.ev) +
+        " after " + bn(bridge.debt) + " debt and " + bn(bridge.financialAssets) + " cash and securities (" + (bridge.netDebt < 0 ? "net cash " : "net debt ") + bn(Math.abs(bridge.netDebt)) + ")");
+    } else {
+      html += "<div class='val-grid'>" +
+        "<button type='button' class='mcard val-card' data-metric='marketValue'><span class='m-label'>Market value</span><span class='m-value'>" + (isNum(m.marketCap) ? money(m.marketCap) : "—") + "</span><span class='m-gloss'>market-data feed</span></button>" +
+        "<button type='button' class='mcard val-card' data-metric='enterpriseValue'><span class='m-label'>Enterprise value</span><span class='m-value'>" + (isNum(m.enterpriseValue) ? money(m.enterpriseValue) : "—") + "</span><span class='m-gloss'>market-data feed</span></button></div>" +
+        "<p class='chart-caption soft'>" + (st.unconfigured ? "The market-data feed is not configured on this deployment." : "The filings-based bridge needs a quote, a share count and a balance sheet; one of them has not arrived.") + "</p>";
+    }
+
+    /* ---- 2. multiples: filings, feed, own history, peers ---- */
+    var peerRows = (st.peers ? st.peers.peers : []).map(function (p) {
+      return (st.comps || []).filter(function (r) { return r.ticker === p.ticker; })[0] || {};
+    });
+    var agg = function (k) { return V ? V.aggregate(peerRows.map(function (r) { return r[k]; })) : null; };
+    var A = { evRevenueTTM: agg("evRevenueTTM"), evEbitdaTTM: agg("evEbitdaTTM"), peTTM: agg("peTTM"),
+      forwardPE: agg("forwardPE"), pb: agg("pb"), fcfYieldTTM: null };
+    var fy = peerRows.map(function (r) { return r.fcfYieldTTM; }).filter(isNum);
+    A.fcfYieldTTM = fy.length ? { median: V.median(fy), harmonic: null, n: fy.length, excluded: 0 } : null;
+    var ownLabel = ltm ? ltm.label : "LTM";
+    var rowsM = [
+      ["evRevenue", "EV / Sales", own && own.evSales, m.evRevenueTTM, H.evRevenue, A.evRevenueTTM, xf],
+      ["evEbitda", "EV / EBITDA", own && own.evEbitda, m.evEbitdaTTM, H.evEbitda, A.evEbitdaTTM, xf],
+      ["evEbit", "EV / EBIT", own && own.evEbit, null, null, null, xf],
+      ["peTTM", "P/E, trailing", own && own.pe, m.peTTM, H.pe, A.peTTM, xf],
+      ["forwardPE", "P/E, forward", null, m.forwardPE, null, A.forwardPE, xf],
+      ["pb", "P/B", own && own.pb, m.pb, H.pb, A.pb, xf],
+      ["fcfYield", "Free cash flow yield", own && own.fcfYield, m.fcfYieldTTM, null, A.fcfYieldTTM, function (v) { return isNum(v) ? pct(v) : "—"; }]
+    ];
+    html += "<h4 class='val-h'>Multiples: the filings, the feed, the company's own decade and the peers</h4>" +
+      "<div class='scroll-x'><table class='grid multiples' data-export-name='Multiples'><thead><tr><th scope='col'>Multiple</th>" +
+      "<th scope='col' class='num'>From filings<br><span class='soft'>" + esc(ownLabel) + "</span></th>" +
+      "<th scope='col' class='num'>Market-data feed<br><span class='soft'>trailing twelve months</span></th>" +
+      "<th scope='col' class='num'>Own 10-yr median<br><span class='soft'>feed's annual series</span></th>" +
+      "<th scope='col' class='num'><span data-metric='peerMedian'>Peer median</span></th>" +
+      "<th scope='col' class='num'><span data-metric='peerHarmonic'>Peer harmonic mean</span></th></tr></thead><tbody>" +
+      rowsM.map(function (r) {
+        var f = r[6], a = r[5];
+        return "<tr><td><span data-metric='" + r[0] + "'>" + r[1] + "</span></td>" +
+          "<td class='num'>" + f(r[2]) + "</td><td class='num'>" + f(r[3]) + "</td>" +
+          "<td class='num'>" + (r[4] && isNum(r[4].median) ? f(r[4].median) + "<sup>" + r[4].percentile + "th</sup>" : "—") + "</td>" +
+          "<td class='num'>" + (a && isNum(a.median) ? f(a.median) : "—") + "</td>" +
+          "<td class='num'>" + (a && isNum(a.harmonic) ? f(a.harmonic) + (a.excluded ? "<sup>" + a.n + "/" + (a.n + a.excluded) + "</sup>" : "") : "—") + "</td></tr>";
+      }).join("") + "</tbody></table></div>";
     var he = H.evEbitda;
+    var cap2 = [];
+    if (own && isNum(own.evEbitda)) {
+      cap2.push("<strong>" + xf(own.evEbitda) + " EV/EBITDA on the filings</strong> (" + bn(own.ebitda) + " of EBITDA over " + esc(ownLabel) + ")" +
+        (isNum(m.evEbitdaTTM) ? ", " + xf(m.evEbitdaTTM) + " on the feed" : "") +
+        (A.evEbitdaTTM && isNum(A.evEbitdaTTM.harmonic) ? ", against a peer harmonic mean of " + xf(A.evEbitdaTTM.harmonic) : "") + ".");
+      facts.push("EV/EBITDA " + xf(own.evEbitda) + " on LTM filings" + (A.evEbitdaTTM && isNum(A.evEbitdaTTM.harmonic) ? " vs peer harmonic mean " + xf(A.evEbitdaTTM.harmonic) + " (" + A.evEbitdaTTM.n + " peers)" : ""));
+    }
     if (he && isNum(m.evEbitdaTTM)) {
-      bits.push("At <strong>" + xf(m.evEbitdaTTM) + " EV/EBITDA</strong> the business is priced in the <strong>" +
-        he.percentile + "th percentile</strong> of its own " + he.years + "-year range — " +
-        (he.percentile <= 25 ? "cheap by its own history" : he.percentile >= 75 ? "rich by its own history" : "mid-range for itself") +
-        ", against a median of " + xf(he.median) + ".");
+      cap2.push("The feed's figure sits in the <strong>" + he.percentile + "th percentile</strong> of the company's own " + he.years + "-year range, median " + xf(he.median) + ".");
+      facts.push("Feed EV/EBITDA " + xf(m.evEbitdaTTM) + " at the " + he.percentile + "th percentile of the company's own " + he.years + "-year range");
+    }
+    if (own && isNum(own.pe) && A.peTTM && isNum(A.peTTM.harmonic)) {
+      cap2.push("Trailing P/E " + xf(own.pe) + " on the filings against " + xf(A.peTTM.harmonic) + " for the peers.");
+      facts.push("Trailing P/E " + xf(own.pe) + " vs peer harmonic mean " + xf(A.peTTM.harmonic));
     }
     if (isNum(m.forwardPE) && isNum(m.peTTM) && m.peTTM > 0) {
-      var implied = m.peTTM / m.forwardPE - 1;
-      bits.push("Trailing P/E of " + xf(m.peTTM) + " against forward " + xf(m.forwardPE) +
-        " means the street has priced roughly <strong>" + pct(implied, 0) + "</strong> earnings growth over the next year — that is the bar the company must clear.");
+      cap2.push("Trailing " + xf(m.peTTM) + " against forward " + xf(m.forwardPE) + " on the feed prices roughly <strong>" + pct(m.peTTM / m.forwardPE - 1, 0) + "</strong> earnings growth over the next year.");
+      facts.push("Trailing-to-forward P/E implies about " + pct(m.peTTM / m.forwardPE - 1, 0) + " earnings growth next year (feed)");
     }
-    var macro = MACRO.data && MACRO.data.leading && MACRO.data.leading.treasury10y;
-    if (isNum(m.fcfYieldTTM) && macro && isNum(macro.value)) {
-      bits.push("Free cash flow yield of " + pct(m.fcfYieldTTM) + " against a " + pct(macro.value, 2) +
-        " ten-year Treasury: the equity " + (m.fcfYieldTTM > macro.value ? "out-yields" : "under-yields") +
-        " the bond by " + pp(m.fcfYieldTTM - macro.value) + ".");
+    html += "<p class='chart-caption'>" + cap2.join(" ") + "</p>";
+
+    /* ---- 3. what the peers imply ---- */
+    var implied = [];
+    if (V && own && price !== null && peerRows.length) {
+      implied = V.impliedPrices({ peers: peerRows, drivers: {
+        epsForward: isNum(m.forwardPE) && m.forwardPE > 0 ? price / m.forwardPE : null,
+        epsLtm: own.perShare.eps, ebitda: own.perShare.ebitda, book: own.perShare.book,
+        sales: own.perShare.sales, netDebt: own.perShare.netDebt } });
     }
-    host.insertAdjacentHTML("beforeend", "<p class='chart-caption'>" + bits.join(" ") +
-      " <span class='soft'>Multiples from the market-data feed, trailing twelve months; the decade range is the vendor's annual series.</span></p>");
+    if (implied.length) {
+      html += "<h4 class='val-h'>What the peers imply</h4>" +
+        "<div class='scroll-x'><table class='grid implied' data-export-name='Implied value'><thead><tr><th scope='col'>Driver</th>" +
+        "<th scope='col' class='num'>" + esc(ticker) + " per share</th><th scope='col' class='num'>Peer harmonic</th>" +
+        "<th scope='col' class='num'>Peer median</th><th scope='col' class='num'><span data-metric='impliedPrice'>Implied price</span></th>" +
+        "<th scope='col' class='num'>vs $" + num(price, 2) + "</th><th scope='col'>Reliability</th></tr></thead><tbody>" +
+        implied.map(function (r) {
+          var gap = r.priceHarmonic / price - 1;
+          return "<tr><td>" + esc(r.label) + "<br><span class='soft'>" + esc(r.multipleLabel) + "</span></td>" +
+            "<td class='num'>$" + num(r.driver, 2) + "</td>" +
+            "<td class='num'>" + xf(r.harmonic) + (r.excluded ? "<sup>" + r.n + "/" + (r.n + r.excluded) + "</sup>" : "") + "</td>" +
+            "<td class='num'>" + xf(r.median) + "</td>" +
+            "<td class='num'><strong>$" + num(r.priceHarmonic, 2) + "</strong>" + (isNum(r.priceMedian) ? "<br><span class='soft'>$" + num(r.priceMedian, 2) + " on the median</span>" : "") + "</td>" +
+            "<td class='num " + (gap >= 0 ? "beat" : "miss") + "'>" + (gap >= 0 ? "+" : "−") + pct(Math.abs(gap), 0) + "</td>" +
+            "<td>" + (r.reliability ? "IQR " + num(r.reliability.iqr, 2) + " — " + esc(r.reliability.note) : "") + "</td></tr>";
+        }).join("") + "</tbody></table></div>";
+      var earn = implied.filter(function (r) { return r.key === "epsForward" || r.key === "epsLtm"; }).map(function (r) { return r.priceHarmonic; });
+      var lo = Math.min.apply(null, earn), hi = Math.max.apply(null, earn);
+      var cap3 = earn.length
+        ? "<strong>On earnings, the peer set implies $" + num(lo, 0) + (earn.length > 1 ? "–$" + num(hi, 0) : "") + " a share against a price of $" + num(price, 2) + "</strong>" +
+          " — the market pays " + pct(Math.abs(price / ((lo + hi) / 2) - 1), 0) + (price > (lo + hi) / 2 ? " more" : " less") + " than the peers' harmonic-mean multiples would."
+        : "";
+      cap3 += " Liu, Nissim and Thomas rank the drivers by pricing error: forward earnings first, then trailing earnings, EBITDA, book value and, last, sales; the interquartile range of each is shown. " +
+        (st.peers ? peerSentence(st.peers) : "");
+      html += "<p class='chart-caption'>" + cap3 + "</p>";
+      if (earn.length) facts.push("Peer multiples imply $" + num(lo, 0) + (earn.length > 1 ? "–$" + num(hi, 0) : "") + " a share on earnings drivers (harmonic mean of " + peerRows.length + " peers: " +
+        st.peers.peers.map(function (p) { return p.ticker; }).join(", ") + ") against a price of $" + num(price, 2));
+    }
+
+    /* ---- 4. what the price assumes ---- */
+    var rf = riskFree();
+    var beta = isNum(m.beta) ? m.beta : null;
+    var erp = V ? V.DEFAULT_ERP : 0.05;
+    var re = V && beta !== null ? V.costOfEquity(rf.value, beta, erp) : null;
+    var tax = is && isNum(is.incomeTax) && isNum(is.pretaxIncome) && is.pretaxIncome > 0 ? is.incomeTax / is.pretaxIncome : null;
+    var rd = V && bridge ? V.costOfDebt(is && is.interestExpense, bridge.debt, rf.value) : null;
+    var w = V && bridge && re !== null ? V.wacc({ marketCap: bridge.marketCap, debt: bridge.debt, nci: bridge.nci, re: re, rd: rd, tax: tax }) : null;
+    var peForG = own && isNum(own.pe) ? own.pe : (isNum(m.peTTM) ? m.peTTM : null);
+    var gPE = V && re !== null ? V.impliedGrowthFromPE(peForG, re) : null;
+    var gFcf = V && bridge && own && w !== null ? V.impliedGrowthFromFcf(bridge.ev, own.fcf, w) : null;
+    var roeLtm = null;
+    if (is && bs && isNum(is.netIncome) && isNum(bs.equity) && bs.equity > 0) roeLtm = is.netIncome / bs.equity;
+    var gLong = 0.04;
+    var pbTheory = V && re !== null && roeLtm !== null ? V.theoreticalPB(roeLtm, re, gLong) : null;
+    html += "<h4 class='val-h'>What the price assumes</h4><div class='kpi-grid'>" +
+      card("costOfEquity", "Cost of equity", re !== null ? pct(re) : "—",
+        re !== null ? "10-yr Treasury " + pct(rf.value, 2) + (rf.assumed ? " (assumed)" : "") + " + β " + num(beta, 2) + " × " + pct(erp, 1) + " premium" : "needs the feed's beta") +
+      card("wacc", "Cost of capital (WACC)", w !== null ? pct(w) : "—",
+        w !== null ? "equity " + pct(bridge.marketCap / (bridge.marketCap + bridge.debt + bridge.nci), 0) + ", debt at " + pct(rd, 1) + " before a " + pct(tax !== null ? tax : 0.21, 0) + " tax rate" : "") +
+      card("impliedGrowthPE", "Growth the P/E assumes", gPE !== null ? pct(gPE) : "—",
+        gPE !== null ? "for ever, from a trailing P/E of " + xf(peForG) + " at " + pct(re) : "") +
+      card("impliedGrowthFcf", "Growth the EV assumes", gFcf !== null ? pct(gFcf) : "—",
+        gFcf !== null ? "in free cash flow (" + bn(own.fcf) + " LTM) at " + pct(w) : (own && isNum(own.fcf) && own.fcf <= 0 ? "free cash flow is negative" : "")) +
+      card("theoryPB", "P/B the theory expects", pbTheory !== null ? xf(pbTheory) : "—",
+        pbTheory !== null ? "at ROE " + pct(roeLtm) + ", r " + pct(re) + ", g " + pct(gLong, 0) + (own && isNum(own.pb) ? "; actual " + xf(own.pb) : "") : "") +
+      "</div>";
+    var cap4 = [];
+    if (gPE !== null) {
+      cap4.push("At a " + pct(re) + " cost of equity, a trailing P/E of " + xf(peForG) + " is consistent with <strong>" + pct(gPE) + " growth in perpetuity</strong>" +
+        (gPE > gLong ? ", above the " + pct(gLong, 0) + " nominal-economy rate the course treats as the long-run ceiling" : ", within the " + pct(gLong, 0) + " long-run economy rate") + ".");
+      facts.push("Cost of equity " + pct(re) + " (CAPM); the trailing P/E of " + xf(peForG) + " implies " + pct(gPE) + " perpetual growth" + (gPE > gLong ? ", above the long-run economy rate" : ""));
+    }
+    if (gFcf !== null) {
+      cap4.push("The enterprise value implies " + pct(gFcf) + " perpetual growth in free cash flow at a " + pct(w) + " cost of capital.");
+      facts.push("WACC " + pct(w) + "; enterprise value implies " + pct(gFcf) + " perpetual FCF growth");
+    }
+    if (pbTheory !== null && own && isNum(own.pb)) {
+      cap4.push("Price-to-book of " + xf(own.pb) + " against " + xf(pbTheory) + " from ROE, the cost of equity and " + pct(gLong, 0) + " growth: the difference is what the market pays for growth beyond that.");
+    }
+    html += "<p class='chart-caption'>" + cap4.join(" ") + (cap4.length ? " " : "") +
+      "<span class='soft'>Cost of equity is CAPM with the feed's beta, the ten-year Treasury and a " + pct(erp, 0) + " premium (the course's range is 4–5.5%). " +
+      "Growth is solved from trailing P/E = (1 + g) ÷ (r − g) and EV = FCF × (1 + g) ÷ (WACC − g).</span></p>";
+
+    /* ---- 5. value creation ---- */
+    var priorBs = null;
+    if (stmt && ltm && stmt.quarterly) {
+      var target = new Date(ltm.periodEnd).getTime() - 365 * 864e5;
+      stmt.quarterly.forEach(function (p) {
+        if (!p.balanceSheet || !isNum(p.balanceSheet.equity)) return;
+        var gap = Math.abs(new Date(p.periodEnd).getTime() - target);
+        if (gap <= 25 * 864e5 && (!priorBs || gap < priorBs.gap)) priorBs = { gap: gap, bs: p.balanceSheet, label: p.label };
+      });
+    }
+    var vc = V && is && isNum(is.operatingIncome) && bs ? V.valueCreation({ ebit: is.operatingIncome, tax: tax, wacc: w,
+      balance: bs, priorBalance: priorBs ? priorBs.bs : null }) : null;
+    if (vc) {
+      html += "<h4 class='val-h'>Value creation</h4><div class='kpi-grid'>" +
+        card("roicLtm", "Return on invested capital", isNum(vc.roicOA) ? pct(vc.roicOA) : "—",
+          "NOPAT " + bn(vc.nopat) + " on " + bn(vc.icOA) + " of " + (priorBs ? "beginning" : "current") + " capital" + (isNum(vc.roicND) ? "; " + pct(vc.roicND) + " net of cash" : "")) +
+        card("wacc", "Cost of capital", w !== null ? pct(w) : "—", "the hurdle") +
+        card("roicLtm", "Spread", isNum(vc.roicOA) && w !== null ? pp(vc.roicOA - w) : "—", "return less cost of capital") +
+        card("eva", "Economic value added", isNum(vc.evaOA) ? bn(vc.evaOA) : "—", "(ROIC − WACC) × capital, " + esc(ownLabel)) +
+        "</div>";
+      if (isNum(vc.roicOA) && w !== null) {
+        html += "<p class='chart-caption'><strong>" + bn(vc.nopat) + " of after-tax operating profit on " + bn(vc.icOA) + " of capital is a " + pct(vc.roicOA) +
+          " return against a " + pct(w) + " cost</strong>, " + bn(vc.evaOA) + " of value " + (vc.evaOA >= 0 ? "added" : "destroyed") + " over " + esc(ownLabel) + "." +
+          " <span class='soft'>Capital is debt, leases, equity and minority interest" + (priorBs ? " at the start of the window (" + esc(priorBs.label) + ")" : " at the latest balance sheet") +
+          "; the net-of-cash view subtracts cash and securities. Tax at the effective rate of " + pct(vc.taxRate, 0) + ".</span></p>";
+        facts.push("ROIC " + pct(vc.roicOA) + " (NOPAT " + bn(vc.nopat) + " on " + bn(vc.icOA) + " capital) vs WACC " + pct(w) + "; EVA " + bn(vc.evaOA) + " over " + ownLabel);
+      }
+    }
+
+    html += "<p class='chart-caption soft'>Filings: " + (ltm ? esc(ltm.label) + (ltm.periodEnd ? " to " + esc(ltm.periodEnd) : "") + " for flows and the balance sheet at that date" : "not available") +
+      (sharesBasis ? "; shares from the " + esc(sharesBasis) : "") + ". Price, beta, forward P/E, the decade series and the peers' multiples: market-data feed.</p>";
+    st.facts = facts;
+    host.innerHTML = html;
   }
 
   /* ---------- says versus did ---------- */
@@ -2766,6 +3153,8 @@
 
     var pi = LIVE_PEER_INFO[state.ticker];
     if (pi && pi.peers.length) f("Peer set (" + pi.method + "): " + pi.peers.join(", "));
+    var vs = VAL_STATE[state.ticker];
+    if (vs && vs.facts) vs.facts.forEach(f);
     return facts;
   }
 
@@ -2882,7 +3271,17 @@
       "so the window reaches back roughly 19 years rather than to 2002. " +
       "Industry grouping is the SEC's own SIC classification, refined to three digits where " +
       "the two-digit group mixes businesses that do not compete. Not investment advice.";
-    renderStrategyNote();
+    scheduleStrategyNote();
+  }
+  /* the company view's note waits, briefly, for the valuation figures
+     so it can argue from them as well */
+  function scheduleStrategyNote() {
+    var t = state.ticker;
+    if (state.view !== "company" || !VAL_PENDING[t]) { renderStrategyNote(); return; }
+    var done = false;
+    var go = function () { if (done) return; done = true; if (state.ticker === t) renderStrategyNote(); };
+    VAL_PENDING[t].then(go, go);
+    window.setTimeout(go, 9000);
   }
 
   function setCompany(ticker) {

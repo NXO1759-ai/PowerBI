@@ -31,6 +31,9 @@ jobs:
             node -e "new Function(require('fs').readFileSync('$f','utf8'))" || { echo "parse failure: $f"; exit 1; }
           done
 
+      - name: Valuation library against the course's worked figures
+        run: node scripts/test-valuation.mjs
+
       - name: Endpoints against awkward companies
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT || 'Research Terminal research@chineduokeke.mba' }}

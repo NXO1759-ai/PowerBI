@@ -280,3 +280,14 @@ table.grid td.pool-you, table.grid td.pool-you:first-child {
 .said-src a { color: var(--rt-gold); }
 .beat { color: #59b87a; } .miss { color: #d4756b; }
 table.grid.recon td { font-size: 11px; }
+
+/* ---- valuation block ---- */
+.val-h { font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--kimi-color-text-tertiary); margin: 18px 0 8px; }
+.val-h:first-child { margin-top: 4px; }
+table.grid.bridge td:first-child { inline-size: 40%; }
+table.grid.bridge tr.total td { font-weight: 600; color: var(--kimi-color-text-primary); border-top: 1px solid var(--kimi-color-border); }
+table.grid.bridge td:last-child, table.grid.multiples th .soft, table.grid.implied td .soft { color: var(--kimi-color-text-tertiary); font-size: 11px; }
+table.grid sup { font-size: 9px; color: var(--kimi-color-text-tertiary); margin-inline-start: 2px; }
+table.grid tfoot tr.agg td { font-weight: 600; color: var(--kimi-color-text-secondary); border-top: 1px solid var(--kimi-color-border); }
+table.grid.implied td strong { color: var(--kimi-color-text-primary); }

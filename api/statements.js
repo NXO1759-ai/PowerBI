@@ -57,6 +57,7 @@ const cache = globalThis.__statementsCache ||
   (globalThis.__statementsCache = new Map());
 
 export default async function handler(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   const q = req.query || {};
   const ticker = String(q.ticker || "").toUpperCase()
     .replace(/[^A-Z0-9.\-]/g, "").slice(0, 12);
