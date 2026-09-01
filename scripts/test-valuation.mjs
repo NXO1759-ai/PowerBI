@@ -91,5 +91,22 @@ const check = (name, ok, detail) => {
   check("EVA on beginning capital", near(vc.evaOA, (0.4 - 0.08) * 2000, 1e-6), vc.evaOA.toFixed(1));
 }
 
+/* perpetual growth: never above the economy */
+{
+  const opts = V.TERMINAL_GROWTH.options.map((o) => o.g);
+  check("every option sits at or below the GDP cap", opts.every((g) => g <= V.TERMINAL_GROWTH.cap) && Math.max(...opts) === 0.04, opts.join(","));
+  check("the default is the safe choice", V.terminalGrowthOption(undefined).key === "safe" && V.terminalGrowthOption("nonsense").g === 0.025);
+  check("a rate above the cap is clamped to it", V.clampTerminalGrowth(0.119) === 0.04 && V.clampTerminalGrowth(0.02) === 0.02);
+  const ss = V.steadyStateValue({ g: 0.025, re: 0.10, wacc: 0.09, eps: 5, fcfPerShare: 4, netDebtPerShare: -3, bookPerShare: 20, roe: 0.10 });
+  check("justified trailing P/E is (1+g)/(r−g)", near(ss.justifiedPE, 1.025 / 0.075, 1e-9), ss.justifiedPE.toFixed(3));
+  check("earnings value is EPS × justified P/E", near(ss.earnings, 5 * 1.025 / 0.075, 1e-9), ss.earnings.toFixed(2));
+  check("FCF value nets debt (net cash adds)", near(ss.fcf, 4 * 1.025 / 0.065 + 3, 1e-9), ss.fcf.toFixed(2));
+  check("residual income at ROE = r is book value", near(ss.residualIncome, 20, 1e-9), ss.residualIncome.toFixed(2));
+  const above = V.steadyStateValue({ g: 0.12, re: 0.10, eps: 5 });
+  check("a rate above the cap is capped and flagged", above.capped && above.g === 0.04 && near(above.earnings, 5 * 1.04 / 0.06, 1e-9), above.g);
+  const bad = V.steadyStateValue({ g: 0.04, re: 0.03, eps: 5 });
+  check("no perpetuity when r ≤ g", bad.earnings === null && bad.justifiedPE === null);
+}
+
 console.log(failed ? "\n" + failed + " failed" : "\nall valuation checks pass");
 process.exit(failed ? 1 : 0);

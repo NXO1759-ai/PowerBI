@@ -482,18 +482,30 @@
       definition: "The blended return the whole business must earn on its capital.",
       interpretation: "The hurdle for return on invested capital: a business earning above it adds value with every dollar it reinvests. Debt is cheap after tax, but weights are at market, so a large equity value keeps WACC close to the cost of equity.",
       watch: "Cost of debt is interest expense over debt from the filings, floored at the Treasury rate; the tax rate is the effective rate over the trailing year." },
+    terminalGrowth: { label: "Growth in perpetuity", formula: "Inflation baseline 2% · safe choice 2–3% · GDP cap 3–4%; never above nominal GDP",
+      definition: "The growth rate every steady-state figure on this page assumes for ever. A company cannot outgrow the economy indefinitely, so the rate is capped at nominal GDP growth.",
+      interpretation: "The safe choice, 2–3%, is conservative, standard and easy to defend for a mature US company. The inflation baseline suits a business that only keeps pace with prices; the GDP cap is the absolute upper limit, not a default.",
+      watch: "A higher rate flatters every value below: at a 10% cost of equity, moving g from 2% to 4% raises a justified P/E from 12.8× to 17.3×. The choice is remembered on this device." },
+    justifiedPE: { label: "Justified P/E", formula: "Trailing (1 + g) ÷ (r − g); forward 1 ÷ (r − g)",
+      definition: "The multiple a steady-state company earns at the chosen perpetual growth and the cost of equity.",
+      interpretation: "The market multiple above this is the premium for growth beyond the economy's — which can only last for a period, so the premium is a claim about how long.",
+      watch: "Undefined when the cost of equity is at or below the growth rate." },
+    steadyValue: { label: "Value per share, steady state", formula: "Earnings: EPS × (1 + g) ÷ (r − g) · FCF: FCF × (1 + g) ÷ (WACC − g) − net debt · Residual income: B₀ + (ROE − r) × B₀ ÷ (r − g)",
+      definition: "What one share is worth if the trailing year repeats for ever, growing at the chosen rate — the course's one-line versions of the dividend, free-cash-flow and abnormal-earnings models.",
+      interpretation: "Three models that agree say the trailing year is close to steady state; three that diverge say it is not — the course's Petrobras and Starbucks cases show both. The gap to the price is what the market pays for growth above the economy's, for a period.",
+      watch: "A perpetuity of a single year: a peak year overstates, a trough year understates, and a heavy investment year depresses free cash flow." },
     impliedGrowthPE: { label: "Growth the P/E assumes", formula: "g = (P/E × r − 1) ÷ (P/E + 1), from trailing P/E = (1 + g) ÷ (r − g)",
-      definition: "The perpetual earnings growth that would justify today's trailing multiple at the cost of equity.",
-      interpretation: "Compare it with the long-run economy (inflation plus real GDP, about 4%): a figure above that assumes the company outgrows the economy for ever, which is the claim to test.",
+      definition: "The perpetual earnings growth that would justify today's trailing multiple at the cost of equity — a diagnostic, not an assumption.",
+      interpretation: "Growth in perpetuity never exceeds economic growth, so a figure above the nominal-GDP cap (3–4%) says no perpetuity justifies the price: the excess has to come from a finite run of above-economy growth, and the question is how long.",
       watch: "The steady-state identity ignores the high-growth years before steady state, so a young company's implied g overstates what is needed." },
     impliedGrowthFcf: { label: "Growth the EV assumes", formula: "g = (EV × WACC − FCF) ÷ (EV + FCF), from EV = FCF × (1 + g) ÷ (WACC − g)",
       definition: "The perpetual growth in free cash flow that would justify today's enterprise value at the cost of capital.",
-      interpretation: "Reverse-engineering the price: the course's way to negotiate with the market rather than forecast against it.",
+      interpretation: "Reverse-engineering the price: the course's way to negotiate with the market rather than forecast against it. Above the nominal-GDP cap it is a figure no perpetuity can deliver.",
       watch: "Free cash flow is operating cash flow less capital expenditure over the trailing year; a heavy investment year depresses it and inflates the implied growth." },
-    theoryPB: { label: "P/B the theory expects", formula: "1 + (ROE − r) ÷ (r − g)",
+    theoryPB: { label: "P/B the theory expects", formula: "1 + (ROE − r) ÷ (r − g), g at the chosen perpetual rate",
       definition: "The price-to-book a company earning this return on equity should command at its cost of equity and long-run growth.",
       interpretation: "Actual above theory means the market expects returns to stay above the cost of equity longer, or growth to run faster, than the steady-state formula allows.",
-      watch: "Undefined when r ≤ g; computed with g at the 4% long-run economy rate." },
+      watch: "Undefined when r ≤ g; g is the perpetual-growth choice above, never more than nominal GDP." },
     roicLtm: { label: "Return on invested capital", formula: "NOPAT ÷ beginning invested capital; NOPAT = operating income × (1 − effective tax rate)",
       definition: "The after-tax return the operations earn on all the capital financing them — debt, leases, equity and minority interest — over the trailing twelve months.",
       interpretation: "Set against the cost of capital: the spread times the capital is the value the business adds in a year. The net-of-cash view subtracts cash and securities from capital.",
@@ -1608,6 +1620,17 @@
      fundamentals from the filings, side by side, subject first. */
   var COMPS_CACHE = {};
   var PEER_CACHE = {}, STMT_CACHE = {}, VAL_STATE = {}, VAL_PENDING = {};
+  /* perpetual growth: never above the economy; the safe choice unless the reader picks another */
+  var TG_KEY = "rt.terminalGrowth";
+  function terminalGrowth() {
+    var key = null;
+    try { key = window.localStorage.getItem(TG_KEY); } catch (e) { key = null; }
+    return V ? V.terminalGrowthOption(key || undefined) : { key: "safe", label: "Safe choice", g: 0.025, note: "" };
+  }
+  function setTerminalGrowth(key) {
+    try { window.localStorage.setItem(TG_KEY, key); } catch (e) { /* private window */ }
+    if (VAL_STATE[state.ticker]) paintValuation(state.ticker, VAL_STATE[state.ticker]);
+  }
   function bn(v) {
     return isNum(v) ? (v < 0 ? "−$" : "$") +
       Math.abs(v / 1e9).toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + "B" : "—";
@@ -2852,36 +2875,77 @@
     var gFcf = V && bridge && own && w !== null ? V.impliedGrowthFromFcf(bridge.ev, own.fcf, w) : null;
     var roeLtm = null;
     if (is && bs && isNum(is.netIncome) && isNum(bs.equity) && bs.equity > 0) roeLtm = is.netIncome / bs.equity;
-    var gLong = 0.04;
+    var tg = terminalGrowth(), gLong = tg.g, gCap = V ? V.TERMINAL_GROWTH.cap : 0.04;
     var pbTheory = V && re !== null && roeLtm !== null ? V.theoreticalPB(roeLtm, re, gLong) : null;
-    html += "<h4 class='val-h'>What the price assumes</h4><div class='kpi-grid'>" +
+    html += "<h4 class='val-h'>What the price assumes</h4>" +
+      "<div class='tg-row'><label for='tg-select'><span data-metric='terminalGrowth'>Growth in perpetuity</span></label>" +
+      "<select id='tg-select' aria-label='Growth in perpetuity'>" +
+      (V ? V.TERMINAL_GROWTH.options : []).map(function (o) {
+        return "<option value='" + esc(o.key) + "'" + (o.key === tg.key ? " selected" : "") + ">" + esc(o.label) + " — " + pct(o.g, 1) + "</option>";
+      }).join("") + "</select>" +
+      "<span class='soft'>never above nominal GDP (" + pct(gCap, 0) + "); " + esc(tg.note) + "</span></div>" +
+      "<div class='kpi-grid'>" +
       card("costOfEquity", "Cost of equity", re !== null ? pct(re) : "—",
         re !== null ? "10-yr Treasury " + pct(rf.value, 2) + (rf.assumed ? " (assumed)" : "") + " + β " + num(beta, 2) + " × " + pct(erp, 1) + " premium" : "needs the feed's beta") +
       card("wacc", "Cost of capital (WACC)", w !== null ? pct(w) : "—",
         w !== null ? "equity " + pct(bridge.marketCap / (bridge.marketCap + bridge.debt + bridge.nci), 0) + ", debt at " + pct(rd, 1) + " before a " + pct(tax !== null ? tax : 0.21, 0) + " tax rate" : "") +
       card("impliedGrowthPE", "Growth the P/E assumes", gPE !== null ? pct(gPE) : "—",
-        gPE !== null ? "for ever, from a trailing P/E of " + xf(peForG) + " at " + pct(re) : "") +
+        gPE !== null ? "for ever, from a trailing P/E of " + xf(peForG) + " at " + pct(re) : "",
+        gPE !== null && gPE > gCap ? "above the " + pct(gCap, 0) + " GDP cap" : null) +
       card("impliedGrowthFcf", "Growth the EV assumes", gFcf !== null ? pct(gFcf) : "—",
-        gFcf !== null ? "in free cash flow (" + bn(own.fcf) + " LTM) at " + pct(w) : (own && isNum(own.fcf) && own.fcf <= 0 ? "free cash flow is negative" : "")) +
+        gFcf !== null ? "in free cash flow (" + bn(own.fcf) + " LTM) at " + pct(w) : (own && isNum(own.fcf) && own.fcf <= 0 ? "free cash flow is negative" : ""),
+        gFcf !== null && gFcf > gCap ? "above the " + pct(gCap, 0) + " GDP cap" : null) +
       card("theoryPB", "P/B the theory expects", pbTheory !== null ? xf(pbTheory) : "—",
-        pbTheory !== null ? "at ROE " + pct(roeLtm) + ", r " + pct(re) + ", g " + pct(gLong, 0) + (own && isNum(own.pb) ? "; actual " + xf(own.pb) : "") : "") +
+        pbTheory !== null ? "at ROE " + pct(roeLtm) + ", r " + pct(re) + ", g " + pct(gLong, 1) + (own && isNum(own.pb) ? "; actual " + xf(own.pb) : "") : "") +
       "</div>";
     var cap4 = [];
     if (gPE !== null) {
       cap4.push("At a " + pct(re) + " cost of equity, a trailing P/E of " + xf(peForG) + " is consistent with <strong>" + pct(gPE) + " growth in perpetuity</strong>" +
-        (gPE > gLong ? ", above the " + pct(gLong, 0) + " nominal-economy rate the course treats as the long-run ceiling" : ", within the " + pct(gLong, 0) + " long-run economy rate") + ".");
-      facts.push("Cost of equity " + pct(re) + " (CAPM); the trailing P/E of " + xf(peForG) + " implies " + pct(gPE) + " perpetual growth" + (gPE > gLong ? ", above the long-run economy rate" : ""));
+        (gPE > gCap ? " — above the " + pct(gCap, 0) + " nominal-GDP ceiling, so no perpetuity justifies the price; the excess is a finite run of above-economy growth the company has to deliver" : " — within the " + pct(gCap, 0) + " ceiling") + ".");
+      facts.push("Cost of equity " + pct(re) + " (CAPM); the trailing P/E of " + xf(peForG) + " implies " + pct(gPE) + " perpetual growth" + (gPE > gCap ? ", above the " + pct(gCap, 0) + " GDP cap — a perpetuity cannot justify the price" : ""));
     }
     if (gFcf !== null) {
       cap4.push("The enterprise value implies " + pct(gFcf) + " perpetual growth in free cash flow at a " + pct(w) + " cost of capital.");
       facts.push("WACC " + pct(w) + "; enterprise value implies " + pct(gFcf) + " perpetual FCF growth");
     }
     if (pbTheory !== null && own && isNum(own.pb)) {
-      cap4.push("Price-to-book of " + xf(own.pb) + " against " + xf(pbTheory) + " from ROE, the cost of equity and " + pct(gLong, 0) + " growth: the difference is what the market pays for growth beyond that.");
+      cap4.push("Price-to-book of " + xf(own.pb) + " against " + xf(pbTheory) + " from ROE, the cost of equity and " + pct(gLong, 1) + " perpetual growth: the difference is what the market pays for growth beyond that.");
     }
     html += "<p class='chart-caption'>" + cap4.join(" ") + (cap4.length ? " " : "") +
       "<span class='soft'>Cost of equity is CAPM with the feed's beta, the ten-year Treasury and a " + pct(erp, 0) + " premium (the course's range is 4–5.5%). " +
       "Growth is solved from trailing P/E = (1 + g) ÷ (r − g) and EV = FCF × (1 + g) ÷ (WACC − g).</span></p>";
+
+    /* ---- 4b. steady-state value at the chosen perpetual growth ---- */
+    var ss = V && own && price !== null && (re !== null || w !== null) ? V.steadyStateValue({ g: gLong, re: re, wacc: w,
+      eps: own.perShare.eps, fcfPerShare: own.perShare.fcf, netDebtPerShare: own.perShare.netDebt,
+      bookPerShare: own.perShare.book, roe: roeLtm }) : null;
+    if (ss && (ss.earnings !== null || ss.fcf !== null || ss.residualIncome !== null)) {
+      var vsPrice = function (v) {
+        if (!isNum(v)) return "<td class='num'>—</td>";
+        var gap = v / price - 1;
+        return "<td class='num " + (gap >= 0 ? "beat" : "miss") + "'>" + (gap >= 0 ? "+" : "−") + pct(Math.abs(gap), 0) + "</td>";
+      };
+      html += "<h4 class='val-h'>What the business is worth at " + pct(gLong, 1) + " growth in perpetuity</h4>" +
+        "<div class='scroll-x'><table class='grid steady' data-export-name='Steady-state value'><thead><tr><th scope='col'>Model</th>" +
+        "<th scope='col' class='num'>Input per share</th><th scope='col' class='num'>Rate</th><th scope='col' class='num'>Justified multiple</th>" +
+        "<th scope='col' class='num'><span data-metric='steadyValue'>Value per share</span></th><th scope='col' class='num'>vs $" + num(price, 2) + "</th></tr></thead><tbody>" +
+        (ss.earnings !== null ? "<tr><td>Earnings in perpetuity<br><span class='soft'>P = EPS × (1 + g) ÷ (r − g)</span></td><td class='num'>EPS $" + num(own.perShare.eps, 2) + "</td>" +
+          "<td class='num'>r " + pct(re) + "</td><td class='num'><span data-metric='justifiedPE'>P/E " + xf(ss.justifiedPE) + "</span></td><td class='num'><strong>$" + num(ss.earnings, 2) + "</strong></td>" + vsPrice(ss.earnings) + "</tr>" : "") +
+        (ss.fcf !== null ? "<tr><td>Free cash flow in perpetuity<br><span class='soft'>EV = FCF × (1 + g) ÷ (WACC − g), less net debt</span></td><td class='num'>FCF $" + num(own.perShare.fcf, 2) + "</td>" +
+          "<td class='num'>WACC " + pct(w) + "</td><td class='num'>EV/FCF " + xf(ss.justifiedEvFcf) + "</td><td class='num'><strong>$" + num(ss.fcf, 2) + "</strong></td>" + vsPrice(ss.fcf) + "</tr>" : "") +
+        (ss.residualIncome !== null ? "<tr><td>Residual income<br><span class='soft'>V = B₀ + (ROE − r) × B₀ ÷ (r − g)</span></td><td class='num'>Book $" + num(own.perShare.book, 2) + " at ROE " + pct(roeLtm) + "</td>" +
+          "<td class='num'>r " + pct(re) + "</td><td class='num'>P/B " + xf(ss.residualIncome / own.perShare.book) + "</td><td class='num'><strong>$" + num(ss.residualIncome, 2) + "</strong></td>" + vsPrice(ss.residualIncome) + "</tr>" : "") +
+        "</tbody></table></div>";
+      var ssVals = [ss.earnings, ss.fcf, ss.residualIncome].filter(isNum);
+      var ssLo = Math.min.apply(null, ssVals), ssHi = Math.max.apply(null, ssVals);
+      html += "<p class='chart-caption'><strong>At " + pct(gLong, 1) + " growth for ever" + (re !== null ? " and a " + pct(re) + " cost of equity" : "") +
+        ", the trailing year is worth $" + num(ssLo, 0) + (ssVals.length > 1 ? "–$" + num(ssHi, 0) : "") + " a share against $" + num(price, 2) + "</strong>" +
+        (price > ssHi ? "; the " + pct(price / ssHi - 1, 0) + " above the top of that range is what the market pays for growth above the economy's — a finite run that has to be delivered, not a perpetuity."
+          : price < ssLo ? "; the price sits " + pct(1 - price / ssLo, 0) + " below the bottom of that range." : ".") +
+        " <span class='soft'>Each figure is a perpetuity of the last twelve months; a year that is not steady state gives a value that is not either. Growth in perpetuity never exceeds nominal GDP.</span></p>";
+      facts.push("At " + pct(gLong, 1) + " perpetual growth (" + tg.label.toLowerCase() + "; the cap is nominal GDP " + pct(gCap, 0) + ") the trailing year is worth $" + num(ssLo, 0) +
+        (ssVals.length > 1 ? "–$" + num(ssHi, 0) : "") + " a share on the earnings, free-cash-flow and residual-income perpetuities, against a price of $" + num(price, 2));
+    }
 
     /* ---- 5. value creation ---- */
     var priorBs = null;
@@ -2916,6 +2980,8 @@
       (sharesBasis ? "; shares from the " + esc(sharesBasis) : "") + ". Price, beta, forward P/E, the decade series and the peers' multiples: market-data feed.</p>";
     st.facts = facts;
     host.innerHTML = html;
+    var sel = document.getElementById("tg-select");
+    if (sel) sel.addEventListener("change", function () { setTerminalGrowth(this.value); });
   }
 
   /* ---------- says versus did ---------- */
