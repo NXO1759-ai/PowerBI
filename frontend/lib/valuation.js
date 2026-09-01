@@ -249,6 +249,69 @@
     };
   }
 
+  /* ---------- perpetual growth: never above the economy ---------- */
+
+  /**
+   * Growth into perpetuity is capped at nominal economic growth. The
+   * three defensible choices: the long-run inflation rate (about 2% in a
+   * stable developed economy), the safe choice of 2–3% for a mature US
+   * company, and the nominal GDP rate of 3–4% as the absolute ceiling.
+   */
+  var TERMINAL_GROWTH = {
+    cap: 0.04,
+    options: [
+      { key: "inflation", label: "Inflation baseline", g: 0.02, note: "the long-term inflation rate of a stable developed economy" },
+      { key: "safe", label: "Safe choice", g: 0.025, note: "conservative, standard and easy to defend for a mature US company" },
+      { key: "safeUpper", label: "Safe choice, upper", g: 0.03, note: "the top of the 2–3% range" },
+      { key: "gdp", label: "GDP cap", g: 0.035, note: "nominal GDP growth, the upper limit" },
+      { key: "gdpCeiling", label: "GDP cap, ceiling", g: 0.04, note: "the absolute upper limit, nominal GDP at the top of its range" }
+    ],
+    defaultKey: "safe"
+  };
+  function terminalGrowthOption(key) {
+    var o = TERMINAL_GROWTH.options.filter(function (x) { return x.key === key; })[0];
+    return o || TERMINAL_GROWTH.options.filter(function (x) { return x.key === TERMINAL_GROWTH.defaultKey; })[0];
+  }
+  /** A growth rate for use in perpetuity: never above the cap. */
+  function clampTerminalGrowth(g) {
+    if (!isNum(g)) return null;
+    return Math.min(g, TERMINAL_GROWTH.cap);
+  }
+
+  /**
+   * What the company is worth in steady state at a chosen perpetual
+   * growth rate, the course's one-line models per share:
+   *   earnings         P = EPS × (1 + g) ÷ (r − g)
+   *   free cash flow   EV = FCF × (1 + g) ÷ (WACC − g), less net debt
+   *   residual income  V = B₀ + (ROE − r) × B₀ ÷ (r − g)
+   * and the multiples those identities justify. Each is a perpetuity of
+   * the trailing year, so a year that is not steady state gives a value
+   * that is not either; the page says so.
+   */
+  function steadyStateValue(x) {
+    var g = clampTerminalGrowth(x.g);
+    if (g === null) return null;
+    var re = x.re, w = x.wacc;
+    var out = { g: g, capped: isNum(x.g) && x.g > TERMINAL_GROWTH.cap,
+      earnings: null, fcf: null, residualIncome: null,
+      justifiedPE: null, justifiedForwardPE: null, justifiedEvFcf: null };
+    if (isNum(re) && re > g) {
+      out.justifiedPE = (1 + g) / (re - g);
+      out.justifiedForwardPE = 1 / (re - g);
+      if (isNum(x.eps) && x.eps > 0) out.earnings = x.eps * (1 + g) / (re - g);
+      if (isNum(x.bookPerShare) && x.bookPerShare > 0 && isNum(x.roe)) {
+        out.residualIncome = x.bookPerShare + (x.roe - re) * x.bookPerShare / (re - g);
+      }
+    }
+    if (isNum(w) && w > g) {
+      out.justifiedEvFcf = (1 + g) / (w - g);
+      if (isNum(x.fcfPerShare) && x.fcfPerShare > 0) {
+        out.fcf = x.fcfPerShare * (1 + g) / (w - g) - (isNum(x.netDebtPerShare) ? x.netDebtPerShare : 0);
+      }
+    }
+    return out;
+  }
+
   /* ---------- what the peers imply ---------- */
 
   /**
@@ -300,6 +363,8 @@
     impliedGrowthFromPE: impliedGrowthFromPE, impliedGrowthFromFcf: impliedGrowthFromFcf,
     theoreticalPB: theoreticalPB, valueCreation: valueCreation,
     impliedPrices: impliedPrices, DRIVER_RELIABILITY: DRIVER_RELIABILITY,
+    TERMINAL_GROWTH: TERMINAL_GROWTH, terminalGrowthOption: terminalGrowthOption,
+    clampTerminalGrowth: clampTerminalGrowth, steadyStateValue: steadyStateValue,
     DEFAULT_ERP: 0.05
   };
 });
