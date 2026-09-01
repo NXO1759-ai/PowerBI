@@ -15,7 +15,7 @@
  * endpoint keeps statement analysis live.
  */
 
-import { buildStatements } from "../scripts/lib/statements.mjs";
+import { coverShares, buildStatements } from "../scripts/lib/statements.mjs";
 import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 const { computeRatios } = require("../frontend/lib/ratios.js");
@@ -181,6 +181,9 @@ export default async function handler(req, res) {
     annual: statements.annual,
     quarterly: statements.quarterly,
     ltm: statements.ltm,
+    /* the cover page's share count, for market value and the bridge to
+       enterprise value */
+    cover: coverShares(facts && facts.facts && facts.facts.dei),
     ratios: {
       annual: computeRatios(statements.annual),
       quarterly: computeRatios(statements.quarterly),

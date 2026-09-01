@@ -569,6 +569,70 @@ function deriveFromYearToDate(bucket, quarterly, fyEndMonth) {
   return out;
 }
 
+/**
+ * Cash flow for the quarters a 10-Q reports only year to date.
+ *
+ * The income statement in a 10-Q carries the quarter and the year to
+ * date; the cash flow statement carries only the year to date. So a
+ * second quarter's income statement is tagged directly while its cash
+ * flow exists only as a six-month span, and a third quarter's only as a
+ * nine-month span. Every quarter but the first therefore lacked cash
+ * flow, and with it every LTM cash figure.
+ *
+ * The span less the quarters before it is the quarter: H1 − Q1 = Q2,
+ * 9M − (Q1 + Q2) = Q3. The subtraction fills a null in the span's own
+ * last quarter only, and only from earlier quarters that carry the
+ * figure, so nothing is ever overwritten and nothing is derived from a
+ * gap. Applies to income-statement lines a filer tags only year to date
+ * as well.
+ */
+function fillFromYearToDate(bucket, quarterly, fyEndMonth) {
+  const ytdSpan = (d) => d !== null &&
+    ((d >= 150 && d <= 200) || (d >= 240 && d <= 290));
+  const ytd = buildStatementSeries(bucket, { spanTest: ytdSpan, limit: 40, fyEndMonth });
+  const closest = (e) => {
+    let best = null, bestGap = Infinity;
+    for (const p of quarterly) {
+      const gap = Math.abs(new Date(p.periodEnd) - new Date(e));
+      if (gap < bestGap) { bestGap = gap; best = p; }
+    }
+    return bestGap <= 20 * DAY_MS ? best : null;
+  };
+  let filled = 0;
+  for (const span of ytd) {
+    const days = Math.round(
+      (new Date(span.periodEnd) - new Date(span.periodStart || span.periodEnd)) / DAY_MS);
+    const n = days > 220 ? 3 : 2;
+    const ends = [];
+    let cur = new Date(span.periodEnd + "T00:00:00");
+    for (let i = 0; i < n; i++) {
+      ends.push(cur.toISOString().slice(0, 10));
+      cur = new Date(cur.getTime() - 91 * DAY_MS);
+    }
+    const matched = ends.map(closest);
+    if (matched.some((q) => !q)) continue;
+    const last = matched[0], earlier = matched.slice(1);
+    for (const stmt of ["cashFlow", "incomeStatement"]) {
+      for (const key of Object.keys(span[stmt] || {})) {
+        if (typeof last[stmt][key] === "number") continue;
+        const total = span[stmt][key];
+        if (typeof total !== "number") continue;
+        let rest = 0, complete = true;
+        for (const q of earlier) {
+          const v = q[stmt][key];
+          if (typeof v !== "number") { complete = false; break; }
+          rest += v;
+        }
+        if (!complete) continue;
+        last[stmt][key] = total - rest;
+        (last.derivedFields || (last.derivedFields = [])).push(stmt + "." + key);
+        filled++;
+      }
+    }
+  }
+  return filled;
+}
+
 export function buildStatements(bucket, { annualLimit = 10, quarterLimit = 20, fyEndMonth: fyOverride } = {}) {
   const annualEnds = [...durationSeries(bucket, INCOME.revenue, { annual: true }).keys()];
   /* A company with no annual filing yet gives fiscalYearEndMonth nothing
@@ -578,11 +642,16 @@ export function buildStatements(bucket, { annualLimit = 10, quarterLimit = 20, f
   const annual = buildStatementSeries(bucket, { annual: true, limit: annualLimit, fyEndMonth });
   let quarterly = buildStatementSeries(bucket, { annual: false, limit: quarterLimit, fyEndMonth });
 
-  quarterly = quarterly
-    .concat(deriveFourthQuarters(annual, quarterly))
-    .sort((a, b) => String(a.periodEnd).localeCompare(String(b.periodEnd)));
+  /* missing quarters first, then the year-to-date-only lines of the
+     reported ones, then Q4 from the year less the three now-complete
+     quarters — the order matters: a Q4 cash flow needs Q2 and Q3 to
+     carry theirs */
   quarterly = quarterly
     .concat(deriveFromYearToDate(bucket, quarterly, fyEndMonth))
+    .sort((a, b) => String(a.periodEnd).localeCompare(String(b.periodEnd)));
+  fillFromYearToDate(bucket, quarterly, fyEndMonth);
+  quarterly = quarterly
+    .concat(deriveFourthQuarters(annual, quarterly))
     .sort((a, b) => String(a.periodEnd).localeCompare(String(b.periodEnd)));
 
   return { annual, quarterly, ltm: buildLtm(quarterly), fiscalYearEndMonth: fyEndMonth };
@@ -642,7 +711,46 @@ function buildLtm(quarterly) {
     for (const k of Object.keys(last.balanceSheet)) period.balanceSheet[k] = last.balanceSheet[k];
     for (const k of Object.keys(last.perShare)) period.perShare[k] = sum("perShare", k);
     for (const k of Object.keys(last.shares)) period.shares[k] = last.shares[k];
+    /* a derived quarter carries no per-share figure, so the sum fails
+       whenever the window holds one; LTM earnings over the latest share
+       count is the figure an analyst would compute instead */
+    const ni = period.incomeStatement.netIncome;
+    if (typeof ni === "number") {
+      if (period.perShare.epsDiluted === null && typeof period.shares.dilutedShares === "number" && period.shares.dilutedShares > 0) {
+        period.perShare.epsDiluted = ni / period.shares.dilutedShares;
+      }
+      if (period.perShare.epsBasic === null && typeof period.shares.basicShares === "number" && period.shares.basicShares > 0) {
+        period.perShare.epsBasic = ni / period.shares.basicShares;
+      }
+    }
     out.push(period);
   }
   return out;
+}
+
+/**
+ * Shares outstanding from the cover page of the latest report — the
+ * dei:EntityCommonStockSharesOutstanding fact, dated a few weeks after
+ * the period end. A multi-class filer reports one row per class under
+ * the same date and filing; they are summed. Returns null when the
+ * feed carries none.
+ */
+export function coverShares(deiBucket) {
+  const tag = deiBucket && deiBucket.EntityCommonStockSharesOutstanding;
+  const rows = tag && tag.units && tag.units.shares;
+  if (!Array.isArray(rows) || !rows.length) return null;
+  const groups = new Map();
+  for (const r of rows) {
+    if (typeof r.val !== "number" || !r.end) continue;
+    const key = r.end + "|" + (r.accn || r.filed || "");
+    const g = groups.get(key) || { end: r.end, filed: r.filed || null, form: r.form || null, value: 0, classes: 0 };
+    g.value += r.val;
+    g.classes++;
+    groups.set(key, g);
+  }
+  let best = null;
+  for (const g of groups.values()) {
+    if (!best || g.end > best.end || (g.end === best.end && String(g.filed) > String(best.filed))) best = g;
+  }
+  return best ? { value: best.value, asOf: best.end, filed: best.filed, form: best.form, classes: best.classes } : null;
 }
