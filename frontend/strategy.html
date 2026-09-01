@@ -242,6 +242,13 @@
       <div class="kpi-grid" id="health-cards"></div>
       <p class="chart-caption" id="health-caption"></p>
 
+      <h3>Valuation</h3>
+      <p class="hint">
+        What the market pays for the business, placed against the company's
+        own decade. Multiples are the market-data feed's trailing figures;
+        everything else on this page is from the filings.
+      </p>
+      <div id="valuation-block"><p class="hint" role="status">Loading valuation…</p></div>
       <h3>Stock performance</h3>
       <div id="stock-block"><p class="hint" id="stock-status">Loading price history…</p></div>
     </section>
@@ -265,6 +272,19 @@
       <div id="seg-block"></div>
       <h3>Geographic mix</h3>
       <div id="geo-block"></div>
+    </section>
+
+    <!-- ============ 2b. WHAT THE COMPANY SAYS VERSUS WHAT IT DID ============ -->
+    <section class="panel-card fsa-section" aria-labelledby="h-said">
+      <div class="section-head">
+        <h2 id="h-said">What the company says, against what it did</h2>
+        <p class="section-blurb">
+          Consensus against delivery, quarter by quarter; the next report and
+          what the street expects of it; and management's own outlook and
+          adjusted figures, quoted from the latest earnings release.
+        </p>
+      </div>
+      <div id="said-block"><p class="hint" role="status">Loading…</p></div>
     </section>
 
     <!-- ============ 3. MARKET AND COMPETITIVE POSITION ============ -->

@@ -120,6 +120,26 @@ await run("fsa-note without key answers 503 or 200", "../api/fsa-note.js",
   { method: "POST", body: { ticker: "NVDA", periodLabel: "smoke", facts: ["a", "b", "c"] } },
   (res) => (res.code === 503 || res.code === 200 || res.code === 502) ? true : "unexpected " + res.code);
 
+console.log("market layer");
+await run("valuation NVDA answers 200 with a key or 503 without", "../api/valuation.js",
+  { query: { ticker: "NVDA", force: "1" } }, (res) =>
+    res.code === 503 ? true
+      : res.code === 200 && isObj(res.body.multiples) && isObj(res.body.history) ? true
+      : "unexpected " + res.code);
+await run("comps answers 200 with a key or 503 without", "../api/comps.js",
+  { query: { tickers: "NKE,DECK" } }, (res) =>
+    res.code === 503 ? true
+      : res.code === 200 && Array.isArray(res.body.rows) ? true
+      : "unexpected " + res.code);
+await run("release NVDA — outlook and reconciliation from the 8-K exhibit", "../api/release.js",
+  { query: { cik: "1045810", force: "1" } }, (res) =>
+    res.code === 200 && Array.isArray(res.body.outlook) && Array.isArray(res.body.reconciliation) &&
+    Array.isArray(res.body.guidanceTables) && /^https:\/\/www\.sec\.gov\//.test(res.body.url) ? true
+      : "unexpected " + res.code + " " + JSON.stringify(res.body).slice(0, 120));
+await run("release AVEX — a new listing may have no release yet", "../api/release.js",
+  { query: { cik: "2096300", force: "1" } }, (res) =>
+    res.code === 200 || res.code === 404 ? true : "unexpected " + res.code);
+
 console.log("");
 console.log(results.length + " checks, " + failures + " failed");
 process.exit(failures ? 1 : 0);

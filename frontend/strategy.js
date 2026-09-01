@@ -282,6 +282,38 @@
       definition: "How fast the price of labour is rising.",
       interpretation: "The line to budget headcount costs and merit pools against, and a lagging confirmation of labour-market tightness.",
       watch: "Mix effects distort it: laying off low-wage workers pushes the average up." },
+    evEbitda: { label: "EV / EBITDA", formula: "Enterprise value ÷ trailing-twelve-month EBITDA",
+      definition: "What the whole business — equity plus net debt — costs per dollar of cash operating profit before depreciation.",
+      interpretation: "The default multiple for comparing businesses with different capital structures. Read it against the company's own decade and against peers; a low multiple in a high-return business is the setup an analyst looks for.",
+      watch: "Vendor trailing figure. EBITDA flatters capital-hungry businesses, since depreciation there is a real recurring cost." },
+    peTTM: { label: "P/E, trailing", formula: "Share price ÷ trailing-twelve-month earnings per share",
+      definition: "Years of current earnings the price pays for.",
+      interpretation: "The oldest multiple and the most abused: it moves with leverage, one-offs and buybacks as well as with the business.",
+      watch: "Vendor trailing figure. Meaningless when earnings are near zero or negative." },
+    forwardPE: { label: "P/E, forward", formula: "Share price ÷ consensus next-twelve-month earnings per share",
+      definition: "What the price pays for the earnings the street expects, not the earnings reported.",
+      interpretation: "The gap between trailing and forward P/E is the growth the market has already priced. A forward P/E far below trailing means the street expects earnings to leap — the business then has to deliver it.",
+      watch: "Built on consensus, which is a forecast; treat it as the market's opinion." },
+    evRevenue: { label: "EV / Sales", formula: "Enterprise value ÷ trailing-twelve-month revenue",
+      definition: "What the business costs per dollar of sales.",
+      interpretation: "The multiple that survives when profits do not exist yet, and the one to compare across margin structures — a high EV/Sales is only justified by high margins.",
+      watch: "Vendor trailing figure." },
+    fcfYield: { label: "Free cash flow yield", formula: "Trailing free cash flow ÷ market value",
+      definition: "The cash return the business generates on the price paid for it.",
+      interpretation: "Compare it directly with the 10-year Treasury yield on the macro backdrop: the spread is the reward for owning the business rather than the bond.",
+      watch: "Capex lumps distort a single year." },
+    pegTTM: { label: "PEG", formula: "P/E ÷ expected earnings growth rate",
+      definition: "The P/E scaled by the growth it is paying for.",
+      interpretation: "Around 1 is the old rule of thumb for fair; well below 1 says the market doubts the growth will arrive.",
+      watch: "Consensus growth is a forecast." },
+    nextReport: { label: "Next report", formula: "From the earnings calendar",
+      definition: "When the next set of results lands, and what the street expects.",
+      interpretation: "The date every figure on this page is next tested. Consensus revenue against the latest reported revenue is the growth already priced in.",
+      watch: "Dates move; confirm against the company's own notice." },
+    surprise: { label: "Earnings surprise", formula: "Reported EPS − consensus EPS, as a share of consensus",
+      definition: "How far delivery landed from expectation, each quarter.",
+      interpretation: "A run of beats says the street has been too cautious; a run of misses says guidance is not being met. The size matters less than the pattern.",
+      watch: "Consensus is what the vendor collected; the company's own adjusted EPS may differ from GAAP." },
     cpi: { label: "Headline inflation", formula: "Consumer price index vs the same month a year ago",
       definition: "How much more the average consumer basket costs than a year ago.",
       interpretation: "Inflation flatters nominal revenue growth while the capital base reprices slowly, so reported returns rise mechanically — deflate before applauding.",
@@ -1441,27 +1473,7 @@
       card("gmGap", "Gross margin vs peers", route ? pp(route.grossMarginGap) : "—",
         "The price-minus-cost outcome, not a price index");
 
-    var rowsHtml = (iy ? iy.pool : []).slice(0, 12).map(function (p) {
-      var m = (BY_INDUSTRY[ctx.me.industry] || []).filter(function (x) { return x.ticker === p.ticker; })[0];
-      var g = null;
-      if (m) {
-        var ys = Object.keys(m.years).map(Number).sort(function (a, b) { return a - b; });
-        var lastY = ys[ys.length - 1], firstY = ys[Math.max(0, ys.length - 6)];
-        var a = m.years[firstY] && get(m.years[firstY], "revenue");
-        var b = m.years[lastY] && get(m.years[lastY], "revenue");
-        if (isNum(a) && isNum(b) && lastY > firstY) g = S.cagr(a, b, lastY - firstY);
-      }
-      var self = p.ticker === state.ticker;
-      return "<tr><td class='" + (self ? "pool-you" : "") + "'>" + esc(p.ticker) + "</td>" +
-        "<td class='num" + (self ? " pool-you" : "") + "'>" + money(p.revenue) + "</td>" +
-        "<td class='num" + (self ? " pool-you" : "") + "'>" + pct(p.revenueShare) + "</td>" +
-        "<td class='num" + (self ? " pool-you" : "") + "'>" + pct(p.operatingMargin) + "</td>" +
-        "<td class='num" + (self ? " pool-you" : "") + "'>" + (isNum(g) ? pct(g) : "—") + "</td></tr>";
-    }).join("");
-    $("t-bench").innerHTML =
-      "<thead><tr><th scope='col'>" + year + "</th><th scope='col' class='num'>Revenue</th>" +
-      "<th scope='col' class='num'>Share</th><th scope='col' class='num'>Op margin</th>" +
-      "<th scope='col' class='num'>Growth, 5-yr</th></tr></thead><tbody>" + rowsHtml + "</tbody>";
+    renderCompSheet(ctx, iy);
 
     $("mkt-caption").innerHTML = mine
       ? esc(state.ticker) + " takes " + pct(mine.revenueShare) + " of the covered peers' revenue and " +
@@ -1474,6 +1486,69 @@
         "so the true denominator is larger and every share here is an upper bound.</span>"
       : "";
 
+  }
+
+  /* The standard comp sheet: market multiples from the feed, operating
+     fundamentals from the filings, side by side, subject first. */
+  var COMPS_CACHE = {};
+  function renderCompSheet(ctx, iy) {
+    var el = $("t-bench");
+    var members = (iy ? iy.pool : []).slice(0, 10);
+    var tickers = members.map(function (p) { return p.ticker; });
+    if (tickers.indexOf(state.ticker) === -1) tickers.unshift(state.ticker);
+    var key = tickers.join(",");
+    var draw = function (rows) {
+      var byT = {};
+      (rows || []).forEach(function (r) { byT[r.ticker] = r; });
+      var xf = function (v) { return isNum(v) ? num(v, 1) + "×" : "—"; };
+      el.innerHTML = "<thead><tr><th scope='col'>" + esc(String(ctx.year)) + "</th>" +
+        "<th scope='col' class='num'>Mkt cap</th><th scope='col' class='num'>EV/Sales</th>" +
+        "<th scope='col' class='num'>EV/EBITDA</th><th scope='col' class='num'>P/E</th>" +
+        "<th scope='col' class='num'>Fwd P/E</th><th scope='col' class='num'>FCF yield</th>" +
+        "<th scope='col' class='num'>Rev growth 5y</th><th scope='col' class='num'>Op margin</th>" +
+        "<th scope='col' class='num'>ROIC</th><th scope='col' class='num'>Net debt/EBITDA</th></tr></thead><tbody>" +
+        tickers.map(function (t) {
+          var c = PANEL[t]; var v = byT[t] || {};
+          var self = t === state.ticker;
+          var cls = self ? " class='pool-you'" : "";
+          var g5 = null, opm = null, roic = null, nde = null;
+          if (c) {
+            var ys = Object.keys(c.years).map(Number).sort(function (a, b) { return a - b; });
+            var yl = S.latestResolvedYear(get, c, function (p) { return p.incomeStatement.revenue; }, 5);
+            if (yl !== null) {
+              var per = S.toPeriod(get, c.years[yl], yl);
+              var pri = c.years[yl - 1] ? S.toPeriod(get, c.years[yl - 1], yl - 1) : null;
+              opm = M.ebitMargin(per);
+              roic = M.roic(per, pri, c);
+              var e = S.ebitOf(per, S.isFinancial(c)), da = per.cashFlow.depreciationAmortization;
+              var ebitda = isNum(e) ? e + (isNum(da) ? Math.abs(da) : 0) : null;
+              var b = per.balanceSheet;
+              var debt = (isNum(b.shortTermDebt) ? b.shortTermDebt : 0) + (isNum(b.longTermDebt) ? b.longTermDebt : 0);
+              var cash = (isNum(b.cash) ? b.cash : 0) + (isNum(b.shortTermInvestments) ? b.shortTermInvestments : 0);
+              nde = (isNum(ebitda) && ebitda > 0) ? (debt - cash) / ebitda : null;
+              var y0 = ys[Math.max(0, ys.indexOf(yl) - 5)];
+              var r0 = get(c.years[y0], "revenue"), r1 = per.incomeStatement.revenue;
+              if (isNum(r0) && isNum(r1) && r0 > 0 && yl > y0) g5 = S.cagr(r0, r1, yl - y0);
+            }
+          }
+          return "<tr><td" + cls + ">" + esc(t) + "</td>" +
+            "<td class='num'>" + (isNum(v.marketCap) ? money(v.marketCap) : "—") + "</td>" +
+            "<td class='num'>" + xf(v.evRevenueTTM) + "</td><td class='num'>" + xf(v.evEbitdaTTM) + "</td>" +
+            "<td class='num'>" + xf(v.peTTM) + "</td><td class='num'>" + xf(v.forwardPE) + "</td>" +
+            "<td class='num'>" + (isNum(v.fcfYieldTTM) ? pct(v.fcfYieldTTM) : "—") + "</td>" +
+            "<td class='num'>" + (isNum(g5) ? pct(g5) : "—") + "</td>" +
+            "<td class='num'>" + (isNum(opm) ? pct(opm) : "—") + "</td>" +
+            "<td class='num'>" + (isNum(roic) ? pct(roic) : "—") + "</td>" +
+            "<td class='num'>" + (isNum(nde) ? num(nde, 1) + "×" : "—") + "</td></tr>";
+        }).join("") + "</tbody>" +
+        "<tfoot><tr><td colspan='11'>Market cap and multiples: market-data feed, trailing twelve months. Growth, margin, return and leverage: computed from each company's filings.</td></tr></tfoot>";
+    };
+    if (COMPS_CACHE[key]) { draw(COMPS_CACHE[key]); return; }
+    draw([]);
+    fetch(API_BASE + "/api/comps?tickers=" + encodeURIComponent(key))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { if (d && d.rows) { COMPS_CACHE[key] = d.rows; if (state.ticker === tickers[0]) draw(d.rows); } })
+      .catch(function () {});
   }
 
   /* ---------- 4. customer and product ---------- */
@@ -2037,10 +2112,16 @@
     return num(v, 1);
   }
 
+  /* US recessions as dated by the NBER business-cycle committee. */
+  var RECESSIONS = [["2001-03", "2001-11"], ["2007-12", "2009-06"], ["2020-02", "2020-04"]];
   function detailChart(hist, kind) {
     if (!hist || hist.length < 8) return "";
     var W = 720, H = 170, padL = 54, padR = 14, padT = 12, padB = 24;
     var iw = W - padL - padR, ih = H - padT - padB;
+    var monthIndex = function (ym) {
+      for (var i = 0; i < hist.length; i++) if (String(hist[i][0]).slice(0, 7) >= ym) return i;
+      return -1;
+    };
     var vals = hist.map(function (h) { return h[1]; });
     var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals);
     if (lo === hi) { lo -= 1; hi += 1; }
@@ -2052,6 +2133,13 @@
       return (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(h[1]).toFixed(1);
     }).join(" ");
     var out = "<svg viewBox='0 0 " + W + " " + H + "' preserveAspectRatio='xMidYMid meet' role='img'>";
+    RECESSIONS.forEach(function (rc) {
+      var a = monthIndex(rc[0]), b = monthIndex(rc[1]);
+      if (a < 0) return;
+      if (b < 0) b = hist.length - 1;
+      out += "<rect x='" + X(a).toFixed(1) + "' y='" + padT + "' width='" + Math.max(2, X(b) - X(a)).toFixed(1) +
+        "' height='" + ih + "' fill='rgba(255,255,255,.06)'><title>Recession " + rc[0] + " to " + rc[1] + "</title></rect>";
+    });
     [lo + (hi - lo) * 0.08, (lo + hi) / 2, hi - (hi - lo) * 0.08].forEach(function (g) {
       out += "<line x1='" + padL + "' x2='" + (W - padR) + "' y1='" + Y(g).toFixed(1) +
         "' y2='" + Y(g).toFixed(1) + "' stroke='rgba(255,255,255,.07)' stroke-width='1'/>" +
@@ -2318,6 +2406,157 @@
         : "");
   }
 
+  /* ---------- valuation ---------- */
+  var VAL_CACHE = {};
+  function renderValuation(ticker, force) {
+    var host = $("valuation-block");
+    if (!host) return;
+    if (!force && VAL_CACHE[ticker]) { paintValuation(ticker, VAL_CACHE[ticker]); return; }
+    host.innerHTML = "<p class='hint' role='status'>Loading valuation…</p>";
+    fetch(API_BASE + "/api/valuation?ticker=" + encodeURIComponent(ticker) + (force ? "&force=1" : ""))
+      .then(function (r) { if (r.status === 503) throw new Error("unconfigured"); return r.ok ? r.json() : Promise.reject(new Error(String(r.status))); })
+      .then(function (d) { VAL_CACHE[ticker] = d; if (state.ticker === ticker) { paintValuation(ticker, d); paintSaid(ticker, d); } })
+      .catch(function (e) {
+        if (state.ticker !== ticker) return;
+        host.innerHTML = "<p class='hint'>" + (String(e.message) === "unconfigured"
+          ? "The market-data feed is not configured on this deployment."
+          : "Valuation is unavailable right now. Every filed figure above stands on its own.") + "</p>";
+        var sb = $("said-block"); if (sb) sb.innerHTML = "<p class='hint'>Consensus and calendar are unavailable right now.</p>";
+      });
+    renderRelease(ticker, force);
+  }
+  function decadeBar(hist) {
+    if (!hist || !isNum(hist.percentile)) return "";
+    var p = Math.max(0, Math.min(100, hist.percentile));
+    return "<div class='decade-bar'><b style='inset-inline-start:50%'></b><i style='inset-inline-start:" + p + "%'></i></div>" +
+      "<span class='decade-note'>" + p + "th pct of own " + hist.years + " yrs · " +
+      num(hist.low.value, 1) + "× (" + esc(String(hist.low.period).slice(0, 4)) + ") – " +
+      num(hist.high.value, 1) + "× (" + esc(String(hist.high.period).slice(0, 4)) + ") · median " +
+      num(hist.median, 1) + "×</span>";
+  }
+  function valCard(key, label, value, sub, hist) {
+    return "<button type='button' class='mcard val-card' data-metric='" + esc(key) + "'>" +
+      "<span class='m-label'>" + esc(label) + "</span>" +
+      "<span class='m-value" + (value === "—" ? " na" : "") + "'>" + esc(value) + "</span>" +
+      (sub ? "<span class='m-gloss'>" + esc(sub) + "</span>" : "") +
+      decadeBar(hist) + "</button>";
+  }
+  function paintValuation(ticker, d) {
+    var host = $("valuation-block");
+    var m = d.multiples || {}, H = d.history || {};
+    var xf = function (v) { return isNum(v) ? num(v, 1) + "×" : "—"; };
+    host.innerHTML = "<div class='val-grid'>" +
+      valCard("marketValue", "Market value", isNum(m.marketCap) ? money(m.marketCap) : "—",
+        isNum(m.enterpriseValue) ? "Enterprise value " + money(m.enterpriseValue) : "") +
+      valCard("evEbitda", "EV / EBITDA", xf(m.evEbitdaTTM), "Trailing twelve months", H.evEbitda) +
+      valCard("peTTM", "P/E, trailing", xf(m.peTTM), isNum(m.pegTTM) ? "PEG " + num(m.pegTTM, 2) : "", H.pe) +
+      valCard("forwardPE", "P/E, forward", xf(m.forwardPE), "On consensus next-twelve-month earnings") +
+      valCard("evRevenue", "EV / Sales", xf(m.evRevenueTTM), "Trailing twelve months", H.evRevenue) +
+      valCard("fcfYield", "Free cash flow yield", isNum(m.fcfYieldTTM) ? pct(m.fcfYieldTTM) : "—",
+        isNum(m.dividendYieldTTM) ? "Dividend yield " + pct(m.dividendYieldTTM, 2) : "") +
+      "</div>";
+    /* the read */
+    var bits = [];
+    var he = H.evEbitda;
+    if (he && isNum(m.evEbitdaTTM)) {
+      bits.push("At <strong>" + xf(m.evEbitdaTTM) + " EV/EBITDA</strong> the business is priced in the <strong>" +
+        he.percentile + "th percentile</strong> of its own " + he.years + "-year range — " +
+        (he.percentile <= 25 ? "cheap by its own history" : he.percentile >= 75 ? "rich by its own history" : "mid-range for itself") +
+        ", against a median of " + xf(he.median) + ".");
+    }
+    if (isNum(m.forwardPE) && isNum(m.peTTM) && m.peTTM > 0) {
+      var implied = m.peTTM / m.forwardPE - 1;
+      bits.push("Trailing P/E of " + xf(m.peTTM) + " against forward " + xf(m.forwardPE) +
+        " means the street has priced roughly <strong>" + pct(implied, 0) + "</strong> earnings growth over the next year — that is the bar the company must clear.");
+    }
+    var macro = MACRO.data && MACRO.data.leading && MACRO.data.leading.treasury10y;
+    if (isNum(m.fcfYieldTTM) && macro && isNum(macro.value)) {
+      bits.push("Free cash flow yield of " + pct(m.fcfYieldTTM) + " against a " + pct(macro.value, 2) +
+        " ten-year Treasury: the equity " + (m.fcfYieldTTM > macro.value ? "out-yields" : "under-yields") +
+        " the bond by " + pp(m.fcfYieldTTM - macro.value) + ".");
+    }
+    host.insertAdjacentHTML("beforeend", "<p class='chart-caption'>" + bits.join(" ") +
+      " <span class='soft'>Multiples from the market-data feed, trailing twelve months; the decade range is the vendor's annual series.</span></p>");
+  }
+
+  /* ---------- says versus did ---------- */
+  var REL_CACHE = {};
+  function renderRelease(ticker, force) {
+    var me = PANEL[ticker], cik = me && me.cik;
+    if (!cik) { var ie = indexEntry(ticker); cik = ie && ie[1]; }
+    if (!cik) return;
+    if (!force && REL_CACHE[ticker]) return;
+    fetch(API_BASE + "/api/release?cik=" + encodeURIComponent(cik) + (force ? "&force=1" : ""))
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) { REL_CACHE[ticker] = d || { none: true }; if (state.ticker === ticker && VAL_CACHE[ticker]) paintSaid(ticker, VAL_CACHE[ticker]); })
+      .catch(function () { REL_CACHE[ticker] = { none: true }; });
+  }
+  function paintSaid(ticker, v) {
+    var host = $("said-block");
+    if (!host) return;
+    var rel = REL_CACHE[ticker];
+    var html = "<div class='said-grid'>";
+    /* consensus against delivery */
+    var sp = v.surprises || [];
+    var beats = sp.filter(function (x) { return x.surprise > 0; }).length;
+    html += "<div><h3>Consensus against delivery</h3>";
+    if (sp.length) {
+      html += "<div class='scroll-x'><table class='grid'><thead><tr><th scope='col'>Quarter</th>" +
+        "<th scope='col' class='num'>Consensus EPS</th><th scope='col' class='num'>Reported</th><th scope='col' class='num'>Surprise</th></tr></thead><tbody>" +
+        sp.slice(-8).map(function (x) {
+          return "<tr><td>" + esc(x.period) + "</td><td class='num'>" + num(x.estimate, 2) + "</td>" +
+            "<td class='num'>" + num(x.actual, 2) + "</td><td class='num " + (x.surprise >= 0 ? "beat" : "miss") + "'>" +
+            (isNum(x.surprisePct) ? (x.surprisePct >= 0 ? "+" : "−") + pct(Math.abs(x.surprisePct)) : "—") + "</td></tr>";
+        }).join("") + "</tbody></table></div>" +
+        "<p class='chart-caption'>Beat consensus in <strong>" + beats + " of " + sp.length + "</strong> quarters" +
+        (sp.length ? "; average surprise " + pp(sp.reduce(function (a, x) { return a + (x.surprisePct || 0); }, 0) / sp.length) : "") + ".</p>";
+    } else html += "<p class='hint'>No consensus history on the feed for " + esc(ticker) + ".</p>";
+    var n = v.next;
+    if (n) {
+      var me = PANEL[ticker];
+      var lastRev = null;
+      if (me) {
+        var ys = Object.keys(me.years).map(Number).sort(function (a, b) { return b - a; });
+        for (var i = 0; i < ys.length; i++) { var rv = get(me.years[ys[i]], "revenue"); if (isNum(rv)) { lastRev = rv; break; } }
+      }
+      html += "<p class='chart-caption'><strong>Next report: " + esc(n.date) + (n.session ? ", " + esc(n.session) : "") + ".</strong> " +
+        (isNum(n.epsEstimate) ? "Consensus EPS $" + num(n.epsEstimate, 2) : "") +
+        (isNum(n.revenueEstimate) ? (isNum(n.epsEstimate) ? ", revenue " : "Consensus revenue ") + money(n.revenueEstimate) : "") +
+        (isNum(n.revenueEstimate) && isNum(lastRev) && lastRev > 0
+          ? " — " + pct(n.revenueEstimate * 4 / lastRev - 1) + " annualised against the last fiscal year's revenue, roughly." : ".") +
+        "</p>";
+    }
+    html += "</div>";
+    /* the company's own words */
+    html += "<div><h3>Management's own figures and outlook</h3>";
+    if (rel && !rel.none) {
+      if (rel.headline) html += "<p class='said-quote'>" + esc(rel.headline) + "</p>";
+      (rel.outlook || []).slice(0, 6).forEach(function (o) { html += "<p class='said-quote'>" + esc(o) + "</p>"; });
+      var gt = (rel.guidanceTables || [])[0];
+      if (gt && gt.length) {
+        html += "<div class='scroll-x'><table class='grid recon'><tbody>" + gt.slice(0, 12).map(function (row) {
+          return "<tr>" + row.map(function (cell, i) { return "<td" + (i ? " class='num'" : "") + ">" + esc(cell) + "</td>"; }).join("") + "</tr>";
+        }).join("") + "</tbody></table></div>";
+      }
+      var rc = (rel.reconciliation || [])[0];
+      if (rc && rc.length) {
+        html += "<h3>Reconciliation to GAAP, as published</h3><div class='scroll-x'><table class='grid recon'><tbody>" +
+          rc.slice(0, 20).map(function (row) {
+            return "<tr>" + row.map(function (cell, i) { return "<td" + (i ? " class='num'" : "") + ">" + esc(cell) + "</td>"; }).join("") + "</tr>";
+          }).join("") + "</tbody></table></div>";
+      }
+      html += "<p class='said-src'>Quoted verbatim from the earnings release filed " + esc(rel.filed) +
+        " — <a href='" + esc(rel.url) + "' target='_blank' rel='noopener'>open the exhibit</a>. " +
+        "Adjusted figures are the company's own definitions, not GAAP.</p>";
+    } else if (rel && rel.none) {
+      html += "<p class='hint'>No earnings release on file for " + esc(ticker) + " — the filings above are the whole record.</p>";
+    } else {
+      html += "<p class='hint' role='status'>Reading the latest earnings release…</p>";
+    }
+    html += "</div></div>";
+    host.innerHTML = html;
+  }
+
   /* ---------- stock performance ---------- */
   var STOCK_CACHE = {};
   function renderStock(ticker, force) {
@@ -2548,6 +2787,7 @@
     renderRiskRegister();
     renderMacro(false);
     renderStock(state.ticker, false);
+    renderValuation(state.ticker, false);
   }
 
   function setView(v) {
@@ -2659,7 +2899,7 @@
       delete PANEL[t];
       setCompanyLive(t, true);
     }
-    if (state.view === "company") renderStock(state.ticker, true);
+    if (state.view === "company") { renderStock(state.ticker, true); renderValuation(state.ticker, true); }
     if (state.view === "company") { MACRO.data = null; renderMacro(true); }
     render();
     window.setTimeout(function () {
