@@ -2725,8 +2725,18 @@
     var mk = st.market || {}, q = mk.quote, prof = mk.profile;
     var price = q && isNum(q.price) ? q.price : null;
     var shares = null, sharesBasis = "";
-    if (stmt && stmt.cover && isNum(stmt.cover.value)) { shares = stmt.cover.value; sharesBasis = "cover page of the " + (stmt.cover.form || "latest report") + ", " + stmt.cover.asOf; }
-    else if (prof && isNum(prof.sharesOutstanding)) { shares = prof.sharesOutstanding; sharesBasis = "market-data feed"; }
+    var coverShares = stmt && stmt.cover && isNum(stmt.cover.value) ? stmt.cover.value : null;
+    var feedShares = prof && isNum(prof.sharesOutstanding) ? prof.sharesOutstanding : null;
+    /* the cover page is the filings' own count, but a split or a large
+       issue since that date leaves it stale against the quote; when the
+       feed's count differs by more than half, the feed's is the one the
+       price belongs to */
+    if (coverShares !== null && feedShares !== null && (coverShares / feedShares > 1.5 || feedShares / coverShares > 1.5)) {
+      shares = feedShares;
+      sharesBasis = "market-data feed; the cover page of the " + (stmt.cover.form || "latest report") + " (" + stmt.cover.asOf + ") showed " +
+        num(coverShares / 1e6, 1) + "M, so the count has changed since — a split or an issue";
+    } else if (coverShares !== null) { shares = coverShares; sharesBasis = "cover page of the " + (stmt.cover.form || "latest report") + ", " + stmt.cover.asOf; }
+    else if (feedShares !== null) { shares = feedShares; sharesBasis = "market-data feed"; }
     else if (ltm && isNum(ltm.shares.dilutedShares)) { shares = ltm.shares.dilutedShares; sharesBasis = "diluted average, " + ltm.label; }
     var xf = function (v) { return isNum(v) ? num(v, 1) + "×" : "—"; };
     var facts = [];
