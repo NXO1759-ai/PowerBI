@@ -80,7 +80,7 @@ function spanDays(r) {
    full year, then per (unit, fy, fp) keep the latest period_end; ties
    prefer the LONGEST duration (YTD over single quarter, matching the
    database), then the latest filed date. */
-const REPORT_FORM = /^(10-K|10-Q|20-F|40-F)(\/A)?$/;
+const REPORT_FORM = /^(10-K|10-Q|20-F|40-F|6-K)(\/A)?$/;
 function normalizeConcept(payload, concept) {
   const out = [];
   const units = payload && payload.units ? payload.units : {};
@@ -234,6 +234,16 @@ export default async function handler(req, res) {
   if (yr === null && fyYears.length) {
     yr = Math.max(...fyYears);
     per = "FY";
+  }
+  /* A newer annual report outranks an older latest quarter: a foreign
+     filer's tagged 6-K interims may stop before its 20-F, and the page
+     should show the latest period it has, not the latest quarter. */
+  const endOf = (year, period) => facts.filter((f) => f.fiscal_year === year &&
+    f.fiscal_period === period && f.period_end).map((f) => f.period_end).sort().pop() || null;
+  if (yr !== null && per !== "FY" && fyYears.length) {
+    const fyLatest = Math.max(...fyYears);
+    const qEndLatest = endOf(yr, per), fyEndLatest = endOf(fyLatest, "FY");
+    if (qEndLatest && fyEndLatest && fyEndLatest > qEndLatest) { yr = fyLatest; per = "FY"; }
   }
   const lyYr = yr ? yr - 1 : null;
   const shares = sharesOutstanding(facts);

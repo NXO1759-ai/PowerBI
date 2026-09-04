@@ -24,6 +24,7 @@ const CASES = [
   { ticker: "AMT",  cik: "1053507", why: "property trust — lease income outside ASC 606" },
   { ticker: "ONON", cik: "1858985", why: "IFRS 20-F filer — no US-GAAP facts" },
   { ticker: "KBLB", cik: "1413119", why: "pre-revenue shell" },
+  { ticker: "ENLV", cik: "1596812", why: "foreign filer — 20-F annual, 6-K interims, the latest untagged" },
 ];
 
 function mockRes() {

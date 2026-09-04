@@ -20,7 +20,11 @@
 import { INCOME, BALANCE, CASHFLOW, PERSHARE, SHARE_COUNTS, COMPOSITES } from "./concepts.mjs";
 
 const DAY_MS = 86400000;
-const REPORT_FORM = /^(10-K|10-Q|20-F|40-F)(\/A)?$/;
+/* Periodic reports, plus the 6-K interim reports of foreign private
+   issuers: a filer that tags its half-year or quarterly statements on
+   Form 6-K has real periods there. Dropping the form left Enlivex with a
+   2025 annual report and nothing between it and 2016. */
+const REPORT_FORM = /^(10-K|10-Q|20-F|40-F|6-K)(\/A)?$/;
 
 /* A quarter is nominally 91 days and an annual period 365, but fiscal
    calendars run 13-week quarters and 52/53-week years, and filers round
@@ -471,7 +475,9 @@ function deriveFourthQuarters(annual, quarterly) {
     /* Per-share figures are not additive across quarters — the share
        count moves — so they are left null rather than back-solved. */
     for (const k of Object.keys(year.perShare)) q4.perShare[k] = null;
-    if (q4.incomeStatement.revenue !== null) derived.push(q4);
+    /* a pre-revenue company still has a fourth quarter: its net income
+       is as derivable as anyone else's revenue */
+    if (q4.incomeStatement.revenue !== null || q4.incomeStatement.netIncome !== null) derived.push(q4);
   }
   return derived;
 }
@@ -554,7 +560,7 @@ function deriveFromYearToDate(bucket, quarterly, fyEndMonth) {
     /* A balance sheet is a point in time and cannot be subtracted; the
        derived quarter carries none rather than a wrong one. */
     for (const key of Object.keys(span.balanceSheet || {})) period.balanceSheet[key] = null;
-    if (!anyValue || period.incomeStatement.revenue === null) continue;
+    if (!anyValue || (period.incomeStatement.revenue === null && period.incomeStatement.netIncome === null)) continue;
     period.fiscalYear = fiscalYearFor(derivedEnd, fyEndMonth);
     period.fiscalPeriod = "Q" + fiscalQuarterFor(derivedEnd, fyEndMonth, null);
     /* the span's own filing names the year the derived quarter sits in */

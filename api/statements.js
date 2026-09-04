@@ -15,7 +15,8 @@
  * endpoint keeps statement analysis live.
  */
 
-import { coverShares, buildStatements } from "../scripts/lib/statements.mjs";
+import { coverShares, buildStatements, fiscalYearFor, fiscalQuarterFor } from "../scripts/lib/statements.mjs";
+import { extractInterimFacts, looksLikeStatements, factsToBucket } from "../scripts/lib/interim-parse.mjs";
 import { createRequire } from "node:module";
 const require = createRequire(import.meta.url);
 const { computeRatios } = require("../frontend/lib/ratios.js");
@@ -129,7 +130,8 @@ export default async function handler(req, res) {
     const feedLatest = latestQ > latestA ? latestQ : latestA;
     const recent = [];
     for (let i = 0; i < r.form.length && recent.length < 4; i++) {
-      if (/^(10-K|10-Q|20-F|40-F)$/.test(r.form[i])) {
+      /* a 6-K carries an instance only when the filer tagged it */
+      if (/^(10-K|10-Q|20-F|40-F)$/.test(r.form[i]) || (r.form[i] === "6-K" && r.isXBRL && r.isXBRL[i])) {
         recent.push({ form: r.form[i], accession: r.accessionNumber[i],
           filed: r.filingDate[i], reportDate: r.reportDate[i],
           fy: r.fy ? r.fy[i] : null, fp: r.fp ? r.fp[i] : null });
@@ -165,6 +167,122 @@ export default async function handler(req, res) {
       }
     }
   } catch (e) { /* the feed alone stands */ }
+
+  /* Interim reports without XBRL.
+     A foreign private issuer furnishes its interim statements on Form
+     6-K and need not tag them; Enlivex tagged its half-year and not its
+     third quarter, so the quarter existed only as tables in an exhibit.
+     For a filer with 6-Ks, the recent untagged ones are scanned for an
+     exhibit that reads like statements, and any period the feed lacks
+     is read from the tables and merged under the same concept tags.
+     Every such figure carries form 6-K and the exhibit it came from. */
+  try {
+    const sub = await (await secGet("https://data.sec.gov/submissions/CIK" +
+      String(cik).padStart(10, "0") + ".json", 15000)).json();
+    const r = sub.filings.recent;
+    const has6k = r.form.some((x) => x === "6-K");
+    if (has6k) {
+      const ends = new Set(statements.annual.concat(statements.quarterly).map((p) => p.periodEnd));
+      const have = (end) => {
+        if (ends.has(end)) return true;
+        const t = new Date(end).getTime();
+        for (const e of ends) if (Math.abs(new Date(e).getTime() - t) <= 5 * 864e5) return true;
+        return false;
+      };
+      /* a period counts as present only with its balance sheet: the
+         tagged half-year carries the first quarter's income statement
+         but not its balance sheet, and the untagged report has both */
+      const full = new Set(statements.annual.concat(statements.quarterly)
+        .filter((p) => typeof p.balanceSheet.totalAssets === "number").map((p) => p.periodEnd));
+      const haveFull = (end) => {
+        const t = new Date(end).getTime();
+        for (const e of full) if (Math.abs(new Date(e).getTime() - t) <= 5 * 864e5) return true;
+        return false;
+      };
+      const latestEnd = [...ends].sort().pop() || "2000-01-01";
+      const since = new Date(new Date(latestEnd).getTime() - 450 * 864e5).toISOString().slice(0, 10);
+      const today = new Date().toISOString().slice(0, 10);
+      const c10 = String(cik).padStart(10, "0");
+      const archive = (accn, name) => "https://www.sec.gov/Archives/edgar/data/" + Number(cik) + "/" + accn.replace(/-/g, "") + "/" + name;
+
+      /* candidates: EDGAR full-text search for the phrase every interim
+         statement header carries, restricted to this filer's 6-Ks */
+      let candidates = [];
+      try {
+        const fts = await (await secGet("https://efts.sec.gov/LATEST/search-index?q=" +
+          encodeURIComponent('"months ended"') + "&forms=6-K&ciks=" + c10 + "&startdt=" + since + "&enddt=" + today, 12000)).json();
+        const hits = (fts && fts.hits && fts.hits.hits) || [];
+        for (const h of hits) {
+          const src = h._source || {};
+          const [adsh, name] = String(h._id || "").split(":");
+          if (!adsh || !name || !/\.htm(l)?$/i.test(name)) continue;
+          const desc = String(src.file_description || "");
+          candidates.push({ accn: adsh, name, filed: src.file_date || "", desc,
+            statements: /financial statements|statements of|balance sheet/i.test(desc) || /ex99-?1/i.test(name) });
+        }
+        candidates.sort((a, b) => (b.filed.localeCompare(a.filed)) || ((b.statements ? 1 : 0) - (a.statements ? 1 : 0)));
+      } catch (e) { candidates = []; }
+
+      /* fallback: the filings' own directories, exhibits large enough
+         to hold statements */
+      if (!candidates.length) {
+        let scanned = 0;
+        for (let i = 0; i < r.form.length && scanned < 40; i++) {
+          if (r.form[i] !== "6-K" || r.filingDate[i] < since) continue;
+          if (r.isXBRL && r.isXBRL[i]) continue;
+          scanned++;
+          const accn = r.accessionNumber[i];
+          let idx;
+          try { idx = await (await secGet(archive(accn, "index.json"), 10000)).json(); } catch (e) { continue; }
+          const items = (idx.directory && idx.directory.item) ? idx.directory.item : [];
+          for (const d of items) {
+            if (!/\.htm(l)?$/i.test(d.name) || /-index/.test(d.name) || Number(d.size || 0) < 40000) continue;
+            candidates.push({ accn, name: d.name, filed: r.filingDate[i], desc: "", statements: /ex99/i.test(d.name) });
+          }
+        }
+      }
+
+      const pulled = [];
+      const tried = new Set();
+      for (const c of candidates) {
+        if (pulled.length >= 4) break;
+        if (tried.has(c.accn)) continue;
+        let html;
+        try { html = await (await secGet(archive(c.accn, c.name), 15000)).text(); } catch (e) { continue; }
+        if (!looksLikeStatements(html)) continue;
+        const facts = extractInterimFacts(html);
+        if (!facts.length) continue;
+        tried.add(c.accn);
+        /* nothing to add when every period in the report is already
+           complete in the feed */
+        const ends = [...new Set(facts.map((x) => x.end))];
+        if (ends.every(haveFull)) continue;
+        const extra = factsToBucket(facts, { form: "6-K", filed: c.filed, accn: c.accn,
+          fyEndMonth: statements.fiscalYearEndMonth }, fiscalYearFor, fiscalQuarterFor);
+        let added = 0;
+        for (const [tag, def] of Object.entries(extra)) {
+          const b = (bucket[tag] = bucket[tag] || { units: {} });
+          for (const [unit, rows] of Object.entries(def.units)) {
+            const u = (b.units[unit] = b.units[unit] || []);
+            const seen = new Set(u.map((row) => (row.start || "") + "|" + row.end + "|" + (row.accn || "")));
+            for (const row of rows) {
+              const key = (row.start || "") + "|" + row.end + "|" + row.accn;
+              if (!seen.has(key)) { u.push(row); added++; }
+            }
+          }
+        }
+        pulled.push({ form: "6-K", exhibit: c.name, filed: c.filed, periods: ends.sort(), factsAdded: added });
+      }
+      if (pulled.length) {
+        statements = buildStatements(bucket, { fyEndMonth: statements.fiscalYearEndMonth });
+        backstop = Object.assign({}, backstop || {}, {
+          reason: ((backstop && backstop.reason) ? backstop.reason + "; " : "") +
+            "interim statements read from the tables of untagged 6-K reports",
+          interim: pulled,
+        });
+      }
+    }
+  } catch (e) { /* the feed and the tagged filings stand */ }
 
   if (!statements.annual.length && !statements.quarterly.length) {
     return res.status(404).json({

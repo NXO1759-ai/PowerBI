@@ -34,6 +34,9 @@ jobs:
       - name: Valuation library against the course's worked figures
         run: node scripts/test-valuation.mjs
 
+      - name: Untagged interim reports against a real 6-K exhibit
+        run: node scripts/test-interim.mjs
+
       - name: Endpoints against awkward companies
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT || 'Research Terminal research@chineduokeke.mba' }}
