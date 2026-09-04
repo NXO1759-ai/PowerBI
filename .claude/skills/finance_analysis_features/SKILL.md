@@ -41,7 +41,7 @@ House facts:
 3. Prices come through the market route; price charts use the fitted price axis and crosshair readout from UI v3.
 
 ### Procedure D - analyst notes (live DeepSeek, `api/analysis.js` + `api/fsa-note.js`)
-1. There is NO stored-insight path: notes are generated live, cached in warm instances (1h / 7d), and rate-gated by `scripts/lib/ratelimit.mjs`. `api/analysis.js` writes the Company Overview note (evidence POSTed by the client); `api/fsa-note.js` writes the statements/strategy note over client-computed facts.
+1. Two sources of one contract. Live: `api/analysis.js` writes the Company Overview note from evidence the client POSTs, rejects a reply without the mandatory `company_needs` block (company_overview, uses_of_funds, sources_of_funds, financing_need), caches it in warm instances (1h) and is rate-gated by `scripts/lib/ratelimit.mjs`; `api/fsa-note.js` writes the statements/strategy note over client-computed facts (7d cache). Stored: `loaders/09_build_analyst_insight.py` builds the same payload into `finance_db.analyst_insight`, and when a company file carries an `insight`, `frontend/app.js` renders its `company_needs` blocks and caveats as the fallback when no live note is available, keeping the panel status line visible so a pending or failed note is never masked.
 2. Persona: a "veteran analyst" with a 7y FA + 5y IB + 15y VP Credit Underwriting biography, writing "like a credit committee memo" (api/analysis.js system prompt). The credit page itself (`credit.html`) is a placeholder - "The credit view is in build".
 3. The prompt contract: CFA-materiality tiers ($10M/$1M thresholds), bps for margins, variance decomposition, fact-vs-inference marking, in-line term definitions, and a banned-jargon list. An insight that cites no filing figure is a defect, not a style choice.
 4. Pass the staleness flag into the prompt and require the note to acknowledge it. Keep the output inside what the supplied facts support.
@@ -53,8 +53,8 @@ House facts:
 4. Export works dependency-free - `lib/export.js` hand-builds the XLSX; keep it working without adding a library.
 5. Default ticker is NVDA (app.js/statements.js/strategy-boot.js state). The About modal owner bio was clobbered by a branch once and restored - check it after every merge or rebase.
 
-### Historical (no longer on main)
-- `loaders/09_build_analyst_insight` (the stored DeepSeek insight pipeline) and `loaders/10_load_news` (Marketaux loader) are gone with the whole Python/MySQL leg. The old contract - a stored insight validated for a mandatory `company_needs` field, shown with a status line above a live fallback - no longer exists; `company_needs` appears nowhere in the repo. The grounding lesson survives in Procedure D's prompt contract; do not reintroduce a stored-insight path or the `company_needs` field from old notes.
+### The stored path (on main)
+- `loaders/09_build_analyst_insight.py` (stored DeepSeek insight, evidence read from `finance_db` and EDGAR excerpts) and `loaders/10_load_news.py` (Marketaux) are in the tree with the rest of the Python/MySQL leg; they were absent from the 4 Sep 2026 snapshot only because PR #37 had deleted them by accident (restored in PR #40). The `company_needs` contract is shared by the stored insight, `api/analysis.js` (which rejects a reply without it) and `frontend/app.js`. Keep the field and the validation; do not fork a second contract.
 
 ### Before you finish (verification)
 - No new arithmetic on raw concepts outside the single-source modules; `node scripts/test-valuation.mjs` passes (it pins the DCF clamp among others).
@@ -65,7 +65,7 @@ House facts:
 - AA contrast passes; a deep link reloads to the same view; mobile nav opens; the dependency-free export still works; About modal still shows the owner bio.
 
 ## Known pitfalls (from history)
-- Insight reads as ungrounded opinion -> prompt contract now forces CFA-materiality tiers, variance decomposition and fact-vs-inference marking; treat a figure-free note as a failed build. (`company_needs` is historical - do not resurrect it.)
+- Insight reads as ungrounded opinion -> prompt contract now forces CFA-materiality tiers, variance decomposition and fact-vs-inference marking; treat a figure-free note as a failed build. (`company_needs` is the mandatory block in both the live and the stored path - keep it.)
 - Unrelated headlines shown -> loose news matching -> spike-day matching between `api/market.js` and the analysis prompt.
 - DCF allowed perpetual growth above the economy's -> `TERMINAL_GROWTH` cap 0.04 + `clampTerminalGrowth`, pinned by test (#36).
 - Model-invented peers -> DeepSeek nominates NAMES ONLY and every name is validated against the SEC registrant file, dropped-with-reason -> keep the validation when touching the peer chain.

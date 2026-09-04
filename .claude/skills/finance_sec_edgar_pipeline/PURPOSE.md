@@ -17,3 +17,4 @@ Seeded 3 Sep 2026 from `docs/PIPELINE.md`, `DATA_POLICY.md`, `sql/07_data_qualit
 ## Evolution History
 - v0 (seed): covers the refresh flow, fact pulling, the quality gate and universe/concept changes; not yet validated by the WikiSkill loop.
 - v0.1 (4 Sep 2026): corrected against full repo source (zip of main).
+- v0.2 (4 Sep 2026): the v0.1 "gone from main" findings reflected an accidental deletion in PR #37, reverted in PR #40; the MySQL/Power BI leg, `refresh.mjs` and `verify-parity.mjs` are on main and the procedures describe them as live.

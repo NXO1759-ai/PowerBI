@@ -15,3 +15,4 @@ Seeded 3 Sep 2026 from `docs/PIPELINE.md`, `frontend/lib/metrics.js`, `sql/06_ca
 ## Evolution History
 - v0 (seed): covers the six-step formula change, TMDL editing rules and the review checklist; not yet validated by the WikiSkill loop.
 - v0.1 (4 Sep 2026): corrected against full repo source (zip of main).
+- v0.2 (4 Sep 2026): the v0.1 "parity contract is gone" finding reflected an accidental deletion in PR #37, reverted in PR #40; the SQL views, verify-parity and the TMDL model are on main and the six-step procedure is live again (Procedure E).
