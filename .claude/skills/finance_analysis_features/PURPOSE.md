@@ -17,3 +17,4 @@ Seeded 3 Sep 2026 from PowerBI PRs #16, #17, #18, #19, #22, #24-28, #32-36, the 
 ## Evolution History
 - v0 (seed): covers the data contract, valuation/strategy rules, risk and news, the analyst prompt and UI conventions; not yet validated by the WikiSkill loop.
 - v0.1 (4 Sep 2026): corrected against full repo source (zip of main).
+- v0.2 (4 Sep 2026): the v0.1 claim that the stored-insight path and `loaders/` were gone reflected an accidental deletion in PR #37, reverted in PR #40; Procedure D now describes the live and the stored path as the two sources of the `company_needs` contract.

@@ -5,8 +5,8 @@ description: Use when loading, refreshing or validating SEC EDGAR financial data
 # Finance SEC EDGAR pipeline
 
 ## When to Apply
-- Editing `scripts/lib/sec-pull.mjs`, `scripts/lib/statements.mjs`, `scripts/lib/interim-parse.mjs`, `scripts/build-{segments,risks,strategy-panel}.mjs`, `scripts/chunk-data.mjs`, or the SEC-backed serverless routes under `api/`.
-- Editing `.github/workflows/weekly-refresh.yml` or `smoke.yml`, `sql/sync/facts-<date>.sql`, `frontend/data/company-*.js`, `frontend/data/quality-report.json`.
+- Editing `scripts/refresh.mjs`, `scripts/verify-parity.mjs`, `scripts/lib/sec-pull.mjs`, `scripts/lib/statements.mjs`, `scripts/lib/interim-parse.mjs`, `scripts/build-{segments,risks,strategy-panel,industry-map}.mjs`, `scripts/chunk-data.mjs`, or the SEC-backed serverless routes under `api/`.
+- Editing `.github/workflows/weekly-refresh.yml` or `smoke.yml`, `sql/sync/facts-<date>.sql`, `sql/06_canonical_views.sql`, `sql/07_data_quality.sql`, `loaders/*.py`, `docs/PIPELINE.md`, `frontend/data/company-*.js`, `frontend/data/quality-report.json`.
 - Symptoms: a balance sheet does not tie; a company file is stale or unchanged after Sunday's run; SEC refuses or throttles requests; duplicate periods; a derived quarter missing line items; a 20-F/40-F filer shows nothing; revenue resolves to a fraction of the real figure.
 - Adding a company to the 130-company universe or a concept to the pull list.
 
@@ -17,9 +17,9 @@ description: Use when loading, refreshing or validating SEC EDGAR financial data
 ## Instructions
 Reference: see _references/powerbi-code-map.md for the current route/API/workflow map.
 
-### Procedure A - know the current flow (all JavaScript)
-1. The pipeline is Node end to end: `scripts/lib/sec-pull.mjs` (EDGAR pull) + `scripts/lib/statements.mjs` (period/statement machinery) + `scripts/build-{segments,risks,strategy-panel}.mjs` + `scripts/chunk-data.mjs`. No Python is tracked at all. Consumers: the static frontend + Vercel serverless `api/`. Production origin is www.chineduokeke.mba.
-2. KNOWN DRIFT in `weekly-refresh.yml`: the workflow still describes writing `company-*.js`, `quality-report.json` and sync SQL, but its first two steps invoke `scripts/refresh.mjs` and `scripts/verify-parity.mjs`, which are NOT in the tree - as committed, the Sunday run fails at step 1. The last successful run's outputs (2026-09-01: 130/130 companies, 0 errors, 3 tie warnings) are committed in `frontend/data/quality-report.json` and `sql/sync/facts-2026-09-01.sql`. Any task that says "run the refresh" must first restore or locate `refresh.mjs`.
+### Procedure A - know the current flow (JavaScript pipeline, MySQL/Power BI leg beside it)
+1. The site's pipeline is Node end to end: `scripts/refresh.mjs` (the weekly refresh) over `scripts/lib/sec-pull.mjs` (EDGAR pull) + `scripts/lib/statements.mjs` (period/statement machinery) + `scripts/build-{segments,risks,strategy-panel}.mjs` + `scripts/chunk-data.mjs`, checked by `scripts/verify-parity.mjs`. Consumers: the static frontend, Vercel serverless `api/`, and - through `sql/sync/facts-<date>.sql` - the local MySQL `finance_db` that the Power BI model (`PowerBI_Dashboard_Project.*`) and the Python `loaders/` read. Production origin is www.chineduokeke.mba. `docs/PIPELINE.md` is the written contract.
+2. `weekly-refresh.yml` runs `node scripts/refresh.mjs --limit N` (writes `company-*.js`, `quality-report.json` and the sync SQL; exit 1 on error-severity findings, 2 if the pull failed) and `node scripts/verify-parity.mjs` (definitions version and committed data against metrics.js; the SQL comparison is skipped in Actions, where no database is reachable), then the three builders and the chunker, and commits `frontend/data` + `sql/sync`. Last run 2026-09-01: 130/130 companies, 0 errors, 3 tie warnings. Both scripts are in the tree; if either is ever missing, restore it before promising a refresh - PR #37 deleted them by accident and PR #40 restored them.
 3. There are SEVEN SEC-backed endpoints (`pull`, `statements`, `panel`, `segments`, `risks`, `release`, plus statements' 6-K interim scraper), each with its own 125ms pace lane and warm-instance cache - not one "on-demand pull".
 
 ### Procedure B - pull facts correctly (`scripts/lib/sec-pull.mjs`)
@@ -39,8 +39,9 @@ Reference: see _references/powerbi-code-map.md for the current route/API/workflo
 4. A company with an error-severity finding keeps its previous `frontend/data/company-*.js`; publish the old file plus the finding in `quality-report.json`, never a wrong figure.
 5. Staleness guard: latest filing 400+ days old (`STALE_AFTER_DAYS` in metrics.js) -> `stale_filing` warn, a UI banner and a flag passed to the analyst prompt. Fix the pull; do not silence the guard.
 
-### Historical (no longer on main)
-- The MySQL/Power BI leg is gone: `loaders/` (all Python: 02_load_sec_data, 03_build_directory, 04_seed_universe, 06/07/08/09/10/11, monthly_refresh.py, run_loader.bat), `docs/PIPELINE.md`, `DATA_POLICY.md`, `sql/06_canonical_views.sql`, `sql/07_data_quality.sql`, the PBIP project, `scripts/refresh.mjs` and `scripts/verify-parity.mjs` are not in the tree (`frontend/data/company-index.js` still credits a deleted `export_dashboard_data.py`). The incidents behind those procedures are real and still encoded in comments and data files, but the loader procedures, `run_loader.bat` invocations and the `mysql -u learn -p finance_db < ...` tail no longer apply. Do not edit files that do not exist; treat old notes referencing them as history.
+### The MySQL / Power BI leg (on main)
+- `loaders/` (Python: 02_load_sec_data, 03_build_directory, 04_seed_universe, 06/07/08/09/10/11, monthly_refresh.py, run_loader.bat, sic_sectors.py), `docs/PIPELINE.md`, `docs/DATA_POLICY.md`, `sql/06_canonical_views.sql`, `sql/07_data_quality.sql`, the PBIP project and `frontend/export_dashboard_data.py` (which writes `company-index.js` and `coverage.js` from `finance_db`) are all in the tree. The tail of a refresh is manual: `mysql -u learn -p finance_db < sql/sync/facts-<date>.sql`, then refresh Power BI (`docs/PIPELINE.md`, "Bringing MySQL and Power BI in step"). Credentials live only in the gitignored `loaders/db_config.json`.
+- These files were absent from the 4 Sep 2026 snapshot because PR #37 had deleted them by accident; PR #40 restored them byte-for-byte. Before any commit, check `git status` for staged deletions - a blind `git add -A` from an incomplete working copy is how they went.
 
 ### Before you finish (verification)
 - Offline suites pass on a clean checkout: `node scripts/test-valuation.mjs` and `node scripts/test-interim.mjs`.
@@ -56,8 +57,8 @@ Reference: see _references/powerbi-code-map.md for the current route/API/workflo
 - Revenue a fraction of the real figure (AMT, COF) -> first-tag-wins picked an ASC 606 component tag -> take the largest candidate per period (`maxDurationSeries`); keep tag lists only in `concepts.mjs`.
 - Quarterly cash flow missing after Q1 / LTM cash dead -> 10-Q cash flow is YTD-only -> de-cumulate via `fillFromYearToDate`; derive Q4 from FY only when Q1-Q3 all exist.
 - Six filers empty -> per-concept pulls missed them (`"units":{"USD":{}}`) -> companyfacts bulk pull; remember `api/pull.js` still uses the per-concept strategy.
-- Sunday refresh fails at step 1 -> `weekly-refresh.yml` invokes `scripts/refresh.mjs` / `verify-parity.mjs` which are not in the tree -> restore/locate the script before promising a refresh; grep workflows for a script's path in the same change that moves it.
+- 54 files vanished from main (PR #37) -> a `git add -A` from a working copy that had lost them staged deletions, taking the workflow's own `refresh.mjs` / `verify-parity.mjs` with them -> restored in #40; check staged deletions before every commit, and grep workflows for a script's path in the same change that moves it.
 - SEC refuses or throttles -> a request escaped the 125ms slot gate -> route every call through it (`SEC_MIN_INTERVAL_MS`).
 - Duplicate periods from comparative columns and fragments -> dedupe before write; per-fact provenance (accession_no) travels into the sync SQL.
 - Stale data trusted silently -> 400-day staleness guard (`stale_filing`) with banner and prompt flag.
-- Historical: sync SQL "applied" but MySQL unchanged (missing provenance, #15) and the Python loader chain - MySQL leg no longer on main; see Historical above.
+- Sync SQL "applied" but MySQL unchanged (#15) -> the file lacked per-fact provenance -> `accession_no` travels into every sync file; apply the file and confirm the row counts before calling the refresh done.
