@@ -17,6 +17,7 @@
  */
 
 import { SEC_UA } from "../scripts/lib/sec-pull.mjs";
+import { jsonSafe } from "../scripts/lib/handler.mjs";
 
 export const maxDuration = 45;
 
@@ -66,7 +67,7 @@ function tableRows(tableHtml) {
   return rows;
 }
 
-export default async function handler(req, res) {
+export default jsonSafe(async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   const q = req.query || {};
   const cik = String(q.cik || "").replace(/\D/g, "");
@@ -141,4 +142,4 @@ export default async function handler(req, res) {
   } catch (e) {
     return res.status(502).json({ error: "SEC unavailable", detail: String(e.message || e) });
   }
-}
+}, { name: "earnings release" });

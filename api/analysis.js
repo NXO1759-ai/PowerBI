@@ -14,6 +14,7 @@
  */
 
 import { gate } from "../scripts/lib/ratelimit.mjs";
+import { jsonSafe } from "../scripts/lib/handler.mjs";
 export const maxDuration = 60;
 
 const MODEL = "deepseek-chat";
@@ -203,7 +204,7 @@ function buildPrompt(body) {
   return { system, user };
 }
 
-export default async function handler(req, res) {
+export default jsonSafe(async function handler(req, res) {
   /* origin and per-caller rate at the door; the daily budget is charged
      only when a request actually reaches the model */
   { const g = gate(req, { burst: 10, ratePerMin: 4, cost: 0 }); if (g) return res.status(g.status).json(g.body); }
@@ -324,4 +325,4 @@ export default async function handler(req, res) {
   cache.set(ticker, { at: Date.now(), payload: out });
   res.setHeader("Cache-Control", force ? "no-store" : "s-maxage=900");
   return res.status(200).json(out);
-}
+}, { name: "research note" });

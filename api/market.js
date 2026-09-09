@@ -17,6 +17,8 @@
  * null instead of failing the whole response.
  */
 
+import { jsonSafe } from "../scripts/lib/handler.mjs";
+
 const DAY = 24 * 60 * 60;
 const CANDLE_DAYS = 220; // covers the 6-month chart with margin
 const NEWS_DAYS = 185;   // 6 months of headlines for spike matching
@@ -132,7 +134,7 @@ const SPIKE_NEWS_TTL_MS = 6 * 60 * 60 * 1000;
 const spikeNewsCache = globalThis.__spikeNewsCache ||
   (globalThis.__spikeNewsCache = new Map());
 
-export default async function handler(req, res) {
+export default jsonSafe(async function handler(req, res) {
   /* public market data; lets a localhost dev session use the deployed API */
   res.setHeader("Access-Control-Allow-Origin", "*");
   const ticker = String((req.query && req.query.ticker) || "")
@@ -286,4 +288,4 @@ export default async function handler(req, res) {
     } : null,
     news,
   });
-}
+}, { name: "market data" });

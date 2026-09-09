@@ -12,6 +12,7 @@
 
 import { strip, extractItem1A, extractHeadings, extractProspectusRisks } from "../scripts/lib/filing-parse.mjs";
 import { SEC_UA } from "../scripts/lib/sec-pull.mjs";
+import { jsonSafe } from "../scripts/lib/handler.mjs";
 
 export const maxDuration = 60;
 
@@ -36,7 +37,7 @@ async function getSec(url, timeoutMs) {
   } finally { clearTimeout(t); }
 }
 
-export default async function handler(req, res) {
+export default jsonSafe(async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   const q = req.query || {};
   const cik = String(q.cik || "").replace(/\D/g, "");
@@ -118,4 +119,4 @@ export default async function handler(req, res) {
   } catch (e) {
     return res.status(502).json({ error: "SEC unavailable", detail: String(e.message || e) });
   }
-}
+}, { name: "risk register" });

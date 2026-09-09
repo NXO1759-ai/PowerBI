@@ -71,7 +71,13 @@ export const SEC_CONCEPTS = [...new Set([
 
 const QUARTERS = ["Q1", "Q2", "Q3"];
 const MIN_YEAR = new Date().getFullYear() - 6;
-const REPORT_FORM = /^(10-K|10-Q|20-F|40-F)(\/A)?$/;
+/* Periodic reports, plus the 6-K interim reports of foreign private
+   issuers, which is where a foreign filer's quarters and half-years
+   actually live. statements.mjs has accepted 6-K since the Enlivex work;
+   this list had not caught up, which left the on-demand pull path with
+   its own copy of the regex. No covered company files a 6-K, so widening
+   it here cannot change any published data file. */
+const REPORT_FORM = /^(10-K|10-Q|20-F|40-F|6-K)(\/A)?$/;
 
 /* SEC publishes a 10 requests/second ceiling and answers 429 past it.
    One gate across the whole run, not per company: 130 companies x 23
@@ -271,13 +277,29 @@ export async function fetchFacts(cik, { batchSize = 4 } = {}) {
 
 /* Builds the payload the dashboard renders. Shape is identical to the
    committed data/company-*.js files. */
-export function buildPayload(company, facts, { source } = {}) {
-  if (!facts.length) return null;
+export function buildPayload(company, facts, { source, preferLatestPeriod = false } = {}) {
+  if (!Array.isArray(facts) || !facts.length) return null;
 
   let [yr, per] = latestQuarter(facts);
   const fyYears = facts.filter((f) => f.fiscal_period === "FY").map((f) => f.fiscal_year);
   if (yr === null && fyYears.length) { yr = Math.max(...fyYears); per = "FY"; }
   if (yr === null) return null;
+
+  /* preferLatestPeriod: a newer annual report outranks an older latest
+     quarter. A foreign filer's tagged interims can stop before its 20-F,
+     and the on-demand pull should show the most recent period it has.
+     Off by default: for a domestic 10-K filer the fiscal year always ends
+     after the third quarter, so switching this on would move every
+     covered company's overview from its latest quarter to its full year. */
+  if (preferLatestPeriod && per !== "FY" && fyYears.length) {
+    const endOf = (year, period) => facts
+      .filter((f) => f.fiscal_year === year && f.fiscal_period === period && f.period_end)
+      .map((f) => f.period_end).sort().pop() || null;
+    const fyLatest = Math.max(...fyYears);
+    const qEnd = endOf(yr, per), fyEnd = endOf(fyLatest, "FY");
+    if (qEnd && fyEnd && fyEnd > qEnd) { yr = fyLatest; per = "FY"; }
+  }
+
   const lyYr = yr - 1;
   const shares = sharesOutstanding(facts);
 

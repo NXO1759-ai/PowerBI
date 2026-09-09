@@ -28,6 +28,8 @@
  * repository is ever made public.
  */
 
+import { jsonSafe } from "../scripts/lib/handler.mjs";
+
 export const maxDuration = 30;
 
 const CACHE_TTL_MS = 6 * 60 * 60 * 1000;
@@ -142,7 +144,7 @@ function asLevel(obs) {
            history: hist.slice(-120) };
 }
 
-export default async function handler(req, res) {
+export default jsonSafe(async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   const KEY = process.env.FRED_API_KEY || FALLBACK_KEY;
   if (!KEY) {
@@ -207,4 +209,4 @@ export default async function handler(req, res) {
   if (!dead) { cache.at = Date.now(); cache.payload = out; }
   res.setHeader("Cache-Control", force ? "no-store" : "s-maxage=21600, stale-while-revalidate=86400");
   return res.status(200).json(out);
-}
+}, { name: "macro" });

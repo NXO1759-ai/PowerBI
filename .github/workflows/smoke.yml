@@ -37,6 +37,9 @@ jobs:
       - name: Untagged interim reports against a real 6-K exhibit
         run: node scripts/test-interim.mjs
 
+      - name: API replies are read without leaking a parser error
+        run: node scripts/test-http.mjs
+
       - name: Endpoints against awkward companies
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT || 'Research Terminal research@chineduokeke.mba' }}

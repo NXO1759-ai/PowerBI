@@ -23,6 +23,8 @@
  * come from the filings. Cached six hours; force skips the read.
  */
 
+import { jsonSafe } from "../scripts/lib/handler.mjs";
+
 export const maxDuration = 30;
 
 const CACHE_TTL_MS = 6 * 60 * 60 * 1000;
@@ -72,7 +74,7 @@ function placeInHistory(series, current) {
   };
 }
 
-export default async function handler(req, res) {
+export default jsonSafe(async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   const q = req.query || {};
   const ticker = String(q.ticker || "").toUpperCase().replace(/[^A-Z0-9.\-]/g, "").slice(0, 12);
@@ -169,4 +171,4 @@ export default async function handler(req, res) {
   cache.set(ticker, { at: Date.now(), payload });
   res.setHeader("Cache-Control", force ? "no-store" : "s-maxage=21600, stale-while-revalidate=86400");
   return res.status(200).json(payload);
-}
+}, { name: "valuation" });

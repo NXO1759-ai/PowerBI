@@ -114,6 +114,52 @@ for (const c of CASES.filter((x) => ["NVDA", "AVEX", "JPM"].includes(x.ticker)))
       res.code === 200 && Array.isArray(res.body.headings) ? true : "unexpected " + res.code);
 }
 
+/* The on-demand pull. SEC's per-concept endpoint answers 200 with
+   "units":{"USD":{}} for these filers — an empty object where an array
+   belongs — so the endpoint must reach them through the companyfacts
+   bulk path and must never crash on the shape. Every one of them
+   returned an HTML 500 before this suite covered the route. */
+console.log("on-demand pull");
+const PULL_CASES = [
+  { ticker: "PYPL", cik: "1633917", why: "empty per-concept units — the reported crash" },
+  { ticker: "KO",   cik: "21344",   why: "empty per-concept units" },
+  { ticker: "COF",  cik: "927628",  why: "empty per-concept units, and a lender's revenue" },
+  { ticker: "WELL", cik: "766704",  why: "empty per-concept units, and a property trust" },
+  { ticker: "RBLX", cik: "1315098", why: "control — ordinary uncovered filer" },
+  { ticker: "ENLV", cik: "1596812", why: "foreign filer — annual must outrank a stale quarter" },
+];
+for (const c of PULL_CASES) {
+  await run("pull " + c.ticker + " — " + c.why, "../api/pull.js",
+    { query: { ticker: c.ticker, cik: c.cik, name: c.ticker } }, (res) => {
+      if (res.code !== 200) return "expected 200, got " + res.code + ": " + ((res.body && res.body.error) || "");
+      const b = res.body;
+      if (!isObj(b.company) || b.company.ticker !== c.ticker) return "company block missing";
+      if (!isObj(b.period) || b.period.fiscalYear === null) return "no reporting period resolved";
+      const bs = b.fundamentals && b.fundamentals.balanceSheet;
+      if (!isObj(bs)) return "no balance sheet";
+      /* the concept list must carry noncontrolling interest: without it an
+         on-demand pull reports parent-only equity and the sheet cannot tie,
+         while the same company in the exported set ties */
+      if (!("minorityInterest" in bs) || !("equityIncludingNci" in bs)) {
+        return "balance sheet omits the noncontrolling-interest concepts";
+      }
+      if (typeof bs.totalAssets.q !== "number") return "no total assets";
+      if (b.definitionsVersion == null) return "payload carries no definitions version";
+      return true;
+    });
+}
+
+/* A pull that cannot work must still answer with JSON, never an HTML 500. */
+await run("pull with a nonsense CIK answers JSON, not a crash", "../api/pull.js",
+  { query: { ticker: "ZZZZ", cik: "9999999", name: "Nothing" } }, (res) => {
+    if (res.code === 200) return "expected a failure for a nonexistent filer";
+    if (!isObj(res.body) || typeof res.body.error !== "string") return "failure body is not JSON with an error";
+    return true;
+  });
+await run("pull without a cik answers 400 JSON", "../api/pull.js",
+  { query: { ticker: "PYPL" } }, (res) =>
+    res.code === 400 && isObj(res.body) && res.body.error ? true : "expected a 400 with a JSON error");
+
 console.log("macro / notes");
 await run("macro", "../api/macro.js", { query: { force: "1" } }, (res) =>
   res.code === 200 && isObj(res.body.leading) && isObj(res.body.lagging) ? true : "unexpected " + res.code);

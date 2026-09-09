@@ -15,6 +15,8 @@
  * feed calls and usually far fewer.
  */
 
+import { jsonSafe } from "../scripts/lib/handler.mjs";
+
 export const maxDuration = 30;
 
 const TTL = 15 * 60 * 1000;
@@ -63,7 +65,7 @@ async function one(ticker, key) {
   return row;
 }
 
-export default async function handler(req, res) {
+export default jsonSafe(async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   const q = req.query || {};
   const tickers = String(q.tickers || "").toUpperCase().split(",")
@@ -86,4 +88,4 @@ export default async function handler(req, res) {
   res.setHeader("Cache-Control", "s-maxage=900, stale-while-revalidate=3600");
   return res.status(200).json({ asOf: new Date().toISOString().slice(0, 19),
     source: "market-data feed", rows });
-}
+}, { name: "comparables" });

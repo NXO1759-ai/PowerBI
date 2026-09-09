@@ -148,12 +148,7 @@
     var base = API_BASE + "/api/panel?ticker=" + encodeURIComponent(ticker) +
       "&cik=" + encodeURIComponent(row[1]);
     fetch(base + (force ? "&force=1" : ""))
-      .then(function (r) {
-        if (!r.ok) return r.json().then(function (b) {
-          throw new Error(b && b.detail ? b.detail : "HTTP " + r.status);
-        });
-        return r.json();
-      })
+      .then(function (r) { return window.RTHttp.json(r, ticker); })
       .then(function (d) {
         PANEL[ticker] = d.company;
         LIVE[ticker] = true;
@@ -190,8 +185,8 @@
         setCompany(ticker);
       })
       .catch(function (e) {
-        $("status").textContent = "Could not pull " + ticker + ": " +
-          (e && e.message ? e.message : "SEC unavailable") + ".";
+        $("status").textContent = "Could not pull " + ticker + ". " +
+          window.RTHttp.message(e, ticker);
       });
   }
 

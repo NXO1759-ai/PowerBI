@@ -857,12 +857,7 @@
       " statements from SEC EDGAR filings…</span>";
     fetch("/api/statements?ticker=" + encodeURIComponent(ticker) +
           "&cik=" + encodeURIComponent(meta[1]) + (force ? "&force=1" : ""))
-      .then(function (r) {
-        return r.json().then(function (body) {
-          if (!r.ok) throw new Error(body && body.error ? body.error : "HTTP " + r.status);
-          return body;
-        });
-      })
+      .then(function (r) { return window.RTHttp.json(r, esc(ticker) + " statements"); })
       .then(function (d) {
         CACHE[ticker] = d;
         if (state.ticker !== ticker) return;
@@ -871,7 +866,7 @@
       })
       .catch(function (err) {
         if (state.ticker !== ticker) return;
-        $("status").textContent = String(err && err.message ? err.message : err);
+        $("status").textContent = window.RTHttp.message(err, ticker + " statements");
         $("fsa-body").hidden = true;
       });
   }
