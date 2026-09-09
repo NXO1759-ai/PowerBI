@@ -6,54 +6,39 @@
  * searched company has no data file:
  *   GET /api/pull?ticker=RBLX&cik=1315098&name=Roblox%20Corp
  *
- * Fetches the same XBRL concept set the offline loader uses, straight
- * from SEC EDGAR's companyconcept API, and returns a data object shaped
- * exactly like the exported data/company-*.js files, so the frontend
- * renders it identically. Source is live SEC EDGAR — the same upstream
- * finance_db is built from.
+ * The pull itself is scripts/lib/sec-pull.mjs — the same module the
+ * weekly refresh runs — so a company pulled on demand and a company in
+ * the exported set are built by one implementation from one concept
+ * list. This endpoint only validates the request, diagnoses a filer with
+ * no periodic reports, and serves the result.
+ *
+ * It used to keep its own copy of the fetch loop and the normalizer, and
+ * the copy was wrong in two ways that this file existed to demonstrate:
+ *
+ *   1. It called SEC's per-concept companyconcept endpoint. For some
+ *      filers that endpoint answers 200 with "units":{"USD":{}} — an
+ *      empty OBJECT where an array belongs. The copy iterated it without
+ *      a type check, threw "rows is not iterable", and the function died
+ *      with an HTML 500 that the browser then tried to parse as JSON.
+ *      PayPal was one such filer; Coca-Cola, Abbott, Capital One, NXP,
+ *      S&P Global and Welltower are others. sec-pull.mjs guards the
+ *      shape AND prefers the companyfacts bulk endpoint, which carries
+ *      the full history for exactly these companies.
+ *   2. Its concept list omitted the noncontrolling-interest tags, so an
+ *      on-demand pull reported parent-only equity and its balance sheet
+ *      did not tie, while the same company in the exported set did.
+ *
+ * Both are gone by deletion rather than by patch.
  */
 
 export const maxDuration = 60;
 
-import { INCOME, BALANCE, CASHFLOW } from "../scripts/lib/concepts.mjs";
-import { SEC_UA } from "../scripts/lib/sec-pull.mjs";
+import { fetchFacts, buildPayload, SEC_UA } from "../scripts/lib/sec-pull.mjs";
+import { jsonSafe } from "../scripts/lib/handler.mjs";
 
-const DAY_MS = 24 * 60 * 60 * 1000;
-
-/* The concept lists come from scripts/lib/concepts.mjs, which is the one
-   place they are defined. They used to be copied here, and the copy drifted:
-   it still ranked the ASC 606 revenue tag ahead of Revenues, so an
-   on-demand pull of a property trust or a lender returned a fraction of the
-   real top line — American Tower $0.9bn against $10.6bn, Capital One $8.1bn
-   against $53.4bn — while a company already in the exported set returned the
-   right number. Two paths, two answers, same company.
-   Order matters here because this endpoint takes the first tag a company
-   reports. Revenues leads, so a total is never passed over for one of its
-   own components. */
-const FLOW = {
-  revenue: INCOME.revenue,
-  cogs: INCOME.cogs,
-  grossProfit: INCOME.grossProfit,
-  netIncome: INCOME.netIncome,
-  cfOps: CASHFLOW.cfOps,
-  cfInv: CASHFLOW.cfInv,
-  cfFin: CASHFLOW.cfFin,
-};
-const INSTANT = {
-  cash: BALANCE.cash,
-  currentAssets: BALANCE.currentAssets,
-  currentLiabilities: BALANCE.currentLiabilities,
-  totalAssets: BALANCE.totalAssets,
-  totalLiabilities: BALANCE.totalLiabilities,
-  equity: BALANCE.equity,
-  retainedEarnings: BALANCE.retainedEarnings,
-};
-const CONCEPTS = [
-  ...new Set([...Object.values(FLOW).flat(), ...Object.values(INSTANT).flat(),
-              "EarningsPerShareDiluted", "CommonStockSharesOutstanding"]),
-];
-const QUARTERS = ["Q1", "Q2", "Q3"];
-const MIN_YEAR = new Date().getFullYear() - 6;
+const REPORT_FORM = /^(10-K|10-Q|20-F|40-F|6-K)(\/A)?$/;
+/* comfortably inside maxDuration, leaving time to build and send */
+const DEADLINE_MS = 40000;
 
 async function getJson(url, timeoutMs = 15000) {
   const ctrl = new AbortController();
@@ -69,303 +54,95 @@ async function getJson(url, timeoutMs = 15000) {
   }
 }
 
-function spanDays(r) {
-  return r.start
-    ? (new Date(r.end) - new Date(r.start)) / DAY_MS
-    : 0;
-}
-
-/* Same rules as loaders/02, plus 20-F/40-F so foreign private issuers
-   with tagged facts are not dropped: fy required, FY rows must span ~a
-   full year, then per (unit, fy, fp) keep the latest period_end; ties
-   prefer the LONGEST duration (YTD over single quarter, matching the
-   database), then the latest filed date. */
-const REPORT_FORM = /^(10-K|10-Q|20-F|40-F|6-K)(\/A)?$/;
-function normalizeConcept(payload, concept) {
-  const out = [];
-  const units = payload && payload.units ? payload.units : {};
-  for (const [unit, rows] of Object.entries(units)) {
-    const groups = {};
-    for (const r of rows) {
-      if (r.fy == null || !REPORT_FORM.test(r.form)) continue;
-      const fp = r.fp || "FY";
-      if (r.fy < MIN_YEAR) continue;
-      if (fp === "FY" && r.start && spanDays(r) < 300) continue;
-      const key = `${unit}|${r.fy}|${fp}`;
-      (groups[key] = groups[key] || []).push(r);
-    }
-    for (const g of Object.values(groups)) {
-      const latestEnd = g.reduce((m, r) => (r.end > m ? r.end : m), "");
-      const cur = g.filter((r) => r.end === latestEnd)
-        .sort((a, b) => (spanDays(b) - spanDays(a)) ||
-                        String(b.filed).localeCompare(String(a.filed)));
-      const r = cur[0];
-      out.push({
-        concept, unit,
-        fiscal_year: r.fy, fiscal_period: r.fp || "FY",
-        period_end: r.end, value: r.val,
-        filed_date: r.filed, form: r.form,
-      });
-    }
-  }
-  return out;
-}
-
-function usd(facts, concept, year, period) {
-  const v = facts.find((f) => f.concept === concept && f.unit === "USD" &&
-    f.fiscal_year === year && f.fiscal_period === period);
-  return v ? Number(v.value) : null;
-}
-function usdAny(facts, concepts, year, period) {
-  for (const c of concepts) {
-    const v = usd(facts, c, year, period);
-    if (v !== null) return v;
-  }
-  return null;
-}
-function latestQuarter(facts) {
-  const pairs = new Set(
-    facts.filter((f) => QUARTERS.includes(f.fiscal_period))
-      .map((f) => `${f.fiscal_year}|${f.fiscal_period}`));
-  if (!pairs.size) return [null, null];
-  const year = Math.max(...[...pairs].map((p) => Number(p.split("|")[0])));
-  const period = QUARTERS.filter((q) => pairs.has(`${year}|${q}`)).pop();
-  return [year, period];
-}
-const prevPeriod = (p) => ({ Q2: "Q1", Q3: "Q2" }[p] || null);
-
-function flowValue(facts, concepts, year, period) {
-  const cur = usdAny(facts, concepts, year, period);
-  const pp = prevPeriod(period);
-  if (pp === null) return cur;
-  const prev = usdAny(facts, concepts, year, pp);
-  if (cur === null && prev === null) return null;
-  return (cur || 0) - (prev || 0);
-}
-
-function sharesOutstanding(facts) {
-  const rows = facts.filter((f) =>
-    ["EntityCommonStockSharesOutstanding", "CommonStockSharesOutstanding"]
-      .includes(f.concept) && f.unit === "shares");
-  if (!rows.length) return null;
-  rows.sort((a, b) =>
-    String(a.filed_date).localeCompare(String(b.filed_date)) ||
-    (a.concept.startsWith("Entity") ? 1 : 0) -
-    (b.concept.startsWith("Entity") ? 1 : 0));
-  return Number(rows[rows.length - 1].value);
-}
-
-function epsFiled(facts, year, period) {
-  const val = (y, p) => {
-    const r = facts.find((f) => f.concept === "EarningsPerShareDiluted" &&
-      f.unit === "USD/shares" && f.fiscal_year === y && f.fiscal_period === p);
-    return r ? Number(r.value) : null;
-  };
-  const cur = val(year, period);
-  const pp = prevPeriod(period);
-  if (pp === null) return cur;
-  const prev = val(year, pp);
-  if (cur === null && prev === null) return null;
-  return (cur || 0) - (prev || 0);
-}
-
-export default async function handler(req, res) {
+export default jsonSafe(async function handler(req, res) {
   const q = req.query || {};
-  const ticker = String(q.ticker || "").toUpperCase()
+  /* a repeated parameter (?cik=1&cik=2) arrives as an array, and joining
+     it would splice two CIKs into one number and label the result with
+     the caller's ticker — take the first value only */
+  const one = (v) => String((Array.isArray(v) ? v[0] : v) || "");
+  const ticker = one(q.ticker).toUpperCase()
     .replace(/[^A-Z0-9.\-]/g, "").slice(0, 12);
-  const cik = Number(String(q.cik || "").replace(/\D/g, ""));
-  const name = String(q.name || ticker).slice(0, 120);
+  const cik = Number(one(q.cik).replace(/\D/g, ""));
+  const name = (one(q.name) || ticker).slice(0, 120);
   if (!ticker || !cik) {
     return res.status(400).json({ error: "ticker and cik required" });
   }
 
-  const cikPadded = String(cik).padStart(10, "0");
+  /* Every failure below answers with JSON. An unhandled throw here would
+     be served as Vercel's HTML error page, which the browser cannot
+     parse and which tells the reader nothing about their company. */
+  try {
+    const cikPadded = String(cik).padStart(10, "0");
 
-  /* Diagnose before pulling: if EDGAR lists no periodic reports at all
-     (10-K/10-Q/20-F/40-F), there is nothing to pull — say so precisely
-     instead of the generic "no facts" error. `filings.files` holds older
-     filings beyond the recent page, so only conclude when it is empty. */
-  const subs = await getJson(
-    `https://data.sec.gov/submissions/CIK${cikPadded}.json`);
-  if (subs && subs.filings && subs.filings.recent) {
-    const recentForms = subs.filings.recent.form || [];
-    const older = subs.filings.files || [];
-    if (!recentForms.some((f) => REPORT_FORM.test(f)) && !older.length) {
-      const only = [...new Set(recentForms)].slice(0, 6).join(", ") || "none";
-      return res.status(404).json({
-        error: `No periodic SEC reports on file for ${ticker} ` +
-               `(CIK ${cik}) — EDGAR lists only: ${only}. ` +
-               "Companies that report elsewhere (e.g. Canadian SEDAR+ " +
-               "filers trading OTC) have no XBRL fundamentals to pull.",
+    /* Diagnose before pulling: if EDGAR lists no periodic reports at all,
+       there is nothing to pull — say so precisely instead of the generic
+       "no facts" error. `filings.files` holds older filings beyond the
+       recent page, so only conclude when it is empty. */
+    const subs = await getJson(
+      `https://data.sec.gov/submissions/CIK${cikPadded}.json`, 8000);
+    if (subs && subs.filings && subs.filings.recent) {
+      const recentForms = subs.filings.recent.form || [];
+      const older = subs.filings.files || [];
+      if (!recentForms.some((f) => REPORT_FORM.test(f)) && !older.length) {
+        const only = [...new Set(recentForms)].slice(0, 6).join(", ") || "none";
+        res.setHeader("Cache-Control", "no-store");
+        return res.status(404).json({
+          error: `No periodic SEC reports on file for ${ticker} ` +
+                 `(CIK ${cik}) — EDGAR lists only: ${only}. ` +
+                 "Companies that report elsewhere (e.g. Canadian SEDAR+ " +
+                 "filers trading OTC) have no XBRL fundamentals to pull.",
+        });
+      }
+    }
+
+    /* The function is killed at maxDuration and a killed invocation is
+       served as the platform's HTML error page — the very thing this
+       endpoint's failure mode was. So the pull runs against a budget
+       that fits inside the ceiling, and against a deadline that answers
+       in JSON if it somehow does not. */
+    const facts = await Promise.race([
+      fetchFacts(cik, { timeoutMs: 15000, retries: 1 }),
+      new Promise((resolve) => setTimeout(() => resolve(null), DEADLINE_MS)),
+    ]);
+    if (facts === null) {
+      res.setHeader("Cache-Control", "no-store");
+      return res.status(504).json({
+        error: `SEC EDGAR did not answer for ${ticker} within ` +
+               `${Math.round(DEADLINE_MS / 1000)} seconds. Try again — a ` +
+               "second attempt usually lands.",
       });
     }
-  }
-
-  const results = [];
-  /* SEC allows ~10 req/s — fetch in batches of 6 */
-  const calls = [
-    ...CONCEPTS.map((c) => ["us-gaap", c]),
-    ["dei", "EntityCommonStockSharesOutstanding"],
-  ];
-  for (let i = 0; i < calls.length; i += 6) {
-    const batch = calls.slice(i, i + 6);
-    const payloads = await Promise.all(batch.map(([ns, c]) =>
-      getJson(`https://data.sec.gov/api/xbrl/companyconcept/` +
-              `CIK${cikPadded}/${ns}/${c}.json`)));
-    payloads.forEach((p, j) => {
-      if (p) results.push(...normalizeConcept(p, batch[j][1]));
-    });
-  }
-
-  if (!results.length) {
-    return res.status(404).json({
-      error: `No SEC XBRL facts found for ${ticker} (CIK ${cik}). ` +
-             "It may file without XBRL tagging (or SEC EDGAR rate-limited " +
-             "the pull — retry in a few seconds).",
-    });
-  }
-
-  const facts = results;
-  let [yr, per] = latestQuarter(facts);
-  /* Annual-only filers (20-F/40-F, no quarterly tags): fall back to the
-     latest FY so tables render annual figures instead of nulls. */
-  const fyYears = facts.filter((f) => f.fiscal_period === "FY")
-    .map((f) => f.fiscal_year);
-  if (yr === null && fyYears.length) {
-    yr = Math.max(...fyYears);
-    per = "FY";
-  }
-  /* A newer annual report outranks an older latest quarter: a foreign
-     filer's tagged 6-K interims may stop before its 20-F, and the page
-     should show the latest period it has, not the latest quarter. */
-  const endOf = (year, period) => facts.filter((f) => f.fiscal_year === year &&
-    f.fiscal_period === period && f.period_end).map((f) => f.period_end).sort().pop() || null;
-  if (yr !== null && per !== "FY" && fyYears.length) {
-    const fyLatest = Math.max(...fyYears);
-    const qEndLatest = endOf(yr, per), fyEndLatest = endOf(fyLatest, "FY");
-    if (qEndLatest && fyEndLatest && fyEndLatest > qEndLatest) { yr = fyLatest; per = "FY"; }
-  }
-  const lyYr = yr ? yr - 1 : null;
-  const shares = sharesOutstanding(facts);
-
-  const flows = {}, instants = {};
-  for (const [k, concepts] of Object.entries(FLOW)) {
-    flows[k] = { q: flowValue(facts, concepts, yr, per),
-                 ly: flowValue(facts, concepts, lyYr, per) };
-  }
-  for (const [k, concepts] of Object.entries(INSTANT)) {
-    instants[k] = { q: usdAny(facts, concepts, yr, per),
-                    ly: usdAny(facts, concepts, lyYr, per) };
-  }
-
-  const isAnnualYr = fyYears.length ? Math.max(...fyYears) : null;
-  const isFy = {};
-  for (const k of ["revenue", "cogs", "grossProfit", "netIncome"]) {
-    isFy[k] = isAnnualYr ? usdAny(facts, FLOW[k], isAnnualYr, "FY") : null;
-  }
-  const ends = facts.filter((f) => f.fiscal_year === yr &&
-    f.fiscal_period === per && f.period_end).map((f) => f.period_end);
-  const qEnd = ends.length ? ends.sort().pop() : null;
-  const qEndStr = qEnd ? new Date(qEnd + "T00:00:00")
-    .toLocaleDateString("en-US",
-      { month: "short", day: "numeric", year: "numeric" }) : null;
-
-  const sub = (a, b) =>
-    a.q === null || b.q === null ? null : a.q - b.q;
-  const subLy = (a, b) =>
-    a.ly === null || b.ly === null ? null : a.ly - b.ly;
-  const ratio = (a, b) =>
-    a !== null && b ? a / b : null;
-
-  const netChange = (side) => {
-    const vals = [flows.cfOps[side], flows.cfInv[side], flows.cfFin[side]];
-    return vals.every((v) => v === null) ? null
-      : vals.reduce((s, v) => s + (v || 0), 0);
-  };
-  const spanMonths = per === "FY" ? 12 : 3;
-  const burn = (side) => {
-    const nc = netChange(side);
-    if (nc === null) {
-      return { netCashChange: null, monthlyBurn: null,
-               remainingCashDays: null };
+    if (!facts.length) {
+      res.setHeader("Cache-Control", "no-store");
+      return res.status(404).json({
+        error: `No SEC XBRL facts found for ${ticker} (CIK ${cik}). ` +
+               "It may file without XBRL tagging, or SEC EDGAR may have " +
+               "throttled the pull — retry in a few seconds.",
+      });
     }
-    const monthly = nc / spanMonths;
-    const cash = instants.cash[side];
-    let remaining = null;
-    if (monthly >= 0) remaining = "Infinite";
-    else if (cash !== null) remaining = Math.round(cash / -monthly * 30);
-    return { netCashChange: nc, monthlyBurn: monthly,
-             remainingCashDays: remaining };
-  };
 
-  let latestFiling = null;
-  if (facts.length) {
-    const newest = [...facts].sort((a, b) =>
-      String(b.filed_date).localeCompare(String(a.filed_date)))[0];
-    latestFiling = { form: newest.form, date: newest.filed_date };
+    /* preferLatestPeriod: a foreign filer's tagged interims can stop
+       before its annual report, and a reader asking for the company now
+       should see the most recent period on file. */
+    const data = buildPayload({ ticker, cik, name, exchange: null }, facts, {
+      source: "SEC EDGAR 10-K/10-Q/20-F/40-F/6-K (live pull)",
+      preferLatestPeriod: true,
+    });
+    if (!data) {
+      res.setHeader("Cache-Control", "no-store");
+      return res.status(404).json({
+        error: `${ticker} (CIK ${cik}) has SEC XBRL facts, but none in a ` +
+               "reporting period this dashboard can assemble.",
+      });
+    }
+
+    res.setHeader("Cache-Control", "s-maxage=3600, stale-while-revalidate=86400");
+    return res.status(200).json(data);
+  } catch (e) {
+    res.setHeader("Cache-Control", "no-store");
+    return res.status(502).json({
+      error: `The pull for ${ticker} did not complete.`,
+      detail: String((e && e.message) || e).slice(0, 300),
+    });
   }
-
-  const gm = (side) => ratio(flows.grossProfit[side], flows.revenue[side]);
-  const data = {
-    generatedAt: new Date().toISOString().slice(0, 19),
-    source: "SEC EDGAR 10-K/10-Q/20-F/40-F (live pull)",
-    company: { ticker, cik, name, exchange: null },
-    latestFiling,
-    period: {
-      fiscalYear: yr, fiscalPeriod: per,
-      label: yr ? `${per} ${yr}` : null,
-      compareLabel: yr
-        ? (per === "FY" ? `FY ${lyYr}` : `${per} ${lyYr}`) : null,
-      isLabel: qEndStr
-        ? (per === "FY" ? `FY ended ${qEndStr}` : `3 mo ended ${qEndStr}`)
-        : null,
-      isCompareLabel: isAnnualYr ? `FY ${isAnnualYr} (annual)` : null,
-    },
-    fundamentals: {
-      balanceSheet: {
-        cash: instants.cash,
-        currentAssets: instants.currentAssets,
-        currentLiabilities: instants.currentLiabilities,
-        workingCapital: {
-          q: sub(instants.currentAssets, instants.currentLiabilities),
-          ly: subLy(instants.currentAssets, instants.currentLiabilities),
-        },
-        retainedEarnings: instants.retainedEarnings,
-        totalAssets: instants.totalAssets,
-        totalLiabilities: instants.totalLiabilities,
-        equity: instants.equity,
-      },
-      incomeStatement: {
-        revenue: { q: flows.revenue.q, fy: isFy.revenue },
-        cogs: { q: flows.cogs.q, fy: isFy.cogs },
-        grossProfit: { q: flows.grossProfit.q, fy: isFy.grossProfit },
-        grossMarginPct: { q: gm("q"),
-                          fy: ratio(isFy.grossProfit, isFy.revenue) },
-        netIncome: { q: flows.netIncome.q, fy: isFy.netIncome },
-      },
-      cashFlow: {
-        cfOps: flows.cfOps, cfInv: flows.cfInv, cfFin: flows.cfFin,
-        netCashChange: { q: netChange("q"), ly: netChange("ly") },
-      },
-      burnRate: { q: burn("q"), ly: burn("ly") },
-    },
-    shares: { outstanding: shares },
-    price: null,
-    earnings: {
-      epsFiled: { q: epsFiled(facts, yr, per),
-                  ly: epsFiled(facts, lyYr, per) },
-      epsComputed: {
-        q: flows.netIncome.q !== null && shares
-          ? flows.netIncome.q / shares : null,
-        ly: flows.netIncome.ly !== null && shares
-          ? flows.netIncome.ly / shares : null,
-      },
-      epsEstimate: null, estimateNote: null,
-    },
-    insight: null,
-    pending: null,
-  };
-
-  res.setHeader("Cache-Control", "s-maxage=3600, stale-while-revalidate=86400");
-  return res.status(200).json(data);
-}
+}, { name: "pull" });

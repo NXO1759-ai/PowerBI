@@ -698,15 +698,7 @@
       fetch("/api/pull?ticker=" + encodeURIComponent(ticker) +
             "&cik=" + encodeURIComponent(meta[1]) +
             "&name=" + encodeURIComponent(meta[2]))
-        .then(function (r) {
-          return r.json().then(function (body) {
-            if (!r.ok) {
-              throw new Error(body && body.error ? body.error
-                : "SEC pull failed (HTTP " + r.status + ")");
-            }
-            return body;
-          });
-        })
+        .then(function (r) { return window.RTHttp.json(r, meta[2] + " (" + ticker + ")"); })
         .then(function (d) {
           if (btn) btn.hidden = true;
           COVERAGE[ticker] = d;
@@ -716,9 +708,10 @@
         })
         .catch(function (err) {
           $("coverage-title").textContent = ticker + " — Pull Failed";
-          $("coverage-text").textContent =
-            String(err && err.message ? err.message : err) +
-            " You can retry — SEC EDGAR rate-limits bursts.";
+          /* the reason comes from the reply; only offer the retry line
+             when a retry could actually help */
+          $("coverage-text").textContent = window.RTHttp.message(err, meta[2]) +
+            (err && err.retryable === false ? "" : " You can retry.");
           if (btn) { btn.disabled = false; btn.textContent = "Retry Pull"; }
         });
     }
@@ -1123,16 +1116,28 @@
             "&cik=" + encodeURIComponent(meta[1]) +
             "&name=" + encodeURIComponent(meta[2]) +
             "&t=" + Date.now())
-        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (r) { return window.RTHttp.json(r, meta[2]); })
         .then(function (d) {
-          if (!d || d.error || !d.fundamentals) { loadCommitted(); return; }
+          if (!d || d.error || !d.fundamentals) throw new Error("the pull returned nothing usable");
           COVERAGE[ticker] = d;
           COVERED[ticker] = true;
           if (state.ticker === ticker) renderAll(d);
           fetchLive(ticker, true);
           setTimeout(done, 800);
         })
-        .catch(function () { loadCommitted(); });
+        /* Falling back to the saved figures is right; doing it silently is
+           not. The reader is told the live pull failed and what they are
+           looking at instead. */
+        .catch(function (err) {
+          loadCommitted();
+          var note = $("caveats");
+          if (note) {
+            note.textContent = "The live pull did not complete — " +
+              window.RTHttp.message(err, meta[2]) +
+              " These are the saved figures from the last weekly refresh.";
+            note.hidden = false;
+          }
+        });
     }
 
     /* ---------- search ---------- */

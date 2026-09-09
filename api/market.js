@@ -17,6 +17,8 @@
  * null instead of failing the whole response.
  */
 
+import { jsonSafe } from "../scripts/lib/handler.mjs";
+
 const DAY = 24 * 60 * 60;
 const CANDLE_DAYS = 220; // covers the 6-month chart with margin
 const NEWS_DAYS = 185;   // 6 months of headlines for spike matching
@@ -41,16 +43,23 @@ const finnhub = (path, params, key) =>
     new URLSearchParams({ ...params, token: key }));
 
 function isoDate(unixSec) {
-  return new Date(unixSec * 1000).toISOString().slice(0, 10);
+  const ms = Number(unixSec) * 1000;
+  if (!Number.isFinite(ms)) return null;
+  const d = new Date(ms);
+  return Number.isNaN(d.getTime()) ? null : d.toISOString().slice(0, 10);
 }
 
+/* The feed is documented as parallel arrays, but a malformed reply that
+   carries timestamps and no closes would throw here and take the whole
+   market response down with it. Every series is checked. */
 function mapFinnhubCandles(raw) {
   if (!raw || raw.s !== "ok" || !Array.isArray(raw.t)) return null;
+  const col = (a) => (Array.isArray(a) ? a : []);
+  const o = col(raw.o), h = col(raw.h), l = col(raw.l), c = col(raw.c), v = col(raw.v);
   return raw.t.map((t, i) => ({
     date: isoDate(t),
-    open: raw.o[i], high: raw.h[i], low: raw.l[i],
-    close: raw.c[i], volume: raw.v[i],
-  }));
+    open: o[i], high: h[i], low: l[i], close: c[i], volume: v[i],
+  })).filter((row) => row.date !== null);
 }
 
 async function yahooDaily(ticker) {
@@ -61,13 +70,16 @@ async function yahooDaily(ticker) {
   const ts = res0 && res0.timestamp;
   const q = res0 && res0.indicators && res0.indicators.quote
     && res0.indicators.quote[0];
-  if (!ts || !q) return null;
+  if (!Array.isArray(ts) || !q || !Array.isArray(q.close)) return null;
+  const col = (a) => (Array.isArray(a) ? a : []);
+  const qo = col(q.open), qh = col(q.high), ql = col(q.low), qv = col(q.volume);
   const rows = [];
   for (let i = 0; i < ts.length; i++) {
     if (q.close[i] == null) continue;
+    if (isoDate(ts[i]) === null) continue;
     rows.push({
       date: isoDate(ts[i]),
-      open: q.open[i], high: q.high[i], low: q.low[i],
+      open: qo[i], high: qh[i], low: ql[i],
       close: q.close[i], volume: q.volume[i] || 0,
     });
   }
@@ -132,7 +144,7 @@ const SPIKE_NEWS_TTL_MS = 6 * 60 * 60 * 1000;
 const spikeNewsCache = globalThis.__spikeNewsCache ||
   (globalThis.__spikeNewsCache = new Map());
 
-export default async function handler(req, res) {
+export default jsonSafe(async function handler(req, res) {
   /* public market data; lets a localhost dev session use the deployed API */
   res.setHeader("Access-Control-Allow-Origin", "*");
   const ticker = String((req.query && req.query.ticker) || "")
@@ -286,4 +298,4 @@ export default async function handler(req, res) {
     } : null,
     news,
   });
-}
+}, { name: "market data" });

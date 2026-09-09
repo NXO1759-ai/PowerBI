@@ -22,6 +22,7 @@ const require = createRequire(import.meta.url);
 const { computeRatios } = require("../frontend/lib/ratios.js");
 import { SEC_UA } from "../scripts/lib/sec-pull.mjs";
 import { instanceToBucket, unzipMember } from "../scripts/lib/filing-parse.mjs";
+import { jsonSafe } from "../scripts/lib/handler.mjs";
 
 export const maxDuration = 60;
 
@@ -57,7 +58,7 @@ const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6h per ticker per warm instance
 const cache = globalThis.__statementsCache ||
   (globalThis.__statementsCache = new Map());
 
-export default async function handler(req, res) {
+export default jsonSafe(async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   const q = req.query || {};
   const ticker = String(q.ticker || "").toUpperCase()
@@ -151,7 +152,9 @@ export default async function handler(req, res) {
         for (const [tag, def] of Object.entries(extra)) {
           const b = (bucket[tag] = bucket[tag] || { units: {} });
           for (const [unit, rows] of Object.entries(def.units)) {
-            const u = (b.units[unit] = b.units[unit] || []);
+            if (!Array.isArray(rows)) continue;
+            if (!Array.isArray(b.units[unit])) b.units[unit] = [];
+            const u = b.units[unit];
             const seen = new Set(u.map((row) => (row.start || "") + "|" + row.end + "|" + (row.accn || "")));
             for (const row of rows) {
               const key = (row.start || "") + "|" + row.end + "|" + row.accn;
@@ -263,7 +266,9 @@ export default async function handler(req, res) {
         for (const [tag, def] of Object.entries(extra)) {
           const b = (bucket[tag] = bucket[tag] || { units: {} });
           for (const [unit, rows] of Object.entries(def.units)) {
-            const u = (b.units[unit] = b.units[unit] || []);
+            if (!Array.isArray(rows)) continue;
+            if (!Array.isArray(b.units[unit])) b.units[unit] = [];
+            const u = b.units[unit];
             const seen = new Set(u.map((row) => (row.start || "") + "|" + row.end + "|" + (row.accn || "")));
             for (const row of rows) {
               const key = (row.start || "") + "|" + row.end + "|" + row.accn;
@@ -315,4 +320,4 @@ export default async function handler(req, res) {
   res.setHeader("Cache-Control",
     force ? "no-store" : "s-maxage=3600, stale-while-revalidate=86400");
   return res.status(200).json(payload);
-}
+}, { name: "statements" });

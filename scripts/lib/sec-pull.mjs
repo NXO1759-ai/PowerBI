@@ -71,7 +71,13 @@ export const SEC_CONCEPTS = [...new Set([
 
 const QUARTERS = ["Q1", "Q2", "Q3"];
 const MIN_YEAR = new Date().getFullYear() - 6;
-const REPORT_FORM = /^(10-K|10-Q|20-F|40-F)(\/A)?$/;
+/* Periodic reports, plus the 6-K interim reports of foreign private
+   issuers, which is where a foreign filer's quarters and half-years
+   actually live. statements.mjs has accepted 6-K since the Enlivex work;
+   this list had not caught up, which left the on-demand pull path with
+   its own copy of the regex. No covered company files a 6-K, so widening
+   it here cannot change any published data file. */
+const REPORT_FORM = /^(10-K|10-Q|20-F|40-F|6-K)(\/A)?$/;
 
 /* SEC publishes a 10 requests/second ceiling and answers 429 past it.
    One gate across the whole run, not per company: 130 companies x 23
@@ -144,6 +150,8 @@ function normalizeConcept(payload, concept) {
       const r = g.filter((x) => x.end === latestEnd)
         .sort((a, b) => (spanDays(b) - spanDays(a)) ||
                         String(b.filed).localeCompare(String(a.filed)))[0];
+      /* a group whose rows all lack an end date matches nothing above */
+      if (!r) continue;
       out.push({
         concept, unit,
         fiscal_year: r.fy, fiscal_period: r.fp || "FY",
@@ -225,10 +233,11 @@ const DEI_WANTED = new Set(["EntityCommonStockSharesOutstanding"]);
    "units":{"USD":{}} for Coca-Cola, Abbott, Capital One, NXP, S&P Global
    and Welltower, which reads as "no data" while companyfacts holds the
    full history. */
-async function fetchFromCompanyFacts(padded) {
+async function fetchFromCompanyFacts(padded, budget = {}) {
   const payload = await getJson(
     `https://data.sec.gov/api/xbrl/companyfacts/CIK${padded}.json`,
-    { timeoutMs: 45000 });
+    { timeoutMs: budget.timeoutMs || 45000,
+      ...(budget.retries === undefined ? {} : { retries: budget.retries }) });
   if (!payload || !payload.facts) return null;
   const results = [];
   for (const [taxonomy, wanted] of [["us-gaap", WANTED], ["dei", DEI_WANTED]]) {
@@ -244,7 +253,7 @@ async function fetchFromCompanyFacts(padded) {
 
 /* Fallback: one request per concept. Kept because companyfacts is a large
    response that can time out, and a slow pull beats no pull. */
-async function fetchFromCompanyConcept(padded, batchSize) {
+async function fetchFromCompanyConcept(padded, batchSize, budget = {}) {
   const calls = [
     ...SEC_CONCEPTS.map((c) => ["us-gaap", c]),
     ["dei", "EntityCommonStockSharesOutstanding"],
@@ -254,7 +263,9 @@ async function fetchFromCompanyConcept(padded, batchSize) {
   for (let i = 0; i < calls.length; i += batchSize) {
     const batch = calls.slice(i, i + batchSize);
     const payloads = await Promise.all(batch.map(([ns, c]) =>
-      getJson(`https://data.sec.gov/api/xbrl/companyconcept/CIK${padded}/${ns}/${c}.json`)));
+      getJson(`https://data.sec.gov/api/xbrl/companyconcept/CIK${padded}/${ns}/${c}.json`,
+        { ...(budget.timeoutMs === undefined ? {} : { timeoutMs: budget.timeoutMs }),
+          ...(budget.retries === undefined ? {} : { retries: budget.retries }) })));
     payloads.forEach((p, j) => {
       if (p) results.push(...normalizeConcept(p, batch[j][1]));
     });
@@ -262,22 +273,48 @@ async function fetchFromCompanyConcept(padded, batchSize) {
   return results;
 }
 
-export async function fetchFacts(cik, { batchSize = 4 } = {}) {
+/**
+ * Facts for one company, bulk endpoint first.
+ *
+ * timeoutMs and retries bound the request budget. The weekly refresh has
+ * all night and takes the generous defaults; a serverless endpoint does
+ * NOT — it is killed at its own maxDuration, and a killed invocation is
+ * served as the platform's HTML error page, which no try/catch of ours
+ * can intercept. A caller with a deadline must pass one.
+ */
+export async function fetchFacts(cik, { batchSize = 4, timeoutMs, retries } = {}) {
   const padded = String(cik).padStart(10, "0");
-  const bulk = await fetchFromCompanyFacts(padded);
+  const budget = { timeoutMs, retries };
+  const bulk = await fetchFromCompanyFacts(padded, budget);
   if (bulk && bulk.length) return bulk;
-  return fetchFromCompanyConcept(padded, batchSize);
+  return fetchFromCompanyConcept(padded, batchSize, budget);
 }
 
 /* Builds the payload the dashboard renders. Shape is identical to the
    committed data/company-*.js files. */
-export function buildPayload(company, facts, { source } = {}) {
-  if (!facts.length) return null;
+export function buildPayload(company, facts, { source, preferLatestPeriod = false } = {}) {
+  if (!Array.isArray(facts) || !facts.length) return null;
 
   let [yr, per] = latestQuarter(facts);
   const fyYears = facts.filter((f) => f.fiscal_period === "FY").map((f) => f.fiscal_year);
   if (yr === null && fyYears.length) { yr = Math.max(...fyYears); per = "FY"; }
   if (yr === null) return null;
+
+  /* preferLatestPeriod: a newer annual report outranks an older latest
+     quarter. A foreign filer's tagged interims can stop before its 20-F,
+     and the on-demand pull should show the most recent period it has.
+     Off by default: for a domestic 10-K filer the fiscal year always ends
+     after the third quarter, so switching this on would move every
+     covered company's overview from its latest quarter to its full year. */
+  if (preferLatestPeriod && per !== "FY" && fyYears.length) {
+    const endOf = (year, period) => facts
+      .filter((f) => f.fiscal_year === year && f.fiscal_period === period && f.period_end)
+      .map((f) => f.period_end).sort().pop() || null;
+    const fyLatest = Math.max(...fyYears);
+    const qEnd = endOf(yr, per), fyEnd = endOf(fyLatest, "FY");
+    if (qEnd && fyEnd && fyEnd > qEnd) { yr = fyLatest; per = "FY"; }
+  }
+
   const lyYr = yr - 1;
   const shares = sharesOutstanding(facts);
 

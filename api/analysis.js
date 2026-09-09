@@ -14,6 +14,7 @@
  */
 
 import { gate } from "../scripts/lib/ratelimit.mjs";
+import { jsonSafe } from "../scripts/lib/handler.mjs";
 export const maxDuration = 60;
 
 const MODEL = "deepseek-chat";
@@ -32,11 +33,11 @@ const money = (v) => {
 };
 
 function buildPrompt(body) {
-  const newsList = (body.news || []).slice(0, 120)
+  const newsList = (Array.isArray(body.news) ? body.news : []).slice(0, 120)
     .map((n, i) => `${i}. [${n.date || "?"}] ` +
       `${String(n.title || "").slice(0, 160)} (${n.source || "?"})`)
     .join("\n");
-  const spikes = (body.spikes || []).map((s) =>
+  const spikes = (Array.isArray(body.spikes) ? body.spikes : []).map((s) =>
     `- ${s.date}: value traded ${money(s.valueTradedUsd)}, ` +
     `${s.volumeShares ? s.volumeShares.toLocaleString("en-US") + " shares" : "volume n/a"}` +
     (s.dayChangePct != null ? `, day move ${s.dayChangePct.toFixed(1)}%` : "") +
@@ -203,7 +204,7 @@ function buildPrompt(body) {
   return { system, user };
 }
 
-export default async function handler(req, res) {
+export default jsonSafe(async function handler(req, res) {
   /* origin and per-caller rate at the door; the daily budget is charged
      only when a request actually reaches the model */
   { const g = gate(req, { burst: 10, ratePerMin: 4, cost: 0 }); if (g) return res.status(g.status).json(g.body); }
@@ -324,4 +325,4 @@ export default async function handler(req, res) {
   cache.set(ticker, { at: Date.now(), payload: out });
   res.setHeader("Cache-Control", force ? "no-store" : "s-maxage=900");
   return res.status(200).json(out);
-}
+}, { name: "research note" });
