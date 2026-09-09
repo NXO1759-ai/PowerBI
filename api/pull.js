@@ -37,6 +37,8 @@ import { fetchFacts, buildPayload, SEC_UA } from "../scripts/lib/sec-pull.mjs";
 import { jsonSafe } from "../scripts/lib/handler.mjs";
 
 const REPORT_FORM = /^(10-K|10-Q|20-F|40-F|6-K)(\/A)?$/;
+/* comfortably inside maxDuration, leaving time to build and send */
+const DEADLINE_MS = 40000;
 
 async function getJson(url, timeoutMs = 15000) {
   const ctrl = new AbortController();
@@ -53,12 +55,15 @@ async function getJson(url, timeoutMs = 15000) {
 }
 
 export default jsonSafe(async function handler(req, res) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
   const q = req.query || {};
-  const ticker = String(q.ticker || "").toUpperCase()
+  /* a repeated parameter (?cik=1&cik=2) arrives as an array, and joining
+     it would splice two CIKs into one number and label the result with
+     the caller's ticker — take the first value only */
+  const one = (v) => String((Array.isArray(v) ? v[0] : v) || "");
+  const ticker = one(q.ticker).toUpperCase()
     .replace(/[^A-Z0-9.\-]/g, "").slice(0, 12);
-  const cik = Number(String(q.cik || "").replace(/\D/g, ""));
-  const name = String(q.name || ticker).slice(0, 120);
+  const cik = Number(one(q.cik).replace(/\D/g, ""));
+  const name = (one(q.name) || ticker).slice(0, 120);
   if (!ticker || !cik) {
     return res.status(400).json({ error: "ticker and cik required" });
   }
@@ -74,7 +79,7 @@ export default jsonSafe(async function handler(req, res) {
        "no facts" error. `filings.files` holds older filings beyond the
        recent page, so only conclude when it is empty. */
     const subs = await getJson(
-      `https://data.sec.gov/submissions/CIK${cikPadded}.json`);
+      `https://data.sec.gov/submissions/CIK${cikPadded}.json`, 8000);
     if (subs && subs.filings && subs.filings.recent) {
       const recentForms = subs.filings.recent.form || [];
       const older = subs.filings.files || [];
@@ -90,7 +95,23 @@ export default jsonSafe(async function handler(req, res) {
       }
     }
 
-    const facts = await fetchFacts(cik);
+    /* The function is killed at maxDuration and a killed invocation is
+       served as the platform's HTML error page — the very thing this
+       endpoint's failure mode was. So the pull runs against a budget
+       that fits inside the ceiling, and against a deadline that answers
+       in JSON if it somehow does not. */
+    const facts = await Promise.race([
+      fetchFacts(cik, { timeoutMs: 15000, retries: 1 }),
+      new Promise((resolve) => setTimeout(() => resolve(null), DEADLINE_MS)),
+    ]);
+    if (facts === null) {
+      res.setHeader("Cache-Control", "no-store");
+      return res.status(504).json({
+        error: `SEC EDGAR did not answer for ${ticker} within ` +
+               `${Math.round(DEADLINE_MS / 1000)} seconds. Try again — a ` +
+               "second attempt usually lands.",
+      });
+    }
     if (!facts.length) {
       res.setHeader("Cache-Control", "no-store");
       return res.status(404).json({

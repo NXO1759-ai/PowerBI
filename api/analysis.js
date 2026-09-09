@@ -33,11 +33,11 @@ const money = (v) => {
 };
 
 function buildPrompt(body) {
-  const newsList = (body.news || []).slice(0, 120)
+  const newsList = (Array.isArray(body.news) ? body.news : []).slice(0, 120)
     .map((n, i) => `${i}. [${n.date || "?"}] ` +
       `${String(n.title || "").slice(0, 160)} (${n.source || "?"})`)
     .join("\n");
-  const spikes = (body.spikes || []).map((s) =>
+  const spikes = (Array.isArray(body.spikes) ? body.spikes : []).map((s) =>
     `- ${s.date}: value traded ${money(s.valueTradedUsd)}, ` +
     `${s.volumeShares ? s.volumeShares.toLocaleString("en-US") + " shares" : "volume n/a"}` +
     (s.dayChangePct != null ? `, day move ${s.dayChangePct.toFixed(1)}%` : "") +

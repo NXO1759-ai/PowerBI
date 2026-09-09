@@ -152,7 +152,9 @@ export default jsonSafe(async function handler(req, res) {
         for (const [tag, def] of Object.entries(extra)) {
           const b = (bucket[tag] = bucket[tag] || { units: {} });
           for (const [unit, rows] of Object.entries(def.units)) {
-            const u = (b.units[unit] = b.units[unit] || []);
+            if (!Array.isArray(rows)) continue;
+            if (!Array.isArray(b.units[unit])) b.units[unit] = [];
+            const u = b.units[unit];
             const seen = new Set(u.map((row) => (row.start || "") + "|" + row.end + "|" + (row.accn || "")));
             for (const row of rows) {
               const key = (row.start || "") + "|" + row.end + "|" + row.accn;
@@ -264,7 +266,9 @@ export default jsonSafe(async function handler(req, res) {
         for (const [tag, def] of Object.entries(extra)) {
           const b = (bucket[tag] = bucket[tag] || { units: {} });
           for (const [unit, rows] of Object.entries(def.units)) {
-            const u = (b.units[unit] = b.units[unit] || []);
+            if (!Array.isArray(rows)) continue;
+            if (!Array.isArray(b.units[unit])) b.units[unit] = [];
+            const u = b.units[unit];
             const seen = new Set(u.map((row) => (row.start || "") + "|" + row.end + "|" + (row.accn || "")));
             for (const row of rows) {
               const key = (row.start || "") + "|" + row.end + "|" + row.accn;
