@@ -85,7 +85,7 @@ const REPORT_FORM = /^(10-K|10-Q|20-F|40-F|6-K)(\/A)?$/;
    rate reach ~23/s. Every request waits its turn here. */
 const MIN_INTERVAL_MS = Number(process.env.SEC_MIN_INTERVAL_MS || 125);
 let nextSlotAt = 0;
-async function paced() {
+export async function paced() {
   const now = Date.now();
   const wait = Math.max(0, nextSlotAt - now);
   /* reserve the slot synchronously so concurrent callers queue rather
@@ -96,7 +96,7 @@ async function paced() {
 
 export const rateLimitHits = { count: 0 };
 
-async function getJson(url, { timeoutMs = 15000, retries = 3 } = {}) {
+export async function getJson(url, { timeoutMs = 15000, retries = 3 } = {}) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     await paced();
     const ctrl = new AbortController();
@@ -122,6 +122,94 @@ async function getJson(url, { timeoutMs = 15000, retries = 3 } = {}) {
     }
   }
   return null;
+}
+
+/* ---------- BDC layer: raw feeds, unfiltered ----------
+ *
+ * fetchFacts above keeps only the operating-company concepts and drops
+ * fiscal years older than six, which is right for the Company Overview
+ * and wrong for a business development company: a BDC tags none of
+ * SEC_CONCEPTS' income lines (no revenue, no cost of sales) and its
+ * portfolio tags start in 2021. The readers below hand back what EDGAR
+ * sent, whole, and leave the concept choice to bdc-concepts.mjs. Every
+ * call goes through the same paced getJson with SEC_UA. */
+
+/**
+ * The whole companyfacts feed for one filer: every taxonomy, every
+ * concept, every fiscal year. Returns { cik, entityName, facts } where
+ * facts is the feed's own facts object ({ "us-gaap": {...}, "dei": {...} }),
+ * or null when EDGAR has nothing for the CIK.
+ */
+export async function fetchCompanyFactsRaw(cik, { timeoutMs = 45000, retries } = {}) {
+  const padded = String(cik).padStart(10, "0");
+  const payload = await getJson(
+    `https://data.sec.gov/api/xbrl/companyfacts/CIK${padded}.json`,
+    { timeoutMs, ...(retries === undefined ? {} : { retries }) });
+  if (!payload || !payload.facts) return null;
+  return { cik: Number(payload.cik) || Number(cik),
+           entityName: payload.entityName || null,
+           facts: payload.facts };
+}
+
+/* The frames endpoint spells a per-share unit with a hyphenated "per":
+   /USD-per-shares/. The unit as companyfacts reports it, "USD/shares",
+   answers 404 from that path, and so does its URL-encoded form
+   "USD%2Fshares" (both probed 2026-09-11). Pure, so it can be tested
+   without the network. */
+export function frameUnitPath(unit) {
+  return String(unit).split("/").join("-per-");
+}
+
+export function frameUrl(concept, unit, frame, taxonomy = "us-gaap") {
+  return `https://data.sec.gov/api/xbrl/frames/${taxonomy}/${concept}/` +
+    `${frameUnitPath(unit)}/${frame}.json`;
+}
+
+/**
+ * One concept across every filer for one calendar period: frame is a
+ * calendar quarter or year, "CY2026Q2" for a duration and "CY2026Q2I"
+ * for an instant. The reply carries { taxonomy, tag, ccp, uom, label,
+ * description, pts, data: [{ accn, cik, entityName, loc, start?, end,
+ * val }] } — no form and no filed date, which is why the caller keeps
+ * companyfacts as the provenance of record and uses frames only where
+ * it is newer. Null when the concept has no frame for that period.
+ */
+export async function fetchFrame(concept, unit, frame, { timeoutMs = 30000, retries, taxonomy } = {}) {
+  return getJson(frameUrl(concept, unit, frame, taxonomy),
+    { timeoutMs, ...(retries === undefined ? {} : { retries }) });
+}
+
+/** The submissions JSON: name, fiscalYearEnd ("0630"), tickers, exchanges
+    and filings.recent, whose fileNumber column carries the 814- numbers
+    that make a filer a BDC. Null on 404. */
+export async function fetchSubmissions(cik, { timeoutMs = 30000, retries } = {}) {
+  const padded = String(cik).padStart(10, "0");
+  return getJson(`https://data.sec.gov/submissions/CIK${padded}.json`,
+    { timeoutMs, ...(retries === undefined ? {} : { retries }) });
+}
+
+/**
+ * SEC's ticker index with exchanges. The file is columnar —
+ * { fields: ["cik","name","ticker","exchange"], data: [[...], ...] },
+ * 10,407 rows on 2026-09-11 — and is turned into plain row objects here
+ * so no caller has to know the column order. A ticker can appear under
+ * more than one CIK row (a preferred class, a note) and a CIK under more
+ * than one ticker; nothing is deduplicated at this level.
+ */
+export async function fetchCompanyTickers({ timeoutMs = 30000, retries } = {}) {
+  const payload = await getJson("https://www.sec.gov/files/company_tickers_exchange.json",
+    { timeoutMs, ...(retries === undefined ? {} : { retries }) });
+  if (!payload || !Array.isArray(payload.fields) || !Array.isArray(payload.data)) return null;
+  const idx = {};
+  payload.fields.forEach((f, i) => { idx[f] = i; });
+  for (const f of ["cik", "name", "ticker", "exchange"]) {
+    if (idx[f] === undefined) return null;
+  }
+  return payload.data.map((r) => ({
+    cik: Number(r[idx.cik]), name: r[idx.name] == null ? null : String(r[idx.name]),
+    ticker: r[idx.ticker] == null ? null : String(r[idx.ticker]).toUpperCase(),
+    exchange: r[idx.exchange] == null ? null : String(r[idx.exchange]),
+  }));
 }
 
 const spanDays = (r) =>

@@ -24,7 +24,7 @@ const DAY_MS = 86400000;
    issuers: a filer that tags its half-year or quarterly statements on
    Form 6-K has real periods there. Dropping the form left Enlivex with a
    2025 annual report and nothing between it and 2016. */
-const REPORT_FORM = /^(10-K|10-Q|20-F|40-F|6-K)(\/A)?$/;
+export const REPORT_FORM = /^(10-K|10-Q|20-F|40-F|6-K)(\/A)?$/;
 
 /* A quarter is nominally 91 days and an annual period 365, but fiscal
    calendars run 13-week quarters and 52/53-week years, and filers round
@@ -44,7 +44,7 @@ function isAnnualSpan(d) { return d !== null && d >= ANNUAL_MIN && d <= ANNUAL_M
 /* Later filings restate earlier periods. Keyed on the period itself, the
    last one filed wins — an amendment supersedes the original, which is
    the same precedence sql/06_canonical_views.sql applies. */
-function keepLatestFiled(rows) {
+export function keepLatestFiled(rows) {
   const best = new Map();
   for (const r of rows) {
     const key = `${r.start || ""}|${r.end}`;
@@ -239,7 +239,7 @@ function shareSeries(bucket, tags, { annual }) {
 /* Balance sheet dates rarely coincide exactly with an income statement
    period end — a filer may close the books on the 28th and tag the
    balance sheet to the 30th. Match within a few days before giving up. */
-function nearest(map, end, toleranceDays = 5) {
+export function nearest(map, end, toleranceDays = 5) {
   if (map.has(end)) return map.get(end);
   const target = new Date(end).getTime();
   let best = null, bestGap = Infinity;

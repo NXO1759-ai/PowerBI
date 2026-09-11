@@ -1,0 +1,61 @@
+# .vercelignore — what the deployment does not need.
+#
+# The site is frontend/ behind the rewrites in vercel.json plus the
+# functions in api/. Everything else in the repository is build tooling,
+# database work or documentation, and without this file it was served as
+# static files too: /scripts/refresh.mjs, /sql/01_create_schema.sql,
+# /docs/DATA_POLICY.md and a skill file all answered 200 on 2026-09-11.
+# Nothing there was secret, but a raw data download committed under
+# data-sources/ would have been public the moment it was pushed.
+#
+# What stays, and why:
+#   api/           the functions, and api/package.json for "type": "module"
+#   vercel.json    the rewrites
+#   frontend/      the pages, lib/ and data/. api/statements.js requires
+#                  ../frontend/lib/ratios.js and scripts/lib/sec-pull.mjs
+#                  requires frontend/lib/metrics.js. Its three tooling
+#                  files (the dev server, the Power BI export script and
+#                  their package.json) are excluded below; nothing in the
+#                  build reads a package.json outside the root.
+#   scripts/lib/   every function imports ../scripts/lib/*.mjs. An ignored
+#                  file is not uploaded at all, so ignoring this directory
+#                  would break every function at runtime. It is served as
+#                  static files on purpose: the libraries read their
+#                  contact address and keys from the environment and hold
+#                  no secret. Only the top-level scripts and the test
+#                  fixtures are excluded.
+#
+# Same syntax as .gitignore. Explicit lines rather than a "/*" allowlist
+# with negations, so the list reads as what is excluded and why.
+# scripts/check-exposure.mjs probes the live site for the result: the
+# weekly refresh runs it after its push, and it can be run by hand
+# against a preview.
+
+# tooling, CI and the house rules: every dot-directory and dot-file
+.*/
+.gitignore
+.vercelignore
+
+# the weekly refresh and the builders run in Actions, never on the site
+scripts/*.mjs
+scripts/fixtures/
+
+# frontend/ tooling that is not page content
+frontend/dev-server.js
+frontend/export_dashboard_data.py
+frontend/package.json
+
+# the MySQL and Power BI leg
+sql/
+loaders/
+PowerBI_Dashboard_Project.*
+Debtsheet - KBLB.xlsm
+
+# documentation and design notes
+docs/
+design-plans/
+/*.md
+
+# raw PitchBook and LCD downloads (gitignored on the owner's machine, but
+# listed here so a committed copy is never served)
+data-sources/

@@ -1,0 +1,83 @@
+{
+ "fetched": "2026-09-11",
+ "cik": 1287750,
+ "frames": {
+  "navPerShare": {
+   "taxonomy": "us-gaap",
+   "tag": "NetAssetValuePerShare",
+   "ccp": "CY2026Q2I",
+   "uom": "USD/shares",
+   "label": "Net Asset Value Per Share",
+   "description": "Net asset value per share or per unit of investments in certain entities that calculate net asset value per share. Includes, but is not limited to, by unit, membership interest, or other ownership interest. Investment includes, but is not limited to, investment in certain hedge funds, venture capital funds, private equity funds, real estate partnerships or funds. Excludes fair value disclosure.",
+   "pts": 314,
+   "data": [
+    {
+     "accn": "0001628280-26-050307",
+     "cik": 1287750,
+     "entityName": "ARES CAPITAL CORPORATION",
+     "loc": "US-NY",
+     "end": "2026-06-30",
+     "val": 19.35
+    }
+   ]
+  },
+  "niiPreTax": {
+   "taxonomy": "us-gaap",
+   "tag": "NetInvestmentIncome",
+   "ccp": "CY2026Q2",
+   "uom": "USD",
+   "label": "Net Investment Income",
+   "description": "Amount, after investment expense, of income earned from investments in securities and real estate. Includes, but is not limited to, real estate investment, policy loans, dividends, and interest. Excludes realized gain (loss) on investments.",
+   "pts": 317,
+   "data": [
+    {
+     "accn": "0001628280-26-050307",
+     "cik": 1287750,
+     "entityName": "ARES CAPITAL CORPORATION",
+     "loc": "US-NY",
+     "start": "2026-04-01",
+     "end": "2026-06-30",
+     "val": 367000000
+    }
+   ]
+  },
+  "assetCoverage": {
+   "taxonomy": "us-gaap",
+   "tag": "InvestmentCompanySeniorSecurityIndebtednessAssetCoverageRatio",
+   "ccp": "CY2026Q2I",
+   "uom": "pure",
+   "label": "",
+   "description": "",
+   "pts": 76,
+   "data": [
+    {
+     "accn": "0001628280-26-050307",
+     "cik": 1287750,
+     "entityName": "ARES CAPITAL CORPORATION",
+     "loc": "US-NY",
+     "end": "2026-06-30",
+     "val": 1.86
+    }
+   ]
+  },
+  "portfolioFairValue": {
+   "taxonomy": "us-gaap",
+   "tag": "InvestmentOwnedAtFairValue",
+   "ccp": "CY2026Q2I",
+   "uom": "USD",
+   "label": "Investment Owned, at Fair Value",
+   "description": "Value of the investment at close of period. For schedules of investments that are categorized, the value would be aggregated by category. For investment in and advances to affiliates, if operations of any controlled companies are different in character from those of the company, group such affiliates within divisions and by type of activities.",
+   "pts": 322,
+   "data": [
+    {
+     "accn": "0001628280-26-050307",
+     "cik": 1287750,
+     "entityName": "ARES CAPITAL CORPORATION",
+     "loc": "US-NY",
+     "end": "2026-06-30",
+     "val": 29349300000
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,1353 @@
+{
+ "generated": "2026-09-11T23:44:48.729Z",
+ "quarter": "CY2026Q2",
+ "rule": "814-",
+ "notes": {
+  "listedSince": "first bar of Yahoo's monthly chart: the month is the listing month, the day can precede the first trade by a day or more"
+ },
+ "rows": [
+  {
+   "cik": 1822523,
+   "ticker": "AFCG",
+   "name": "Advanced Flower Capital Inc.",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-01950"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": "0000",
+   "listedSince": "2021-03-15",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1287750,
+   "ticker": "ARCC",
+   "name": "ARES CAPITAL CORP",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00663"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2004-11-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames"
+   ]
+  },
+  {
+   "cik": 1379785,
+   "ticker": "BBDC",
+   "name": "Barings BDC, Inc.",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00733"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2007-03-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1372807,
+   "ticker": "BCIC",
+   "name": "BCP Investment Corp",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00735"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2007-01-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1655050,
+   "ticker": "BCSF",
+   "name": "Bain Capital Specialty Finance, Inc.",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-01175"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2018-11-12",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1736035,
+   "ticker": "BXSL",
+   "name": "Blackstone Secured Lending Fund",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-01299"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2021-10-25",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1633336,
+   "ticker": "CCAP",
+   "name": "Crescent Capital BDC, Inc.",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-01132"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2020-02-03",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1544206,
+   "ticker": "CGBD",
+   "name": "Carlyle Secured Lending, Inc.",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00995"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2017-06-12",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1534254,
+   "ticker": "CION",
+   "name": "CION Investment Corp",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00941"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2021-10-04",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 17313,
+   "ticker": "CSWC",
+   "name": "CAPITAL SOUTHWEST CORP",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00061"
+   ],
+   "fiscalYearEnd": "0331",
+   "fyEndMonth": 3,
+   "sic": null,
+   "listedSince": "1984-12-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 878932,
+   "ticker": "EQS",
+   "name": "EQUUS TOTAL RETURN, INC.",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00098"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "1992-10-01",
+   "priceHistoryEnds": "2026-09-10",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "roster"
+   ]
+  },
+  {
+   "cik": 1513363,
+   "ticker": "FDUS",
+   "name": "FIDUS INVESTMENT Corp",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00861"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2011-07-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1825248,
+   "ticker": "FRBP",
+   "name": "Franklin BSP Capital Corp",
+   "exchange": "OTC",
+   "listed": false,
+   "otc": true,
+   "fileNumbers": [
+    "814-01360"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2024-07-08",
+   "priceHistoryEnds": "2025-05-30",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1422183,
+   "ticker": "FSK",
+   "name": "FS KKR Capital Corp",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00757"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2014-05-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1321741,
+   "ticker": "GAIN",
+   "name": "GLADSTONE INVESTMENT CORPORATION\\DE",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00704"
+   ],
+   "fiscalYearEnd": "0331",
+   "fyEndMonth": 3,
+   "sic": null,
+   "listedSince": "2005-07-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1476765,
+   "ticker": "GBDC",
+   "name": "GOLUB CAPITAL BDC, Inc.",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00794"
+   ],
+   "fiscalYearEnd": "0930",
+   "fyEndMonth": 9,
+   "sic": null,
+   "listedSince": "2010-05-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1675033,
+   "ticker": "GECC",
+   "name": "Great Elm Capital Corp.",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-01211"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2016-12-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames"
+   ]
+  },
+  {
+   "cik": 1143513,
+   "ticker": "GLAD",
+   "name": "GLADSTONE CAPITAL CORP",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00237"
+   ],
+   "fiscalYearEnd": "0930",
+   "fyEndMonth": 9,
+   "sic": null,
+   "listedSince": "2002-09-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames"
+   ]
+  },
+  {
+   "cik": 1572694,
+   "ticker": "GSBD",
+   "name": "Goldman Sachs BDC, Inc.",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00998"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2015-04-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1487428,
+   "ticker": "HRZN",
+   "name": "Horizon Technology Finance Corp",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00802"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2010-11-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1280784,
+   "ticker": "HTGC",
+   "name": "Hercules Capital, Inc.",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00702"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2005-07-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1578348,
+   "ticker": "ICMB",
+   "name": "Investcorp Credit Management BDC, Inc.",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-01054"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2014-03-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1747172,
+   "ticker": "KBDC",
+   "name": "Kayne Anderson BDC, Inc.",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-01363"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2024-05-20",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1843162,
+   "ticker": "LIEN",
+   "name": "Chicago Atlantic BDC, Inc.",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-01383"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2022-01-31",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1396440,
+   "ticker": "MAIN",
+   "name": "Main Street Capital CORP",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00746"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2007-11-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1278752,
+   "ticker": "MFIC",
+   "name": "MidCap Financial Investment Corp",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00646"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2004-05-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1782524,
+   "ticker": "MSDL",
+   "name": "Morgan Stanley Direct Lending Fund",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-01332"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2024-01-22",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1535778,
+   "ticker": "MSIF",
+   "name": "MSC INCOME FUND, INC.",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00939"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2025-01-29",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1737924,
+   "ticker": "NCDL",
+   "name": "Nuveen Churchill Direct Lending Corp.",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-01338"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2024-01-22",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1496099,
+   "ticker": "NMFC",
+   "name": "New Mountain Finance Corp",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00832",
+    "814-00839"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2011-06-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1509470,
+   "ticker": "NSLR",
+   "name": "Neostellar Capital Corp.",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00852"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2011-05-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1655888,
+   "ticker": "OBDC",
+   "name": "Blue Owl Capital Corp",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-01190"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2019-07-15",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1414932,
+   "ticker": "OCSL",
+   "name": "Oaktree Specialty Lending Corp",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00755"
+   ],
+   "fiscalYearEnd": "0930",
+   "fyEndMonth": 9,
+   "sic": null,
+   "listedSince": "2008-07-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1487918,
+   "ticker": "OFS",
+   "name": "OFS Capital Corp",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00813"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2012-12-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1747777,
+   "ticker": "OTF",
+   "name": "Blue Owl Technology Finance Corp.",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-01284"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2025-06-12",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1259429,
+   "ticker": "OXSQ",
+   "name": "Oxford Square Capital Corp.",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00638"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2003-12-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1504619,
+   "ticker": "PFLT",
+   "name": "PennantPark Floating Rate Capital Ltd.",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00891"
+   ],
+   "fiscalYearEnd": "0930",
+   "fyEndMonth": 9,
+   "sic": null,
+   "listedSince": "2011-05-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1490349,
+   "ticker": "PFX",
+   "name": "PhenixFIN Corp",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00818"
+   ],
+   "fiscalYearEnd": "0930",
+   "fyEndMonth": 9,
+   "sic": null,
+   "listedSince": "2011-02-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "roster"
+   ]
+  },
+  {
+   "cik": 845385,
+   "ticker": "PIAC",
+   "name": "PRINCETON CAPITAL CORP",
+   "exchange": "OTC",
+   "listed": false,
+   "otc": true,
+   "fileNumbers": [
+    "814-00710"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "1994-08-01",
+   "priceHistoryEnds": "2026-09-10",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1383414,
+   "ticker": "PNNT",
+   "name": "PENNANTPARK INVESTMENT CORP",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00736",
+    "814-00743"
+   ],
+   "fiscalYearEnd": "0930",
+   "fyEndMonth": 9,
+   "sic": null,
+   "listedSince": "2007-05-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1794776,
+   "ticker": "PSBD",
+   "name": "Palmer Square Capital BDC Inc.",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-01334"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2024-01-15",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1287032,
+   "ticker": "PSEC",
+   "name": "PROSPECT CAPITAL CORP",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00659"
+   ],
+   "fiscalYearEnd": "0630",
+   "fyEndMonth": 6,
+   "sic": null,
+   "listedSince": "2004-08-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 81955,
+   "ticker": "RAND",
+   "name": "RAND CAPITAL CORP",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00235"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "1984-12-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1653384,
+   "ticker": "RWAY",
+   "name": "Runway Growth Finance Corp.",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-01180"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2021-10-18",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1377936,
+   "ticker": "SAR",
+   "name": "SARATOGA INVESTMENT CORP.",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00732",
+    "814-00740"
+   ],
+   "fiscalYearEnd": "0228",
+   "fyEndMonth": 2,
+   "sic": null,
+   "listedSince": "2007-04-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1551901,
+   "ticker": "SCM",
+   "name": "Stellus Capital Investment Corp",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00971"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2012-12-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1418076,
+   "ticker": "SLRC",
+   "name": "SLR Investment Corp.",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00754"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2010-03-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1495584,
+   "ticker": "SVVC",
+   "name": "Firsthand Technology Value Fund, Inc.",
+   "exchange": "OTC",
+   "listed": false,
+   "otc": true,
+   "fileNumbers": [
+    "814-00830"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2011-05-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1370755,
+   "ticker": "TCPC",
+   "name": "BlackRock TCP Capital Corp.",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00899"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2012-05-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1580345,
+   "ticker": "TPVG",
+   "name": "TriplePoint Venture Growth BDC Corp.",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-01044"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2014-04-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  },
+  {
+   "cik": 1786108,
+   "ticker": "TRIN",
+   "name": "Trinity Capital Inc.",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-01341",
+    "814-01890"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2021-01-25",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames"
+   ]
+  },
+  {
+   "cik": 1508655,
+   "ticker": "TSLX",
+   "name": "Sixth Street Specialty Lending, Inc.",
+   "exchange": "NYSE",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00854"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2014-04-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames"
+   ]
+  },
+  {
+   "cik": 1552198,
+   "ticker": "WHF",
+   "name": "WhiteHorse Finance, Inc.",
+   "exchange": "Nasdaq",
+   "listed": true,
+   "otc": false,
+   "fileNumbers": [
+    "814-00967"
+   ],
+   "fiscalYearEnd": "1231",
+   "fyEndMonth": 12,
+   "sic": null,
+   "listedSince": "2013-01-01",
+   "priceHistoryEnds": "2026-09-11",
+   "acSource": null,
+   "sbaExempt": null,
+   "foundIn": [
+    "frames",
+    "roster"
+   ]
+  }
+ ],
+ "mergers": [
+  {
+   "acquirer": "OCSL",
+   "acquirerCik": 1414932,
+   "target": "OCSI",
+   "targetCik": 1577791,
+   "targetName": "Oaktree Strategic Income Corporation",
+   "targetListed": true,
+   "closeDate": "2021-03-19",
+   "closeQuarter": "2021-03-31",
+   "source": "https://www.sec.gov/Archives/edgar/data/1577791/000119312521086898/d345330d8k.htm"
+  },
+  {
+   "acquirer": "PTMN",
+   "acquirerCik": 1372807,
+   "target": "HCAP",
+   "targetCik": 1559909,
+   "targetName": "Harvest Capital Credit Corporation",
+   "targetListed": true,
+   "closeDate": "2021-06-09",
+   "closeQuarter": "2021-06-30",
+   "source": "https://www.sec.gov/Archives/edgar/data/1372807/000119312521186945/d176074d8k.htm"
+  },
+  {
+   "acquirer": "FSK",
+   "acquirerCik": 1422183,
+   "target": "FSKR",
+   "targetCik": 1525759,
+   "targetName": "FS KKR Capital Corp. II",
+   "targetListed": true,
+   "closeDate": "2021-06-16",
+   "closeQuarter": "2021-06-30",
+   "source": "https://www.sec.gov/Archives/edgar/data/1422183/000119312521192219/d175618d8k.htm"
+  },
+  {
+   "acquirer": "BBDC",
+   "acquirerCik": 1379785,
+   "target": null,
+   "targetCik": 1523526,
+   "targetName": "Sierra Income Corporation",
+   "targetListed": false,
+   "closeDate": "2022-02-25",
+   "closeQuarter": "2022-03-31",
+   "source": "https://www.sec.gov/Archives/edgar/data/1379785/000114036122007670/ny20002465x3_8k.htm"
+  },
+  {
+   "acquirer": "SLRC",
+   "acquirerCik": 1418076,
+   "target": "SUNS",
+   "targetCik": 1508171,
+   "targetName": "SLR Senior Investment Corp.",
+   "targetListed": true,
+   "closeDate": "2022-04-01",
+   "closeQuarter": "2022-06-30",
+   "source": "https://www.sec.gov/Archives/edgar/data/1418076/000119312522092898/d296304d8k.htm"
+  },
+  {
+   "acquirer": "OCSL",
+   "acquirerCik": 1414932,
+   "target": null,
+   "targetCik": 1744179,
+   "targetName": "Oaktree Strategic Income II, Inc.",
+   "targetListed": false,
+   "closeDate": "2023-01-23",
+   "closeQuarter": "2023-03-31",
+   "source": "https://www.sec.gov/Archives/edgar/data/1414932/000119312523012750/d280532d8k.htm"
+  },
+  {
+   "acquirer": "CCAP",
+   "acquirerCik": 1633336,
+   "target": "FCRD",
+   "targetCik": 1464963,
+   "targetName": "First Eagle Alternative Capital BDC, Inc.",
+   "targetListed": true,
+   "closeDate": "2023-03-09",
+   "closeQuarter": "2023-03-31",
+   "source": "https://www.sec.gov/Archives/edgar/data/1633336/000119312523066479/d456056d8k.htm"
+  },
+  {
+   "acquirer": "FRBP",
+   "acquirerCik": 1825248,
+   "target": null,
+   "targetCik": 1490927,
+   "targetName": "Franklin BSP Lending Corporation",
+   "targetListed": false,
+   "closeDate": "2024-01-24",
+   "closeQuarter": "2024-03-31",
+   "source": "https://www.sec.gov/Archives/edgar/data/1825248/000121390024006162/ea191916-8k_franklinbsp.htm"
+  },
+  {
+   "acquirer": "TCPC",
+   "acquirerCik": 1370755,
+   "target": "BKCC",
+   "targetCik": 1326003,
+   "targetName": "BlackRock Capital Investment Corporation",
+   "targetListed": true,
+   "closeDate": "2024-03-18",
+   "closeQuarter": "2024-03-31",
+   "source": "https://www.sec.gov/Archives/edgar/data/1370755/000114036124013943/ef20024232_8k.htm"
+  },
+  {
+   "acquirer": "GBDC",
+   "acquirerCik": 1476765,
+   "target": null,
+   "targetCik": 1715268,
+   "targetName": "Golub Capital BDC 3, Inc.",
+   "targetListed": false,
+   "closeDate": "2024-06-03",
+   "closeQuarter": "2024-06-30",
+   "source": "https://www.sec.gov/Archives/edgar/data/1476765/000110465924067549/tm2416178d1_8k.htm"
+  },
+  {
+   "acquirer": "MFIC",
+   "acquirerCik": 1278752,
+   "target": "AFT",
+   "targetCik": 1502573,
+   "targetName": "Apollo Senior Floating Rate Fund Inc.",
+   "targetListed": true,
+   "closeDate": "2024-07-22",
+   "closeQuarter": "2024-09-30",
+   "targetKind": "closed-end fund",
+   "source": "https://www.sec.gov/Archives/edgar/data/1278752/000119312524182213/d871191d8k.htm"
+  },
+  {
+   "acquirer": "MFIC",
+   "acquirerCik": 1278752,
+   "target": "AIF",
+   "targetCik": 1526697,
+   "targetName": "Apollo Tactical Income Fund Inc.",
+   "targetListed": true,
+   "closeDate": "2024-07-22",
+   "closeQuarter": "2024-09-30",
+   "targetKind": "closed-end fund",
+   "source": "https://www.sec.gov/Archives/edgar/data/1278752/000119312524182213/d871191d8k.htm"
+  },
+  {
+   "acquirer": "OBDC",
+   "acquirerCik": 1655888,
+   "target": "OBDE",
+   "targetCik": 1807427,
+   "targetName": "Blue Owl Capital Corporation III",
+   "targetListed": true,
+   "closeDate": "2025-01-13",
+   "closeQuarter": "2025-03-31",
+   "source": "https://www.sec.gov/Archives/edgar/data/1655888/000162828025001250/obdc-20250113.htm"
+  },
+  {
+   "acquirer": "OTF",
+   "acquirerCik": 1747777,
+   "target": null,
+   "targetCik": 1889668,
+   "targetName": "Blue Owl Technology Finance Corp. II",
+   "targetListed": false,
+   "closeDate": "2025-03-24",
+   "closeQuarter": "2025-03-31",
+   "source": "https://www.sec.gov/Archives/edgar/data/1747777/000162828025014413/otic-20250324.htm"
+  },
+  {
+   "acquirer": "CGBD",
+   "acquirerCik": 1544206,
+   "target": null,
+   "targetCik": 1851277,
+   "targetName": "Carlyle Secured Lending III",
+   "targetListed": false,
+   "closeDate": "2025-03-27",
+   "closeQuarter": "2025-03-31",
+   "source": "https://www.sec.gov/Archives/edgar/data/1544206/000119312525065938/d906363d8k.htm"
+  },
+  {
+   "acquirer": "PTMN",
+   "acquirerCik": 1372807,
+   "target": "LRFC",
+   "targetCik": 1571329,
+   "targetName": "Logan Ridge Finance Corporation",
+   "targetListed": true,
+   "closeDate": "2025-07-15",
+   "closeQuarter": "2025-09-30",
+   "source": "https://www.sec.gov/Archives/edgar/data/1372807/000162828025035078/ptmn-20250715.htm"
+  }
+ ]
+}
