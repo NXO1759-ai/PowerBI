@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Private Credit Report — Research Terminal</title>
-<meta name="description" content="The credit view of the same filings: leverage, coverage, maturities, liquidity runway and covenant headroom. In build." />
+<title>Private Credit Terminal — Research Terminal</title>
+<meta name="description" content="Where the credit cycle is, what private credit costs, and how the vehicles that hold the loans are doing — FRED, the listed BDCs' filings and the market feed on one page, every term defined." />
 <meta name="theme-color" content="#0b0d0f" />
 <meta name="color-scheme" content="dark" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Research Terminal" />
-<meta property="og:title" content="Private Credit Report — Research Terminal" />
-<meta property="og:description" content="The credit view of the same filings: leverage, coverage, maturities, liquidity runway and covenant headroom. In build." />
+<meta property="og:title" content="Private Credit Terminal — Research Terminal" />
+<meta property="og:description" content="Credit conditions, the price of private credit and the listed BDCs, from FRED, SEC filings and the market feed." />
 <meta property="og:url" content="https://www.chineduokeke.mba/credit.html" />
 <meta name="twitter:card" content="summary" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f5c518'/%3E%3Ctext x='32' y='43' font-family='Menlo,Consolas,monospace' font-size='26' font-weight='700' text-anchor='middle' fill='%23151515'%3ERT%3C/text%3E%3C/svg%3E" />
@@ -19,35 +19,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" />
 <link rel="stylesheet" href="styles.css" />
 <link rel="stylesheet" href="statements.css" />
-<style>[hidden]{display:none!important}
-.credit-hero { max-inline-size: 78ch; }
-.credit-hero h1 { font-size: 22px; margin: 0 0 10px; }
-.credit-hero .lede {
-  font-size: 13.5px; line-height: 1.7; color: var(--kimi-color-text-secondary);
-  margin: 0 0 8px;
-}
-.credit-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 12px; margin-top: 18px;
-}
-.credit-card {
-  border: 1px solid var(--kimi-color-border); border-radius: 10px;
-  background: var(--page-bg); padding: 14px 16px 12px;
-}
-.credit-card h3 {
-  font-size: 12.5px; font-weight: 600; margin: 0 0 5px;
-  color: var(--rt-gold);
-}
-.credit-card p {
-  font-size: 12px; line-height: 1.6; color: var(--kimi-color-text-secondary);
-  margin: 0;
-}
-.credit-spine {
-  font-size: 12px; line-height: 1.65; color: var(--kimi-color-text-tertiary);
-  border-inline-start: 2px solid var(--rt-gold-border);
-  padding-inline-start: 12px; margin-top: 20px; max-inline-size: 78ch;
-}
-</style>
+<link rel="stylesheet" href="strategy.css" />
+<link rel="stylesheet" href="credit.css" />
+<style>[hidden]{display:none!important}</style>
 </head>
 <body>
 
@@ -60,70 +34,194 @@
     <nav class="nav-tabs" aria-label="Dashboards">
       <a class="nav-tab" href="index.html"><span class="tab-long">Company Overview</span><span class="tab-short">Overview</span></a>
       <a class="nav-tab" href="statements.html"><span class="tab-long">Financial Statement Analysis</span><span class="tab-short">Statements</span></a>
-      <a class="nav-tab active" href="credit.html" aria-current="page"><span class="tab-long">Private Credit Report</span><span class="tab-short">Credit</span> <span class="soon-pill">Soon</span></a>
+      <a class="nav-tab active" href="credit.html" aria-current="page"><span class="tab-long">Private Credit Terminal</span><span class="tab-short">Credit</span></a>
       <a class="nav-tab" href="strategy.html"><span class="tab-long">Strategy Analysis</span><span class="tab-short">Strategy</span></a>
     </nav>
-    <div class="topbar-right"></div>
+    <div class="topbar-right">
+      <button type="button" id="about-btn">About</button>
+    </div>
   </div>
 </header>
 
-<main class="app">
-  <section class="panel-card fsa-section credit-hero" aria-labelledby="h-credit">
-    <h1 id="h-credit">The credit view is in build</h1>
-    <p class="lede">
-      Equity analysis asks what a business is worth; credit analysis asks
-      whether it can pay. Same filings, different question — and the data
-      spine this terminal already runs (fundamentals refreshed weekly from
-      SEC EDGAR, statements parsed to the line item, segment and risk
-      detail read from each filing) is the spine a credit report needs.
-      What follows is what this page will compute when it opens.
-    </p>
-  </section>
+<main class="app" id="app">
 
-  <section class="panel-card fsa-section" aria-label="Planned coverage">
-    <div class="credit-grid">
-      <div class="credit-card">
-        <h3>Leverage &amp; coverage</h3>
-        <p>Gross and net leverage through EBITDA and through free cash flow,
-        interest cover on both, and the trend of each across the cycle —
-        the four numbers every credit committee reads first.</p>
-      </div>
-      <div class="credit-card">
-        <h3>Maturity wall</h3>
-        <p>When the debt actually comes due, from the filings' own maturity
-        schedules — refinancing risk is a calendar before it is a ratio.</p>
-      </div>
-      <div class="credit-card">
-        <h3>Liquidity runway</h3>
-        <p>Cash, undrawn capacity where disclosed, and the burn or build
-        against it — how long the company operates if markets shut.</p>
-      </div>
-      <div class="credit-card">
-        <h3>Covenant headroom</h3>
-        <p>Where reported figures sit against the covenant levels filers
-        disclose, and how much deterioration the headroom absorbs.</p>
-      </div>
-      <div class="credit-card">
-        <h3>Priority &amp; recovery</h3>
-        <p>What ranks ahead of what — secured, unsecured, leases,
-        pensions — and what the asset side suggests each layer recovers.</p>
-      </div>
-      <div class="credit-card">
-        <h3>The credit cycle</h3>
-        <p>The same macro feed the strategy page reads — policy rate, curve,
-        claims — pointed at the question credit cares about: what happens
-        to this borrower when refinancing costs what the curve says next.</p>
+  <section class="fsa-hero" aria-label="Private credit view">
+    <div class="hero-id">
+      <div>
+        <h1 id="page-title">Private Credit Terminal</h1>
+        <p class="meta" id="page-meta">The credit cycle, the price of private credit and the listed lenders — FRED, SEC filings and the market feed, every term defined on hover.</p>
       </div>
     </div>
-    <p class="credit-spine">
-      Everything above will be computed from filings and stated sources the
-      way the rest of the terminal works: every figure traceable, every gap
-      named rather than filled, and an analyst's note arguing what the
-      numbers mean together. Until it opens, the Overview, Statements and
-      Strategy pages already carry the balance-sheet, cash-flow and
-      coverage figures a credit read starts from.
-    </p>
+    <div class="fsa-controls">
+      <div class="seg" role="group" aria-label="View">
+        <button type="button" id="view-market" data-view="market" aria-pressed="true">Market</button>
+        <button type="button" id="view-lenders" data-view="lenders" aria-pressed="false">Lenders</button>
+        <button type="button" id="view-underwriting" data-view="underwriting" aria-pressed="false">Underwriting</button>
+        <button type="button" id="view-glossary" data-view="glossary" aria-pressed="false">Glossary</button>
+      </div>
+      <button type="button" id="refresh-btn" class="refresh-btn" title="Re-fetch every feed on this page, skipping the six-hour cache">Refresh</button>
+    </div>
   </section>
+
+  <p class="fsa-status" id="status" role="status"></p>
+  <p class="stale-warn" id="stale-warn" role="alert" hidden></p>
+
+  <!-- ============ MARKET ============ -->
+  <div id="market-view">
+
+    <!-- 1. the conditions strip: flat tiles on the page ground -->
+    <section class="fsa-section credit-strip" aria-labelledby="h-conditions">
+      <div class="section-head">
+        <h2 id="h-conditions">Credit conditions</h2>
+        <p class="section-blurb">Eight readings of where the credit cycle sits today, each placed against its own history: spreads, the base rate, the long-run risk premium, bank standards and bank losses.</p>
+        <details class="how-to-read"><summary>How to read this</summary><p>Each tile carries the latest value, a one-line reading from a fixed rule, two years of history as a sparkline and a percentile marker whose window is written on the tile — a three-year window for the ICE BofA series, because that is all FRED serves of them, and ten years where the history exists. Spreads are in basis points over Treasuries; the base rate and yields are percentages; the survey series are net percentages of banks. A tile that says "not available" names the series that did not answer rather than showing a zero.</p></details>
+      </div>
+      <div class="tile-grid" id="conditions-strip"></div>
+      <details class="more-conditions" id="more-conditions">
+        <summary>More conditions</summary>
+        <div class="tile-grid tile-grid-small" id="more-strip"></div>
+        <div class="ndfi-block" id="ndfi-block"></div>
+      </details>
+    </section>
+
+    <!-- 2. M8: BIZD against a loan ETF -->
+    <section class="panel-card fsa-section" aria-labelledby="h-m8">
+      <div class="section-head">
+        <h2 id="h-m8"><span class="h-pop" data-metric="bdcVsLoans" tabindex="0">Listed BDCs against leveraged loans</span></h2>
+        <p class="section-blurb">The only daily public price of the asset class — the listed BDC ETF against a leveraged-loan ETF, five years monthly, rebased to 100.</p>
+        <details class="how-to-read"><summary>How to read this</summary><p>BIZD holds the largest listed business development companies, so its price is the market's mark on their books, months ahead of the quarterly net asset values the managers publish. SRLN (or BKLN when SRLN is not available) holds broadly syndicated loans, the liquid neighbor of a private loan. Total return uses the dividend-adjusted close and is the default, because BDCs pay out most of what they earn; the price toggle shows what the shares alone did. Shaded bands are recessions from FRED's USREC series, which runs each band from the month after the NBER peak through the trough month (FRED's trough method), so a band here starts one month later than the hand-keyed bands on the Strategy page.</p></details>
+      </div>
+      <div class="chart-controls">
+        <div class="seg" role="group" aria-label="Return basis">
+          <button type="button" id="m8-total" aria-pressed="true">Total return</button>
+          <button type="button" id="m8-price" aria-pressed="false">Price</button>
+        </div>
+        <span class="chart-legend" id="m8-legend"></span>
+      </div>
+      <div class="chart-box" id="m8-chart"><canvas id="m8-canvas" role="img" aria-label="BIZD against a leveraged-loan ETF, rebased to 100"></canvas></div>
+      <p class="chart-caption" id="m8-caption"></p>
+      <p class="tile-foot" id="m8-foot"></p>
+    </section>
+
+    <!-- 3. M1: the spread ladder -->
+    <section class="panel-card fsa-section" aria-labelledby="h-m1">
+      <div class="section-head">
+        <h2 id="h-m1"><span class="h-pop" data-metric="spreadLadder" tabindex="0">Spread ladder</span></h2>
+        <p class="section-blurb">What each rung of the bond market pays over Treasuries today, in basis points, with the slot the site's own BDC composite will fill.</p>
+        <details class="how-to-read"><summary>How to read this</summary><p>Option-adjusted spread is the extra yield over the Treasury curve after the value of any call option in the bond is stripped out, so the bars are comparable across ratings. The order is a ladder — investment grade, BB, the high-yield index, single-B, CCC — and the gap between the top and bottom rungs is dispersion: how differently the market prices the safest and riskiest borrowers. Bonds are priced over Treasuries; private loans are priced over a floating base rate, so the BDC composite bar, when it lands, is a spread over base and is labeled as such.</p></details>
+      </div>
+      <div class="chart-box" id="m1-chart" role="img" aria-label="Spread ladder, basis points"></div>
+      <p class="chart-caption" id="m1-caption"></p>
+      <p class="tile-foot" id="m1-foot"></p>
+    </section>
+
+    <!-- 4. M2: the yield stack -->
+    <section class="panel-card fsa-section" aria-labelledby="h-m2">
+      <div class="section-head">
+        <h2 id="h-m2"><span class="h-pop" data-metric="yieldStack" tabindex="0">Yield stack</span></h2>
+        <p class="section-blurb">The base rate of every floating loan against the yield on the liquid alternative, ten years monthly, with the composite lines to follow.</p>
+        <details class="how-to-read"><summary>How to read this</summary><p>A private loan pays the base rate plus a spread, so its yield moves with SOFR first and with credit risk second. The high-yield effective yield is what a public bond investor earns for a comparable borrower; the gap between the two lines is the room a private lender has to price a spread. Each line starts where FRED's history starts, and the caption says where that is. The composite yield of the listed BDCs is added when their schedules of investments are parsed.</p></details>
+      </div>
+      <div class="chart-controls"><span class="chart-legend" id="m2-legend"></span></div>
+      <div class="chart-box" id="m2-chart"><canvas id="m2-canvas" role="img" aria-label="SOFR and the high-yield effective yield, ten years monthly"></canvas></div>
+      <p class="chart-caption" id="m2-caption"></p>
+      <p class="tile-foot" id="m2-foot"></p>
+    </section>
+
+    <!-- data tables for the workbook export; hidden from view, read by RTExport -->
+    <div class="export-tables" hidden>
+      <table class="grid" id="t-conditions" data-export-name="Credit conditions"></table>
+      <table class="grid" id="t-prices" data-export-name="BIZD vs loan ETF"></table>
+    </div>
+  </div>
+
+  <!-- ============ LENDERS (PR D) ============ -->
+  <div id="lenders-view" hidden>
+    <section class="panel-card fsa-section" aria-labelledby="h-lenders">
+      <div class="section-head">
+        <h2 id="h-lenders">Lenders — the listed BDCs</h2>
+        <p class="section-blurb">How healthy are the vehicles that hold these loans? This view lands in a later release; what it will carry is listed below, and no figure is shown until it is computed from a filing.</p>
+      </div>
+      <ul class="plan-list">
+        <li><strong>Universe.</strong> Every listed business development company, found by its 814- file number in the SEC's submissions index, with its fiscal year end, listing date, merger history and the day it entered the universe.</li>
+        <li><strong>Scorecard.</strong> One row per BDC: net asset value per share and price to NAV, net investment income and dividend coverage, asset coverage and its cushion, non-accruals at cost and at fair value, PIK share, the mark (fair value to cost), leverage, fees, dividend yield — each with its catalog popup and a severity stripe where the reading rule fires.</li>
+        <li><strong>Per-BDC drill-down.</strong> NAV against price from the listing date, the maturity wall, lien and industry mix, the spread histogram over base, the liability card and the fee card, with the industry's series drawn as outlines where a comparison exists.</li>
+        <li><strong>The composite and dispersion.</strong> The site's own private credit index across the universe, weighted by cost of third-party debt, every figure carrying its n, with the quarter's distribution around it.</li>
+        <li><strong>Peers and the sector line.</strong> Comparables chosen by the course rule, price to NAV against the sector median, and the listed-BDC index as the sector line behind the price charts.</li>
+      </ul>
+      <p class="tile-foot">Sources when it ships: SEC EDGAR companyfacts and frames, the SEC's BDC data set, 10-Q schedules of investments, the market feed.</p>
+    </section>
+  </div>
+
+  <!-- ============ UNDERWRITING (PR F) ============ -->
+  <div id="underwriting-view" hidden>
+    <section class="panel-card fsa-section" aria-labelledby="h-underwriting">
+      <div class="section-head">
+        <h2 id="h-underwriting">Underwriting — the covered companies as borrowers</h2>
+        <p class="section-blurb">Would a credit committee lend to this company, and on what terms? This view lands in a later release and reuses the statements feed; what it will carry is listed below.</p>
+      </div>
+      <ul class="plan-list">
+        <li><strong>Financial-risk bands.</strong> Every covered operating company placed in the rating agencies' published leverage and coverage bands, from the same filings the Statement Analysis page reads.</li>
+        <li><strong>The leveraged-lending ladder.</strong> Leverage through EBITDA against the regulatory guidance line and the buyout structure norms, as a sub-investment-grade ladder.</li>
+        <li><strong>Debt structure.</strong> The maturity schedule by year, undrawn revolver capacity, lease payments due, the fair value of the debt and interest actually paid — new concepts read from the filings.</li>
+        <li><strong>Charts U1 to U4.</strong> Leverage and coverage against the bands, the maturity wall, liquidity runway, and where the company sits among the covered borrowers.</li>
+        <li><strong>The credit note.</strong> A note in the credit-committee voice written by the research model from the figures on the page, and only those figures.</li>
+      </ul>
+      <p class="tile-foot">Sources when it ships: SEC EDGAR XBRL filings through the statements feed; the published rating-agency bands and the leveraged-lending guidance as reference lines.</p>
+    </section>
+  </div>
+
+  <!-- ============ GLOSSARY ============ -->
+  <div id="glossary-view" hidden>
+    <section class="panel-card fsa-section" aria-labelledby="h-glossary">
+      <div class="section-head">
+        <h2 id="h-glossary">Glossary</h2>
+        <p class="section-blurb">Every series id, acronym and term of art used on this page, grouped by the side it belongs to, each with its expansion, its definition and where the definition comes from.</p>
+        <details class="how-to-read"><summary>How to read this</summary><p>The same entries power the hover definitions on the Market view. Market-side terms describe the public and bank credit markets; lender-side terms describe the business development companies and the rules they file under. The source is the FRED series page, the ICE methodology, the 1940 Act text, a filing, or the course material, so a definition can always be checked.</p></details>
+      </div>
+      <div class="glossary-controls">
+        <label class="glossary-filter"><span class="ind-picker-label">Filter</span>
+          <input type="search" id="glossary-q" aria-label="Filter terms" placeholder="Term, acronym or series id…" autocomplete="off" /></label>
+        <span class="glossary-count" id="glossary-count"></span>
+      </div>
+      <div id="glossary-list" data-no-terms></div>
+    </section>
+  </div>
+
+  <footer class="src-footer" id="src-footer">
+    <span id="src-footer-text">Sources: FRED, Federal Reserve Bank of St. Louis (credit series, USREC); the market feed for ETF prices (Yahoo chart data, Finnhub where the plan allows); ICE Data Indices for the option-adjusted spreads via FRED. Percent series are percentage points; spreads are shown in basis points. Every caption is computed from the series on the page at render time.</span>
+    <span class="footer-actions">
+      <button type="button" id="export-xlsx" class="refresh-btn" title="Every table on this page as a workbook, with provenance">Workbook</button>
+    </span>
+  </footer>
 </main>
+
+<div class="metric-pop" id="metric-pop" role="tooltip" hidden></div>
+
+<div class="modal-overlay" id="about-modal" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="about-title" tabindex="-1">
+    <button type="button" class="modal-close" id="about-close" aria-label="Close">×</button>
+    <h3 id="about-title">About Me</h3>
+    <p class="about-tagline">Finance Operator. Systems Builder. Duke MBA.</p>
+    <p>I specialize in building financial architecture for high-growth environments. With a background spanning payment tech, biotech, and financial advisory, I turn messy, manual processes into automated, audit-ready engines.</p>
+    <h4>What I do</h4>
+    <ul class="about-list">
+      <li><strong>Financial Infrastructure &amp; Automation:</strong> Built and scaled automated revenue calculations, treasury workflows, and TMS integrations across 400+ global bank accounts at Flutterwave.</li>
+      <li><strong>Strategic Finance &amp; Valuation:</strong> Experienced in financial modeling, working capital optimization, and corporate valuation, from Amgen&rsquo;s clinical supply spend to pre-revenue startup valuations.</li>
+      <li><strong>Cross-Functional Execution:</strong> A firm believer in radical collaboration, combining high emotional intelligence with technical tools (SQL, Power BI, Python/VBA, TMS) to bridge finance, product, and engineering teams.</li>
+    </ul>
+    <h4>Beyond the Numbers</h4>
+    <p>Duke Fuqua MBA &rsquo;26 | SIE (in view); Certified Treasury Professional (in view) | Amateur boxer &amp; nature enthusiast.</p>
+  </div>
+</div>
+
+<script src="lib/http.js"></script>
+<script src="lib/metrics.js"></script>
+<script src="lib/ratios.js"></script>
+<script src="lib/export.js"></script>
+<script src="lib/metric-catalog.js"></script>
+<script src="lib/credit-terms.js"></script>
+<script src="vendor/chart.umd.min.js"></script>
+<script src="credit.js"></script>
 </body>
 </html>

@@ -22,6 +22,10 @@
  * number. `direction` says which way is generally better, and is
  * deliberately "context" wherever a higher reading is not simply better —
  * leverage and payable days are the obvious cases.
+ *
+ * The "credit" group at the end serves the Private Credit page's tiles
+ * and charts rather than a ratio card; it adds the formats pp, bps, index
+ * and chart, and is kept out of GROUPS on purpose (its note says why).
  */
 (function (root, factory) {
   if (typeof module === "object" && module.exports) module.exports = factory();
@@ -682,6 +686,408 @@
         "purchases of securities depress it alongside genuine capital " +
         "spending. A single large acquisition can make a healthy year " +
         "look poor.",
+    },
+
+    /* ================= credit (the Private Credit page) ================= */
+    /* Read by credit.js for the conditions strip, "More conditions" and
+       charts M1, M2 and M8. The group is deliberately absent from GROUPS:
+       statements.js renders every group there as a card grid against the
+       ratio object, and these keys are not ratio properties. byGroup
+       ("credit") still returns them. Values on the credit page arrive
+       from /api/credit-macro as percentage points (2.71 means 2.71%),
+       so the formats are `pp` (percentage points, shown as-is with a %
+       sign), `bps` (percentage points shown ×100 as basis points),
+       `index` (a unitless level), `money` for $ billions and `chart` for
+       the three chart popups. Reading rules are from blueprint 3.1; the
+       ICE three-year window and the term-SOFR stand-in sit in `watch`. */
+
+    hyOas: {
+      key: "hyOas", group: "credit", format: "bps", direction: "context",
+      label: "High-yield OAS",
+      subtitle: "BAMLH0A0HYM2",
+      formula: "Index yield − spot Treasury curve, adjusted for embedded call options; market-cap weighted; daily close, percent",
+      definition:
+        "The extra yield over Treasuries that investors demand to hold US " +
+        "bonds rated BB or lower. The liquid market's price for " +
+        "sub-investment-grade credit risk, and the closest public read on " +
+        "what private borrowers pay.",
+      interpretation:
+        "Under 300 bps is tight, 300–500 normal, over 500 stress, over 800 " +
+        "crisis. Tight spreads mean cheap public credit competing with " +
+        "private lenders; widening reaches private spreads with a lag.",
+      watch:
+        "FRED serves three years of this ICE BofA series, so the " +
+        "percentile window is three years, not ten; blank holiday rows are " +
+        "dropped before ranking.",
+    },
+    igOas: {
+      key: "igOas", group: "credit", format: "bps", direction: "context",
+      label: "Investment-grade OAS",
+      subtitle: "BAMLC0A0CM",
+      formula: "Option-adjusted spread of US-dollar corporate bonds rated BBB or better; market-cap weighted; daily close, percent",
+      definition:
+        "The extra yield over Treasuries on investment-grade corporate " +
+        "bonds: the calmest corner of credit, and the benchmark every " +
+        "riskier spread is measured against.",
+      interpretation:
+        "Under 100 bps is tight; over 200 is stress. When this one moves, " +
+        "everything below it in credit quality is moving more.",
+      watch:
+        "FRED serves three years of this series, so the percentile is " +
+        "against a short and mostly calm history.",
+    },
+    bbOas: {
+      key: "bbOas", group: "credit", format: "bps", direction: "context",
+      label: "BB OAS",
+      subtitle: "BAMLH0A1HYBB",
+      formula: "Option-adjusted spread of the BB-rated subset of the ICE BofA US High Yield Index; daily close, percent",
+      definition:
+        "The spread on the best-rated high-yield bonds, one notch below " +
+        "investment grade. The top rung of the spread ladder.",
+      interpretation:
+        "Read as a ladder with B and CCC: the CCC minus BB gap is " +
+        "dispersion. A narrow gap means the market is not distinguishing " +
+        "quality; a wide one means it is punishing the weakest.",
+      watch:
+        "FRED serves three years of this series. Most direct-lending " +
+        "borrowers sit below this band or are unrated.",
+    },
+    bOas: {
+      key: "bOas", group: "credit", format: "bps", direction: "context",
+      label: "B OAS",
+      subtitle: "BAMLH0A2HYB",
+      formula: "Option-adjusted spread of the B-rated subset of the ICE BofA US High Yield Index; daily close, percent",
+      definition:
+        "The spread on single-B bonds, the rating band closest to a " +
+        "typical leveraged-buyout borrower. The middle rung of the ladder.",
+      interpretation:
+        "The reference for private loan pricing: a new-issue direct-lending " +
+        "spread well above single-B OAS is the illiquidity and control " +
+        "premium a private lender earns.",
+      watch:
+        "FRED serves three years of this series. Bond OAS is over " +
+        "Treasuries; loan spreads are over SOFR, so the ladder mixes bases.",
+    },
+    cccOas: {
+      key: "cccOas", group: "credit", format: "bps", direction: "context",
+      label: "CCC OAS",
+      subtitle: "BAMLH0A3HYC",
+      formula: "Option-adjusted spread of the CCC-and-lower subset of the ICE BofA US High Yield Index; daily close, percent",
+      definition:
+        "The spread on the weakest rated bonds, where default risk " +
+        "dominates the price. The bottom rung of the ladder.",
+      interpretation:
+        "Its gap to BB is the market's dispersion: a widening gap with a " +
+        "flat HY index means stress concentrating in the weakest names " +
+        "before it shows in the average.",
+      watch:
+        "FRED serves three years of this series. A small index whose " +
+        "membership changes with downgrades, so jumps can be composition.",
+    },
+    hyEffectiveYield: {
+      key: "hyEffectiveYield", group: "credit", format: "pp", direction: "context",
+      label: "High-yield effective yield",
+      subtitle: "BAMLH0A0HYM2EY",
+      formula: "Effective yield of the ICE BofA US High Yield Index: Treasury yield plus OAS, market-cap weighted; daily, percent",
+      definition:
+        "The all-in yield an investor gets on the public high-yield bond " +
+        "market today. The liquid alternative to holding a private loan.",
+      interpretation:
+        "The private credit premium is the composite all-in yield minus " +
+        "this figure. When this rises with rates, private loans must " +
+        "pay more to stay competitive; when it falls, spreads carry more.",
+      watch:
+        "Five of the six ICE BofA tiles are spreads; this one is a yield, " +
+        "so it moves with Treasuries as well as with credit. Three-year " +
+        "window on FRED.",
+    },
+    sofr: {
+      key: "sofr", group: "credit", format: "pp", direction: "context",
+      label: "SOFR",
+      subtitle: "Secured Overnight Financing Rate",
+      formula: "Overnight rate on cash borrowed against Treasury collateral (Treasury repo), published by the New York Fed; daily, percent",
+      definition:
+        "The overnight rate banks pay to borrow cash against Treasuries. " +
+        "The base rate of almost every floating-rate loan, so when it " +
+        "moves, every borrower's interest bill and every BDC's income move.",
+      interpretation:
+        "Floating-rate loans pass it straight through: rising SOFR lifts " +
+        "BDC net investment income and squeezes borrowers' coverage; " +
+        "falling SOFR does the reverse unless floors bite.",
+      watch:
+        "An overnight rate. Loans reset off term SOFR, which FRED does not " +
+        "carry; the 90-day average tile is the stand-in. History from " +
+        "2018-04-03, so the window says 'since 2018'.",
+    },
+    sofr90: {
+      key: "sofr90", group: "credit", format: "pp", direction: "context",
+      label: "SOFR 90-day average",
+      subtitle: "SOFR90DAYAVG",
+      formula: "Compounded average of SOFR over the trailing 90 calendar days, published by the New York Fed; daily, percent",
+      definition:
+        "A three-month-style base rate built from realized overnight SOFR. " +
+        "The closest thing FRED serves to the term SOFR most loans reset " +
+        "off.",
+      interpretation:
+        "Used here to back the spread out of an all-in rate: LCD's " +
+        "cost-weighted all-in yield less this average is the site's " +
+        "estimate of the spread over base.",
+      watch:
+        "A stand-in for term SOFR, which is forward-looking and set from " +
+        "futures; the two differ when the market expects rate moves. " +
+        "History from 2018-07-02 ('since 2018').",
+    },
+    baa10y: {
+      key: "baa10y", group: "credit", format: "pp", direction: "context",
+      label: "Baa minus 10-year Treasury",
+      subtitle: "BAA10Y",
+      formula: "Moody's seasoned Baa corporate bond yield − 10-year Treasury constant-maturity yield; daily, percentage points",
+      definition:
+        "The long-run corporate risk premium: what the lowest investment-" +
+        "grade borrowers pay over the government. The only credit spread " +
+        "here with history back to 1986.",
+      interpretation:
+        "The tile carries the ten-year percentile the ICE series cannot. " +
+        "Read it as the slow tide under the daily OAS moves: a rising Baa " +
+        "spread with tight HY OAS is an early divergence.",
+      watch:
+        "A yield spread, not an OAS: no option adjustment, and Baa is a " +
+        "narrower band than the whole IG index. Recession bands on the " +
+        "long chart come from USREC.",
+    },
+    sloosCiLarge: {
+      key: "sloosCiLarge", group: "credit", format: "pp", direction: "context",
+      label: "Bank lending standards, C&I",
+      subtitle: "DRTSCILM · large and middle-market firms",
+      formula: "Net percentage of domestic banks tightening standards for C&I loans to large and middle-market firms (tightening − easing); quarterly",
+      definition:
+        "The Fed's Senior Loan Officer Opinion Survey: the share of banks " +
+        "tightening minus the share easing. Positive means banks are " +
+        "pulling back from the borrowers private credit competes for.",
+      interpretation:
+        "Over 20 is tightening, under −10 loosening. Banks retreating " +
+        "(2022–23) is when private credit fills the gap; easing is when " +
+        "syndicated loans take deals back.",
+      watch:
+        "Quarterly, about 40 points in ten years, so the sparkline shows " +
+        "eight points and says 'quarterly'. A survey of intentions, not " +
+        "of loans made.",
+    },
+    ciDelinquency: {
+      key: "ciDelinquency", group: "credit", format: "pp", direction: "context",
+      label: "C&I delinquency rate",
+      subtitle: "DRBLACBS · all commercial banks",
+      formula: "Delinquent business loans ÷ business loans outstanding, all commercial banks, seasonally adjusted; quarterly, end of period, percent",
+      definition:
+        "The share of bank business loans that have stopped paying on " +
+        "time. A lagging proxy for defaults in the bank-lent middle market.",
+      interpretation:
+        "Rises after the economy turns, not before. Read it with the BDC " +
+        "non-accrual rate: the two measure the same borrowers through " +
+        "different lenders.",
+      watch:
+        "Quarterly and published with a lag, so the tile's date can be " +
+        "months old. Bank C&I borrowers are not the direct-lending " +
+        "population, which LCD describes as typically unrated.",
+    },
+    ciChargeoff: {
+      key: "ciChargeoff", group: "credit", format: "pp", direction: "context",
+      label: "C&I charge-off rate",
+      subtitle: "CORBLACBS · all commercial banks",
+      formula: "Net charge-offs on C&I loans, annualized ÷ average C&I loans, all commercial banks, seasonally adjusted; quarterly, percent",
+      definition:
+        "The share of bank business loans written off as unrecoverable in " +
+        "a year. The loss that follows delinquency.",
+      interpretation:
+        "Charge-offs lag delinquencies by a few quarters; delinquency " +
+        "rising while charge-offs stay low is the early stage of a credit " +
+        "cycle.",
+      watch:
+        "Annualized from one quarter, so a single bad quarter shows as a " +
+        "full year's rate. Quarterly, lagged.",
+    },
+    busloans: {
+      key: "busloans", group: "credit", format: "money", direction: "context",
+      label: "C&I loans outstanding",
+      subtitle: "BUSLOANS · $ billions",
+      formula: "Commercial and industrial loans on the books of all commercial banks, seasonally adjusted; monthly, $ billions",
+      definition:
+        "How much banks are lending to businesses. The stock that private " +
+        "credit grows beside, and takes share from when banks tighten.",
+      interpretation:
+        "Flat or shrinking bank lending while private credit assets grow " +
+        "is the substitution story; both growing is a credit boom.",
+      watch:
+        "A balance, not a flow: repayments and charge-offs shrink it as " +
+        "much as new lending grows it.",
+    },
+    sloosDemand: {
+      key: "sloosDemand", group: "credit", format: "pp", direction: "context",
+      label: "Bank C&I loan demand",
+      subtitle: "DRSDCILM · large and middle-market firms",
+      formula: "Net percentage of banks reporting stronger demand for C&I loans from large and middle-market firms (stronger − weaker); quarterly",
+      definition:
+        "The demand side of the loan-officer survey: whether businesses " +
+        "are asking banks for more credit.",
+      interpretation:
+        "Standards and demand together: tight standards with strong demand " +
+        "is the best environment for a private lender; easy standards with " +
+        "weak demand is the worst.",
+      watch:
+        "Quarterly survey, eight points on the sparkline. Demand can fall " +
+        "because borrowers went elsewhere, not because they need less.",
+    },
+    sloosSmall: {
+      key: "sloosSmall", group: "credit", format: "pp", direction: "context",
+      label: "Bank lending standards, small firms",
+      subtitle: "DRTSCIS",
+      formula: "Net percentage of domestic banks tightening standards for C&I loans to small firms (tightening − easing); quarterly",
+      definition:
+        "The same survey question as the large-and-middle-market tile, " +
+        "asked about small firms.",
+      interpretation:
+        "Small-firm standards usually tighten first and ease last. A gap " +
+        "opening between the two series is banks rationing by size.",
+      watch:
+        "Quarterly, about 40 points in ten years. Small firms in the survey " +
+        "are smaller than most direct-lending borrowers.",
+    },
+    nfci: {
+      key: "nfci", group: "credit", format: "index", direction: "context",
+      label: "Financial conditions",
+      subtitle: "NFCI · Chicago Fed National Financial Conditions Index",
+      formula: "Chicago Fed composite of money-market, debt, equity and banking-system indicators, scaled so zero is the long-run average; weekly",
+      definition:
+        "One number for how easy or hard it is to get financing across US " +
+        "money, bond and equity markets and the banking system.",
+      interpretation:
+        "Positive is tighter than average, negative looser. A reading well " +
+        "below zero with tight spreads is an easy-money regime; the risk " +
+        "is how fast it can reverse.",
+      watch:
+        "A composite: it cannot say which market is tightening. Read it " +
+        "with the spread tiles for the where.",
+    },
+    stlfsi: {
+      key: "stlfsi", group: "credit", format: "index", direction: "context",
+      label: "Financial stress",
+      subtitle: "STLFSI4 · St. Louis Fed Financial Stress Index",
+      formula: "Built from 18 weekly series (seven interest rates, six yield spreads, five other indicators), scaled so the average since late 1993 is zero; weekly",
+      definition:
+        "A weekly stress gauge built from rates, spreads and volatility " +
+        "measures. Above zero is above-average stress.",
+      interpretation:
+        "Spikes mark the weeks credit markets seized. Between spikes it " +
+        "drifts; the level matters less than a sudden jump.",
+      watch:
+        "Version 4 of the index, which swapped in forward-looking 90-day " +
+        "SOFR; earlier versions are not comparable. Weekly, so it can lag " +
+        "a fast-moving week by a few days.",
+    },
+    t10y2y: {
+      key: "t10y2y", group: "credit", format: "pp", direction: "context",
+      label: "10-year minus 2-year Treasury",
+      subtitle: "T10Y2Y",
+      formula: "10-year Treasury constant-maturity yield − 2-year constant-maturity yield; daily, percentage points",
+      definition:
+        "The slope of the Treasury curve. Below zero the curve is inverted, " +
+        "which has preceded most US recessions.",
+      interpretation:
+        "For a floating-rate lender the front end is what matters; the " +
+        "slope says whether the market expects that base rate to fall. " +
+        "A re-steepening after inversion has often marked the turn.",
+      watch:
+        "A signal with long and variable lead times, and the shading on " +
+        "the long charts (USREC) is the only test of it the page draws.",
+    },
+    prime: {
+      key: "prime", group: "credit", format: "pp", direction: "context",
+      label: "Prime rate",
+      subtitle: "DPRIME · bank prime loan rate",
+      formula: "Rate posted by a majority of the 25 largest insured US-chartered commercial banks, from the Fed's H.15 release; daily, percent",
+      definition:
+        "One of the base rates banks use to price short-term business " +
+        "loans; small-business and revolving loans are often priced off it.",
+      interpretation:
+        "Prime moves in steps with Fed decisions while SOFR moves daily; " +
+        "the gap between them is the bank's built-in margin on prime-based " +
+        "loans.",
+      watch:
+        "BDC schedules price off SOFR, SONIA and EURIBOR, not prime; it " +
+        "is here as the bank-market comparison, not as a loan base rate.",
+    },
+    ndfiShare: {
+      key: "ndfiShare", group: "credit", format: "pp", direction: "context",
+      label: "Bank loans to non-bank lenders",
+      subtitle: "LNFACBW027SBOG ÷ TOTBKCR · share of bank credit",
+      formula: "Bank loans to nondepository financial institutions ÷ total bank credit, both from the Fed's H.8 release; weekly, percent",
+      definition:
+        "How much of bank credit now goes to non-bank lenders (private " +
+        "credit funds, BDCs, finance companies) rather than to businesses " +
+        "directly. The banks' exposure to private credit, at one remove.",
+      interpretation:
+        "The share was 10.1% in the week of Jul 1 2026 against 3.5% in " +
+        "June 2016 (both series fetched 2026-09-11): banks lend to the " +
+        "lenders instead of the borrowers. Rising share means the two " +
+        "systems are more entangled.",
+      watch:
+        "A share of bank credit, not of bank assets, which is a smaller " +
+        "figure. The loan series starts in January 2015, so no ten-year " +
+        "percentile before 2025.",
+    },
+
+    spreadLadder: {
+      key: "spreadLadder", group: "credit", format: "chart", direction: "context",
+      label: "Spread ladder",
+      subtitle: "OAS by rating rung, bps",
+      formula: "Latest OAS for IG, BB, HY, B and CCC in bps; the BDC composite spread over base and LCD's new-issue direct-lending LBO spread join as the BDC layer and the deck ingest land",
+      definition:
+        "Every rung of the credit market on one scale, from investment " +
+        "grade to CCC, with the private-loan spread placed against it.",
+      interpretation:
+        "Read the gaps: CCC minus BB is dispersion; a private loan spread " +
+        "far above single-B OAS is the illiquidity and control premium. " +
+        "Where LCD's population meets the site's, direction, not level.",
+      watch:
+        "Bond OAS is over Treasuries; loan spread is over SOFR. One scale, " +
+        "two bases. The composite bar and the LCD dot are absent until " +
+        "the schedules are parsed and the deck is ingested.",
+    },
+    yieldStack: {
+      key: "yieldStack", group: "credit", format: "chart", direction: "context",
+      label: "Yield stack",
+      subtitle: "SOFR and the high-yield yield, 10 years, monthly",
+      formula: "SOFR, the high-yield effective yield and, once computed, the BDC composite total-investment-income yield on average cost; monthly, percent",
+      definition:
+        "The base rate, the public high-yield alternative and what BDC " +
+        "books actually earn, on one axis over ten years.",
+      interpretation:
+        "The gap between the composite and the HY yield is the private " +
+        "credit premium; the gap between the composite and SOFR is the " +
+        "floating-rate carry. Both narrow as base rates fall.",
+      watch:
+        "The ICE yield has three years of history on FRED, so its line " +
+        "starts in 2023 while SOFR runs from 2018. The composite line " +
+        "arrives when the schedules of investments are parsed and states its n.",
+    },
+    bdcVsLoans: {
+      key: "bdcVsLoans", group: "credit", format: "chart", direction: "context",
+      label: "Listed BDCs vs leveraged loans",
+      subtitle: "BIZD vs SRLN (BKLN as the alternative), 5 years, monthly",
+      formula: "Monthly closes rebased to 100 at the first month; the total-return view uses the adjusted close (dividends reinvested), the price view the plain close",
+      definition:
+        "The one daily public price of private credit (the BDC ETF) " +
+        "against the syndicated loan market (a loan ETF), each divided by " +
+        "its own starting value so both begin at 100.",
+      interpretation:
+        "The market's mark on BDC books moves months ahead of the " +
+        "quarterly NAV marks. BDCs pay high distributions, so the price " +
+        "line can fall while the total-return line rises; the toggle " +
+        "and caption say which is shown.",
+      watch:
+        "Adjusted close restates history at every distribution, so the " +
+        "total-return line changes shape over time. The five-year figures " +
+        "in the caption are computed at build, never typed.",
     },
   };
 
