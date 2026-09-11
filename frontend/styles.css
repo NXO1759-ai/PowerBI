@@ -101,12 +101,6 @@ body {
 .nav-tab:hover { color: var(--kimi-color-text-primary); }
 .nav-tab:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 2px; }
 .nav-tab.active { color: var(--rt-gold); background: var(--rt-gold-tint); font-weight: 500; }
-.nav-tab.soon { color: var(--kimi-color-text-tertiary); cursor: default; }
-.soon-pill {
-  font-size: 10px; color: var(--kimi-color-text-tertiary);
-  border: 1px solid var(--kimi-color-border-strong); border-radius: 999px;
-  padding: 1px 7px; margin-left: 6px;
-}
 .tab-short { display: none; }
 .topbar-right { margin-inline-start: auto; flex: none; }
 #about-btn {
@@ -457,7 +451,6 @@ td.na, .na { color: var(--kimi-color-text-tertiary); }
      fits on one line without scrolling. */
   .tab-long { display: none; }
   .tab-short { display: inline; }
-  .soon-pill { font-size: 9px; margin-left: 4px; padding: 1px 4px; }
   .nav-tab { font-size: 12.5px; padding: 7px 7px; }
 }
 @media (max-width: 680px) {

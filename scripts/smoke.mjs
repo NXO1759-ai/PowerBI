@@ -163,6 +163,55 @@ await run("pull without a cik answers 400 JSON", "../api/pull.js",
 console.log("macro / notes");
 await run("macro", "../api/macro.js", { query: { force: "1" } }, (res) =>
   res.code === 200 && isObj(res.body.leading) && isObj(res.body.lagging) ? true : "unexpected " + res.code);
+
+/* ---- credit macro (the credit page's conditions strip) -----------------
+   Twenty-two FRED series, keyless through the public CSV. The strip's
+   eight tiles are printed so a reviewer can read the live values off
+   the run; the assertions are ranges, since the values move daily. */
+const CREDIT_IDS = ["BAMLH0A0HYM2", "BAMLC0A0CM", "BAMLH0A1HYBB", "BAMLH0A2HYB", "BAMLH0A3HYC", "BAMLH0A0HYM2EY",
+  "SOFR", "SOFR90DAYAVG", "BAA10Y", "DRTSCILM", "DRBLACBS", "CORBLACBS", "BUSLOANS", "DRSDCILM", "DRTSCIS",
+  "NFCI", "STLFSI4", "T10Y2Y", "DPRIME", "LNFACBW027SBOG", "TOTBKCR", "USREC"];
+const TILE_IDS = ["BAMLH0A0HYM2", "BAMLC0A0CM", "BAMLH0A1HYBB", "BAMLH0A2HYB", "BAMLH0A3HYC", "BAMLH0A0HYM2EY",
+  "SOFR", "SOFR90DAYAVG", "BAA10Y", "DRTSCILM", "DRBLACBS", "CORBLACBS"];
+const creditRes = await run("credit-macro — 22 FRED series, percentiles, recessions, the H.8 share", "../api/credit-macro.js",
+  { query: { force: "1" } }, (res) => {
+    if (res.code !== 200) return "expected 200, got " + res.code + ": " + ((res.body && res.body.error) || "");
+    const b = res.body;
+    if (!isObj(b.series) || b.source !== "FRED" || typeof b.keyed !== "boolean") return "shape wrong";
+    const present = CREDIT_IDS.filter((id) => isObj(b.series[id]) && !b.series[id].error && isObj(b.series[id].latest));
+    if (present.length < 20) return "only " + present.length + " of 22 series answered: missing " +
+      CREDIT_IDS.filter((id) => !present.includes(id)).join(", ");
+    const cutoff = new Date(Date.now() - 45 * 864e5).toISOString().slice(0, 10);
+    for (const id of present) {
+      const s = b.series[id];
+      if (s.freq === "daily" && s.latest.d < cutoff) return id + " is stale: " + s.latest.d;
+      if (!isObj(s.percentile) || typeof s.percentile.p !== "number" || !s.percentile.n ||
+          !s.percentile.windowStart || !s.percentile.windowEnd || !s.percentile.windowLabel) return id + " lacks its percentile";
+      if (!Array.isArray(s.sparkline) || !Array.isArray(s.history) || !s.history.length) return id + " lacks its history";
+    }
+    const hy = b.series.BAMLH0A0HYM2;
+    if (!hy || hy.error) return "no high-yield OAS";
+    if (!(hy.latest.v > 1 && hy.latest.v < 15)) return "HY OAS out of range: " + hy.latest.v;
+    if (hy.percentile.windowLabel !== "3-year") return "HY OAS window label is " + hy.percentile.windowLabel;
+    if (!Array.isArray(b.recessions) || !b.recessions.length) return "no recession bands";
+    const share = b.derived && b.derived.ndfiShare;
+    if (!isObj(share) || !isObj(share.latest) || !(share.latest.v > 5 && share.latest.v < 20)) {
+      return "H.8 share out of range: " + JSON.stringify(share && share.latest);
+    }
+    return true;
+  });
+if (creditRes && creditRes.code === 200) {
+  for (const id of TILE_IDS) {
+    const s = creditRes.body.series[id];
+    console.log("         " + id.padEnd(15) + (s && !s.error ? s.latest.v + " (" + s.latest.d + ", p" + s.percentile.p + " " + s.percentile.windowLabel + ")" : "failed"));
+  }
+}
+await run("credit-macro answers the next call from its cache", "../api/credit-macro.js",
+  { query: {} }, (res) =>
+    res.code === 200 && creditRes && res.body.generated === creditRes.body.generated &&
+    /s-maxage/.test(String(res.headers["Cache-Control"])) ? true : "expected the cached payload, got HTTP " + res.code);
+/* ---- end credit macro --------------------------------------------------- */
+
 await run("fsa-note without key answers 503 or 200", "../api/fsa-note.js",
   { method: "POST", body: { ticker: "NVDA", periodLabel: "smoke", facts: ["a", "b", "c"] } },
   (res) => (res.code === 503 || res.code === 200 || res.code === 502) ? true : "unexpected " + res.code);
@@ -186,6 +235,40 @@ await run("release NVDA — outlook and reconciliation from the 8-K exhibit", ".
 await run("release AVEX — a new listing may have no release yet", "../api/release.js",
   { query: { cik: "2096300", force: "1" } }, (res) =>
     res.code === 200 || res.code === 404 ? true : "unexpected " + res.code);
+
+/* ---- price history (the credit page's BDC-against-loans chart) ----------
+   Five years of monthly closes, keyless through Yahoo when Finnhub's plan
+   has no candles. 61 points were verified on 2026-09-11; 55 leaves room
+   for a provider that trims the first bar or omits the live tail. A
+   provider that refuses the runner (Yahoo answers 429 to some cloud
+   addresses) is logged, not counted: the parsing paths are covered
+   offline by test-price-history.mjs, and a refusal is not a code fault. */
+console.log("price history");
+for (const t of ["BIZD", "SRLN"]) {
+  await run("price-history " + t + " — five years, monthly, close and adjusted close", "../api/price-history.js",
+    { query: { ticker: t } }, (res) => {
+      if (res.code === 502 && isObj(res.body) && typeof res.body.error === "string") {
+        console.log("         warning: " + t + " — both providers refused (" + res.body.error.slice(0, 120) + "); the shape checks did not run");
+        return true;
+      }
+      if (res.code !== 200) return "expected 200, got " + res.code + ": " + ((res.body && res.body.error) || "");
+      const b = res.body;
+      if (b.ticker !== t || b.interval !== "1mo" || b.range !== "5y") return "shape wrong: " + JSON.stringify(b).slice(0, 100);
+      if (!["finnhub", "yahoo"].includes(b.source)) return "unknown source " + b.source;
+      if (!Array.isArray(b.points) || b.n !== b.points.length || b.n < 55) return "too few points: " + b.n;
+      for (const p of b.points) {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(p.d)) return "bad date " + p.d;
+        if (!Number.isFinite(p.close)) return "close not finite at " + p.d;
+        /* Finnhub candles carry no dividend-adjusted close; Yahoo's do */
+        if (b.source === "yahoo" && !Number.isFinite(p.adjClose)) return "adjClose not finite at " + p.d;
+      }
+      return true;
+    });
+}
+await run("price-history without a ticker answers 400 JSON", "../api/price-history.js",
+  { query: {} }, (res) =>
+    res.code === 400 && isObj(res.body) && res.body.error ? true : "expected a 400 with a JSON error");
+/* ---- end price history ---------------------------------------------- */
 
 console.log("");
 console.log(results.length + " checks, " + failures + " failed");

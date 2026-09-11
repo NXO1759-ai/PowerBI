@@ -37,6 +37,18 @@ jobs:
       - name: Untagged interim reports against a real 6-K exhibit
         run: node scripts/test-interim.mjs
 
+      - name: FRED reader against real downloads
+        run: node scripts/test-fred.mjs
+
+      - name: Monthly price history against a real Yahoo reply
+        run: node scripts/test-price-history.mjs
+
+      - name: Glossary terms, the generator and the hover wrapper
+        run: node scripts/test-credit-terms.mjs
+
+      - name: Navigation on four pages and the credit captions
+        run: node scripts/test-nav.mjs
+
       - name: API replies are read without leaking a parser error
         run: node scripts/test-http.mjs
 

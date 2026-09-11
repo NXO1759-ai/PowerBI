@@ -1,0 +1,194 @@
+/* ==========================================================================
+   credit.css — Private Credit Terminal.
+   Extends styles.css, statements.css and strategy.css; every color comes
+   from their tokens so the four dashboards stay one system. The
+   conditions strip is flat tiles on the page ground with one rule between
+   them; only the chart sections are cards.
+   ========================================================================== */
+
+.hero-id .meta { max-inline-size: 78ch; line-height: 1.55; display: block; }
+.fsa-controls .refresh-btn { min-block-size: 30px; }
+
+/* ---- the conditions strip: tiles, not cards ---- */
+.credit-strip { padding-bottom: 6px; }
+.tile-grid {
+  display: grid; gap: 0 22px;
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+  border-top: 1px solid var(--kimi-color-border);
+}
+.tile {
+  padding: 14px 0 13px; min-inline-size: 0;
+  border-bottom: 1px solid var(--kimi-color-border);
+  display: flex; flex-direction: column; gap: 4px;
+}
+.tile-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.tile-label {
+  font: inherit; font-size: 10.5px; font-weight: 600; letter-spacing: .05em;
+  text-transform: uppercase; color: var(--kimi-color-text-tertiary);
+  background: none; border: 0; padding: 0; cursor: help; text-align: start;
+}
+.tile-label span { border-bottom: 1px dotted var(--kimi-color-text-quaternary); }
+.tile-label:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 2px; border-radius: 3px; }
+.tile-asof { font-size: 10.5px; color: var(--kimi-color-text-quaternary); font-family: var(--rt-font-mono); white-space: nowrap; }
+.tile-value {
+  font-family: var(--rt-font-mono); font-size: 24px; font-weight: 600;
+  line-height: 1.1; font-variant-numeric: tabular-nums; color: var(--kimi-color-text-primary);
+}
+.tile-value .unit { font-size: 13px; font-weight: 500; color: var(--kimi-color-text-tertiary); }
+.tile-value.na { font-size: 15px; font-weight: 500; color: var(--kimi-color-text-tertiary); font-family: var(--rt-font-sans); }
+.tile-change { font-size: 11px; font-variant-numeric: tabular-nums; color: var(--kimi-color-text-tertiary); font-family: var(--rt-font-mono); }
+.tile-reading {
+  font-size: 12px; line-height: 1.5; color: var(--kimi-color-text-secondary); margin: 2px 0 0;
+}
+.tile-reading .regime { color: var(--rt-gold); font-weight: 600; }
+.tile-spark { display: block; inline-size: 100%; block-size: 44px; margin-top: 6px; }
+.tile-spark svg { display: block; inline-size: 100%; block-size: 44px; overflow: visible; }
+/* the percentile marker: a track for the window, a tick where today sits */
+.tile-pct { display: flex; align-items: center; gap: 8px; margin-top: 4px; font-size: 10.5px; color: var(--kimi-color-text-tertiary); font-family: var(--rt-font-mono); }
+.tile-pct .track { position: relative; flex: 1 1 auto; block-size: 5px; border-radius: 3px; background: var(--kimi-color-surface-muted); }
+.tile-pct .track i { position: absolute; inset-block: -3px; inline-size: 3px; margin-inline-start: -1px; border-radius: 2px; background: var(--rt-gold); }
+.tile-pct .pct-label { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.tile-foot {
+  font-size: 10.5px; line-height: 1.5; color: var(--kimi-color-text-quaternary);
+  font-family: var(--rt-font-mono); margin: 6px 0 0; overflow-wrap: anywhere;
+}
+.tile-foot .term, .chart-caption .term { color: inherit; }
+/* a ladder tile: three series stacked as rows inside one tile */
+.tile-rows { display: grid; gap: 5px; margin-top: 2px; }
+.tile-row { display: grid; grid-template-columns: minmax(4.6em, auto) 1fr auto auto; align-items: center; gap: 8px; font-size: 11.5px; }
+.tile-row .r-id { font-family: var(--rt-font-mono); color: var(--kimi-color-text-tertiary); font-size: 10.5px; white-space: nowrap; }
+.tile-row .r-id[data-metric] { border-bottom: 1px dotted var(--kimi-color-text-quaternary); cursor: help; justify-self: start; }
+.tile-row .r-id[data-metric]:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 2px; border-radius: 3px; }
+.tile-row .r-spark { block-size: 22px; min-inline-size: 0; }
+.tile-row .r-spark svg { display: block; inline-size: 100%; block-size: 22px; overflow: visible; }
+.tile-row .r-val { font-family: var(--rt-font-mono); font-weight: 600; font-variant-numeric: tabular-nums; color: var(--kimi-color-text-primary); }
+.tile-row .r-pct { font-family: var(--rt-font-mono); font-size: 10.5px; color: var(--kimi-color-text-tertiary); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.tile-row .r-val.na, .tile-row .r-pct.na { color: var(--kimi-color-text-quaternary); font-weight: 400; }
+
+/* the secondary strip behind the disclosure */
+.more-conditions { margin-top: 10px; }
+.more-conditions > summary {
+  cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12.5px; color: var(--kimi-color-text-secondary); user-select: none; min-block-size: 32px;
+}
+.more-conditions > summary::-webkit-details-marker { display: none; }
+.more-conditions > summary::before { content: "\25B8"; font-size: 10px; line-height: 1; }
+.more-conditions[open] > summary::before { content: "\25BE"; }
+.more-conditions > summary:hover { color: var(--rt-gold); }
+.tile-grid-small { grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr)); margin-top: 6px; }
+.tile-grid-small .tile { padding: 11px 0 10px; }
+.tile-grid-small .tile-value { font-size: 19px; }
+.tile-grid-small .tile-spark, .tile-grid-small .tile-spark svg { block-size: 30px; }
+.ndfi-block { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--kimi-color-border); }
+.ndfi-block .ndfi-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.ndfi-block .ndfi-value { font-family: var(--rt-font-mono); font-size: 22px; font-weight: 600; color: var(--kimi-color-text-primary); font-variant-numeric: tabular-nums; }
+.ndfi-block .ndfi-chart { inline-size: 100%; margin-top: 6px; }
+.ndfi-block .ndfi-chart svg { display: block; inline-size: 100%; block-size: auto; }
+.ndfi-block .ndfi-chart svg text { font-family: var(--rt-font-mono); }
+
+/* ---- charts ---- */
+.chart-controls { display: flex; align-items: center; justify-content: space-between; gap: 10px 16px; flex-wrap: wrap; margin: 0 0 8px; }
+.chart-legend { display: inline-flex; flex-wrap: wrap; gap: 12px; font-size: 11px; color: var(--kimi-color-text-tertiary); }
+.chart-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.chart-legend i { inline-size: 14px; block-size: 3px; border-radius: 2px; display: inline-block; }
+.chart-legend i.dash { background: repeating-linear-gradient(90deg, currentColor 0 3px, transparent 3px 6px); }
+.chart-box { position: relative; inline-size: 100%; block-size: 300px; }
+.chart-box canvas { display: block; inline-size: 100% !important; block-size: 100% !important; }
+#m1-chart { block-size: auto; }
+/* the spread ladder: one scale, thin bars, tabular labels */
+.ladder { display: grid; gap: 7px; max-inline-size: 900px; padding: 4px 0 2px; }
+.ladder-row { display: grid; grid-template-columns: minmax(6.5em, 9em) 1fr 4.2em; align-items: center; gap: 10px; }
+.ladder-row .l-label { font-size: 12px; color: var(--kimi-color-text-secondary); text-align: end; }
+.ladder-row .l-track { position: relative; block-size: 16px; }
+.ladder-row .l-track i { position: absolute; inset-block: 1px; inset-inline-start: 0; background: #6b6f78; border-radius: 0 3px 3px 0; min-inline-size: 2px; }
+.ladder-row .l-track i.accent { background: var(--rt-gold); }
+.ladder-row .l-val { font-family: var(--rt-font-mono); font-size: 12.5px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--kimi-color-text-primary); }
+.ladder-row .l-val.na, .ladder-row .l-na { color: var(--kimi-color-text-quaternary); font-weight: 400; font-size: 11px; }
+.ladder-row .l-slot {
+  position: absolute; inset-block: 0; inset-inline-start: 0; display: flex; align-items: center;
+  border: 1px dashed var(--rt-gold-border); border-radius: 3px; padding: 0 8px;
+  font-family: var(--rt-font-mono); font-size: 10.5px; color: var(--kimi-color-text-tertiary); white-space: nowrap; overflow: hidden;
+}
+.ladder-row.slot .l-label { color: var(--kimi-color-text-tertiary); }
+.ladder-row.scale { margin-top: 2px; }
+.ladder-row.scale .l-track { block-size: 14px; border-top: 1px solid var(--kimi-color-border); }
+.ladder-row.scale .l-track b { position: absolute; inset-block-start: -1px; inline-size: 1px; block-size: 5px; background: var(--kimi-color-border-strong); }
+.ladder-row.scale .l-track b span {
+  position: absolute; inset-block-start: 6px; inset-inline-start: 0; transform: translateX(-50%);
+  font-family: var(--rt-font-mono); font-size: 9.5px; font-weight: 400; color: var(--kimi-color-text-tertiary);
+}
+.chart-empty {
+  padding: 26px 0; text-align: center; color: var(--kimi-color-text-tertiary); font-size: 12.5px;
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+}
+/* the message is one flex item, so the series ids wrapped as hover terms
+   reflow inside it at phone width instead of lining up as items */
+.chart-empty > span { max-inline-size: 60ch; overflow-wrap: anywhere; }
+.chart-caption { font-variant-numeric: tabular-nums; }
+.chart-caption strong { font-family: var(--rt-font-mono); }
+
+/* ---- placeholder views ---- */
+.plan-list { margin: 4px 0 12px; padding-inline-start: 20px; display: grid; gap: 8px; max-inline-size: 84ch; }
+.plan-list li { font-size: 12.5px; line-height: 1.6; color: var(--kimi-color-text-secondary); }
+.plan-list li strong { color: var(--kimi-color-text-primary); font-weight: 600; }
+
+/* ---- glossary ---- */
+.glossary-controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 12px; }
+.glossary-filter { display: flex; align-items: center; gap: 8px; flex: 1 1 260px; max-inline-size: 420px; }
+#glossary-q {
+  font: inherit; font-size: 13px; color: var(--kimi-color-text-primary);
+  background: var(--input-bg); border: 1px solid var(--kimi-color-border-strong);
+  border-radius: 7px; padding: 7px 10px; min-block-size: 34px; inline-size: 100%;
+}
+#glossary-q:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 2px; }
+.glossary-count { font-size: 11.5px; color: var(--kimi-color-text-tertiary); font-family: var(--rt-font-mono); }
+.gl-side { margin-top: 14px; }
+.gl-side > h3 { font-size: 13px; font-weight: 600; margin: 0 0 4px; color: var(--rt-gold); }
+.gl-kind { margin-top: 10px; }
+.gl-kind > h4 {
+  font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--kimi-color-text-tertiary); margin: 0 0 4px;
+}
+.gl-entry { padding: 9px 0; border-top: 1px solid var(--kimi-color-surface-muted); }
+.gl-entry:first-of-type { border-top: 0; }
+.gl-term { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.gl-term b { font-size: 13px; font-weight: 600; color: var(--kimi-color-text-primary); }
+.gl-term .gl-exp { font-size: 12px; color: var(--kimi-color-text-secondary); overflow-wrap: anywhere; }
+/* XBRL element names run to sixty unbroken characters; break them rather than the page */
+.gl-def { font-size: 12.5px; line-height: 1.6; color: var(--kimi-color-text-secondary); margin: 3px 0 0; max-inline-size: 88ch; overflow-wrap: anywhere; }
+.gl-src { font-size: 11px; line-height: 1.5; color: var(--kimi-color-text-quaternary); margin: 3px 0 0; overflow-wrap: anywhere; }
+.gl-src a { color: var(--rt-gold); }
+.gl-empty { font-size: 12.5px; color: var(--kimi-color-text-tertiary); padding: 10px 0; }
+
+/* a chart heading with a catalog entry behind it */
+.h-pop { border-bottom: 1px dotted var(--kimi-color-text-quaternary); cursor: help; }
+.h-pop:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 2px; border-radius: 3px; }
+
+/* ---- hover terms and the term popup ---- */
+.term { border-bottom: 1px dotted var(--kimi-color-text-tertiary); cursor: help; border-radius: 2px; }
+.term:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 2px; }
+.metric-pop .pop-expansion { color: var(--kimi-color-text-tertiary); font-size: 11.5px; margin: 0 0 8px; }
+.metric-pop .pop-source, .metric-pop .pop-src { font-size: 10.5px; color: var(--kimi-color-text-quaternary); font-family: var(--rt-font-mono); overflow-wrap: anywhere; }
+
+/* ---- the workbook's hidden data tables ---- */
+.export-tables[hidden] { display: none; }
+
+@media (max-width: 680px) {
+  .fsa-controls { flex-direction: column; align-items: stretch; gap: 10px; }
+  .fsa-controls .seg { inline-size: 100%; }
+  .fsa-controls .seg button { flex: 1 1 auto; min-block-size: 42px; padding: 6px 6px; font-size: 12px; }
+  .fsa-controls .refresh-btn { inline-size: 100%; min-block-size: 44px; }
+  .tile-grid { grid-template-columns: 1fr; gap: 0; }
+  .tile-value { font-size: 22px; }
+  .chart-box { block-size: 240px; }
+  .chart-controls { align-items: flex-start; }
+  .chart-controls .seg button { min-block-size: 38px; }
+  .tile-row { grid-template-columns: minmax(4.2em, auto) 1fr auto; }
+  .tile-row .r-pct { grid-column: 2 / -1; justify-self: end; }
+  .glossary-filter { max-inline-size: none; }
+  .ladder-row { grid-template-columns: minmax(5.5em, 7em) 1fr 3.6em; gap: 8px; }
+  .ladder-row .l-label { font-size: 11px; }
+  .ladder-row .l-slot { font-size: 9.5px; padding: 0 5px; inline-size: 100% !important; }
+  /* half the scale labels at phone width, so none collide */
+  .ladder-row.scale .l-track b:nth-child(even) span { display: none; }
+}

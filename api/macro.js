@@ -29,6 +29,7 @@
  */
 
 import { jsonSafe } from "../scripts/lib/handler.mjs";
+import { fredSeries, asYoY, asRate, asLevel, round } from "../scripts/lib/fred.mjs";
 
 export const maxDuration = 30;
 
@@ -58,91 +59,8 @@ const SERIES = {
   UMCSENT: "level",         // consumer sentiment index
 };
 
-async function fredSeries(id, key) {
-  /* eleven years of raw data yields ten years of year-over-year */
-  const start = new Date(Date.now() - 4100 * 864e5).toISOString().slice(0, 10);
-  const url = "https://api.stlouisfed.org/fred/series/observations" +
-    "?series_id=" + id + "&api_key=" + key + "&file_type=json" +
-    "&observation_start=" + start + "&sort_order=asc";
-  const ctrl = new AbortController();
-  const t = setTimeout(() => ctrl.abort(), 12000);
-  try {
-    const r = await fetch(url, { signal: ctrl.signal });
-    if (!r.ok) return null;
-    const j = await r.json();
-    return (j.observations || [])
-      .map((o) => ({ date: o.date, value: Number(o.value) }))
-      .filter((o) => isFinite(o.value));
-  } catch (e) {
-    return null;
-  } finally {
-    clearTimeout(t);
-  }
-}
-
-/** Last observation of each calendar month — daily and weekly series
-    downsampled so every history draws at the same monthly rhythm. */
-function monthly(obs) {
-  if (!obs) return null;
-  const by = new Map();
-  for (const o of obs) by.set(o.date.slice(0, 7), o);
-  return [...by.values()];
-}
-
-const latest = (obs) => (obs && obs.length ? obs[obs.length - 1] : null);
-
-function atMonthsBack(obs, months) {
-  const now = latest(obs);
-  if (!now) return null;
-  const target = new Date(new Date(now.date) - months * 30.44 * 864e5).getTime();
-  let best = null, bestGap = Infinity;
-  for (const o of obs) {
-    const gap = Math.abs(new Date(o.date).getTime() - target);
-    if (gap < bestGap) { bestGap = gap; best = o; }
-  }
-  return best && bestGap <= 50 * 864e5 ? best : null;
-}
-
-const round = (v) => Math.round(v * 1e6) / 1e6;
-
-/** Index level → year-over-year rate, with a decade of the rate. */
-function asYoY(obs) {
-  const m = monthly(obs);
-  if (!m || m.length < 14) return null;
-  const hist = [];
-  for (let i = 12; i < m.length; i++) {
-    if (m[i - 12].value !== 0) {
-      hist.push([m[i].date, round(m[i].value / m[i - 12].value - 1)]);
-    }
-  }
-  if (!hist.length) return null;
-  const now = hist[hist.length - 1];
-  const ago = hist.length > 12 ? hist[hist.length - 13] : null;
-  return { value: now[1], period: now[0],
-           yearAgo: ago ? ago[1] : null, history: hist.slice(-120) };
-}
-
-/** A percentage series, as fractions, with its decade. */
-function asRate(obs) {
-  const m = monthly(obs);
-  if (!m || !m.length) return null;
-  const hist = m.map((o) => [o.date, round(o.value / 100)]);
-  const now = latest(m), ago = atMonthsBack(m, 12);
-  return { value: now.value / 100, period: now.date,
-           yoyPp: ago ? round((now.value - ago.value) / 100) : null,
-           history: hist.slice(-120) };
-}
-
-/** A raw level, with its decade and a year-over-year change. */
-function asLevel(obs) {
-  const m = monthly(obs);
-  if (!m || !m.length) return null;
-  const hist = m.map((o) => [o.date, o.value]);
-  const now = latest(m), ago = atMonthsBack(m, 12);
-  return { value: now.value, period: now.date,
-           yoy: ago && ago.value !== 0 ? round(now.value / ago.value - 1) : null,
-           history: hist.slice(-120) };
-}
+/* fredSeries, monthly, asYoY, asRate, asLevel and atMonthsBack live in
+   scripts/lib/fred.mjs, shared with api/credit-macro.js. */
 
 export default jsonSafe(async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
