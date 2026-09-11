@@ -1,0 +1,26 @@
+{
+ "startedAt": "2026-09-11T23:44:48.729Z",
+ "quarter": "CY2026Q2",
+ "universe": {
+  "framesCandidates": 229,
+  "rosterRows": 212,
+  "rosterUnanswered": false,
+  "withTicker": 126,
+  "rows": 53,
+  "submissionsUnanswered": [],
+  "noListingDate": []
+ },
+ "companiesAttempted": 53,
+ "companiesWritten": 53,
+ "companiesFailed": [],
+ "companiesRemoved": [],
+ "findings": [],
+ "errorCount": 0,
+ "warnCount": 0,
+ "flagCount": 565,
+ "framesFetched": 21,
+ "rateLimitHits": 0,
+ "bytesWritten": 8748238,
+ "finishedAt": "2026-09-11T23:45:50.776Z",
+ "durationSeconds": 62
+}

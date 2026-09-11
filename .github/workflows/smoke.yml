@@ -49,6 +49,15 @@ jobs:
       - name: Navigation on four pages and the credit captions
         run: node scripts/test-nav.mjs
 
+      - name: BDC series builder against ARCC and PSEC fixtures
+        run: node scripts/test-bdc-series.mjs
+
+      - name: Credit formulas against BXSL and MAIN pins
+        run: node scripts/test-credit-ratios.mjs
+
+      - name: BDC data files
+        run: node scripts/test-bdc-data.mjs
+
       - name: API replies are read without leaking a parser error
         run: node scripts/test-http.mjs
 
