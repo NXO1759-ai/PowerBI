@@ -4,3 +4,13 @@ loaders/db_config.json
 **/.pbi/cache.abf
 __pycache__/
 loaders/filing_cache/
+
+# PitchBook and LCD downloads are licensed study material: they stay on
+# the owner's machine and never enter the repository. The ingest's
+# manifest, the hand-keyed report files and the README are committed.
+data-sources/*
+!data-sources/README.md
+!data-sources/manifest.json
+!data-sources/reports/
+data-sources/reports/*
+!data-sources/reports/*.json

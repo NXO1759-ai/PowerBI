@@ -1,0 +1,75 @@
+{
+ "generated": "2026-09-11",
+ "slug": "pb-first-time-fund-managers-open",
+ "title": "First-Time Fund Managers (Open Funds)",
+ "editions": [
+  {
+   "slug": "pb-first-time-fund-managers-open",
+   "key": "pb_first_time_managers_open_list",
+   "title": "First-Time Fund Managers (Open Funds)",
+   "label": "First-time fund managers with open funds (five most recent)",
+   "edition": "2026-09-10",
+   "vintage": "2026-09-10",
+   "downloadedOn": "2026-09-10",
+   "filterLine": "Access Point: All; Fund Category: All; Fund Size: All; Vintage Year: All; Fund Location: World",
+   "chartFilters": "Access Point: All; Fund Category: All",
+   "currency": "USD",
+   "columns": [
+    {
+     "name": "Fund Name",
+     "kind": "text"
+    },
+    {
+     "name": "Fund Strategy",
+     "kind": "text"
+    },
+    {
+     "name": "Target Size",
+     "kind": "money"
+    },
+    {
+     "name": "Open Date",
+     "kind": "date"
+    }
+   ],
+   "header": [
+    "Fund Name",
+    "Fund Strategy",
+    "Target Size",
+    "Open Date"
+   ],
+   "rows": [
+    [
+     "BlackTech Capital Catalyst Cleantech Fund",
+     "Venture Capital - Early Stage",
+     "$1.43M",
+     "26-Aug-2026"
+    ],
+    [
+     "RCS Contrarian Office Fund",
+     "Real Estate Distressed",
+     "$350M",
+     "10-Aug-2026"
+    ],
+    [
+     "Innventure Food & Agtech Fund",
+     "Venture Capital - Early Stage",
+     "$30M",
+     "06-Aug-2026"
+    ],
+    [
+     "Nucleo Ventures Fund",
+     "Venture - General",
+     "$39.34M",
+     "23-Jun-2026"
+    ],
+    [
+     "Future of Mobility Fund",
+     "Venture - General",
+     "$50M",
+     "16-Jun-2026"
+    ]
+   ]
+  }
+ ]
+}

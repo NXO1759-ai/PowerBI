@@ -1,0 +1,65 @@
+{
+ "generated": "2026-09-11",
+ "slug": "pb-newly-opened-funds",
+ "title": "Newly Opened Funds",
+ "editions": [
+  {
+   "slug": "pb-newly-opened-funds",
+   "key": "pb_newly_opened_funds_list",
+   "title": "Newly Opened Funds",
+   "label": "Newly opened funds (five most recent)",
+   "edition": "2026-09-10",
+   "vintage": "2026-09-10",
+   "downloadedOn": "2026-09-10",
+   "filterLine": "Access Point: All; Fund Category: All; Fund Size: All; Vintage Year: All; Fund Location: World",
+   "chartFilters": "Access Point: All; Fund Category: All; Target Fund Size: All",
+   "currency": "USD",
+   "columns": [
+    {
+     "name": "Fund Name",
+     "kind": "text"
+    },
+    {
+     "name": "Fund Strategy",
+     "kind": "text"
+    },
+    {
+     "name": "Open Date",
+     "kind": "date"
+    }
+   ],
+   "header": [
+    "Fund Name",
+    "Fund Strategy",
+    "Open Date"
+   ],
+   "rows": [
+    [
+     "Fasanara Stable Fund",
+     "Debt - General",
+     "09-Sep-2026"
+    ],
+    [
+     "RBCx Growth Fund I",
+     "Growth/Expansion",
+     "09-Sep-2026"
+    ],
+    [
+     "Verras Capital Fund II",
+     "Venture - General",
+     "09-Sep-2026"
+    ],
+    [
+     "1789 Capital Fund II",
+     "Buyout",
+     "08-Sep-2026"
+    ],
+    [
+     "1789 US Fund II",
+     "Buyout",
+     "08-Sep-2026"
+    ]
+   ]
+  }
+ ]
+}

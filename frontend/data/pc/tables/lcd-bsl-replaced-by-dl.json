@@ -1,0 +1,115 @@
+{
+ "generated": "2026-09-11",
+ "slug": "lcd-bsl-replaced-by-dl",
+ "title": "Most recent direct lending deals that replaced broadly syndicated term loans",
+ "editions": [
+  {
+   "slug": "lcd-bsl-replaced-by-dl",
+   "edition": "2026-08",
+   "vintage": "2026-09-10",
+   "publishedAt": "2026-09-08T22:04:10Z",
+   "asOf": "2026-08-31",
+   "slide": 41,
+   "headline": "…while those leaving the BSL space find certainty of execution and competitive pricing",
+   "title": "Most recent direct lending deals that replaced broadly syndicated term loans",
+   "sourceLine": "Source: PitchBook | LCD  •  Geography: US  •  *As of Aug. 31, 2026",
+   "footnote": "Table is based on LCD News reporting.",
+   "recoveredFrom": "ppt/media/image7.emf (EMR_EXTTEXTOUTW records, 71 strings)",
+   "header": [
+    "Company name",
+    "Date",
+    "Debt amount ($M)",
+    "Current sponsor",
+    "Last BSL deal date",
+    "Lender(s)"
+   ],
+   "rows": [
+    [
+     "Learfield",
+     "Jul 2026",
+     "1,150",
+     "TPG Capital",
+     "Oct 2024",
+     "Oak Hill Advisors"
+    ],
+    [
+     "Clearwater Analytics Holdings Inc",
+     "Jul 2026",
+     "3,525",
+     "Permira Advisers and Warburg Pincus",
+     "Feb 2025",
+     "Goldman Sachs Private Credit, Ares, blue owl, Antares, Golub, Neuberger, CPP, KKR, Apollo, HPS"
+    ],
+    [
+     "GlobalTranz Enterprises",
+     "Jun 2026",
+     "4,815",
+     "Thoma Bravo",
+     "Mar 2025",
+     "Apollo, Ares, Blackstone, Blue Owl, Goldman Sachs, New Mountain, Oaktree, PSP, Silver Rock, Thoma Bravo"
+    ],
+    [
+     "Maravai Life Sciences Inc",
+     "Jun 2026",
+     "180",
+     "GTCR Golder Rauner",
+     "Jan 2022",
+     "Benefit Street Partners"
+    ],
+    [
+     "Topgolf Callaway Brands",
+     "Jun 2026",
+     "637",
+     "Leonard Green & Partners",
+     "Mar 2024",
+     "Ares"
+    ],
+    [
+     "Turtle Beach",
+     "May 2026",
+     "160",
+     "Not Sponsored",
+     "Aug 2025",
+     "Blue Torch"
+    ],
+    [
+     "MagicLab/Bumble",
+     "May 2026",
+     "525",
+     "Blackstone",
+     "Oct 2020",
+     "Alter Domus, Guggenheim"
+    ],
+    [
+     "Orbcomm",
+     "Apr 2026",
+     "460",
+     "GI Partners",
+     "Jun 2021",
+     "Carlyle, Bain Credit’s Private Credit Group, and Morgan Stanley Private Credit"
+    ],
+    [
+     "PLZ Aeroscience",
+     "Apr 2026",
+     "1,000",
+     "Pritzker",
+     "Feb 2021",
+     "Antares"
+    ],
+    [
+     "Bally's Corp",
+     "Mar 2026",
+     "1,100",
+     "Not Sponsored",
+     "Oct 2025",
+     "Ares Management, King Street Capital Management and TPG Credit"
+    ]
+   ],
+   "handKeyedCheck": {
+    "file": "lcd-monitor-2026-08-tables.json",
+    "cellsCompared": 60,
+    "differing": []
+   }
+  }
+ ]
+}

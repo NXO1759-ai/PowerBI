@@ -1,0 +1,65 @@
+{
+ "generated": "2026-09-11",
+ "slug": "pb-open-funds-largest-target",
+ "title": "Open Funds with Largest Target Sizes",
+ "editions": [
+  {
+   "slug": "pb-open-funds-largest-target",
+   "key": "pb_open_funds_largest_target_list",
+   "title": "Open Funds with Largest Target Sizes",
+   "label": "Open funds with the largest target sizes (top five)",
+   "edition": "2026-09-10",
+   "vintage": "2026-09-10",
+   "downloadedOn": "2026-09-10",
+   "filterLine": "Access Point: All; Fund Category: All; Fund Size: All; Vintage Year: All; Fund Location: World",
+   "chartFilters": "Access Point: All; Fund Category: All",
+   "currency": "USD",
+   "columns": [
+    {
+     "name": "Fund Name",
+     "kind": "text"
+    },
+    {
+     "name": "Fund Strategy",
+     "kind": "text"
+    },
+    {
+     "name": "Target Size",
+     "kind": "money"
+    }
+   ],
+   "header": [
+    "Fund Name",
+    "Fund Strategy",
+    "Target Size"
+   ],
+   "rows": [
+    [
+     "National Development and Reform Commission Guidance Fund",
+     "Venture - General",
+     "$148.61B"
+    ],
+    [
+     "National Growth Fund No 1",
+     "Growth/Expansion",
+     "$108.12B"
+    ],
+    [
+     "Gyrfalcon Fund",
+     "Venture - General",
+     "$100B"
+    ],
+    [
+     "Ningbo Black Ant No. 4 RMB Fund",
+     "Venture - General",
+     "$70.11B"
+    ],
+    [
+     "Rental Yield Plus",
+     "Real Estate Core",
+     "$50B"
+    ]
+   ]
+  }
+ ]
+}

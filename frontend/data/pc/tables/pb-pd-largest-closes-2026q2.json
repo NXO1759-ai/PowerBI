@@ -1,0 +1,52 @@
+{
+ "generated": "2026-09-11",
+ "slug": "pb-pd-largest-closes-2026q2",
+ "title": "Largest private debt fund closes, Q2 2026 (from the p.17 text)",
+ "editions": [
+  {
+   "slug": "pb-pd-largest-closes-2026q2",
+   "key": "pb_pd_largest_closes_2026q2",
+   "edition": "2026Q2",
+   "vintage": "2026-09-10",
+   "asOf": "2026-06-30",
+   "title": "Largest private debt fund closes, Q2 2026 (from the p.17 text)",
+   "doc": "fr2026q2",
+   "page": 17,
+   "geography": "Global",
+   "unit": {
+    "size": "$B",
+    "stepUp": "x"
+   },
+   "header": [
+    "fund",
+    "size",
+    "stepUp"
+   ],
+   "rows": [
+    [
+     "Barings Global Direct Lending Fund",
+     19,
+     null
+    ],
+    [
+     "Blackstone Capital Opportunities Fund V",
+     10,
+     1.1
+    ],
+    [
+     "Ares Pathfinder Fund III",
+     8.5,
+     1.3
+    ],
+    [
+     "Antares Senior Loan Fund III",
+     8.5,
+     1.4
+    ]
+   ],
+   "note": "p.17: Barings 'at $19 billion, was Q2's largest close and nearly double the size of the next-largest vehicle'; step-ups as printed. The full top-funds table on p.26 is not keyed here.",
+   "document": "Q2 2026 Global Private Market Fundraising Report",
+   "file": "pitchbook-global-fundraising-2026q2.json"
+  }
+ ]
+}

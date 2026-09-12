@@ -1,0 +1,65 @@
+name: PitchBook and LCD ingest — readers, mapping and replay against the fixture cuts
+
+# The raw monitor decks and workbook exports are licensed study material
+# and live only in the owner's local, gitignored data-sources/. The strict
+# ingest therefore runs on the owner's machine (data-sources/README.md,
+# drop procedure); here the reader, period, report and ingest tests run
+# against the committed fixture cuts and report files, so a change to the
+# readers, the mapping table or the hand-keyed series cannot land unproved.
+# Any push under data-sources/ (the manifest a local re-ingest rewrites
+# included) runs the guard that no raw download is tracked.
+on:
+  push:
+    paths:
+      - "scripts/lib/pc-*.mjs"
+      - "scripts/lib/zip-read.mjs"
+      - "scripts/lib/ooxml.mjs"
+      - "scripts/lib/pptx-charts.mjs"
+      - "scripts/lib/xlsx-read.mjs"
+      - "scripts/ingest-pc.mjs"
+      - "scripts/pc-map.json"
+      - "scripts/test-pc-*.mjs"
+      - "scripts/fixtures/pc/**"
+      - "data-sources/**"
+      - "frontend/data/pc/**"
+      - ".github/workflows/ingest-pc.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: ingest-pc-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ingest-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # No dependencies to install: everything is node:zlib, node:fs and
+      # hand-written XML reading.
+      - name: The deck reader against the six-slide cut of the August 2026 monitor
+        run: node scripts/test-pc-deck.mjs
+
+      - name: The workbook reader against the four-sheet cut of the Fund Overview export
+        run: node scripts/test-pc-workbook.mjs
+
+      - name: The period grammar on every label the deck and the workbook print
+        run: node scripts/test-pc-periods.mjs
+
+      - name: The hand-keyed report series and the press series
+        run: node scripts/test-pc-reports.mjs
+
+      - name: Mapping, extraction, vintage replay and the ingest script end to end
+        run: node scripts/test-pc-ingest.mjs
+
+      - name: No raw download is tracked
+        run: |
+          if git ls-files data-sources | grep -Ei '\.(pptx|xlsx|pdf)$'; then
+            echo "a raw PitchBook or LCD file is tracked; remove it from the index"
+            exit 1
+          fi
+          echo "only README.md, manifest.json and reports/*.json are tracked under data-sources/"
