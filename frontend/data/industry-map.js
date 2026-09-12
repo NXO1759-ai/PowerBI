@@ -153,6 +153,16 @@ window.INDUSTRY_MAP = {
   "sector": "Financials",
   "exchange": "NYSE"
  },
+ "APLD": {
+  "cik": 1144879,
+  "name": "Applied Digital Corp.",
+  "sic": "7374",
+  "sicName": "Services-Computer Processing & Data Preparation",
+  "industry": "AI infrastructure",
+  "sector": "Information Technology",
+  "exchange": "Nasdaq",
+  "override": "decision 12.18"
+ },
  "AVGO": {
   "cik": 1730168,
   "name": "Broadcom Inc.",
@@ -279,6 +289,16 @@ window.INDUSTRY_MAP = {
   "sector": "Communication Services",
   "exchange": "Nasdaq"
  },
+ "CIFR": {
+  "cik": 1819989,
+  "name": "Cipher Digital Inc.",
+  "sic": "6199",
+  "sicName": "Finance Services",
+  "industry": "AI infrastructure",
+  "sector": "Information Technology",
+  "exchange": "Nasdaq",
+  "override": "decision 12.18"
+ },
  "CMCSA": {
   "cik": 1166691,
   "name": "COMCAST CORP",
@@ -342,6 +362,16 @@ window.INDUSTRY_MAP = {
   "sector": "Information Technology",
   "exchange": "Nasdaq"
  },
+ "CRWV": {
+  "cik": 1769628,
+  "name": "CoreWeave, Inc.",
+  "sic": "7372",
+  "sicName": "Services-Prepackaged Software",
+  "industry": "AI infrastructure",
+  "sector": "Information Technology",
+  "exchange": "Nasdaq",
+  "override": "decision 12.18"
+ },
  "CSCO": {
   "cik": 858877,
   "name": "CISCO SYSTEMS, INC.",
@@ -394,6 +424,15 @@ window.INDUSTRY_MAP = {
   "sicName": "Services-Miscellaneous Amusement & Recreation",
   "industry": "Recreation & Entertainment",
   "sector": "Communication Services",
+  "exchange": "NYSE"
+ },
+ "DLR": {
+  "cik": 1297996,
+  "name": "DIGITAL REALTY TRUST, INC.",
+  "sic": "6798",
+  "sicName": "Real Estate Investment Trusts",
+  "industry": "Investment Offices",
+  "sector": "Financials",
   "exchange": "NYSE"
  },
  "DUK": {
@@ -539,6 +578,16 @@ window.INDUSTRY_MAP = {
   "industry": "Software & IT Services",
   "sector": "Information Technology",
   "exchange": "Nasdaq"
+ },
+ "IREN": {
+  "cik": 1878848,
+  "name": "IREN Ltd",
+  "sic": "6199",
+  "sicName": "Finance Services",
+  "industry": "AI infrastructure",
+  "sector": "Information Technology",
+  "exchange": "Nasdaq",
+  "override": "decision 12.18"
  },
  "JNJ": {
   "cik": 200406,
@@ -728,6 +777,16 @@ window.INDUSTRY_MAP = {
   "industry": "Semiconductors",
   "sector": "Information Technology",
   "exchange": "Nasdaq"
+ },
+ "NBIS": {
+  "cik": 1513845,
+  "name": "Nebius Group N.V.",
+  "sic": "7370",
+  "sicName": "Services-Computer Programming, Data Processing, Etc.",
+  "industry": "AI infrastructure",
+  "sector": "Information Technology",
+  "exchange": "Nasdaq",
+  "override": "decision 12.18"
  },
  "NEE": {
   "cik": 753308,
@@ -1161,6 +1220,16 @@ window.INDUSTRY_MAP = {
   "sector": "Consumer Discretionary",
   "exchange": "Nasdaq"
  },
+ "WULF": {
+  "cik": 1083301,
+  "name": "TERAWULF INC.",
+  "sic": "6199",
+  "sicName": "Finance Services",
+  "industry": "AI infrastructure",
+  "sector": "Information Technology",
+  "exchange": "Nasdaq",
+  "override": "decision 12.18"
+ },
  "XOM": {
   "cik": 34088,
   "name": "EXXON MOBIL CORP",
@@ -1240,6 +1309,7 @@ window.INDUSTRY_MEMBERS = {
  ],
  "Investment Offices": [
   "AMT",
+  "DLR",
   "EQIX",
   "PLD",
   "SPG",
@@ -1247,6 +1317,14 @@ window.INDUSTRY_MEMBERS = {
  ],
  "Specialty & Internet Retail": [
   "AMZN"
+ ],
+ "AI infrastructure": [
+  "APLD",
+  "CIFR",
+  "CRWV",
+  "IREN",
+  "NBIS",
+  "WULF"
  ],
  "Consumer & Specialty Finance": [
   "AXP"

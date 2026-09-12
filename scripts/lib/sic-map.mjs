@@ -111,7 +111,42 @@ export const INDUSTRY_GROUP = {
   873: ["Research Services", "Health Care"],
 };
 
-export function classify(sic, sicDescription) {
+/* Filers whose SIC code says nothing about what they do. The six
+   neoclouds of the build-out monitor (blueprint 15.0) carry either the
+   generic software codes (CoreWeave 7372, Nebius 7370, Applied Digital
+   7374) or 6199 "Finance Services", the bitcoin-mining legacy of IREN,
+   Cipher and TeraWulf — which files three data-center builders under
+   Consumer & Specialty Finance beside Capital One. Decision 12.18
+   (2026-09-11) names them "AI infrastructure" instead, whatever code
+   EDGAR carries, blank included. Keyed by CIK rather than ticker or
+   code: the CIK is the identity the financials travel under, so a
+   renamed filer (Cipher Mining became Cipher Digital on 2026-02-23) or
+   a reassigned SIC cannot lose the override, and no other 7372 or 6199
+   filer is touched. The sector is the roll-up of the three that already
+   sit in 737x. frontend/data/cohorts.json lists the same six with the
+   same label. */
+export const INDUSTRY_OVERRIDES = {
+  1769628: ["AI infrastructure", "Information Technology"], /* CRWV CoreWeave, Inc. */
+  1513845: ["AI infrastructure", "Information Technology"], /* NBIS Nebius Group N.V. */
+  1144879: ["AI infrastructure", "Information Technology"], /* APLD Applied Digital Corp. */
+  1878848: ["AI infrastructure", "Information Technology"], /* IREN IREN Ltd */
+  1819989: ["AI infrastructure", "Information Technology"], /* CIFR Cipher Digital Inc. */
+  1083301: ["AI infrastructure", "Information Technology"], /* WULF TERAWULF INC. */
+};
+
+/** The override for a filer, or null. Exported so a builder can say
+    which rows were classified by decision rather than by code. */
+export function overrideFor(cik) {
+  const hit = cik == null ? null : INDUSTRY_OVERRIDES[Number(cik)];
+  return hit ? { industry: hit[0], sector: hit[1] } : null;
+}
+
+/* classify(sic, sicDescription, cik): the CIK is optional and only
+   consulted for the override table above; every existing caller that
+   passes two arguments classifies exactly as before. */
+export function classify(sic, sicDescription, cik) {
+  const forced = overrideFor(cik);
+  if (forced) return forced;
   const code = Number(String(sic || "").slice(0, 4));
   const three = Math.floor(code / 10);
   const fine = INDUSTRY_GROUP[three];

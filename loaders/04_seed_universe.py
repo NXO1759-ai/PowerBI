@@ -29,7 +29,17 @@ UNIVERSE = {
     "Technology": ["AAPL","MSFT","NVDA","AVGO","ORCL","CRM","AMD","ADBE",
                    "CSCO","ACN","INTC","IBM","QCOM","TXN","AMAT","NOW",
                    "PANW","MU","SNPS","CDNS","INTU","ANET","KLAC","FTNT",
-                   "NXPI","MCHP","ADI","CRWD","PLTR","DDOG"],
+                   "NXPI","MCHP","ADI","CRWD","PLTR","DDOG",
+                   # the six neoclouds of the build-out monitor
+                   # (blueprint 15.0, frontend/data/cohorts.json), added
+                   # to frontend/data/coverage.js in PR H1. This key is
+                   # only the fallback when the SIC lookup fails; IREN,
+                   # CIFR and WULF carry SIC 6199 ("Finance Services",
+                   # their bitcoin-mining legacy), which sector_for_sic
+                   # maps to Financials. The site itself classifies all
+                   # six as "AI infrastructure" (scripts/lib/sic-map.mjs,
+                   # decision 12.18).
+                   "CRWV","NBIS","APLD","IREN","CIFR","WULF"],
     "Financials": ["BRK-B","JPM","V","MA","BAC","WFC","GS","MS","AXP",
                    "SPGI","BLK","C","PGR","SCHW","CME","CB","MMC","ICE",
                    "AON","COF","USB","PNC","BK","AFL","MET","PRU","TFC",
@@ -45,7 +55,11 @@ UNIVERSE = {
     "Energy": ["XOM","CVX","COP","SLB","EOG","MPC","PSX"],
     "Consumer Staples": ["WMT","COST","PG","KO","PEP","PM","MO"],
     "Utilities": ["NEE","SO","DUK","CEG","SRE"],
-    "Real Estate": ["PLD","AMT","EQIX","SPG","WELL"],
+    "Real Estate": ["PLD","AMT","EQIX","SPG","WELL",
+                    # Digital Realty, the second landlord of the build-out
+                    # monitor (Equinix was already here), added to
+                    # coverage.js in PR H1
+                    "DLR"],
     "Materials": ["LIN","SHW","FCX","NEM","ECL"],
 }
 

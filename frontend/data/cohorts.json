@@ -1,0 +1,233 @@
+{
+  "what": "The three cohorts of the hyperscaler and neocloud build-out monitor (blueprint section 15.0). Ticker, CIK and name as in company-index.js; fiscal year end as data.sec.gov/submissions reports it, verified 2026-09-11; the quirks the panel builder must know per filer. Hand-edited; the weekly refresh reads coverage.js, not this file.",
+  "verifiedOn": "2026-09-11",
+  "verifiedAgainst": "https://data.sec.gov/submissions/CIK##########.json (name, fiscalYearEnd, sic, formerNames, filings.recent), read through scripts/lib/sec-pull.mjs fetchSubmissions",
+  "landlordsDefault": false,
+  "landlordsDefaultWhy": "decision 12.16 (2026-09-11): Equinix and Digital Realty sit behind the cohort toggle, off by default",
+  "neocloudLabel": "AI infrastructure",
+  "neocloudLabelWhy": "decision 12.18 (2026-09-11): the SIC override label for the six neoclouds, applied by CIK in scripts/lib/sic-map.mjs INDUSTRY_OVERRIDES",
+  "quarterGrid": "keyed by period-end date, never by fiscal year and period: a column is the calendar quarter containing the period end. MSFT and IREN quarters end Mar/Jun/Sep/Dec and align without adjustment (the fiscal label shows on hover); ORCL and APLD quarters end Feb/May/Aug/Nov, sit in the calendar quarter of their period end, and every aggregate that includes them carries the footnote 'Oracle and Applied Digital quarters end one month before the calendar quarter'.",
+  "signConvention": "outflows (capex, buybacks, dividends, repayments) stored positive; proceeds positive; a line transcribed from a 'Less:' reconciliation keeps the cash-flow sign",
+  "historyStart": "A per-filer first period end (historyStart) where the CIK predates the company: scripts/build-strategy-panel.mjs cuts the companyfacts document to facts ending on or after it (trimHistory in scripts/lib/statements.mjs) before it builds the panel row, so the shell or predecessor years never reach the panel. The live panel route (api/panel.js) does not read this file; the six neoclouds are in the static panel, so that path is not reached for them.",
+  "hyperscalers": [
+    {
+      "ticker": "MSFT",
+      "cik": 789019,
+      "name": "MICROSOFT CORP",
+      "fyEndMonth": 6,
+      "fiscalYearEnd": "0630",
+      "filerType": "10-K",
+      "sic": "7372",
+      "notes": [
+        "June 30 fiscal year: FQ1 = calendar Q3, FQ2 = Q4, FQ3 = Q1, FQ4 = Q2; companyfacts fy=2026 fp=FY is the year to 2026-06-30. Hover label 'FQ4 FY26 = Apr-Jun 2026'.",
+        "Three-month cash-flow facts are tagged for FQ1-FQ3 only, so FQ4 is the 10-K annual minus the nine-month year-to-date: 115,948 - 80,146 = 35,802 for April to June 2026 (10-K acc 0001193125-26-323660).",
+        "Its own capex metric adds finance-lease additions (RightOfUseAssetObtainedInExchangeForFinanceLeaseLiability 24,608,000,000 FY2026); the tagged line and the company metric are never mixed in one series.",
+        "Depreciation is tagged as 'Depreciation' (34,300,000,000 FY2026), not DepreciationDepletionAndAmortization; the depreciationAmortization ladder must carry it.",
+        "Maturity buckets are fiscal-year buckets ('Year Ending June 30')."
+      ]
+    },
+    {
+      "ticker": "GOOG",
+      "cik": 1652044,
+      "name": "Alphabet Inc.",
+      "fyEndMonth": 12,
+      "fiscalYearEnd": "1231",
+      "filerType": "10-K",
+      "sic": "7370",
+      "notes": [
+        "Calendar year. Cash-flow facts are year-to-date after Q1, so Q2-Q4 are de-cumulated (H1 2026 capex 80,598,000,000; Q2 44,924 by differencing).",
+        "The CIK carries four tickers (GOOGL, GOOG, GOOGM, GOOGN); the cohort row is GOOG, the one in coverage.",
+        "Debt proceeds are ProceedsFromDebtNetOfIssuanceCosts (56,226,000,000 H1 2026); dividends PaymentsOfOrdinaryDividends (5,231,000,000 H1 2026); JV partner cash ProceedsFromMinorityShareholders (3,758,000,000 H1 2026). Purchase commitments moved from PurchaseObligation (7,700,000,000 at 2025-12-31) to LongTermPurchaseCommitmentAmount, a duration fact (232,700,000,000 to 2026-03-31; 707,000,000,000 to 2026-06-30); its uncommenced leases sit under the unrecorded tag (75,600,000,000 at 2026-03-31), served as unrecordedPurchaseObligations and labeled 'Leases not yet commenced'.",
+        "InterestExpense has no fact ending 2024 or later; InterestExpenseNonoperating is the live tag (1,278,000,000 Q2 2026)."
+      ]
+    },
+    {
+      "ticker": "AMZN",
+      "cik": 1018724,
+      "name": "AMAZON COM INC",
+      "fyEndMonth": 12,
+      "fiscalYearEnd": "1231",
+      "filerType": "10-K",
+      "sic": "5961",
+      "notes": [
+        "Calendar year. Tags three spans per cash-flow line (quarter, year-to-date, trailing twelve months), so facts are selected by (start, end), never by longest span: the TTM row (capex 173,028,000,000 to 2026-06-30) is the run-rate check value and must never land as a quarter or a year.",
+        "Capex is PaymentsToAcquireProductiveAssets (54,208,000,000 Q2 2026); its own free-cash-flow metric nets proceeds and incentives, so the gross tagged line and the company figure are shown side by side.",
+        "InterestExpense has no fact ending 2024 or later.",
+        "Q2 2026 10-Q acc 0001018724-26-000026 (filed 2026-07-31): the regression fixture for the duration fix (operating cash flow 45,387,000,000, period end 2026-06-30).",
+        "DebtInstrumentCarryingAmount is its NON-CURRENT carrying amount (128,894,000,000 at 2026-06-30, LongTermDebtNoncurrent to the dollar); the totalDebtPrincipal screen drops it and the ladder falls through to LongTermDebt, the face value (132,995,000,000)."
+      ]
+    },
+    {
+      "ticker": "META",
+      "cik": 1326801,
+      "name": "Meta Platforms, Inc.",
+      "fyEndMonth": 12,
+      "fiscalYearEnd": "1231",
+      "filerType": "10-K",
+      "sic": "7370",
+      "notes": [
+        "Calendar year. Cash-flow facts are year-to-date after Q1 (H1 2026 capex 49,113,000,000; Q1 18,997, so Q2 30,116).",
+        "Lease schedules and the finance-lease liability are tagged only in the 10-K (RightOfUseAssetObtainedInExchangeForFinanceLeaseLiability 613,000,000 FY2025, annual only).",
+        "UnrecordedUnconditionalPurchaseObligationBalanceSheetAmount 278,990,000,000 is its leases-not-yet-commenced figure, served under unrecordedPurchaseObligations (not purchaseObligations, which carries its 349,310,000,000 commitment table) and labeled 'Leases not yet commenced' through LABEL_OVERRIDES.",
+        "Its own capex metric adds finance leases (FY2025 company metric 72.22B against the tagged 69,691,000,000); the Louisiana and El Paso ventures are equity-method, so no partner cash appears in its statements."
+      ]
+    },
+    {
+      "ticker": "ORCL",
+      "cik": 1341439,
+      "name": "ORACLE CORP",
+      "fyEndMonth": 5,
+      "fiscalYearEnd": "0531",
+      "filerType": "10-K",
+      "sic": "7372",
+      "notes": [
+        "May 31 fiscal year: quarters end Aug 31, Nov 30, Feb 28/29 and May 31, one month before the calendar quarter; 2026-05-31 sits in the calendar-Q2 2026 column labeled 'FQ4 FY26, Mar-May', with the footnote on every aggregate. companyfacts fy=2026 fp=FY is the year to 2026-05-31.",
+        "Three-month cash-flow facts exist for Q1 only; Q2-Q4 are de-cumulated (FY2026 capex 55,663,000,000; FQ4 16,493 = 55,663 - 39,170).",
+        "companyfacts carries one placeholder row dated 2199-12-31; the feed filter caps period ends at today.",
+        "DebtInstrumentCarryingAmount leaks dimensioned issue sizes at 10-Q dates (18,000,000,000 at 2025-11-30; 43,000,000,000 at 2026-02-28) against 130,105,000,000 at 2026-05-31. The totalDebtPrincipal screen in scripts/lib/statements.mjs drops a row below half the debt on the balance sheet at the same date (99,984 + 8,091 and 124,718 + 9,887 million), so those two quarters serve null and a card shows 'last tagged 2026-05-31'; the balance-sheet lines (longTermDebt, shortTermDebt) carry the carrying total at every quarter.",
+        "The custom line 'Proceeds from short-term financing related to capital expenditures, net' is absent from companyfacts and is hand-keyed in cash-flow sign (FY2026 +3,345; FY2025 +1,422; Q1 FY27 -830). No InterestCostsCapitalized or MarketableSecuritiesCurrent tag.",
+        "Q1 FY2027 10-Q (quarter to 2026-08-31) was filed 2026-09-11, acc 0001193125-26-389274, the day this file was keyed; companyfacts may lag it by weeks.",
+        "Its 10-Q for the quarter to 2026-08-31 carries fy=2026 fp=Q1, the slot of the quarter to 2025-08-31; the overview shows the latest period end (Aug 31, 2026) and the statements label the later quarter Q1 FY2027."
+      ]
+    }
+  ],
+  "neoclouds": [
+    {
+      "ticker": "CRWV",
+      "cik": 1769628,
+      "name": "CoreWeave, Inc.",
+      "fyEndMonth": 12,
+      "fiscalYearEnd": "1231",
+      "filerType": "10-K",
+      "sic": "7372",
+      "label": "AI infrastructure",
+      "notes": [
+        "Calendar year; 10-K/10-Q/8-K filer (former Atlantic Crypto Corp to 2019-10-03). Latest 10-Q Q2 2026 acc 0001769628-26-000366 (filed 2026-08-12).",
+        "LongTermDebt is not re-tagged at Q2 2026 (last 2026-03-31, 24,859,000,000); the card shows 'last tagged 2026-03-31' and gross debt reads DebtInstrumentCarryingAmount 35,551,000,000 at 2026-06-30.",
+        "Convertible notes sit inside the generic ProceedsFromIssuanceOfLongTermDebt tag (16,747,000,000 H1 2026) and are split from the deal ledger, labeled 'ledger split'; no ProceedsFromConvertibleDebt tag.",
+        "All notes are Rule 144A, so issuance events surface only in 8-K Items 1.01 and 2.03, never as 424B prospectuses.",
+        "Its own capex metric is the change in gross PP&E including construction in progress (FY2025 company figure 14.9B against the tagged 10,309,000,000).",
+        "Equity: the 10-K files the IPO (1,491,000,000 for 2025) under ProceedsFromIssuanceInitialPublicOffering (ipoProceeds) and 0 under ProceedsFromIssuanceOfCommonStock, after the 10-Qs carried 67,669,000 of common-stock proceeds for the nine months, so the derived fourth quarter of equityIssued is not served (notDerivable); the private placements are ProceedsFromIssuanceOfPrivatePlacement (2,982,000,000 H1 2026, equityIssued)."
+      ]
+    },
+    {
+      "ticker": "NBIS",
+      "cik": 1513845,
+      "name": "Nebius Group N.V.",
+      "fyEndMonth": 12,
+      "fiscalYearEnd": null,
+      "filerType": "20-F",
+      "sic": "7370",
+      "historyStart": "2024-01-01",
+      "label": "AI infrastructure",
+      "notes": [
+        "Foreign private issuer (Netherlands N.V., formerly Yandex N.V. to 2024-08-16): 20-F annual, 6-K interim. fiscalYearEnd is null in the submissions feed; the year is the calendar year (20-F for the year to December 31). CIK 1073429, which one working note gave for Nebius, is U.S. Concrete, Inc.",
+        "Every 6-K carries isXBRL=0, so companyfacts holds annual USD facts only (FY2024, FY2025). Quarters come from the interim-report 6-K exhibits through scripts/lib/interim-parse.mjs, hand-keyed and proven in frontend/data/nbis-interims.json and scripts/test-nbis-interims.mjs. Interim reports with statements began with Q1 2026 (acc 0001104659-26-064092, filed 2026-05-20); Q2 2026 is acc 0001104659-26-094844 (filed 2026-08-12).",
+        "Two 6-Ks were filed on 2026-08-12: 0001104659-26-094568 (press release EX-99.1, shareholder letter EX-99.2) and 0001104659-26-094844 (OFR EX-99.1, financial statements EX-99.2). Cite the accession, never 'EX-99.2' alone.",
+        "companyfacts carries RUB-unit Yandex-era facts under the same concepts to 2023-12-31 and USD facts for the Yandex years from 2011; every pull filters unit = USD. historyStart 2024-01-01: the panel builder drops every fact ending before 2024, so the panel row starts at 2024 (the Yandex years never reach the panel or the AI-infrastructure aggregate). The statements route serves the whole document.",
+        "The annual anchor for the 6-K quarters is PaymentsToAcquirePropertyPlantAndEquipment 4,066,000,000 FY2025 (20-F acc 0001104659-26-052948); the 20-F/A of 2026-05-22 did not replace the tagged financials as of 2026-09-11.",
+        "Customer prepayments are recognised in operating cash flow (deferred revenue rose 4,395.0M in H1 2026), which lowers its capex-to-operating-cash-flow ratio; the popup says so. The March 2026 converts accrete: principal at maturity 3,105.0 and 2,100.0 at 2026-06-30 against $4.34B original."
+      ]
+    },
+    {
+      "ticker": "APLD",
+      "cik": 1144879,
+      "name": "Applied Digital Corp.",
+      "fyEndMonth": 5,
+      "fiscalYearEnd": "0531",
+      "filerType": "10-K",
+      "sic": "7374",
+      "label": "AI infrastructure",
+      "notes": [
+        "May 31 fiscal year, like Oracle: quarters end Aug 31, Nov 30, Feb 28/29 and May 31, one month before the calendar quarter, with the same footnote. Latest 10-K FY2026 acc 0001144879-26-000048 (filed 2026-07-29).",
+        "Capex is PaymentsToAcquireProductiveAssets (2,865,765,000 FY2026); PaymentsToAcquirePropertyPlantAndEquipment was last tagged 2023-08-31.",
+        "Debt raised is ProceedsFromIssuanceOfMediumTermNotes (4,955,327,000 FY2026) and repaid RepaymentsOfMediumTermNotes (521,512,000); preferred ProceedsFromIssuanceOfPreferredStockAndPreferenceStock 814,998,000 (never the rounded 815,000,000); Macquarie's units are ProceedsFromMinorityShareholders 1,825,000,000 and RedeemableNoncontrollingInterestEquityCarryingAmount 1,956,303,000.",
+        "RestrictedCashCurrent 2,381,027,000 at 2026-05-31 is escrowed 2031-note proceeds, released 2026-06-18; the revolver was upsized to $430M on 2026-06-26 (events after the balance-sheet date).",
+        "Backlog is LessorOperatingLeasePaymentsToBeReceived 35,844,882,000 with buckets, because its contracts are leases."
+      ]
+    },
+    {
+      "ticker": "IREN",
+      "cik": 1878848,
+      "name": "IREN Ltd",
+      "fyEndMonth": 6,
+      "fiscalYearEnd": "0630",
+      "filerType": "10-K",
+      "sic": "6199",
+      "label": "AI infrastructure",
+      "notes": [
+        "June 30 fiscal year, like Microsoft; quarters align with the calendar grid. A 10-K filer only since fiscal 2025 (first 10-K filed 2025-08-28), IFRS 20-F before; its us-gaap history under the same CIK starts at fiscal 2022. Still an Australian company (state of incorporation C3), so it files 8-Ks and historically 6-Ks. Former names Iris Energy Ltd (to 2024-11-29) and Iris Energy Pty Ltd.",
+        "PaymentsToAcquirePropertyPlantAndEquipment (2,998,006,000 FY2026) excludes its second capex line 'Payments for computer hardware' (1,335,081,000 FY2026), which carries no us-gaap tag. The hardware line is hand-keyed per span with its accession in frontend/data/capex-adjustments.json (from the capex-ledger refutation), and the series a reader builds is the sum, 4,333.1M, never 2,998.0.",
+        "Debt raised is ProceedsFromConvertibleDebt (6,299,555,000 FY2026); the DDTL ($413M of $1,545M) and USPP ($525M of $2,100M) draws are text only, with 'Proceeds from financing facilities 938,000' on the face of the statement.",
+        "EDGAR SIC 6199 'Finance Services' (the bitcoin-mining legacy); decision 12.18 overrides it to 'AI infrastructure'.",
+        "Latest 10-K FY2026 acc 0001878848-26-000052 (filed 2026-08-27); DebtInstrumentCarryingAmount 7,705,649,000 at 2026-06-30."
+      ]
+    },
+    {
+      "ticker": "CIFR",
+      "cik": 1819989,
+      "name": "Cipher Digital Inc.",
+      "fyEndMonth": 12,
+      "fiscalYearEnd": "1231",
+      "filerType": "10-K",
+      "sic": "6199",
+      "label": "AI infrastructure",
+      "notes": [
+        "Calendar year. EDGAR name is 'Cipher Digital Inc.'; 'Cipher Mining Inc.' to 2026-02-23 (and GOOD WORKS ACQUISITION CORP. before 2021-08-25), so the cohort row carries the index name and the override is keyed by CIK.",
+        "Capex is on the combined basis it adopted in 2026, purchases of property and equipment plus deposits on equipment: 2024 302.5M (139,495 + 162,958) and 2025 492.8M (487,921 + 4,874) from the FY2025 10-K (acc 0001819989-26-000009, R8), never 139.5 and 487.9. The deposits line is hand-keyed per span with its accession in frontend/data/capex-adjustments.json for the spans the tagged line still carries on the purchases-only basis; the Q1 and H1 2025 comparatives were recast to the combined basis in the 2026 10-Qs (99,675,000 and 218,245,000) and need no adjustment, and the Q2 2026 10-Q (acc 0001819989-26-000041) prints a single 'Purchases of property and equipment' line (964,261 thousand H1).",
+        "The project notes sit in SPV issuers (Cipher Compute LLC, Black Pearl Compute LLC, Stingray Compute LLC); the maturity ladder from companyfacts lacks about 3.6B of 2030-31 principal, hand-keyed from the note.",
+        "EDGAR SIC 6199 'Finance Services'; decision 12.18 overrides it to 'AI infrastructure'."
+      ]
+    },
+    {
+      "ticker": "WULF",
+      "cik": 1083301,
+      "name": "TERAWULF INC.",
+      "fyEndMonth": 12,
+      "fiscalYearEnd": "1231",
+      "filerType": "10-K",
+      "sic": "6199",
+      "historyStart": "2022-01-01",
+      "label": "AI infrastructure",
+      "notes": [
+        "Calendar year. The CIK is the former IKONICS Corp shell (reverse merger December 2021), so companyfacts carries IKONICS facts (a photo-imaging company, 2010-2021) under it. historyStart 2022-01-01: the panel builder drops every fact ending before 2022, so the panel row and its AI-infrastructure aggregate start at 2022. The statements route serves the whole document.",
+        "LongTermDebtNoncurrent is not re-tagged at Q2 2026 (last 2026-03-31, 3,060,194,000); the card shows 'last tagged 2026-03-31'. ConvertibleDebt 1,101,976,000 at 2026-06-30.",
+        "A second capex line, PaymentsToAcquireOtherProductiveAssets (231,350,000 H1 2026), sits beside PaymentsToAcquirePropertyPlantAndEquipment (1,378,514,000) and is treated the way IREN's computer-hardware line is, stated in the popup.",
+        "Issuance tags change by period: ProceedsFromIssuanceOfSecuredDebt in 2025 (no fact ending 2026-06-30), ProceedsFromIssuanceOfCommonStock 1,199,820,000 in H1 2026; resolve per period, not first-tag-wins.",
+        "EDGAR SIC 6199 'Finance Services'; decision 12.18 overrides it to 'AI infrastructure'. Latest 10-Q Q2 2026 acc 0001083301-26-000166 (filed 2026-08-05)."
+      ]
+    }
+  ],
+  "landlords": [
+    {
+      "ticker": "EQIX",
+      "cik": 1101239,
+      "name": "EQUINIX INC",
+      "fyEndMonth": 12,
+      "fiscalYearEnd": "1231",
+      "filerType": "10-K",
+      "sic": "6798",
+      "notes": [
+        "Calendar year; REIT; already in weekly coverage before PR H1.",
+        "Capex tag changed at Q2 2026: PaymentsToAcquireProductiveAssets to 2026-03-31 (1,256,000,000 Q1 2026), PaymentsToAcquireOtherPropertyPlantAndEquipment from Q2 2026 (2,834,000,000 H1 2026); the ladder carries both.",
+        "Repayments split across RepaymentsOfSeniorDebt (700,000,000, debtRepaid) and RepaymentsOfOtherDebt (682,000,000, its own key otherDebtRepaid) in H1 2026, so a reader adds the two keys for Equinix: 674,000,000 + 0 in the first quarter and 8,000,000 + 700,000,000 in the second. InterestExpense is stale (last 2024-03-31), InterestExpenseNonoperating is live (151,000,000 Q2 2026).",
+        "Behind the cohort toggle, off by default (decision 12.16)."
+      ]
+    },
+    {
+      "ticker": "DLR",
+      "cik": 1297996,
+      "name": "DIGITAL REALTY TRUST, INC.",
+      "fyEndMonth": 12,
+      "fiscalYearEnd": "1231",
+      "filerType": "10-K",
+      "sic": "6798",
+      "notes": [
+        "Calendar year; REIT; combined filings with Digital Realty Trust, L.P. (CIK 1494877, co-registrant). Joins weekly coverage in PR H1.",
+        "Its Q2 2026 10-Q (filed 2026-07-31, acc 0001104659-26-089296, inline XBRL) is not in companyfacts as of 2026-09-11, so its series ends 2026-03-31 and the page states the known limit.",
+        "Capex is PaymentsToDevelopRealEstateAssets (870,038,000 Q1 2026); interest is InterestExpense. Its revolver draws and repayments are ProceedsFromLinesOfCredit and RepaymentsOfLinesOfCredit (shortTermDebtProceeds and shortTermDebtRepaid: 1,802,807,000 and 2,586,749,000 for 2025); its term repayments RepaymentsOfLongTermDebt (2,514,388,000 for 2025). ProceedsFromIssuanceOfRedeemablePreferredStock is a mis-tag (731,690,000 for each of 2023-2025, the carrying value of its preferred) and is not read.",
+        "Behind the cohort toggle, off by default (decision 12.16)."
+      ]
+    }
+  ]
+}

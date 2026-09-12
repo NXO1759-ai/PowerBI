@@ -83,6 +83,15 @@ jobs:
       - name: Private credit page layer, sections and captions
         run: node scripts/test-pc-page.mjs
 
+      - name: Feed durations and labels against Amazon, Microsoft and Oracle slices
+        run: node scripts/test-feed-durations.mjs
+
+      - name: Build-out monitor concepts against the cohort slices
+        run: node scripts/test-hs-concepts.mjs
+
+      - name: Nebius interim reports against the hand-keyed table
+        run: node scripts/test-nbis-interims.mjs
+
       - name: API replies are read without leaking a parser error
         run: node scripts/test-http.mjs
 
