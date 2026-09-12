@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Private Credit Terminal — Research Terminal</title>
-<meta name="description" content="Where the credit cycle is, what private credit costs, and how the vehicles that hold the loans are doing — FRED, the listed BDCs' filings and the market feed on one page, every term defined." />
+<meta name="description" content="Where the credit cycle is, what private credit costs, how much capital is chasing how many deals, and how the vehicles that hold the loans are doing — FRED, PitchBook and LCD series, the listed BDCs' filings and the market feed on one page, every term defined." />
 <meta name="theme-color" content="#0b0d0f" />
 <meta name="color-scheme" content="dark" />
 <meta property="og:type" content="website" />
@@ -21,6 +21,10 @@
 <link rel="stylesheet" href="statements.css" />
 <link rel="stylesheet" href="strategy.css" />
 <link rel="stylesheet" href="credit.css" />
+<!-- the three ingested sections style their own tiles and charts -->
+<link rel="stylesheet" href="credit-stress.css" />
+<link rel="stylesheet" href="credit-capital.css" />
+<link rel="stylesheet" href="credit-dealflow.css" />
 <style>[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -128,6 +132,29 @@
       <p class="tile-foot" id="m2-foot"></p>
     </section>
 
+    <!-- 5–7. the ingested sections. Each file (credit-stress.js,
+         credit-capital.js, credit-dealflow.js) registers itself on
+         window.RTCreditSections; credit.js mounts it into its container
+         in this order once the series it names are loaded. A container
+         is an empty div; the section renders its own panel inside it. -->
+    <div id="sec-stress" class="pc-section" data-section="stress"></div>
+    <div id="sec-capital" class="pc-section" data-section="capital"></div>
+    <div id="sec-dealflow" class="pc-section" data-section="dealflow"></div>
+
+    <!-- 8. the credit committee's note, written on request from the facts drawn above -->
+    <section class="panel-card fsa-section" id="sec-credit-note" aria-labelledby="h-credit-note">
+      <div class="section-head">
+        <h2 id="h-credit-note">The credit committee's note</h2>
+        <p class="section-blurb">Written by the research model from the figures drawn on this view — the eight conditions, the spread ladder and the newest stress, capital and deal-flow readings — and only those figures.</p>
+        <details class="how-to-read"><summary>How to read this</summary><p>The note is argument, not data: the tiles and charts above state what the series say, and the note reads them together in the voice of a credit committee memo. It is written on request, from a list of facts the page computes at render time, and it may not use a number the page did not post. Every figure it cites can be found in a tile or caption above. A deployment without the note feed says so here instead of writing.</p></details>
+      </div>
+      <div class="chart-controls">
+        <button type="button" id="credit-note-btn" class="refresh-btn" title="Write the note from the facts on this view">Write the note</button>
+        <span class="tile-foot" id="credit-note-facts"></span>
+      </div>
+      <div id="analyst-note-body"><p class="hint" role="status">Press “Write the note” to have the research model read the figures on this view.</p></div>
+    </section>
+
     <!-- data tables for the workbook export; hidden from view, read by RTExport -->
     <div class="export-tables" hidden>
       <table class="grid" id="t-conditions" data-export-name="Credit conditions"></table>
@@ -189,7 +216,7 @@
   </div>
 
   <footer class="src-footer" id="src-footer">
-    <span id="src-footer-text">Sources: FRED, Federal Reserve Bank of St. Louis (credit series, USREC); the market feed for ETF prices (Yahoo chart data, Finnhub where the plan allows); ICE Data Indices for the option-adjusted spreads via FRED. Percent series are percentage points; spreads are shown in basis points. Every caption is computed from the series on the page at render time.</span>
+    <span id="src-footer-text">Sources: FRED, Federal Reserve Bank of St. Louis (credit series, USREC); the market feed for ETF prices (Yahoo chart data, Finnhub where the plan allows); ICE Data Indices for the option-adjusted spreads via FRED. Percent series are percentage points; spreads are shown in basis points. Every caption is computed from the series on the page at render time. <span id="src-footer-pc"></span></span>
     <span class="footer-actions">
       <button type="button" id="export-xlsx" class="refresh-btn" title="Every table on this page as a workbook, with provenance">Workbook</button>
     </span>
@@ -222,6 +249,11 @@
 <script src="lib/metric-catalog.js"></script>
 <script src="lib/credit-terms.js"></script>
 <script src="vendor/chart.umd.min.js"></script>
+<script src="lib/pc-series.js"></script>
 <script src="credit.js"></script>
+<!-- the ingested sections register themselves on window.RTCreditSections; credit.js mounts them after the feeds load -->
+<script src="credit-stress.js"></script>
+<script src="credit-capital.js"></script>
+<script src="credit-dealflow.js"></script>
 </body>
 </html>

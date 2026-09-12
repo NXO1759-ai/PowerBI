@@ -26,6 +26,9 @@
  * The "credit" group at the end serves the Private Credit page's tiles
  * and charts rather than a ratio card; it adds the formats pp, bps, index
  * and chart, and is kept out of GROUPS on purpose (its note says why).
+ * The credit page's section files (credit-stress.js, credit-capital.js,
+ * credit-dealflow.js) add their own credit-group entries at runtime
+ * through register(), defined at the end.
  */
 (function (root, factory) {
   if (typeof module === "object" && module.exports) module.exports = factory();
@@ -1056,18 +1059,20 @@
     yieldStack: {
       key: "yieldStack", group: "credit", format: "chart", direction: "context",
       label: "Yield stack",
-      subtitle: "SOFR and the high-yield yield, 10 years, monthly",
-      formula: "SOFR, the high-yield effective yield and, once computed, the BDC composite total-investment-income yield on average cost; monthly, percent",
+      subtitle: "SOFR, the high-yield yield and LCD's all-in rate, 10 years",
+      formula: "SOFR and the high-yield effective yield, monthly; LCD's cost-weighted all-in rate on BDC-held loans at each quarter end, once the ingested series load; and, once computed, the BDC composite total-investment-income yield on average cost; percent",
       definition:
-        "The base rate, the public high-yield alternative and what BDC " +
-        "books actually earn, on one axis over ten years.",
+        "The base rate, the public high-yield alternative and what the " +
+        "loans BDCs hold actually pay, on one axis over ten years.",
       interpretation:
-        "The gap between the composite and the HY yield is the private " +
-        "credit premium; the gap between the composite and SOFR is the " +
-        "floating-rate carry. Both narrow as base rates fall.",
+        "The gap between the LCD line and the HY yield is the private " +
+        "credit premium; the gap between the LCD line and SOFR is the " +
+        "spread the book earns, the floating-rate carry. Both narrow as base rates fall.",
       watch:
         "The ICE yield has three years of history on FRED, so its line " +
-        "starts in 2023 while SOFR runs from 2018. The composite line " +
+        "starts in 2023 while SOFR runs from 2018. LCD's line covers every " +
+        "BDC portfolio it tracks (the footer states how many), a different " +
+        "population from the site composite: direction, not level. The composite line " +
         "arrives when the schedules of investments are parsed and states its n.",
     },
     bdcVsLoans: {
@@ -1101,5 +1106,31 @@
   }
   function get(key) { return METRICS[key] || null; }
 
-  return { GROUPS: GROUPS, METRICS: METRICS, byGroup: byGroup, get: get };
+  /**
+   * register(entries) — the credit page's section files add their own
+   * entries at runtime (one per chart and tile, same shape as above:
+   * key, label, formula, watch, definition, interpretation, and
+   * optionally subtitle, group, format, direction). get() then finds
+   * them like any built-in entry. A key already in the catalog throws,
+   * and nothing from that batch is added, so two files can never claim
+   * one popup: register at file evaluation, not inside a mount that
+   * runs again on Refresh. Returns the number of entries added.
+   */
+  function register(entries) {
+    if (!Array.isArray(entries)) throw new TypeError("RTCatalog.register expects an array of entries");
+    var seen = {};
+    entries.forEach(function (e) {
+      if (!e || typeof e.key !== "string" || !e.key) throw new TypeError("RTCatalog.register: every entry needs a string key");
+      if (METRICS[e.key] || seen[e.key]) throw new Error("RTCatalog.register: key already registered: " + e.key);
+      seen[e.key] = true;
+    });
+    entries.forEach(function (e) {
+      var entry = { group: "credit", format: "chart", direction: "context" };
+      for (var f in e) if (Object.prototype.hasOwnProperty.call(e, f)) entry[f] = e[f];
+      METRICS[e.key] = entry;
+    });
+    return entries.length;
+  }
+
+  return { GROUPS: GROUPS, METRICS: METRICS, byGroup: byGroup, get: get, register: register };
 });

@@ -1,0 +1,83 @@
+/* ==========================================================================
+   credit-dealflow.css — the Market view's "Deal flow and pricing" section
+   (credit-dealflow.js). Extends credit.css: the tiles, chart boxes,
+   captions, footers and legends are the page's own classes; this file
+   adds the chart grid, the two-panel layout, the hatched legend swatch,
+   the dumbbell rows, the series-key spans, the composite slot line and
+   the two deal tables. Every color comes from the shared tokens.
+   ========================================================================== */
+
+.df-tiles { margin-bottom: 18px; }
+/* the as-of on a tile wraps under a long label instead of running past the tile's edge */
+.df-tiles .tile-asof { white-space: normal; text-align: end; flex: 0 1 auto; }
+.df-tiles .tile-value { overflow-wrap: anywhere; }
+.df-charts { display: grid; gap: 22px 26px; grid-template-columns: repeat(auto-fit, minmax(min(520px, 100%), 1fr)); }
+.df-chart { min-inline-size: 0; padding-top: 14px; border-top: 1px solid var(--kimi-color-border); }
+.df-chart.df-wide { grid-column: 1 / -1; }
+.df-chart-head { display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px; }
+.df-chart-head h3 { font-size: 13px; font-weight: 600; margin: 0; color: var(--kimi-color-text-primary); letter-spacing: 0; text-transform: none; line-height: 1.4; }
+.df-chart-head .chart-controls { margin: 0; }
+.df-chart-head .seg button { font-size: 11.5px; padding: 4px 9px; min-block-size: 28px; }
+.df-box { block-size: 280px; }
+.df-panels { display: grid; gap: 12px 18px; grid-template-columns: 1fr 1fr; }
+.df-panels > div { min-inline-size: 0; }
+.df-panels .df-box { block-size: 250px; }
+.df-panels-3 { grid-template-columns: 1fr 1fr 1fr; }
+.df-panel-title { margin: 0 0 4px; font-size: 10.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--kimi-color-text-tertiary); }
+.df-chart .chart-caption { margin: 8px 0 0; }
+.df-foot .tile-foot { margin-top: 6px; }
+.df-key { font-family: var(--rt-font-mono); border-bottom: 1px dotted var(--kimi-color-text-quaternary); cursor: help; }
+.df-key:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 2px; border-radius: 3px; }
+.df-legend-note { font-size: 11px; color: var(--kimi-color-text-tertiary); }
+/* the hatched swatch for the rolling and YTD columns */
+.chart-legend i.hatch { background: repeating-linear-gradient(135deg, currentColor 0 2px, transparent 2px 5px); block-size: 8px; border: 1px solid var(--kimi-color-border-strong); }
+/* the slot the site composite fills after the holdings release */
+.df-slot { margin: 6px 0 0; padding: 7px 10px; border: 1px dashed var(--rt-gold-border); border-radius: 4px; font-size: 11.5px; line-height: 1.5; color: var(--kimi-color-text-tertiary); }
+.df-slot > span { display: block; max-inline-size: 90ch; }
+
+/* ---- dumbbells (D5, D17): HTML rows, readable at phone width ---- */
+.db { display: grid; gap: 6px; padding: 4px 0 2px; }
+.db-row { display: grid; grid-template-columns: minmax(7em, 12em) 1fr 8em; align-items: center; gap: 10px; font-size: 12px; }
+.db-label { color: var(--kimi-color-text-secondary); text-align: end; overflow-wrap: anywhere; }
+.db-label .db-small { font-style: normal; color: var(--rt-gold); margin-inline-start: 4px; }
+.db-track { position: relative; block-size: 18px; border-bottom: 1px solid var(--kimi-color-surface-muted); }
+.db-track .db-line { position: absolute; inset-block-start: 8px; block-size: 2px; background: var(--kimi-color-text-quaternary); }
+.db-track b { position: absolute; inset-block-start: 4px; inline-size: 10px; block-size: 10px; margin-inline-start: -5px; border-radius: 50%; }
+.db-track .db-a { background: var(--kimi-color-text-tertiary); }
+.db-track .db-b { background: var(--rt-gold); box-shadow: 0 0 0 2px var(--kimi-color-surface); }
+.db-track .db-site { background: transparent; border: 2px solid var(--kimi-color-text-secondary); border-radius: 0; transform: rotate(45deg); inline-size: 8px; block-size: 8px; inset-block-start: 5px; }
+.db-val { font-family: var(--rt-font-mono); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--kimi-color-text-primary); white-space: nowrap; }
+.db-val em { font-style: normal; font-weight: 400; color: var(--kimi-color-text-tertiary); }
+.db-row.small .db-val { color: var(--kimi-color-text-secondary); }
+
+/* ---- the two deal tables under D13 ---- */
+.df-tables { display: grid; gap: 18px 26px; grid-template-columns: 1fr 1fr; margin-top: 14px; }
+.df-table { min-inline-size: 0; }
+.df-table-title { margin: 0 0 2px; font-size: 12.5px; font-weight: 600; color: var(--kimi-color-text-primary); }
+.df-table-headline { margin: 0 0 8px; font-size: 12px; line-height: 1.5; color: var(--kimi-color-text-secondary); }
+/* table.df-grid outranks styles.css's table.grid rules, which right-align every cell for figures */
+table.df-grid { font-size: 11.5px; }
+table.df-grid th { white-space: nowrap; text-align: start; padding: 6px 10px 6px 0; }
+table.df-grid td { text-align: start; padding: 5px 10px 5px 0; vertical-align: top; line-height: 1.45; color: var(--kimi-color-text-secondary); }
+table.df-grid th.num, table.df-grid td.num { text-align: end; font-family: var(--rt-font-mono); white-space: nowrap; }
+table.df-grid td.dt { white-space: nowrap; }
+/* the last column carries the prose (the debt refinanced, the lender list) */
+table.df-grid th:last-child, table.df-grid td:last-child { inline-size: 34%; padding-inline-end: 0; }
+table.df-grid td:first-child { color: var(--kimi-color-text-primary); }
+
+@media (max-width: 1100px) {
+  .df-panels-3 { grid-template-columns: 1fr; }
+}
+@media (max-width: 900px) {
+  .df-charts { grid-template-columns: 1fr; }
+  .df-panels, .df-tables { grid-template-columns: 1fr; }
+}
+@media (max-width: 680px) {
+  .df-box { block-size: 240px; }
+  .df-panels .df-box { block-size: 220px; }
+  .df-chart-head .seg { inline-size: 100%; }
+  .df-chart-head .seg button { flex: 1 1 auto; min-block-size: 36px; }
+  .db-row { grid-template-columns: minmax(6em, 8.5em) 1fr 6.5em; gap: 8px; font-size: 11px; }
+  .db-val { font-size: 11px; }
+  table.df-grid { min-inline-size: 560px; }
+}

@@ -1,0 +1,70 @@
+/* ==========================================================================
+   credit-capital.css — the Market view's capital section (blueprint 3.4).
+   Builds on credit.css: the tiles reuse .tile-grid / .tile / .tile-label /
+   .tile-value / .tile-foot, the charts reuse .chart-box / .chart-legend /
+   .chart-caption. Only what this section adds lives here: the secondary
+   rows inside a tile, the provisional flag, the series ids in footers, the
+   two-up chart grid and the hollow legend swatch. Every color is a token
+   from styles.css so the section stays in the page's one system.
+   ========================================================================== */
+
+.cap-section .tile-grid { margin-top: 2px; }
+/* the as-of here is a period ("TTM to Jun 30, 2026"), longer than the
+   page's FRED dates: it keeps its width and drops under the label on a
+   narrow tile instead of spilling past the edge */
+.cap-tile .tile-head { flex-wrap: wrap; row-gap: 2px; }
+.cap-tile .tile-asof { flex-shrink: 0; margin-inline-start: auto; }
+.cap-tile .tile-value { font-variant-numeric: tabular-nums; }
+.cap-tile .tile-change { font-variant-numeric: tabular-nums; line-height: 1.45; overflow-wrap: anywhere; }
+.cap-tile .tile-reading .regime { color: var(--rt-gold); font-weight: 600; }
+
+/* secondary rows inside a tile: period on the left, figure on the right */
+.cap-rows { display: grid; gap: 3px; margin-top: 6px; }
+.cap-row {
+  display: grid; grid-template-columns: minmax(6em, auto) 1fr; align-items: baseline; gap: 10px;
+  font-size: 11.5px; line-height: 1.45;
+}
+.cap-row .cap-k { color: var(--kimi-color-text-tertiary); font-family: var(--rt-font-mono); font-size: 10.5px; white-space: nowrap; }
+.cap-row .cap-v {
+  font-family: var(--rt-font-mono); font-variant-numeric: tabular-nums; font-weight: 500;
+  color: var(--kimi-color-text-primary); text-align: end; overflow-wrap: anywhere;
+}
+
+/* the provisional / overlaps / preliminary flag */
+.cap-flag {
+  display: inline-block; vertical-align: middle; margin-inline-start: 2px;
+  font-family: var(--rt-font-mono); font-size: 9.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--rt-gold); border: 1px dashed var(--rt-gold-border); border-radius: 3px; padding: 0 5px; line-height: 1.6;
+}
+
+/* a series id in a footer: its own popup, keyboard-reachable */
+.cap-id { border-bottom: 1px dotted var(--kimi-color-text-quaternary); cursor: help; }
+.cap-id:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 2px; border-radius: 3px; }
+.cap-missing { margin-top: 10px; }
+
+/* the seven charts, two up */
+.cap-charts {
+  display: grid; gap: 18px 28px; margin-top: 18px; padding-top: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(min(440px, 100%), 1fr));
+  border-top: 1px solid var(--kimi-color-border);
+}
+.cap-chart { min-inline-size: 0; }
+/* the card's h3 is a 10px uppercase label; these are chart headings, sentence case like the other sections */
+.cap-chart h3 { font-size: 13px; font-weight: 600; margin: 0 0 8px; color: var(--kimi-color-text-primary); text-transform: none; letter-spacing: 0; }
+.cap-chart .chart-controls { margin-bottom: 6px; }
+.cap-chart .chart-legend { font-variant-numeric: tabular-nums; }
+.cap-chart .chart-legend i.hollow {
+  background: transparent; border: 1.5px solid currentColor; block-size: 8px; inline-size: 8px; border-radius: 50%;
+}
+.cap-chart .chart-box { block-size: 280px; }
+.cap-chart .chart-caption { margin: 8px 0 0; }
+.cap-chart .tile-foot { margin-top: 4px; }
+/* the last chart takes the full row when the grid is two up */
+.cap-chart[data-chart="c7"] { grid-column: 1 / -1; }
+
+@media (max-width: 680px) {
+  .cap-charts { gap: 16px; }
+  .cap-chart .chart-box { block-size: 240px; }
+  .cap-chart h3 { font-size: 12.5px; }
+  .cap-row { grid-template-columns: minmax(5em, auto) 1fr; }
+}
