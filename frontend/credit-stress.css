@@ -1,0 +1,152 @@
+/* ==========================================================================
+   credit-stress.css — the Market view's stress section (credit-stress.js):
+   the LCD price references (M1 dot, M4 histogram, M5 decomposition with
+   the LCD line M2 also carries) and the M6 stress small multiples. Extends credit.css;
+   every color is a token from styles.css so the page stays one system.
+   Figures carry tabular numerals; the rolling three-month point is
+   hatched; forecasts are hollow; one modal bucket takes the accent.
+   ========================================================================== */
+
+/* ---- panels inside the container ---- */
+.pc-section .fsa-section + .fsa-section { margin-top: 16px; }
+.pc-sub { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--kimi-color-border); }
+.pc-sub:first-of-type { margin-top: 4px; padding-top: 0; border-top: 0; }
+/* a series id in a footer: its own popup, keyboard-reachable */
+.st-id { border-bottom: 1px dotted var(--kimi-color-text-quaternary); cursor: help; }
+.st-id:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 2px; border-radius: 3px; }
+/* the card's h3 is a 10px uppercase label; these are chart headings */
+.panel-card .pc-sub > h3 {
+  font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none;
+  margin: 0 0 6px; color: var(--kimi-color-text-primary);
+}
+.panel-card .pc-sub > h3 small { font-weight: 400; font-size: 10.5px; color: var(--kimi-color-text-tertiary); margin-inline-start: 8px; font-family: var(--rt-font-mono); }
+.pc-sub > .sub-blurb { font-size: 12px; line-height: 1.55; color: var(--kimi-color-text-tertiary); margin: 0 0 10px; max-inline-size: 80ch; }
+.pc-grid-2 { display: grid; gap: 18px 24px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.pc-grid-2 > .pc-sub { margin-top: 0; padding-top: 0; border-top: 0; min-inline-size: 0; }
+.pc-figure { font-variant-numeric: tabular-nums; }
+
+/* a slot for what arrives with the holdings release, inside a chart panel */
+/* a block, not a flex row: the hover terms inside stay inline text */
+.pc-slot {
+  display: block; position: relative; margin: 8px 0 0; padding: 6px 10px 6px 24px; line-height: 1.5;
+  border: 1px dashed var(--rt-gold-border); border-radius: 6px;
+  font-family: var(--rt-font-mono); font-size: 10.5px; color: var(--kimi-color-text-tertiary);
+}
+.pc-slot::before {
+  content: ""; position: absolute; inset-inline-start: 10px; inset-block-start: 11px;
+  inline-size: 6px; block-size: 6px; border-radius: 50%; background: var(--rt-gold); opacity: .6;
+}
+
+/* ---- M1 reference: LCD's new-issue spread as dated dots on a bps scale ---- */
+.lcd-dots { display: grid; gap: 9px; max-inline-size: 900px; padding: 2px 0; }
+.lcd-row { display: grid; grid-template-columns: minmax(7em, 12em) 1fr 4.6em; align-items: center; gap: 10px; }
+.lcd-row .l-label { font-size: 12px; color: var(--kimi-color-text-secondary); text-align: end; }
+.lcd-row .l-val {
+  font-family: var(--rt-font-mono); font-size: 12.5px; font-weight: 600; font-variant-numeric: tabular-nums;
+  color: var(--kimi-color-text-primary); white-space: nowrap;
+}
+.lcd-row .l-val small { font-weight: 400; font-size: 9.5px; color: var(--kimi-color-text-tertiary); }
+.l-dots { position: relative; block-size: 22px; }
+.l-dots::after { content: ""; position: absolute; inset-inline: 0; inset-block-start: 50%; block-size: 1px; background: var(--kimi-color-border); }
+.l-dots .dot {
+  position: absolute; inset-block-start: 50%; inline-size: 9px; block-size: 9px; border-radius: 50%;
+  transform: translate(-50%, -50%); background: var(--kimi-color-text-tertiary); z-index: 1;
+}
+.l-dots .dot.prior { inline-size: 7px; block-size: 7px; background: transparent; border: 1.5px solid var(--kimi-color-text-tertiary); }
+.l-dots .dot.latest { inline-size: 11px; block-size: 11px; background: var(--rt-gold); }
+.l-dots .dot.rolling {
+  background: repeating-linear-gradient(45deg, var(--rt-gold) 0 1.5px, transparent 1.5px 3.5px);
+  border: 1.5px solid var(--rt-gold);
+}
+.l-dots .dot-tag {
+  position: absolute; inset-block-start: -3px; transform: translateX(-50%);
+  font-family: var(--rt-font-mono); font-size: 9px; color: var(--kimi-color-text-tertiary); white-space: nowrap;
+}
+.l-dots .dot-tag.below { inset-block-start: auto; inset-block-end: -4px; }
+.lcd-row.scale .l-dots { block-size: 16px; }
+.lcd-row.scale .l-dots::after { inset-block-start: 0; }
+.lcd-row.scale .l-dots b { position: absolute; inset-block-start: 0; inline-size: 1px; block-size: 5px; background: var(--kimi-color-border-strong); }
+.lcd-row.scale .l-dots b span {
+  position: absolute; inset-block-start: 6px; inset-inline-start: 0; transform: translateX(-50%);
+  font-family: var(--rt-font-mono); font-size: 9.5px; font-weight: 400; color: var(--kimi-color-text-tertiary);
+}
+/* the end labels stay inside the track, so nothing overflows the page at phone width */
+.lcd-row.scale .l-dots b:first-child span { transform: translateX(0); }
+.lcd-row.scale .l-dots b:last-child span { transform: translateX(-100%); }
+.lcd-key { display: inline-flex; flex-wrap: wrap; gap: 12px; font-size: 11px; color: var(--kimi-color-text-tertiary); margin: 6px 0 0; }
+.lcd-key span { display: inline-flex; align-items: center; gap: 5px; }
+.lcd-key i { inline-size: 9px; block-size: 9px; border-radius: 50%; display: inline-block; background: var(--rt-gold); }
+.lcd-key i.hatch { background: repeating-linear-gradient(45deg, var(--rt-gold) 0 1.5px, transparent 1.5px 3.5px); border: 1px solid var(--rt-gold); }
+.lcd-key i.hollow { background: transparent; border: 1.5px solid var(--kimi-color-text-tertiary); }
+
+/* ---- M4 / M5 charts (scoped to this section's price panel) ---- */
+#st-price .chart-legend i.outline { background: transparent; border: 1.5px solid var(--kimi-color-text-primary); block-size: 8px; inline-size: 12px; border-radius: 2px; }
+#st-price .chart-legend i.fill { block-size: 8px; border-radius: 2px; }
+/* a provisional latest snapshot: the same diagonal hatch as the rolling dot */
+#st-price .chart-legend i.fill.hatch { background: repeating-linear-gradient(45deg, currentColor 0 1.5px, transparent 1.5px 3.5px); border: 1px solid currentColor; }
+
+/* ---- M6: small multiples ---- */
+.m6-grid {
+  display: grid; gap: 4px 22px;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  border-top: 1px solid var(--kimi-color-border);
+}
+.m6-panel {
+  margin: 0; padding: 13px 0 12px; min-inline-size: 0;
+  border-bottom: 1px solid var(--kimi-color-border);
+  display: flex; flex-direction: column; gap: 5px;
+}
+.panel-card .m6-panel > h3 { margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0; text-transform: none; color: var(--kimi-color-text-primary); }
+.panel-card .m6-panel > h3 .h-pop { border-bottom: 1px dotted var(--kimi-color-text-quaternary); cursor: help; }
+.panel-card .m6-panel > h3 small { font-weight: 400; font-size: 10.5px; color: var(--kimi-color-text-tertiary); margin-inline-start: 6px; font-family: var(--rt-font-mono); }
+.m6-value { font-family: var(--rt-font-mono); font-size: 20px; font-weight: 600; line-height: 1.1; font-variant-numeric: tabular-nums; color: var(--kimi-color-text-primary); }
+.m6-value .unit { font-size: 12px; font-weight: 500; color: var(--kimi-color-text-tertiary); }
+.m6-value .second { font-size: 13px; font-weight: 500; color: var(--kimi-color-text-secondary); margin-inline-start: 8px; }
+.m6-chart { inline-size: 100%; margin-top: 2px; }
+.m6-chart svg { display: block; inline-size: 100%; block-size: auto; overflow: visible; }
+.m6-chart svg text { font-family: var(--rt-font-mono); }
+.m6-chart svg a { cursor: pointer; }
+.m6-chart svg a:hover circle.pt, .m6-chart svg a:focus circle.pt { stroke: var(--kimi-color-text-primary); stroke-width: 1.5; }
+.m6-chart svg a:focus { outline: none; }
+.m6-key { display: inline-flex; flex-wrap: wrap; gap: 10px; font-size: 10.5px; color: var(--kimi-color-text-tertiary); margin: 0; }
+.m6-key span { display: inline-flex; align-items: center; gap: 5px; }
+.m6-key i { inline-size: 12px; block-size: 3px; border-radius: 2px; display: inline-block; }
+.m6-key i.dot { inline-size: 8px; block-size: 8px; border-radius: 50%; }
+.m6-key i.hollow { background: transparent !important; border: 1.5px solid currentColor; }
+.m6-key i.dash { background: repeating-linear-gradient(90deg, currentColor 0 3px, transparent 3px 6px); }
+.m6-caption { font-size: 12px; line-height: 1.5; color: var(--kimi-color-text-secondary); margin: 2px 0 0; font-variant-numeric: tabular-nums; }
+.m6-foot {
+  font-size: 10.5px; line-height: 1.5; color: var(--kimi-color-text-quaternary);
+  font-family: var(--rt-font-mono); margin: 2px 0 0; overflow-wrap: anywhere;
+}
+.m6-foot a, .m6-caption a { color: var(--kimi-color-text-tertiary); }
+.m6-foot a:hover, .m6-caption a:hover { color: var(--rt-gold); }
+.m6-empty {
+  display: flex; flex-direction: column; gap: 4px; justify-content: center;
+  min-block-size: 96px; padding: 10px 12px; margin-top: 2px;
+  border: 1px dashed var(--rt-gold-border); border-radius: 6px;
+}
+.m6-empty > span { font-family: var(--rt-font-mono); font-size: 11px; color: var(--kimi-color-text-secondary); }
+.m6-empty > small { font-size: 11px; line-height: 1.5; color: var(--kimi-color-text-tertiary); }
+/* the dated-statements tile */
+.m6-statements { display: grid; gap: 8px; margin-top: 2px; }
+.m6-stmt { font-size: 12px; line-height: 1.55; color: var(--kimi-color-text-secondary); padding: 6px 0; border-top: 1px solid var(--kimi-color-surface-muted); }
+.m6-stmt:first-child { border-top: 0; padding-top: 0; }
+.m6-stmt b { font-family: var(--rt-font-mono); font-weight: 600; color: var(--kimi-color-text-primary); font-variant-numeric: tabular-nums; }
+.m6-stmt .when { font-family: var(--rt-font-mono); font-size: 10.5px; color: var(--kimi-color-text-quaternary); margin-inline-start: 6px; }
+.m6-stmt.slot { color: var(--kimi-color-text-tertiary); }
+
+@media (max-width: 680px) {
+  .pc-grid-2 { grid-template-columns: 1fr; }
+  .m6-grid { grid-template-columns: 1fr; gap: 0; }
+  /* at phone width the label sits above its track, so the dots keep the
+     full width and the quarter tags never collide */
+  .lcd-row { grid-template-columns: 1fr 4.2em; grid-template-areas: "label label" "dots val"; gap: 2px 8px; }
+  .lcd-row .l-label { grid-area: label; text-align: start; font-size: 11px; }
+  .lcd-row .l-dots { grid-area: dots; }
+  .lcd-row .l-val { grid-area: val; align-self: center; }
+  .lcd-row.scale { grid-template-areas: "dots val"; }
+  .lcd-row.scale .l-label { display: none; }
+  .lcd-dots { gap: 12px; }
+  .lcd-row.scale .l-dots b:nth-child(even) span { display: none; }
+}

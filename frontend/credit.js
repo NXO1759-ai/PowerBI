@@ -3,10 +3,17 @@
    /api/price-history (BIZD against a loan ETF) and /api/macro (the two
    Treasury yields it already serves), draws the Market view, and reuses
    the tile, caption and popup patterns from the Statement Analysis and
-   Strategy pages. The Lenders and Underwriting views are placeholders
-   until their own releases; the Glossary renders data/pc/glossary.json,
-   the file every hover definition on the page is built from, fetched
-   the first time that view is opened. */
+   Strategy pages. The ingested PitchBook and LCD series are drawn by
+   three section files (credit-stress.js, credit-capital.js,
+   credit-dealflow.js) that register themselves on window.RTCreditSections;
+   this file loads the series they name through lib/pc-series.js and
+   mounts each into its container in a fixed order once the feeds land
+   (see "the ingested sections" below for the contract). The committee's
+   note posts the facts drawn on the view to /api/fsa-note on request.
+   The Lenders and Underwriting views are placeholders until their own
+   releases; the Glossary renders data/pc/glossary.json, the file every
+   hover definition on the page is built from, fetched the first time
+   that view is opened. */
 (function () {
   "use strict";
 
@@ -99,10 +106,130 @@
     return out;
   };
 
+  /* ---------- the site's BDC composite, one view for every section ----------
+     data/bdc/composite.json is written by the holdings refresh from the
+     formulas in lib/credit.js (CREDIT_VERSION stamped) as
+       { creditVersion, n, asOf, totals: { cost, fv },
+         weighted: { nonAccrualCost, nonAccrualFv, pikShareOfInterest,
+                     pikShareOfTotal, fvOverCost, ... },
+         histogram: { byCount, byCost } }
+     with every rate and share a FRACTION (0.024 is 2.4%), the lib/credit.js
+     convention. The sections never read the file: they read the view
+     this builds, so a field the refresh adds later (a quarters[] history,
+     allInYield, spreadOverBase, baseRate, distressedShare, the maturity
+     wall, the sector mix) is picked up here and a field it does not
+     write leaves that panel in its designed empty state. The view:
+       { creditVersion, n, asOf, totals,
+         quarters: [ { p, n, nonAccrualCost, nonAccrualFv, nonAccrualDebtCost,
+                       nonAccrualDebtFv, pikShareOfInterest, pikShareOfTotal,
+                       fvOverCost, distressedShare, allInYield, spreadOverBase,
+                       baseRate } ]      sorted by p; the file's quarters[] when
+                                         it carries one, else the one row the
+                                         weighted block describes, dated asOf
+         latest:   the last of quarters, or null
+         histogram: { p, n, byCount: [{label, share}], byCost: [{label, share}] }
+                   or null; labels normalized to LCD's form ("450-499",
+                   "under 300", "700 or higher"); a list whose values sum
+                   past 1.5 is read as counts and turned into shares
+         maturityWall: [{label, cost, share}] or null, lib/credit.js's buckets
+         sectors:  [{label, share}] or null
+         raw:      the file as read }
+     Nothing here invents a number: every field is a copy, a rename or a
+     ratio of two fields the file carries. */
+  var COMPOSITE_FIELDS = ["nonAccrualCost", "nonAccrualFv", "nonAccrualDebtCost", "nonAccrualDebtFv", "pikShareOfInterest", "pikShareOfTotal",
+    "fvOverCost", "distressedShare", "allInYield", "spreadOverBase", "baseRate"];
+  /* names an earlier draft of the file, or a filer-side builder, may use */
+  var COMPOSITE_ALIASES = { mark: "fvOverCost", fvToCost: "fvOverCost", pikShareOfIncome: "pikShareOfTotal", pikShare: "pikShareOfInterest",
+    nonAccrualRate: "nonAccrualCost", nonAccrualRateFv: "nonAccrualFv", allInRate: "allInYield", spread: "spreadOverBase", base: "baseRate" };
+  function compositeDate(cands) {
+    for (var i = 0; i < cands.length; i++) {
+      var s = cands[i];
+      if (typeof s === "string" && /^\d{4}-\d{2}-\d{2}/.test(s)) return s.slice(0, 10);
+    }
+    return null;
+  }
+  function compositeLabel(s) {
+    return String(s === undefined || s === null ? "" : s).trim().replace(/\s*[–—-]\s*/g, "-").replace(/\s+/g, " ");
+  }
+  /* a bucket list as [{label, share}]: an array of {label|c|bucket|range,
+     share|v|count|value} or an object map {label: value}; counts become
+     shares by division when the list does not already sum to about one */
+  function compositeBuckets(list, valueKeys) {
+    var rows = [];
+    if (Array.isArray(list)) {
+      list.forEach(function (b) {
+        if (!b || typeof b !== "object") return;
+        var label = b.label !== undefined ? b.label : b.c !== undefined ? b.c : b.bucket !== undefined ? b.bucket : b.range;
+        var v = null;
+        for (var i = 0; i < valueKeys.length && !isNum(v); i++) v = isNum(b[valueKeys[i]]) ? b[valueKeys[i]] : null;
+        if (label === undefined || label === null || !isNum(v)) return;
+        rows.push({ label: compositeLabel(label), value: v, n: isNum(b.n) ? b.n : null });
+      });
+    } else if (list && typeof list === "object") {
+      Object.keys(list).forEach(function (k) { if (isNum(list[k])) rows.push({ label: compositeLabel(k), value: list[k], n: null }); });
+    }
+    if (!rows.length) return null;
+    var sum = rows.reduce(function (a, r) { return a + r.value; }, 0);
+    var asCounts = sum > 1.5;
+    return rows.map(function (r) { return { label: r.label, share: asCounts ? r.value / sum : r.value, n: r.n }; });
+  }
+  function normalizeComposite(raw) {
+    if (!raw || typeof raw !== "object") return null;
+    var n = isNum(raw.n) ? raw.n : (raw.totals && isNum(raw.totals.n) ? raw.totals.n : null);
+    var asOf = compositeDate([raw.asOf, raw.period, raw.periodEnd, raw.quarter, raw.latestQuarter, raw.date, raw.generated]);
+    var totals = raw.totals && typeof raw.totals === "object" ? { cost: isNum(raw.totals.cost) ? raw.totals.cost : null, fv: isNum(raw.totals.fv) ? raw.totals.fv : (isNum(raw.totals.fairValue) ? raw.totals.fairValue : null) } : null;
+    function row(src, p) {
+      if (!src || typeof src !== "object") return null;
+      var r = { p: compositeDate([src.p, src.period, src.periodEnd, src.asOf, p]), n: isNum(src.n) ? src.n : n };
+      Object.keys(src).forEach(function (k) {
+        var name = COMPOSITE_ALIASES[k] || k;
+        if (COMPOSITE_FIELDS.indexOf(name) >= 0 && isNum(src[k]) && !isNum(r[name])) r[name] = src[k];
+      });
+      var any = COMPOSITE_FIELDS.some(function (f) { return isNum(r[f]); });
+      return any ? r : null;
+    }
+    /* a row with no date of its own is kept (its value prints as the
+       latest quarter) and sorts last; a chart needs a date, so it draws
+       only the dated rows */
+    var quarters = (Array.isArray(raw.quarters) ? raw.quarters : []).map(function (q) { return row(q, null); }).filter(Boolean);
+    if (!quarters.length) { var w = row(raw.weighted || raw.latest || null, asOf); if (w) quarters = [w]; }
+    quarters.sort(function (a, b) { return !a.p ? 1 : !b.p ? -1 : a.p < b.p ? -1 : a.p > b.p ? 1 : 0; });
+    var latest = quarters.length ? quarters[quarters.length - 1] : null;
+    if (!asOf && latest) asOf = latest.p;
+    var h = raw.histogram || raw.spreadHistogram || null, histogram = null;
+    var byCount = h ? compositeBuckets(h.byCount, ["share", "v", "count", "value"]) : compositeBuckets(raw.spreadBuckets, ["share", "count", "v", "value"]);
+    var byCost = h ? compositeBuckets(h.byCost, ["share", "v", "cost", "value"]) : null;
+    if (byCount || byCost) histogram = { p: compositeDate([h && h.p, h && h.asOf, asOf]), n: h && isNum(h.n) ? h.n : n, byCount: byCount, byCost: byCost };
+    var wallSrc = raw.maturityWall || raw.wall || (raw.maturity && raw.maturity.buckets) || null, maturityWall = null;
+    if (Array.isArray(wallSrc)) {
+      var wall = wallSrc.map(function (b) {
+        if (!b || typeof b !== "object") return null;
+        var label = b.label !== undefined ? b.label : b.bucket, cost = isNum(b.cost) ? b.cost : (isNum(b.v) ? b.v : (isNum(b.value) ? b.value : null));
+        return label === undefined || label === null || !isNum(cost) ? null : { label: compositeLabel(label), cost: cost, share: isNum(b.share) ? b.share : null };
+      }).filter(Boolean);
+      var wallTotal = wall.reduce(function (a, b) { return a + b.cost; }, 0);
+      wall.forEach(function (b) { if (!isNum(b.share) && wallTotal > 0) b.share = b.cost / wallTotal; });
+      if (wall.length) maturityWall = wall;
+    }
+    var sectorsSrc = raw.sectors || raw.sectorMix || null;
+    var sectors = compositeBuckets(sectorsSrc, ["share", "v", "value", "count"]);
+    return { creditVersion: raw.creditVersion || raw.CREDIT_VERSION || null, n: n, asOf: asOf, totals: totals,
+      quarters: quarters, latest: latest, histogram: histogram, maturityWall: maturityWall, sectors: sectors, raw: raw };
+  }
+
   /* The caption test loads this file in Node; there is no page to draw,
-     so the templates are handed over and the renderer stops here. */
+     so the templates are handed over and the renderer stops here. The
+     formatters ride along so scripts/test-pc-page.mjs can measure a
+     fact line the way the page prints it, and normalizeComposite so the
+     composite view can be checked against the holdings contract. (The
+     section files use the loader's set, RTPcSeries.fmt, handed to them
+     as ctx.fmt; these are the FRED-side helpers — percent points to
+     bps, the tile kinds.) */
   if (typeof document === "undefined") {
-    if (typeof module !== "undefined") module.exports = { CAPTIONS: CAPTIONS };
+    if (typeof module !== "undefined") {
+      module.exports = { CAPTIONS: CAPTIONS, normalizeComposite: normalizeComposite, fmt: { fmtDate: fmtDate, monthLabel: monthLabel, withCommas: withCommas, fmtPct: fmtPct,
+        fmtBps: fmtBps, bpsNum: bpsNum, fmtSigned: fmtSigned, fmtRet: fmtRet, fmtB: fmtB, ordinal: ordinal } };
+    }
     return;
   }
 
@@ -232,10 +359,10 @@
       definition: "What each rung of the bond market pays over Treasuries today.",
       interpretation: "The gap between the CCC and BB rungs is dispersion. A private loan's spread over SOFR sits on this ladder only after the base-rate difference is allowed for.",
       watch: "Bonds are priced over Treasuries and loans over a floating base; the two are not the same spread." },
-    yieldStack: { label: "Yield stack", formula: "SOFR and the high-yield effective yield, month-end values; the composite yields are added when their schedules are parsed",
-      definition: "The floor a floating loan pays and the yield of the liquid alternative, over time.",
-      interpretation: "The floating-rate carry of 2023–24 was the base rate rising under fixed spreads; the reversal is the base rate falling while spreads compress.",
-      watch: "Each line starts where FRED's history starts; the high-yield yield reaches back three years only." }
+    yieldStack: { label: "Yield stack", formula: "SOFR and the high-yield effective yield, month-end values; LCD's cost-weighted all-in rate on BDC-held loans at each quarter end, once the ingested series load; the composite yields are added when their schedules are parsed",
+      definition: "The floor a floating loan pays, the yield of the liquid alternative, and what the loans BDCs hold actually pay, over time.",
+      interpretation: "The floating-rate carry of 2023–24 was the base rate rising under fixed spreads; the reversal is the base rate falling while spreads compress. The gap between the LCD line and SOFR is the spread the book earns.",
+      watch: "Each line starts where its history starts; the high-yield yield reaches back three years only. LCD's line covers every BDC portfolio it tracks (the footer states how many), a different population from the site composite: direction, not level." }
   };
   function def(key) { return (C && C.get ? C.get(key) : null) || DEFS[key] || null; }
 
@@ -293,6 +420,9 @@
     root.querySelectorAll(".term").forEach(function (t) {
       t.parentNode.replaceChild(document.createTextNode(t.textContent), t);
     });
+    /* the text nodes an unwrap leaves behind are joined again, so a
+       term that straddled a former span is matched whole */
+    if (root.normalize) root.normalize();
   }
   function wrapTerms(root) {
     if (!TERMS || typeof TERMS.wrap !== "function" || !root) return;
@@ -692,7 +822,8 @@
     }).join("");
   }
   function chartEmpty(hostId, msg) {
-    var host = $(hostId);
+    var host = typeof hostId === "string" ? $(hostId) : hostId;
+    if (!host) return;
     var old = host.querySelector(".chart-empty");
     if (old) old.parentNode.removeChild(old);
     if (!msg) return;
@@ -863,7 +994,375 @@
     }
     ft.textContent = "Source: FRED (SOFR" + (sofr ? " " + sofr.latest.d : " not available") + "; BAMLH0A0HYM2EY" + (hy ? " " + hy.latest.d : " not available") +
       ") · month-end values · ten-year axis · recessions from FRED USREC · composite lines arrive with the BDC layer";
+    M2.labels = labels;
   }
+  /* M2's fourth line (blueprint 3.2): LCD's cost-weighted all-in rate on
+     BDC-held loans, quarterly, placed at each quarter-end month of the
+     same ten-year axis once the stress section has loaded the lcd-bdc
+     group; n and the population go to the footer, the id is a hover term.
+     A Refresh redraws M2 first and this runs again after the sections. */
+  var M2 = { labels: null, key: "lcd_bdc_all_in_rate_quarterly" };
+  function completeM2() {
+    var chart = CHARTS["m2-canvas"], S = window.RTPcSeries, ft = $("m2-foot"), lg = $("m2-legend");
+    if (!chart || !S || !M2.labels || !S.has(M2.key) || !S.loaded("lcd-bdc")) return;
+    if (chart.data.datasets.some(function (d) { return d.lcdKey === M2.key; })) return;
+    var pts = S.pointsOf(M2.key, { grain: "quarter" }).filter(function (p) { return isNum(p.y); });
+    if (!pts.length) return;
+    var by = {}; pts.forEach(function (p) { by[p.x.slice(0, 7)] = p.y; });
+    var data = M2.labels.map(function (k) { return isNum(by[k]) ? by[k] : null; });
+    if (!data.some(isNum)) return;
+    chart.data.datasets.push({ label: "LCD all-in rate, BDC-held loans (quarterly)", lcdKey: M2.key, data: data, borderColor: "#e8eaed", backgroundColor: "#e8eaed",
+      borderWidth: 1.5, pointRadius: 2, pointHitRadius: 10, tension: 0, spanGaps: true });
+    chart.update("none");
+    var e = S.get(M2.key), l = pts[pts.length - 1], n = S.populationN ? S.populationN(M2.key) : "";
+    if (lg) lg.insertAdjacentHTML("beforeend", "<span><i style='background:#e8eaed'></i>" + esc("LCD all-in rate, BDC-held loans (quarterly, " + fmtPct(l.y, 2) + " " + S.fmt.quarter(l.x) + ")") + "</span>");
+    if (ft) {
+      ft.innerHTML = esc(ft.textContent) + " · LCD line: <span class='h-pop' data-metric='" + esc(M2.key) + "'>" + esc(M2.key) + "</span>" +
+        (n ? " · n: " + esc(n) : "") + " · population: " + esc(String(e.population || "").split(/[.;]/)[0]) + " · " + esc(S.stamp("lcd-monitor")) + " · direction, not level against the site composite";
+      bindPopups(ft);
+      if (S.registerIds) S.registerIds(C, [M2.key]);
+    }
+  }
+
+  /* ---------- the ingested sections ----------
+     The contract (blueprint PR E2, L3). Each section file pushes
+       { id: "stress" | "capital" | "dealflow", title?, groups: [pc series
+         groups it needs], mount(container, ctx) → Promise<void>,
+         CAPTIONS: { <name>: { template(values) → string, sample() → string } },
+         facts?(ctx) → string[]  (the lines the note posts; optional),
+         keys?: [series keys it draws]  (dates the note; optional) }
+     onto window.RTCreditSections at file evaluation (it also registers
+     its catalog entries then, through RTCatalog.register, never inside
+     mount, which runs again on Refresh; the series-id popups its
+     footers print are the exception, registered at mount through
+     RTPcSeries.registerIds, which skips a key the catalog knows). After
+     the feeds land and the section scripts have evaluated
+     (DOMContentLoaded) the page loads each section's groups through
+     RTPcSeries, destroys any chart on a canvas under its container,
+     empties the container (an empty div under #market-view:
+     #sec-stress, #sec-capital, #sec-dealflow, in that order after M2),
+     calls mount, then binds the popups and wraps the hover terms in
+     what it drew. Once every section has settled the page adds LCD's
+     all-in rate to M2 (completeM2) and stamps the footer with the
+     sources the sections actually draw.
+     ctx = {
+       series:   RTPcSeries (load, get, pointsOf, latest, prior, snapshot,
+                 at, stamp, stampOf, restatementsOf, provenance, table,
+                 isRolling, isWindow, isProvisional, fmt)
+       catalog:  RTCatalog (get, register)
+       terms:    RTTerms or null
+       macro:    the /api/credit-macro payload or null
+       composite: the view normalizeComposite() above builds from
+                 data/bdc/composite.json ({ creditVersion, n, asOf, totals,
+                 quarters, latest, histogram, maturityWall, sectors, raw }),
+                 or null until the holdings release (a 404 is not an
+                 error); a section reads the view, never the file
+       holdingsAvailable: boolean, true only when composite is present
+       fmt:      RTPcSeries.fmt (the shared formatters)
+       popup:    bindPopups(container) — makes every [data-metric] in the
+                 container keyboard-reachable; the popup itself is bound
+                 once at the document level, so any [data-metric] shows
+                 its catalog entry as formula → caveat → definition → how
+                 to read it
+       usrec:    { bands: [{start, end}], plugin(labels) → the Chart.js
+                 plugin that shades them behind a category axis }; for
+                 an SVG chart, lineChart() above is the pattern to copy
+       Chart:    Chart.js (UMD 4.4.3) or null
+       chart:    { baseOptions(labels, yfmt, unitLabel), make(canvas, config)
+                 which destroys the chart already on that canvas first,
+                 empty(host, msg), colors }
+       fromCredit(id): a FRED series from the macro payload, or null
+       esc, fixture, apiBase
+     }
+     A section renders its own one-sentence blurb, a collapsed "How to
+     read this", its tiles and charts with captions, and the source
+     stamp in the tile footer via series.stamp; when a key or the
+     composite is missing it renders a designed empty state ("composite
+     after the holdings release", "not in this edition") rather than
+     throwing. A throw or a rejected mount lands here as the section's
+     error state and never takes the page down. */
+  var SECTION_ORDER = ["stress", "capital", "dealflow"];
+  var SECTION_TITLES = { stress: "Stress and defaults", capital: "Capital: fundraising, AUM, dry powder and deployment", dealflow: "Deal flow and pricing" };
+  var SECTIONS = { status: {} };
+  window.RTCreditSections = window.RTCreditSections || [];
+  function registry() { return Array.isArray(window.RTCreditSections) ? window.RTCreditSections : []; }
+  /* resolves once every parser-blocking script tag has run — that is
+     DOMContentLoaded, which follows the three section files — so a
+     section is marked missing only when its file truly did not load */
+  var SECTION_SCRIPTS_READY = new Promise(function (resolve) {
+    if (document.readyState !== "loading") resolve();
+    else document.addEventListener("DOMContentLoaded", function () { resolve(); }, { once: true });
+  });
+  function orderedSections() {
+    var regs = registry().filter(function (s) { return s && typeof s.mount === "function" && typeof s.id === "string"; });
+    var first = SECTION_ORDER.map(function (id) { return regs.filter(function (s) { return s.id === id; })[0] || null; }).filter(Boolean);
+    var rest = regs.filter(function (s) { return SECTION_ORDER.indexOf(s.id) < 0; });
+    return first.concat(rest);
+  }
+  /* every [data-metric] in the container reaches the popup from the
+     keyboard; the popup itself is delegated at the document level above */
+  function bindPopups(container) {
+    if (!container || !container.querySelectorAll) return 0;
+    var n = 0;
+    container.querySelectorAll("[data-metric]").forEach(function (el) {
+      var tag = String(el.tagName).toUpperCase();
+      if (tag !== "BUTTON" && tag !== "A" && tag !== "INPUT" && !el.hasAttribute("tabindex")) el.setAttribute("tabindex", "0");
+      n++;
+    });
+    return n;
+  }
+  function makeChart(canvas, config) {
+    if (!canvas || typeof window.Chart !== "function") return null;
+    var prev = window.Chart.getChart ? window.Chart.getChart(canvas) : null;
+    if (prev) prev.destroy();
+    return new window.Chart(canvas.getContext("2d"), config);
+  }
+  /* every Chart.js instance on a canvas under the host is destroyed
+     before the host is emptied, so a section that replaces its canvases
+     through innerHTML can never leave an orphaned chart (each one keeps
+     a document-wide MutationObserver) behind on a Refresh */
+  function destroyChartsUnder(host) {
+    if (!host || typeof window.Chart !== "function" || !window.Chart.getChart) return;
+    host.querySelectorAll("canvas").forEach(function (c) {
+      var ch = window.Chart.getChart(c);
+      if (ch) { try { ch.destroy(); } catch (e) { /* already gone */ } }
+    });
+  }
+  function sectionCtx() {
+    var cm = DATA.cm, bands = (cm && cm.recessions) || [];
+    var S = window.RTPcSeries || null;
+    return {
+      series: S, catalog: C, terms: TERMS, macro: cm,
+      composite: DATA.composite || null, holdingsAvailable: !!DATA.composite,
+      fmt: S ? S.fmt : null, popup: bindPopups,
+      usrec: { bands: bands, plugin: function (labels) { return recessionPlugin(bands, labels); } },
+      Chart: typeof window.Chart === "function" ? window.Chart : null,
+      chart: { baseOptions: baseOptions, make: makeChart, empty: chartEmpty,
+               colors: { gold: GOLD, ink: INK, line2: LINE2, grid: GRID, band: BAND } },
+      fromCredit: function (id) { return fromCredit(cm, id); },
+      esc: esc, fixture: FIXTURE, apiBase: API_BASE
+    };
+  }
+  function sectionShell(title, body, cls) {
+    return "<section class='panel-card fsa-section pc-section-state " + esc(cls || "") + "' aria-label='" + esc(title) + "'>" +
+      "<div class='section-head'><h2>" + esc(title) + "</h2></div>" + body + "</section>";
+  }
+  function mountOne(s, ctx) {
+    var host = $("sec-" + s.id);
+    if (!host) {
+      /* a section the page did not plan a container for goes before the note */
+      host = document.createElement("div");
+      host.id = "sec-" + s.id; host.className = "pc-section"; host.setAttribute("data-section", s.id);
+      var note = $("sec-credit-note");
+      note.parentNode.insertBefore(host, note);
+    }
+    var title = s.title || SECTION_TITLES[s.id] || s.id;
+    var groups = Array.isArray(s.groups) ? s.groups.slice() : [];
+    SECTIONS.status[s.id] = "loading";
+    host.setAttribute("data-section-status", "loading");
+    destroyChartsUnder(host);
+    host.innerHTML = sectionShell(title, "<p class='hint' role='status'>Loading the series for " + esc(title.toLowerCase()) + "…</p>", "is-loading");
+    return Promise.resolve().then(function () {
+      if (!ctx.series) throw new Error("the series loader (lib/pc-series.js) did not load");
+      return ctx.series.load(groups);
+    }).then(function () {
+      destroyChartsUnder(host);
+      host.innerHTML = "";
+      return s.mount(host, ctx);
+    }).then(function () {
+      SECTIONS.status[s.id] = "ready";
+      host.setAttribute("data-section-status", "ready");
+    }, function (e) {
+      SECTIONS.status[s.id] = "error";
+      host.setAttribute("data-section-status", "error");
+      host.innerHTML = sectionShell(title,
+        "<p class='chart-empty' style='position:static'><span>" + esc(title) + " could not be drawn: " +
+        esc(HTTP.message(e, "the " + title.toLowerCase() + " series")) + ". Nothing is shown in its place.</span></p>" +
+        (groups.length ? "<p class='tile-foot'>Series groups: " + esc(groups.join(", ")) + "</p>" : ""), "is-error");
+    }).then(function () {
+      bindPopups(host);
+      wrapTerms(host);
+    });
+  }
+  /* mount every registered section, in SECTION_ORDER then registration
+     order; a planned container with no registered section says so */
+  function mountSections() {
+    var ctx = sectionCtx();
+    var regs = orderedSections(), byId = {};
+    regs.forEach(function (s) { byId[s.id] = s; });
+    SECTION_ORDER.forEach(function (id) {
+      if (byId[id]) return;
+      var host = $("sec-" + id);
+      if (!host) return;
+      SECTIONS.status[id] = "missing";
+      host.setAttribute("data-section-status", "missing");
+      host.innerHTML = sectionShell(SECTION_TITLES[id],
+        "<p class='chart-empty' style='position:static'><span>This section's file (credit-" + esc(id) + ".js) did not load, so nothing is drawn in its place.</span></p>", "is-missing");
+    });
+    return Promise.all(regs.map(function (s) { return mountOne(s, ctx); })).then(function () {
+      completeM2();
+      renderPcStamps();
+      renderNoteControl();
+      wrapTerms($("sec-credit-note"));
+    });
+  }
+  /* the sources the mounted sections actually draw, in the index's
+     order: every key a section names (its `keys`, the note keys and the
+     M2 line) resolved to its source, a derived key to its inputs' */
+  function drawnSources() {
+    var S = window.RTPcSeries, ids = [], seen = {};
+    if (!S || !S.index()) return ids;
+    var keys = [M2.key];
+    orderedSections().forEach(function (s) {
+      if (SECTIONS.status[s.id] !== "ready") return;
+      (Array.isArray(s.keys) ? s.keys : []).concat(NOTE_KEYS[s.id] || []).forEach(function (k) { keys.push(k); });
+    });
+    var add = function (k) {
+      if (seen[k]) return; seen[k] = true;
+      var m = S.meta(k); if (!m) return;
+      if (m.source === "derived") { (m.inputs || (S.get(k) || {}).inputs || []).forEach(add); return; }
+      if (m.source && ids.indexOf(m.source) < 0) ids.push(m.source);
+    };
+    keys.forEach(add);
+    var order = Object.keys(S.sources());
+    return ids.sort(function (a, b) { return order.indexOf(a) - order.indexOf(b); });
+  }
+  /* the footer's edition stamps: the sources drawn on this view once the
+     sections are mounted (nothing is stamped that no section draws; a
+     source the sections do not reach yet, the Fund Overview export, is
+     stamped only when a series of it is drawn) */
+  function renderPcStamps() {
+    var host = $("src-footer-pc"), S = window.RTPcSeries;
+    if (!host || !S) return;
+    var ids = drawnSources();
+    var parts = ids.map(function (id) { return S.stamp(id); }).filter(Boolean);
+    host.textContent = parts.length ? "Ingested series: " + parts.join(" · ") + " · re-ingested from the owner's downloads, nothing typed." : "";
+  }
+
+  /* ---------- the credit committee's note (L4) ----------
+     Posts kind "credit", ticker "PCMARKET" and the facts drawn on this
+     view — the eight conditions with their readings, the spread ladder,
+     and the newest capital, stress and deal-flow readings when those
+     sections are mounted — to /api/fsa-note, which is rate-gated as it
+     is for the other pages and answers 503 on a deployment without the
+     note feed. periodLabel is the newest as-of across the drawn series,
+     so a new edition or a new FRED day writes a new note. The section
+     may hand over its own fact lines through facts(ctx); otherwise the
+     page reads a fixed list of its keys from the loader. */
+  var NOTE = { pending: false, last: null };
+  var NOTE_KEYS = {
+    stress: ["proskauer_pcdi_overall", "proskauer_pcdi_loan_count", "kbra_dld_ttm_default_rate", "fitch_us_private_credit_default_rate", "moodys_private_credit_default_2025_range"],
+    capital: ["pb_pd_fundraising_capital_q2_2026ed", "pb_pd_fund_count_q2_2026ed", "pb_pd_fundraising_ttm", "derived_us_dl_aum_annual", "derived_us_dl_dry_powder_share_of_aum", "derived_dl_deployment_ttm", "derived_dl_years_of_dry_powder", "derived_fundraising_minus_deployment_annual"],
+    dealflow: ["lcd_dl_volume_quarterly", "lcd_dl_count_quarterly", "lcd_dl_lbo_spread_recent", "lcd_lbo_spread_diff_dl_vs_bsl_all_quarterly", "lcd_bdc_all_in_rate_quarterly"]
+  };
+  function plainText(html) { var d = document.createElement("div"); d.innerHTML = html; return d.textContent.replace(/\s+/g, " ").trim(); }
+  /* one fact line from a loader key: the newest point, its prior at the
+     same grain, and the edition stamp — all computed here, nothing typed */
+  function keyFact(S, key) {
+    var e = S.get(key); if (!e) return null;
+    var F = S.fmt, l = S.latest(key); if (!l) return null;
+    /* every point of the newest date: a range or a bucketed snapshot
+       prints each member with its qualifier, a restated duplicate once */
+    var same = S.pointsOf(key, { grain: l.g }).filter(function (q) { return q.x === l.x && isNum(q.y); });
+    var seen = {}, members = [];
+    same.forEach(function (q) {
+      var tag = q.c || (q.q ? String(q.q).split(",")[0] : "") || "";
+      var id = F.byUnit(q.y, e.unit) + "|" + tag;
+      if (seen[id]) return; seen[id] = true;
+      members.push(F.byUnit(q.y, e.unit) + (tag ? " (" + tag + ")" : ""));
+    });
+    var line = e.label + ": " + (members.length > 1 ? members.join(", ") : F.byUnit(l.y, e.unit)) + " (" + F.period(l) + ")";
+    var p = members.length > 1 ? null : S.prior(key);
+    if (p) line += ", from " + F.byUnit(p.y, e.unit) + " (" + F.period(p) + ")";
+    /* a window key drawn from an annual chart also states its last full year */
+    if (S.isWindow(l)) {
+      var y = S.latest(key, { grain: "year" });
+      if (y && y.x !== l.x) line += "; " + F.period(y) + " full year " + F.byUnit(y.y, e.unit);
+    }
+    if (e.population) line += " — population: " + String(e.population).split(/[.;]/)[0];
+    var st = S.stampOf(key);
+    if (st) line += " — " + st;
+    return line.slice(0, 400);
+  }
+  function collectNoteFacts() {
+    var cm = DATA.cm, facts = [], dates = [], today = new Date().toISOString().slice(0, 10);
+    if (cm) {
+      TILES.forEach(function (t) {
+        var S = t.ids.map(function (id) { return fromCredit(cm, id); });
+        if (!S[0]) return;
+        var main = S[0], val;
+        if (t.rows) {
+          val = t.ids.map(function (id, i) { return S[i] ? t.rowLabels[i] + " " + fmtPlain(t.kind, S[i].latest.v) : null; }).filter(Boolean).join(", ");
+        } else {
+          val = fmtPlain(t.kind, main.latest.v) + (t.unitWord ? " " + t.unitWord : "");
+        }
+        var pct = main.percentile && isNum(main.percentile.p)
+          ? "; " + ordinal(main.percentile.p) + " percentile of the " + main.percentile.windowLabel + " window" : "";
+        facts.push(t.label + ": " + val + " (FRED " + main.latest.d + pct + "). Reading: " + plainText(t.read(S, cm)));
+        dates.push(main.latest.d);
+      });
+      var rungs = LADDER.map(function (r) { var s = fromCredit(cm, r[1]); return s ? { label: r[0], bps: s.latest.v * 100, d: s.latest.d } : null; }).filter(Boolean);
+      if (rungs.length) {
+        var by = {}; rungs.forEach(function (r) { by[r.label] = r; });
+        var gap = by["CCC and lower"] && by.BB ? "; CCC–BB dispersion gap " + withCommas(Math.round(by["CCC and lower"].bps - by.BB.bps)) + " bps" : "";
+        facts.push("Spread ladder, OAS over Treasuries in bps: " + rungs.map(function (r) { return r.label + " " + withCommas(Math.round(r.bps)); }).join(", ") +
+          gap + " (FRED " + rungs[0].d + "). Bonds are priced over Treasuries; private loans over a floating base.");
+        rungs.forEach(function (r) { dates.push(r.d); });
+      }
+    }
+    var S = window.RTPcSeries, ctx = null;
+    orderedSections().forEach(function (s) {
+      if (SECTIONS.status[s.id] !== "ready" || !S) return;
+      var lines = null;
+      if (typeof s.facts === "function") {
+        try { lines = s.facts(ctx || (ctx = sectionCtx())); } catch (e) { lines = null; }
+      }
+      if (!Array.isArray(lines)) lines = (NOTE_KEYS[s.id] || []).map(function (k) { return keyFact(S, k); });
+      lines.filter(Boolean).slice(0, 8).forEach(function (l) { facts.push(String(l).slice(0, 400)); });
+      /* the as-of of the keys whose facts are posted (a section may name
+         the keys it draws in `keys`); a forecast series is dated at its
+         horizon, so nothing later than today counts */
+      (NOTE_KEYS[s.id] || []).concat(Array.isArray(s.keys) ? s.keys : []).forEach(function (k) {
+        var m = S.meta(k); if (m && m.asOf && m.asOf <= today) dates.push(m.asOf);
+      });
+    });
+    dates.sort();
+    var asOf = dates.length ? dates[dates.length - 1] : null;
+    return { facts: facts.slice(0, 40), asOf: asOf, periodLabel: asOf ? "Market view as of " + fmtDate(asOf) : "Market view" };
+  }
+  function renderNoteControl() {
+    var btn = $("credit-note-btn"), meta = $("credit-note-facts");
+    if (!btn) return;
+    var f = collectNoteFacts();
+    btn.disabled = NOTE.pending || f.facts.length < 3;
+    meta.textContent = f.facts.length < 3
+      ? "The note needs the conditions strip; it is written once the credit series answer."
+      : f.facts.length + " facts on this view · " + f.periodLabel;
+  }
+  function writeNote() {
+    var host = $("analyst-note-body"), btn = $("credit-note-btn");
+    var f = collectNoteFacts();
+    if (f.facts.length < 3) { renderNoteControl(); return; }
+    NOTE.pending = true; btn.disabled = true; btn.textContent = "Writing…";
+    host.innerHTML = "<p class='hint' role='status'>Writing the note from " + f.facts.length + " facts on this view…</p>";
+    var done = function () { NOTE.pending = false; btn.textContent = "Write the note"; renderNoteControl(); wrapTerms($("sec-credit-note")); };
+    fetch(API_BASE + "/api/fsa-note", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ kind: "credit", ticker: "PCMARKET", periodLabel: f.periodLabel, facts: f.facts })
+    }).then(function (r) { return HTTP.json(r, "the note"); }).then(function (d) {
+      NOTE.last = d;
+      host.innerHTML = String(d.note || "").split("\n\n").map(function (p) { return "<p>" + esc(p) + "</p>"; }).join("") +
+        "<p class='note-meta'>Written by the research model from the " + f.facts.length + " facts drawn on this view and nothing else · " +
+        esc(f.periodLabel) + (d.writtenAt ? " · written " + esc(String(d.writtenAt).slice(0, 16).replace("T", " ")) + " UTC" : "") + "</p>";
+      done();
+    }).catch(function (e) {
+      var msg = e && e.status === 503 ? "The note feed is not configured on this deployment, so no note is written; every figure above stands on its own."
+        : "The note could not be written just now (" + HTTP.message(e, "the note") + "). Every figure above stands on its own.";
+      host.innerHTML = "<p class='hint'>" + esc(msg) + "</p>";
+      done();
+    });
+  }
+  $("credit-note-btn").addEventListener("click", writeNote);
 
   /* ---------- staleness ----------
      A daily or weekly series should have answered within 45 days and a
@@ -996,7 +1495,7 @@
   VIEWS.forEach(function (k) { $("view-" + k).addEventListener("click", function () { setView(k); }); });
 
   /* ---------- loading ---------- */
-  var DATA = { cm: null, macro: null };
+  var DATA = { cm: null, macro: null, composite: null };
   function statusLine(msg) { $("status").textContent = msg || ""; }
   function renderAll() {
     renderStrip(DATA.cm, DATA.macro);
@@ -1014,17 +1513,28 @@
       });
     });
   }
+  /* the site's own BDC composite: absent (404) until the holdings
+     release, which is a state the sections design for, not a fault */
+  function composite() {
+    return fetch("data/bdc/composite.json").then(function (r) {
+      if (r.status === 404) return null;
+      return HTTP.json(r, "the BDC composite");
+    });
+  }
   function load(force) {
     statusLine(force ? "Refreshing every feed, skipping the six-hour cache…" : "Loading the credit series…");
     var problems = [];
     var note = function (what) { return function (e) { problems.push({ what: what, e: e }); return null; }; };
+    if (force && window.RTPcSeries) window.RTPcSeries.invalidate();
     return API_BASE_READY.then(function (base) {
       API_BASE = base;
       return Promise.all([
         getJson("/api/credit-macro", "the credit series", force).catch(note("credit series")),
         getJson("/api/macro", "the macro feed", force).catch(note("macro feed")),
         getJson("/api/price-history?ticker=BIZD", "BIZD", force).catch(note("BIZD price history")),
-        loanEtf(force).catch(note("loan ETF price history"))
+        loanEtf(force).catch(note("loan ETF price history")),
+        composite().catch(note("BDC composite")),
+        window.RTPcSeries ? window.RTPcSeries.load([]).catch(note("ingested series index")) : Promise.resolve(null)
       ]);
     }).then(function (r) {
       /* a forced refresh that is refused or fails leaves what is already
@@ -1032,11 +1542,18 @@
       var keep = force && DATA.cm;
       DATA.cm = r[0] || (keep ? DATA.cm : null);
       DATA.macro = r[1] || (keep ? DATA.macro : null);
+      DATA.composite = normalizeComposite(r[4]) || (keep ? DATA.composite : null);
       var why = problems.filter(function (p) { return /price/.test(p.what); }).map(function (p) { return HTTP.message(p.e); }).join("; ");
       var prev = M8.data || {};
       M8.data = { a: r[2] || (keep ? prev.a : null), b: r[3] || (keep ? prev.b : null),
                   bTicker: r[3] ? r[3].ticker : prev.bTicker || "SRLN", why: why || null };
       renderAll();
+      /* the sections mount after the strip and charts, in order, and
+         only once their files have evaluated: the three section scripts
+         are parser-blocking tags after this file, and on a slow link the
+         feeds can answer before they arrive; each section settles on its
+         own and never holds the status line */
+      SECTION_SCRIPTS_READY.then(mountSections);
       var cm = DATA.cm;
       var n = cm && cm.series ? Object.keys(cm.series).filter(function (k) { return fromCredit(cm, k); }).length : 0;
       var refused = problems.filter(function (p) { return p.e && (p.e.status === 429 || p.e.status === 403); });
@@ -1086,6 +1603,11 @@
       if (!window.RTExport.xlsx(tables, ctx())) xb.textContent = "Nothing to export";
     });
   })();
+
+  /* what a console or a test can reach: re-mount the sections, build the
+     ctx, list the facts the note would post, read each section's state */
+  window.RTCreditPage = { remount: mountSections, ctx: sectionCtx, noteFacts: collectNoteFacts,
+    status: function () { var o = {}; Object.keys(SECTIONS.status).forEach(function (k) { o[k] = SECTIONS.status[k]; }); return o; } };
 
   /* ---------- init ---------- */
   /* ?view= picks the view; ?t=TICKER is reserved for the Lenders view's

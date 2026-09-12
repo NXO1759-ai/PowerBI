@@ -215,6 +215,10 @@ await run("credit-macro answers the next call from its cache", "../api/credit-ma
 await run("fsa-note without key answers 503 or 200", "../api/fsa-note.js",
   { method: "POST", body: { ticker: "NVDA", periodLabel: "smoke", facts: ["a", "b", "c"] } },
   (res) => (res.code === 503 || res.code === 200 || res.code === 502) ? true : "unexpected " + res.code);
+/* the Private Credit Terminal's Market view posts kind "credit" for PCMARKET; same gate, same 503 */
+await run("fsa-note kind credit (PCMARKET) without key answers 503 or 200", "../api/fsa-note.js",
+  { method: "POST", body: { kind: "credit", ticker: "PCMARKET", periodLabel: "smoke", facts: ["a", "b", "c"] } },
+  (res) => (res.code === 503 || res.code === 200 || res.code === 502) ? true : "unexpected " + res.code);
 
 console.log("market layer");
 await run("valuation NVDA answers 200 with a key or 503 without", "../api/valuation.js",

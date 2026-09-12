@@ -76,6 +76,13 @@ jobs:
       - name: Chart mapping, vintage replay and the ingest end to end
         run: node scripts/test-pc-ingest.mjs
 
+      # The Market view's page layer over the ingested series: the loader
+      # against the committed files, the catalog registry, the composite
+      # view, the html and the note endpoint, and every section file's
+      # registration and caption widths under a window stub.
+      - name: Private credit page layer, sections and captions
+        run: node scripts/test-pc-page.mjs
+
       - name: API replies are read without leaking a parser error
         run: node scripts/test-http.mjs
 
