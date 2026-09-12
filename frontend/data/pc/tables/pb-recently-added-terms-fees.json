@@ -1,0 +1,75 @@
+{
+ "generated": "2026-09-11",
+ "slug": "pb-recently-added-terms-fees",
+ "title": "Recently Added Terms & Fees",
+ "editions": [
+  {
+   "slug": "pb-recently-added-terms-fees",
+   "key": "pb_recent_terms_fees_list",
+   "title": "Recently Added Terms & Fees",
+   "label": "Recently added fund terms and fees (five most recent)",
+   "edition": "2026-09-10",
+   "vintage": "2026-09-10",
+   "downloadedOn": "2026-09-10",
+   "filterLine": "Access Point: All; Fund Category: All; Fund Size: All; Vintage Year: All; Fund Location: World",
+   "chartFilters": "Access Point: All; Fund Category: All",
+   "currency": "USD",
+   "columns": [
+    {
+     "name": "Fund Name",
+     "kind": "text"
+    },
+    {
+     "name": "Fund Strategy",
+     "kind": "text"
+    },
+    {
+     "name": "Fee",
+     "kind": "percent"
+    },
+    {
+     "name": "Carry",
+     "kind": "percent"
+    }
+   ],
+   "header": [
+    "Fund Name",
+    "Fund Strategy",
+    "Fee",
+    "Carry"
+   ],
+   "rows": [
+    [
+     "OneSixOne Ventures",
+     "Venture Capital - Early Stage",
+     "2.00%",
+     "20.00%"
+    ],
+    [
+     "European Braintech Fund I",
+     "Venture Capital - Early Stage",
+     "2.00%",
+     "20.00%"
+    ],
+    [
+     "GLF Opportunistic Fund I",
+     "Agriculture",
+     "1.50%",
+     "15.00%"
+    ],
+    [
+     "Jera GP-led Fund",
+     "Diversified Private Equity",
+     "5.00%",
+     "10.00%"
+    ],
+    [
+     "Beijing Cuihu Accelerated Growth Startup Fund",
+     "Venture - General",
+     "2.00%",
+     "20.00%"
+    ]
+   ]
+  }
+ ]
+}

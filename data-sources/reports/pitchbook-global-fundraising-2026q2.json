@@ -1,0 +1,847 @@
+{
+ "publisher": "PitchBook",
+ "document": "Q2 2026 Global Private Market Fundraising Report",
+ "edition": "2026Q2",
+ "asOf": "2026-06-30",
+ "published": "2026-09-03",
+ "downloaded": "2026-09-10",
+ "file": "q2-2026-global-private-market-fundraising-report.pdf",
+ "sha256": "6a58b17b3ccbc179304354676edc5ea2bb63adc0e8673c922e95c4ba01aadaba",
+ "geography": "Global",
+ "pages": {
+  "2": "contents; table 'YoY changes in trailing 12-month fundraising activity by strategy'; 'Published on September 3, 2026'",
+  "3": "overview: private capital AUM $6.1T to $16.7T; H1 2026 $658.1B across 1,499 funds; 'If this pace holds through year-end'",
+  "5": "private capital cash flows; private debt 24.1% distribution rate, $39.5B 2025 net cash flow, TTM +14% YoY, H1 2026 +27.3% YoY",
+  "17": "Private debt: chart 'Private debt fundraising activity' 2016-2026 (capital and count labels); text on 88 funds, $158.3B, top five Q2 closes $54.4B (34.4%), Barings $19B",
+  "18": "Private debt AUM ($B) chart (unlabeled, as of December 31, 2025); dry powder $547B at end-2025, 'more than $120 billion' lower YoY; share of capital raised by type (unlabeled)",
+  "21": "Secondaries: private debt secondaries $16.1B in 2025, $13B through Q2 2026 across five funds (45.3% of H1); private debt 'almost $2 trillion in AUM'"
+ },
+ "notes": "Hand-keyed from the PDF pages named on each point. Shape: series.<key> = { label, unit, cadence, geography, population, edition, points: [{ p, g, start?, v, doc, page, quote, locator?, note?, approx?, estimate?, provisional? }], caveats, restatement?, feeds?, catalogKey? }. p is the period end (ISO), g the grain (year, half, quarter, ytd, ttm, asof, window, rolling6m), doc a key of documents. Keys are the series-catalog group 2 keys; a catalog row that mixed units or populations is split into one key per measure, the catalog key keeping the primary measure and every sibling carrying catalogKey (see splits). A key may recur across the report files; points are unioned by key, and the same key, date and grain in two files is a restatement in which the later document's asOf wins. Threshold wording ('exceeds', 'almost', 'more than') is flagged approx; report estimates are flagged estimate; latest-period prints are flagged provisional.",
+ "documents": {
+  "fr2026q2": {
+   "publisher": "PitchBook",
+   "title": "Q2 2026 Global Private Market Fundraising Report",
+   "edition": "2026Q2",
+   "asOf": "2026-06-30",
+   "published": "2026-09-03",
+   "publishedSource": "p.2, 'Published on September 3, 2026'",
+   "file": "q2-2026-global-private-market-fundraising-report.pdf",
+   "sha256": "6a58b17b3ccbc179304354676edc5ea2bb63adc0e8673c922e95c4ba01aadaba",
+   "downloaded": "2026-09-10",
+   "pages": "printed page numbers; the footer of page 17 reads '17 Q2 2026 GLOBAL PRIVATE MARKET FUNDRAISING REPORT' and coincides with the PDF page index"
+  }
+ },
+ "splits": {
+  "pb_pd_fundraising_ttm": [
+   "pb_pd_fundraising_ttm",
+   "pb_pd_fundraising_ttm_yoy_pct",
+   "pb_pd_fundraising_ttm_fund_count",
+   "pb_pd_fundraising_ttm_fund_count_yoy_pct"
+  ],
+  "pb_pd_fundraising_half_year": [
+   "pb_pd_fundraising_half_year",
+   "pb_pd_fundraising_half_year_yoy_pct"
+  ],
+  "pb_pd_dry_powder_headline": [
+   "pb_pd_dry_powder_headline",
+   "pb_pd_dry_powder_yoy_change"
+  ]
+ },
+ "series": {
+  "pb_pd_fundraising_capital_q2_2026ed": {
+   "label": "Private debt capital raised by year (Q2 2026 Fundraising Report edition)",
+   "unit": "$B",
+   "cadence": "annual",
+   "geography": "Global",
+   "population": "Closed-end private debt funds, final closes only; the 2026 bar is the first half of the year",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2016-12-31",
+     "g": "year",
+     "start": "2016-01-01",
+     "v": 146.1,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "$146.1",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2017-12-31",
+     "g": "year",
+     "start": "2017-01-01",
+     "v": 203.2,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "$203.2",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2018-12-31",
+     "g": "year",
+     "start": "2018-01-01",
+     "v": 199.1,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "$199.1",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2019-12-31",
+     "g": "year",
+     "start": "2019-01-01",
+     "v": 233.6,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "$233.6",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2020-12-31",
+     "g": "year",
+     "start": "2020-01-01",
+     "v": 234.9,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "$234.9",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2021-12-31",
+     "g": "year",
+     "start": "2021-01-01",
+     "v": 328.3,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "$328.3",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2022-12-31",
+     "g": "year",
+     "start": "2022-01-01",
+     "v": 255.2,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "$255.2",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2023-12-31",
+     "g": "year",
+     "start": "2023-01-01",
+     "v": 270.5,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "$270.5",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2024-12-31",
+     "g": "year",
+     "start": "2024-01-01",
+     "v": 261.3,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "$261.3",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2025-12-31",
+     "g": "year",
+     "start": "2025-01-01",
+     "v": 275.2,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "$275.2",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2026-06-30",
+     "g": "ytd",
+     "start": "2026-01-01",
+     "v": 158.3,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "managers closed on 88 funds totaling $158.3 billion in commitments",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026); also the text",
+     "provisional": true
+    }
+   ],
+   "caveats": "Latest edition; supersedes the 2024 annual report for 2016-2024. The 2026 point is a half-year figure and is never annualized without 'if this pace holds' (p.3 wording; p.17 says 'At the current pace, fundraising for 2026 is on track to be the second-best year on record'). The run of years at or above $200B is computed from this series, never typed (seven on this cut, 2019-2025).",
+   "feeds": "Fundraising tile (primary series 2016 onward); C1",
+   "restatement": "Every later edition restates overlapping years upward as late-reporting funds arrive (about 20% per the 2024 report p.5)"
+  },
+  "pb_pd_fund_count_q2_2026ed": {
+   "label": "Private debt funds closed by year (Q2 2026 Fundraising Report edition)",
+   "unit": "count",
+   "cadence": "annual",
+   "geography": "Global",
+   "population": "Closed-end private debt funds, final closes only; the 2026 point is the first half of the year",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2016-12-31",
+     "g": "year",
+     "start": "2016-01-01",
+     "v": 354,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "354",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2017-12-31",
+     "g": "year",
+     "start": "2017-01-01",
+     "v": 379,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "379",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2018-12-31",
+     "g": "year",
+     "start": "2018-01-01",
+     "v": 420,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "420",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2019-12-31",
+     "g": "year",
+     "start": "2019-01-01",
+     "v": 404,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "404",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2020-12-31",
+     "g": "year",
+     "start": "2020-01-01",
+     "v": 485,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "485",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2021-12-31",
+     "g": "year",
+     "start": "2021-01-01",
+     "v": 520,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "520",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2022-12-31",
+     "g": "year",
+     "start": "2022-01-01",
+     "v": 585,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "585",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2023-12-31",
+     "g": "year",
+     "start": "2023-01-01",
+     "v": 568,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "568",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2024-12-31",
+     "g": "year",
+     "start": "2024-01-01",
+     "v": 436,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "436",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2025-12-31",
+     "g": "year",
+     "start": "2025-01-01",
+     "v": 309,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "309",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    },
+    {
+     "p": "2026-06-30",
+     "g": "ytd",
+     "start": "2026-01-01",
+     "v": 88,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "managers closed on 88 funds totaling $158.3 billion in commitments",
+     "locator": "p.17 chart 'Private debt fundraising activity', label above the year on the x-axis (Source: PitchBook, Geography: Global, As of June 30, 2026); also the text",
+     "provisional": true
+    }
+   ],
+   "caveats": "p.17: 88 funds is 'a fund count on pace for fewer than 200 closes by year-end, which would mark a fourth consecutive year of decline' - conditional; 2023, 2024 and 2025 are the three completed declines on this series. Latest-year counts are under-reported at publication.",
+   "feeds": "Fundraising tile (fund count line); C1"
+  },
+  "pb_pd_fundraising_ttm": {
+   "label": "Private debt trailing 12-month capital raised",
+   "unit": "$B",
+   "cadence": "snapshot",
+   "geography": "Global",
+   "population": "Closed-end private debt funds, final closes in the twelve months to June 30, 2026",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2026-06-30",
+     "g": "ttm",
+     "start": "2025-07-01",
+     "v": 309.1,
+     "doc": "fr2026q2",
+     "page": 2,
+     "quote": "Private debt $309.1 14.0% 259 -39.6%",
+     "locator": "p.2 table 'YoY changes in trailing 12-month fundraising activity by strategy', row Private debt (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    }
+   ],
+   "caveats": "Second to private equity's $468.8B and the only strategy up on the year (p.5: 'debt is the only asset class with an increase in trailing 12-month fundraising, at 14% YoY'). The nine-strategy table is carried in tables.pb_ttm_fundraising_by_strategy_2026q2; the row is read from the rendered page because the text layer misaligns the row labels.",
+   "feeds": "Fundraising tile (TTM headline); C2"
+  },
+  "pb_pd_fundraising_ttm_yoy_pct": {
+   "catalogKey": "pb_pd_fundraising_ttm",
+   "label": "Private debt trailing 12-month capital raised, YoY change",
+   "unit": "%",
+   "cadence": "snapshot",
+   "geography": "Global",
+   "population": "Closed-end private debt funds, final closes in the twelve months to June 30, 2026",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2026-06-30",
+     "g": "ttm",
+     "start": "2025-07-01",
+     "v": 14,
+     "doc": "fr2026q2",
+     "page": 2,
+     "quote": "Private debt $309.1 14.0% 259 -39.6%",
+     "locator": "p.2 table 'YoY changes in trailing 12-month fundraising activity by strategy', row Private debt (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    }
+   ],
+   "caveats": "Split from the catalog's compound row pb_pd_fundraising_ttm."
+  },
+  "pb_pd_fundraising_ttm_fund_count": {
+   "catalogKey": "pb_pd_fundraising_ttm",
+   "label": "Private debt trailing 12-month fund count",
+   "unit": "count",
+   "cadence": "snapshot",
+   "geography": "Global",
+   "population": "Closed-end private debt funds, final closes in the twelve months to June 30, 2026",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2026-06-30",
+     "g": "ttm",
+     "start": "2025-07-01",
+     "v": 259,
+     "doc": "fr2026q2",
+     "page": 2,
+     "quote": "Private debt $309.1 14.0% 259 -39.6%",
+     "locator": "p.2 table 'YoY changes in trailing 12-month fundraising activity by strategy', row Private debt (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    }
+   ],
+   "caveats": "Split from the catalog's compound row pb_pd_fundraising_ttm."
+  },
+  "pb_pd_fundraising_ttm_fund_count_yoy_pct": {
+   "catalogKey": "pb_pd_fundraising_ttm",
+   "label": "Private debt trailing 12-month fund count, YoY change",
+   "unit": "%",
+   "cadence": "snapshot",
+   "geography": "Global",
+   "population": "Closed-end private debt funds, final closes in the twelve months to June 30, 2026",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2026-06-30",
+     "g": "ttm",
+     "start": "2025-07-01",
+     "v": -39.6,
+     "doc": "fr2026q2",
+     "page": 2,
+     "quote": "Private debt $309.1 14.0% 259 -39.6%",
+     "locator": "p.2 table 'YoY changes in trailing 12-month fundraising activity by strategy', row Private debt (Source: PitchBook, Geography: Global, As of June 30, 2026)"
+    }
+   ],
+   "caveats": "Split from the catalog's compound row pb_pd_fundraising_ttm."
+  },
+  "pb_pd_fundraising_half_year": {
+   "label": "Private debt capital raised, half-year and quarter prints",
+   "unit": "$B",
+   "cadence": "snapshot",
+   "geography": "Global",
+   "population": "Closed-end private debt funds, final closes only",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2026-06-30",
+     "g": "half",
+     "start": "2026-01-01",
+     "v": 158.3,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "managers closed on 88 funds totaling $158.3 billion in commitments"
+    }
+   ],
+   "caveats": "The 2022-2024 prints of this key are in pitchbook-annual-private-debt-reports.json; points are unioned by key across the report files. Each print is provisional at publication.",
+   "feeds": "Fundraising tile sub-annual context"
+  },
+  "pb_pd_fundraising_half_year_yoy_pct": {
+   "catalogKey": "pb_pd_fundraising_half_year",
+   "label": "Private debt capital raised, first half, YoY change",
+   "unit": "%",
+   "cadence": "snapshot",
+   "geography": "Global",
+   "population": "Closed-end private debt funds, final closes only",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2026-06-30",
+     "g": "half",
+     "start": "2026-01-01",
+     "v": 27.3,
+     "doc": "fr2026q2",
+     "page": 5,
+     "quote": "H1 2026 fundraising was up 27.3% YoY"
+    }
+   ],
+   "caveats": ""
+  },
+  "pb_pd_aum_headline": {
+   "label": "Private debt AUM (institutional drawdown funds), headline by edition",
+   "unit": "$B",
+   "cadence": "snapshot",
+   "geography": "Global",
+   "population": "Closed-end private debt funds (NAV plus dry powder), institutional; excludes retail semiliquid vehicles",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2025-12-31",
+     "g": "asof",
+     "v": 2000,
+     "doc": "fr2026q2",
+     "page": 21,
+     "quote": "which now stands at almost $2 trillion in AUM",
+     "approx": true,
+     "locator": "p.21 secondaries text; the p.18 chart 'Private debt AUM ($B)' (As of December 31, 2025) carries no labels"
+    }
+   ],
+   "caveats": "Threshold wording ('almost $2 trillion'), not an exact value; the earlier editions' headlines are in pitchbook-annual-private-debt-reports.json under the same key.",
+   "feeds": "AUM tile"
+  },
+  "pb_pd_dry_powder_headline": {
+   "label": "Private debt dry powder, headline by edition",
+   "unit": "$B",
+   "cadence": "snapshot",
+   "geography": "Global",
+   "population": "All private debt closed-end funds, committed but uncalled capital",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2025-12-31",
+     "g": "asof",
+     "v": 547,
+     "doc": "fr2026q2",
+     "page": 18,
+     "quote": "Private debt dry powder fell by more than $120 billion YoY to $547 billion at the end of 2025"
+    }
+   ],
+   "caveats": "p.18 reads the fall as 'managers deploying capital they had previously closed on rather than a retreat from the asset class'. Implies end-2024 above $667B, which no edition prints. Earlier editions' headlines are in pitchbook-annual-private-debt-reports.json under the same key.",
+   "feeds": "Dry powder tile"
+  },
+  "pb_pd_dry_powder_yoy_change": {
+   "catalogKey": "pb_pd_dry_powder_headline",
+   "label": "Private debt dry powder, YoY change in dollars",
+   "unit": "$B",
+   "cadence": "snapshot",
+   "geography": "Global",
+   "population": "All private debt closed-end funds",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2025-12-31",
+     "g": "asof",
+     "v": -120,
+     "doc": "fr2026q2",
+     "page": 18,
+     "quote": "fell by more than $120 billion YoY to $547 billion at the end of 2025",
+     "approx": true
+    }
+   ],
+   "caveats": "'more than $120 billion'; the sign is the direction, the magnitude a floor."
+  },
+  "pb_pd_distribution_rate": {
+   "label": "Private debt fund distribution rate relative to prior-year NAV",
+   "unit": "%",
+   "cadence": "snapshot",
+   "geography": "Global",
+   "population": "Closed-end private debt funds; distributions in 2025 over 2024 NAV",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2025-12-31",
+     "g": "year",
+     "start": "2025-01-01",
+     "v": 24.1,
+     "doc": "fr2026q2",
+     "page": 5,
+     "quote": "Private debt funds printed a 24.1% distribution rate relative to 2024 NAV"
+    }
+   ],
+   "caveats": "Only the 2025 print exists; the report charts private capital cash flows, not private debt alone. The 2024 annual report's direct lending vs buyout distribution rates are separate keys (pb_dl_distribution_rate, pb_buyout_distribution_rate) in the annual file; the Quantitative Perspectives distribution yield (qp_pd_ttm_distribution_yield) is US-only and on beginning NAV.",
+   "feeds": "Cash-flow tile"
+  },
+  "pb_pd_net_cash_flow": {
+   "label": "Private debt fund net cash flow (distributions minus contributions)",
+   "unit": "$B",
+   "cadence": "snapshot",
+   "geography": "Global",
+   "population": "Closed-end private debt funds",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2025-12-31",
+     "g": "year",
+     "start": "2025-01-01",
+     "v": 39.5,
+     "doc": "fr2026q2",
+     "page": 5,
+     "quote": "their $39.5 billion in 2025 net cash flow is the highest in our records for this strategy dating back to 1997"
+    }
+   ],
+   "caveats": "Only print in the folder; the p.5 chart is all private capital and unlabeled.",
+   "feeds": "Cash-flow tile"
+  },
+  "pb_pd_secondaries_fundraising": {
+   "label": "Private debt secondaries fundraising",
+   "unit": "$B",
+   "cadence": "annual",
+   "geography": "Global",
+   "population": "Secondaries funds focused on private debt, final closes",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2025-12-31",
+     "g": "year",
+     "start": "2025-01-01",
+     "v": 16.1,
+     "doc": "fr2026q2",
+     "page": 21,
+     "quote": "stepped up dramatically from roughly $3 billion or less annually through 2024 to $16.1 billion in 2025"
+    },
+    {
+     "p": "2026-06-30",
+     "g": "ytd",
+     "start": "2026-01-01",
+     "v": 13,
+     "doc": "fr2026q2",
+     "page": 21,
+     "quote": "Five private debt secondaries funds raised $13 billion through Q2",
+     "approx": true,
+     "provisional": true
+    }
+   ],
+   "caveats": "Added per the catalog verifier's missing list. Years through 2024 are 'roughly $3 billion or less annually' (p.21) and are not keyed as points."
+  },
+  "pb_pd_secondaries_fund_count": {
+   "catalogKey": "pb_pd_secondaries_fundraising",
+   "label": "Private debt secondaries funds closed",
+   "unit": "count",
+   "cadence": "annual",
+   "geography": "Global",
+   "population": "Secondaries funds focused on private debt",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2026-06-30",
+     "g": "ytd",
+     "start": "2026-01-01",
+     "v": 5,
+     "doc": "fr2026q2",
+     "page": 21,
+     "quote": "Five private debt secondaries funds raised $13 billion through Q2",
+     "provisional": true
+    }
+   ],
+   "caveats": ""
+  },
+  "pb_pd_secondaries_share_of_secondaries_fundraising": {
+   "catalogKey": "pb_pd_secondaries_fundraising",
+   "label": "Private debt share of secondaries capital raised, first half",
+   "unit": "%",
+   "cadence": "snapshot",
+   "geography": "Global",
+   "population": "All secondaries funds closed in H1 2026 ($28.6B across 32 vehicles, p.21)",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2026-06-30",
+     "g": "half",
+     "start": "2026-01-01",
+     "v": 45.3,
+     "doc": "fr2026q2",
+     "page": 21,
+     "quote": "or 45.3% of H1 secondaries commitments"
+    }
+   ],
+   "caveats": ""
+  },
+  "pb_pd_top_five_funds_capital": {
+   "label": "Capital raised by the five largest private debt funds closed in the quarter",
+   "unit": "$B",
+   "cadence": "snapshot",
+   "geography": "Global",
+   "population": "The five largest private debt funds that closed in Q2 2026",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2026-06-30",
+     "g": "quarter",
+     "start": "2026-04-01",
+     "v": 54.4,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "The five largest funds that closed in Q2 raised a combined $54.4 billion, or 34.4% of total capital raised YTD"
+    }
+   ],
+   "caveats": "Megafund concentration series added per the catalog verifier; the 2024 annual report's top-five figure is in the annual file under the same key."
+  },
+  "pb_pd_top_five_fund_share_of_capital": {
+   "catalogKey": "pb_pd_top_five_funds_capital",
+   "label": "Five largest fund closes as a share of private debt capital raised",
+   "unit": "%",
+   "cadence": "snapshot",
+   "geography": "Global",
+   "population": "Five largest Q2 2026 closes over H1 2026 capital raised",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2026-06-30",
+     "g": "ytd",
+     "start": "2026-01-01",
+     "v": 34.4,
+     "doc": "fr2026q2",
+     "page": 17,
+     "quote": "a combined $54.4 billion, or 34.4% of total capital raised YTD"
+    }
+   ],
+   "caveats": ""
+  },
+  "pb_private_capital_aum": {
+   "label": "Private capital AUM, all strategies",
+   "unit": "$B",
+   "cadence": "snapshot",
+   "geography": "Global",
+   "population": "All private capital strategies (PE, VC, real estate, real assets, debt, funds of funds, secondaries, co-investment)",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2016-12-31",
+     "g": "asof",
+     "v": 6100,
+     "doc": "fr2026q2",
+     "page": 3,
+     "quote": "AUM has nearly tripled since 2016, rising from $6.1 trillion to $16.7 trillion as of December 2025",
+     "note": "the text says 'since 2016'; dated to the year-end"
+    },
+    {
+     "p": "2025-12-31",
+     "g": "asof",
+     "v": 16700,
+     "doc": "fr2026q2",
+     "page": 3,
+     "quote": "rising from $6.1 trillion to $16.7 trillion as of December 2025"
+    }
+   ],
+   "caveats": "Comparator for the AUM CAGR row; the two points imply 11.8% a year over nine years, computed at build, never typed."
+  },
+  "pb_private_capital_fundraising_ytd": {
+   "label": "Private capital raised, all strategies, first half",
+   "unit": "$B",
+   "cadence": "snapshot",
+   "geography": "Global",
+   "population": "All private capital funds, final closes in H1 2026",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2026-06-30",
+     "g": "ytd",
+     "start": "2026-01-01",
+     "v": 658.1,
+     "doc": "fr2026q2",
+     "page": 3,
+     "quote": "Through the first half of 2026, $658.1 billion was raised across 1,499 funds",
+     "provisional": true
+    }
+   ],
+   "caveats": "p.3: 'If this pace holds through year-end, the global fundraising total will decline for a fifth straight year' - the only page carrying the 'if this pace holds' phrase."
+  },
+  "pb_private_capital_fund_count_ytd": {
+   "catalogKey": "pb_private_capital_fundraising_ytd",
+   "label": "Private capital funds closed, all strategies, first half",
+   "unit": "count",
+   "cadence": "snapshot",
+   "geography": "Global",
+   "population": "All private capital funds, final closes in H1 2026",
+   "edition": "2026Q2",
+   "points": [
+    {
+     "p": "2026-06-30",
+     "g": "ytd",
+     "start": "2026-01-01",
+     "v": 1499,
+     "doc": "fr2026q2",
+     "page": 3,
+     "quote": "$658.1 billion was raised across 1,499 funds",
+     "provisional": true
+    }
+   ],
+   "caveats": ""
+  }
+ },
+ "tables": {
+  "pb_ttm_fundraising_by_strategy_2026q2": {
+   "title": "YoY changes in trailing 12-month fundraising activity by strategy",
+   "doc": "fr2026q2",
+   "page": 2,
+   "asOf": "2026-06-30",
+   "geography": "Global",
+   "unit": {
+    "capitalRaised": "$B",
+    "capitalYoY": "%",
+    "fundCount": "count",
+    "fundCountYoY": "%"
+   },
+   "header": [
+    "strategy",
+    "capitalRaised",
+    "capitalYoY",
+    "fundCount",
+    "fundCountYoY"
+   ],
+   "rows": [
+    [
+     "Private equity",
+     468.8,
+     -12.1,
+     862,
+     -35.5
+    ],
+    [
+     "Venture capital",
+     183.1,
+     -4.2,
+     1815,
+     -31.6
+    ],
+    [
+     "Real estate",
+     90.7,
+     -32.5,
+     357,
+     -39.1
+    ],
+    [
+     "Real assets",
+     137.3,
+     -26.2,
+     99,
+     -52.4
+    ],
+    [
+     "Private debt",
+     309.1,
+     14,
+     259,
+     -39.6
+    ],
+    [
+     "Fund of funds",
+     26.5,
+     -57.2,
+     92,
+     -66.1
+    ],
+    [
+     "Secondaries",
+     95.1,
+     -20.6,
+     73,
+     -30.5
+    ],
+    [
+     "Co-investment",
+     37.5,
+     -18.3,
+     206,
+     -46.4
+    ],
+    [
+     "Private capital",
+     1348,
+     -12.7,
+     3763,
+     -37
+    ]
+   ],
+   "note": "Rows read from the rendered page; the PDF text layer prints the row labels out of line with the values. Private debt's share of the private capital total is computed at build (309.1 / 1348.0)."
+  },
+  "pb_pd_largest_closes_2026q2": {
+   "title": "Largest private debt fund closes, Q2 2026 (from the p.17 text)",
+   "doc": "fr2026q2",
+   "page": 17,
+   "asOf": "2026-06-30",
+   "geography": "Global",
+   "unit": {
+    "size": "$B",
+    "stepUp": "x"
+   },
+   "header": [
+    "fund",
+    "size",
+    "stepUp"
+   ],
+   "rows": [
+    [
+     "Barings Global Direct Lending Fund",
+     19,
+     null
+    ],
+    [
+     "Blackstone Capital Opportunities Fund V",
+     10,
+     1.1
+    ],
+    [
+     "Ares Pathfinder Fund III",
+     8.5,
+     1.3
+    ],
+    [
+     "Antares Senior Loan Fund III",
+     8.5,
+     1.4
+    ]
+   ],
+   "note": "p.17: Barings 'at $19 billion, was Q2's largest close and nearly double the size of the next-largest vehicle'; step-ups as printed. The full top-funds table on p.26 is not keyed here."
+  }
+ }
+}

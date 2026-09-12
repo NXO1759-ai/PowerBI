@@ -1,0 +1,1245 @@
+{
+ "generated": "2026-09-11",
+ "strict": true,
+ "sourceDir": "data-sources",
+ "outDir": "frontend/data/pc",
+ "vintages": [
+  {
+   "id": "2026-08-09",
+   "source": "pb-annual-reports",
+   "edition": "2021",
+   "keys": 11
+  },
+  {
+   "id": "2026-08-09",
+   "source": "pb-annual-reports",
+   "edition": "2022",
+   "keys": 18
+  },
+  {
+   "id": "2026-08-09",
+   "source": "pb-annual-reports",
+   "edition": "2023",
+   "keys": 42
+  },
+  {
+   "id": "2026-08-12",
+   "source": "pb-annual-reports",
+   "edition": "2024",
+   "keys": 48
+  },
+  {
+   "id": "2026-08-15",
+   "source": "pb-annual-reports",
+   "edition": "2026Q1",
+   "keys": 28
+  },
+  {
+   "id": "2026-08-15",
+   "source": "pb-annual-reports",
+   "edition": "2026Q3",
+   "keys": 39
+  },
+  {
+   "id": "2026-09-10",
+   "source": "pb-fundraising-report",
+   "edition": "2026Q2",
+   "keys": 21
+  },
+  {
+   "id": "2026-09-10",
+   "source": "lcd-monitor",
+   "edition": "2026-08",
+   "keys": 89
+  },
+  {
+   "id": "2026-09-10",
+   "source": "pb-fund-overview",
+   "edition": "2026-09-10",
+   "keys": 124
+  },
+  {
+   "id": "2026-09-11",
+   "source": "press",
+   "edition": "2026-09-11",
+   "keys": 20
+  }
+ ],
+ "summary": {
+  "files": 5,
+  "charts": 31,
+  "sheets": 20,
+  "matched": 50,
+  "fallbackMatched": 0,
+  "unmatched": 0,
+  "unmatchedSeries": 0,
+  "refused": 0,
+  "filterMismatch": 0,
+  "unparsedCells": 0,
+  "signalMismatch": 0,
+  "keys": 391,
+  "points": 2905,
+  "derivedKeys": 17,
+  "restated": 0,
+  "stale": 0,
+  "tables": 10,
+  "warnings": 0
+ },
+ "files": [
+  {
+   "file": "lcd/2026-09-10/august-2026-us-private-credit-monitor.pptx",
+   "source": "lcd-monitor",
+   "vintage": "2026-09-10",
+   "edition": "2026-08",
+   "asOf": "2026-08-31",
+   "publishedAt": "2026-09-08T22:04:10Z",
+   "sha256": "19ec895cfb84dc1c3d37e39bef612142c11d2e0aaa358f24ce50894861e8e417",
+   "chartsSeen": 31,
+   "matched": [
+    {
+     "chart": "chart1",
+     "slide": 4,
+     "id": "lcd-dl-count-volume-quarterly",
+     "via": "heading",
+     "score": 7,
+     "heading": "Direct lending deal count and estimated volume (quarterly) ($B)"
+    },
+    {
+     "chart": "chart2",
+     "slide": 5,
+     "id": "lcd-dl-count-volume-annual",
+     "via": "heading",
+     "score": 7,
+     "heading": "Direct lending deal count and estimated volume (annual) ($B)"
+    },
+    {
+     "chart": "chart3",
+     "slide": 6,
+     "id": "lcd-dl-sponsor-count-volume-quarterly",
+     "via": "heading",
+     "score": 7,
+     "heading": "Direct lending deal count and estimated volume, sponsor-backed borrowers (quarterly) ($B)"
+    },
+    {
+     "chart": "chart4",
+     "slide": 7,
+     "id": "lcd-dl-sponsor-count-volume-annual",
+     "via": "heading",
+     "score": 7,
+     "heading": "Direct lending deal count and estimated volume, sponsor-backed borrowers (annual) ($B)"
+    },
+    {
+     "chart": "chart5",
+     "slide": 8,
+     "id": "lcd-dl-pe-use-of-proceeds-quarterly",
+     "via": "heading",
+     "score": 7,
+     "heading": "Count of PE-backed direct lending deals by use of proceeds"
+    },
+    {
+     "chart": "chart6",
+     "slide": 9,
+     "id": "lcd-dl-lbo-count-volume-quarterly",
+     "via": "heading",
+     "score": 7,
+     "heading": "Direct lending deal count and estimated volume of deals financing buyouts (quarterly) ($B)"
+    },
+    {
+     "chart": "chart7",
+     "slide": 10,
+     "id": "lcd-dl-lbo-count-volume-annual",
+     "via": "heading",
+     "score": 7,
+     "heading": "Direct lending deal count and estimated volume of deals financing LBOs (annual) ($B)"
+    },
+    {
+     "chart": "chart8",
+     "slide": 11,
+     "id": "lcd-dl-sector-share-top10",
+     "via": "heading",
+     "score": 7,
+     "heading": "New-issue direct lending top 10 sectors – share by deal count"
+    },
+    {
+     "chart": "chart9",
+     "slide": 13,
+     "id": "lcd-dl-lbo-spread-distribution-annual",
+     "via": "heading",
+     "score": 7,
+     "heading": "New-issue spread distribution of LBOs financed in direct lending market"
+    },
+    {
+     "chart": "chart10",
+     "slide": 14,
+     "id": "lcd-lbo-spread-bsl-bminus-vs-dl-annual",
+     "via": "heading",
+     "score": 7,
+     "heading": "Spread of LBOs financed in BSL (B-minus borrowers) vs direct lending market"
+    },
+    {
+     "chart": "chart11",
+     "slide": 15,
+     "id": "lcd-lbo-spread-bsl-all-vs-dl-annual",
+     "via": "heading",
+     "score": 7,
+     "heading": "Spread of LBOs financed in BSL (all borrowers) vs direct lending market"
+    },
+    {
+     "chart": "chart12",
+     "slide": 16,
+     "id": "lcd-lbo-spread-bsl-all-vs-dl-quarterly",
+     "via": "heading",
+     "score": 7,
+     "heading": "Spread of LBOs financed in BSL (all borrowers) vs direct lending market"
+    },
+    {
+     "chart": "chart13",
+     "slide": 17,
+     "id": "lcd-dl-spread-pe-backed-and-lbo-recent",
+     "via": "heading",
+     "score": 7,
+     "heading": "Spread of PE-backed deals & LBOs, direct lending market (bps)"
+    },
+    {
+     "chart": "chart14",
+     "slide": 18,
+     "id": "lcd-dl-spread-distribution-pe-backed-recent",
+     "via": "heading",
+     "score": 7,
+     "heading": "Direct lending spread distribution skews towards higher pricing for PE-backed borrowers"
+    },
+    {
+     "chart": "chart15",
+     "slide": 19,
+     "id": "lcd-dl-spread-distribution-lbo-recent",
+     "via": "heading",
+     "score": 7,
+     "heading": "Direct lending spread distribution, LBOs"
+    },
+    {
+     "chart": "chart16",
+     "slide": 21,
+     "id": "lcd-lbo-count-bsl-vs-dl-quarterly",
+     "via": "heading",
+     "score": 7,
+     "heading": "Count of LBO deals financed in BSL vs direct lending market (quarterly)"
+    },
+    {
+     "chart": "chart17",
+     "slide": 22,
+     "id": "lcd-lbo-volume-bsl-vs-dl-quarterly",
+     "via": "heading",
+     "score": 7,
+     "heading": "New-issue volume for LBOs financed in BSL vs direct lending market (quarterly) ($B)"
+    },
+    {
+     "chart": "chart18",
+     "slide": 23,
+     "id": "lcd-sponsor-count-bsl-vs-dl-quarterly",
+     "via": "heading",
+     "score": 7,
+     "heading": "Count of sponsor-backed deals financed in BSL vs direct lending market (quarterly)"
+    },
+    {
+     "chart": "chart19",
+     "slide": 24,
+     "id": "lcd-sponsor-volume-bsl-vs-dl-quarterly",
+     "via": "heading",
+     "score": 7,
+     "heading": "New-issue sponsor-backed volume for loans financed in BSL vs private credit market (quarterly) ($B)"
+    },
+    {
+     "chart": "chart20",
+     "slide": 25,
+     "id": "lcd-global-buyouts-1b-financing-share",
+     "via": "heading",
+     "score": 7,
+     "heading": "Share of global buyouts over $1B, by financing type"
+    },
+    {
+     "chart": "chart21",
+     "slide": 27,
+     "id": "lcd-bdc-spread-distribution-all",
+     "via": "heading",
+     "score": 7,
+     "heading": "BDC holdings spread distribution ranges (bps) by share of portfolio, based on count"
+    },
+    {
+     "chart": "chart22",
+     "slide": 28,
+     "id": "lcd-bdc-spread-range-unitranche",
+     "via": "heading",
+     "score": 7,
+     "heading": "Spread range (bps) for unitranche loans held by BDCs, based on count"
+    },
+    {
+     "chart": "chart23",
+     "slide": 29,
+     "id": "lcd-bdc-spread-range-first-lien",
+     "via": "heading",
+     "score": 7,
+     "heading": "Spread range (bps) for senior secured first-lien term loans held by BDCs"
+    },
+    {
+     "chart": "chart24",
+     "slide": 30,
+     "id": "lcd-bdc-sector-share",
+     "via": "heading",
+     "score": 7,
+     "heading": "Count of BDC holdings by sector (%)"
+    },
+    {
+     "chart": "chart25",
+     "slide": 31,
+     "id": "lcd-bdc-maturity-wall-share",
+     "via": "heading",
+     "score": 7,
+     "heading": "BDC maturity wall (% by cost)"
+    },
+    {
+     "chart": "chart26",
+     "slide": 32,
+     "id": "lcd-bdc-maturity-wall-usd",
+     "via": "heading",
+     "score": 7,
+     "heading": "BDC maturity wall ($B by cost)"
+    },
+    {
+     "chart": "chart27",
+     "slide": 33,
+     "id": "lcd-bdc-all-in-rate",
+     "via": "heading",
+     "score": 7,
+     "heading": "Cost-weighted average all-in interest rate (%)"
+    },
+    {
+     "chart": "chart28",
+     "slide": 35,
+     "id": "pb-us-dl-aum",
+     "via": "heading",
+     "score": 7,
+     "heading": "US direct lending AUM ($B)"
+    },
+    {
+     "chart": "chart29",
+     "slide": 36,
+     "id": "pb-us-private-debt-raised-by-type",
+     "via": "heading",
+     "score": 7,
+     "heading": "US private debt capital raised by type ($B)"
+    },
+    {
+     "chart": "chart30",
+     "slide": 37,
+     "id": "lcd-mm-clo-issuance",
+     "via": "heading",
+     "score": 7,
+     "heading": "US private credit/middle market CLO issuance ($B)"
+    },
+    {
+     "chart": "chart31",
+     "slide": 39,
+     "id": "lcd-takeouts",
+     "via": "heading",
+     "score": 7,
+     "heading": "Syndicated loans and direct lending takeouts ($B)"
+    }
+   ],
+   "fallbackMatched": [],
+   "unmatched": [],
+   "unmatchedSeries": [],
+   "refused": [],
+   "signalMismatch": [],
+   "dropped": [
+    {
+     "chart": "chart27",
+     "slide": 33,
+     "id": "lcd-bdc-all-in-rate",
+     "series": "#REF!",
+     "valRef": "'All-in yield'!#REF!",
+     "reason": "refError",
+     "cachedPoints": 1
+    }
+   ],
+   "blanks": [
+    {
+     "chart": "chart5",
+     "slide": 8,
+     "series": "Refinancing",
+     "idx": [
+      1
+     ],
+     "cats": [
+      "2Q20"
+     ]
+    }
+   ],
+   "crossChecks": [
+    {
+     "kind": "sumOfQuarters",
+     "key": "lcd_dl_volume_annual",
+     "of": "lcd_dl_volume_quarterly",
+     "checked": 6,
+     "equal": true,
+     "rows": [
+      {
+       "year": "2020",
+       "annual": 65.591440738,
+       "sumOfQuarters": 65.591440738,
+       "equal": true
+      },
+      {
+       "year": "2021",
+       "annual": 135.134650179,
+       "sumOfQuarters": 135.134650179,
+       "equal": true
+      },
+      {
+       "year": "2022",
+       "annual": 150.945691264,
+       "sumOfQuarters": 150.945691264,
+       "equal": true
+      },
+      {
+       "year": "2023",
+       "annual": 158.716188264,
+       "sumOfQuarters": 158.716188264,
+       "equal": true
+      },
+      {
+       "year": "2024",
+       "annual": 286.675091791,
+       "sumOfQuarters": 286.675091791,
+       "equal": true
+      },
+      {
+       "year": "2025",
+       "annual": 268.38137862099995,
+       "sumOfQuarters": 268.38137862099995,
+       "equal": true
+      }
+     ]
+    },
+    {
+     "kind": "sumOfQuarters",
+     "key": "lcd_dl_count_annual",
+     "of": "lcd_dl_count_quarterly",
+     "checked": 6,
+     "equal": true,
+     "rows": [
+      {
+       "year": "2020",
+       "annual": 318,
+       "sumOfQuarters": 318,
+       "equal": true
+      },
+      {
+       "year": "2021",
+       "annual": 561,
+       "sumOfQuarters": 561,
+       "equal": true
+      },
+      {
+       "year": "2022",
+       "annual": 601,
+       "sumOfQuarters": 601,
+       "equal": true
+      },
+      {
+       "year": "2023",
+       "annual": 604,
+       "sumOfQuarters": 604,
+       "equal": true
+      },
+      {
+       "year": "2024",
+       "annual": 1014,
+       "sumOfQuarters": 1014,
+       "equal": true
+      },
+      {
+       "year": "2025",
+       "annual": 876,
+       "sumOfQuarters": 876,
+       "equal": true
+      }
+     ]
+    },
+    {
+     "kind": "sumOfQuarters",
+     "key": "lcd_dl_sponsor_volume_annual",
+     "of": "lcd_dl_sponsor_volume_quarterly",
+     "checked": 6,
+     "equal": true,
+     "rows": [
+      {
+       "year": "2020",
+       "annual": 50.246690298,
+       "sumOfQuarters": 50.246690298,
+       "equal": true
+      },
+      {
+       "year": "2021",
+       "annual": 108.151578591,
+       "sumOfQuarters": 108.151578591,
+       "equal": true
+      },
+      {
+       "year": "2022",
+       "annual": 117.608946825,
+       "sumOfQuarters": 117.608946825,
+       "equal": true
+      },
+      {
+       "year": "2023",
+       "annual": 128.055208264,
+       "sumOfQuarters": 128.055208264,
+       "equal": true
+      },
+      {
+       "year": "2024",
+       "annual": 222.73487479099998,
+       "sumOfQuarters": 222.73487479099998,
+       "equal": true
+      },
+      {
+       "year": "2025",
+       "annual": 194.542786821,
+       "sumOfQuarters": 194.542786821,
+       "equal": true
+      }
+     ]
+    },
+    {
+     "kind": "sumOfQuarters",
+     "key": "lcd_dl_sponsor_count_annual",
+     "of": "lcd_dl_sponsor_count_quarterly",
+     "checked": 6,
+     "equal": true,
+     "rows": [
+      {
+       "year": "2020",
+       "annual": 245,
+       "sumOfQuarters": 245,
+       "equal": true
+      },
+      {
+       "year": "2021",
+       "annual": 446,
+       "sumOfQuarters": 446,
+       "equal": true
+      },
+      {
+       "year": "2022",
+       "annual": 407,
+       "sumOfQuarters": 407,
+       "equal": true
+      },
+      {
+       "year": "2023",
+       "annual": 418,
+       "sumOfQuarters": 418,
+       "equal": true
+      },
+      {
+       "year": "2024",
+       "annual": 679,
+       "sumOfQuarters": 679,
+       "equal": true
+      },
+      {
+       "year": "2025",
+       "annual": 531,
+       "sumOfQuarters": 531,
+       "equal": true
+      }
+     ]
+    },
+    {
+     "kind": "sumOfQuarters",
+     "key": "lcd_dl_lbo_volume_annual",
+     "of": "lcd_dl_lbo_volume_quarterly",
+     "checked": 6,
+     "equal": true,
+     "rows": [
+      {
+       "year": "2020",
+       "annual": 28.660291198,
+       "sumOfQuarters": 28.660291198,
+       "equal": true
+      },
+      {
+       "year": "2021",
+       "annual": 65.86654562500001,
+       "sumOfQuarters": 65.86654562500001,
+       "equal": true
+      },
+      {
+       "year": "2022",
+       "annual": 74.69045782500001,
+       "sumOfQuarters": 74.69045782500001,
+       "equal": true
+      },
+      {
+       "year": "2023",
+       "annual": 55.572148806,
+       "sumOfQuarters": 55.572148806,
+       "equal": true
+      },
+      {
+       "year": "2024",
+       "annual": 77.48822554,
+       "sumOfQuarters": 77.48822554,
+       "equal": true
+      },
+      {
+       "year": "2025",
+       "annual": 92.36465918100001,
+       "sumOfQuarters": 92.36465918100001,
+       "equal": true
+      }
+     ]
+    },
+    {
+     "kind": "sumOfQuarters",
+     "key": "lcd_dl_lbo_count_annual",
+     "of": "lcd_dl_lbo_count_quarterly",
+     "checked": 6,
+     "equal": true,
+     "rows": [
+      {
+       "year": "2020",
+       "annual": 137,
+       "sumOfQuarters": 137,
+       "equal": true
+      },
+      {
+       "year": "2021",
+       "annual": 252,
+       "sumOfQuarters": 252,
+       "equal": true
+      },
+      {
+       "year": "2022",
+       "annual": 223,
+       "sumOfQuarters": 223,
+       "equal": true
+      },
+      {
+       "year": "2023",
+       "annual": 181,
+       "sumOfQuarters": 181,
+       "equal": true
+      },
+      {
+       "year": "2024",
+       "annual": 258,
+       "sumOfQuarters": 258,
+       "equal": true
+      },
+      {
+       "year": "2025",
+       "annual": 226,
+       "sumOfQuarters": 226,
+       "equal": true
+      }
+     ]
+    }
+   ],
+   "derived": [
+    {
+     "chart": "chart10",
+     "key": "lcd_lbo_spread_diff_dl_vs_bsl_bminus_annual",
+     "formula": "Direct lending spread − BSL spread, same period (bps); the chart's own 'Difference' cache is read only to confirm the arithmetic",
+     "points": 7,
+     "crossCheck": {
+      "series": "Difference (right axis)",
+      "compared": 7,
+      "differing": []
+     }
+    },
+    {
+     "chart": "chart11",
+     "key": "lcd_lbo_spread_diff_dl_vs_bsl_all_annual",
+     "formula": "Direct lending spread − BSL spread, same period (bps); the chart's own 'Difference' cache is read only to confirm the arithmetic",
+     "points": 8,
+     "crossCheck": {
+      "series": "Difference (right axis)",
+      "compared": 8,
+      "differing": []
+     }
+    },
+    {
+     "chart": "chart12",
+     "key": "lcd_lbo_spread_diff_dl_vs_bsl_all_quarterly",
+     "formula": "Direct lending spread − BSL spread, same period (bps); the chart's own 'Difference' cache is read only to confirm the arithmetic",
+     "points": 8,
+     "crossCheck": {
+      "series": "Difference (right axis)",
+      "compared": 8,
+      "differing": []
+     }
+    }
+   ],
+   "duplicatesSkipped": [
+    {
+     "key": "lcd_dl_lbo_spread_annual_c10",
+     "duplicateOf": "lcd_dl_lbo_spread_annual",
+     "chart": "chart10",
+     "series": "Direct lending spread",
+     "points": 7,
+     "compared": 7,
+     "differing": 0,
+     "written": false
+    },
+    {
+     "key": "lcd_dl_lbo_count_quarterly_c16",
+     "duplicateOf": "lcd_dl_lbo_count_quarterly",
+     "chart": "chart16",
+     "series": "Direct lending",
+     "points": 27,
+     "compared": 27,
+     "differing": 0,
+     "written": false
+    },
+    {
+     "key": "lcd_dl_lbo_volume_quarterly_c17",
+     "duplicateOf": "lcd_dl_lbo_volume_quarterly",
+     "chart": "chart17",
+     "series": "Direct lending (estimate)",
+     "points": 27,
+     "compared": 27,
+     "differing": 0,
+     "written": false
+    },
+    {
+     "key": "lcd_dl_sponsor_count_quarterly_c18",
+     "duplicateOf": "lcd_dl_sponsor_count_quarterly",
+     "chart": "chart18",
+     "series": "Direct lending",
+     "points": 27,
+     "compared": 27,
+     "differing": 0,
+     "written": false
+    },
+    {
+     "key": "lcd_dl_sponsor_volume_quarterly_c19",
+     "duplicateOf": "lcd_dl_sponsor_volume_quarterly",
+     "chart": "chart19",
+     "series": "Direct lending (estimate)",
+     "points": 27,
+     "compared": 27,
+     "differing": 0,
+     "written": false
+    }
+   ],
+   "generatedKeys": [],
+   "tables": [
+    {
+     "slug": "lcd-dl-refinanced-in-bsl",
+     "slide": 40,
+     "rows": 10,
+     "columns": 5,
+     "handKeyedCheck": true
+    },
+    {
+     "slug": "lcd-bsl-replaced-by-dl",
+     "slide": 41,
+     "rows": 10,
+     "columns": 6,
+     "handKeyedCheck": true
+    }
+   ],
+   "warnings": [],
+   "deckWarnings": [
+    {
+     "slide": 8,
+     "chart": "chart5",
+     "kind": "blankPoints",
+     "detail": "Refinancing",
+     "idx": [
+      1
+     ],
+     "cats": [
+      "2Q20"
+     ]
+    },
+    {
+     "slide": 33,
+     "chart": "chart27",
+     "kind": "refError",
+     "detail": "#REF! 'All-in yield'!#REF!",
+     "points": 1
+    }
+   ],
+   "slideCount": 43
+  },
+  {
+   "file": "pitchbook/2026-09-10/PitchBook_Fund_Overview_PitchBook_View_All_Charts_2026_09_10_05_03_44.xlsx",
+   "source": "pb-fund-overview",
+   "vintage": "2026-09-10",
+   "edition": "2026-09-10",
+   "asOf": "2026-09-10",
+   "publishedAt": "2026-09-10T17:03:44Z",
+   "sha256": "8c063d42a4b934fa70e14ccdbef1d8f5560c9c801db19935f41b772cdcd23fd6",
+   "sheetsSeen": 20,
+   "matched": [
+    {
+     "sheet": "Fundraising Activity",
+     "id": "pb-fo-fundraising-activity",
+     "via": "heading",
+     "score": 7,
+     "title": "Fundraising Activity"
+    },
+    {
+     "sheet": "Average & Median Fund Size",
+     "id": "pb-fo-average-median-fund-size",
+     "via": "heading",
+     "score": 7,
+     "title": "Average & Median Fund Size"
+    },
+    {
+     "sheet": "Fundraising by Category (%)",
+     "id": "pb-fo-fundraising-by-category-share",
+     "via": "heading",
+     "score": 7,
+     "title": "Fundraising by Category (%)"
+    },
+    {
+     "sheet": "Fundraising by Category (#)",
+     "id": "pb-fo-fundraising-by-category-count",
+     "via": "heading",
+     "score": 7,
+     "title": "Fundraising by Category (#)"
+    },
+    {
+     "sheet": "Fundraising by Location (%)",
+     "id": "pb-fo-fundraising-by-location-share",
+     "via": "heading",
+     "score": 7,
+     "title": "Fundraising by Location (%)"
+    },
+    {
+     "sheet": "Fundraising by Location (#)",
+     "id": "pb-fo-fundraising-by-location-count",
+     "via": "heading",
+     "score": 7,
+     "title": "Fundraising by Location (#)"
+    },
+    {
+     "sheet": "Fundraising by Size Bucket (%)",
+     "id": "pb-fo-fundraising-by-size-bucket-share",
+     "via": "heading",
+     "score": 7,
+     "title": "Fundraising by Size Bucket (%)"
+    },
+    {
+     "sheet": "Fundraising by Size Bucket (#)",
+     "id": "pb-fo-fundraising-by-size-bucket-count",
+     "via": "heading",
+     "score": 7,
+     "title": "Fundraising by Size Bucket (#)"
+    },
+    {
+     "sheet": "Average & Median Time To Close ",
+     "id": "pb-fo-average-median-time-to-close-months",
+     "via": "heading",
+     "score": 7,
+     "title": "Average & Median Time To Close (months)"
+    },
+    {
+     "sheet": "Average & Median Time Between F",
+     "id": "pb-fo-average-median-time-between-funds-years",
+     "via": "heading",
+     "score": 7,
+     "title": "Average & Median Time Between Funds (years)"
+    },
+    {
+     "sheet": "First-Time Commitments",
+     "id": "pb-fo-first-time-commitments",
+     "via": "heading",
+     "score": 7,
+     "title": "First-Time Commitments"
+    },
+    {
+     "sheet": "Newly Opened Funds",
+     "id": "pb-fo-newly-opened-funds",
+     "via": "heading",
+     "score": 7,
+     "title": "Newly Opened Funds"
+    },
+    {
+     "sheet": "Open Funds with Largest Target ",
+     "id": "pb-fo-open-funds-with-largest-target-sizes",
+     "via": "heading",
+     "score": 7,
+     "title": "Open Funds with Largest Target Sizes"
+    },
+    {
+     "sheet": "Open Funds by Category",
+     "id": "pb-fo-open-funds-by-category",
+     "via": "heading",
+     "score": 7,
+     "title": "Open Funds by Category"
+    },
+    {
+     "sheet": "First-Time Fund Managers (Open ",
+     "id": "pb-fo-first-time-fund-managers-open-funds",
+     "via": "heading",
+     "score": 7,
+     "title": "First-Time Fund Managers (Open Funds)"
+    },
+    {
+     "sheet": "Sources of Capital",
+     "id": "pb-fo-sources-of-capital",
+     "via": "heading",
+     "score": 7,
+     "title": "Sources of Capital"
+    },
+    {
+     "sheet": "Recent Mandates",
+     "id": "pb-fo-recent-mandates",
+     "via": "heading",
+     "score": 7,
+     "title": "Recent Mandates"
+    },
+    {
+     "sheet": "Recently Added Terms & Fees",
+     "id": "pb-fo-recently-added-terms-fees",
+     "via": "heading",
+     "score": 7,
+     "title": "Recently Added Terms & Fees"
+    },
+    {
+     "sheet": "Average & Median Fees",
+     "id": "pb-fo-average-median-fees",
+     "via": "heading",
+     "score": 7,
+     "title": "Average & Median Fees"
+    }
+   ],
+   "fallbackMatched": [],
+   "unmatched": [],
+   "skipped": [
+    {
+     "sheet": "Disclaimer",
+     "kind": "disclaimer",
+     "reason": "the license text, not data"
+    }
+   ],
+   "filterMismatch": [],
+   "unparsedCells": [],
+   "refused": [],
+   "signalMismatch": [],
+   "tables": [
+    {
+     "slug": "pb-first-time-commitments",
+     "sheet": "First-Time Commitments",
+     "rows": 5
+    },
+    {
+     "slug": "pb-newly-opened-funds",
+     "sheet": "Newly Opened Funds",
+     "rows": 5
+    },
+    {
+     "slug": "pb-open-funds-largest-target",
+     "sheet": "Open Funds with Largest Target ",
+     "rows": 5
+    },
+    {
+     "slug": "pb-first-time-fund-managers-open",
+     "sheet": "First-Time Fund Managers (Open ",
+     "rows": 5
+    },
+    {
+     "slug": "pb-recent-mandates",
+     "sheet": "Recent Mandates",
+     "rows": 5
+    },
+    {
+     "slug": "pb-recently-added-terms-fees",
+     "sheet": "Recently Added Terms & Fees",
+     "rows": 5
+    }
+   ],
+   "warnings": [],
+   "stamp": {
+    "coreDate": "2026-09-10",
+    "fileDate": "2026-09-10",
+    "downloadedOn": [
+     "2026-09-10"
+    ],
+    "agree": true
+   }
+  },
+  {
+   "file": "reports/pitchbook-annual-private-debt-reports.json",
+   "source": "pb-annual-reports",
+   "documents": [
+    {
+     "id": "2026-08-09",
+     "edition": "2021",
+     "asOf": "2021-12-31",
+     "series": 11,
+     "points": 62,
+     "tables": 0
+    },
+    {
+     "id": "2026-08-09",
+     "edition": "2022",
+     "asOf": "2022-12-31",
+     "series": 18,
+     "points": 69,
+     "tables": 0
+    },
+    {
+     "id": "2026-08-09",
+     "edition": "2023",
+     "asOf": "2023-12-31",
+     "series": 42,
+     "points": 102,
+     "tables": 0
+    },
+    {
+     "id": "2026-08-12",
+     "edition": "2024",
+     "asOf": "2024-12-31",
+     "series": 48,
+     "points": 96,
+     "tables": 0
+    },
+    {
+     "id": "2026-08-15",
+     "edition": "2026Q1",
+     "asOf": "2025-12-31",
+     "series": 28,
+     "points": 38,
+     "tables": 0
+    },
+    {
+     "id": "2026-08-15",
+     "edition": "2026Q3",
+     "asOf": "2026-06-30",
+     "series": 39,
+     "points": 59,
+     "tables": 0
+    }
+   ]
+  },
+  {
+   "file": "reports/pitchbook-global-fundraising-2026q2.json",
+   "source": "pb-fundraising-report",
+   "documents": [
+    {
+     "id": "2026-09-10",
+     "edition": "2026Q2",
+     "asOf": "2026-06-30",
+     "series": 21,
+     "points": 43,
+     "tables": 2
+    }
+   ]
+  },
+  {
+   "file": "frontend/data/pc/press-series.json",
+   "source": "press",
+   "vintage": "2026-09-11",
+   "series": 20
+  }
+ ],
+ "derived": [
+  {
+   "key": "derived_us_private_debt_raised_total_annual",
+   "points": 19,
+   "formula": "Σ of the nine chart series (venture debt, real estate debt, mezzanine, infrastructure debt, debt, distressed debt, direct lending, credit special situations, bridge financing), same period"
+  },
+  {
+   "key": "derived_us_dl_share_of_private_debt_raised",
+   "points": 19,
+   "formula": "Direct lending ÷ Σ nine types, same period"
+  },
+  {
+   "key": "derived_us_dl_aum_annual",
+   "points": 20,
+   "formula": "Dry powder + NAV, same year-end"
+  },
+  {
+   "key": "derived_us_dl_dry_powder_share_of_aum",
+   "points": 20,
+   "formula": "Dry powder ÷ (dry powder + NAV), same year-end"
+  },
+  {
+   "key": "derived_us_dl_aum_cagr_10y",
+   "points": 10,
+   "formula": "(AUM_end ÷ AUM_start)^(1 ÷ 10) − 1, a fraction per year"
+  },
+  {
+   "key": "derived_us_dl_aum_cagr_5y",
+   "points": 15,
+   "formula": "(AUM_end ÷ AUM_start)^(1 ÷ 5) − 1, a fraction per year"
+  },
+  {
+   "key": "derived_dl_deployment_ttm",
+   "points": 1,
+   "formula": "YTD (this year) + (full prior year − YTD prior year to the same date), from the annual chart"
+  },
+  {
+   "key": "derived_dl_deployment_count_ttm",
+   "points": 1,
+   "formula": "YTD (this year) + (full prior year − YTD prior year to the same date), from the annual chart"
+  },
+  {
+   "key": "derived_dl_years_of_dry_powder",
+   "points": 1,
+   "formula": "Dry powder at the latest year-end ÷ direct lending volume over the trailing twelve months (mixed as-of dates, stated on the point)"
+  },
+  {
+   "key": "derived_dl_years_of_dry_powder_calendar",
+   "points": 6,
+   "formula": "Dry powder at year-end ÷ direct lending estimated volume of the same year"
+  },
+  {
+   "key": "derived_fundraising_minus_deployment_annual",
+   "points": 6,
+   "formula": "Σ nine US private debt types raised − LCD direct lending estimated volume, same calendar year"
+  },
+  {
+   "key": "derived_dl_fundraising_minus_deployment_annual",
+   "points": 6,
+   "formula": "Direct lending capital raised − LCD direct lending estimated volume, same calendar year"
+  },
+  {
+   "key": "derived_pd_fundraising_200b_run",
+   "points": 1,
+   "formula": "Count back from the latest full year while capital raised ≥ 200 ($B), on the report cut named in inputs"
+  },
+  {
+   "key": "derived_pd_avg_fund_size",
+   "points": 11,
+   "formula": "Capital raised ($B × 1000) ÷ fund count, same period and same report cut"
+  },
+  {
+   "key": "derived_pd_fundraising_ttm_rank",
+   "points": 1,
+   "formula": "Position of private debt when the report's strategy table is sorted by TTM capital raised (the private-capital total row excluded)"
+  },
+  {
+   "key": "derived_pd_fundraising_ttm_share_of_private_capital",
+   "points": 1,
+   "formula": "Private debt TTM capital ÷ private capital TTM total, both from the report's strategy table"
+  },
+  {
+   "key": "derived_lbo_financing_both_channels_quarterly",
+   "points": 27,
+   "formula": "Direct lending LBO volume + institutional leveraged loan LBO volume, same period"
+  }
+ ],
+ "stale": [],
+ "restated": [],
+ "removed": [],
+ "catalog": {
+  "checked": 213,
+  "differing": 12,
+  "rows": [
+   {
+    "key": "lcd_dl_pe_count_refi_quarterly",
+    "expected": 27,
+    "written": 26,
+    "reason": "the catalog counts cache slots; a blank cell is not a point"
+   },
+   {
+    "key": "lcd_dl_lbo_spread_annual_c10",
+    "expected": 7,
+    "written": 0,
+    "reason": "read as a cross-check of lcd_dl_lbo_spread_annual and written as its alias, not twice"
+   },
+   {
+    "key": "lcd_dl_lbo_count_quarterly_c16",
+    "expected": 27,
+    "written": 0,
+    "reason": "read as a cross-check of lcd_dl_lbo_count_quarterly and written as its alias, not twice"
+   },
+   {
+    "key": "lcd_dl_lbo_volume_quarterly_c17",
+    "expected": 27,
+    "written": 0,
+    "reason": "read as a cross-check of lcd_dl_lbo_volume_quarterly and written as its alias, not twice"
+   },
+   {
+    "key": "lcd_dl_sponsor_count_quarterly_c18",
+    "expected": 27,
+    "written": 0,
+    "reason": "read as a cross-check of lcd_dl_sponsor_count_quarterly and written as its alias, not twice"
+   },
+   {
+    "key": "lcd_dl_sponsor_volume_quarterly_c19",
+    "expected": 27,
+    "written": 0,
+    "reason": "read as a cross-check of lcd_dl_sponsor_volume_quarterly and written as its alias, not twice"
+   },
+   {
+    "key": "pb_first_time_commitments_list",
+    "expected": 5,
+    "written": 0,
+    "reason": "a table: the key points to tables/pb-first-time-commitments.json, the rows live there"
+   },
+   {
+    "key": "pb_newly_opened_funds_list",
+    "expected": 5,
+    "written": 0,
+    "reason": "a table: the key points to tables/pb-newly-opened-funds.json, the rows live there"
+   },
+   {
+    "key": "pb_open_funds_largest_target_list",
+    "expected": 5,
+    "written": 0,
+    "reason": "a table: the key points to tables/pb-open-funds-largest-target.json, the rows live there"
+   },
+   {
+    "key": "pb_first_time_managers_open_list",
+    "expected": 5,
+    "written": 0,
+    "reason": "a table: the key points to tables/pb-first-time-fund-managers-open.json, the rows live there"
+   },
+   {
+    "key": "pb_recent_mandates_list",
+    "expected": 5,
+    "written": 0,
+    "reason": "a table: the key points to tables/pb-recent-mandates.json, the rows live there"
+   },
+   {
+    "key": "pb_recent_terms_fees_list",
+    "expected": 5,
+    "written": 0,
+    "reason": "a table: the key points to tables/pb-recently-added-terms-fees.json, the rows live there"
+   }
+  ]
+ },
+ "bytesWritten": 1182322,
+ "outputs": [
+  "series.json",
+  "series/lcd-bdc.json",
+  "series/lcd-dealflow.json",
+  "series/lcd-pricing.json",
+  "series/pb-capital.json",
+  "series/pb-fund.json",
+  "series/press.json",
+  "series/reports.json",
+  "tables/pb-ttm-fundraising-by-strategy-2026q2.json",
+  "tables/pb-pd-largest-closes-2026q2.json",
+  "tables/lcd-dl-refinanced-in-bsl.json",
+  "tables/lcd-bsl-replaced-by-dl.json",
+  "tables/pb-first-time-commitments.json",
+  "tables/pb-newly-opened-funds.json",
+  "tables/pb-open-funds-largest-target.json",
+  "tables/pb-first-time-fund-managers-open.json",
+  "tables/pb-recent-mandates.json",
+  "tables/pb-recently-added-terms-fees.json",
+  "restatements.json",
+  "series-index.json",
+  "series-provenance.json",
+  "ingest-report.json",
+  "manifest.json"
+ ]
+}

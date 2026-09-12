@@ -1,0 +1,240 @@
+{
+ "publisher": "PitchBook | LCD",
+ "document": "US Private Credit Monitor, August 2026",
+ "edition": "2026-08",
+ "asOf": "2026-08-31",
+ "publishedAt": "2026-09-08",
+ "publishedAtSource": "docProps/core.xml dcterms:modified 2026-09-08T22:04:10Z",
+ "downloaded": "2026-09-10",
+ "file": "august-2026-us-private-credit-monitor.pptx",
+ "sha256": "19ec895cfb84dc1c3d37e39bef612142c11d2e0aaa358f24ce50894861e8e417",
+ "geography": "US",
+ "pages": {
+  "35": "chart28 'US direct lending AUM ($B)', dry powder and NAV 2006-2025, '*As of Dec. 31, 2025'",
+  "40": "EMF picture ppt/media/image6.emf: 'Last ten syndicated term loans that refinance debt provided by direct lenders'",
+  "41": "EMF picture ppt/media/image7.emf: 'Most recent direct lending deals that replaced broadly syndicated term loans'"
+ },
+ "notes": "The two deal tables are hand-keyed from the EMR_EXTTEXTOUTW text records of the EMF pictures on slides 40 and 41 (the deck reader parses the same records); the ingest cross-checks this file against what it recovers and fails on any cell that differs. Cell text is verbatim, including the deck's own casing ('blue owl') and punctuation ('dividend,'); wrapped cells are joined with a single space. Each monthly monitor replaces both tables in full (slide 39 footnote: historical data is subject to revisions). The headlines block carries the slide 35 figures the capital section quotes, read from the chart28 cache, so the figures the blueprint names are present and cited even before the deck ingest runs; the ingested keys pb_us_dl_dry_powder_annual and pb_us_dl_nav_annual are the series of record.",
+ "tables": {
+  "lcd_dl_refinanced_in_bsl_2026_08": {
+   "slide": 40,
+   "title": "Last ten syndicated term loans that refinance debt provided by direct lenders",
+   "headline": "Borrowers refinancing direct lending deals in the BSL market continue to find favorable spreads…",
+   "sourceLine": "Source: PitchBook | LCD  •  Geography: US  •  *As of Aug. 31, 2026",
+   "footnote": "Table is based on LCD News reporting.",
+   "recoveredFrom": "ppt/media/image6.emf (EMR_EXTTEXTOUTW records; 60 strings)",
+   "header": [
+    "Company",
+    "PE sponsor",
+    "Borrower rating",
+    "Date",
+    "Debt being refinanced"
+   ],
+   "rows": [
+    [
+     "Accuris",
+     "Kohlberg, Kravis & Roberts",
+     "B/B2",
+     "Aug 2026",
+     "Refinance the company’s existing private debt and to fund a shareholder distribution."
+    ],
+    [
+     "Fidelis Insurance Holdings Limited",
+     "Not Sponsored",
+     "B+/Ba3",
+     "Aug 2026",
+     "Replacing its existing unitranche facility"
+    ],
+    [
+     "Catalent",
+     "Novo Holdings",
+     "B+/B1",
+     "Jul 2026",
+     "Proceeds refinance a $4.123 billion private credit loan due 2031"
+    ],
+    [
+     "Arrow International",
+     "Platinum Equity",
+     "B+/B2",
+     "Jul 2026",
+     "Refinance existing private credit facilities."
+    ],
+    [
+     "Vireo Growth (CNQ: VREO)",
+     "Not Sponsored",
+     "NR/NR",
+     "Jul 2026",
+     "Refinance certain debt"
+    ],
+    [
+     "Family Dollar Stores",
+     "Brigade Capital",
+     "B/B2",
+     "Jul 2026",
+     "Refinance around $800 million of existing debt and fund a $320 million sponsor dividend,"
+    ],
+    [
+     "Lyntris (NYS: LYNX)",
+     "Trive Capital",
+     "NR/NR",
+     "Jul 2026",
+     "Refinance existing private credit facilities."
+    ],
+    [
+     "FDH Aero",
+     "Bain Capital",
+     "B/B2",
+     "Jul 2026",
+     "Fund Bain Capital Private Equity's acquisition and repay existing private debt"
+    ],
+    [
+     "DwyerOmega",
+     "Arcline Investment Management",
+     "B/B2",
+     "Jul 2026",
+     "Repay the company’s existing private debt, a first-lien term loan facility due July 2029 priced at S+475"
+    ],
+    [
+     "Harrington Industrial Plastics",
+     "Bain Capital",
+     "B-/B2",
+     "Jun 2026",
+     "Refinance existing private debt and fund future M&A and general corporate purposes"
+    ]
+   ]
+  },
+  "lcd_bsl_replaced_by_dl_2026_08": {
+   "slide": 41,
+   "title": "Most recent direct lending deals that replaced broadly syndicated term loans",
+   "headline": "…while those leaving the BSL space find certainty of execution and competitive pricing",
+   "sourceLine": "Source: PitchBook | LCD  •  Geography: US  •  *As of Aug. 31, 2026",
+   "footnote": "Table is based on LCD News reporting.",
+   "recoveredFrom": "ppt/media/image7.emf (EMR_EXTTEXTOUTW records; 91 strings, of which 20 are padding)",
+   "unit": {
+    "Debt amount ($M)": "$M"
+   },
+   "header": [
+    "Company name",
+    "Date",
+    "Debt amount ($M)",
+    "Current sponsor",
+    "Last BSL deal date",
+    "Lender(s)"
+   ],
+   "rows": [
+    [
+     "Learfield",
+     "Jul 2026",
+     "1,150",
+     "TPG Capital",
+     "Oct 2024",
+     "Oak Hill Advisors"
+    ],
+    [
+     "Clearwater Analytics Holdings Inc",
+     "Jul 2026",
+     "3,525",
+     "Permira Advisers and Warburg Pincus",
+     "Feb 2025",
+     "Goldman Sachs Private Credit, Ares, blue owl, Antares, Golub, Neuberger, CPP, KKR, Apollo, HPS"
+    ],
+    [
+     "GlobalTranz Enterprises",
+     "Jun 2026",
+     "4,815",
+     "Thoma Bravo",
+     "Mar 2025",
+     "Apollo, Ares, Blackstone, Blue Owl, Goldman Sachs, New Mountain, Oaktree, PSP, Silver Rock, Thoma Bravo"
+    ],
+    [
+     "Maravai Life Sciences Inc",
+     "Jun 2026",
+     "180",
+     "GTCR Golder Rauner",
+     "Jan 2022",
+     "Benefit Street Partners"
+    ],
+    [
+     "Topgolf Callaway Brands",
+     "Jun 2026",
+     "637",
+     "Leonard Green & Partners",
+     "Mar 2024",
+     "Ares"
+    ],
+    [
+     "Turtle Beach",
+     "May 2026",
+     "160",
+     "Not Sponsored",
+     "Aug 2025",
+     "Blue Torch"
+    ],
+    [
+     "MagicLab/Bumble",
+     "May 2026",
+     "525",
+     "Blackstone",
+     "Oct 2020",
+     "Alter Domus, Guggenheim"
+    ],
+    [
+     "Orbcomm",
+     "Apr 2026",
+     "460",
+     "GI Partners",
+     "Jun 2021",
+     "Carlyle, Bain Credit’s Private Credit Group, and Morgan Stanley Private Credit"
+    ],
+    [
+     "PLZ Aeroscience",
+     "Apr 2026",
+     "1,000",
+     "Pritzker",
+     "Feb 2021",
+     "Antares"
+    ],
+    [
+     "Bally's Corp",
+     "Mar 2026",
+     "1,100",
+     "Not Sponsored",
+     "Oct 2025",
+     "Ares Management, King Street Capital Management and TPG Credit"
+    ]
+   ]
+  }
+ },
+ "headlines": {
+  "pb_us_dl_aum_2025": {
+   "slide": 35,
+   "chart": "chart28",
+   "heading": "US direct lending AUM ($B)",
+   "headline": "Direct lending AUM is maintaining a steady level",
+   "sourceLine": "Source: PitchBook  •  Geography: US  •  *As of Dec. 31, 2025",
+   "asOf": "2025-12-31",
+   "unit": "$B",
+   "geography": "US",
+   "population": "US direct lending funds (dry powder plus NAV), PitchBook",
+   "dryPowder": 169.6,
+   "nav": 295.7,
+   "aum": 465.3,
+   "dryPowderShareOfAum": 36.4,
+   "prior": {
+    "year": 2024,
+    "dryPowder": 171.2,
+    "nav": 283,
+    "aum": 454.2,
+    "dryPowderShareOfAum": 37.7
+   },
+   "peakShare": {
+    "year": 2017,
+    "dryPowder": 62.5,
+    "nav": 55.9,
+    "dryPowderShareOfAum": 52.8
+   },
+   "locator": "ppt/charts/chart28.xml, series 'Dry powder ($B)' and 'NAV ($B)' (sheet 'AUM - US DL'), cached values at idx 19 (2025), 18 (2024) and 11 (2017); AUM and the share are arithmetic on the two cached values",
+   "note": "AUM = dry powder + NAV = 169.6 + 295.7 = 465.3; share = 169.6 / 465.3 = 36.4%; +2.4% on 2024's 454.2. Ingested as pb_us_dl_dry_powder_annual and pb_us_dl_nav_annual; the site computes the same figures at build."
+  }
+ }
+}

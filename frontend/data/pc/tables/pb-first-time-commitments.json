@@ -1,0 +1,65 @@
+{
+ "generated": "2026-09-11",
+ "slug": "pb-first-time-commitments",
+ "title": "First-Time Commitments",
+ "editions": [
+  {
+   "slug": "pb-first-time-commitments",
+   "key": "pb_first_time_commitments_list",
+   "title": "First-Time Commitments",
+   "label": "First-time LP commitments (five most recent)",
+   "edition": "2026-09-10",
+   "vintage": "2026-09-10",
+   "downloadedOn": "2026-09-10",
+   "filterLine": "Access Point: All; Fund Category: All; Fund Size: All; Vintage Year: All; Fund Location: World",
+   "chartFilters": "Access Point: All; Fund Category: All",
+   "currency": "USD",
+   "columns": [
+    {
+     "name": "Limited Partner",
+     "kind": "text"
+    },
+    {
+     "name": "Fund Strategy",
+     "kind": "text"
+    },
+    {
+     "name": "Amount Committed",
+     "kind": "money"
+    }
+   ],
+   "header": [
+    "Limited Partner",
+    "Fund Strategy",
+    "Amount Committed"
+   ],
+   "rows": [
+    [
+     "European Investment Bank",
+     "Infrastructure Debt",
+     "$40M"
+    ],
+    [
+     "Trimtab Impact",
+     "Infrastructure Debt",
+     "$4M"
+    ],
+    [
+     "U.S. International Development Finance Corporation",
+     "Infrastructure Debt",
+     "$25M"
+    ],
+    [
+     "Swiss Investment Fund for Emerging Markets",
+     "Infrastructure Debt",
+     "$12.5M"
+    ],
+    [
+     "European Investment Fund",
+     "Debt - General",
+     "$22.98M"
+    ]
+   ]
+  }
+ ]
+}

@@ -1,0 +1,104 @@
+{
+ "generated": "2026-09-11",
+ "slug": "lcd-dl-refinanced-in-bsl",
+ "title": "Last ten syndicated term loans that refinance debt provided by direct lenders",
+ "editions": [
+  {
+   "slug": "lcd-dl-refinanced-in-bsl",
+   "edition": "2026-08",
+   "vintage": "2026-09-10",
+   "publishedAt": "2026-09-08T22:04:10Z",
+   "asOf": "2026-08-31",
+   "slide": 40,
+   "headline": "Borrowers refinancing direct lending deals in the BSL market continue to find favorable spreads…",
+   "title": "Last ten syndicated term loans that refinance debt provided by direct lenders",
+   "sourceLine": "Source: PitchBook | LCD  •  Geography: US  •  *As of Aug. 31, 2026",
+   "footnote": "Table is based on LCD News reporting.",
+   "recoveredFrom": "ppt/media/image6.emf (EMR_EXTTEXTOUTW records, 60 strings)",
+   "header": [
+    "Company",
+    "PE sponsor",
+    "Borrower rating",
+    "Date",
+    "Debt being refinanced"
+   ],
+   "rows": [
+    [
+     "Accuris",
+     "Kohlberg, Kravis & Roberts",
+     "B/B2",
+     "Aug 2026",
+     "Refinance the company’s existing private debt and to fund a shareholder distribution."
+    ],
+    [
+     "Fidelis Insurance Holdings Limited",
+     "Not Sponsored",
+     "B+/Ba3",
+     "Aug 2026",
+     "Replacing its existing unitranche facility"
+    ],
+    [
+     "Catalent",
+     "Novo Holdings",
+     "B+/B1",
+     "Jul 2026",
+     "Proceeds refinance a $4.123 billion private credit loan due 2031"
+    ],
+    [
+     "Arrow International",
+     "Platinum Equity",
+     "B+/B2",
+     "Jul 2026",
+     "Refinance existing private credit facilities."
+    ],
+    [
+     "Vireo Growth (CNQ: VREO)",
+     "Not Sponsored",
+     "NR/NR",
+     "Jul 2026",
+     "Refinance certain debt"
+    ],
+    [
+     "Family Dollar Stores",
+     "Brigade Capital",
+     "B/B2",
+     "Jul 2026",
+     "Refinance around $800 million of existing debt and fund a $320 million sponsor dividend,"
+    ],
+    [
+     "Lyntris (NYS: LYNX)",
+     "Trive Capital",
+     "NR/NR",
+     "Jul 2026",
+     "Refinance existing private credit facilities."
+    ],
+    [
+     "FDH Aero",
+     "Bain Capital",
+     "B/B2",
+     "Jul 2026",
+     "Fund Bain Capital Private Equity's acquisition and repay existing private debt"
+    ],
+    [
+     "DwyerOmega",
+     "Arcline Investment Management",
+     "B/B2",
+     "Jul 2026",
+     "Repay the company’s existing private debt, a first-lien term loan facility due July 2029 priced at S+475"
+    ],
+    [
+     "Harrington Industrial Plastics",
+     "Bain Capital",
+     "B-/B2",
+     "Jun 2026",
+     "Refinance existing private debt and fund future M&A and general corporate purposes"
+    ]
+   ],
+   "handKeyedCheck": {
+    "file": "lcd-monitor-2026-08-tables.json",
+    "cellsCompared": 50,
+    "differing": []
+   }
+  }
+ ]
+}

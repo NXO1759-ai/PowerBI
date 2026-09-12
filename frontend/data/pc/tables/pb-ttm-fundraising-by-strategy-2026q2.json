@@ -1,0 +1,99 @@
+{
+ "generated": "2026-09-11",
+ "slug": "pb-ttm-fundraising-by-strategy-2026q2",
+ "title": "YoY changes in trailing 12-month fundraising activity by strategy",
+ "editions": [
+  {
+   "slug": "pb-ttm-fundraising-by-strategy-2026q2",
+   "key": "pb_ttm_fundraising_by_strategy_2026q2",
+   "edition": "2026Q2",
+   "vintage": "2026-09-10",
+   "asOf": "2026-06-30",
+   "title": "YoY changes in trailing 12-month fundraising activity by strategy",
+   "doc": "fr2026q2",
+   "page": 2,
+   "geography": "Global",
+   "unit": {
+    "capitalRaised": "$B",
+    "capitalYoY": "%",
+    "fundCount": "count",
+    "fundCountYoY": "%"
+   },
+   "header": [
+    "strategy",
+    "capitalRaised",
+    "capitalYoY",
+    "fundCount",
+    "fundCountYoY"
+   ],
+   "rows": [
+    [
+     "Private equity",
+     468.8,
+     -12.1,
+     862,
+     -35.5
+    ],
+    [
+     "Venture capital",
+     183.1,
+     -4.2,
+     1815,
+     -31.6
+    ],
+    [
+     "Real estate",
+     90.7,
+     -32.5,
+     357,
+     -39.1
+    ],
+    [
+     "Real assets",
+     137.3,
+     -26.2,
+     99,
+     -52.4
+    ],
+    [
+     "Private debt",
+     309.1,
+     14,
+     259,
+     -39.6
+    ],
+    [
+     "Fund of funds",
+     26.5,
+     -57.2,
+     92,
+     -66.1
+    ],
+    [
+     "Secondaries",
+     95.1,
+     -20.6,
+     73,
+     -30.5
+    ],
+    [
+     "Co-investment",
+     37.5,
+     -18.3,
+     206,
+     -46.4
+    ],
+    [
+     "Private capital",
+     1348,
+     -12.7,
+     3763,
+     -37
+    ]
+   ],
+   "note": "Rows read from the rendered page; the PDF text layer prints the row labels out of line with the values. Private debt's share of the private capital total is computed at build (309.1 / 1348.0).",
+   "document": "Q2 2026 Global Private Market Fundraising Report",
+   "file": "pitchbook-global-fundraising-2026q2.json"
+  }
+ ]
+}

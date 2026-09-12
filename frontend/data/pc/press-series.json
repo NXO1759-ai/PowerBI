@@ -1,0 +1,2112 @@
+{
+ "generated": "2026-09-11",
+ "note": "Hand-keyed series from public release pages and press coverage, one URL per point. All 25 Proskauer release pages were fetched a second time and every value confirmed; corrections from that second read are attached as caveats.",
+ "served": "Copied from the blueprint's press-series.json on 2026-09-11 with a check field per point (HTTP status of the cited URL on that date; 200 answers, 403 refuses a script but the page exists, 302 is a cookie gate). No point was removed. The findings block of the source file is not served; its corrections are already in the caveats. Caveats and notFound entries name the document, the URL and the HTTP status; working paths and fetch-process notes are not served.",
+ "checked": {
+  "at": "2026-09-11",
+  "uniqueUrls": 48,
+  "pointsByStatus": {
+   "200": 186,
+   "302": 6,
+   "403": 4
+  }
+ },
+ "series": [
+  {
+   "key": "proskauer_pcdi_overall",
+   "label": "Proskauer Private Credit Default Index, overall default rate",
+   "unit": "% of active loans",
+   "publisher": "Proskauer Rose LLP",
+   "cadence": "quarterly",
+   "definition": "Share of active US senior secured and unitranche loans in Proskauer's database in default during the quarter. Proskauer's default is the earliest of a missed debt payment, a distressed restructuring, a bankruptcy filing, a financial cove...",
+   "caveats": "Every value read on the named proskauer.com release page. Q1 2023 has no release page I could find; its 2.15% is read as the prior-quarter figure on the Q2 2023 page and repeated on the Q1 2024 page. Values before Q4 2021 are published to one decimal, later ones to two. Index composition changes each quarter (see the loan-count and principal series), so this is not a fixed cohort.",
+   "points": [
+    {
+     "period": "2020Q1",
+     "value": 5.9,
+     "url": "https://www.proskauer.com/release/proskauer-introduces-innovative-private-credit-default-index",
+     "note": "published May 27, 2020",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2020Q2",
+     "value": 8.1,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q2-private-credit-default-index",
+     "note": "published July 29, 2020; series peak",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2020Q3",
+     "value": 4.2,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q3-private-credit-default-index",
+     "note": "published October 16, 2020",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2020Q4",
+     "value": 3.6,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q4-private-credit-default-index",
+     "note": "published February 8, 2021",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q1",
+     "value": 2.4,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q1-private-credit-default-index-2021",
+     "note": "published May 3, 2021",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q2",
+     "value": 1.3,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q2-private-credit-default-index-2021",
+     "note": "published July 26, 2021",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q3",
+     "value": 1.5,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q3-private-credit-default-index-reports-an-overall-default-rate-of-15",
+     "note": "published October 21, 2021",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q4",
+     "value": 1.04,
+     "url": "https://www.proskauer.com/report/proskauer-releases-q4-private-credit-default-index-reports-an-overall-default-rate-of-104",
+     "note": "published January 27, 2022",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q1",
+     "value": 1.12,
+     "url": "https://www.proskauer.com/report/proskauer-releases-2022-q1-private-credit-default-index",
+     "note": "published May 19, 2022",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q2",
+     "value": 1.18,
+     "url": "https://www.proskauer.com/report/proskauer-releases-2022-q2-private-credit-default-index",
+     "note": "published July 25, 2022",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q3",
+     "value": 1.56,
+     "url": "https://www.proskauer.com/report/proskauer-q3-private-credit-default-index-reports-an-overall-default-rate-of-156",
+     "note": "published October 26, 2022",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q4",
+     "value": 2.06,
+     "url": "https://www.proskauer.com/report/proskauers-q4-2022-private-credit-default-index-reveals-default-rate-of-206-increasing-05-over-previous-period",
+     "note": "published January 26, 2023",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q1",
+     "value": 2.15,
+     "url": "https://www.proskauer.com/report/proskauers-q2-2023-private-credit-default-index-reveals-default-rate-of-164",
+     "note": "no Q1 2023 release page found; value read as the prior-quarter figure on the Q2 2023 page (also on the Q1 2024 page)",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q2",
+     "value": 1.64,
+     "url": "https://www.proskauer.com/report/proskauers-q2-2023-private-credit-default-index-reveals-default-rate-of-164",
+     "note": "published July 19, 2023",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q3",
+     "value": 1.41,
+     "url": "https://www.proskauer.com/report/proskauers-q3-2023-private-credit-default-index-highlights-the-resilience-of-private-credit-in-a-turbulent-economy",
+     "note": "published October 24, 2023",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q4",
+     "value": 1.6,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-16-for-fourth-quarter-of-2023",
+     "note": "published January 18, 2024; later pages cite it as 1.60%",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q1",
+     "value": 1.84,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-184-for-q1-2024",
+     "note": "published April 23, 2024",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q2",
+     "value": 2.71,
+     "url": "https://www.proskauer.com/report/private-credit-defaults-rise-to-271-according-to-latest-proskauer-index",
+     "note": "published July 22, 2024; page also quotes Fitch BSL default rate 4.33% for the 12 months to May 31, 2024",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q3",
+     "value": 1.95,
+     "url": "https://www.proskauer.com/report/proskauer-q3-private-credit-default-index-decreases-to-195",
+     "note": "published October 24, 2024",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q4",
+     "value": 2.67,
+     "url": "https://www.proskauer.com/report/proskauer-announces-q4-private-credit-default-rate-of-267",
+     "note": "published January 21, 2025; 1.2% on a payment-default/bankruptcy/distressed-exchange-only basis",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q1",
+     "value": 2.42,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-242-for-q1-2025",
+     "note": "published April 16, 2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q2",
+     "value": 1.76,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-176-for-q2-2025",
+     "note": "published July 23, 2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q3",
+     "value": 1.84,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-184-for-q3-2025",
+     "note": "published October 23, 2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q4",
+     "value": 2.46,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-246-for-q4-2025",
+     "note": "published January 26, 2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026Q1",
+     "value": 2.73,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-273-for-q1-2026",
+     "note": "published April 27, 2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026Q2",
+     "value": 2.51,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-251-for-q2-2026",
+     "note": "published July 28, 2026; April 1 to June 30, 2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ],
+   "watch": "t default, another default expected to last more than 30 days, or a loan modified in anticipation of default (definition per MFA/Proskauer 'The Role of Private Credit in US Capital Markets', printed p.8-9 fn 36-37). Broader than rating-agency definitions: the Q4 2024 release says the rate falls to 1.2% if only payment defaults, bankruptcies and distressed exchanges are counted."
+  },
+  {
+   "key": "proskauer_pcdi_loan_count",
+   "label": "Proskauer index: active loans covered",
+   "unit": "loans",
+   "publisher": "Proskauer Rose LLP",
+   "cadence": "quarterly",
+   "definition": "Number of active US private credit loans in the index for the quarter, as stated on each release page.",
+   "caveats": "Not stated on the Q2 2022, Q3 2022 and Q1 2023 pages. Q3 2021 is given only as 'over 825' and Q4 2023 only as 'more than 1,000'. Q4 2021 comes from the MFA/Proskauer paper in the study folder, not a web page. Coverage fell from ~1,000 loans (Q4 2023) to ~700 (2025-26) while principal rose, so per-loan size changed materially.",
+   "points": [
+    {
+     "period": "2020Q1",
+     "value": 576,
+     "url": "https://www.proskauer.com/release/proskauer-introduces-innovative-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2020Q2",
+     "value": 546,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q2-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2020Q3",
+     "value": 642,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q3-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2020Q4",
+     "value": 689,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q4-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q1",
+     "value": 721,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q1-private-credit-default-index-2021",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q2",
+     "value": 780,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q2-private-credit-default-index-2021",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q3",
+     "value": 825,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q3-private-credit-default-index-reports-an-overall-default-rate-of-15",
+     "note": "page says 'over 825'",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q4",
+     "value": 867,
+     "url": "https://www.proskauer.com/report/proskauer-releases-q4-private-credit-default-index-reports-an-overall-default-rate-of-104",
+     "note": "not on the release page; from The-Role-of-Private-Credit-in-US-Capital-Markets.pdf, printed p.8-9: 867 active US loans",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q1",
+     "value": 893,
+     "url": "https://www.proskauer.com/report/proskauer-releases-2022-q1-private-credit-default-index",
+     "note": "page says approximately 893",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q4",
+     "value": 973,
+     "url": "https://www.proskauer.com/report/proskauers-q4-2022-private-credit-default-index-reveals-default-rate-of-206-increasing-05-over-previous-period",
+     "note": "approximately 973",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q2",
+     "value": 977,
+     "url": "https://www.proskauer.com/report/proskauers-q2-2023-private-credit-default-index-reveals-default-rate-of-164",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q3",
+     "value": 990,
+     "url": "https://www.proskauer.com/report/proskauers-q3-2023-private-credit-default-index-highlights-the-resilience-of-private-credit-in-a-turbulent-economy",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q4",
+     "value": 1000,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-16-for-fourth-quarter-of-2023",
+     "note": "page says 'more than 1,000'",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q1",
+     "value": 980,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-184-for-q1-2024",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q2",
+     "value": 922,
+     "url": "https://www.proskauer.com/report/private-credit-defaults-rise-to-271-according-to-latest-proskauer-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q3",
+     "value": 872,
+     "url": "https://www.proskauer.com/report/proskauer-q3-private-credit-default-index-decreases-to-195",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q4",
+     "value": 825,
+     "url": "https://www.proskauer.com/report/proskauer-announces-q4-private-credit-default-rate-of-267",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q1",
+     "value": 786,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-242-for-q1-2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q2",
+     "value": 739,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-176-for-q2-2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q3",
+     "value": 705,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-184-for-q3-2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q4",
+     "value": 691,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-246-for-q4-2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026Q1",
+     "value": 697,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-273-for-q1-2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026Q2",
+     "value": 716,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-251-for-q2-2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ]
+  },
+  {
+   "key": "proskauer_pcdi_principal",
+   "label": "Proskauer index: original principal covered",
+   "unit": "USD billions",
+   "publisher": "Proskauer Rose LLP",
+   "cadence": "quarterly",
+   "definition": "Aggregate original principal amount of the active loans in the index, as stated on each release page.",
+   "caveats": "Not stated on the Q3 2021, Q2 2022, Q3 2022 and Q1 2023 pages. Q4 2021 from the MFA/Proskauer paper in the study folder. Q1 2020, Q1 2024 and Q2 2024 are given as approximate. Principal jumps from $144.5B (Q4 2025) to $189.2B (Q1 2026) with almost the same loan count; the pages do not explain the change.",
+   "points": [
+    {
+     "period": "2020Q1",
+     "value": 95,
+     "url": "https://www.proskauer.com/release/proskauer-introduces-innovative-private-credit-default-index",
+     "note": "approximately $95 billion",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2020Q2",
+     "value": 101.6,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q2-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2020Q3",
+     "value": 121.5,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q3-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2020Q4",
+     "value": 129.3,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q4-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q1",
+     "value": 131.1,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q1-private-credit-default-index-2021",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q2",
+     "value": 134.1,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q2-private-credit-default-index-2021",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q4",
+     "value": 141.8,
+     "url": "https://www.proskauer.com/report/proskauer-releases-q4-private-credit-default-index-reports-an-overall-default-rate-of-104",
+     "note": "not on the release page; from The-Role-of-Private-Credit-in-US-Capital-Markets.pdf, ROLE printed p.8-9",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q1",
+     "value": 144.4,
+     "url": "https://www.proskauer.com/report/proskauer-releases-2022-q1-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q4",
+     "value": 145.65,
+     "url": "https://www.proskauer.com/report/proskauers-q4-2022-private-credit-default-index-reveals-default-rate-of-206-increasing-05-over-previous-period",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q2",
+     "value": 144.9,
+     "url": "https://www.proskauer.com/report/proskauers-q2-2023-private-credit-default-index-reveals-default-rate-of-164",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q3",
+     "value": 146.7,
+     "url": "https://www.proskauer.com/report/proskauers-q3-2023-private-credit-default-index-highlights-the-resilience-of-private-credit-in-a-turbulent-economy",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q4",
+     "value": 148.9,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-16-for-fourth-quarter-of-2023",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q1",
+     "value": 150,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-184-for-q1-2024",
+     "note": "approximately $150 billion",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q2",
+     "value": 150.7,
+     "url": "https://www.proskauer.com/report/private-credit-defaults-rise-to-271-according-to-latest-proskauer-index",
+     "note": "approximately",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q3",
+     "value": 152.1,
+     "url": "https://www.proskauer.com/report/proskauer-q3-private-credit-default-index-decreases-to-195",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q4",
+     "value": 152.8,
+     "url": "https://www.proskauer.com/report/proskauer-announces-q4-private-credit-default-rate-of-267",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q1",
+     "value": 148.6,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-242-for-q1-2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q2",
+     "value": 143.6,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-176-for-q2-2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q3",
+     "value": 141,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-184-for-q3-2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q4",
+     "value": 144.5,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-246-for-q4-2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026Q1",
+     "value": 189.2,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-273-for-q1-2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026Q2",
+     "value": 195.6,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-251-for-q2-2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ]
+  },
+  {
+   "key": "proskauer_pcdi_ebitda_lt25",
+   "label": "Proskauer index: default rate, borrowers with EBITDA under $25M",
+   "unit": "%",
+   "publisher": "Proskauer Rose LLP",
+   "cadence": "quarterly",
+   "definition": "Default rate (Proskauer definition) for loans to companies with EBITDA below $25 million at origination.",
+   "caveats": "Not reported on the release pages for Q3 2020 through Q1 2022 (those pages give only the two larger bands). Where a quarter's own page omits the band, the value is the prior-quarter figure printed on the next page (noted). The Q1 2025 page gives 1.4% and the Q2 2025 page repeats it.",
+   "points": [
+    {
+     "period": "2020Q1",
+     "value": 7,
+     "url": "https://www.proskauer.com/release/proskauer-introduces-innovative-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2020Q2",
+     "value": 9.2,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q2-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q2",
+     "value": 1.3,
+     "url": "https://www.proskauer.com/report/proskauer-q3-private-credit-default-index-reports-an-overall-default-rate-of-156",
+     "note": "read as prior quarter on the Q3 2022 page",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q3",
+     "value": 1.5,
+     "url": "https://www.proskauer.com/report/proskauer-q3-private-credit-default-index-reports-an-overall-default-rate-of-156",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q4",
+     "value": 2.7,
+     "url": "https://www.proskauer.com/report/proskauers-q4-2022-private-credit-default-index-reveals-default-rate-of-206-increasing-05-over-previous-period",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q1",
+     "value": 2,
+     "url": "https://www.proskauer.com/report/proskauers-q2-2023-private-credit-default-index-reveals-default-rate-of-164",
+     "note": "read as prior quarter on the Q2 2023 page",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q2",
+     "value": 2.1,
+     "url": "https://www.proskauer.com/report/proskauers-q2-2023-private-credit-default-index-reveals-default-rate-of-164",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q3",
+     "value": 0.7,
+     "url": "https://www.proskauer.com/report/proskauers-q3-2023-private-credit-default-index-highlights-the-resilience-of-private-credit-in-a-turbulent-economy",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q4",
+     "value": 0.7,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-16-for-fourth-quarter-of-2023",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q1",
+     "value": 1.9,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-184-for-q1-2024",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q2",
+     "value": 2.6,
+     "url": "https://www.proskauer.com/report/private-credit-defaults-rise-to-271-according-to-latest-proskauer-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q3",
+     "value": 2,
+     "url": "https://www.proskauer.com/report/proskauer-q3-private-credit-default-index-decreases-to-195",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q4",
+     "value": 1.8,
+     "url": "https://www.proskauer.com/report/proskauer-announces-q4-private-credit-default-rate-of-267",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q1",
+     "value": 1.4,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-242-for-q1-2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q2",
+     "value": 1.8,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-176-for-q2-2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q3",
+     "value": 1.6,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-184-for-q3-2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q4",
+     "value": 1.7,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-273-for-q1-2026",
+     "note": "Q4 2025 page says the band 'held steady' (+0.1 pt); 1.7% read as prior quarter on the Q1 2026 page",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026Q1",
+     "value": 2.3,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-273-for-q1-2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026Q2",
+     "value": 1.9,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-251-for-q2-2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ]
+  },
+  {
+   "key": "proskauer_pcdi_ebitda_25_50",
+   "label": "Proskauer index: default rate, borrowers with EBITDA $25M to $49.9M",
+   "unit": "%",
+   "publisher": "Proskauer Rose LLP",
+   "cadence": "quarterly",
+   "definition": "Default rate (Proskauer definition) for loans to companies with EBITDA of $25 million to $49.9 million at origination.",
+   "caveats": "Q1 2023 is the prior-quarter figure on the Q2 2023 page. All others read on the quarter's own release page.",
+   "points": [
+    {
+     "period": "2020Q1",
+     "value": 5.2,
+     "url": "https://www.proskauer.com/release/proskauer-introduces-innovative-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2020Q2",
+     "value": 6.7,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q2-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2020Q3",
+     "value": 5.1,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q3-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2020Q4",
+     "value": 2.9,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q4-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q1",
+     "value": 1.4,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q1-private-credit-default-index-2021",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q2",
+     "value": 1.3,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q2-private-credit-default-index-2021",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q3",
+     "value": 1.2,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q3-private-credit-default-index-reports-an-overall-default-rate-of-15",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q4",
+     "value": 0.8,
+     "url": "https://www.proskauer.com/report/proskauer-releases-q4-private-credit-default-index-reports-an-overall-default-rate-of-104",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q1",
+     "value": 1.1,
+     "url": "https://www.proskauer.com/report/proskauer-releases-2022-q1-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q2",
+     "value": 1.8,
+     "url": "https://www.proskauer.com/report/proskauer-releases-2022-q2-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q3",
+     "value": 2.1,
+     "url": "https://www.proskauer.com/report/proskauer-q3-private-credit-default-index-reports-an-overall-default-rate-of-156",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q4",
+     "value": 1.7,
+     "url": "https://www.proskauer.com/report/proskauers-q4-2022-private-credit-default-index-reveals-default-rate-of-206-increasing-05-over-previous-period",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q1",
+     "value": 2,
+     "url": "https://www.proskauer.com/report/proskauers-q2-2023-private-credit-default-index-reveals-default-rate-of-164",
+     "note": "read as prior quarter on the Q2 2023 page",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q2",
+     "value": 1.6,
+     "url": "https://www.proskauer.com/report/proskauers-q2-2023-private-credit-default-index-reveals-default-rate-of-164",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q3",
+     "value": 2.5,
+     "url": "https://www.proskauer.com/report/proskauers-q3-2023-private-credit-default-index-highlights-the-resilience-of-private-credit-in-a-turbulent-economy",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q4",
+     "value": 2.2,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-16-for-fourth-quarter-of-2023",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q1",
+     "value": 2,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-184-for-q1-2024",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q2",
+     "value": 2.7,
+     "url": "https://www.proskauer.com/report/private-credit-defaults-rise-to-271-according-to-latest-proskauer-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q3",
+     "value": 3,
+     "url": "https://www.proskauer.com/report/proskauer-q3-private-credit-default-index-decreases-to-195",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q4",
+     "value": 4.7,
+     "url": "https://www.proskauer.com/report/proskauer-announces-q4-private-credit-default-rate-of-267",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q1",
+     "value": 4.3,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-242-for-q1-2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q2",
+     "value": 2.9,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-176-for-q2-2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q3",
+     "value": 2.6,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-184-for-q3-2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q4",
+     "value": 3.6,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-246-for-q4-2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026Q1",
+     "value": 3.1,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-273-for-q1-2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026Q2",
+     "value": 3.4,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-251-for-q2-2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ]
+  },
+  {
+   "key": "proskauer_pcdi_ebitda_ge50",
+   "label": "Proskauer index: default rate, borrowers with EBITDA $50M or more",
+   "unit": "%",
+   "publisher": "Proskauer Rose LLP",
+   "cadence": "quarterly",
+   "definition": "Default rate (Proskauer definition) for loans to companies with EBITDA of $50 million or more at origination.",
+   "caveats": "Q1 2023 and Q1 2025 are prior-quarter figures read on the following quarter's page (the Q1 2025 page itself says 'no change', consistent with 1.7% in Q4 2024). All others read on the quarter's own release page.",
+   "points": [
+    {
+     "period": "2020Q1",
+     "value": 4.4,
+     "url": "https://www.proskauer.com/release/proskauer-introduces-innovative-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2020Q2",
+     "value": 5.3,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q2-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2020Q3",
+     "value": 2.8,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q3-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2020Q4",
+     "value": 2.6,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q4-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q1",
+     "value": 1,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q1-private-credit-default-index-2021",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q2",
+     "value": 0.5,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q2-private-credit-default-index-2021",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q3",
+     "value": 0.5,
+     "url": "https://www.proskauer.com/release/proskauer-releases-q3-private-credit-default-index-reports-an-overall-default-rate-of-15",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2021Q4",
+     "value": 0.4,
+     "url": "https://www.proskauer.com/report/proskauer-releases-q4-private-credit-default-index-reports-an-overall-default-rate-of-104",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q1",
+     "value": 0.4,
+     "url": "https://www.proskauer.com/report/proskauer-releases-2022-q1-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q2",
+     "value": 0.4,
+     "url": "https://www.proskauer.com/report/proskauer-releases-2022-q2-private-credit-default-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q3",
+     "value": 1.1,
+     "url": "https://www.proskauer.com/report/proskauer-q3-private-credit-default-index-reports-an-overall-default-rate-of-156",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2022Q4",
+     "value": 1.5,
+     "url": "https://www.proskauer.com/report/proskauers-q4-2022-private-credit-default-index-reveals-default-rate-of-206-increasing-05-over-previous-period",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q1",
+     "value": 2.6,
+     "url": "https://www.proskauer.com/report/proskauers-q2-2023-private-credit-default-index-reveals-default-rate-of-164",
+     "note": "read as prior quarter on the Q2 2023 page",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q2",
+     "value": 0.8,
+     "url": "https://www.proskauer.com/report/proskauers-q2-2023-private-credit-default-index-reveals-default-rate-of-164",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q3",
+     "value": 1.2,
+     "url": "https://www.proskauer.com/report/proskauers-q3-2023-private-credit-default-index-highlights-the-resilience-of-private-credit-in-a-turbulent-economy",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2023Q4",
+     "value": 2.3,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-16-for-fourth-quarter-of-2023",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q1",
+     "value": 1.5,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-184-for-q1-2024",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q2",
+     "value": 2.8,
+     "url": "https://www.proskauer.com/report/private-credit-defaults-rise-to-271-according-to-latest-proskauer-index",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q3",
+     "value": 0.8,
+     "url": "https://www.proskauer.com/report/proskauer-q3-private-credit-default-index-decreases-to-195",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024Q4",
+     "value": 1.7,
+     "url": "https://www.proskauer.com/report/proskauer-announces-q4-private-credit-default-rate-of-267",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q1",
+     "value": 1.7,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-176-for-q2-2025",
+     "note": "read as prior quarter on the Q2 2025 page; the Q1 2025 page says no change from Q4 2024",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q2",
+     "value": 0.5,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-176-for-q2-2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q3",
+     "value": 1.2,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-184-for-q3-2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q4",
+     "value": 2.4,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-246-for-q4-2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026Q1",
+     "value": 3,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-273-for-q1-2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026Q2",
+     "value": 2.4,
+     "url": "https://www.proskauer.com/report/proskauers-private-credit-default-index-reveals-rate-of-251-for-q2-2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ]
+  },
+  {
+   "key": "kbra_dld_ttm_default_rate",
+   "label": "KBRA DLD Direct Lending Index, trailing-12-month default rate (headlines)",
+   "unit": "% of issuers unless noted",
+   "publisher": "KBRA Analytics (KBRA DLD), via press coverage",
+   "cadence": "irregular (monthly report; public headlines only)",
+   "definition": "Share of borrowers in the KBRA DLD US Direct Lending Index (about 3,000 issuers, about $300B of BDC-held loans) that defaulted in the trailing 12 months. KBRA counts bankruptcies, missed payments, distressed debt exchanges and restructur...",
+   "caveats": "KBRA DLD's own monthly report is subscriber-only and the BusinessWire and kbra.com release pages returned 403 to every fetch, so the series is what press pages quote. Weighting differs by point (issuer count vs dollar volume) and is noted. The June 2026 point's as-of date is 'Monday' in an article dated June 17, 2026 (Bloomberg's coverage is dated June 16, 2026), so it is recorded as mid-June 2026. kbra.com publication pages are readable; BusinessWire pages are not. Not yet in the series: the 2023 actuals, 2.3% overall by count and 2.1% sponsored (YTD December 2023), reported by ABF Journal and ABL Advisor.",
+   "points": [
+    {
+     "period": "TTM to 2024-03-20",
+     "value": 2,
+     "url": "https://www.abfjournal.com/overall-direct-lending-default-rates-at-2-over-the-last-12-months/",
+     "note": "by issuer count; sponsored 1.5%, non-sponsored 3.5%; 48 defaults (25 sponsored, 23 non-sponsored); index ~1,700 sponsored and ~600 non-sponsored borrowers; ABF Journal March 25, 2024",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2024 (estimate, by count)",
+     "value": 1.9,
+     "url": "https://www.ai-cio.com/news/direct-lending-default-rate-expected-to-rise-to-3-in-2025/",
+     "note": "KBRA's estimated 2024 rate (~46 defaults) as reported January 22, 2025; could reach ~2.75% if 17 Q4 restructurings counted",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025 (by volume)",
+     "value": 1.5,
+     "url": "https://www.kbra.com/publications/RwTYWQZJ/kbra-releases-research-private-credit-2026-outlook",
+     "note": "KBRA Private Credit: 2026 Outlook, January 21, 2026: 2025 direct lending default rate by volume 1.5%",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025 (loan-weighted)",
+     "value": 1.4,
+     "url": "https://www.privateequitywire.co.uk/private-credit-default-rates-return-to-peak-levels-says-kbra/",
+     "note": "loan-weighted 2025 rate as quoted June 17, 2026; differs from the 1.5% in KBRA's January 2026 outlook",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "TTM to mid-June 2026",
+     "value": 2.3,
+     "url": "https://www.privateequitywire.co.uk/private-credit-default-rates-return-to-peak-levels-says-kbra/",
+     "note": "by issuer count, 'as of Monday' in an article dated June 17, 2026; matches the late-2023 peak at index inception",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ],
+   "watch": "s; shifts to PIK and covenant violations are excluded (The Lead, KBRA DLD Default Indices page)."
+  },
+  {
+   "key": "kbra_dld_default_forecasts",
+   "label": "KBRA DLD direct lending default forecasts",
+   "unit": "%",
+   "publisher": "KBRA Analytics (KBRA DLD), via press coverage",
+   "cadence": "annual forecasts",
+   "definition": "KBRA DLD's published forecast of the US direct lending default rate for the coming year, by issuer count unless noted.",
+   "caveats": "Forecasts, not outcomes; keep off the actuals line. The December 2023 forecast (2.75% for 2024, sponsored) was read only in search snippets because the BusinessWire and kbra.com pages returned 403; it is listed in notFound. The same December 15, 2023 forecast is readable at abladvisor.com/news/37718 and is not yet in the series.",
+   "points": [
+    {
+     "period": "2025 forecast (by count)",
+     "value": 3,
+     "url": "https://www.ai-cio.com/news/direct-lending-default-rate-expected-to-rise-to-3-in-2025/",
+     "note": "~72 defaults on ~2,400 borrowers; sponsored-only 2.75%; consumer 6.5%, software 1.5%; January 22, 2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025 forecast (by count)",
+     "value": 3,
+     "url": "https://www.kbra.com/publications/hVZMjVDd/kbra-releases-research-private-credit-2025-outlook",
+     "note": "KBRA Private Credit: 2025 Outlook, January 14, 2025",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026 forecast (by volume)",
+     "value": 2,
+     "url": "https://www.kbra.com/publications/RwTYWQZJ/kbra-releases-research-private-credit-2026-outlook",
+     "note": "January 21, 2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026 forecast (by issuer count)",
+     "value": 3.5,
+     "url": "https://www.privateequitywire.co.uk/private-credit-default-rates-return-to-peak-levels-says-kbra/",
+     "note": "~111 issuers by end-2026; June 17, 2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026 forecast (loan-weighted)",
+     "value": 2.5,
+     "url": "https://www.privateequitywire.co.uk/private-credit-default-rates-return-to-peak-levels-says-kbra/",
+     "note": "about $7.6B of defaulted loans; June 17, 2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ]
+  },
+  {
+   "key": "kbra_kmdm_default_rate",
+   "label": "KBRA Middle Market Default Monitor (KMDM) rate",
+   "unit": "%",
+   "publisher": "Kroll Bond Rating Agency",
+   "cadence": "quarterly",
+   "definition": "Share of KBRA's middle-market credit-assessment universe (2,416 unique sponsored borrowers assessed in 2025, $1T+ of direct lending debt) in the KMDM, by count and by value.",
+   "caveats": "Different universe from KBRA DLD (credit assessments, not BDC holdings). Read on the kbra.com release page dated February 25, 2026.",
+   "points": [
+    {
+     "period": "2025Q3 (by count)",
+     "value": 3.5,
+     "url": "https://www.kbra.com/publications/kpbzZfGH/kbra-releases-research-private-credit-q4-2025-middle-market-borrower-surveillance-compendium-stability-at-the-median-stress-at-the-margins",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q3 (by value)",
+     "value": 2.1,
+     "url": "https://www.kbra.com/publications/kpbzZfGH/kbra-releases-research-private-credit-q4-2025-middle-market-borrower-surveillance-compendium-stability-at-the-median-stress-at-the-margins",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q4 (by count)",
+     "value": 3.4,
+     "url": "https://www.kbra.com/publications/kpbzZfGH/kbra-releases-research-private-credit-q4-2025-middle-market-borrower-surveillance-compendium-stability-at-the-median-stress-at-the-margins",
+     "note": "81 companies in KMDM, 17 payment defaults, 64 CCC-; median ICR 1.5x; 25% of borrowers below 1.0x ICR",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q4 (by value)",
+     "value": 2,
+     "url": "https://www.kbra.com/publications/kpbzZfGH/kbra-releases-research-private-credit-q4-2025-middle-market-borrower-surveillance-compendium-stability-at-the-median-stress-at-the-margins",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ]
+  },
+  {
+   "key": "cliffwater_cdli_headline_return",
+   "label": "Cliffwater Direct Lending Index, headline total return (press releases)",
+   "unit": "%",
+   "publisher": "Cliffwater LLC",
+   "cadence": "semi-annual press releases (index is quarterly)",
+   "definition": "Unlevered, gross-of-fees total return of US middle-market loans held by eligible BDCs, asset-weighted, computed from SEC filings (CDLI methodology text on the release).",
+   "caveats": "Cliffwater only began issuing CDLI press releases in 2026; no press release for 2023 Q4, 2024 or mid-2025 was found on prnewswire.com or cliffwater.com. Headline only per the owner's ruling; the growth-of-$1 history is not drawn. The March 31, 2026 release states the 20-year average as 9.5% on PRNewswire but 9.6% in the cliffwater.com PDF of the same release.",
+   "points": [
+    {
+     "period": "CY2025",
+     "value": 9.3,
+     "url": "https://www.prnewswire.com/news-releases/cliffwater-direct-lending-index-data-supports-strength-of-private-credit-302730370.html",
+     "note": "released March 31, 2026; ~21,000 loans, $549B; 20-year average 9.5% (PDF at cliffwater.com/files/docs/CliffwaterPressRelease_CDLI_2025_Results.pdf says 9.6%)",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026H1",
+     "value": 3,
+     "url": "https://www.prnewswire.com/news-releases/private-credit-shows-resilience-in-cliffwater-direct-lending-index-data-302854703.html",
+     "note": "first six months to June 30, 2026; released August 19, 2026; 23,000+ loans, $553B",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "TTM to 2026-06-30",
+     "value": 7.7,
+     "url": "https://www.prnewswire.com/news-releases/private-credit-shows-resilience-in-cliffwater-direct-lending-index-data-302854703.html",
+     "note": "trailing year; realized losses 0.5% vs 1.0% long-term average; private loans priced $0.98 vs public $0.96; Q1 software markdowns 3%, Q2 under 1%",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ]
+  },
+  {
+   "key": "cliffwater_cdli_income_and_pik",
+   "label": "Cliffwater CDLI interest income and PIK income (annual)",
+   "unit": "% of assets",
+   "publisher": "Cliffwater LLC",
+   "cadence": "annual",
+   "definition": "Interest income return of the CDLI for the calendar year, and the payment-in-kind component of that income, as stated in the annual press release.",
+   "caveats": "Only the 2025 figures are on a press release. The 2026 mid-year release says non-accruals and PIK 'remain stable and well below long-term averages' without numbers.",
+   "points": [
+    {
+     "period": "CY2025 interest income",
+     "value": 10.4,
+     "url": "https://www.prnewswire.com/news-releases/cliffwater-direct-lending-index-data-supports-strength-of-private-credit-302730370.html",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "CY2025 PIK interest income",
+     "value": 0.7,
+     "url": "https://www.prnewswire.com/news-releases/cliffwater-direct-lending-index-data-supports-strength-of-private-credit-302730370.html",
+     "note": "7.3% of total income",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ]
+  },
+  {
+   "key": "cliffwater_cdli_quarterly_secondary",
+   "label": "Cliffwater CDLI quarterly total return (secondary quotations)",
+   "unit": "%",
+   "publisher": "Cliffwater LLC, quoted by LSTA and Larry Swedroe (Substack / WealthManagement.com)",
+   "cadence": "quarterly, incomplete",
+   "definition": "CDLI quarterly total return as quoted by third parties from Cliffwater's subscriber quarterly report.",
+   "caveats": "Not Cliffwater press releases; the quarterly reports themselves are subscriber-only (bdcs.com/docs probes for 2023Q4-2026Q2 returned 404). Q1 2024 through Q4 2024 and Q3 2025 quarterly totals were not found on any open page. Use as a cross-check, or label 'via' the quoting source.",
+   "points": [
+    {
+     "period": "2023Q4",
+     "value": 3.02,
+     "url": "https://www.wealthmanagement.com/alternative-investments/private-direct-lending-performance-q1-2024-update",
+     "note": "Swedroe, June 25, 2024; trailing four quarters 12.49%; interest income 2.93%, realized losses -0.23%",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q1",
+     "value": 2.1,
+     "url": "https://www.lsta.org/tag/cliffwater-direct-lending-index/",
+     "note": "LSTA excerpt (June 12, 2025 article is members-only): 'total return in the first quarter softened to 2.1%'",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q2",
+     "value": 2.34,
+     "url": "https://larryswedroe.substack.com/p/private-credit-delivers-strong-q2",
+     "note": "August 22, 2025; TTM 10.06%; income 2.52% (11.05% TTM); realized losses -0.24% (-0.75% TTM vs -1.01% long-term)",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025Q4",
+     "value": 2.22,
+     "url": "https://larryswedroe.substack.com/p/the-sky-isnt-falling",
+     "note": "February 24, 2026; CY2025 9.33%; non-accruals 1.48% of cost (1.33% prior quarter, 2.13% historical); realized losses 0.13% Q4, 0.70% CY2025; year-end income yield 9.94%",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ]
+  },
+  {
+   "key": "moodys_private_credit_default_2025_range",
+   "label": "Moody's estimated private credit default rate, 2025",
+   "unit": "%",
+   "publisher": "Moody's (Moody's Analytics insight pages, moodys.com)",
+   "cadence": "one-off estimate with dated restatements",
+   "definition": "Moody's approximated 2025 US private credit (direct lending) default rate, shown as a range whose low end excludes distressed exchanges and whose high end includes them. Moody's says distressed restructurings were roughly 65% of all 2025...",
+   "caveats": "A range, not a series; draw as a band or two markers. Both pages carry the same 1.6%-4.7% figures (April 28, 2026 and May 18, 2026 by David Hamilton). No earlier dated update of the range was found on moodys.com.",
+   "points": [
+    {
+     "period": "2025 (excluding distressed exchanges)",
+     "value": 1.6,
+     "url": "https://www.moodys.com/web/en/us/insights/credit-risk/private-credit/us-corporate-default-risk-in-2026.html",
+     "note": "April 28, 2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025 (including distressed exchanges)",
+     "value": 4.7,
+     "url": "https://www.moodys.com/web/en/us/insights/credit-risk/private-credit/us-corporate-default-risk-in-2026.html",
+     "note": "April 28, 2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025 (excluding distressed exchanges, restated)",
+     "value": 1.6,
+     "url": "https://www.moodys.com/web/en/us/insights/credit-risk/private-credit/lend-extend-and-then.html",
+     "note": "May 18, 2026, David Hamilton; same range",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2025 (including distressed exchanges, restated)",
+     "value": 4.7,
+     "url": "https://www.moodys.com/web/en/us/insights/credit-risk/private-credit/lend-extend-and-then.html",
+     "note": "May 18, 2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ],
+   "watch": "faults."
+  },
+  {
+   "key": "moodys_spec_grade_default_rate",
+   "label": "Moody's US speculative-grade default rate (context for the private credit range)",
+   "unit": "%",
+   "publisher": "Moody's Ratings, via press coverage and moodys.com",
+   "cadence": "irregular",
+   "definition": "Moody's trailing speculative-grade corporate default rate and forecast, quoted alongside its private credit commentary.",
+   "caveats": "End-2025 and end-2026 figures read on a Yahoo Finance article about Moody's January 21, 2026 outlook; the Q1 2026 high-yield figure is from the May 18, 2026 moodys.com page. The 3.2% one-year expected probability of default (Moody's Analytics) is not part of this default-rate series; the May 18, 2026 end-2026 forecast of 3.2% is not yet recorded as a separate forecast point.",
+   "points": [
+    {
+     "period": "end-2025",
+     "value": 4.5,
+     "url": "https://finance.yahoo.com/news/private-credit-market-hit-2t-205002945.html",
+     "note": "'roughly 4.5%'; article January 22, 2026 on Moody's '2026 Outlook' of January 21, 2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "end-2026 forecast",
+     "value": 3,
+     "url": "https://finance.yahoo.com/news/private-credit-market-hit-2t-205002945.html",
+     "note": "'below 3%'",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ]
+  },
+  {
+   "key": "vaneck_bdc_price_to_book",
+   "label": "VanEck: listed-BDC index price-to-book (MVIS US BDC Index)",
+   "unit": "x",
+   "publisher": "VanEck (blog, Coulter Regal and Kendall Duncan)",
+   "cadence": "dated points, not monthly",
+   "definition": "Index-level price-to-book (price to NAV) of the MVIS US Business Development Companies Index, the index behind BIZD, at the dates VanEck tabulates.",
+   "caveats": "Not a monthly series: VanEck publishes only these dated points plus a long-term average (0.97x, Aug 2011 to Feb 2026); the chart's monthly data is not on the page. 'Late 2024' has no exact date. Index data before June 19, 2023 is the MVIS BDC Liquid Index linked to the current index. The page sits behind a cookie redirect (HTTP 302 on the check); data as of 2/27/2026.",
+   "points": [
+    {
+     "period": "2015-09",
+     "value": 0.83,
+     "url": "https://www.vaneck.com/us/en/blogs/income-investing/what-is-driving-bdc-valuations/",
+     "note": "pre-hike low, energy/credit concerns",
+     "check": {
+      "status": 302,
+      "checkedAt": "2026-09-11",
+      "note": "cookie gate: redirects to ?cken=true and then to /row/disabled-cookies/ without a browser-set cookie; the article is not refused, it needs a browser"
+     }
+    },
+    {
+     "period": "2016-01",
+     "value": 0.81,
+     "url": "https://www.vaneck.com/us/en/blogs/income-investing/what-is-driving-bdc-valuations/",
+     "note": "selloff trough",
+     "check": {
+      "status": 302,
+      "checkedAt": "2026-09-11",
+      "note": "cookie gate: redirects to ?cken=true and then to /row/disabled-cookies/ without a browser-set cookie; the article is not refused, it needs a browser"
+     }
+    },
+    {
+     "period": "2016-08",
+     "value": 1,
+     "url": "https://www.vaneck.com/us/en/blogs/income-investing/what-is-driving-bdc-valuations/",
+     "note": "recovery",
+     "check": {
+      "status": 302,
+      "checkedAt": "2026-09-11",
+      "note": "cookie gate: redirects to ?cken=true and then to /row/disabled-cookies/ without a browser-set cookie; the article is not refused, it needs a browser"
+     }
+    },
+    {
+     "period": "2020-03",
+     "value": 0.63,
+     "url": "https://www.vaneck.com/us/en/blogs/income-investing/what-is-driving-bdc-valuations/",
+     "note": "COVID low",
+     "check": {
+      "status": 302,
+      "checkedAt": "2026-09-11",
+      "note": "cookie gate: redirects to ?cken=true and then to /row/disabled-cookies/ without a browser-set cookie; the article is not refused, it needs a browser"
+     }
+    },
+    {
+     "period": "late 2024",
+     "value": 1.1,
+     "url": "https://www.vaneck.com/us/en/blogs/income-investing/what-is-driving-bdc-valuations/",
+     "note": "recent high; no exact month",
+     "check": {
+      "status": 302,
+      "checkedAt": "2026-09-11",
+      "note": "cookie gate: redirects to ?cken=true and then to /row/disabled-cookies/ without a browser-set cookie; the article is not refused, it needs a browser"
+     }
+    },
+    {
+     "period": "2026-02-27",
+     "value": 0.83,
+     "url": "https://www.vaneck.com/us/en/blogs/income-investing/what-is-driving-bdc-valuations/",
+     "note": "post dated March 4, 2026; long-term average 0.97x; index dividend yield ~12.2%",
+     "check": {
+      "status": 302,
+      "checkedAt": "2026-09-11",
+      "note": "cookie gate: redirects to ?cken=true and then to /row/disabled-cookies/ without a browser-set cookie; the article is not refused, it needs a browser"
+     }
+    }
+   ]
+  },
+  {
+   "key": "fitch_us_private_credit_default_rate",
+   "label": "Fitch US private credit default rate (TTM composite)",
+   "unit": "%",
+   "publisher": "Fitch Ratings, via The Lead, Investment Executive and Funds Society",
+   "cadence": "quarterly headline, monthly updates",
+   "definition": "Trailing-12-month default rate across roughly 1,300 US private-debt borrowers Fitch tracks: about 300 privately monitored ratings (PMR, used by insurers) and about 900 model-implied credit opinions (MCO, feeding middle-market CLOs). Defa...",
+   "caveats": "fitchratings.com commentary pages are client-rendered and serve no article text, so every value is from a page quoting Fitch. The May 2026 point is read from a post title. The July 2026 '6.1%' appeared only in a search snippet and is not recorded. The 2Q26 note's July 30, 2026 date and the software 1.2% figure are not on the cited page (dated August 5, 2026) and are not recorded.",
+   "points": [
+    {
+     "period": "TTM to 2025Q1",
+     "value": 4.5,
+     "url": "https://www.investmentexecutive.com/news/research-and-markets/u-s-private-credit-defaults-rise-fitch-2/",
+     "note": "August 8, 2025",
+     "check": {
+      "status": 403,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "TTM to 2025Q2",
+     "value": 5.5,
+     "url": "https://www.investmentexecutive.com/news/research-and-markets/u-s-private-credit-defaults-rise-fitch-2/",
+     "note": "8 new defaulters in Q2 2025; 28 defaults TTM",
+     "check": {
+      "status": 403,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "TTM to 2025-12",
+     "value": 5.6,
+     "url": "https://www.fundssociety.com/en/news/alternatives/u-s-private-credit-default-rate-continues-to-climb/",
+     "note": "March 2, 2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "TTM to 2026-01",
+     "value": 5.8,
+     "url": "https://www.fundssociety.com/en/news/alternatives/u-s-private-credit-default-rate-continues-to-climb/",
+     "note": "74 unique defaulters, 89 events in the 12 months; 11 default events in February 2026 vs 2025 monthly average 5.9",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "TTM to 2026Q1",
+     "value": 5.7,
+     "url": "https://theleadpc.com/middle-market-private-credit-8-3-2026/",
+     "note": "prior-quarter figure on the August 5, 2026 post; 78 unique defaulters",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "TTM to 2026-05",
+     "value": 6,
+     "url": "https://theleadleft.com/middle-market-private-credit-6-15-2026/",
+     "note": "from the post title 'remains at record high 6.0% in May 2026'",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "TTM to 2026Q2",
+     "value": 6,
+     "url": "https://theleadpc.com/middle-market-private-credit-8-3-2026/",
+     "note": "Fitch 'U.S. Private Credit Default Rate Reaches New High in 2Q26', July 30, 2026; 32 events from 20 new defaulters; 84 TTM defaulters; software 1.2% (from 2.3%)",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ],
+   "watch": " events include interest deferrals or PIK introduction, stressed maturity extensions, uncured payment defaults, and bankruptcies or restructurings."
+  },
+  {
+   "key": "fitch_pmr_default_rate",
+   "label": "Fitch privately monitored ratings (PMR) TTM default rate",
+   "unit": "%",
+   "publisher": "Fitch Ratings, via The Lead, Investment Executive and Funds Society",
+   "cadence": "quarterly with monthly updates",
+   "definition": "Trailing-12-month default rate of the ~300-issuer privately monitored ratings portfolio only (the higher-risk subset of Fitch's composite).",
+   "caveats": "Secondary quotations, as above. MCO component: 4.5% December 2025, 4.7% January 2026 (Funds Society, March 2, 2026).",
+   "points": [
+    {
+     "period": "TTM to 2025Q1",
+     "value": 7.8,
+     "url": "https://www.investmentexecutive.com/news/research-and-markets/u-s-private-credit-defaults-rise-fitch-2/",
+     "check": {
+      "status": 403,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "TTM to 2025Q2",
+     "value": 9.5,
+     "url": "https://www.investmentexecutive.com/news/research-and-markets/u-s-private-credit-defaults-rise-fitch-2/",
+     "check": {
+      "status": 403,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "TTM to 2025Q4",
+     "value": 9.2,
+     "url": "https://theleadleft.com/middle-market-private-credit-6-15-2026/",
+     "note": "28 defaulters in the TTM period",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "TTM to 2026-01",
+     "value": 9.4,
+     "url": "https://www.fundssociety.com/en/news/alternatives/u-s-private-credit-default-rate-continues-to-climb/",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "TTM to 2026Q1",
+     "value": 10,
+     "url": "https://theleadleft.com/middle-market-private-credit-6-15-2026/",
+     "note": "'Fitch's Privately Monitored Ratings Portfolio - 1Q26', June 18, 2026; 32 unique defaulters, 42 events; 38% PIK/interest deferrals, 38% maturity extensions, 7% payment defaults, 17% Chapter 11/liquidation",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ]
+  },
+  {
+   "key": "fitch_bdc_leverage",
+   "label": "Fitch-rated BDC average leverage (debt/equity)",
+   "unit": "x",
+   "publisher": "Fitch Ratings, via The Lead",
+   "cadence": "quarterly",
+   "definition": "Average leverage across the 32 BDCs Fitch rates, as stated in Fitch's June 2026 BDC valuation commentary.",
+   "caveats": "Read on The Lead's syndication of the Fitch piece (June 25, 2026), not on fitchratings.com. Same page: average NAV down 2.0% in 1Q26 (2.5% per share); 9 BDCs at or above 1.25x.",
+   "points": [
+    {
+     "period": "YE2024",
+     "value": 1.01,
+     "url": "https://theleadpc.com/bdc-valuations-weaken-as-leverage-and-dividend-pressure-rise/",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "YE2025",
+     "value": 1.09,
+     "url": "https://theleadpc.com/bdc-valuations-weaken-as-leverage-and-dividend-pressure-rise/",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026Q1",
+     "value": 1.11,
+     "url": "https://theleadpc.com/bdc-valuations-weaken-as-leverage-and-dividend-pressure-rise/",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ]
+  },
+  {
+   "key": "fitch_bdc_peer_review_2026",
+   "label": "Fitch BDC peer review, July 2026 (counts behind the 'deteriorating' sector outlook)",
+   "unit": "count of BDCs",
+   "publisher": "Fitch Ratings, via The Lead and Alternative Credit Investor",
+   "cadence": "one-off",
+   "definition": "Outcome of Fitch's July 2026 peer review of 13 US BDCs, at which Fitch called the sector outlook 'deteriorating' citing NII and dividend-coverage pressure, weaker asset-quality metrics, and elevated redemptions at perpetually non-traded ...",
+   "caveats": "Counts, not a rate; use for the statement tile. Fitch first assigned the 'deteriorating' 2026 outlook in a November 19, 2025 report (Bloomberg headline only; paywalled, in notFound).",
+   "points": [
+    {
+     "period": "2026-07 reviewed",
+     "value": 13,
+     "url": "https://theleadpc.com/middle-market-private-credit-7-27-2026/",
+     "note": "July 28, 2026 post; 12 affirmed, 1 review-no-action",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026-07 negative outlooks",
+     "value": 3,
+     "url": "https://alternativecreditinvestor.com/2026/07/13/fitch-ratings-warns-of-deteriorating-sector-outlook-for-us-bdcs/",
+     "note": "July 13, 2026",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    },
+    {
+     "period": "2026-07 stable outlooks",
+     "value": 10,
+     "url": "https://alternativecreditinvestor.com/2026/07/13/fitch-ratings-warns-of-deteriorating-sector-outlook-for-us-bdcs/",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ],
+   "watch": "s (5% quarterly tender caps)."
+  },
+  {
+   "key": "sp_spec_grade_default_vs_proskauer",
+   "label": "S&P Global speculative-grade default rate (single point, from the study folder)",
+   "unit": "%",
+   "publisher": "S&P Global, as cited by PitchBook/AIC",
+   "cadence": "single point",
+   "definition": "S&P Global's US speculative-grade default rate quoted by the AIC section of the PitchBook 2023 Annual Global Private Debt Report against Proskauer's 1.4% for Q3 2023.",
+   "caveats": "The only S&P figure I could verify; every S&P Global Ratings page tried returned 403 (see notFound). Source is a file, not a web page: the 2023 Annual Global Private Debt Report, p.13 (the AIC section), keyed in data-sources/reports/pitchbook-annual-private-debt-reports.json.",
+   "points": [
+    {
+     "period": "2023Q3",
+     "value": 4.1,
+     "url": "https://www.proskauer.com/report/proskauers-q3-2023-private-credit-default-index-highlights-the-resilience-of-private-credit-in-a-turbulent-economy",
+     "note": "value from the 2023 PitchBook report p.13 in the study folder; the URL is the matching Proskauer Q3 2023 page (1.41%) for the comparison tile, not the S&P source",
+     "check": {
+      "status": 200,
+      "checkedAt": "2026-09-11"
+     }
+    }
+   ]
+  }
+ ],
+ "notFound": [
+  "Proskauer Q1 2023 release page (2.15%): no page found on proskauer.com; tried https://www.proskauer.com/report/proskauers-q1-2023-private-credit-default-index-reveals-default-rate-of-215 (404) and the browse-insights listing; value taken from the Q2 2023 and Q1 2024 pages instead.",
+  "Proskauer loan count and principal for Q2 2022, Q3 2022 and Q1 2023: not stated on any release page read.",
+  "Proskauer sector-level default rates: only Q1 2020 (healthcare 5.5%, software/technology 4.5%, business services 1.4%), Q4 2022 (health care/life sciences 2.3%, food & beverage 1.8%, manufacturing 2.5% from 0.8%, consumer goods/retail 4.6% from 3.5%) and Q2 2023 (consumer goods/services 5.3% from 8.0% in Q1 2023) are numeric on the pages; no other quarter gives sector numbers.",
+  "KBRA DLD December 15, 2023 release (2024 forecast 2.75% sponsored; 2023 rate 2.3%; YTD sponsored 2.1% from 1.9%): https://www.businesswire.com/news/home/20231215070490/en/... (403), https://www.kbra.com/publications/rxXPTLBX/... (403 with and without ?format=file), Morningstar mirror (403). Figures seen only in search snippets, not recorded.",
+  "KBRA DLD March 22, 2024 BusinessWire release: https://www.businesswire.com/news/home/20240322194000/en/... (403); the same figures were read on ABF Journal instead.",
+  "KBRA DLD Lower Middle Market index launch, April 23, 2025 (direct lending index 1.6% as of April 24, 2025 per snippet): https://www.morningstar.com/news/business-wire/20250423514569/... (403) and https://finance.yahoo.com/news/kbra-dld-launches-lower-middle-004900797.html (404).",
+  "KBRA DLD monthly TTM issuer-weighted series: subscriber-only at dld.kbraanalytics.com; https://www.kbra.com/analytics/products/dld shows no figures; https://theleadleft.com/kbra-dld-default-indices/ (Sept 9, 2026) shows only non-accrual rates (direct lending 1.8%, lower middle market 1.7%) and index sizes ($300B/3,000 borrowers; LMM $20B/800). The Lead posts https://theleadleft.com/kbra-direct-lending-deals-news-analysis-6-15-2026/, .../3-2-2026/ and https://theleadpc.com/kbra-direct-lending-deals-news-analysis-6-15-2026/ returned 404.",
+  "Bloomberg, 'Private-Credit Defaults Match 2023 High in a KBRA Index', June 16, 2026: https://www.bloomberg.com/news/articles/2026-06-16/private-credit-defaults-match-2023-high-in-300-billion-index (paywalled; not opened).",
+  "Cliffwater CDLI press releases before 2026 (2023 Q4 results, CY2024, mid-2025): none found on prnewswire.com or cliffwater.com; Cliffwater's quarterly 'Report on U.S. Direct Lending' PDFs for 2023Q4-2026Q2 are subscriber-only (https://www.bdcs.com/docs/Cliffwater<YYYY>Q<N>ReportonUSDirectLending.pdf all 404; https://www.cliffwaterdirectlendingindex.com/ shows only a title; https://www.cliffwater.com/Insights is a JS-loaded list). CDLI quarterly totals for 2024Q1-2024Q4 and 2025Q3 not found on any open page (LSTA articles https://www.lsta.org/content/us-dl-returns-hold-steady-amid-volatile-2q/ and https://www.lsta.org/content/u-s-dl-returns-soften-in-1q-outperform-bsl/ are members-only).",
+  "Cliffwater CDLI PIK and non-accrual figures for years other than 2025: the August 19, 2026 release gives no numbers; the March 31, 2026 release gives 2025 only.",
+  "Public monthly listed-BDC price-to-NAV average series (VanEck or other): none found. VanEck publishes dated P/B points only (recorded). Cliffwater's public monthly file https://www.bdcs.com/docs/CWBDC-History.xls (Cliffwater BDC Index, October 2004 to August 2026) carries total return, price return, index levels, income return and dividend yield but no price-to-NAV. Other hits (cefdata.com/bdc/, bdcinvestor.com price-to-NAV screen, bdcreporter.com NAV table, ycharts PBDC discount) are current-snapshot screens or paywalled, not fetched.",
+  "Moody's: no dated update of the private credit default range other than the two moodys.com pages recorded (April 28 and May 18, 2026); the January 21, 2026 Moody's '2026 Outlook' itself was not opened (read via Yahoo Finance). https://www.moodys.com/web/en/us/insights/resources/us-report-july-2025.pdf not fetched.",
+  "Fitch Ratings own pages: https://www.fitchratings.com/research/corporate-finance/fitch-ratings-us-private-credit-default-rate-remains-at-record-high-in-july-2026-13-08-2026 and https://www.fitchratings.com/research/corporate-finance/us-private-credit-default-rate-reaches-new-high-in-2q26-30-07-2026 (the served page is a client-rendered shell with no article text). The July 2026 TTM figure (6.1% per a search snippet) is therefore not recorded. Fitch's November 19, 2025 BDC 2026 outlook: Bloomberg https://www.bloomberg.com/news/articles/2025-11-19/bdcs-face-rising-credit-quality-pressure-into-2026-fitch-says (paywalled). Connect Money mirrors (https://www.connectmoney.com/stories/fitch-turns-negative-on-bdcs-as-asset-quality-weakens-redemptions-climb/ and .../u-s-private-credit-default-rate-eases-but-remains-elevated/) returned 403. The Lead's July 28, 2026 post lists a Fitch report date of 'October 7, 2026', which is after today and is treated as an extraction error.",
+  "S&P Global Ratings BDC statements: every spglobal.com page returned 403 ('Security Controls Triggered'): 'Business Development Companies Sector View 2026' (January 21, 2026) https://www.spglobal.com/ratings/en/regulatory/article/-/view/sourceId/101665734; 'PIKs Decline in Business Development Companies' Portfolios as Rates Start Easing' (November 4, 2025) https://www.spglobal.com/ratings/en/regulatory/article/piks-decline-in-business-development-companies-portfolios-as-rates-start-easing-br--s101653680; 'Private Credit Payment Defaults Rose in 2023' (June 26, 2024) https://spglobal.com/ratings/en/research/articles/240626-credit-trends-private-credit-payment-defaults-rose-in-2023-as-weaker-borrowers-struggled-to-service-debt-13160401; 'U.S. Leveraged Finance Q1 2025 Update' (April 24, 2025) https://spglobal.com/ratings/en/research/articles/250424-u-s-leveraged-finance-q1-2025-update-private-credit-boom-narrows-gap-to-bsl-market-13476410. The snippet-only figure 'S&P forecasts 3.5% by December 2025' is not recorded.",
+  "Proskauer's own full quarterly report (sector and vintage detail): 'available only to the Firm's direct lending clients' (Q3 2025 page)."
+ ]
+}

@@ -58,6 +58,24 @@ jobs:
       - name: BDC data files
         run: node scripts/test-bdc-data.mjs
 
+      # The PitchBook and LCD ingest: readers, period grammar, hand-keyed
+      # reports and the mapping and replay, all against the committed
+      # fixture cuts (the raw downloads are not in the repository).
+      - name: LCD monitor deck reader against the six-slide cut
+        run: node scripts/test-pc-deck.mjs
+
+      - name: Fund Overview workbook reader against the four-sheet cut
+        run: node scripts/test-pc-workbook.mjs
+
+      - name: Period grammar on every deck and workbook label
+        run: node scripts/test-pc-periods.mjs
+
+      - name: Hand-keyed report series and the press series
+        run: node scripts/test-pc-reports.mjs
+
+      - name: Chart mapping, vintage replay and the ingest end to end
+        run: node scripts/test-pc-ingest.mjs
+
       - name: API replies are read without leaking a parser error
         run: node scripts/test-http.mjs
 

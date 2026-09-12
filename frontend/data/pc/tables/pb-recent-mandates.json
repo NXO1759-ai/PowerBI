@@ -1,0 +1,65 @@
+{
+ "generated": "2026-09-11",
+ "slug": "pb-recent-mandates",
+ "title": "Recent Mandates",
+ "editions": [
+  {
+   "slug": "pb-recent-mandates",
+   "key": "pb_recent_mandates_list",
+   "title": "Recent Mandates",
+   "label": "Recent LP mandates (five most recent)",
+   "edition": "2026-09-10",
+   "vintage": "2026-09-10",
+   "downloadedOn": "2026-09-10",
+   "filterLine": "Access Point: All; Fund Category: All; Fund Size: All; Vintage Year: All; Fund Location: World",
+   "chartFilters": "Limited Partner Type: All; Access Point: All; Fund Type for Mandate: All; Mandate Amount: All",
+   "currency": "USD",
+   "columns": [
+    {
+     "name": "Limited Partner",
+     "kind": "text"
+    },
+    {
+     "name": "Fund Strategies Targeting",
+     "kind": "text"
+    },
+    {
+     "name": "Amount",
+     "kind": "money"
+    }
+   ],
+   "header": [
+    "Limited Partner",
+    "Fund Strategies Targeting",
+    "Amount"
+   ],
+   "rows": [
+    [
+     "Teachers' Retirement System of Oklahoma",
+     "Real Assets & Natural Resources - General",
+     "$700M"
+    ],
+    [
+     "AG2R La Mondiale",
+     "Buyout, Growth/Expansion",
+     "$231.88M"
+    ],
+    [
+     "AG2R La Mondiale",
+     "Infrastructure - General, Infrastructure Core, Infrastructure Greenfield, Infrastructure Opportunistic, Infrastructure Core Plus, Infrastructure Value Added, Infrastructure Debt",
+     "$231.88M"
+    ],
+    [
+     "Illinois Police Officers' Pension Investment Fund",
+     "Debt - General",
+     "$250M"
+    ],
+    [
+     "FDJ UNITED",
+     "Venture - General",
+     "$125.8M"
+    ]
+   ]
+  }
+ ]
+}
