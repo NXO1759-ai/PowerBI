@@ -1,0 +1,671 @@
+{
+ "ticker": "RWAY",
+ "cik": 1653384,
+ "name": "Runway Growth Finance Corp.",
+ "period": "2026-06-30",
+ "form": "10-Q",
+ "accn": "0001193125-26-337968",
+ "filed": "2026-08-06",
+ "creditVersion": "1.1.0",
+ "rowSource": "dataset",
+ "sources": {
+  "dataset": {
+   "zip": "2026_08_bdc.zip",
+   "rows": 121,
+   "counts": {
+    "rows": 724,
+    "identifier": 551,
+    "atPeriod": 314,
+    "kept": 121
+   },
+   "dropped": {
+    "otherDate": 237,
+    "otherEntity": 0,
+    "subtotal": 0,
+    "cash": 0,
+    "fvOnly": 3,
+    "costOnly": 28,
+    "neither": 162
+   },
+   "extra": {
+    "costOnly": 28,
+    "cash": 0
+   }
+  },
+  "instance": null,
+  "table": {
+   "doc": "0001193125-26-337968.htm",
+   "period": "2026-06-30",
+   "tables": 9,
+   "rows": 159,
+   "subtotals": 43,
+   "scale": 1000,
+   "scaleFix": 1,
+   "totals": {
+    "cost": 1237268000,
+    "fv": 1192350000
+   },
+   "matched": 157,
+   "rate": 1,
+   "stages": {
+    "numeric": 148,
+    "principal": 6,
+    "cost": 3,
+    "name": 0
+   },
+   "filled": {
+    "mat": 0,
+    "ind": 120,
+    "na": 0,
+    "lien": 70,
+    "aff": 8,
+    "rate": 0,
+    "acquired": 121,
+    "name": 110,
+    "principal": 43,
+    "affByIssuer": 8
+   },
+   "asRows": 36,
+   "asRowsNote": "36 printed rows no tagged holding claimed stand as holdings of their own (src.row \"table\"); the gate passed on the union",
+   "nonAccrualRows": 0,
+   "nonAccrualUnmatched": 0,
+   "unmatchedRows": 2,
+   "headers": {
+    "portfolio company": "issuer",
+    "investment type": "type",
+    "initial acquisition date": "acquired",
+    "maturity date": "maturity",
+    "principal ($) / shares": "principal",
+    "cost ($)": "cost",
+    "fair value ($)": "fv",
+    "footnotes": "footnotes"
+   },
+   "notes": []
+  },
+  "rpage": {
+   "report": "R8.htm",
+   "longName": "75080 - Statement - Schedule of Investments (Unaudited)",
+   "period": "2026-06-30",
+   "rows": 121,
+   "fvOnly": 38,
+   "matched": 121,
+   "exact": 121,
+   "filled": {
+    "na": 4,
+    "ind": 0
+   },
+   "nonAccrualRows": 4,
+   "industries": 12,
+   "issuers": 0,
+   "notes": [
+    "identifier members are not nested under an industry; industry per position comes from the main table"
+   ],
+   "usedFor": [
+    "non-accrual"
+   ]
+  }
+ },
+ "gate": {
+  "passed": true,
+  "tolerance": 0.005,
+  "tagSource": "company file",
+  "variant": "tagged rows + 36 table-only rows",
+  "cost": {
+   "sum": 1237268000,
+   "tag": 1237268000,
+   "diffPct": 0
+  },
+  "fv": {
+   "sum": 1192350000,
+   "tag": 1192350000,
+   "diffPct": 0
+  },
+  "rows": 157,
+  "subtotalRowsDropped": 3,
+  "dropped": {
+   "otherDate": 237,
+   "otherEntity": 0,
+   "subtotal": 0,
+   "cash": 0,
+   "fvOnly": 3,
+   "costOnly": 28,
+   "neither": 162
+  },
+  "tried": [
+   {
+    "variant": "tagged rows",
+    "n": 121,
+    "cost": {
+     "sum": 1201195000,
+     "tag": 1237268000,
+     "diffPct": 0.029155
+    },
+    "fv": {
+     "sum": 1172494000,
+     "tag": 1192350000,
+     "diffPct": 0.016653
+    },
+    "reason": "cost and fair value both outside tolerance"
+   },
+   {
+    "variant": "tagged rows with cost-only rows at fair value 0",
+    "n": 149,
+    "cost": {
+     "sum": 1237268000,
+     "tag": 1237268000,
+     "diffPct": 0
+    },
+    "fv": {
+     "sum": 1172494000,
+     "tag": 1192350000,
+     "diffPct": 0.016653
+    },
+    "reason": "fair value outside tolerance"
+   },
+   {
+    "variant": "tagged rows + 36 table-only rows",
+    "n": 157,
+    "cost": {
+     "sum": 1237268000,
+     "tag": 1237268000,
+     "diffPct": 0
+    },
+    "fv": {
+     "sum": 1192350000,
+     "tag": 1192350000,
+     "diffPct": 0
+    },
+    "reason": null
+   }
+  ]
+ },
+ "summary": {
+  "portfolioCost": 1237268000,
+  "portfolioFv": 1192350000,
+  "holdings": 157,
+  "thirdPartyDebtCost": 1126195000,
+  "thirdPartyDebtFv": 1122329000,
+  "thirdPartyDebtHoldings": 57,
+  "count": 87,
+  "countAll": 88,
+  "countDebt": 51,
+  "namesUnsplit": 0,
+  "nonAccrual": {
+   "cost": 53713000,
+   "fv": 45034000,
+   "n": 4,
+   "issuers": 2,
+   "ofTotalCost": 0.0434,
+   "ofTotalFv": 0.0378,
+   "ofDebtCost": 0.0477,
+   "ofDebtFv": 0.0401,
+   "source": "rpage"
+  },
+  "wa": {
+   "yieldAtCost": null,
+   "yieldAtFv": null,
+   "spreadCostWeighted": 0.067,
+   "floatingShare": 0.9445,
+   "pikContractual": 0.5916,
+   "n": {
+    "yield": 2,
+    "spread": 49,
+    "debt": 57
+   },
+   "yieldCoverage": 0.0375,
+   "yieldNote": "withheld: rows with a tagged principal and rate carry 3.8% of accruing third-party debt cost, under the 80% floor"
+  },
+  "lien": {
+   "classes": {
+    "first lien": {
+     "cost": 1072526000,
+     "share": 0.9523,
+     "shareOfPortfolio": 0.8669
+    },
+    "second lien": {
+     "cost": 22296000,
+     "share": 0.0198,
+     "shareOfPortfolio": 0.018
+    },
+    "unsecured": {
+     "cost": 31373000,
+     "share": 0.0279,
+     "shareOfPortfolio": 0.0254
+    }
+   },
+   "total": 1126195000,
+   "portfolioCost": 1237268000,
+   "firstLienShare": 0.9523,
+   "firstLienShareOfPortfolio": 0.8669,
+   "unclassifiedShare": 0
+  },
+  "industry": [
+   {
+    "name": "Application Software",
+    "fv": 216324000,
+    "share": 0.1814
+   },
+   {
+    "name": "Health Care Equipment & Services",
+    "fv": 181964000,
+    "share": 0.1526
+   },
+   {
+    "name": "Pharmaceutical, Biotechnology & Life Sciences",
+    "fv": 166947000,
+    "share": 0.14
+   },
+   {
+    "name": "Financial Services",
+    "fv": 110358000,
+    "share": 0.0926
+   },
+   {
+    "name": "Commercial & Professional Services",
+    "fv": 104875000,
+    "share": 0.088
+   },
+   {
+    "name": "Systems Software",
+    "fv": 97444000,
+    "share": 0.0817
+   },
+   {
+    "name": "Technology Hardware & Equipment",
+    "fv": 72886000,
+    "share": 0.0611
+   },
+   {
+    "name": "Household & Personal Products",
+    "fv": 66370000,
+    "share": 0.0557
+   },
+   {
+    "name": "Insurance",
+    "fv": 45598000,
+    "share": 0.0382
+   },
+   {
+    "name": "Consumer Staples Distribution & Retail",
+    "fv": 43139000,
+    "share": 0.0362
+   },
+   {
+    "name": "other",
+    "fv": 73410000,
+    "share": 0.0616
+   },
+   {
+    "name": "n/a",
+    "fv": 13035000,
+    "share": 0.0109
+   }
+  ],
+  "industrySource": "table",
+  "maturity": {
+   "2026": 127143000,
+   "2027": 191153000,
+   "2028": 244212000,
+   "2029": 366648000,
+   "2030": 143753000,
+   "2031-2033": 53286000,
+   "later": 0,
+   "n/a": 0,
+   "excluded": 0,
+   "total": 1126195000,
+   "dated": 1126195000,
+   "unfunded": null,
+   "shares": {
+    "2026": 0.1129,
+    "2027": 0.1697,
+    "2028": 0.2168,
+    "2029": 0.3256,
+    "2030": 0.1276,
+    "2031-2033": 0.0473,
+    "later": 0
+   }
+  },
+  "maturitySource": "axis,table",
+  "vehicles": {
+   "fv": 0,
+   "share": 0
+  },
+  "structured": {
+   "fv": 0,
+   "share": 0
+  },
+  "equity": {
+   "fv": 70021000,
+   "share": 0.0587
+  },
+  "top10": {
+   "fv": 469036000,
+   "share": 0.3934
+  },
+  "affiliation": {
+   "controlled": {
+    "fv": 13035000,
+    "share": 0.0109
+   },
+   "non-controlled/non-affiliated": {
+    "fv": 1159491000,
+    "share": 0.9724
+   },
+   "n/a": {
+    "fv": 19824000,
+    "share": 0.0166
+   }
+  },
+  "affiliationClasses": [
+   "controlled",
+   "non-controlled/non-affiliated"
+  ],
+  "affiliationSource": "issuer,table",
+  "unfunded": {
+   "total": 0,
+   "holdings": 0
+  },
+  "pik": {
+   "holdings": 9,
+   "cost": 192774000
+  },
+  "histogram": {
+   "byCount": {
+    "300-350": 0.0204,
+    "350-400": 0.0204,
+    "400-450": 0.0408,
+    "450-500": 0.0204,
+    "500-550": 0.0816,
+    "550-600": 0.0204,
+    "600-650": 0.0408,
+    "650-700": 0.2041,
+    "700-750": 0.1837,
+    "750-800": 0.1224,
+    "800-850": 0.0612,
+    "850-900": 0.0612,
+    "900-950": 0.0408,
+    "950-1000": 0.0408,
+    "1000+": 0.0408
+   },
+   "byCost": {
+    "300-350": 0.0289,
+    "350-400": 0.0495,
+    "400-450": 0.0529,
+    "450-500": 0.0393,
+    "500-550": 0.0851,
+    "550-600": 0.0088,
+    "600-650": 0.0064,
+    "650-700": 0.1525,
+    "700-750": 0.2756,
+    "750-800": 0.1365,
+    "800-850": 0.0469,
+    "850-900": 0.0414,
+    "900-950": 0.0298,
+    "950-1000": 0.0146,
+    "1000+": 0.0319
+   },
+   "n": 49,
+   "cost": 1043966000
+  },
+  "vsProse": {
+   "yieldAtCost": null,
+   "yieldAtFv": null,
+   "floatingShare": 0.875,
+   "floatingShareBasis": {
+    "of": "debt",
+    "at": null
+   },
+   "nonAccrualCost": null,
+   "nonAccrualFv": null,
+   "nonAccrualOf": null,
+   "portfolioCompanies": null
+  }
+ },
+ "tableUnmatched": {
+  "rows": [
+   {
+    "issuer": "Goldman Sachs Financial Square Government Fund Institutional Shares",
+    "type": "FGTXX/38141W273",
+    "lien": "Cash and Cash Equivalents and Short Term Investments",
+    "industry": null,
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": null,
+    "cost": 8643000,
+    "fv": 8643000,
+    "page": 9,
+    "src": "table"
+   },
+   {
+    "issuer": "Cash",
+    "type": null,
+    "lien": "Cash and Cash Equivalents and Short Term Investments",
+    "industry": null,
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": null,
+    "cost": 2188000,
+    "fv": 2188000,
+    "page": 9,
+    "src": "table"
+   }
+  ],
+  "nonAccrualRows": 0,
+  "note": "printed rows that matched no tagged holding, kept whole with their columns (src \"table\", non-accrual first) and never summed; the gate's sums stay the tagged sums"
+ },
+ "notes": [
+  "1 rate fact(s) tagged a hundred times too large were rescaled or dropped (src.rt says which)",
+  "gate passed on: tagged rows + 36 table-only rows",
+  "11 issuer name(s) read again from the member text against the filing's own industry vocabulary (src.nm \"id\")"
+ ],
+ "keys": {
+  "holding": {
+   "id": "id",
+   "issuer": "k",
+   "name": "n",
+   "aff": "a",
+   "kind": "t",
+   "lien": "l",
+   "facility": "f",
+   "industry": "i",
+   "rate": "r",
+   "spread": "sp",
+   "floor": "fl",
+   "pik": "pk",
+   "base": "b",
+   "principal": "p",
+   "cost": "c",
+   "fv": "v",
+   "pctNav": "nv",
+   "unfunded": "u",
+   "acquired": "ad",
+   "maturity": "m",
+   "nonAccrual": "na",
+   "floating": "fr",
+   "units": "un",
+   "src": "s",
+   "fvUntagged": "fvu",
+   "costUntagged": "cu",
+   "cashEquivalent": "ce"
+  },
+  "lien": {
+   "class": "c",
+   "subclass": "s",
+   "raw": "r"
+  },
+  "src": {
+   "row": "w",
+   "table": "t",
+   "r": "r",
+   "na": "na",
+   "ind": "i",
+   "mat": "m",
+   "unf": "u",
+   "rt": "rt",
+   "ds": "ds",
+   "val": "vl",
+   "nm": "nm",
+   "af": "af"
+  },
+  "note": "short keys per blueprint 7.4; a key absent from a row is null (floating: false); src.t and src.r absent mean false, src.na absent means none; src.vl \"table\" marks a fair value the filer left untagged and the printed schedule supplied; src.nm \"table\" marks an issuer name the printed row supplied; src.af \"issuer\" marks an affiliation taken from the issuer's other tranches; the issuer key (H1 `issuer`) is not written — it is normalizeIssuer(n), which expandHolding restores"
+ },
+ "holdings": [
+{"id":"Control Investments Equity Investments Multi-Sector Holdings Runway-Cadma I LLC Investment Type Equity 50% Equity Interest Initial Acquisition Date 3/6/2024","n":"Runway-Cadma I LLC","a":"controlled","t":"equity","l":{"c":"equity","r":"Equity Investments"},"c":12180000,"v":13035000,"ad":"2024-03-06","s":{"w":"dataset","t":true,"r":true,"nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Application Software Airship Group, Inc. Investment Type Senior Secured Interest Rate SOFR+3.75%, 9.08% floor, 3.00% PIK, 3.25% ETP Initial Acquisition Date 6/28/2024 Maturity Date 6/15/2028","n":"Airship Group, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 3.75 %, 9.08 % floor, 3.00 % PIK, 3.25 % ETP"},"i":"Application Software","sp":0.0375,"fl":0.0908,"pk":0.03,"b":"SOFR","p":51418000,"c":51646000,"v":52257000,"ad":"2024-06-28","m":"2028-06-15","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Application Software CarNow, Inc. Investment Type Senior Secured Interest Rate SOFR+7.25%, 11.75% floor, 3.10% ETP Initial Acquisition Date 3/22/2024 Maturity Date 3/22/2029","n":"CarNow, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 7.25 %, 11.75 % floor, 3.10 % ETP"},"i":"Application Software","sp":0.0725,"fl":0.1175,"b":"SOFR","p":20000000,"c":18514000,"v":18903000,"ad":"2024-03-22","m":"2029-03-22","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Application Software Piano Software, Inc. Investment Type Senior Secured Interest Rate SOFR+7.25%, 11.25% floor, 1.50% ETP Initial Acquisition Date 12/31/2024 Maturity Date 12/31/2029","n":"Piano Software, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 7.25 %, 11.25 % floor, 1.50 % ETP"},"i":"Application Software","sp":0.0725,"fl":0.1125,"b":"SOFR","p":43000000,"c":42253000,"v":42791000,"ad":"2024-12-31","m":"2029-12-31","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Application Software VTX Intermediate Holdings, Inc. (dba VertexOne) Investment Type Second Lien Interest Rate FIXED 12.50% PIK, 33.50% ETP Initial Acquisition Date 12/12/2024 Maturity Date 9/24/2029","n":"VTX Intermediate Holdings, Inc. (dba VertexOne)","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"second lien","r":"Second Lien FIXED 12.50 % PIK, 33.50 % ETP"},"i":"Application Software","pk":0.125,"p":7057000,"c":6839000,"v":6824000,"ad":"2024-12-12","m":"2029-09-24","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Application Software VTX Intermediate Holdings, Inc. (dba VertexOne) Investment Type Senior Secured Interest Rate SOFR+7.00% 8.00%floor PIK4.00% ETP AcquisitionDate12/12/2024 MaturityDate12/12/24","n":"VTX Intermediate Holdings, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"(dba VertexOne) Investment Type Senior Secured Interest Rate SOFR+7.00% 8.00%floor PIK4.00% ETP AcquisitionDate12/12/2024 MaturityDate12/12/24"},"i":"Application Software","sp":0.07,"fl":0.08,"pk":0.04,"b":"SOFR","p":35508000,"c":35515000,"v":35458000,"ad":"2024-12-12","m":"2029-09-24","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Application Software Zinnia Corporate Holdings, LLC Investment Type Senior Secured Interest Rate SOFR+6.50%, 7.50% floor Initial Acquisition Date 9/23/2024 Maturity Date 9/21/2029","n":"Zinnia Corporate Holdings, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 6.50 %, 7.50 % floor"},"i":"Application Software","sp":0.065,"fl":0.075,"b":"SOFR","p":40000000,"c":39433000,"v":39570000,"ad":"2024-09-23","m":"2029-09-21","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments BlueConic Holding, Inc. (fka Blueshift Labs, Inc.) Investment Type Second Lien Interest Rate 0.00% until 06/17/2028, 20.00% PIK Initial Acquisition Date 6/17/2026 Maturity Date 6/17/2030","n":"BlueConic Holding, Inc. (fka Blueshift Labs, Inc.)","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"second lien","r":"20.00% PIK Initial Acquisition Date 6/17/2026 Maturity Date 6/17/2030"},"i":"Application Software","pk":0.2,"p":18500000,"c":15457000,"v":15457000,"ad":"2026-06-17","m":"2030-06-17","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","rt":"dropped","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Commercial & Professional Services Bombora, Inc. Investment Type Senior Secured Interest Rate SOFR+4.25%, 6.75% floor, 3.25% PIK, 1.11% ETP Initial Acquisition Date 12/26/2023 Maturity Date 1/15/2028","n":"Bombora, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 4.25 %, 6.75 % floor, 3.25 % PIK, 1.11 % ETP"},"i":"Commercial & Professional Services","sp":0.0425,"fl":0.0675,"pk":0.0325,"b":"SOFR","p":31907000,"c":32003000,"v":32236000,"ad":"2023-12-26","m":"2028-01-15","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Commercial & Professional Services Elevate Services, Inc. Investment Type Senior Secured Interest Rate SOFR+7.50%, 12.78% floor, 0.50% ETP Initial Acquisition Date 7/10/2023 Maturity Date 7/10/2027","n":"Elevate Services, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 7.50 %, 12.78 % floor, 0.50 % ETP"},"i":"Commercial & Professional Services","sp":0.075,"fl":0.1278,"b":"SOFR","p":39000000,"c":38414000,"v":39195000,"ad":"2023-07-10","m":"2027-07-10","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Commercial & Professional Services Shepherd Intermediate, LLC Investment Type Senior Secured Interest Rate SOFR+7.25%, 8.25% floor, Initial Acquisition Date 7/10/2025 Maturity Date 7/10/2030","n":"Shepherd Intermediate, LLC (dba FHAS)","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 7.25 %, 8.25 % floor"},"i":"Commercial & Professional Services","sp":0.0725,"fl":0.0825,"b":"SOFR","p":6331000,"c":6241000,"v":6401000,"ad":"2025-07-10","m":"2030-07-10","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Commercial & Professional Services Swing Education, Inc. Investment Type Senior Secured Interest Rate SOFR+7.00%, 10.80% floor, 6.25% ETP Initial Acquisition Date 6/27/2025 Maturity Date 6/15/2029","n":"Swing Education, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 7.00 %, 10.80 % floor, 6.25 % ETP"},"i":"Commercial & Professional Services","sp":0.07,"fl":0.108,"b":"SOFR","p":8000000,"c":7965000,"v":7822000,"ad":"2025-06-27","m":"2029-06-15","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Consumer Services Buzz Finco, LLC (dba Bumble) Investment Type Senior Secured Interest Rate SOFR+6.75%, 6.75% floor Initial Acquisition Date 4/24/2026 Maturity Date 4/24/2030","n":"Buzz Finco, LLC (dba Bumble)","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 6.75 %, 9.25 % floor"},"i":"Consumer Services","sp":0.0675,"fl":0.0925,"b":"SOFR","p":15000000,"c":14783000,"v":14775000,"ad":"2026-04-24","m":"2030-04-24","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Consumer Services FINN GmbH Investment Type Senior Secured Interest Rate SOFR+8.75%, 10.75% floor Initial Acquisition Date 12/8/2025 Maturity Date 6/30/2030","n":"FINN GmbH","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 8.75 %, 10.75 % floor"},"i":"Consumer Services","sp":0.0875,"fl":0.1075,"b":"SOFR","p":20000000,"c":19193000,"v":19036000,"ad":"2025-12-08","m":"2030-06-30","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Consumer Staples Distribution & Retail Marley Spoon SE Investment Type Senior Secured Rate SOFR+8.00% PIK, 10.50% floor, 14.00% ceiling, 2.00% ETP Initial Acquisition Date 4/24/2026","n":"Marley Spoon SE","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 8.00 % PIK, 10.50 % floor, 14.00 % ceiling, 2.00 % ETP"},"i":"Consumer Staples Distribution & Retail","sp":0.08,"fl":0.105,"b":"SOFR","p":17583000,"c":17583000,"v":17583000,"ad":"2026-04-24","m":"2030-12-31","na":true,"fr":true,"s":{"w":"dataset","t":true,"r":true,"na":"rpage","i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Consumer Staples Distribution & Retail Marley Spoon SE Investment Type Subordinated Debt Rate SOFR+8.00% PIK, 10.50% floor, 14.00% ceiling, 0.42% ETP Initial Acquisition Date 4/24/2026","n":"Marley Spoon SE","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"unsecured","r":"Subordinated Debt - Senior Tranche Term Loan SOFR + 8.00 % PIK, 10.50 % floor, 14.00 % ceiling, 0.42 % ETP"},"i":"Consumer Staples Distribution & Retail","sp":0.08,"fl":0.105,"b":"SOFR","p":14465000,"c":14465000,"v":14465000,"ad":"2026-04-24","m":"2030-12-31","na":true,"fr":true,"s":{"w":"dataset","t":true,"r":true,"na":"rpage","i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Consumer Staples Distribution & Retail Marley Spoon SE Investment Type Subordinated Debt Rate SOFR+8.00% PIK, 10.50% floor, 14.00% ceiling, 2.00% ETP Initial Acquisition Date 4/24/2026","n":"Marley Spoon SE","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"unsecured","r":"Subordinated Debt - Junior Tranche Term Loan SOFR + 8.00 % PIK, 10.50 % floor, 14.00 % ceiling, 2.00 % ETP"},"i":"Consumer Staples Distribution & Retail","sp":0.08,"fl":0.105,"b":"SOFR","p":49362000,"c":16908000,"v":11089000,"ad":"2026-04-24","m":"2030-12-31","na":true,"fr":true,"s":{"w":"dataset","t":true,"r":true,"na":"rpage","i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Financial Services Under Technologies, Inc. (dba Rho) Investment Type Senior Secured Interest Rate FIXED 6.25%, 6.25% PIK Initial Acquisition Date 12/31/2024 Maturity Date 11/22/2029","n":"Under Technologies, Inc. (dba Rho)","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured Interest Rate FIXED 6.25% | 6.25% PIK Initial Acquisition Date 12/31/2024 Maturity Date 11/22/2029"},"i":"Financial Services","r":0.0625,"pk":0.0625,"p":31011000,"c":29481000,"v":31070000,"ad":"2024-12-31","m":"2029-11-22","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Financial Services Vesta Payment Solutions, Inc. Investment Type Senior Secured Interest Rate SOFR+7.00%, 9.00% floor, 6.00% ETP Initial Acquisition Date 11/29/2022 Maturity Date 12/16/2026","n":"Vesta Payment Solutions, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 7.00 %, 9.00 % floor, 6.00 % ETP"},"i":"Financial Services","sp":0.07,"fl":0.09,"b":"SOFR","p":25000000,"c":26269000,"v":21221000,"ad":"2022-11-29","m":"2026-12-16","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Health Care Biotricity, Inc. Investment Type Senior Secured Interest Rate SOFR+10.50%, 11.50% floor, 10.29% ETP Initial Acquisition Date 4/6/2026 Maturity Date 5/15/2027","n":"Biotricity, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 10.50 %, 11.50 % floor, 10.29 % ETP"},"i":"Health Care Equipment & Services","sp":0.105,"fl":0.115,"b":"SOFR","p":13846000,"c":13428000,"v":13563000,"ad":"2026-04-06","m":"2027-05-15","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Health Care Equipment & Services EBR Systems, Inc. Investment Type Senior Secured Interest Rate PRIME+4.90%, 8.90% floor, 4.50% ETP Initial Acquisition Date 6/30/2022 Maturity Date 6/15/2027","n":"EBR Systems, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured PRIME + 4.90 %, 8.90 % floor, 4.50 % ETP"},"i":"Health Care Equipment & Services","sp":0.049,"fl":0.089,"b":"other","p":40000000,"c":41037000,"v":41501000,"ad":"2022-06-30","m":"2027-06-15","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Health Care Equipment & Services HR Pharmaceuticals, LLC (Revolver) Investment Type Senior Secured Interest Rate SOFR+6.00%, 8.00% floor, Acquisition Date 1/29/2026 Maturity Date 1/29/2031 One","n":"HR Pharmaceuticals, LLC (Revolver)","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 6.00 %, 8.00 % floor"},"i":"Health Care Equipment & Services","sp":0.06,"fl":0.08,"b":"SOFR","p":206000,"c":193000,"v":202000,"ad":"2026-01-29","m":"2031-01-29","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Health Care Equipment & Services HR Pharmaceuticals, LLC Investment Type Senior Secured Interest Rate SOFR+6.00%, 8.00% floor, 5.36% ETP Acquisition Date 1/29/2026 Maturity Date 1/29/2031","n":"HR Pharmaceuticals, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 6.00 %, 8.00 % floor, 5.36 % ETP"},"i":"Health Care Equipment & Services","sp":0.06,"fl":0.08,"b":"SOFR","p":6579000,"c":6473000,"v":6464000,"ad":"2026-01-29","m":"2031-01-29","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Health Care Equipment & Services Mingle Healthcare Solutions, Inc. Investment Type Senior Secured Interest Rate SOFR+9.75%, 12.26% floor, 10.50% ETP Acquisition Date 8/15/2018 Maturity Date 12/15/2026","n":"Mingle Healthcare Solutions, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 9.75 %, 12.26 % floor, 10.50 % ETP"},"i":"Health Care Equipment & Services","sp":0.0975,"fl":0.1226,"b":"SOFR","p":4127000,"c":4757000,"v":1897000,"ad":"2018-08-15","m":"2026-12-15","na":true,"fr":true,"s":{"w":"dataset","t":true,"r":true,"na":"rpage","i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Health Care Equipment & Services Onward Medical, N.V. Investment Type Senior Secured Interest Rate SOFR+6.50%, 10.75% floor, 2.50% ETP Initial Acquisition Date 6/28/2024 Maturity Date 6/15/2028","n":"Onward Medical, N.V.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 6.50 %, 10.75 % floor, 2.50 % ETP"},"i":"Health Care Equipment & Services","sp":0.065,"fl":0.1075,"b":"SOFR","p":17088000,"c":16998000,"v":17610000,"ad":"2024-06-28","m":"2028-06-15","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Health Care Equipment & Services Route 92 Medical, Inc. Investment Type Senior Secured Interest Rate SOFR+7.00%, 9.00% floor, 3.95% ETP Initial Acquisition Date 3/31/2025 Maturity Date 3/31/2029","n":"Route 92 Medical, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 7.00 %, 9.00 % floor, 3.95 % ETP"},"i":"Health Care Equipment & Services","sp":0.07,"fl":0.09,"b":"SOFR","p":35000000,"c":34682000,"v":35083000,"ad":"2025-03-31","m":"2029-03-31","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Health Care ImpediMed, Inc. Investment Type Senior Secured Interest Rate SOFR+9.50%, 13.75% floor, 9.00% ETP Initial Acquisition Date 4/6/2026 Maturity Date 2/5/2030","n":"ImpediMed, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 9.50 %, 13.75 % floor, 9.00 % ETP"},"i":"Health Care Equipment & Services","sp":0.095,"fl":0.1375,"b":"SOFR","p":11500000,"c":10510000,"v":11413000,"ad":"2026-04-06","m":"2030-02-05","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Health Care MedMinder Systems, Inc. Investment Type Senior Secured Interest Rate PRIME+4.35%, 9.10% floor, 6.00% ETP Initial Acquisition Date 4/6/2026 Maturity Date 8/18/2028","n":"MedMinder Systems, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured PRIME + 4.35 %, 9.10 % floor, 6.00 % ETP"},"i":"Health Care Equipment & Services","sp":0.0435,"fl":0.091,"b":"other","p":25000000,"c":23185000,"v":24517000,"ad":"2026-04-06","m":"2028-08-18","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Household & Personal Products 13Scents Inc. (dba Dossier) (Revolver) Investment Type Senior Secured Interest Rate SOFR+6.75%, 7.75% floor Initial Acquisition Date 4/8/2026 Maturity Date 3/31/2031 One","n":"13Scents Inc. (dba Dossier) (Revolver)","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 6.75 %, 7.75 % floor"},"i":"Household & Personal Products","sp":0.0675,"fl":0.0775,"b":"other","p":1823000,"c":1762000,"v":1770000,"ad":"2026-04-08","m":"2031-03-31","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Household & Personal Products 13Scents Inc. (dba Dossier) Investment Type Senior Secured Interest Rate SOFR+6.75%, 7.75% floor Initial Acquisition Date 4/8/2026 Maturity Date 3/31/2031","n":"13Scents Inc. (dba Dossier)","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 6.75 %, 7.75 % floor"},"i":"Household & Personal Products","sp":0.0675,"fl":0.0775,"b":"other","p":25465000,"c":25034000,"v":24712000,"ad":"2026-04-08","m":"2031-03-31","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Household & Personal Products Madison Reed, Inc. Investment Type Senior Secured Interest Rate PRIME+5.00%, 12.50% floor, 3.00% ETP Initial Acquisition Date 8/29/2025 Maturity Date 8/29/2029","n":"Madison Reed, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured PRIME + 5.00 %, 12.50 % floor, 3.00 % ETP"},"i":"Household & Personal Products","sp":0.05,"fl":0.125,"b":"other","p":40000000,"c":39526000,"v":39432000,"ad":"2025-08-29","m":"2029-08-29","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Insurance Kin Insurance, Inc. Investment Type Senior Secured Interest Rate PRIME+5.00%, 12.00% floor, 2.00% ETP Initial Acquisition Date 12/30/2025 Maturity Date 8/13/2029","n":"Kin Insurance, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured PRIME + 5.00 %, 12.00 % floor, 2.00 % ETP"},"i":"Insurance","sp":0.05,"fl":0.12,"b":"other","p":15000000,"c":14648000,"v":14903000,"ad":"2025-12-30","m":"2029-08-13","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Insurance Kin Insurance, Inc. Investment Type Senior Secured Interest Rate PRIME+5.00%, 12.00% floor, 2.00% ETP Initial Acquisition Date 8/13/2025 Maturity Date 8/13/2029","n":"Kin Insurance, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured PRIME + 5.00 %, 12.00 % floor, 2.00 % ETP"},"i":"Insurance","sp":0.05,"fl":0.12,"b":"other","p":30000000,"c":29460000,"v":29805000,"ad":"2025-08-13","m":"2029-08-13","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Media & Entertainment Skillshare, Inc. Investment Type Senior Secured Interest Rate SOFR+6.75%, 10.96% floor, 2.00% ETP Initial Acquisition Date 8/15/2025 Maturity Date 2/8/2029","n":"Skillshare, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 6.75 %, 10.96 % floor, 2.00 % ETP"},"i":"Media & Entertainment","sp":0.0675,"fl":0.1096,"b":"SOFR","p":10043000,"c":9980000,"v":9282000,"ad":"2025-08-15","m":"2029-02-08","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Media & Entertainment Synack, Inc. Investment Type Senior Secured Interest Rate SOFR+7.50%, 12.10% floor, 3.83% ETP Initial Acquisition Date 9/30/2024 Maturity Date 9/30/2028","n":"Snap! Mobile, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 7.50 %, 12.10 % floor, 3.83 % ETP"},"i":"Media & Entertainment","sp":0.075,"fl":0.121,"b":"SOFR","p":18000000,"c":17907000,"v":17703000,"ad":"2024-09-30","m":"2028-09-30","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments ments Health Care Equipment & Services Route 92 Medical, Inc. Investment Type Senior Secured Interest Rate SOFR+7.00%, 9.00% floor, 3.95% ETP Initial Acquisition Date 3/31/2025 Maturity Date 3/31/2029","n":"Triple Ring Technologies, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 7.50 %, 12.00 % floor, 7.75 % ETP"},"i":"Health Care Equipment & Services","sp":0.075,"fl":0.12,"b":"SOFR","p":8000000,"c":7574000,"v":8012000,"ad":"2026-04-06","m":"2028-12-06","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Multi-Sector Holdings SPB C-2024, LLC Investment Type Senior Secured Interest Rate FIXED 15.00% PIK, 1.57% ETP Initial Acquisition Date 12/16/2025 Maturity Date 12/16/2028","n":"SPB-C 2024, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured FIXED 15.00 % PIK, 1.57 % ETP"},"i":"Media & Entertainment","r":0.15,"pk":0.0157,"p":10836000,"c":10773000,"v":10745000,"ad":"2025-12-16","m":"2028-12-16","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Pharmaceuticals, Biotechnology & Life Sciences 4Web, Inc. Investment Type Senior Secured Interest Rate SOFR+9.25%, 12.75% floor, 34.43% ETP Initial Acquisition Date 4/6/2026 Maturity Date 12/31/2027","n":"4Web, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 9.25 %, 12.75 % floor, 34.43 % ETP"},"i":"Pharmaceutical, Biotechnology & Life Sciences","sp":0.0925,"fl":0.1275,"b":"SOFR","p":19926000,"c":22803000,"v":24312000,"ad":"2026-04-06","m":"2027-12-31","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Pharmaceuticals, Biotechnology & Life Sciences Advanced Oxygen Therapy, Inc. Investment Type Senior Secured Interest Rate SOFR+7.75%, 10.90% floor, 5.60% ETP Acquisition Date 4/6/2026 Maturity 2/15/20","n":"Advanced Oxygen Therapy, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 7.75 %, 10.90 % floor, 5.60 % ETP"},"i":"Pharmaceutical, Biotechnology & Life Sciences","sp":0.0775,"fl":0.109,"b":"SOFR","p":19478000,"c":18332000,"v":19438000,"ad":"2026-04-06","m":"2029-02-15","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Pharmaceuticals, Biotechnology & Life Sciences Eton Pharmaceuticals, Inc. Investment Type Senior Secured Interest Rate SOFR+6.55% 9.30% floor 5.45% ETP Acquisition Date 4/6/2026 Maturity Date 12/17/27","n":"Eton Pharmaceuticals, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Investment Type Senior Secured Interest Rate SOFR+6.55% 9.30% floor 5.45% ETP Acquisition Date 4/6/2026 Maturity Date 12/17/27"},"i":"Pharmaceutical, Biotechnology & Life Sciences","sp":0.0655,"fl":0.093,"b":"SOFR","p":27000000,"c":25901000,"v":27459000,"ad":"2026-04-06","m":"2027-12-17","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Pharmaceuticals, Biotechnology & Life Sciences Goodwin Biotechnology, Inc. Investment Type Senior Secured Interest Rate SOFR+5.03%, 9.28% floor 3.98% PIK 5.44% ETP Acquisition Date 4/6/2026","n":"Goodwin Biotechnology, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"9.28% floor 3.98% PIK 5.44% ETP Acquisition Date 4/6/2026"},"i":"Pharmaceutical, Biotechnology & Life Sciences","sp":0.0503,"fl":0.0928,"pk":0.0398,"b":"SOFR","p":5565000,"c":5244000,"v":5528000,"ad":"2026-04-06","m":"2027-09-13","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Pharmaceuticals, Biotechnology & Life Sciences Journey Medical Corporation Investment Type Senior Secured Interest Rate SOFR+7.75% 12.75%floor 5.00%ETP Acquisition Date 4/6/2026 Maturity Date6/27/2028","n":"Pharmaceuticals","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Biotechnology & Life Sciences Journey Medical Corporation Investment Type Senior Secured Interest Rate SOFR+7.75% 12.75%floor 5.00%ETP Acquisition Date 4/6/2026 Maturity Date6/27/2028"},"i":"Pharmaceutical, Biotechnology & Life Sciences","sp":0.0775,"fl":0.1275,"b":"SOFR","p":25000000,"c":23842000,"v":25206000,"ad":"2026-04-06","m":"2028-06-27","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Pharmaceuticals, Biotechnology & Life Sciences NeoLight, LLC Investment Type Senior Secured Interest Rate SOFR+6.50%13.50%floor 50%Cash 50%PIK 9.66%ETP Acquisition Date4/6/2026 Maturity Date5/15/2027","n":"NeoLight, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Investment Type Senior Secured Interest Rate SOFR+6.50%13.50%floor 50%Cash 50%PIK 9.66%ETP Acquisition Date4/6/2026 Maturity Date5/15/2027"},"i":"Pharmaceutical, Biotechnology & Life Sciences","sp":0.065,"fl":0.135,"pk":0.5,"b":"SOFR","p":6051000,"c":5816000,"v":5539000,"ad":"2026-04-06","m":"2027-05-15","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Pharmaceuticals, Biotechnology & Life Sciences Nicoya Lifesciences, Inc. Investment Type Senior Secured Interest Rate SOFR+9.00% 12.75% floor 10.00% ETP Acquisition Date 4/6/2026 Maturity Date 4/14/27","n":"Nicoya Lifesciences, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Investment Type Senior Secured Interest Rate SOFR+9.00% 12.75% floor 10.00% ETP Acquisition Date 4/6/2026 Maturity Date 4/14/27"},"i":"Pharmaceutical, Biotechnology & Life Sciences","sp":0.09,"fl":0.1275,"b":"SOFR","p":8500000,"c":8306000,"v":8606000,"ad":"2026-04-06","m":"2027-04-14","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Pharmaceuticals, Biotechnology & Life Sciences Shield Therapeutics PLC Investment Type Senior Secured Interest Rate SOFR+8.75%, 12.25% floor, 5.00% ETP Acquisition Date 12/2/2025 Maturity Date 9/28/28","n":"Shield Therapeutics PLC","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 8.75 %, 12.25 % floor, 5.00 % ETP"},"i":"Pharmaceutical, Biotechnology & Life Sciences","sp":0.0875,"fl":0.1225,"b":"SOFR","p":5000000,"c":4873000,"v":5013000,"ad":"2025-12-02","m":"2028-09-28","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Pharmaceuticals, Biotechnology & Life Sciences Shield Therapeutics PLC Investment Type Senior Secured Interest Rate SOFR+8.75%, 12.25% floor, 6.56% ETP Acquisition Date 4/6/2026 Maturity Date 9/28/28","n":"Shield Therapeutics PLC","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 8.75 %, 12.25 % floor, 6.56 % ETP"},"i":"Pharmaceutical, Biotechnology & Life Sciences","sp":0.0875,"fl":0.1225,"b":"SOFR","p":20000000,"c":19128000,"v":20052000,"ad":"2026-04-06","m":"2028-09-28","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Pharmaceuticals, Biotechnology & Life Sciences Sincerus Pharmaceuticals, Inc. Investment Type Senior Secured Interest Rate SOFR+6.75% 10.50%floor 7.50%ETP Acquisition Date6/30/26 Maturity Date08/31/30","n":"Sincerus Pharmaceuticals, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Investment Type Senior Secured Interest Rate SOFR+6.75% 10.50%floor 7.50%ETP Acquisition Date6/30/26 Maturity Date08/31/30"},"i":"Pharmaceutical, Biotechnology & Life Sciences","sp":0.0675,"fl":0.105,"b":"SOFR","p":4003000,"c":3983000,"v":4088000,"ad":"2026-06-30","m":"2030-08-31","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Pharmaceuticals, Biotechnology & Life Sciences Sincerus Pharmaceuticals, Inc. Investment Type Senior Secured Interest Rate SOFR+6.75% 10.50%floor, 8.85%ETP Acquisition Date4/6/26 Maturity Date8/31/30","n":"Sincerus Pharmaceuticals, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 6.75 %, 10.50 % floor, 8.85 % ETP"},"i":"Pharmaceutical, Biotechnology & Life Sciences","sp":0.0675,"fl":0.105,"b":"SOFR","p":15997000,"c":15504000,"v":16340000,"ad":"2026-04-06","m":"2030-08-31","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Systems Software 3PL Central LLC (dba Extensiv) Investment Type Senior Secured Interest Rate SOFR+7.00%, 9.00% floor, 5.10% ETP Initial Acquisition Date 11/9/2022 Maturity Date 6/30/2026","n":"3PL Central LLC (dba Extensiv)","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 7.00 %, 9.00 % floor, 5.10 % ETP"},"i":"Systems Software","sp":0.07,"fl":0.09,"b":"SOFR","p":72290000,"c":76263000,"v":70184000,"ad":"2022-11-09","m":"2026-09-30","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Systems Software Circadence Corporation Investment Type Senior Secured Interest Rate SOFR+11.00%, 14.69% floor, 8.89% ETP Initial Acquisition Date 12/20/2018 Maturity Date 12/31/2026","n":"Circadence Corporation","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 11.00 %, 14.69 % floor, 10.56 % ETP"},"i":"Systems Software","sp":0.11,"fl":0.1469,"b":"SOFR","p":18552000,"c":19854000,"v":17909000,"ad":"2018-12-20","m":"2026-12-31","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Systems Software Digicert, Inc. Investment Type Senior Secured Interest Rate SOFR+5.75%, 6.50% floor Initial Acquisition Date 7/30/2025 Maturity Date 7/30/2030","n":"Digicert, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 5.75 %, 6.50 % floor"},"i":"Systems Software","sp":0.0575,"fl":0.065,"b":"SOFR","p":9257000,"c":9139000,"v":9015000,"ad":"2025-07-30","m":"2030-07-30","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Systems Software Synack, Inc. Investment Type Senior Secured Interest Rate SOFR+7.50%, 11.77% floor, 3.75% ETP Initial Acquisition Date 05/05/2025 Maturity Date 02/05/2028","n":"Autobooks, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 7.50 %, 11.77 % floor, 3.75 % ETP"},"i":"Financial Services","sp":0.075,"fl":0.1177,"b":"SOFR","p":36600000,"c":36415000,"v":37118000,"ad":"2025-05-05","m":"2028-02-05","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Technology Hardware & Equipment Brivo, Inc. Investment Type Senior Secured Interest Rate SOFR+7.25%, 11.29% floor, 2.53% ETP Initial Acquisition Date 12/27/2024 Maturity Date 12/15/2029","n":"Brivo, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 7.00 %, 10.66 % floor, 2.53 % ETP"},"i":"Technology Hardware & Equipment","sp":0.07,"fl":0.1066,"b":"SOFR","p":40000000,"c":40020000,"v":41110000,"ad":"2024-12-27","m":"2029-12-15","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Debt Investments Technology Hardware & Equipment Linxup, LLC Investment Type Senior Secured Interest Rate PRIME+3.25%, 11.75% floor, 2.25% ETP Initial Acquisition Date 11/3/2023 Maturity Date 11/15/2027","n":"Linxup, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured PRIME + 3.25 %, 11.75 % floor, 2.25 % ETP"},"i":"Technology Hardware & Equipment","sp":0.0325,"fl":0.1175,"b":"other","p":30000000,"c":30204000,"v":30821000,"ad":"2023-11-03","m":"2027-11-15","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Equity Investments Commercial & Professional Services FiscalNote, Inc. Investment Type Equity Common Stock Initial Acquisition Date 10/19/2020","n":"FiscalNote, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Equity Common Stock Initial Acquisition Date 10/19/2020"},"i":"Commercial & Professional Services","c":438000,"v":2000,"ad":"2020-10-19","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Equity Investments Commercial & Professional Services JobGet Holdings, Inc. (fka Snagajob.com, Inc.) Investment Type Equity Series C-1 Preferred Stock Initial Acquisition Date 11/15/2024","n":"JobGet Holdings, Inc. (fka Snagajob.com","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Inc.) Investment Type Equity Series C-1 Preferred Stock Initial Acquisition Date 11/15/2024"},"i":"Commercial & Professional Services","c":39275000,"v":17098000,"ad":"2024-11-15","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"id"}},
+{"id":"Non-Control/Non-Affiliate Investments Equity Investments Consumer Staples Distribution & Retail Marley Spoon SE Investment Type Equity Common Stock Initial Acquisition Date 7/7/2023","n":"Marley Spoon SE","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Equity Investments"},"i":"Consumer Staples Distribution & Retail","c":410000,"v":2000,"ad":"2023-07-07","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Equity Investments Health Care Equipment & Services CareCloud, Inc. Investment Type Equity 8.75% Series A Cumulative Redeemable Perpetual Preferred Stock Initial Acquisition Date 1/8/2020","n":"CareCloud, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Equity 8.75% Series A Cumulative Redeemable Perpetual Preferred Stock Initial Acquisition Date 1/8/2020"},"i":"Health Care Equipment & Services","p":462064000,"c":12132000,"v":9822000,"ad":"2020-01-08","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Equity Investments Health Care Equipment & Services Epica International, Inc. Investment Type Equity Common Stock Initial Acquisition Date 1/4/2022","n":"Epica International, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Equity Common Stock Initial Acquisition Date 1/4/2022"},"i":"Health Care Equipment & Services","p":25000000,"c":136000,"v":145000,"ad":"2022-01-04","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Equity Investments Health Care Equipment & Services HR Pharmaceuticals, LLC Investment Type Equity Preferred Units Initial Acquisition Date 1/29/2026","n":"HR Pharmaceuticals, LLC","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Equity Preferred Units Initial Acquisition Date 1/29/2026"},"i":"Health Care Equipment & Services","p":2000000000,"c":2000000,"v":1981000,"ad":"2026-01-29","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Equity Investments Health Care Equipment & Services MolecuLight, Inc. Investment Type Equity Series B-3 Preferred Stock Initial Acquisition Date 1/1/2025","n":"MolecuLight, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Equity Series B-3 Preferred Stock Initial Acquisition Date 1/1/2025"},"i":"Health Care Equipment & Services","c":37000,"v":19000,"ad":"2025-01-01","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Equity Investments Media & Entertainment Minute Media Inc. Investment Type Equity Common Stock Initial Acquisition Date 12/13/2023","n":"Minute Media Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Equity Investments"},"i":"Media & Entertainment","c":16000,"v":8000,"ad":"2023-12-13","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Equity Investments Media & Entertainment Minute Media Inc. Investment Type Equity Preferred Stock Initial Acquisition Date 12/13/2023","n":"Minute Media Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Equity Investments"},"i":"Media & Entertainment","c":120000,"v":82000,"ad":"2023-12-13","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Equity Investments Pharmaceutical, Biotechnology & Life Sciences Advanced Oxygen Therapy, Inc. Investment Type Equity Common Stock Initial Acquisition Date 06/30/2024","n":"Advanced Oxygen Therapy, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Equity Common Stock Initial Acquisition Date 06/30/2024"},"i":"Pharmaceutical, Biotechnology & Life Sciences","c":178000,"v":329000,"ad":"2024-06-30","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Equity Investments Pharmaceutical, Biotechnology & Life Sciences Sincerus Pharmaceuticals, Inc. Investment Type Equity Common Stock Initial Acquisition Date 05/21/2021","n":"Sincerus Pharmaceuticals, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Equity Common Stock Initial Acquisition Date 05/21/2021"},"i":"Pharmaceutical, Biotechnology & Life Sciences","c":509000,"v":481000,"ad":"2021-05-21","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrant Application Software Aria Systems, Inc. Investment Type Warrants Series C Preferred Stock Initial Acquisition Date 6/29/2018 Maturity Date 6/29/2028","n":"Warrant","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Aria Systems, Inc. | Investment Type Warrants Series C Preferred Stock Initial Acquisition Date 6/29/2018 Maturity Date 6/29/2028"},"i":"Application Software","c":143000,"v":9000,"ad":"2024-12-12","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"id"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrant Application Software Aria Systems, Inc. Investment Type Warrants Series G Preferred Stock Initial Acquisition Date 6/29/2018 Maturity Date 6/29/2028","n":"Aria Systems, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrants Series G Preferred Stock Initial Acquisition Date 6/29/2018 Maturity Date 6/29/2028"},"i":"Application Software","c":250000,"v":286000,"ad":"2018-07-10","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrant Health Care Equipment & Services SetPoint Medical Corporation Investment Type Warrant Series B Preferred Stock Initial Acquisition Date 12/29/2022 Maturity Date 12/29/2032","n":"SetPoint Medical Corporation","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrants & Other Contractual Rights"},"i":"Health Care Equipment & Services","p":600000000,"c":74000,"v":133000,"ad":"2022-12-29","m":"2032-12-29","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Application Software Airship Group, Inc. Investment Type Warrants Series F Preferred Stock Initial Acquisition Date 6/28/2024 Maturity Date 6/28/2034","n":"Airship Group, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrants Series F Preferred Stock Initial Acquisition Date 6/28/2024 Maturity Date 6/28/2034"},"i":"Application Software","p":519313000,"c":414000,"v":403000,"ad":"2024-06-28","m":"2034-06-28","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Application Software Aria Systems, Inc. Investment Type Warrants Series G Preferred Stock Initial Acquisition Date 6/29/2018 Maturity Date 6/29/2028","n":"Aria Systems, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrants Series G Preferred Stock Initial Acquisition Date 6/29/2018 Maturity Date 6/29/2028"},"i":"Application Software","p":2387705000,"c":1048000,"v":1024000,"ad":"2018-06-29","m":"2028-06-29","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Application Software CarNow, Inc. Investment Type Warrant Common Stock Initial Acquisition Date 3/22/2024 Maturity Date 3/22/2034","n":"CarNow, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Common Stock Initial Acquisition Date 3/22/2024 Maturity Date 3/22/2034"},"i":"Application Software","p":200000000,"c":2400000,"v":2423000,"ad":"2024-03-22","m":"2034-03-22","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Application Software Exeevo, Inc. Investment Type Contractual Right Gross Margin Earnout Initial Acquisition Date 11/13/2024 Maturity Date 9/30/2027","n":"Exeevo, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrants & Other Contractual Rights"},"i":"Application Software","c":409000,"v":462000,"ad":"2024-11-13","m":"2027-09-30","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Application Software Piano Software, Inc. Investment Type Warrants Series D Preferred Stock Initial Acquisition Date 12/31/2024 Maturity Date 12/31/2034","n":"Piano Software, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrants Series D Preferred Stock Initial Acquisition Date 12/31/2024 Maturity Date 12/31/2034"},"i":"Application Software","p":119978000,"c":348000,"v":457000,"ad":"2024-12-31","m":"2034-12-31","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Commercial & Professional Services Bombora, Inc. Investment Type Warrants Common Stock Initial Acquisition Date 12/26/2023 Maturity Date 12/26/2033","n":"Bombora, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrants Common Stock Initial Acquisition Date 12/26/2023 Maturity Date 12/26/2033"},"i":"Commercial & Professional Services","p":57750000,"c":51000,"v":53000,"ad":"2023-12-26","m":"2033-12-26","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Commercial & Professional Services Bombora, Inc. Investment Type Warrants Common Stock Initial Acquisition Date 3/31/2021 Maturity Date 3/31/2031","n":"Bombora, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrants Common Stock Initial Acquisition Date 3/31/2021 Maturity Date 3/31/2031"},"i":"Commercial & Professional Services","p":121581000,"c":174000,"v":111000,"ad":"2021-03-31","m":"2031-03-31","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Commercial & Professional Services CloudPay, Inc. Investment Type Warrants Series B Preferred Stock Initial Acquisition Date 6/30/2020 Maturity Date 6/30/2030","n":"CloudPay, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrants Series B Preferred Stock Initial Acquisition Date 6/30/2020 Maturity Date 6/30/2030"},"i":"Commercial & Professional Services","p":11273000,"c":218000,"v":876000,"ad":"2020-06-30","m":"2030-06-30","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Commercial & Professional Services CloudPay, Inc. Investment Type Warrants Series D Preferred Stock Initial Acquisition Date 8/17/2021 Maturity Date 8/17/2031","n":"CloudPay, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrants Series D Preferred Stock Initial Acquisition Date 8/17/2021 Maturity Date 8/17/2031"},"i":"Commercial & Professional Services","p":3502000,"c":52000,"v":19000,"ad":"2021-08-17","m":"2031-08-17","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Commercial & Professional Services CloudPay, Inc. Investment Type Warrants Series D Preferred Stock Initial Acquisition Date 9/26/2022 Maturity Date 9/26/2032","n":"CloudPay, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrants Series D Preferred Stock Initial Acquisition Date 9/26/2022 Maturity Date 9/26/2032"},"i":"Commercial & Professional Services","p":5252000,"c":176000,"v":105000,"ad":"2022-09-26","m":"2032-09-26","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Commercial & Professional Services Elevate Services, Inc. Investment Type Warrants Series C Preferred Stock Initial Acquisition Date 7/10/2023 Maturity Date 7/10/2033","n":"Elevate Services, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrants Series C Preferred Stock Initial Acquisition Date 7/10/2023 Maturity Date 7/10/2033"},"i":"Commercial & Professional Services","p":248997000,"c":447000,"v":368000,"ad":"2023-07-10","m":"2033-07-10","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Commercial & Professional Services Elevate Services, Inc. Investment Type Warrants Series C Preferred Stock Initial Acquisition Date 7/17/2024 Maturity Date 7/17/2034","n":"Elevate Services, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrants Series C Preferred Stock Initial Acquisition Date 7/17/2024 Maturity Date 7/17/2034"},"i":"Commercial & Professional Services","p":236549000,"c":377000,"v":582000,"ad":"2024-07-17","m":"2034-07-17","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Commercial & Professional Services Swing Education, Inc. Investment Type Warrants Series C Preferred Stock Initial Acquisition Date 6/27/2025 Maturity Date 6/27/2035","n":"Swing Education, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrants Series C Preferred Stock Initial Acquisition Date 6/27/2025 Maturity Date 6/27/2035"},"i":"Commercial & Professional Services","p":196160000,"c":19000,"v":7000,"ad":"2025-06-27","m":"2035-06-27","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Consumer Services FINN GmbH Investment Type Warrants Series C2 Preferred Stock Initial Acquisition Date 12/4/2025 Maturity Date 12/4/2030","n":"FINN GmbH","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrants & Other Contractual Rights"},"i":"Consumer Services","p":510000,"c":691000,"v":1454000,"ad":"2025-12-04","m":"2030-12-04","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Financial Services Autobooks, Inc. Investment Type Contractual Right Success Fee Initial Acquisition Date 5/5/2025","n":"Autobooks, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrants & Other Contractual Rights"},"i":"Financial Services","c":489000,"v":748000,"ad":"2025-05-05","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Financial Services Betterment Holdings, Inc. Investment Type Warrants Common Stock Initial Acquisition Date 10/6/2023 Maturity Date 10/6/2033 One","n":"Betterment Holdings, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrants Common Stock Initial Acquisition Date 10/6/2023 Maturity Date 10/6/2033 One"},"i":"Financial Services","p":9818000,"c":40000,"v":50000,"ad":"2023-10-06","m":"2033-10-06","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Financial Services Betterment Holdings, Inc. Investment Type Warrants Common Stock Initial Acquisition Date 10/6/2023 Maturity Date 10/6/2033","n":"Betterment Holdings, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrants Common Stock Initial Acquisition Date 10/6/2023 Maturity Date 10/6/2033"},"i":"Financial Services","p":7680000,"c":35000,"v":45000,"ad":"2023-10-06","m":"2033-10-06","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Financial Services Credit Sesame, Inc. Investment Type Warrants Common Stock Initial Acquisition Date 1/7/2020 Maturity Date 1/7/2030","n":"Credit Sesame, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrants Common Stock Initial Acquisition Date 1/7/2020 Maturity Date 1/7/2030"},"i":"Financial Services","p":191601000,"c":425000,"v":279000,"ad":"2020-01-07","m":"2030-01-07","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Financial Services Under Technologies, Inc. (dba Rho) Investment Type Warrant Series B Preferred Stock Initial Acquisition Date 5/8/2026 Maturity Date 5/8/2036","n":"Warrants & Other Contractual Rights","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Under Technologies, Inc. | (dba Rho) Investment Type Warrant Series B Preferred Stock Initial Acquisition Date 5/8/2026 Maturity Date 5/8/2036"},"i":"Financial Services","p":101203000,"c":2000,"v":3000,"ad":"2026-05-08","m":"2036-05-08","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Health Care Equipment & Services Best ABT, Inc. Investment Type Contractual Right Settlement Payment Right Initial Acquisition Date 11/12/2018 Maturity Date 11/12/2028","n":"Best ABT, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrants & Other Contractual Rights"},"i":"Health Care Equipment & Services","c":952000,"v":1051000,"ad":"2018-11-12","m":"2028-11-12","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Health Care Equipment & Services Biotricity, Inc. Investment Type Warrant Series C Preferred Stock Initial Acquisition Date 8/25/2023 Maturity Date 8/25/2030","n":"Biotricity, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Series C Preferred Stock Initial Acquisition Date 8/25/2023 Maturity Date 8/25/2030"},"i":"Health Care Equipment & Services","p":600000000,"c":112000,"v":1000,"ad":"2023-08-25","m":"2030-08-25","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Health Care Equipment & Services Biotricity, Inc. Investment Type Warrant Series E Preferred Stock Initial Acquisition Date 12/12/2025 Maturity Date 12/12/2032","n":"Biotricity, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Series E Preferred Stock Initial Acquisition Date 12/12/2025 Maturity Date 12/12/2032"},"i":"Health Care Equipment & Services","p":120000000,"c":24000,"v":8000,"ad":"2025-12-12","m":"2032-12-12","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Health Care Equipment & Services EBR Systems, Inc. Investment Type Contractual Right Success Fee Initial Acquisition Date 6/30/2022 Maturity Date 6/30/2032","n":"EBR Systems, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrants & Other Contractual Rights"},"i":"Health Care Equipment & Services","c":605000,"v":504000,"ad":"2022-06-30","m":"2032-06-30","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Health Care Equipment & Services Elutia, Inc. Investment Type Warrant Common Stock Initial Acquisition Date 8/10/2022 Maturity Date 8/10/2029","n":"Elutia, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Common Stock Initial Acquisition Date 8/10/2022 Maturity Date 8/10/2029"},"i":"Health Care Equipment & Services","p":187970000,"c":49000,"v":26000,"ad":"2022-08-10","m":"2029-08-10","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Health Care Equipment & Services Epica International, Inc. Investment Type Warrant Common Stock Initial Acquisition Date 7/24/2018 Maturity Date 7/24/2027","n":"Epica International, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Common Stock Initial Acquisition Date 7/24/2018 Maturity Date 7/24/2027"},"i":"Health Care Equipment & Services","p":581818000,"c":1189000,"v":1265000,"ad":"2018-07-24","m":"2027-07-24","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Health Care Equipment & Services Flowonix Medical, Inc. Investment Type Contractual Right Royalty Initial Acquisition Date 6/26/2023","n":"Flowonix Medical, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrants & Other Contractual Rights"},"i":"Health Care Equipment & Services","c":4693000,"v":4442000,"ad":"2023-06-26","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Health Care Equipment & Services Ideal Implant, Inc. Investment Type Contractual Right Royalty Initial Acquisition Date 8/1/2023 Maturity Date 2/1/2039","n":"Ideal Implant, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrants & Other Contractual Rights"},"i":"Health Care Equipment & Services","c":1812000,"v":1336000,"ad":"2023-08-01","m":"2039-02-01","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Health Care Equipment & Services ImpediMed, Inc. Investment Type Warrant Common Stock Initial Acquisition Date 2/6/2025 Maturity Date 2/6/2032","n":"ImpediMed, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Common Stock Initial Acquisition Date 2/6/2025 Maturity Date 2/6/2032"},"i":"Health Care Equipment & Services","p":18737805000,"c":115000,"v":16000,"ad":"2025-02-06","m":"2032-02-06","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Health Care Equipment & Services MedMinder Systems, Inc. Investment Type Warrant Series C Preferred Stock Initial Acquisition Date 8/18/2022 Maturity Date 8/18/2029","n":"MedMinder Systems, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Series C Preferred Stock Initial Acquisition Date 8/18/2022 Maturity Date 8/18/2029"},"i":"Health Care Equipment & Services","p":65092000,"c":56000,"v":54000,"ad":"2022-08-18","m":"2029-08-18","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Health Care Equipment & Services MolecuLight, Inc. Investment Type Warrant Common Stock Initial Acquisition Date 1/1/2025 Maturity Date 12/28/2028","n":"MolecuLight, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Common Stock Initial Acquisition Date 1/1/2025 Maturity Date 12/28/2028"},"i":"Health Care Equipment & Services","p":394322000,"c":3000,"v":2000,"ad":"2025-01-01","m":"2028-12-28","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Health Care Equipment & Services Moximed, Inc. Investment Type Warrant Series C Preferred Stock Initial Acquisition Date 6/24/2022 Maturity Date 6/24/2032","n":"Moximed, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Series C Preferred Stock Initial Acquisition Date 6/24/2022 Maturity Date 6/24/2032"},"i":"Health Care Equipment & Services","p":214285000,"c":175000,"v":32000,"ad":"2022-06-24","m":"2032-06-24","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Health Care Equipment & Services Onward Medical, N.V. Investment Type Warrant Common Stock Initial Acquisition Date 6/28/2024 Maturity Date 9/26/2034","n":"Warrants & Other Contractual Rights","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Onward Medical | N.V. Investment Type Warrant Common Stock Initial Acquisition Date 6/28/2024 Maturity Date 9/26/2034"},"i":"Health Care Equipment & Services","p":165338000,"c":340000,"v":51000,"ad":"2024-06-28","m":"2034-09-26","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Health Care Equipment & Services Route 92 Medical, Inc. Investment Type Contractual Right Success fee Initial Acquisition Date 3/31/2025 Maturity Date 3/31/2035","n":"Route 92 Medical, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrants & Other Contractual Rights"},"i":"Health Care Equipment & Services","c":833000,"v":693000,"ad":"2025-03-31","m":"2035-03-31","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Health Care Equipment & Services SetPoint Medical Corporation Investment Type Warrant Series B Preferred Stock Initial Acquisition Date 6/29/2021 Maturity Date 6/29/2031","n":"SetPoint Medical Corporation","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrants & Other Contractual Rights"},"i":"Health Care Equipment & Services","p":400000000,"c":14000,"v":89000,"ad":"2021-06-29","m":"2031-06-29","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Household & Personal Products Madison Reed, Inc. Investment Type Contractual Right Success fee Initial Acquisition Date 8/29/2025","n":"Madison Reed, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrants & Other Contractual Rights"},"i":"Household & Personal Products","c":404000,"v":456000,"ad":"2025-08-29","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Insurance Kin Insurance, Inc. Investment Type Warrant Series D-3 Preferred Stock Initial Acquisition Date 9/26/2022 Maturity Date 9/26/2032","n":"Kin Insurance, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Series D-3 Preferred Stock Initial Acquisition Date 9/26/2022 Maturity Date 9/26/2032"},"i":"Insurance","p":62364000,"c":426000,"v":336000,"ad":"2022-09-26","m":"2032-09-26","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Insurance Kin Insurance, Inc. Investment Type Warrant Series E Preferred Stock Initial Acquisition Date 8/13/2025 Maturity Date 8/13/2035","n":"Kin Insurance, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Series E Preferred Stock Initial Acquisition Date 8/13/2025 Maturity Date 8/13/2035"},"i":"Insurance","p":10618000,"c":546000,"v":554000,"ad":"2025-08-13","m":"2035-08-13","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Media & Entertainment Skillshare, Inc. Investment Type Contractual Right Success fee Initial Acquisition Date 8/15/2025","n":"Skillshare, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrants & Other Contractual Rights"},"i":"Media & Entertainment","c":337000,"v":89000,"ad":"2025-08-15","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Media & Entertainment Snap! Mobile, Inc. Investment Type Warrant Series B Preferred Stock Initial Acquisition Date 9/30/2024 Maturity Date 9/30/2034","n":"Snap! Mobile, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Series B Preferred Stock Initial Acquisition Date 9/30/2024 Maturity Date 9/30/2034"},"i":"Media & Entertainment","p":19140000,"c":345000,"v":236000,"ad":"2024-09-30","m":"2034-09-30","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Pharmaceuticals, Biotechnology & Life Sciences 4Web, Inc. Investment Type Warrant Series D Preferrred Stock Initial Acquisition Date 6/3/2019 Maturity Date 9/3/2031","n":"4Web, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Series D Preferrred Stock Initial Acquisition Date 6/3/2019 Maturity Date 9/3/2031"},"i":"Pharmaceutical, Biotechnology & Life Sciences","p":780387000,"c":3989000,"v":4246000,"ad":"2019-06-03","m":"2031-09-03","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Pharmaceuticals, Biotechnology & Life Sciences Goodwin Biotechnology, Inc. Investment Type Warrant Series C Preferred Stock Initial Acquisition Date 9/13/2023 Maturity Date 9/13/203","n":"Goodwin Biotechnology, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Series C Preferred Stock Initial Acquisition Date 9/13/2023 Maturity Date 9/13/203"},"i":"Pharmaceutical, Biotechnology & Life Sciences","p":211442000,"c":50000,"v":69000,"ad":"2023-09-13","m":"2030-09-13","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Pharmaceuticals, Biotechnology & Life Sciences NeoLight, LLC Investment Type Warrant Series B-2 Preferred Stock Initial Acquisition Date 2/17/2023 Maturity Date 2/17/2030","n":"NeoLight, LLC","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Series B-2 Preferred Stock Initial Acquisition Date 2/17/2023 Maturity Date 2/17/2030"},"i":"Pharmaceutical, Biotechnology & Life Sciences","p":105048000,"c":3000,"v":5000,"ad":"2023-02-17","m":"2030-02-17","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Pharmaceuticals, Biotechnology & Life Sciences Nicoya Lifesciences, Inc. Investment Type Warrant Series A-3 Preferred Stock Initial Acquisition Date 5/27/2025 Maturity Date 5/27/203","n":"Nicoya Lifesciences, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Series A-3 Preferred Stock Initial Acquisition Date 5/27/2025 Maturity Date 5/27/203"},"i":"Pharmaceutical, Biotechnology & Life Sciences","p":276630000,"c":21000,"v":1000,"ad":"2025-05-27","m":"2032-05-27","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Pharmaceuticals, Biotechnology & Life Sciences Nicoya Lifesciences, Inc. Investment Type Warrant Series B-1 Preferred Stock Initial Acquisition Date 10/13/2023 Maturity Date 10/13/2","n":"Nicoya Lifesciences, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Series B-1 Preferred Stock Initial Acquisition Date 10/13/2023 Maturity Date 10/13/2"},"i":"Pharmaceutical, Biotechnology & Life Sciences","p":117305000,"c":154000,"v":22000,"ad":"2023-10-13","m":"2030-10-13","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Pharmaceuticals, Biotechnology & Life Sciences Shield Therapeutics PLC Investment Type Warrant Common Stock Initial Acquisition Date 10/2/2023 Maturity Date 10/2/2029","n":"Warrants & Other Contractual Rights Pharmaceuticals","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Biotechnology & Life Sciences Shield Therapeutics PLC Investment Type Warrant Common Stock Initial Acquisition Date 10/2/2023 Maturity Date 10/2/2029"},"i":"Pharmaceutical, Biotechnology & Life Sciences","p":8910540000,"c":531000,"v":117000,"ad":"2023-10-02","m":"2029-10-02","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Pharmaceuticals, Biotechnology & Life Sciences Shield Therapeutics PLC Investment Type Warrant Common Stock Initial Acquisition Date 12/2/2025 Maturity Date 12/2/2031","n":"Warrants & Other Contractual Rights Pharmaceuticals","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Biotechnology & Life Sciences Shield Therapeutics PLC Investment Type Warrant Common Stock Initial Acquisition Date 12/2/2025 Maturity Date 12/2/2031"},"i":"Pharmaceutical, Biotechnology & Life Sciences","p":906468000,"c":63000,"v":30000,"ad":"2025-12-02","m":"2031-12-02","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Pharmaceuticals, Biotechnology & Life Sciences Shield Therapeutics PLC Investment Type Warrant Common Stock Initial Acquisition Date 6/8/2026 Maturity Date 6/8/2032","n":"Warrants & Other Contractual Rights Pharmaceuticals","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Biotechnology & Life Sciences Shield Therapeutics PLC Investment Type Warrant Common Stock Initial Acquisition Date 6/8/2026 Maturity Date 6/8/2032"},"i":"Pharmaceutical, Biotechnology & Life Sciences","p":1765019000,"c":67000,"v":66000,"ad":"2026-06-08","m":"2032-06-08","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Systems Software Circadence Corporation Investment Type Contractual Right Success fee Initial Acquisition Date 12/21/2023","n":"Circadence Corporation","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrants & Other Contractual Rights"},"i":"Systems Software","c":304000,"v":217000,"ad":"2023-12-21","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Systems Software Synack, Inc. Investment Type Warrant Common Stock Initial Acquisition Date 12/29/2023 Maturity Date 6/30/2032","n":"Synack, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Common Stock Initial Acquisition Date 12/29/2023 Maturity Date 6/30/2032"},"i":"Systems Software","p":131521000,"c":168000,"v":119000,"ad":"2023-12-29","m":"2032-06-30","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Technology Hardware & Equipment Brivo, Inc. Investment Type Warrant Series A-2 Preferred Stock Initial Acquisition Date 10/20/2022 Maturity Date 10/20/2032","n":"Brivo, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Investment Type Warrant Series A-2 Preferred Stock Initial Acquisition Date 10/20/2022 Maturity Date 10/20/2032"},"i":"Technology Hardware & Equipment","p":201000000,"c":98000,"v":165000,"ad":"2022-10-20","m":"2032-10-20","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Technology Hardware & Equipment Brivo, Inc.Investment Type Warrant Series A-2 Preferred Stock Initial Acquisition Date 12/27/2024 Maturity Date 12/27/2034","n":"Warrants & Other Contractual Rights","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Brivo | Inc.Investment Type Warrant Series A-2 Preferred Stock Initial Acquisition Date 12/27/2024 Maturity Date 12/27/2034"},"i":"Technology Hardware & Equipment","p":32109000,"c":43000,"v":41000,"ad":"2024-12-27","m":"2034-12-27","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Technology Hardware & Equipment Dejero Labs Inc. Investment Type Warrant Common Stock Initial Acquisition Date 5/31/2019 Maturity Date 5/31/2029","n":"Dejero Labs, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrants & Other Contractual Rights"},"i":"Technology Hardware & Equipment","p":333621000,"c":192000,"v":167000,"ad":"2019-05-31","m":"2029-05-31","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Control/Non-Affiliate Investments Warrants & Other Contractual Rights Technology Hardware & Equipment Linxup, LLC Investment Type Contractual Right Success fee Initial Acquisition Date 11/3/2023 Maturity Date 11/3/2033","n":"Linxup, LLC","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrants & Other Contractual Rights"},"i":"Technology Hardware & Equipment","c":253000,"v":582000,"ad":"2023-11-03","m":"2033-11-03","s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Shepherd Intermediate, LLC (dba FHAS) (Revolver) | Senior Secured SOFR + 7.25 %, 8.25 % floor 2030-07-10","n":"Shepherd Intermediate, LLC (dba FHAS) (Revolver)","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 7.25 %, 8.25 % floor"},"i":"Commercial & Professional Services","b":"SOFR","p":0,"c":-5000,"v":0,"ad":"2025-07-10","m":"2030-07-10","fr":true,"s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"Swing Education, Inc. (Revolver) | Senior Secured SOFR + 6.65 %, 10.45 % floor 2028-06-01","n":"Swing Education, Inc. (Revolver)","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 6.65 %, 10.45 % floor"},"i":"Commercial & Professional Services","b":"SOFR","p":0,"c":-132000,"v":0,"ad":"2025-06-27","m":"2028-06-01","fr":true,"s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"Under Technologies, Inc. (dba Rho) | Senior Secured SOFR + 7.75 %, 11.39 % floor, 5.00 % ETP 2031-05-08","n":"Under Technologies, Inc. (dba Rho)","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 7.75 %, 11.39 % floor, 5.00 % ETP"},"i":"Financial Services","b":"SOFR","p":20000000,"c":19824000,"v":19824000,"ad":"2026-05-08","m":"2031-05-08","fr":true,"s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"Digicert, Inc. (Revolver) | Senior Secured SOFR + 5.75 %, 6.50 % floor 2030-07-30","n":"Digicert, Inc. (Revolver)","t":"debt","l":{"c":"first lien","r":"Senior Secured SOFR + 5.75 %, 6.50 % floor"},"i":"Systems Software","b":"SOFR","p":0,"c":-8000,"v":0,"ad":"2025-07-30","m":"2030-07-30","fr":true,"s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"JobGet Holdings, Inc. (fka Snagajob, Inc.) | Equity Series C-2 Preferred Stock","n":"JobGet Holdings, Inc. (fka Snagajob, Inc.)","t":"equity","l":{"c":"equity","r":"Equity Series C-2 Preferred Stock"},"i":"Commercial & Professional Services","p":16963,"c":0,"v":0,"ad":"2024-11-15","s":{"w":"table","t":true,"i":"table"}},
+{"id":"3DNA Corp. (dba NationBuilder) | Warrant Series C-1 Preferred Stock 2028-12-28","n":"3DNA Corp. (dba NationBuilder)","t":"equity","l":{"c":"equity","r":"Warrant Series C-1 Preferred Stock"},"i":"Application Software","p":273164000,"c":104000,"v":0,"ad":"2018-12-28","m":"2028-12-28","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"CarNow, Inc. | Warrant Common Stock 2036-04-24","n":"CarNow, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrant Common Stock"},"i":"Application Software","p":20000000,"c":0,"v":0,"ad":"2026-04-24","m":"2036-04-24","s":{"w":"table","t":true,"i":"table","m":"table","af":"issuer"}},
+{"id":"INRIX, Inc. | Warrant Common Stock 2029-07-26","n":"INRIX, Inc.","t":"equity","l":{"c":"equity","r":"Warrant Common Stock"},"i":"Application Software","p":150804000,"c":522000,"v":0,"ad":"2019-07-26","m":"2029-07-26","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"JWP Holdco LLC (fka Longtail Ad Solutions, Inc.) | Warrant Common Units 2029-12-12","n":"JWP Holdco LLC (fka Longtail Ad Solutions, Inc.)","t":"equity","l":{"c":"equity","r":"Warrant Common Units"},"i":"Application Software","p":167827000,"c":47000,"v":0,"ad":"2019-12-12","m":"2029-12-12","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"Predactiv, Inc. (fka Sharethis, Inc.) | Warrant Series D-3 Preferred Stock 2028-12-03","n":"Predactiv, Inc. (fka Sharethis, Inc.)","t":"equity","l":{"c":"equity","r":"Warrant Series D-3 Preferred Stock"},"i":"Application Software","p":647615000,"c":2162000,"v":0,"ad":"2018-12-03","m":"2028-12-03","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"AllClear ID, Inc. | Warrant Common Stock 2027-08-31","n":"AllClear ID, Inc.","t":"equity","l":{"c":"equity","r":"Warrant Common Stock"},"i":"Commercial & Professional Services","p":870514000,"c":1750000,"v":0,"ad":"2017-08-31","m":"2027-08-31","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"FiscalNote, Inc. | Contractual Right Earnout 2027-07-29","n":"FiscalNote, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Contractual Right Earnout"},"i":"Commercial & Professional Services","c":127000,"v":0,"ad":"2022-07-29","m":"2027-07-29","s":{"w":"table","t":true,"i":"table","m":"table","af":"issuer"}},
+{"id":"JobGet Holdings, Inc. (fka Snagajob, Inc.) | Warrant Series B-1 Preferred Stock 2031-09-29","n":"JobGet Holdings, Inc. (fka Snagajob, Inc.)","t":"equity","l":{"c":"equity","r":"Warrant Series B-1 Preferred Stock"},"i":"Commercial & Professional Services","p":763269000,"c":343000,"v":0,"ad":"2021-09-29","m":"2031-09-29","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"Marley Spoon SE | Warrant Common Stock 2035-12-31","n":"Marley Spoon SE","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrant Common Stock"},"i":"Consumer Staples Distribution & Retail","p":5466000,"c":0,"v":0,"ad":"2026-04-25","m":"2035-12-31","s":{"w":"table","t":true,"i":"table","m":"table","af":"issuer"}},
+{"id":"Allurion Technologies, Inc. | Warrant Common Stock 2031-03-30","n":"Allurion Technologies, Inc.","t":"equity","l":{"c":"equity","r":"Warrant Common Stock"},"i":"Health Care Equipment & Services","p":5320000,"c":282000,"v":0,"ad":"2021-03-30","m":"2031-03-30","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"Allurion Technologies, Inc. | Warrant Common Stock 2031-03-30 2","n":"Allurion Technologies, Inc.","t":"equity","l":{"c":"equity","r":"Warrant Common Stock"},"i":"Health Care Equipment & Services","p":1851000,"c":141000,"v":0,"ad":"2022-06-14","m":"2031-03-30","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"Allurion Technologies, Inc. | Warrant Common Stock 2032-09-15","n":"Allurion Technologies, Inc.","t":"equity","l":{"c":"equity","r":"Warrant Common Stock"},"i":"Health Care Equipment & Services","p":1850000,"c":144000,"v":0,"ad":"2022-09-15","m":"2032-09-15","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"Allurion Technologies, Inc. | Contractual Right Earnout 2028-08-01","n":"Allurion Technologies, Inc.","t":"equity","l":{"c":"equity","r":"Contractual Right Earnout"},"i":"Health Care Equipment & Services","c":0,"v":0,"ad":"2023-08-02","m":"2028-08-01","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"Biotricity, Inc. | Warrant Series A Preferred Stock 2028-12-21","n":"Biotricity, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrant Series A Preferred Stock"},"i":"Health Care Equipment & Services","p":9589000,"c":0,"v":32000,"ad":"2021-12-21","m":"2028-12-21","s":{"w":"table","t":true,"i":"table","m":"table","af":"issuer"}},
+{"id":"Biotricity, Inc. | Warrant Series B Preferred Stock 2031-11-11","n":"Biotricity, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrant Series B Preferred Stock"},"i":"Health Care Equipment & Services","p":54300000,"c":7000,"v":0,"ad":"2024-11-11","m":"2031-11-11","s":{"w":"table","t":true,"i":"table","m":"table","af":"issuer"}},
+{"id":"DxTerity Diagnostics, Inc. | Warrant Series B Preferred Stock 2026-12-31","n":"DxTerity Diagnostics, Inc.","t":"equity","l":{"c":"equity","r":"Warrant Series B Preferred Stock"},"i":"Health Care Equipment & Services","p":2019231000,"c":43000,"v":0,"ad":"2015-04-06","m":"2026-12-31","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"Mingle Healthcare Solutions, Inc. | Warrant Series CC Preferred Stock 2028-08-15","n":"Mingle Healthcare Solutions, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrant Series CC Preferred Stock"},"i":"Health Care Equipment & Services","p":1770973000,"c":492000,"v":0,"ad":"2018-08-15","m":"2028-08-15","s":{"w":"table","t":true,"i":"table","m":"table","af":"issuer"}},
+{"id":"Insite Vision, Inc. | Contractual Right Royalty","n":"Insite Vision, Inc.","t":"equity","l":{"c":"equity","r":"Contractual Right Royalty"},"i":"Pharmaceutical, Biotechnology & Life Sciences","c":0,"v":0,"ad":"2013-04-02","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Mustang Bio, Inc. | Warrant Common Stock 2032-03-04","n":"Mustang Bio, Inc.","t":"equity","l":{"c":"equity","r":"Warrant Common Stock"},"i":"Pharmaceutical, Biotechnology & Life Sciences","p":997000,"c":315000,"v":0,"ad":"2022-03-04","m":"2032-03-04","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"Zevra Therapeutics, Inc. (fka Acer Therapeutics, Inc.) | Contractual Right Contingent Value Right","n":"Zevra Therapeutics, Inc. (fka Acer Therapeutics, Inc.)","t":"equity","l":{"c":"equity","r":"Contractual Right Contingent Value Right"},"i":"Pharmaceutical, Biotechnology & Life Sciences","c":0,"v":0,"ad":"2023-11-17","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Circadence Corporation | Warrant Series B Preferred Stock 2028-12-20","n":"Circadence Corporation","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrant Series B Preferred Stock"},"i":"Systems Software","p":1538462000,"c":3630000,"v":0,"ad":"2018-12-20","m":"2028-12-20","s":{"w":"table","t":true,"i":"table","m":"table","af":"issuer"}},
+{"id":"Circadence Corporation | Warrant Series B Preferred Stock 2029-10-31","n":"Circadence Corporation","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Warrant Series B Preferred Stock"},"i":"Systems Software","p":384615000,"c":846000,"v":0,"ad":"2019-10-31","m":"2029-10-31","s":{"w":"table","t":true,"i":"table","m":"table","af":"issuer"}},
+{"id":"Scale Computing, Inc. | Warrant Common Stock 2029-03-29","n":"Scale Computing, Inc.","t":"equity","l":{"c":"equity","r":"Warrant Common Stock"},"i":"Systems Software","p":9665667000,"c":346000,"v":0,"ad":"2019-03-29","m":"2029-03-29","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"RealWear, Inc. | Warrant Series A-1 Preferred Stock 2028-10-05","n":"RealWear, Inc.","t":"equity","l":{"c":"equity","r":"Warrant Series A-1 Preferred Stock"},"i":"Technology Hardware & Equipment","p":73746000,"c":89000,"v":0,"ad":"2018-10-05","m":"2028-10-05","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"RealWear, Inc. | Warrant Common Stock 2028-10-05","n":"RealWear, Inc.","t":"equity","l":{"c":"equity","r":"Warrant Common Stock"},"i":"Technology Hardware & Equipment","p":38705000,"c":47000,"v":0,"ad":"2018-10-05","m":"2028-10-05","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"RealWear, Inc. | Warrant Series A-1 Preferred Stock 2028-12-28","n":"RealWear, Inc.","t":"equity","l":{"c":"equity","r":"Warrant Series A-1 Preferred Stock"},"i":"Technology Hardware & Equipment","p":14749000,"c":16000,"v":0,"ad":"2018-12-28","m":"2028-12-28","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"RealWear, Inc. | Warrant Common Stock 2028-12-28","n":"RealWear, Inc.","t":"equity","l":{"c":"equity","r":"Warrant Common Stock"},"i":"Technology Hardware & Equipment","p":7742000,"c":9000,"v":0,"ad":"2018-12-28","m":"2028-12-28","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"RealWear, Inc. | Warrant Series A-1 Preferred Stock 2029-06-27","n":"RealWear, Inc.","t":"equity","l":{"c":"equity","r":"Warrant Series A-1 Preferred Stock"},"i":"Technology Hardware & Equipment","p":81251000,"c":250000,"v":0,"ad":"2019-06-27","m":"2029-06-27","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"RealWear, Inc. | Warrant Common Stock 2029-06-27","n":"RealWear, Inc.","t":"equity","l":{"c":"equity","r":"Warrant Common Stock"},"i":"Technology Hardware & Equipment","p":42643000,"c":131000,"v":0,"ad":"2019-06-27","m":"2029-06-27","s":{"w":"table","t":true,"i":"table","m":"table"}},
+{"id":"Coginiti Corp | Equity Common Stock","n":"Coginiti Corp","t":"equity","l":{"c":"equity","r":"Equity Common Stock"},"i":"Application Software","p":1040160,"c":4551000,"v":0,"ad":"2020-03-09","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Coginiti Corp | Warrant Common Stock 2030-03-09","n":"Coginiti Corp","t":"equity","l":{"c":"equity","r":"Warrant Common Stock"},"i":"Application Software","p":811770000,"c":0,"v":0,"ad":"2020-03-09","m":"2030-03-09","s":{"w":"table","t":true,"i":"table","m":"table"}}
+ ]
+}

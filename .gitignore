@@ -14,3 +14,6 @@ data-sources/*
 !data-sources/reports/
 data-sources/reports/*
 !data-sources/reports/*.json
+
+# streamed SEC data-set zips and their sidecars (zip-stream.mjs downloadToFile)
+.cache/

@@ -92,6 +92,23 @@ jobs:
       - name: Nebius interim reports against the hand-keyed table
         run: node scripts/test-nbis-interims.mjs
 
+      # The schedule-of-investments readers against verbatim fixture
+      # cuts (the SEC data set, a filing instance, the 10-Q table and
+      # the rendered R page, the 10-Q prose), then the committed holdings
+      # and composite files against the PR C acceptance list. All four
+      # are offline.
+      - name: Schedule readers against the SEC data set and a filing instance
+        run: node scripts/test-soi.mjs
+
+      - name: Schedule readers against the 10-Q table and the R page
+        run: node scripts/test-soi-html.mjs
+
+      - name: Prose extractor against 10-Q cuts
+        run: node scripts/test-bdc-prose.mjs
+
+      - name: BDC holdings and composite files
+        run: node scripts/test-bdc-holdings.mjs
+
       - name: API replies are read without leaking a parser error
         run: node scripts/test-http.mjs
 

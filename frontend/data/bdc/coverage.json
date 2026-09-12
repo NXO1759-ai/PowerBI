@@ -1023,6 +1023,1971 @@
    "tickers_flagged": []
   }
  },
+ "holdings": {
+  "n": 32,
+  "refused": 21,
+  "failed": 0,
+  "tickers_refused": [
+   {
+    "ticker": "AFCG",
+    "accn": "0001628280-26-056471",
+    "reason": "cost and fair value both outside tolerance"
+   },
+   {
+    "ticker": "CCAP",
+    "accn": "0001193125-26-342351",
+    "reason": "cost and fair value both outside tolerance"
+   },
+   {
+    "ticker": "CGBD",
+    "accn": "0001544206-26-000055",
+    "reason": "cost and fair value both outside tolerance"
+   },
+   {
+    "ticker": "CION",
+    "accn": "0001534254-26-000010",
+    "reason": "cost and fair value both outside tolerance"
+   },
+   {
+    "ticker": "EQS",
+    "accn": "0001712543-26-000047",
+    "reason": "no rows kept"
+   },
+   {
+    "ticker": "FSK",
+    "accn": "0001628280-26-053783",
+    "reason": "cost and fair value both outside tolerance"
+   },
+   {
+    "ticker": "GECC",
+    "accn": "0001193125-26-335023",
+    "reason": "cost and fair value both outside tolerance"
+   },
+   {
+    "ticker": "GSBD",
+    "accn": "0001193125-26-338331",
+    "reason": "cost and fair value both outside tolerance"
+   },
+   {
+    "ticker": "HRZN",
+    "accn": "0001437749-26-025689",
+    "reason": "cost and fair value both outside tolerance"
+   },
+   {
+    "ticker": "KBDC",
+    "accn": "0001193125-26-342385",
+    "reason": "cost and fair value both outside tolerance"
+   },
+   {
+    "ticker": "NSLR",
+    "accn": "0001493152-26-036285",
+    "reason": "no rows kept"
+   },
+   {
+    "ticker": "OXSQ",
+    "accn": "0001213900-26-087243",
+    "reason": "cost and fair value both outside tolerance"
+   },
+   {
+    "ticker": "PFLT",
+    "accn": "0001193125-26-342352",
+    "reason": "cost and fair value both outside tolerance"
+   },
+   {
+    "ticker": "PFX",
+    "accn": "0001213900-26-085667",
+    "reason": "no tagged total to reconcile against"
+   },
+   {
+    "ticker": "RAND",
+    "accn": "0001193125-26-333983",
+    "reason": "cost and fair value both outside tolerance"
+   },
+   {
+    "ticker": "SAR",
+    "accn": "0001213900-26-075931",
+    "reason": "cost and fair value both outside tolerance"
+   },
+   {
+    "ticker": "SCM",
+    "accn": "0001104659-26-093435",
+    "reason": "cost and fair value both outside tolerance"
+   },
+   {
+    "ticker": "SLRC",
+    "accn": "0001193125-26-332726",
+    "reason": "cost and fair value both outside tolerance"
+   },
+   {
+    "ticker": "SVVC",
+    "accn": "0001437749-26-028070",
+    "reason": "cost and fair value both outside tolerance"
+   },
+   {
+    "ticker": "TSLX",
+    "accn": "0001193125-26-332725",
+    "reason": "cost and fair value both outside tolerance"
+   },
+   {
+    "ticker": "WHF",
+    "accn": "0001104659-26-093465",
+    "reason": "cost and fair value both outside tolerance"
+   }
+  ],
+  "tickers_failed": [],
+  "tickers_missing": [],
+  "byTicker": {
+   "AFCG": {
+    "status": "refused",
+    "accn": "0001628280-26-056471",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "cost and fair value both outside tolerance",
+    "rows": 19,
+    "cost": {
+     "sum": 622430535,
+     "tag": 354320536,
+     "diffPct": 0.756688
+    },
+    "fv": {
+     "sum": 493143231,
+     "tag": 289763599,
+     "diffPct": 0.701881
+    },
+    "source": "dataset",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 19,
+      "cost": {
+       "sum": 622430535,
+       "tag": 354320536,
+       "diffPct": 0.756688
+      },
+      "fv": {
+       "sum": 493143231,
+       "tag": 289763599,
+       "diffPct": 0.701881
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "table rows",
+      "n": 19,
+      "cost": {
+       "sum": 622430535,
+       "tag": 354320536,
+       "diffPct": 0.756688
+      },
+      "fv": {
+       "sum": 493143231,
+       "tag": 289763599,
+       "diffPct": 0.701881
+      },
+      "reason": "cost and fair value both outside tolerance"
+     }
+    ],
+    "acSource": "prose",
+    "unchanged": true
+   },
+   "ARCC": {
+    "status": "written",
+    "accn": "0001628280-26-050307",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 1439,
+    "source": "dataset",
+    "nonAccrualSource": "table"
+   },
+   "BBDC": {
+    "status": "written",
+    "accn": "0001379785-26-000030",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 700,
+    "source": "dataset",
+    "nonAccrualSource": "table"
+   },
+   "BCIC": {
+    "status": "written",
+    "accn": "0001193125-26-337959",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 175,
+    "source": "dataset",
+    "nonAccrualSource": "table"
+   },
+   "BCSF": {
+    "status": "written",
+    "accn": "0001193125-26-342491",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 549,
+    "source": "dataset",
+    "nonAccrualSource": "table"
+   },
+   "BXSL": {
+    "status": "written",
+    "accn": "0001736035-26-000016",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 699,
+    "source": "dataset",
+    "nonAccrualSource": "table"
+   },
+   "CCAP": {
+    "status": "refused",
+    "accn": "0001193125-26-342351",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "cost and fair value both outside tolerance",
+    "rows": 562,
+    "cost": {
+     "sum": 1606519000,
+     "tag": 1625061000,
+     "diffPct": 0.01141
+    },
+    "fv": {
+     "sum": 1550328000,
+     "tag": 1570668000,
+     "diffPct": 0.01295
+    },
+    "source": "dataset",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 562,
+      "cost": {
+       "sum": 1606519000,
+       "tag": 1625061000,
+       "diffPct": 0.01141
+      },
+      "fv": {
+       "sum": 1550328000,
+       "tag": 1570668000,
+       "diffPct": 0.01295
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cost-only rows at fair value 0",
+      "n": 609,
+      "cost": {
+       "sum": 1607293000,
+       "tag": 1625061000,
+       "diffPct": 0.010934
+      },
+      "fv": {
+       "sum": 1550328000,
+       "tag": 1570668000,
+       "diffPct": 0.01295
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows + 107 table-only rows",
+      "n": 669,
+      "cost": {
+       "sum": 1715439000,
+       "tag": 1625061000,
+       "diffPct": 0.055615
+      },
+      "fv": {
+       "sum": 1659547000,
+       "tag": 1570668000,
+       "diffPct": 0.056587
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cost-only rows at fair value 0 + 107 table-only rows",
+      "n": 716,
+      "cost": {
+       "sum": 1716213000,
+       "tag": 1625061000,
+       "diffPct": 0.056091
+      },
+      "fv": {
+       "sum": 1659547000,
+       "tag": 1570668000,
+       "diffPct": 0.056587
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "table rows",
+      "n": 654,
+      "cost": {
+       "sum": 1714612000,
+       "tag": 1625061000,
+       "diffPct": 0.055106
+      },
+      "fv": {
+       "sum": 1658504000,
+       "tag": 1570668000,
+       "diffPct": 0.055923
+      },
+      "reason": "cost and fair value both outside tolerance"
+     }
+    ],
+    "acSource": "prose",
+    "unchanged": true
+   },
+   "CGBD": {
+    "status": "refused",
+    "accn": "0001544206-26-000055",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "cost and fair value both outside tolerance",
+    "rows": 341,
+    "cost": {
+     "sum": 3595909000,
+     "tag": 2414341000,
+     "diffPct": 0.489396
+    },
+    "fv": {
+     "sum": 3526522000,
+     "tag": 2360009000,
+     "diffPct": 0.494283
+    },
+    "source": "dataset",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 341,
+      "cost": {
+       "sum": 3595909000,
+       "tag": 2414341000,
+       "diffPct": 0.489396
+      },
+      "fv": {
+       "sum": 3526522000,
+       "tag": 2360009000,
+       "diffPct": 0.494283
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows + 24 table-only rows",
+      "n": 365,
+      "cost": {
+       "sum": 8225653000,
+       "tag": 2414341000,
+       "diffPct": 2.406997
+      },
+      "fv": {
+       "sum": 8035249000,
+       "tag": 2360009000,
+       "diffPct": 2.404754
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "table rows",
+      "n": 257,
+      "cost": {
+       "sum": 6892166000,
+       "tag": 2414341000,
+       "diffPct": 1.854678
+      },
+      "fv": {
+       "sum": 6723817000,
+       "tag": 2360009000,
+       "diffPct": 1.849064
+      },
+      "reason": "cost and fair value both outside tolerance"
+     }
+    ],
+    "acSource": "tag",
+    "unchanged": true
+   },
+   "CION": {
+    "status": "refused",
+    "accn": "0001534254-26-000010",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "cost and fair value both outside tolerance",
+    "rows": 248,
+    "cost": {
+     "sum": 1985694000,
+     "tag": 1930556000,
+     "diffPct": 0.028561
+    },
+    "fv": {
+     "sum": 1850163000,
+     "tag": 1800093000,
+     "diffPct": 0.027815
+    },
+    "source": "dataset",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 248,
+      "cost": {
+       "sum": 1985694000,
+       "tag": 1930556000,
+       "diffPct": 0.028561
+      },
+      "fv": {
+       "sum": 1850163000,
+       "tag": 1800093000,
+       "diffPct": 0.027815
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows + 106 table-only rows",
+      "n": 354,
+      "cost": {
+       "sum": 2068074000,
+       "tag": 1930556000,
+       "diffPct": 0.071232
+      },
+      "fv": {
+       "sum": 1103599000,
+       "tag": 1800093000,
+       "diffPct": 0.386921
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "table rows",
+      "n": 298,
+      "cost": {
+       "sum": 2012909000,
+       "tag": 1930556000,
+       "diffPct": 0.042658
+      },
+      "fv": {
+       "sum": 1053828000,
+       "tag": 1800093000,
+       "diffPct": 0.41457
+      },
+      "reason": "cost and fair value both outside tolerance"
+     }
+    ],
+    "acSource": "tag",
+    "unchanged": true
+   },
+   "CSWC": {
+    "status": "written",
+    "accn": "0000017313-26-000095",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 455,
+    "source": "dataset",
+    "nonAccrualSource": "table"
+   },
+   "EQS": {
+    "status": "refused",
+    "accn": "0001712543-26-000047",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "no rows kept",
+    "rows": 0,
+    "cost": {
+     "sum": 0,
+     "tag": null,
+     "diffPct": null
+    },
+    "fv": {
+     "sum": 0,
+     "tag": null,
+     "diffPct": null
+    },
+    "source": "instance",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 0,
+      "cost": {
+       "sum": 0,
+       "tag": null,
+       "diffPct": null
+      },
+      "fv": {
+       "sum": 0,
+       "tag": null,
+       "diffPct": null
+      },
+      "reason": "no rows kept"
+     }
+    ],
+    "acSource": "prose"
+   },
+   "FDUS": {
+    "status": "written",
+    "accn": "0001193125-26-337982",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 226,
+    "source": "dataset",
+    "nonAccrualSource": null
+   },
+   "FRBP": {
+    "status": "written",
+    "accn": "0001825248-26-000024",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 347,
+    "source": "table",
+    "nonAccrualSource": "rpage"
+   },
+   "FSK": {
+    "status": "refused",
+    "accn": "0001628280-26-053783",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "cost and fair value both outside tolerance",
+    "rows": 616,
+    "cost": {
+     "sum": 13715800000,
+     "tag": 12604800000,
+     "diffPct": 0.088141
+    },
+    "fv": {
+     "sum": 12529100000,
+     "tag": 11418100000,
+     "diffPct": 0.097302
+    },
+    "source": "dataset",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 616,
+      "cost": {
+       "sum": 13715800000,
+       "tag": 12604800000,
+       "diffPct": 0.088141
+      },
+      "fv": {
+       "sum": 12529100000,
+       "tag": 11418100000,
+       "diffPct": 0.097302
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows + 9 table-only rows",
+      "n": 625,
+      "cost": {
+       "sum": 21530600000,
+       "tag": 12604800000,
+       "diffPct": 0.708127
+      },
+      "fv": {
+       "sum": 19669700000,
+       "tag": 11418100000,
+       "diffPct": 0.722677
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "table rows",
+      "n": 622,
+      "cost": {
+       "sum": 21522300000,
+       "tag": 12604800000,
+       "diffPct": 0.707469
+      },
+      "fv": {
+       "sum": 19661400000,
+       "tag": 11418100000,
+       "diffPct": 0.72195
+      },
+      "reason": "cost and fair value both outside tolerance"
+     }
+    ],
+    "acSource": "tag",
+    "unchanged": true
+   },
+   "GAIN": {
+    "status": "written",
+    "accn": "0001321741-26-000017",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 65,
+    "source": "dataset",
+    "nonAccrualSource": "rpage"
+   },
+   "GBDC": {
+    "status": "written",
+    "accn": "0001476765-26-000048",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 2076,
+    "source": "dataset",
+    "nonAccrualSource": "table"
+   },
+   "GECC": {
+    "status": "refused",
+    "accn": "0001193125-26-335023",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "cost and fair value both outside tolerance",
+    "rows": 73,
+    "cost": {
+     "sum": 308595000,
+     "tag": 344841000,
+     "diffPct": 0.105109
+    },
+    "fv": {
+     "sum": 264496000,
+     "tag": 272252000,
+     "diffPct": 0.028488
+    },
+    "source": "dataset",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 73,
+      "cost": {
+       "sum": 308595000,
+       "tag": 344841000,
+       "diffPct": 0.105109
+      },
+      "fv": {
+       "sum": 264496000,
+       "tag": 272252000,
+       "diffPct": 0.028488
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cost-only rows at fair value 0",
+      "n": 79,
+      "cost": {
+       "sum": 340875000,
+       "tag": 344841000,
+       "diffPct": 0.011501
+      },
+      "fv": {
+       "sum": 264496000,
+       "tag": 272252000,
+       "diffPct": 0.028488
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cash-equivalent lines",
+      "n": 74,
+      "cost": {
+       "sum": 312561000,
+       "tag": 344841000,
+       "diffPct": 0.093608
+      },
+      "fv": {
+       "sum": 268462000,
+       "tag": 272252000,
+       "diffPct": 0.013921
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cost-only rows and cash-equivalent lines",
+      "n": 80,
+      "cost": {
+       "sum": 344841000,
+       "tag": 344841000,
+       "diffPct": 0
+      },
+      "fv": {
+       "sum": 268462000,
+       "tag": 272252000,
+       "diffPct": 0.013921
+      },
+      "reason": "fair value outside tolerance"
+     }
+    ],
+    "acSource": "prose",
+    "unchanged": true
+   },
+   "GLAD": {
+    "status": "written",
+    "accn": "0001143513-26-000012",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 139,
+    "source": "dataset",
+    "nonAccrualSource": "rpage"
+   },
+   "GSBD": {
+    "status": "refused",
+    "accn": "0001193125-26-338331",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "cost and fair value both outside tolerance",
+    "rows": 509,
+    "cost": {
+     "sum": 3263973000,
+     "tag": 3410976000,
+     "diffPct": 0.043097
+    },
+    "fv": {
+     "sum": 2885630000,
+     "tag": 3195248000,
+     "diffPct": 0.0969
+    },
+    "source": "dataset",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 509,
+      "cost": {
+       "sum": 3263973000,
+       "tag": 3410976000,
+       "diffPct": 0.043097
+      },
+      "fv": {
+       "sum": 2885630000,
+       "tag": 3195248000,
+       "diffPct": 0.0969
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows + 104 table-only rows",
+      "n": 613,
+      "cost": {
+       "sum": 3727616000,
+       "tag": 3410976000,
+       "diffPct": 0.09283
+      },
+      "fv": {
+       "sum": 3325173000,
+       "tag": 3195248000,
+       "diffPct": 0.040662
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "table rows",
+      "n": 552,
+      "cost": {
+       "sum": 3447202000,
+       "tag": 3410976000,
+       "diffPct": 0.01062
+      },
+      "fv": {
+       "sum": 3231474000,
+       "tag": 3195248000,
+       "diffPct": 0.011337
+      },
+      "reason": "cost and fair value both outside tolerance"
+     }
+    ],
+    "acSource": "prose",
+    "unchanged": true
+   },
+   "HRZN": {
+    "status": "refused",
+    "accn": "0001437749-26-025689",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "cost and fair value both outside tolerance",
+    "rows": 286,
+    "cost": {
+     "sum": 3905135000,
+     "tag": 777867000,
+     "diffPct": 4.020312
+    },
+    "fv": {
+     "sum": 3468637000,
+     "tag": 676711000,
+     "diffPct": 4.125729
+    },
+    "source": "instance",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 286,
+      "cost": {
+       "sum": 3905135000,
+       "tag": 777867000,
+       "diffPct": 4.020312
+      },
+      "fv": {
+       "sum": 3468637000,
+       "tag": 676711000,
+       "diffPct": 4.125729
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows + 90 table-only rows",
+      "n": 376,
+      "cost": {
+       "sum": 4278529000,
+       "tag": 777867000,
+       "diffPct": 4.500335
+      },
+      "fv": {
+       "sum": 3819650000,
+       "tag": 676711000,
+       "diffPct": 4.644433
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "table rows",
+      "n": 159,
+      "cost": {
+       "sum": 682425000,
+       "tag": 777867000,
+       "diffPct": 0.122697
+      },
+      "fv": {
+       "sum": 647999000,
+       "tag": 676711000,
+       "diffPct": 0.042429
+      },
+      "reason": "cost and fair value both outside tolerance"
+     }
+    ],
+    "acSource": "prose"
+   },
+   "HTGC": {
+    "status": "written",
+    "accn": "0001280784-26-000042",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 362,
+    "source": "dataset",
+    "nonAccrualSource": "table"
+   },
+   "ICMB": {
+    "status": "written",
+    "accn": "0001193125-26-352658",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 49,
+    "source": "dataset",
+    "nonAccrualSource": "table"
+   },
+   "KBDC": {
+    "status": "refused",
+    "accn": "0001193125-26-342385",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "cost and fair value both outside tolerance",
+    "rows": 335,
+    "cost": {
+     "sum": 2264639696,
+     "tag": 2304505000,
+     "diffPct": 0.017299
+    },
+    "fv": {
+     "sum": 2252973658,
+     "tag": 2291802000,
+     "diffPct": 0.016942
+    },
+    "source": "dataset",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 335,
+      "cost": {
+       "sum": 2264639696,
+       "tag": 2304505000,
+       "diffPct": 0.017299
+      },
+      "fv": {
+       "sum": 2252973658,
+       "tag": 2291802000,
+       "diffPct": 0.016942
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows + 79 table-only rows",
+      "n": 414,
+      "cost": {
+       "sum": 2439830696,
+       "tag": 2304505000,
+       "diffPct": 0.058722
+      },
+      "fv": {
+       "sum": 2421529658,
+       "tag": 2291802000,
+       "diffPct": 0.056605
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "table rows",
+      "n": 346,
+      "cost": {
+       "sum": 2417076000,
+       "tag": 2304505000,
+       "diffPct": 0.048848
+      },
+      "fv": {
+       "sum": 2406194000,
+       "tag": 2291802000,
+       "diffPct": 0.049914
+      },
+      "reason": "cost and fair value both outside tolerance"
+     }
+    ],
+    "acSource": "tag",
+    "unchanged": true
+   },
+   "LIEN": {
+    "status": "written",
+    "accn": "0001193125-26-347342",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 50,
+    "source": "dataset",
+    "nonAccrualSource": "prose"
+   },
+   "MAIN": {
+    "status": "written",
+    "accn": "0001396440-26-000094",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 619,
+    "source": "dataset",
+    "nonAccrualSource": "table"
+   },
+   "MFIC": {
+    "status": "written",
+    "accn": "0001193125-26-335848",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 582,
+    "source": "dataset",
+    "nonAccrualSource": "table"
+   },
+   "MSDL": {
+    "status": "written",
+    "accn": "0001193125-26-337915",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 613,
+    "source": "table",
+    "nonAccrualSource": "table"
+   },
+   "MSIF": {
+    "status": "written",
+    "accn": "0001535778-26-000085",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 463,
+    "source": "dataset",
+    "nonAccrualSource": "table"
+   },
+   "NCDL": {
+    "status": "written",
+    "accn": "0001737924-26-000084",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 569,
+    "source": "dataset",
+    "nonAccrualSource": "table"
+   },
+   "NMFC": {
+    "status": "written",
+    "accn": "0001496099-26-000029",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 337,
+    "source": "table",
+    "nonAccrualSource": "table"
+   },
+   "NSLR": {
+    "status": "refused",
+    "accn": "0001493152-26-036285",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "no rows kept",
+    "rows": 0,
+    "cost": {
+     "sum": 0,
+     "tag": null,
+     "diffPct": null
+    },
+    "fv": {
+     "sum": 0,
+     "tag": 405851701,
+     "diffPct": 1
+    },
+    "source": "dataset",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 0,
+      "cost": {
+       "sum": 0,
+       "tag": null,
+       "diffPct": null
+      },
+      "fv": {
+       "sum": 0,
+       "tag": 405851701,
+       "diffPct": 1
+      },
+      "reason": "no rows kept"
+     },
+     {
+      "variant": "table rows",
+      "n": 60,
+      "cost": {
+       "sum": 262840450,
+       "tag": null,
+       "diffPct": null
+      },
+      "fv": {
+       "sum": 405851701,
+       "tag": 405851701,
+       "diffPct": 0
+      },
+      "reason": "no tagged total to reconcile against"
+     }
+    ],
+    "acSource": null,
+    "unchanged": true
+   },
+   "OBDC": {
+    "status": "written",
+    "accn": "0001655888-26-000056",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 354,
+    "source": "table",
+    "nonAccrualSource": "table"
+   },
+   "OCSL": {
+    "status": "written",
+    "accn": "0001414932-26-000017",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 366,
+    "source": "dataset",
+    "nonAccrualSource": "table"
+   },
+   "OFS": {
+    "status": "written",
+    "accn": "0001487918-26-000078",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 94,
+    "source": "dataset",
+    "nonAccrualSource": "table"
+   },
+   "OTF": {
+    "status": "written",
+    "accn": "0001747777-26-000028",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 305,
+    "source": "dataset",
+    "nonAccrualSource": "table"
+   },
+   "OXSQ": {
+    "status": "refused",
+    "accn": "0001213900-26-087243",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "cost and fair value both outside tolerance",
+    "rows": 81,
+    "cost": {
+     "sum": 1121934993,
+     "tag": 23834191,
+     "diffPct": 46.072502
+    },
+    "fv": {
+     "sum": 823771047,
+     "tag": 15409950,
+     "diffPct": 52.457088
+    },
+    "source": "dataset",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 81,
+      "cost": {
+       "sum": 1121934993,
+       "tag": 23834191,
+       "diffPct": 46.072502
+      },
+      "fv": {
+       "sum": 823771047,
+       "tag": 15409950,
+       "diffPct": 52.457088
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cost-only rows at fair value 0",
+      "n": 88,
+      "cost": {
+       "sum": 1142244018,
+       "tag": 23834191,
+       "diffPct": 46.924598
+      },
+      "fv": {
+       "sum": 823771047,
+       "tag": 15409950,
+       "diffPct": 52.457088
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cash-equivalent lines",
+      "n": 84,
+      "cost": {
+       "sum": 1606625130,
+       "tag": 23834191,
+       "diffPct": 66.408419
+      },
+      "fv": {
+       "sum": 1174924542,
+       "tag": 15409950,
+       "diffPct": 75.24454
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cost-only rows and cash-equivalent lines",
+      "n": 91,
+      "cost": {
+       "sum": 1626934155,
+       "tag": 23834191,
+       "diffPct": 67.260515
+      },
+      "fv": {
+       "sum": 1174924542,
+       "tag": 15409950,
+       "diffPct": 75.24454
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows + 17 table-only rows",
+      "n": 98,
+      "cost": {
+       "sum": 1202437475,
+       "tag": 23834191,
+       "diffPct": 49.450107
+      },
+      "fv": {
+       "sum": 875731188,
+       "tag": 15409950,
+       "diffPct": 55.828944
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cost-only rows at fair value 0 + 17 table-only rows",
+      "n": 105,
+      "cost": {
+       "sum": 1222746500,
+       "tag": 23834191,
+       "diffPct": 50.302203
+      },
+      "fv": {
+       "sum": 875731188,
+       "tag": 15409950,
+       "diffPct": 55.828944
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cash-equivalent lines + 17 table-only rows",
+      "n": 101,
+      "cost": {
+       "sum": 1687127612,
+       "tag": 23834191,
+       "diffPct": 69.786024
+      },
+      "fv": {
+       "sum": 1226884683,
+       "tag": 15409950,
+       "diffPct": 78.616396
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cost-only rows and cash-equivalent lines + 17 table-only rows",
+      "n": 108,
+      "cost": {
+       "sum": 1707436637,
+       "tag": 23834191,
+       "diffPct": 70.63812
+      },
+      "fv": {
+       "sum": 1226884683,
+       "tag": 15409950,
+       "diffPct": 78.616396
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "table rows",
+      "n": 70,
+      "cost": {
+       "sum": 386379336,
+       "tag": 23834191,
+       "diffPct": 15.211137
+      },
+      "fv": {
+       "sum": 252842694,
+       "tag": 15409950,
+       "diffPct": 15.407756
+      },
+      "reason": "cost and fair value both outside tolerance"
+     }
+    ],
+    "acSource": "prose",
+    "unchanged": true
+   },
+   "PFLT": {
+    "status": "refused",
+    "accn": "0001193125-26-342352",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "cost and fair value both outside tolerance",
+    "rows": 724,
+    "cost": {
+     "sum": 4126062000,
+     "tag": 2627447000,
+     "diffPct": 0.570369
+    },
+    "fv": {
+     "sum": 3964683000,
+     "tag": 2504658000,
+     "diffPct": 0.582924
+    },
+    "source": "dataset",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 724,
+      "cost": {
+       "sum": 4126062000,
+       "tag": 2627447000,
+       "diffPct": 0.570369
+      },
+      "fv": {
+       "sum": 3964683000,
+       "tag": 2504658000,
+       "diffPct": 0.582924
+      },
+      "reason": "cost and fair value both outside tolerance"
+     }
+    ],
+    "acSource": "prose",
+    "unchanged": true
+   },
+   "PFX": {
+    "status": "refused",
+    "accn": "0001213900-26-085667",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "no tagged total to reconcile against",
+    "rows": 92,
+    "cost": {
+     "sum": 1279358731,
+     "tag": null,
+     "diffPct": null
+    },
+    "fv": {
+     "sum": 1206549240,
+     "tag": null,
+     "diffPct": null
+    },
+    "source": "dataset",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 92,
+      "cost": {
+       "sum": 1279358731,
+       "tag": null,
+       "diffPct": null
+      },
+      "fv": {
+       "sum": 1206549240,
+       "tag": null,
+       "diffPct": null
+      },
+      "reason": "no tagged total to reconcile against"
+     },
+     {
+      "variant": "tagged rows with cost-only rows at fair value 0",
+      "n": 96,
+      "cost": {
+       "sum": 1309656512,
+       "tag": null,
+       "diffPct": null
+      },
+      "fv": {
+       "sum": 1206549240,
+       "tag": null,
+       "diffPct": null
+      },
+      "reason": "no tagged total to reconcile against"
+     },
+     {
+      "variant": "tagged rows + 21 table-only rows",
+      "n": 113,
+      "cost": {
+       "sum": 1433993725,
+       "tag": null,
+       "diffPct": null
+      },
+      "fv": {
+       "sum": 1341768265,
+       "tag": null,
+       "diffPct": null
+      },
+      "reason": "no tagged total to reconcile against"
+     },
+     {
+      "variant": "tagged rows with cost-only rows at fair value 0 + 21 table-only rows",
+      "n": 117,
+      "cost": {
+       "sum": 1464291506,
+       "tag": null,
+       "diffPct": null
+      },
+      "fv": {
+       "sum": 1341768265,
+       "tag": null,
+       "diffPct": null
+      },
+      "reason": "no tagged total to reconcile against"
+     },
+     {
+      "variant": "table rows",
+      "n": 63,
+      "cost": {
+       "sum": 329552262,
+       "tag": null,
+       "diffPct": null
+      },
+      "fv": {
+       "sum": 304049754,
+       "tag": null,
+       "diffPct": null
+      },
+      "reason": "no tagged total to reconcile against"
+     }
+    ],
+    "acSource": "tag",
+    "unchanged": true
+   },
+   "PIAC": {
+    "status": "written",
+    "accn": "0001213900-26-090000",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 14,
+    "source": "table",
+    "nonAccrualSource": null
+   },
+   "PNNT": {
+    "status": "written",
+    "accn": "0001193125-26-342350",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 481,
+    "source": "table",
+    "nonAccrualSource": "table"
+   },
+   "PSBD": {
+    "status": "written",
+    "accn": "0001193125-26-333791",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 282,
+    "source": "dataset",
+    "nonAccrualSource": "rpage"
+   },
+   "PSEC": {
+    "status": "written",
+    "accn": "0001287032-26-000269",
+    "period": "2026-06-30",
+    "form": "10-K",
+    "unchanged": true,
+    "rows": 216,
+    "source": "dataset",
+    "nonAccrualSource": "rpage"
+   },
+   "RAND": {
+    "status": "refused",
+    "accn": "0001193125-26-333983",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "cost and fair value both outside tolerance",
+    "rows": 33,
+    "cost": {
+     "sum": 61931025,
+     "tag": 67460476,
+     "diffPct": 0.081966
+    },
+    "fv": {
+     "sum": 54500906,
+     "tag": 56500906,
+     "diffPct": 0.035398
+    },
+    "source": "instance",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 33,
+      "cost": {
+       "sum": 61931025,
+       "tag": 67460476,
+       "diffPct": 0.081966
+      },
+      "fv": {
+       "sum": 54500906,
+       "tag": 56500906,
+       "diffPct": 0.035398
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cost-only rows at fair value 0",
+      "n": 45,
+      "cost": {
+       "sum": 67460476,
+       "tag": 67460476,
+       "diffPct": 0
+      },
+      "fv": {
+       "sum": 54500906,
+       "tag": 56500906,
+       "diffPct": 0.035398
+      },
+      "reason": "fair value outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cost-only rows at the printed fair value (1 of 12 filled from the table)",
+      "n": 45,
+      "cost": {
+       "sum": 67460476,
+       "tag": 67460476,
+       "diffPct": 0
+      },
+      "fv": {
+       "sum": 55200906,
+       "tag": 56500906,
+       "diffPct": 0.023008
+      },
+      "reason": "fair value outside tolerance"
+     },
+     {
+      "variant": "tagged rows + 42 table-only rows",
+      "n": 75,
+      "cost": {
+       "sum": 98116090,
+       "tag": 67460476,
+       "diffPct": 0.454423
+      },
+      "fv": {
+       "sum": 89060702,
+       "tag": 56500906,
+       "diffPct": 0.57627
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cost-only rows at fair value 0 + 42 table-only rows",
+      "n": 87,
+      "cost": {
+       "sum": 103645541,
+       "tag": 67460476,
+       "diffPct": 0.536389
+      },
+      "fv": {
+       "sum": 89760702,
+       "tag": 56500906,
+       "diffPct": 0.58866
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "table rows",
+      "n": 61,
+      "cost": {
+       "sum": 78302654,
+       "tag": 67460476,
+       "diffPct": 0.160719
+      },
+      "fv": {
+       "sum": 76280049,
+       "tag": 56500906,
+       "diffPct": 0.350068
+      },
+      "reason": "cost and fair value both outside tolerance"
+     }
+    ],
+    "acSource": null
+   },
+   "RWAY": {
+    "status": "written",
+    "accn": "0001193125-26-337968",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 157,
+    "source": "dataset",
+    "nonAccrualSource": "rpage"
+   },
+   "SAR": {
+    "status": "refused",
+    "accn": "0001213900-26-075931",
+    "period": "2026-05-31",
+    "form": "10-Q",
+    "reason": "cost and fair value both outside tolerance",
+    "rows": 123,
+    "cost": {
+     "sum": 1114428284,
+     "tag": 1168765135,
+     "diffPct": 0.046491
+    },
+    "fv": {
+     "sum": 1113300705,
+     "tag": 1126333942,
+     "diffPct": 0.011571
+    },
+    "source": "dataset",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 123,
+      "cost": {
+       "sum": 1114428284,
+       "tag": 1168765135,
+       "diffPct": 0.046491
+      },
+      "fv": {
+       "sum": 1113300705,
+       "tag": 1126333942,
+       "diffPct": 0.011571
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cost-only rows at fair value 0",
+      "n": 134,
+      "cost": {
+       "sum": 1149567274,
+       "tag": 1168765135,
+       "diffPct": 0.016426
+      },
+      "fv": {
+       "sum": 1113300705,
+       "tag": 1126333942,
+       "diffPct": 0.011571
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cost-only rows at the printed fair value (11 of 11 filled from the table)",
+      "n": 134,
+      "cost": {
+       "sum": 1149567274,
+       "tag": 1168765135,
+       "diffPct": 0.016426
+      },
+      "fv": {
+       "sum": 1113300705,
+       "tag": 1126333942,
+       "diffPct": 0.011571
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows + 26 table-only rows",
+      "n": 149,
+      "cost": {
+       "sum": 1168765135,
+       "tag": 1168765135,
+       "diffPct": 0
+      },
+      "fv": {
+       "sum": 1118104623,
+       "tag": 1126333942,
+       "diffPct": 0.007306
+      },
+      "reason": "fair value outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cost-only rows at fair value 0 + 26 table-only rows",
+      "n": 160,
+      "cost": {
+       "sum": 1203904125,
+       "tag": 1168765135,
+       "diffPct": 0.030065
+      },
+      "fv": {
+       "sum": 1118104623,
+       "tag": 1126333942,
+       "diffPct": 0.007306
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "table rows",
+      "n": 147,
+      "cost": {
+       "sum": 1135362129,
+       "tag": 1168765135,
+       "diffPct": 0.02858
+      },
+      "fv": {
+       "sum": 1084721327,
+       "tag": 1126333942,
+       "diffPct": 0.036945
+      },
+      "reason": "cost and fair value both outside tolerance"
+     }
+    ],
+    "acSource": "tag",
+    "unchanged": true
+   },
+   "SCM": {
+    "status": "refused",
+    "accn": "0001104659-26-093435",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "cost and fair value both outside tolerance",
+    "rows": 347,
+    "cost": {
+     "sum": 956385151,
+     "tag": 977628049,
+     "diffPct": 0.021729
+    },
+    "fv": {
+     "sum": 946334656,
+     "tag": 968246417,
+     "diffPct": 0.02263
+    },
+    "source": "dataset",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 347,
+      "cost": {
+       "sum": 956385151,
+       "tag": 977628049,
+       "diffPct": 0.021729
+      },
+      "fv": {
+       "sum": 946334656,
+       "tag": 968246417,
+       "diffPct": 0.02263
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cost-only rows at fair value 0",
+      "n": 375,
+      "cost": {
+       "sum": 977628049,
+       "tag": 977628049,
+       "diffPct": 0
+      },
+      "fv": {
+       "sum": 946334656,
+       "tag": 968246417,
+       "diffPct": 0.02263
+      },
+      "reason": "fair value outside tolerance"
+     },
+     {
+      "variant": "tagged rows + 21 table-only rows",
+      "n": 368,
+      "cost": {
+       "sum": 981305739,
+       "tag": 977628049,
+       "diffPct": 0.003762
+      },
+      "fv": {
+       "sum": 948916471,
+       "tag": 968246417,
+       "diffPct": 0.019964
+      },
+      "reason": "fair value outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cost-only rows at fair value 0 + 21 table-only rows",
+      "n": 396,
+      "cost": {
+       "sum": 1002548637,
+       "tag": 977628049,
+       "diffPct": 0.025491
+      },
+      "fv": {
+       "sum": 948916471,
+       "tag": 968246417,
+       "diffPct": 0.019964
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "table rows",
+      "n": 354,
+      "cost": {
+       "sum": 978366791,
+       "tag": 977628049,
+       "diffPct": 0.000756
+      },
+      "fv": {
+       "sum": 945979068,
+       "tag": 968246417,
+       "diffPct": 0.022998
+      },
+      "reason": "fair value outside tolerance"
+     }
+    ],
+    "acSource": "prose",
+    "unchanged": true
+   },
+   "SLRC": {
+    "status": "refused",
+    "accn": "0001193125-26-332726",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "cost and fair value both outside tolerance",
+    "rows": 110,
+    "cost": {
+     "sum": 2321923000,
+     "tag": 2139297000,
+     "diffPct": 0.085367
+    },
+    "fv": {
+     "sum": 2280195000,
+     "tag": 2099331000,
+     "diffPct": 0.086153
+    },
+    "source": "dataset",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 110,
+      "cost": {
+       "sum": 2321923000,
+       "tag": 2139297000,
+       "diffPct": 0.085367
+      },
+      "fv": {
+       "sum": 2280195000,
+       "tag": 2099331000,
+       "diffPct": 0.086153
+      },
+      "reason": "cost and fair value both outside tolerance"
+     }
+    ],
+    "acSource": "prose",
+    "unchanged": true
+   },
+   "SVVC": {
+    "status": "refused",
+    "accn": "0001437749-26-028070",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "cost and fair value both outside tolerance",
+    "rows": 31,
+    "cost": {
+     "sum": 179724324,
+     "tag": 89862162,
+     "diffPct": 1
+    },
+    "fv": {
+     "sum": 297270,
+     "tag": 148635,
+     "diffPct": 1
+    },
+    "source": "instance",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 31,
+      "cost": {
+       "sum": 179724324,
+       "tag": 89862162,
+       "diffPct": 1
+      },
+      "fv": {
+       "sum": 297270,
+       "tag": 148635,
+       "diffPct": 1
+      },
+      "reason": "cost and fair value both outside tolerance"
+     }
+    ],
+    "acSource": null
+   },
+   "TCPC": {
+    "status": "written",
+    "accn": "0001193125-26-336794",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 319,
+    "source": "dataset",
+    "nonAccrualSource": null
+   },
+   "TPVG": {
+    "status": "written",
+    "accn": "0001580345-26-000025",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 311,
+    "source": "dataset",
+    "nonAccrualSource": "table"
+   },
+   "TRIN": {
+    "status": "written",
+    "accn": "0001193125-26-333907",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "unchanged": true,
+    "rows": 512,
+    "source": "dataset",
+    "nonAccrualSource": "table"
+   },
+   "TSLX": {
+    "status": "refused",
+    "accn": "0001193125-26-332725",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "cost and fair value both outside tolerance",
+    "rows": 208,
+    "cost": {
+     "sum": 3263973000,
+     "tag": 3316393000,
+     "diffPct": 0.015806
+    },
+    "fv": {
+     "sum": 3246673000,
+     "tag": 3302132000,
+     "diffPct": 0.016795
+    },
+    "source": "dataset",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 208,
+      "cost": {
+       "sum": 3263973000,
+       "tag": 3316393000,
+       "diffPct": 0.015806
+      },
+      "fv": {
+       "sum": 3246673000,
+       "tag": 3302132000,
+       "diffPct": 0.016795
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cost-only rows at fair value 0",
+      "n": 209,
+      "cost": {
+       "sum": 3265002000,
+       "tag": 3316393000,
+       "diffPct": 0.015496
+      },
+      "fv": {
+       "sum": 3246673000,
+       "tag": 3302132000,
+       "diffPct": 0.016795
+      },
+      "reason": "cost and fair value both outside tolerance"
+     }
+    ],
+    "acSource": "prose",
+    "unchanged": true
+   },
+   "WHF": {
+    "status": "refused",
+    "accn": "0001104659-26-093465",
+    "period": "2026-06-30",
+    "form": "10-Q",
+    "reason": "cost and fair value both outside tolerance",
+    "rows": 189,
+    "cost": {
+     "sum": 926728000,
+     "tag": 594296000,
+     "diffPct": 0.559371
+    },
+    "fv": {
+     "sum": 907226000,
+     "tag": 569202000,
+     "diffPct": 0.593856
+    },
+    "source": "dataset",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 189,
+      "cost": {
+       "sum": 926728000,
+       "tag": 594296000,
+       "diffPct": 0.559371
+      },
+      "fv": {
+       "sum": 907226000,
+       "tag": 569202000,
+       "diffPct": 0.593856
+      },
+      "reason": "cost and fair value both outside tolerance"
+     },
+     {
+      "variant": "tagged rows with cost-only rows at fair value 0",
+      "n": 199,
+      "cost": {
+       "sum": 934155000,
+       "tag": 594296000,
+       "diffPct": 0.571868
+      },
+      "fv": {
+       "sum": 907226000,
+       "tag": 569202000,
+       "diffPct": 0.593856
+      },
+      "reason": "cost and fair value both outside tolerance"
+     }
+    ],
+    "acSource": "prose",
+    "unchanged": true
+   }
+  }
+ },
  "byTicker": {
  "AFCG":{"portfolioFairValue":{"tag":"InvestmentOwnedAtFairValue","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2025-12-31"},"portfolioCost":{"tag":"InvestmentOwnedAtCost","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2025-12-31"},"navPerShare":{"tag":"NetAssetValuePerShare","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2025-12-31"},"niiAfterTax":{"tag":"InvestmentIncomeOperatingAfterExpenseAndTax","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-03-31"},"niiPreTax":{"tag":"NetInvestmentIncome","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-03-31"},"niiTax":{"tag":"InvestmentIncomeOperatingTaxExpenseBenefit","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-03-31"},"niiPerShare":{"tag":"InvestmentCompanyInvestmentIncomeLossPerShare","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-03-31","derived":"ytd-differenced","differenced":true},"distributionsPerShare":{"tag":"InvestmentCompanyDistributionToShareholdersPerShare","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2023-09-30"},"distributionsDollars":{"tag":"InvestmentCompanyDividendDistribution","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-03-31"},"totalReturn":{"tag":"InvestmentCompanyTotalReturn","periodType":"YTD","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-03-31"},"netAssets":{"tag":"StockholdersEquity","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2020-09-30"},"liabilities":{"tag":"Liabilities","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2020-12-31"},"lineOfCredit":{"tag":"LineOfCredit","periodType":"instant","end":"2025-12-31","source":"companyfacts","firstPeriod":"2021-12-31"},"totalAssets":{"tag":"Assets","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2020-12-31"},"cash":{"tag":"CashAndCashEquivalentsAtCarryingValue","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2020-09-30"},"weightedShares":{"tag":"WeightedAverageNumberOfSharesOutstandingBasic","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-03-31"},"preferredDividends":{"tag":"PreferredStockDividendsIncomeStatementImpact","periodType":"derivedQ4","end":"2025-12-31","source":"companyfacts","firstPeriod":"2022-06-30","derived":"annual-less-ytd","differenced":true},"sharesOutstanding":{"tag":"CommonStockSharesOutstanding","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2020-12-31"},"incentiveFeeIncome":{"tag":"IncentiveFeeExpense","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-03-31"},"pikInterestIncome":{"tag":"InterestIncomeOperatingPaidInKind","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-03-31"},"pikNonCashAdjustment":{"tag":"PaidInKindInterest","periodType":"derivedQ4","end":"2022-12-31","source":"companyfacts","firstPeriod":"2022-09-30","derived":"annual-less-ytd","differenced":true},"totalInvestmentIncome":{"tag":"GrossInvestmentIncomeOperating","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-03-31"},"totalExpenses":{"tag":"InvestmentIncomeInvestmentExpense","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-03-31"},"interestExpense":{"tag":"InterestExpense","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-03-31"},"realizedGains":{"tag":"RealizedInvestmentGainsLosses","periodType":"derivedQ4","end":"2025-12-31","source":"companyfacts","firstPeriod":"2021-03-31","derived":"annual-less-ytd","differenced":true},"unrealizedGains":{"tag":"UnrealizedGainLossOnInvestments","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-03-31","derived":"ytd-differenced","differenced":true},"netIncreaseInNetAssets":{"tag":"NetIncomeLoss","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-03-31"},"unfundedCommitments":{"tag":"InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2025-12-31"}},
  "ARCC":{"portfolioFairValue":{"tag":"InvestmentOwnedAtFairValue","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"portfolioCost":{"tag":"InvestmentOwnedAtCost","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"navPerShare":{"tag":"NetAssetValuePerShare","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2012-12-31"},"niiAfterTax":{"tag":"InvestmentIncomeOperatingAfterExpenseAndTax","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"niiPreTax":{"tag":"NetInvestmentIncome","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"niiTax":{"tag":"InvestmentIncomeOperatingTaxExpenseBenefit","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-06-30"},"niiPerShare":{"tag":"InvestmentCompanyInvestmentIncomeLossPerShare","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31","derived":"ytd-differenced","differenced":true},"distributionsPerShare":{"tag":"InvestmentCompanyDistributionToShareholdersPerShare","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-03-31","derived":"ytd-differenced","differenced":true},"distributionsDollars":{"tag":"InvestmentCompanyDividendDistribution","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-03-31"},"distributionsCommon":{"tag":"DividendsCommonStock","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2023-03-31","derived":"ytd-differenced","differenced":true},"totalReturn":{"tag":"InvestmentCompanyTotalReturn","periodType":"YTD","end":"2026-06-30","source":"companyfacts","firstPeriod":"2013-12-31"},"netAssets":{"tag":"StockholdersEquity","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2013-12-31"},"debt":{"tag":"DebtInstrumentCarryingAmount","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"liabilities":{"tag":"Liabilities","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"totalAssets":{"tag":"Assets","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"cash":{"tag":"CashAndCashEquivalentsAtCarryingValue","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2019-12-31"},"assetCoverage":{"tag":"InvestmentCompanySeniorSecurityIndebtednessAssetCoverageRatio","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2023-06-30"},"weightedShares":{"tag":"WeightedAverageNumberOfSharesOutstandingBasic","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2020-12-31"},"sharesOutstanding":{"tag":"CommonStockSharesOutstanding","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2013-12-31"},"managementFee":{"tag":"ManagementFeeExpense","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"incentiveFeeIncome":{"tag":"IncentiveFeeExpenseIncomeBased","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2025-03-31"},"expenseRatio":{"tag":"InvestmentCompanyExpenseRatioIncludingIncentiveFee","periodType":"YTD","end":"2026-06-30","source":"companyfacts","firstPeriod":"2013-12-31"},"costOfDebt":{"tag":"DebtWeightedAverageInterestRate","periodType":"instant","end":"2025-12-31","source":"companyfacts","firstPeriod":"2021-12-31"},"pikInterestIncome":{"tag":"InterestIncomeOperatingPaidInKind","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-09-30","derived":"ytd-differenced","differenced":true},"pikDividendIncome":{"tag":"DividendIncomeOperatingPaidInKind","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-09-30","derived":"ytd-differenced","differenced":true},"pikNonCashAdjustment":{"tag":"PaidInKindInterest","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-03-31","derived":"ytd-differenced","differenced":true},"totalInvestmentIncome":{"tag":"GrossInvestmentIncomeOperating","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"totalExpenses":{"tag":"InvestmentIncomeInvestmentExpense","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"interestExpense":{"tag":"InterestExpense","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"realizedGains":{"tag":"RealizedGainLossInvestmentDerivativeAndForeignCurrencyTransactionPriceChangeOperatingAfterTax","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-06-30"},"unrealizedGains":{"tag":"UnrealizedGainLossInvestmentDerivativeAndForeignCurrencyTransactionPriceChangeOperatingAfterTax","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-03-31"},"netIncreaseInNetAssets":{"tag":"NetIncomeLoss","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"unfundedCommitments":{"tag":"InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"}},

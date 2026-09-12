@@ -1,0 +1,586 @@
+{
+ "ticker": "OFS",
+ "cik": 1487918,
+ "name": "OFS Capital Corp",
+ "period": "2026-06-30",
+ "form": "10-Q",
+ "accn": "0001487918-26-000078",
+ "filed": "2026-07-31",
+ "creditVersion": "1.1.0",
+ "rowSource": "dataset",
+ "sources": {
+  "dataset": {
+   "zip": "2026_07_bdc.zip",
+   "rows": 94,
+   "counts": {
+    "rows": 445,
+    "identifier": 261,
+    "atPeriod": 132,
+    "kept": 94
+   },
+   "dropped": {
+    "otherDate": 129,
+    "otherEntity": 0,
+    "subtotal": 0,
+    "cash": 0,
+    "fvOnly": 10,
+    "costOnly": 0,
+    "neither": 28
+   },
+   "extra": {
+    "costOnly": 0,
+    "cash": 0
+   }
+  },
+  "instance": null,
+  "table": {
+   "doc": "0001487918-26-000078.htm",
+   "period": "2026-06-30",
+   "tables": 7,
+   "rows": 97,
+   "subtotals": 28,
+   "scale": 1000,
+   "scaleFix": 1,
+   "totals": {
+    "cost": 275837000,
+    "fv": 297756000
+   },
+   "matched": 92,
+   "rate": 0.9787,
+   "stages": {
+    "numeric": 89,
+    "principal": 1,
+    "cost": 2,
+    "name": 0
+   },
+   "filled": {
+    "mat": 0,
+    "ind": 12,
+    "na": 9,
+    "lien": 0,
+    "aff": 10,
+    "rate": 1,
+    "acquired": 0,
+    "name": 0
+   },
+   "nonAccrualRows": 10,
+   "nonAccrualUnmatched": 1,
+   "unmatchedRows": 5,
+   "headers": {
+    "(unlabeled first column)": "issuer",
+    "industry": "industry",
+    "interest rate": "rate",
+    "spread above index": "spread",
+    "initial acquisition date": "acquired",
+    "maturity": "maturity",
+    "principal amount": "principal",
+    "amortized cost": "cost",
+    "fair value": "fv",
+    "percent of net assets": "pctNav"
+   },
+   "notes": []
+  },
+  "rpage": null
+ },
+ "gate": {
+  "passed": true,
+  "tolerance": 0.005,
+  "tagSource": "company file",
+  "variant": "tagged rows",
+  "cost": {
+   "sum": 275837000,
+   "tag": 275837000,
+   "diffPct": 0
+  },
+  "fv": {
+   "sum": 297756000,
+   "tag": 297756000,
+   "diffPct": 0
+  },
+  "rows": 94,
+  "subtotalRowsDropped": 10,
+  "dropped": {
+   "otherDate": 129,
+   "otherEntity": 0,
+   "subtotal": 0,
+   "cash": 0,
+   "fvOnly": 10,
+   "costOnly": 0,
+   "neither": 28
+  },
+  "tried": [
+   {
+    "variant": "tagged rows",
+    "n": 94,
+    "cost": {
+     "sum": 275837000,
+     "tag": 275837000,
+     "diffPct": 0
+    },
+    "fv": {
+     "sum": 297756000,
+     "tag": 297756000,
+     "diffPct": 0
+    },
+    "reason": null
+   }
+  ]
+ },
+ "summary": {
+  "portfolioCost": 275837000,
+  "portfolioFv": 297756000,
+  "holdings": 94,
+  "thirdPartyDebtCost": 180599000,
+  "thirdPartyDebtFv": 145126000,
+  "thirdPartyDebtHoldings": 64,
+  "count": null,
+  "countAll": 51,
+  "countDebt": 33,
+  "namesUnsplit": 0,
+  "nonAccrual": {
+   "cost": 43990000,
+   "fv": 21386000,
+   "n": 9,
+   "issuers": 6,
+   "ofTotalCost": 0.1595,
+   "ofTotalFv": 0.0718,
+   "ofDebtCost": 0.2436,
+   "ofDebtFv": 0.1474,
+   "source": "table"
+  },
+  "wa": {
+   "yieldAtCost": null,
+   "yieldAtFv": null,
+   "spreadCostWeighted": 0.066,
+   "floatingShare": 0.8679,
+   "pikContractual": 0,
+   "n": {
+    "yield": 37,
+    "spread": 61,
+    "debt": 64
+   },
+   "yieldCoverage": 0.5864,
+   "yieldNote": "withheld: rows with a tagged principal and rate carry 58.6% of accruing third-party debt cost, under the 80% floor"
+  },
+  "lien": {
+   "classes": {
+    "first lien": {
+     "cost": 159279000,
+     "share": 0.8819,
+     "shareOfPortfolio": 0.5774
+    },
+    "second lien": {
+     "cost": 18340000,
+     "share": 0.1016,
+     "shareOfPortfolio": 0.0665
+    },
+    "unsecured": {
+     "cost": 2980000,
+     "share": 0.0165,
+     "shareOfPortfolio": 0.0108
+    }
+   },
+   "total": 180599000,
+   "portfolioCost": 275837000,
+   "firstLienShare": 0.8819,
+   "firstLienShareOfPortfolio": 0.5774,
+   "unclassifiedShare": 0
+  },
+  "industry": [
+   {
+    "name": "Pharmaceutical Preparation Manufacturing",
+    "fv": 95824000,
+    "share": 0.3218
+   },
+   {
+    "name": "Motorcycle, Bicycle, and Parts Manufacturing",
+    "fv": 38853000,
+    "share": 0.1305
+   },
+   {
+    "name": "Other Ambulatory Health Care Services",
+    "fv": 18004000,
+    "share": 0.0605
+   },
+   {
+    "name": "Sports and Recreation Instruction",
+    "fv": 17377000,
+    "share": 0.0584
+   },
+   {
+    "name": "Other Computer Related Services",
+    "fv": 17345000,
+    "share": 0.0583
+   },
+   {
+    "name": "Services for the Elderly and Persons with Disabilities",
+    "fv": 12636000,
+    "share": 0.0424
+   },
+   {
+    "name": "Office Machinery and Equipment Rental and Leasing",
+    "fv": 12205000,
+    "share": 0.041
+   },
+   {
+    "name": "Offices of Other Holding Companies",
+    "fv": 10360000,
+    "share": 0.0348
+   },
+   {
+    "name": "Software Publishers",
+    "fv": 9606000,
+    "share": 0.0323
+   },
+   {
+    "name": "Temporary Help Services",
+    "fv": 8298000,
+    "share": 0.0279
+   },
+   {
+    "name": "other",
+    "fv": 52819000,
+    "share": 0.1774
+   },
+   {
+    "name": "n/a",
+    "fv": 4429000,
+    "share": 0.0149
+   }
+  ],
+  "industrySource": "id,table",
+  "maturity": {
+   "2026": 54835000,
+   "2027": 55360000,
+   "2028": 10398000,
+   "2029": 42986000,
+   "2030": 10256000,
+   "2031-2033": 3784000,
+   "later": 2980000,
+   "n/a": 0,
+   "excluded": 0,
+   "total": 180599000,
+   "dated": 180599000,
+   "unfunded": 7132000,
+   "shares": {
+    "2026": 0.3036,
+    "2027": 0.3065,
+    "2028": 0.0576,
+    "2029": 0.238,
+    "2030": 0.0568,
+    "2031-2033": 0.021,
+    "later": 0.0165
+   }
+  },
+  "maturitySource": "axis",
+  "vehicles": {
+   "fv": 0,
+   "share": 0
+  },
+  "structured": {
+   "fv": 31760000,
+   "share": 0.1067
+  },
+  "equity": {
+   "fv": 116656000,
+   "share": 0.3918
+  },
+  "top10": {
+   "fv": null,
+   "share": null
+  },
+  "affiliation": {
+   "non-controlled affiliated": {
+    "fv": 115826000,
+    "share": 0.389
+   },
+   "n/a": {
+    "fv": 181930000,
+    "share": 0.611
+   }
+  },
+  "affiliationClasses": [
+   "non-controlled affiliated"
+  ],
+  "affiliationSource": "table",
+  "unfunded": {
+   "total": 7289000,
+   "holdings": 17,
+   "matched": 17,
+   "unmatched": 0,
+   "membersTotal": 7289000,
+   "dimensionless": 6003000
+  },
+  "pik": {
+   "holdings": 15,
+   "cost": 62661000
+  },
+  "histogram": {
+   "byCount": {
+    "350-400": 0.0328,
+    "400-450": 0.0164,
+    "450-500": 0.0492,
+    "500-550": 0.082,
+    "550-600": 0.2623,
+    "600-650": 0.1803,
+    "650-700": 0.1639,
+    "700-750": 0.082,
+    "750-800": 0.0656,
+    "850-900": 0.0328,
+    "1000+": 0.0328
+   },
+   "byCost": {
+    "350-400": 0.0128,
+    "400-450": 0.0031,
+    "450-500": 0.0042,
+    "500-550": 0.0098,
+    "550-600": 0.1835,
+    "600-650": 0.2501,
+    "650-700": 0.2801,
+    "700-750": 0.1673,
+    "750-800": 0.0316,
+    "850-900": 0.0008,
+    "1000+": 0.0567
+   },
+   "n": 61,
+   "cost": 156741000
+  },
+  "vsProse": {
+   "yieldAtCost": null,
+   "yieldAtFv": null,
+   "floatingShare": null,
+   "floatingShareBasis": null,
+   "nonAccrualCost": null,
+   "nonAccrualFv": 0.072,
+   "nonAccrualOf": "total",
+   "portfolioCompanies": 33
+  },
+  "flags": [
+   {
+    "figure": "count",
+    "computed": 51,
+    "disclosed": 33,
+    "note": "withheld with top10: more than 25% from the filing's stated portfolio-company count (compared over every issuer, controlled ones included)"
+   }
+  ]
+ },
+ "tableUnmatched": {
+  "rows": [
+   {
+    "issuer": "BayMark Health Services, Inc.",
+    "type": null,
+    "lien": "Debt and Equity Investments",
+    "industry": "Outpatient Mental Health and Substance Abuse Centers",
+    "nonAccrual": true,
+    "maturity": null,
+    "principal": 8950000,
+    "cost": 8892000,
+    "fv": 51000,
+    "page": 1,
+    "src": "table"
+   },
+   {
+    "issuer": "Metasource, LLC",
+    "type": "First Lien Debt (Revolver)",
+    "lien": "Debt and Equity Investments",
+    "industry": "All Other Business Support Services",
+    "nonAccrual": false,
+    "maturity": "2031-06-09",
+    "principal": 0,
+    "cost": -4000,
+    "fv": -4000,
+    "page": 4,
+    "src": "table"
+   },
+   {
+    "issuer": "PSB Group, LLC",
+    "type": "First Lien Debt (Revolver)",
+    "lien": "Debt and Equity Investments",
+    "industry": "Lessors of Nonfinancial Intangible Assets (except Copyrighted Works)",
+    "nonAccrual": false,
+    "maturity": "2030-04-17",
+    "principal": 0,
+    "cost": -4000,
+    "fv": -4000,
+    "page": 4,
+    "src": "table"
+   },
+   {
+    "issuer": "Pfanstiehl Holdings, Inc.",
+    "type": "First American Treasury Obligations Fund Class Z",
+    "lien": "Cash Equivalents",
+    "industry": "Pharmaceutical Preparation Manufacturing",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 371000,
+    "cost": 371000,
+    "fv": 371000,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "Morgan Stanley Institutional Liquidity Funds - Government Portfolio Advisory Class",
+    "type": null,
+    "lien": "Cash Equivalents",
+    "industry": null,
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 996000,
+    "cost": 996000,
+    "fv": 996000,
+    "page": 7,
+    "src": "table"
+   }
+  ],
+  "nonAccrualRows": 1,
+  "note": "printed rows that matched no tagged holding, kept whole with their columns (src \"table\", non-accrual first) and never summed; the gate's sums stay the tagged sums"
+ },
+ "notes": [],
+ "keys": {
+  "holding": {
+   "id": "id",
+   "issuer": "k",
+   "name": "n",
+   "aff": "a",
+   "kind": "t",
+   "lien": "l",
+   "facility": "f",
+   "industry": "i",
+   "rate": "r",
+   "spread": "sp",
+   "floor": "fl",
+   "pik": "pk",
+   "base": "b",
+   "principal": "p",
+   "cost": "c",
+   "fv": "v",
+   "pctNav": "nv",
+   "unfunded": "u",
+   "acquired": "ad",
+   "maturity": "m",
+   "nonAccrual": "na",
+   "floating": "fr",
+   "units": "un",
+   "src": "s",
+   "fvUntagged": "fvu",
+   "costUntagged": "cu",
+   "cashEquivalent": "ce"
+  },
+  "lien": {
+   "class": "c",
+   "subclass": "s",
+   "raw": "r"
+  },
+  "src": {
+   "row": "w",
+   "table": "t",
+   "r": "r",
+   "na": "na",
+   "ind": "i",
+   "mat": "m",
+   "unf": "u",
+   "rt": "rt",
+   "ds": "ds",
+   "val": "vl",
+   "nm": "nm",
+   "af": "af"
+  },
+  "note": "short keys per blueprint 7.4; a key absent from a row is null (floating: false); src.t and src.r absent mean false, src.na absent means none; src.vl \"table\" marks a fair value the filer left untagged and the printed schedule supplied; src.nm \"table\" marks an issuer name the printed row supplied; src.af \"issuer\" marks an affiliation taken from the issuer's other tranches; the issuer key (H1 `issuer`) is not written — it is normalizeIssuer(n), which expandHolding restores"
+ },
+ "holdings": [
+{"id":"Portfolio Company Investment Type AI Contract Datascan Holdings, Inc. CE (11,273 shares) Industry Office Machinery and Equipment Rental and Leasing IAD 6/28/2016","n":"Contract Datascan Holdings, Inc.","a":"non-controlled affiliated","t":"equity","l":{"c":"equity","r":"Common Equity (11,273 shares)"},"i":"Office Machinery and Equipment Rental and Leasing","c":104000,"v":0,"nv":0,"ad":"2016-06-28","s":{"w":"dataset","t":true,"i":"id"}},
+{"id":"Portfolio Company Investment Type AI Contract Datascan Holdings, Inc. PE (2750 Series C shares),14% PIK Industry Office Machinery and Equipment Rental and Leasing IAD 8/21/2025","n":"Contract Datascan Holdings, Inc.","a":"non-controlled affiliated","t":"equity","l":{"c":"equity","r":"Preferred Equity (2750 Series C shares),14% PIK"},"i":"Office Machinery and Equipment Rental and Leasing","c":3083000,"v":3078000,"nv":0.027,"ad":"2025-08-21","s":{"w":"dataset","t":true,"i":"id"}},
+{"id":"Portfolio Company Investment Type AI Contract Datascan Holdings, Inc. PE (3,061 Series A shares),10% PIK Industry Office Machinery and Equipment Rental and Leasing IAD 8/5/2015","n":"Contract Datascan Holdings, Inc.","a":"non-controlled affiliated","t":"equity","l":{"c":"equity","r":"Preferred Equity (3,061 Series A shares),10% PIK"},"i":"Office Machinery and Equipment Rental and Leasing","c":10256000,"v":9127000,"nv":0.081,"ad":"2015-08-05","s":{"w":"dataset","t":true,"i":"id"}},
+{"id":"Portfolio Company Investment Type AI Contract Datascan Holdings, Inc. Warrants (warrants to purchase 1,946 shares of common equity) Industry Office Machinery and Equipment Rental and Leasing IAD 8/21/2025 Maturity 8/20/2035","n":"Contract Datascan Holdings, Inc.","a":"non-controlled affiliated","t":"equity","l":{"c":"equity","r":"Warrants (warrants to purchase 1,946 shares of common equity)"},"i":"Office Machinery and Equipment Rental and Leasing","c":0,"v":0,"nv":0,"ad":"2025-08-21","m":"2035-08-20","s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type AI Contract Datascan Holdings, Inc. Warrants (warrants to purchase 224 Series A preferred equity shares) Industry Office Machinery and Equipment Rental and Leasing IAD 8/21/2025 Maturity 8/20/2035","n":"Contract Datascan Holdings, Inc.","a":"non-controlled affiliated","t":"equity","l":{"c":"equity","r":"Warrants (warrants to purchase 224 Series A preferred equity shares)"},"i":"Office Machinery and Equipment Rental and Leasing","c":0,"v":0,"nv":0,"ad":"2025-08-21","m":"2035-08-20","s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type AI DRS Imaging Services, LLC CE Industry Data Processing, Hosting, and Related Services IAD 3/8/2018","n":"DRS Imaging Services, LLC","a":"non-controlled affiliated","t":"equity","l":{"c":"equity","r":"Common Equity"},"i":"Data Processing, Hosting, and Related Services","c":1135000,"v":3583000,"nv":0.032,"ad":"2018-03-08","s":{"w":"dataset","t":true,"i":"id"}},
+{"id":"Portfolio Company Investment Type AI Pfanstiehl Holdings, Inc CE (400 Class A shares) Industry Pharmaceutical Preparation Manufacturing IAD 1/1/2014","n":"Pfanstiehl Holdings, Inc","a":"non-controlled affiliated","t":"equity","l":{"c":"equity","r":"Common Equity (400 Class A shares)"},"i":"Pharmaceutical Preparation Manufacturing","c":217000,"v":94550000,"nv":0.84,"ad":"2014-01-01","s":{"w":"dataset","t":true,"i":"id"}},
+{"id":"Portfolio Company Investment Type AI SSJA Bariatric Management LLC CE (52,763 Class A units) IAD 10/31/2025","n":"SSJA Bariatric Management LLC","a":"non-controlled affiliated","t":"equity","l":{"c":"equity","r":"Common Equity (52,763 Class A units)"},"i":"Pharmaceutical Preparation Manufacturing","c":9657000,"v":1274000,"nv":0.011,"ad":"2025-10-31","s":{"w":"dataset","t":true,"i":"table"}},
+{"id":"Portfolio Company Investment Type AI SSJA Bariatric Management LLC FLD Industry Offices of Physicians and Mental Health Specialists IR 9.06 % SPI SOFR+ 5.25 % IAD 10/31/2025 Maturity 10/31/2028","n":"SSJA Bariatric Management LLC","a":"non-controlled affiliated","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Offices of Physicians and Mental Health Specialists","r":0.0906,"sp":0.0525,"b":"SOFR","p":233000,"c":233000,"v":233000,"nv":0.002,"ad":"2025-10-31","m":"2028-10-31","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type AI SSJA Bariatric Management LLC FLD Industry Offices of Physicians and Mental Health Specialists IR 9.07% PIK SPI SOFR+ 5.25 % IAD 12/31/2020 Maturity 10/31/2028","n":"SSJA Bariatric Management LLC","a":"non-controlled affiliated","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Offices of Physicians and Mental Health Specialists","sp":0.0525,"pk":0.0907,"b":"SOFR","p":3981000,"c":3981000,"v":3981000,"nv":0.035,"u":157000,"ad":"2020-12-31","m":"2028-10-31","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis","u":"issuer"}},
+{"id":"Portfolio Company Investment Type NCNA Debt and Equity Inv. RPLF Holdings, LLC CE Industry Software Publishers IAD 1/17/2018","n":"RPLF Holdings, LLC","t":"equity","l":{"c":"equity","r":"Common Equity"},"i":"Software Publishers","c":0,"v":1848000,"nv":0.016,"ad":"2018-01-17","s":{"w":"dataset","t":true,"i":"id"}},
+{"id":"Portfolio Company Investment Type NCNA Debt and Equity Inv. Sentry Centers Holdings, LLC PE Industry Convention and Trade Show Organizers IAD 9/4/2020","n":"Sentry Centers Holdings, LLC","t":"equity","l":{"c":"equity","r":"Preferred Equity"},"i":"Convention and Trade Show Organizers","c":160000,"v":1000,"nv":0,"ad":"2020-09-04","s":{"w":"dataset","t":true,"i":"id"}},
+{"id":"Portfolio Company Investment Type NCNA Debt and Equity Inv. Signal Parent, Inc. FLD Industry New Single-Family Housing Construction (except For-Sale Builders) IR 7.26% SAI SOFR+3.50 % IAD 3/25/2021 Maturity 4/3/2028","n":"Signal Parent, Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"New Single-Family Housing Construction (except For-Sale Builders)","r":0.0726,"sp":0.035,"b":"SOFR","p":1510000,"c":1506000,"v":607000,"nv":0.005,"ad":"2021-03-25","m":"2028-04-03","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Debt and Equity Inv. SS Acquisition, LLC FLD Industry Sports and Recreation Instruction IR 9.48% SAI SOFR+5.75 % IAD 12/20/2024 Maturity 12/20/2029","n":"SS Acquisition, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Sports and Recreation Instruction","r":0.0948,"sp":0.0575,"b":"SOFR","p":16710000,"c":16652000,"v":16877000,"nv":0.15,"u":1286000,"ad":"2024-12-20","m":"2029-12-20","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis","u":"issuer"}},
+{"id":"Portfolio Company Investment Type NCNA Debt and Equity Inv. SS Acquisition, LLC FLD(R) Industry Sports and Recreation Instruction IR 9.48% SAI SOFR+5.75 % IAD 12/20/2024 Maturity 12/20/2029","n":"SS Acquisition, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt(R)"},"f":"revolver","i":"Sports and Recreation Instruction","r":0.0948,"sp":0.0575,"b":"SOFR","p":500000,"c":494000,"v":500000,"nv":0.004,"u":1286000,"ad":"2024-12-20","m":"2029-12-20","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis","u":"issuer"}},
+{"id":"Portfolio Company Investment Type NCNA Debt and Equity Inv. Staples, Inc. FLD Industry Business to Business Electronic Markets IR 9.41 % SAI SOFR+5.75 % IAD 5/23/2024 Maturity 9/4/2029","n":"Staples, Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Business to Business Electronic Markets","r":0.0941,"sp":0.0575,"b":"SOFR","p":526000,"c":514000,"v":490000,"nv":0.004,"ad":"2024-05-23","m":"2029-09-04","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Debt and Equity Inv. TalentSmart Holdings, LLC CE Industry Professional and Management Development Trainin IAD 10/11/2019","n":"TalentSmart Holdings, LLC","t":"equity","l":{"c":"equity","r":"Common Equity"},"i":"Professional and Management Development Trainin","c":670000,"v":640000,"nv":0.006,"ad":"2019-10-11","s":{"w":"dataset","t":true,"i":"id"}},
+{"id":"Portfolio Company Investment Type NCNA Debt and Equity Inv. Tolemar Acquisition, Inc. FLD Industry Motorcycle, Bicycle, and Parts Manufacturing IR 9.74% cash / 1.25% PIK SAI SOFR+6.00 % IAD 10/14/2021 Maturity 10/14/2027","n":"Tolemar Acquisition, Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Motorcycle, Bicycle, and Parts Manufacturing","sp":0.06,"pk":0.0125,"b":"SOFR","p":14534000,"c":14494000,"v":8837000,"nv":0.08,"ad":"2021-10-14","m":"2027-10-14","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Debt and Equity Inv. Tolemar Acquisition, Inc. FLD(R) Industry Motorcycle, Bicycle, and Parts Manufacturing IR 9.74 % SAI SOFR+6.00 % IAD 10/14/2021 Maturity 10/14/2027","n":"Tolemar Acquisition, Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt(R)"},"f":"revolver","i":"Motorcycle, Bicycle, and Parts Manufacturing","r":0.0974,"sp":0.06,"b":"SOFR","p":978000,"c":976000,"v":373000,"nv":0.003,"u":566000,"ad":"2021-10-14","m":"2027-10-14","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis","u":"issuer"}},
+{"id":"Portfolio Company Investment Type NCNA I PSB Group, LLC FLD Industry Lessors of Nonfinancial Intangible Assets (except Copyrighted Works) IR 10.39% SAI SOFR+ 6.75 % IAD 4/17/2025 Maturity 4/17/2030","n":"PSB Group, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Lessors of Nonfinancial Intangible Assets (except Copyrighted Works)","r":0.1039,"sp":0.0675,"b":"SOFR","p":7842000,"c":7812000,"v":7803000,"nv":0.069,"u":1059000,"ad":"2025-04-17","m":"2030-04-17","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis","u":"issuer"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. 24 Seven Holdco, LLC FLD Industry Temporary Help Services IR 10.88% SAI SOFR+ 7.13% IAD 1/28/2022 Maturity 11/16/2027","n":"24 Seven Holdco, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Temporary Help Services","r":0.1088,"sp":0.0713,"b":"SOFR","p":8340000,"c":8325000,"v":8298000,"nv":0.074,"ad":"2022-01-28","m":"2027-11-16","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. AIDC IntermediateCo 2, LLC FLD Industry Computer Systems Design Services IR 9.14% SAI SOFR+ 5.50% IAD 7/22/2022 Maturity 7/22/2027","n":"AIDC IntermediateCo 2, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Computer Systems Design Services","r":0.0914,"sp":0.055,"b":"SOFR","p":1930000,"c":1920000,"v":1918000,"nv":0.017,"ad":"2022-07-22","m":"2027-07-22","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. AIDC IntermediateCo 2, LLC FLD Industry Computer Systems Design Services IR 9.14% SAI SOFR+ 5.50% IAD 7/31/2023 Maturity 7/22/2027","n":"AIDC IntermediateCo 2, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Computer Systems Design Services","r":0.0914,"sp":0.055,"b":"SOFR","p":45000,"c":45000,"v":45000,"nv":0,"ad":"2023-07-31","m":"2027-07-22","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Allen Media, LLC FLD Industry Cable and Other Subscription Programming IR 9.38% SAI SOFR+ 5.50% IAD 3/2/2021 Maturity 2/10/2027","n":"Allen Media, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Cable and Other Subscription Programming","r":0.0938,"sp":0.055,"b":"SOFR","p":3633000,"c":3632000,"v":2626000,"nv":0.023,"ad":"2021-03-02","m":"2027-02-10","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Asurion, LLC FLD Industry Communication Equipment Repair and Maintenance IR 7.91% SAI SOFR+ 4.25% IAD 10/28/2025 Maturity 9/19/2030","n":"Asurion, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Communication Equipment Repair and Maintenance","r":0.0791,"sp":0.0425,"b":"SOFR","p":494000,"c":493000,"v":490000,"nv":0.004,"ad":"2025-10-28","m":"2030-09-19","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Avison Young Inc. CE (1,185 Class B units) IAD 3/12/2024","n":"Avison Young Inc.","t":"equity","l":{"c":"equity","r":"Common Equity (1,185 Class B units)"},"i":"Nonresidential Property Managers","c":1400000,"v":0,"nv":0,"ad":"2024-03-12","s":{"w":"dataset","t":true,"i":"table"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Avison Young Inc. FLD Industry Nonresidential Property Managers IR 11.41% SAI SOFR+ 7.50% IAD 11/25/2021 Maturity 3/12/2029","n":"Avison Young Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Nonresidential Property Managers","sp":0.075,"pk":0.1141,"b":"SOFR","p":326000,"c":189000,"v":250000,"nv":0.002,"ad":"2021-11-25","m":"2029-03-12","na":true,"fr":true,"s":{"w":"dataset","t":true,"na":"table","i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Avison Young Inc. FLD Industry Nonresidential Property Managers IR 11.43% SAI SOFR+ 7.50% IAD 11/25/2021 Maturity 3/12/2029","n":"Avison Young Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Nonresidential Property Managers","sp":0.075,"pk":0.1143,"b":"SOFR","p":1662000,"c":1662000,"v":1535000,"nv":0.014,"ad":"2021-11-25","m":"2029-03-12","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Avison Young Inc. FLD Industry Nonresidential Property Managers IR 12.26% PIK SAI SOFR+ 8.50% IAD 12/18/2025 Maturity 12/12/2027","n":"Avison Young Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Nonresidential Property Managers","sp":0.085,"pk":0.1226,"b":"SOFR","p":86000,"c":86000,"v":87000,"nv":0.001,"ad":"2025-12-18","m":"2027-12-12","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Avison Young Inc. FLD Industry Nonresidential Property Managers IR 12.26% PIK SAI SOFR+ 8.50% IAD 12/18/2025 Maturity 46733 12/12/2027","n":"Avison Young Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Nonresidential Property Managers","sp":0.085,"pk":0.1226,"b":"SOFR","p":35000,"c":35000,"v":37000,"nv":0,"ad":"2025-12-18","m":"2027-12-12","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Avison Young Inc. FLD Industry Nonresidential Property Managers IR 5.15% cash / 5.96% PIK SAI SOFR+ 7.35% IAD 12/18/2025 Maturity 12/12/2027","n":"Avison Young Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Nonresidential Property Managers","sp":0.0735,"pk":0.0596,"b":"SOFR","p":239000,"c":239000,"v":241000,"nv":0.002,"ad":"2025-12-18","m":"2027-12-12","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Avison Young Inc. PE (1,715 Class A units) IAD 3/12/2024","n":"Avison Young Inc.","t":"equity","l":{"c":"equity","r":"Preferred Equity (1,715 Class A units)"},"i":"Nonresidential Property Managers","c":1270000,"v":0,"nv":0,"ad":"2024-03-12","s":{"w":"dataset","t":true,"i":"table"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. BayMark Health Services, Inc. SLD Industry Outpatient Mental Health and Substance Abuse Centers IR 14.49% SAI SOFR+ 10.50% IAD 6/10/2021 Maturity 6/11/2028 One","n":"BayMark Health Services, Inc.","t":"debt","l":{"c":"second lien","r":"Second Lien Debt"},"i":"Outpatient Mental Health and Substance Abuse Centers","r":0.1449,"sp":0.105,"b":"SOFR","p":3988000,"c":3961000,"v":22000,"nv":0,"ad":"2021-06-10","m":"2028-06-11","na":true,"fr":true,"s":{"w":"dataset","t":true,"na":"table","i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. BayMark Health Services, Inc. SLD Industry Outpatient Mental Health and Substance Abuse Centers IR 14.49% SAI SOFR+ 10.50% IAD 6/10/2021 Maturity 6/11/2028","n":"BayMark Health Services, Inc.","t":"debt","l":{"c":"second lien","r":"Second Lien Debt"},"i":"Outpatient Mental Health and Substance Abuse Centers","r":0.1449,"sp":0.105,"b":"SOFR","p":4962000,"c":4931000,"v":29000,"nv":0,"ad":"2021-06-10","m":"2028-06-11","na":true,"fr":true,"s":{"w":"dataset","t":true,"na":"table","i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Blackhawk Network Holdings, Inc. FLD Industry Computer and Computer Peripheral Equipment and Software Merchant Wholesalers IR 7.14% SAI SOFR+ 3.50% IAD 3/25/2026 Maturity 3/12/2029","n":"Blackhawk Network Holdings, Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Computer and Computer Peripheral Equipment and Software Merchant Wholesalers","r":0.0714,"sp":0.035,"b":"SOFR","p":498000,"c":493000,"v":496000,"nv":0.004,"ad":"2026-03-25","m":"2029-03-12","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Boca Home Care Holdings, Inc. CE (1,290 Class A units) Industry Services for the Elderly and Persons with Disabilities IAD 2/25/2022","n":"Boca Home Care Holdings, Inc.","t":"equity","l":{"c":"equity","r":"Common Equity (1,290 Class A units)"},"i":"Services for the Elderly and Persons with Disabilities","c":1290000,"v":734000,"nv":0.007,"ad":"2022-02-25","s":{"w":"dataset","t":true,"i":"id"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Boca Home Care Holdings, Inc. FLD (Revolver) Industry Services for the Elderly and Persons with Disabilities IR 10.41% SAI SOFR+ 6.50% IAD 2/25/2022 Maturity 2/25/2029","n":"Boca Home Care Holdings, Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt (Revolver)"},"f":"revolver","i":"Services for the Elderly and Persons with Disabilities","r":0.1041,"sp":0.065,"b":"SOFR","p":226000,"c":224000,"v":226000,"nv":0.002,"u":1065000,"ad":"2022-02-25","m":"2029-02-25","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis","u":"issuer"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Boca Home Care Holdings, Inc. FLD Industry Services for the Elderly and Persons with Disabilities IR 10.41% SAI SOFR+ 6.50% IAD 2/25/2022 Maturity 2/25/2029","n":"Boca Home Care Holdings, Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Services for the Elderly and Persons with Disabilities","r":0.1041,"sp":0.065,"b":"SOFR","p":8873000,"c":8831000,"v":8876000,"nv":0.079,"ad":"2022-02-25","m":"2029-02-25","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Boca Home Care Holdings, Inc. PE (3,446 Class A Units), 12% cash / 2% PIK Industry Services for the Elderly and Persons with Disabilities IAD 3/3/2023","n":"Boca Home Care Holdings, Inc.","t":"equity","l":{"c":"equity","r":"Preferred Equity (3,446 Class A Units), 12% cash / 2% PIK"},"i":"Services for the Elderly and Persons with Disabilities","c":345000,"v":368000,"nv":0.003,"ad":"2023-03-03","s":{"w":"dataset","t":true,"i":"id"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Clevertech Bidco FLD (Revolver) Commodity Contracts Dealing IR 12.50% SAI Prime+ 5.75% IAD 11/3/2023 Maturity 12/30/2027","n":"Clevertech Bidco","t":"debt","l":{"c":"first lien","r":"First Lien Debt (Revolver) Commodity Contracts Dealing"},"f":"revolver","i":"Commodity Contracts Dealing","r":0.125,"sp":0.0575,"b":"other","p":218000,"c":214000,"v":203000,"nv":0.002,"u":76000,"ad":"2023-11-03","m":"2027-12-30","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","u":"issuer"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Clevertech Bidco, FLD LLC Industry Commodity Contracts Dealing IR 10.63% SAI SOFR+ 6.75% IAD 11/3/2023 Maturity 12/30/2027","n":"Clevertech Bidco,","t":"debt","l":{"c":"first lien","r":"First Lien Debt LLC"},"i":"Commodity Contracts Dealing","r":0.1063,"sp":0.0675,"b":"SOFR","p":3117000,"c":3082000,"v":2958000,"nv":0.026,"ad":"2023-11-03","m":"2027-12-30","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Constellis Holdings, LLC CE(20,628 common shares) Industry Other Justice, Public Order, and Safety Activities IAD 3/27/2020","n":"Constellis Holdings, LLC","t":"equity","l":{"c":"equity","r":"Common Equity(20,628 common shares)"},"i":"Other Justice, Public Order, and Safety Activities","c":703000,"v":18000,"nv":0,"ad":"2020-03-27","s":{"w":"dataset","t":true,"i":"id"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. ESP Associates, Inc. FLD (Revolver) Industry Other Heavy and Civil Engineering Construction SAI SOFR+5.25% IAD 4/14/2026 Maturity 4/14/2031","n":"ESP Associates, Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt (Revolver)"},"f":"revolver","i":"Other Heavy and Civil Engineering Construction","sp":0.0525,"b":"SOFR","p":0,"c":0,"v":0,"nv":0,"u":33000,"ad":"2026-04-14","m":"2031-04-14","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis","u":"issuer"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. ESP Associates, Inc. FLD Industry Other Heavy and Civil Engineering Construction IR 8.97% SAI SOFR+ 4.25% IAD 4/14/2026 Maturity 4/14/2026","n":"ESP Associates, Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Other Heavy and Civil Engineering Construction","r":0.0897,"sp":0.0525,"b":"SOFR","p":107000,"c":106000,"v":106000,"nv":0.001,"ad":"2026-04-14","m":"2031-04-14","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. ESP Associates, Inc. FLD Industry Other Heavy and Civil Engineering Construction IR 8.98% SAI SOFR+ 5.25% IAD 4/14/2026 Maturity 4/14/2026","n":"ESP Associates, Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Other Heavy and Civil Engineering Construction","r":0.0898,"sp":0.0525,"b":"SOFR","p":350000,"c":347000,"v":347000,"nv":0.003,"u":9000,"ad":"2026-04-14","m":"2031-04-14","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis","u":"issuer"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Excelin Home Health, LLC SLD Industry Home Health Care Services IR 18.00% PIK IAD 10/25/2018 Maturity 10/1/2026","n":"Excelin Home Health, LLC","t":"debt","l":{"c":"second lien","r":"Second Lien Debt"},"i":"Home Health Care Services","r":0.18,"pk":0.18,"p":7778000,"c":6765000,"v":1983000,"nv":0.018,"ad":"2018-10-25","m":"2026-10-01","na":true,"s":{"w":"dataset","t":true,"na":"table","i":"id","m":"axis","rt":"table"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Heritage Grocers Group, LLC. FLD Industry Supermarkets and Other Grocery (except Convenience) Stores IR 10.55% SAI SOFR+ 6.75% IAD 7/20/2022 Maturity 8/1/2029","n":"Heritage Grocers Group, LLC.","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Supermarkets and Other Grocery (except Convenience) Stores","r":0.1058,"sp":0.0675,"b":"SOFR","p":8862000,"c":8738000,"v":5690000,"nv":0.051,"ad":"2022-07-20","m":"2029-08-01","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Honor HN Buyer Inc. FLD (Delayed Draw) Industry Services for the Elderly and Persons with Disabilities IR 9.63% SAI SOFR+5.75% IAD 10/15/2024 Maturity 10/15/2027","n":"Honor HN Buyer Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt (Delayed Draw)"},"f":"delayed draw","i":"Services for the Elderly and Persons with Disabilities","r":0.0963,"sp":0.0575,"b":"SOFR","p":127000,"c":123000,"v":127000,"nv":0.001,"u":473000,"ad":"2024-10-15","m":"2027-10-15","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis","u":"issuer"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Honor HN Buyer Inc. FLD (Revolver) Industry Services for the Elderly and Persons with Disabilities SAI Prime+4.75% IAD 10/15/2021 Maturity 10/15/2027","n":"Honor HN Buyer Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt (Revolver)"},"f":"revolver","i":"Services for the Elderly and Persons with Disabilities","sp":0.0475,"b":"other","p":0,"c":-1000,"v":0,"nv":0,"u":119000,"ad":"2021-10-15","m":"2027-10-15","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis","u":"issuer"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Honor HN Buyer Inc. FLD Industry Services for the Elderly and Persons with Disabilities IR 9.63% SAI SOFR+ 5.75% IAD 10/15/2021 Maturity 10/15/2027 One","n":"Honor HN Buyer Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Services for the Elderly and Persons with Disabilities","r":0.0963,"sp":0.0575,"b":"SOFR","p":624000,"c":612000,"v":624000,"nv":0.006,"ad":"2021-10-15","m":"2027-10-15","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Honor HN Buyer Inc. FLD Industry Services for the Elderly and Persons with Disabilities IR 9.63% SAI SOFR+ 5.75% IAD 10/15/2021 Maturity 10/15/2027","n":"Honor HN Buyer Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Services for the Elderly and Persons with Disabilities","r":0.0963,"sp":0.0575,"b":"SOFR","p":987000,"c":983000,"v":987000,"nv":0.009,"ad":"2021-10-15","m":"2027-10-15","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Honor HN Buyer Inc. FLD Industry Services for the Elderly and Persons with Disabilities IR 9.63% SAI SOFR+ 5.75% IAD 3/31/2023 Maturity 10/15/2027","n":"Honor HN Buyer Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Services for the Elderly and Persons with Disabilities","r":0.0963,"sp":0.0575,"b":"SOFR","p":694000,"c":679000,"v":694000,"nv":0.006,"ad":"2023-03-31","m":"2027-10-15","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. I Love Produce, LLC FLD (Delayed Draw) Industry Spice and Extract Manufacturing SAI SOFR+ 6.00% IAD 3/24/2026 Maturity 3/24/2031","n":"I Love Produce, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt (Delayed Draw)"},"f":"delayed draw","i":"Spice and Extract Manufacturing","sp":0.06,"b":"SOFR","p":0,"c":-1000,"v":-4000,"nv":0,"u":152000,"ad":"2026-03-24","m":"2031-03-24","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis","u":"issuer"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. I Love Produce, LLC FLD (Revolver) Industry Spice and Extract Manufacturing IR 9.83% SAI SOFR+ 6.00% IAD 3/24/2026 Maturity 3/24/2026","n":"I Love Produce, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt (Revolver)"},"f":"revolver","i":"Spice and Extract Manufacturing","r":0.0983,"sp":0.06,"b":"SOFR","p":4000,"c":4000,"v":3000,"nv":0,"u":34000,"ad":"2026-03-24","m":"2031-03-24","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis","u":"issuer"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. I Love Produce, LLC FLD Industry Spice and Extract Manufacturing IR 9.83% SAI SOFR+ 6.00% IAD 3/24/2026 Maturity 3/24/2031","n":"I Love Produce, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Spice and Extract Manufacturing","r":0.0983,"sp":0.06,"b":"SOFR","p":308000,"c":302000,"v":300000,"nv":0.003,"ad":"2026-03-24","m":"2031-03-24","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Idera Inc. SLD Industry Computer and Computer Peripheral Equipment and Software Merchant Wholesalers IR 10.56% SAI SOFR+ 6.75% IAD 1/27/2022 Maturity 3/2/2029","n":"Idera Inc.","t":"debt","l":{"c":"second lien","r":"Second Lien Debt"},"i":"Computer and Computer Peripheral Equipment and Software Merchant Wholesalers","r":0.1056,"sp":0.0675,"b":"SOFR","p":2683000,"c":2683000,"v":1910000,"nv":0.017,"ad":"2022-01-27","m":"2029-03-02","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Inergex Holdings, LLC FLD (Revolver) Industry Other Computer Related Services IR 12.88 % SAI SOFR+ 7.00% IAD 10/1/2018 Maturity 10/1/2026","n":"Inergex Holdings, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt (Revolver)"},"f":"revolver","i":"Other Computer Related Services","sp":0.07,"b":"SOFR","p":2813000,"c":2813000,"v":2813000,"nv":0.025,"ad":"2018-10-01","m":"2026-10-01","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Inergex Holdings, LLC FLD Industry Other Computer Related Services IR 12.88 % SAI SOFR+ 7.00% IAD 10/1/2028 Maturity 10/1/2026","n":"Inergex Holdings, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Other Computer Related Services","sp":0.07,"b":"SOFR","p":14532000,"c":14514000,"v":14532000,"nv":0.129,"ad":"2018-10-01","m":"2026-10-01","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Integrated Energy Services, LLC FLD (Delayed Draw) Industry Computer Systems Design Services SAI SOFR+ 5.50% IAD 12/18/2025 Maturity 12/19/2030","n":"Integrated Energy Services, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt (Delayed Draw)"},"f":"delayed draw","i":"Computer Systems Design Services","sp":0.055,"b":"SOFR","p":0,"c":-2000,"v":-7000,"nv":0,"u":300000,"ad":"2025-12-18","m":"2030-12-19","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis","u":"issuer"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Integrated Energy Services, LLC FLD (Revolver) Industry Computer Systems Design Services IR 9.17% SAI SOFR+ 5.50% IAD 12/18/2025 Maturity 12/19/2030","n":"Integrated Energy Services, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt (Revolver)"},"f":"revolver","i":"Computer Systems Design Services","r":0.0917,"sp":0.055,"b":"SOFR","p":45000,"c":43000,"v":42000,"nv":0,"u":105000,"ad":"2025-12-18","m":"2030-12-19","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis","u":"issuer"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Integrated Energy Services, LLC FLD Industry Computer Systems Design Services IR 9.23% SAI SOFR+ 5.50% IAD 12/18/2025 Maturity 12/19/2030","n":"Integrated Energy Services, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Computer Systems Design Services","r":0.0923,"sp":0.055,"b":"SOFR","p":522000,"c":514000,"v":510000,"nv":0.005,"ad":"2025-12-18","m":"2030-12-19","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. JP Intermediate B, LLC CE (12,663 Units) Industry Drugs and Druggists' Sundries Merchant Wholesalers IAD 9/30/2025","n":"JP Intermediate B, LLC","t":"equity","l":{"c":"equity","r":"Common Equity (12,663 Units)"},"i":"Drugs and Druggists' Sundries Merchant Wholesalers","c":2992000,"v":0,"nv":0,"ad":"2025-09-30","s":{"w":"dataset","t":true,"i":"id"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. JP Intermediate B, LLC FLD Industry Drugs and Druggists' Sundries Merchant Wholesalers IR 10.70% SAI SOFR+ 7.00% IAD 10/2/2025 Maturity 9/30/2030","n":"JP Intermediate B, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Drugs and Druggists' Sundries Merchant Wholesalers","r":0.1073,"sp":0.07,"b":"SOFR","p":333000,"c":333000,"v":333000,"nv":0.003,"ad":"2025-10-02","m":"2030-09-30","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. JP Intermediate B, LLC FLD Industry Drugs and Druggists' Sundries Merchant Wholesalers IR 9.23 % SAI SOFR+ 5.50% IAD 1/14/2021 Maturity 3/31/2031","n":"JP Intermediate B, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Drugs and Druggists' Sundries Merchant Wholesalers","sp":0.055,"b":"SOFR","p":1499000,"c":1499000,"v":980000,"nv":0.009,"ad":"2021-01-14","m":"2031-03-31","na":true,"fr":true,"s":{"w":"dataset","t":true,"na":"table","i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Kreg LLC FLD (Revolver) Industry Other Ambulatory Health Care Services IR 10.10% SAI SOFR+ 6.25% IAD 12/20/2021 Maturity 12/20/2026","n":"Kreg LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt (Revolver)"},"f":"revolver","i":"Other Ambulatory Health Care Services","r":0.1013,"sp":0.0625,"b":"SOFR","p":1337000,"c":1336000,"v":1321000,"nv":0.012,"ad":"2021-12-20","m":"2026-12-20","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Kreg LLC FLD Industry Other Ambulatory Health Care Services IR 0.10% cash / 0.50% PIK SAI SOFR+ 6.25% IAD 12/20/2021 Maturity 12/20/2026","n":"Kreg LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Other Ambulatory Health Care Services","sp":0.0625,"pk":0.005,"b":"SOFR","p":16886000,"c":16875000,"v":16683000,"nv":0.148,"ad":"2021-12-20","m":"2026-12-20","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. M2S Group Intermediate Holdings Inc. FLD Industry Plastics Packaging Film and Sheet (including Laminated) Manufacturing IR 8.41% SAI SOFR+4.75% IAD 10/28/2025 Maturity 8/25/2031","n":"M2S Group Intermediate Holdings Inc.","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Plastics Packaging Film and Sheet (including Laminated) Manufacturing","r":0.0841,"sp":0.0475,"b":"SOFR","p":452000,"c":447000,"v":449000,"nv":0.004,"ad":"2025-10-28","m":"2031-08-25","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Medrina LLC FLD (Revolver) Industry All Other Outpatient Care Centers SAI SOFR+6.00% IAD 10/20/2023 Maturity 10/20/2029","n":"Medrina LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt (Revolver)"},"f":"revolver","i":"All Other Outpatient Care Centers","sp":0.06,"b":"SOFR","p":0,"c":-4000,"v":0,"nv":0,"u":319000,"ad":"2023-10-20","m":"2029-10-20","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis","u":"issuer"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Medrina LLC FLD Industry All Other Outpatient Care Centers IR 9.63% SAI SOFR+6.00% IAD 10/20/2023 Maturity 10/20/2029","n":"Medrina LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"All Other Outpatient Care Centers","r":0.0963,"sp":0.06,"b":"SOFR","p":366000,"c":362000,"v":366000,"nv":0.003,"ad":"2023-10-20","m":"2029-10-20","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Medrina LLC FLD Industry All Other Outpatient Care Centers IR 9.66% SAI SOFR+6.00% IAD 10/20/2023 Maturity 10/20/2029","n":"Medrina LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"All Other Outpatient Care Centers","r":0.0966,"sp":0.06,"b":"SOFR","p":2178000,"c":2148000,"v":2178000,"nv":0.019,"ad":"2023-10-20","m":"2029-10-20","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Metasource, LLC FLD Industry All Other Business Support Services IR 10.24% cash / 0.50% PIK SAI SOFR+6.25% IAD 5/17/2022 Maturity 5/17/2027","n":"Metasource, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"All Other Business Support Services","sp":0.0625,"pk":0.005,"b":"SOFR","p":2720000,"c":2705000,"v":2676000,"nv":0.024,"ad":"2022-05-17","m":"2027-05-17","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. MP Design, LLC FLD (Revolver) Industry Architectural Services SAI SOFR+ 5.25% IAD 6/9/2026 Maturity 6/9/2031","n":"MP Design, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt (Revolver)"},"f":"revolver","i":"Architectural Services","sp":0.0525,"b":"SOFR","p":0,"c":-4000,"v":-4000,"nv":0,"u":250000,"ad":"2026-06-09","m":"2031-06-09","fr":true,"s":{"w":"dataset","i":"id","m":"axis","u":"issuer"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. MP Design, LLC FLD Industry Architectural Services IR 8.98% SAI SOFR+ 5.25% IAD 6/9/2026 Maturity 6/9/2031","n":"MP Design, LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Architectural Services","r":0.0898,"sp":0.0525,"b":"SOFR","p":1100000,"c":1084000,"v":1084000,"nv":0.01,"ad":"2026-06-09","m":"2031-06-09","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. One GI LLC FLD (R) Industry Offices of Other Holding Companies SAI SOFR+6.75% IAD 4/17/2025 Maturity 4/17/2030","n":"One GI LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt (R)"},"f":"revolver","i":"Offices of Other Holding Companies","sp":0.0675,"b":"SOFR","p":0,"c":-4000,"v":-4000,"nv":0,"ad":"2025-04-17","m":"2030-04-17","fr":true,"s":{"w":"dataset","i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. One GI LLC FLD (Revolver) Industry Offices of Other Holding Companies IR 10.48% PIK SAI SOFR+ 6.75% IAD 12/13/2021 Maturity 8/31/2026","n":"One GI LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt (Revolver)"},"f":"revolver","i":"Offices of Other Holding Companies","sp":0.0675,"pk":0.1048,"b":"other","p":1508000,"c":1444000,"v":1194000,"nv":0.011,"ad":"2021-12-13","m":"2026-08-31","na":true,"fr":true,"s":{"w":"dataset","t":true,"na":"table","i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. One GI LLC FLD Industry Offices of Other Holding Companies IR 10.48% PIK SAI SOFR+ 6.75% IAD 12/13/2021 Maturity 8/31/2026 One","n":"One GI LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Offices of Other Holding Companies","sp":0.0675,"pk":0.1048,"b":"SOFR","p":3996000,"c":3827000,"v":3165000,"nv":0.028,"ad":"2021-12-13","m":"2026-08-31","na":true,"fr":true,"s":{"w":"dataset","t":true,"na":"table","i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. One GI LLC FLD Industry Offices of Other Holding Companies IR 10.48% PIK SAI SOFR+ 6.75% IAD 12/13/2021 Maturity 8/31/2026","n":"One GI LLC","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Offices of Other Holding Companies","sp":0.0675,"pk":0.1048,"b":"SOFR","p":7582000,"c":7261000,"v":6005000,"nv":0.053,"ad":"2021-12-13","m":"2026-08-31","na":true,"fr":true,"s":{"w":"dataset","t":true,"na":"table","i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Planet Bingo, LLC (F/K/A 3rd Rock Gaming Holdings, LLC) FLD Industry Software Publishers IR 6.50% IAD 3/13/2018 Maturity 12/31/2027","n":"Planet Bingo, LLC (F/K/A 3rd Rock Gaming Holdings, LLC)","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Software Publishers","r":0.065,"p":16648000,"c":14113000,"v":7758000,"nv":0.069,"ad":"2018-03-13","m":"2027-12-31","na":true,"s":{"w":"dataset","t":true,"na":"table","i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. PM Acquisition LLC CE (499 units) Industry All Other General Merchandise Stores IAD 9/30/2017","n":"PM Acquisition LLC","t":"equity","l":{"c":"equity","r":"Common Equity (499 units)"},"i":"All Other General Merchandise Stores","c":231000,"v":1335000,"nv":0.012,"ad":"2017-09-30","s":{"w":"dataset","t":true,"i":"id"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Redstone Holdco 2 LP (F/K/A RSA Security) FLD Industry Computer and Computer Peripheral Equipment and Software Merchant Wholesalers IR 8.41% SAI SOFR+4.75 % IAD 4/16/2021 Maturity 12/31/2030","n":"Redstone Holdco 2 LP (F/K/A RSA Security)","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Computer and Computer Peripheral Equipment and Software Merchant Wholesalers","r":0.0841,"sp":0.0475,"b":"SOFR","p":223000,"c":220000,"v":219000,"nv":0.002,"ad":"2021-04-16","m":"2030-12-31","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. Redstone Holdco 2 LP (F/K/A RSA Security) FLD Industry Computer and Computer Peripheral Equipment and Software Merchant Wholesalers IR 9.16% SAI SOFR+5.50% IAD 1/30/2026 Maturity 12/31/2030","n":"Redstone Holdco 2 LP (F/K/A RSA Security)","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"Computer and Computer Peripheral Equipment and Software Merchant Wholesalers","r":0.0916,"sp":0.055,"b":"SOFR","p":857000,"c":847000,"v":811000,"nv":0.007,"ad":"2026-01-30","m":"2030-12-31","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. RideNow Group, Inc. (F/K/A. RumbleOn, Inc.) FLD Industry IR 10.68% cash / 1.00% PIK SAI SOFR+ 7.75% IAD 8/31/2021 Maturity 9/30/2027 One","n":"RideNow Group, Inc. (F/K/A. RumbleOn, Inc.)","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"IR 10.68% cash / 1.00% PIK","sp":0.0775,"pk":0.01,"b":"SOFR","p":723000,"c":718000,"v":723000,"nv":0.006,"ad":"2021-08-31","m":"2027-09-30","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. RideNow Group, Inc. (F/K/A. RumbleOn, Inc.) FLD Industry IR 10.68% cash / 1.00% PIK SAI SOFR+ 7.75% IAD 8/31/2021 Maturity 9/30/2027","n":"RideNow Group, Inc. (F/K/A. RumbleOn, Inc.)","t":"debt","l":{"c":"first lien","r":"First Lien Debt"},"i":"IR 10.68% cash / 1.00% PIK","sp":0.0775,"pk":0.01,"b":"SOFR","p":2396000,"c":2380000,"v":2396000,"nv":0.021,"ad":"2021-08-31","m":"2027-09-30","fr":true,"s":{"w":"dataset","t":true,"i":"id","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Inv. Debt and Equity Inv. RideNow Group, Inc. (F/K/A. RumbleOn, Inc.) Warrants (warrants to purchase up to $73,000 in common stock) IAD 8/31/2021","n":"RideNow Group, Inc. (F/K/A. RumbleOn, Inc.)","t":"equity","l":{"c":"equity","r":"Warrants (warrants to purchase up to $73,000 in common stock)"},"i":"Other Industrial Machinery Manufacturing","c":200000,"v":100000,"nv":0.001,"ad":"2021-08-31","m":"2030-08-10","s":{"w":"dataset","t":true,"i":"table","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Structured Finance Securities Apex Credit CLO 2020 Ltd SN IR 5.31 % IAD 11/16/2020 Maturity 4/20/2035","n":"Apex Credit CLO 2020 Ltd","t":"structured","l":{"c":"unsecured","r":"Subordinated Note"},"i":"Motorcycle, Bicycle, and Parts Manufacturing","r":0.0531,"p":11080000,"c":9164000,"v":3515000,"nv":0.031,"ad":"2020-11-16","m":"2035-04-20","s":{"w":"dataset","t":true,"i":"table","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Structured Finance Securities Apex Credit CLO 2021 Ltd SN IR 0.00 % IAD 5/28/2021 Maturity 7/18/2034","n":"Apex Credit CLO 2021 Ltd","t":"structured","l":{"c":"unsecured","r":"Subordinated Note"},"i":"Motorcycle, Bicycle, and Parts Manufacturing","r":0,"p":8630000,"c":4926000,"v":1139000,"nv":0.01,"ad":"2021-05-28","m":"2034-07-18","s":{"w":"dataset","t":true,"i":"table","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Structured Finance Securities Apex Credit CLO 2022-1 Ltd SN IR 13.93 % IAD 4/28/2022 Maturity 10/22/2038","n":"Apex Credit CLO 2022-1 Ltd","t":"structured","l":{"c":"unsecured","r":"Subordinated Note"},"i":"Motorcycle, Bicycle, and Parts Manufacturing","r":0.1393,"p":17074000,"c":10287000,"v":5047000,"nv":0.045,"ad":"2022-04-28","m":"2038-10-22","s":{"w":"dataset","t":true,"i":"table","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Structured Finance Securities BlueMountain CLO XXXV Ltd. SN IR 13.63 % IAD 10/30/2024 Maturity 10/22/1937","n":"BlueMountain CLO XXXV Ltd.","t":"structured","l":{"c":"unsecured","r":"Subordinated Note"},"i":"Motorcycle, Bicycle, and Parts Manufacturing","r":0.1363,"p":7800000,"c":5980000,"v":3599000,"nv":0.032,"ad":"2024-10-30","m":"2037-10-22","s":{"w":"dataset","t":true,"i":"table","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Structured Finance Securities Brightwood Capital MM CLO 2023-1,Ltd SN IR 30.82 % IAD 9/28/2023 Maturity 10/15/2035","n":"Brightwood Capital MM CLO 2023-1,Ltd","t":"structured","l":{"c":"unsecured","r":"Subordinated Note"},"i":"Motorcycle, Bicycle, and Parts Manufacturing","r":0.3082,"p":5494000,"c":4253000,"v":4405000,"nv":0.039,"ad":"2023-09-28","m":"2035-10-15","s":{"w":"dataset","t":true,"i":"table","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Structured Finance Securities Canyon CLO 2019-1, Ltd. SN IR 13.85 % IAD 8/22/2024 Maturity 7/15/2037","n":"Canyon CLO 2019-1, Ltd.","t":"structured","l":{"c":"unsecured","r":"Subordinated Note"},"i":"Motorcycle, Bicycle, and Parts Manufacturing","r":0.1385,"p":18453000,"c":9775000,"v":6482000,"nv":0.058,"ad":"2024-08-22","m":"2037-07-15","s":{"w":"dataset","t":true,"i":"table","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Structured Finance Securities ICG US CLO 2021-3, Ltd. SN IR 18.31 % IAD 8/8/2024 Maturity 10/20/2034","n":"ICG US CLO 2021-3, Ltd.","t":"structured","l":{"c":"unsecured","r":"Subordinated Note"},"i":"Motorcycle, Bicycle, and Parts Manufacturing","r":0.1831,"p":16750000,"c":7651000,"v":5456000,"nv":0.048,"ad":"2024-08-08","m":"2034-10-20","s":{"w":"dataset","t":true,"i":"table","m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Structured Finance Securities LCM 42 Ltd. SN IR 17.17 % IAD 12/19/2024 Maturity 1/15/2038","n":"LCM 42 Ltd.","t":"debt","l":{"c":"unsecured","r":"Subordinated Note"},"r":0.1717,"p":3500000,"c":2980000,"v":2312000,"nv":0.021,"ad":"2024-12-19","m":"2038-01-15","s":{"w":"dataset","t":true,"m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Structured Finance Securities Trinitas CLO VIII, Ltd. SN IR 0.00 % IAD 3/4/2021 Maturity 7/20/2117","n":"Trinitas CLO VIII, Ltd.","t":"structured","l":{"c":"unsecured","r":"Subordinated Note"},"r":0,"p":5200000,"c":2307000,"v":0,"nv":0,"ad":"2021-03-04","m":"2117-07-20","s":{"w":"dataset","t":true,"m":"axis"}},
+{"id":"Portfolio Company Investment Type NCNA Structured Finance Securities Venture 45 CLO, Limited MD - Class E IR 11.38 % SAI SOFR+7.70 % IAD 4/18/2022 Maturity 7/20/2035","n":"Venture 45 CLO, Limited","t":"structured","l":{"c":"unsecured","r":"Mezzanine Debt - Class E"},"r":0.1138,"sp":0.077,"b":"SOFR","p":3000000,"c":2968000,"v":2117000,"nv":0.019,"ad":"2022-04-18","m":"2035-07-20","fr":true,"s":{"w":"dataset","t":true,"m":"axis"}}
+ ]
+}

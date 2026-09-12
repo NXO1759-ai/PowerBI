@@ -24,7 +24,10 @@ const check = (name, ok, detail) => {
   if (!ok) failed++;
 };
 
-check("CREDIT_VERSION is the string composite.json stamps", C.CREDIT_VERSION === "1.0.0", C.CREDIT_VERSION);
+/* 1.1.0: the lien map strips a trailing tranche number and carries
+   MSIF beside MAIN in FILER_LIEN_OVERRIDES (PR C); a composite stamped
+   under 1.0.0 can be told apart */
+check("CREDIT_VERSION is the string composite.json stamps", C.CREDIT_VERSION === "1.1.0", C.CREDIT_VERSION);
 
 /* ---------- BXSL: the inputs, each with its line in the 10-Q ---------- */
 const BXSL = {

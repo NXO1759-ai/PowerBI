@@ -1,0 +1,338 @@
+{
+ "ticker": "PIAC",
+ "cik": 845385,
+ "name": "PRINCETON CAPITAL CORP",
+ "period": "2026-06-30",
+ "form": "10-Q",
+ "accn": "0001213900-26-090000",
+ "filed": "2026-08-14",
+ "creditVersion": "1.1.0",
+ "rowSource": "table",
+ "sources": {
+  "dataset": {
+   "zip": "2026_08_bdc.zip",
+   "rows": 0,
+   "counts": {
+    "rows": 149,
+    "identifier": 95,
+    "atPeriod": 47,
+    "kept": 0
+   },
+   "dropped": {
+    "otherDate": 48,
+    "otherEntity": 0,
+    "subtotal": 3,
+    "cash": 0,
+    "fvOnly": 0,
+    "costOnly": 0,
+    "neither": 44
+   },
+   "extra": {
+    "costOnly": 0,
+    "cash": 0
+   }
+  },
+  "instance": null,
+  "table": {
+   "doc": "0001213900-26-090000.htm",
+   "period": "2026-06-30",
+   "tables": 2,
+   "rows": 14,
+   "subtotals": 8,
+   "scale": 1,
+   "scaleFix": 1,
+   "totals": {
+    "cost": 34111452,
+    "fv": 13803034
+   },
+   "asSource": true,
+   "cashRowsLeftOut": 0,
+   "emptyRowsLeftOut": 0,
+   "taggedJoined": 0,
+   "taggedRate": 0,
+   "stages": {
+    "numeric": 0,
+    "principal": 0,
+    "cost": 0,
+    "name": 0
+   },
+   "nonAccrualRows": 0,
+   "headers": {
+    "investments": "issuer",
+    "acquisition date": "acquired",
+    "principal amount/ shares/ % ownership": "principal",
+    "amortized cost": "cost",
+    "fair value": "fv",
+    "% of net assets": "pctNav",
+    "principal amount/ shares/% ownership": "principal"
+   },
+   "notes": [
+    "no equity section seen"
+   ]
+  },
+  "rpage": null
+ },
+ "gate": {
+  "passed": true,
+  "tolerance": 0.005,
+  "tagSource": "company file",
+  "variant": "table rows: the tagged rows (0, Σ cost 0) do not reconcile; the printed schedule does",
+  "cost": {
+   "sum": 34111452,
+   "tag": 34111452,
+   "diffPct": 0
+  },
+  "fv": {
+   "sum": 13803034,
+   "tag": 13803034,
+   "diffPct": 0
+  },
+  "rows": 14,
+  "subtotalRowsDropped": 3,
+  "dropped": {
+   "otherDate": 48,
+   "otherEntity": 0,
+   "subtotal": 3,
+   "cash": 0,
+   "fvOnly": 0,
+   "costOnly": 0,
+   "neither": 44
+  },
+  "tried": [
+   {
+    "variant": "tagged rows",
+    "n": 0,
+    "cost": {
+     "sum": 0,
+     "tag": 34111452,
+     "diffPct": 1
+    },
+    "fv": {
+     "sum": 0,
+     "tag": 13803034,
+     "diffPct": 1
+    },
+    "reason": "no rows kept"
+   },
+   {
+    "variant": "table rows",
+    "n": 14,
+    "cost": {
+     "sum": 34111452,
+     "tag": 34111452,
+     "diffPct": 0
+    },
+    "fv": {
+     "sum": 13803034,
+     "tag": 13803034,
+     "diffPct": 0
+    },
+    "reason": null
+   }
+  ]
+ },
+ "summary": {
+  "portfolioCost": 34111452,
+  "portfolioFv": 13803034,
+  "holdings": 14,
+  "thirdPartyDebtCost": 7234756,
+  "thirdPartyDebtFv": 1463336,
+  "thirdPartyDebtHoldings": 1,
+  "count": 1,
+  "countAll": 5,
+  "countDebt": 1,
+  "namesUnsplit": 0,
+  "nonAccrual": {
+   "cost": null,
+   "fv": null,
+   "n": 0,
+   "issuers": 0,
+   "ofTotalCost": null,
+   "ofTotalFv": null,
+   "ofDebtCost": null,
+   "ofDebtFv": null,
+   "source": null,
+   "note": "no source read a non-accrual mark for this filing: rates are not zero, they are unknown"
+  },
+  "wa": {
+   "yieldAtCost": null,
+   "yieldAtFv": null,
+   "spreadCostWeighted": null,
+   "floatingShare": null,
+   "pikContractual": null,
+   "n": {
+    "yield": 0,
+    "spread": 0,
+    "debt": 1
+   },
+   "yieldCoverage": 0,
+   "yieldNote": "withheld: rows with a tagged principal and rate carry 0% of accruing third-party debt cost, under the 80% floor",
+   "floatingNote": "withheld: no spread fact and no base-rate label on any debt row — rate type is unread, not fixed"
+  },
+  "lien": {
+   "classes": {
+    "second lien": {
+     "cost": 7234756,
+     "share": 1,
+     "shareOfPortfolio": 0.2121
+    }
+   },
+   "total": 7234756,
+   "portfolioCost": 34111452,
+   "firstLienShare": 0,
+   "firstLienShareOfPortfolio": 0,
+   "unclassifiedShare": 0
+  },
+  "industry": [
+   {
+    "name": "n/a",
+    "fv": 13803034,
+    "share": 1
+   }
+  ],
+  "industrySource": null,
+  "maturity": {
+   "2026": 0,
+   "2027": 0,
+   "2028": 0,
+   "2029": 0,
+   "2030": 0,
+   "2031-2033": 0,
+   "later": 0,
+   "n/a": 7234756,
+   "excluded": 0,
+   "total": 7234756,
+   "dated": 0,
+   "unfunded": null,
+   "shares": null
+  },
+  "maturitySource": null,
+  "vehicles": {
+   "fv": 0,
+   "share": 0
+  },
+  "structured": {
+   "fv": 0,
+   "share": 0
+  },
+  "equity": {
+   "fv": 854735,
+   "share": 0.0619
+  },
+  "top10": {
+   "fv": 1463336,
+   "share": 0.106
+  },
+  "affiliation": {
+   "controlled": {
+    "fv": 12339698,
+    "share": 0.894
+   },
+   "non-controlled/non-affiliated": {
+    "fv": 1463336,
+    "share": 0.106
+   }
+  },
+  "affiliationClasses": [
+   "controlled",
+   "non-controlled/non-affiliated"
+  ],
+  "affiliationSource": "table",
+  "unfunded": {
+   "total": 0,
+   "holdings": 0
+  },
+  "pik": {
+   "holdings": 0,
+   "cost": 0
+  },
+  "histogram": {
+   "byCount": {},
+   "byCost": {},
+   "n": 0,
+   "cost": 0
+  },
+  "vsProse": {
+   "yieldAtCost": null,
+   "yieldAtFv": null,
+   "floatingShare": null,
+   "floatingShareBasis": null,
+   "nonAccrualCost": null,
+   "nonAccrualFv": null,
+   "nonAccrualOf": null,
+   "portfolioCompanies": 4
+  }
+ },
+ "tableUnmatched": null,
+ "notes": [
+  "gate passed on: table rows: the tagged rows (0, Σ cost 0) do not reconcile; the printed schedule does",
+  "R page R7.htm: no identifier member carried a value at the period"
+ ],
+ "keys": {
+  "holding": {
+   "id": "id",
+   "issuer": "k",
+   "name": "n",
+   "aff": "a",
+   "kind": "t",
+   "lien": "l",
+   "facility": "f",
+   "industry": "i",
+   "rate": "r",
+   "spread": "sp",
+   "floor": "fl",
+   "pik": "pk",
+   "base": "b",
+   "principal": "p",
+   "cost": "c",
+   "fv": "v",
+   "pctNav": "nv",
+   "unfunded": "u",
+   "acquired": "ad",
+   "maturity": "m",
+   "nonAccrual": "na",
+   "floating": "fr",
+   "units": "un",
+   "src": "s",
+   "fvUntagged": "fvu",
+   "costUntagged": "cu",
+   "cashEquivalent": "ce"
+  },
+  "lien": {
+   "class": "c",
+   "subclass": "s",
+   "raw": "r"
+  },
+  "src": {
+   "row": "w",
+   "table": "t",
+   "r": "r",
+   "na": "na",
+   "ind": "i",
+   "mat": "m",
+   "unf": "u",
+   "rt": "rt",
+   "ds": "ds",
+   "val": "vl",
+   "nm": "nm",
+   "af": "af"
+  },
+  "note": "short keys per blueprint 7.4; a key absent from a row is null (floating: false); src.t and src.r absent mean false, src.na absent means none; src.vl \"table\" marks a fair value the filer left untagged and the printed schedule supplied; src.nm \"table\" marks an issuer name the printed row supplied; src.af \"issuer\" marks an affiliation taken from the issuer's other tranches; the issuer key (H1 `issuer`) is not written — it is normalizeIssuer(n), which expandHolding restores"
+ },
+ "holdings": [
+{"id":"Advantis Certified Staffing Solutions, Inc. | Second Lien Loan, 12.0 % Cash, due 12/31/2029 (6) Staffing","n":"Advantis Certified Staffing Solutions, Inc.","a":"controlled","t":"debt","l":{"c":"second lien","r":"Second Lien Loan, 12.0 % Cash, due 12/31/2029 (6) Staffing"},"p":4500000,"c":4500000,"v":3333944,"nv":0.2457,"ad":"2015-03-13","s":{"w":"table","t":true}},
+{"id":"Advantis Certified Staffing Solutions, Inc. | Unsecured loan 6.33 %, due 12/31/2027","n":"Advantis Certified Staffing Solutions, Inc.","a":"controlled","t":"debt","l":{"c":"unsecured","r":"Unsecured loan 6.33 %, due 12/31/2027"},"p":1381586,"c":1381586,"v":0,"ad":"2019-10-01","s":{"w":"table","t":true}},
+{"id":"Advantis Certified Staffing Solutions, Inc. | Common Stock - Series A","n":"Advantis Certified Staffing Solutions, Inc.","a":"controlled","t":"equity","l":{"c":"equity","r":"Common Stock - Series A"},"p":225000,"c":10150,"v":0,"ad":"2017-07-02","s":{"w":"table","t":true}},
+{"id":"Advantis Certified Staffing Solutions, Inc. | Common Stock - Series B","n":"Advantis Certified Staffing Solutions, Inc.","a":"controlled","t":"equity","l":{"c":"equity","r":"Common Stock - Series B"},"p":9500000,"c":428571,"v":0,"ad":"2017-07-02","s":{"w":"table","t":true}},
+{"id":"Advantis Certified Staffing Solutions, Inc. | Warrant for 250,000 Shares of Series A Common Stock, exercise price $ 0.01 per share, expires 1/1/2027","n":"Advantis Certified Staffing Solutions, Inc.","a":"controlled","t":"equity","l":{"c":"equity","r":"Warrant for 250,000 Shares of Series A Common Stock, exercise price $ 0.01 per share, expires 1/1/2027"},"p":1,"c":11278,"v":0,"ad":"2017-07-02","s":{"w":"table","t":true}},
+{"id":"Advantis Certified Staffing Solutions, Inc. | Warrant for 700,000 Shares of Series A Common Stock, exercise price $ 0.01 per share, expires 1/1/2027","n":"Advantis Certified Staffing Solutions, Inc.","a":"controlled","t":"equity","l":{"c":"equity","r":"Warrant for 700,000 Shares of Series A Common Stock, exercise price $ 0.01 per share, expires 1/1/2027"},"p":1,"c":0,"v":0,"ad":"2016-12-31","s":{"w":"table","t":true}},
+{"id":"PCC SBH Sub, Inc. | Common stock (4) (6) Energy Services","n":"PCC SBH Sub, Inc.","a":"controlled","t":"equity","l":{"c":"equity","r":"Common stock (4) (6) Energy Services"},"p":100,"c":2525481,"v":854735,"nv":0.063,"ad":"2017-02-06","s":{"w":"table","t":true}},
+{"id":"PCC SBH Sub, Inc. | First Lien Revolving Loan 10 % Cash, due 12/31/2028","n":"PCC SBH Sub, Inc.","a":"controlled","t":"debt","l":{"c":"first lien","r":"First Lien Revolving Loan 10 % Cash, due 12/31/2028"},"f":"revolver","p":135000,"c":135000,"v":135000,"nv":0.0099,"ad":"2024-05-08","s":{"w":"table","t":true}},
+{"id":"Rockfish Seafood Grill, Inc. | First Lien Loan, 8 % Cash, 6.0 % PIK, due 3/31/2018 (2) (3) (4) (6) Casual Dining","n":"Rockfish Seafood Grill, Inc.","a":"controlled","t":"debt","l":{"c":"first lien","r":"First Lien Loan, 8 % Cash, 6.0 % PIK, due 3/31/2018 (2) (3) (4) (6) Casual Dining"},"p":6352944,"c":6352944,"v":5582438,"nv":0.4115,"ad":"2015-03-13","s":{"w":"table","t":true}},
+{"id":"Rockfish Seafood Grill, Inc. | Revolving Loan, 8 % Cash, due 12/31/2027","n":"Rockfish Seafood Grill, Inc.","a":"controlled","t":"debt","l":{"r":"Revolving Loan, 8 % Cash, due 12/31/2027"},"f":"revolver","p":2251000,"c":2251000,"v":2433581,"nv":0.1794,"ad":"2015-06-29","s":{"w":"table","t":true}},
+{"id":"Rockfish Holdings, LLC | Warrant for Membership Interest, exercise price $ 0.001 per 1 % membership interest, expires 7/28/2028","n":"Rockfish Holdings, LLC","a":"controlled","t":"equity","l":{"c":"equity","r":"Warrant for Membership Interest, exercise price $ 0.001 per 1 % membership interest, expires 7/28/2028"},"c":414960,"v":0,"ad":"2015-03-13","s":{"w":"table","t":true}},
+{"id":"Rockfish Holdings, LLC | Membership Interest - Class A","n":"Rockfish Holdings, LLC","a":"controlled","t":"equity","l":{"c":"equity","r":"Membership Interest - Class A"},"c":3734636,"v":0,"ad":"2015-03-13","s":{"w":"table","t":true}},
+{"id":"Performance Alloys, LLC | Second Lien Loan, 10 % Cash, 4.0 % PIK, due 12/31/2026 (2) (3) (4) (6) Nickel Pipe, Fittings & Flanges","n":"Performance Alloys, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"second lien","r":"Second Lien Loan, 10 % Cash, 4.0 % PIK, due 12/31/2026 (2) (3) (4) (6) Nickel Pipe, Fittings & Flanges"},"p":7234756,"c":7234756,"v":1463336,"nv":0.1079,"ad":"2016-07-01","s":{"w":"table","t":true}},
+{"id":"Performance Alloys, LLC | Membership Interest - Class B","n":"Performance Alloys, LLC","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Membership Interest - Class B"},"c":5131090,"v":0,"ad":"2016-07-01","s":{"w":"table","t":true}}
+ ]
+}

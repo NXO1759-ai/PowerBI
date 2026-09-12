@@ -175,8 +175,14 @@
   }
   function normalizeComposite(raw) {
     if (!raw || typeof raw !== "object") return null;
-    var n = isNum(raw.n) ? raw.n : (raw.totals && isNum(raw.totals.n) ? raw.totals.n : null);
-    var asOf = compositeDate([raw.asOf, raw.period, raw.periodEnd, raw.quarter, raw.latestQuarter, raw.date, raw.generated]);
+    /* the refresh writes n as a map (filers, and one count per figure)
+       and the quarter as CY2026Q2; the holdings contract wrote a number
+       and a date, and both are read */
+    var nBy = raw.n && typeof raw.n === "object" ? raw.n : null;
+    var n = isNum(raw.n) ? raw.n : (nBy && isNum(nBy.filers) ? nBy.filers : (raw.totals && isNum(raw.totals.n) ? raw.totals.n : null));
+    var cyq = /^CY(\d{4})Q([1-4])I?$/.exec(String(raw.quarter || ""));
+    var quarterEnd = cyq ? cyq[1] + "-" + ["03-31", "06-30", "09-30", "12-31"][Number(cyq[2]) - 1] : null;
+    var asOf = compositeDate([raw.asOf, raw.period, raw.periodEnd, quarterEnd, raw.quarter, raw.latestQuarter, raw.date, raw.generated]);
     var totals = raw.totals && typeof raw.totals === "object" ? { cost: isNum(raw.totals.cost) ? raw.totals.cost : null, fv: isNum(raw.totals.fv) ? raw.totals.fv : (isNum(raw.totals.fairValue) ? raw.totals.fairValue : null) } : null;
     function row(src, p) {
       if (!src || typeof src !== "object") return null;
@@ -185,6 +191,7 @@
         var name = COMPOSITE_ALIASES[k] || k;
         if (COMPOSITE_FIELDS.indexOf(name) >= 0 && isNum(src[k]) && !isNum(r[name])) r[name] = src[k];
       });
+      if (nBy) { r.nBy = {}; COMPOSITE_FIELDS.forEach(function (f) { if (isNum(nBy[f])) r.nBy[f] = nBy[f]; }); }
       var any = COMPOSITE_FIELDS.some(function (f) { return isNum(r[f]); });
       return any ? r : null;
     }
@@ -201,6 +208,15 @@
     var byCost = h ? compositeBuckets(h.byCost, ["share", "v", "cost", "value"]) : null;
     if (byCount || byCost) histogram = { p: compositeDate([h && h.p, h && h.asOf, asOf]), n: h && isNum(h.n) ? h.n : n, byCount: byCount, byCost: byCost };
     var wallSrc = raw.maturityWall || raw.wall || (raw.maturity && raw.maturity.buckets) || null, maturityWall = null;
+    /* the refresh writes the wall as bucket → cost with a shares map beside
+       it (LCD's buckets: the years, 2031-2033, later); the bookkeeping
+       keys are not buckets */
+    if (wallSrc && !Array.isArray(wallSrc) && typeof wallSrc === "object") {
+      var skip = { "n/a": 1, excluded: 1, total: 1, dated: 1, unfunded: 1, shares: 1, filers: 1, n: 1 };
+      var wallShares = wallSrc.shares && typeof wallSrc.shares === "object" ? wallSrc.shares : {};
+      wallSrc = Object.keys(wallSrc).filter(function (k) { return !skip[k] && isNum(wallSrc[k]); })
+        .map(function (k) { return { label: k, cost: wallSrc[k], share: isNum(wallShares[k]) ? wallShares[k] : null }; });
+    }
     if (Array.isArray(wallSrc)) {
       var wall = wallSrc.map(function (b) {
         if (!b || typeof b !== "object") return null;
@@ -212,6 +228,9 @@
       if (wall.length) maturityWall = wall;
     }
     var sectorsSrc = raw.sectors || raw.sectorMix || null;
+    if (sectorsSrc && !Array.isArray(sectorsSrc) && Array.isArray(sectorsSrc.rows)) {
+      sectorsSrc = sectorsSrc.rows.map(function (r) { return { label: r.name !== undefined ? r.name : r.label, share: r.share, v: r.fv }; });
+    }
     var sectors = compositeBuckets(sectorsSrc, ["share", "v", "value", "count"]);
     return { creditVersion: raw.creditVersion || raw.CREDIT_VERSION || null, n: n, asOf: asOf, totals: totals,
       quarters: quarters, latest: latest, histogram: histogram, maturityWall: maturityWall, sectors: sectors, raw: raw };

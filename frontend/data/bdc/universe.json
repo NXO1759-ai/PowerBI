@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-11T23:44:48.729Z",
+ "generated": "2026-09-12T03:22:46.303Z",
  "quarter": "CY2026Q2",
  "rule": "814-",
  "notes": {
@@ -21,12 +21,13 @@
    "sic": "0000",
    "listedSince": "2021-03-15",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1287750,
@@ -43,11 +44,12 @@
    "sic": null,
    "listedSince": "2004-11-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
     "frames"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1379785,
@@ -64,12 +66,13 @@
    "sic": null,
    "listedSince": "2007-03-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1372807,
@@ -86,12 +89,13 @@
    "sic": null,
    "listedSince": "2007-01-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1655050,
@@ -108,12 +112,13 @@
    "sic": null,
    "listedSince": "2018-11-12",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1736035,
@@ -130,12 +135,13 @@
    "sic": null,
    "listedSince": "2021-10-25",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1633336,
@@ -152,12 +158,13 @@
    "sic": null,
    "listedSince": "2020-02-03",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1544206,
@@ -174,12 +181,13 @@
    "sic": null,
    "listedSince": "2017-06-12",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1534254,
@@ -196,12 +204,13 @@
    "sic": null,
    "listedSince": "2021-10-04",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 17313,
@@ -218,12 +227,13 @@
    "sic": null,
    "listedSince": "1984-12-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
-   "sbaExempt": null,
+   "acSource": "tag",
+   "sbaExempt": true,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "confirmed"
   },
   {
    "cik": 878932,
@@ -240,11 +250,12 @@
    "sic": null,
    "listedSince": "1992-10-01",
    "priceHistoryEnds": "2026-09-10",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1513363,
@@ -261,12 +272,13 @@
    "sic": null,
    "listedSince": "2011-07-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
-   "sbaExempt": null,
+   "acSource": "prose",
+   "sbaExempt": true,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "confirmed"
   },
   {
    "cik": 1825248,
@@ -283,12 +295,13 @@
    "sic": null,
    "listedSince": "2024-07-08",
    "priceHistoryEnds": "2025-05-30",
-   "acSource": null,
+   "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1422183,
@@ -305,12 +318,13 @@
    "sic": null,
    "listedSince": "2014-05-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1321741,
@@ -327,12 +341,13 @@
    "sic": null,
    "listedSince": "2005-07-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
-   "sbaExempt": null,
+   "acSource": "tag",
+   "sbaExempt": true,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "unconfirmed seed"
   },
   {
    "cik": 1476765,
@@ -349,12 +364,13 @@
    "sic": null,
    "listedSince": "2010-05-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
-   "sbaExempt": null,
+   "acSource": "tag",
+   "sbaExempt": true,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "confirmed"
   },
   {
    "cik": 1675033,
@@ -371,11 +387,12 @@
    "sic": null,
    "listedSince": "2016-12-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1143513,
@@ -392,11 +409,12 @@
    "sic": null,
    "listedSince": "2002-09-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
-   "sbaExempt": null,
+   "acSource": "prose",
+   "sbaExempt": true,
    "foundIn": [
     "frames"
-   ]
+   ],
+   "sbaExemptStatus": "unconfirmed seed"
   },
   {
    "cik": 1572694,
@@ -413,12 +431,13 @@
    "sic": null,
    "listedSince": "2015-04-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1487428,
@@ -435,12 +454,13 @@
    "sic": null,
    "listedSince": "2010-11-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1280784,
@@ -457,12 +477,13 @@
    "sic": null,
    "listedSince": "2005-07-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
-   "sbaExempt": null,
+   "acSource": "prose",
+   "sbaExempt": true,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "confirmed"
   },
   {
    "cik": 1578348,
@@ -479,12 +500,13 @@
    "sic": null,
    "listedSince": "2014-03-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1747172,
@@ -501,12 +523,13 @@
    "sic": null,
    "listedSince": "2024-05-20",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1843162,
@@ -528,7 +551,8 @@
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1396440,
@@ -545,12 +569,13 @@
    "sic": null,
    "listedSince": "2007-11-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
-   "sbaExempt": null,
+   "acSource": "prose",
+   "sbaExempt": true,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "confirmed"
   },
   {
    "cik": 1278752,
@@ -567,12 +592,13 @@
    "sic": null,
    "listedSince": "2004-05-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1782524,
@@ -589,12 +615,13 @@
    "sic": null,
    "listedSince": "2024-01-22",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1535778,
@@ -611,12 +638,13 @@
    "sic": null,
    "listedSince": "2025-01-29",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1737924,
@@ -633,12 +661,13 @@
    "sic": null,
    "listedSince": "2024-01-22",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1496099,
@@ -656,12 +685,13 @@
    "sic": null,
    "listedSince": "2011-06-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
-   "sbaExempt": null,
+   "acSource": "tag",
+   "sbaExempt": true,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "confirmed"
   },
   {
    "cik": 1509470,
@@ -683,7 +713,8 @@
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1655888,
@@ -700,12 +731,13 @@
    "sic": null,
    "listedSince": "2019-07-15",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1414932,
@@ -722,12 +754,13 @@
    "sic": null,
    "listedSince": "2008-07-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1487918,
@@ -744,12 +777,13 @@
    "sic": null,
    "listedSince": "2012-12-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
-   "sbaExempt": null,
+   "acSource": "prose",
+   "sbaExempt": true,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "unconfirmed seed"
   },
   {
    "cik": 1747777,
@@ -766,12 +800,13 @@
    "sic": null,
    "listedSince": "2025-06-12",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1259429,
@@ -788,12 +823,13 @@
    "sic": null,
    "listedSince": "2003-12-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1504619,
@@ -810,12 +846,13 @@
    "sic": null,
    "listedSince": "2011-05-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1490349,
@@ -832,11 +869,12 @@
    "sic": null,
    "listedSince": "2011-02-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 845385,
@@ -852,13 +890,14 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "1994-08-01",
-   "priceHistoryEnds": "2026-09-10",
+   "priceHistoryEnds": "2026-09-11",
    "acSource": null,
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1383414,
@@ -876,12 +915,13 @@
    "sic": null,
    "listedSince": "2007-05-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1794776,
@@ -898,12 +938,13 @@
    "sic": null,
    "listedSince": "2024-01-15",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1287032,
@@ -920,12 +961,13 @@
    "sic": null,
    "listedSince": "2004-08-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 81955,
@@ -947,7 +989,8 @@
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1653384,
@@ -964,12 +1007,13 @@
    "sic": null,
    "listedSince": "2021-10-18",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1377936,
@@ -987,12 +1031,13 @@
    "sic": null,
    "listedSince": "2007-04-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
-   "sbaExempt": null,
+   "acSource": "tag",
+   "sbaExempt": true,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "confirmed"
   },
   {
    "cik": 1551901,
@@ -1009,12 +1054,13 @@
    "sic": null,
    "listedSince": "2012-12-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
-   "sbaExempt": null,
+   "acSource": "prose",
+   "sbaExempt": true,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "confirmed"
   },
   {
    "cik": 1418076,
@@ -1031,12 +1077,13 @@
    "sic": null,
    "listedSince": "2010-03-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1495584,
@@ -1058,7 +1105,8 @@
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1370755,
@@ -1075,12 +1123,13 @@
    "sic": null,
    "listedSince": "2012-05-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
-   "sbaExempt": null,
+   "acSource": "prose",
+   "sbaExempt": true,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "confirmed"
   },
   {
    "cik": 1580345,
@@ -1097,12 +1146,13 @@
    "sic": null,
    "listedSince": "2014-04-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1786108,
@@ -1120,11 +1170,12 @@
    "sic": null,
    "listedSince": "2021-01-25",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1508655,
@@ -1141,11 +1192,12 @@
    "sic": null,
    "listedSince": "2014-04-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   },
   {
    "cik": 1552198,
@@ -1162,12 +1214,13 @@
    "sic": null,
    "listedSince": "2013-01-01",
    "priceHistoryEnds": "2026-09-11",
-   "acSource": null,
+   "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
     "frames",
     "roster"
-   ]
+   ],
+   "sbaExemptStatus": "not stated"
   }
  ],
  "mergers": [

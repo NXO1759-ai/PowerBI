@@ -1,0 +1,482 @@
+{
+ "ticker": "GAIN",
+ "cik": 1321741,
+ "name": "GLADSTONE INVESTMENT CORPORATION\\DE",
+ "period": "2026-06-30",
+ "form": "10-Q",
+ "accn": "0001321741-26-000017",
+ "filed": "2026-08-06",
+ "creditVersion": "1.1.0",
+ "rowSource": "dataset",
+ "sources": {
+  "dataset": {
+   "zip": "2026_08_bdc.zip",
+   "rows": 65,
+   "counts": {
+    "rows": 312,
+    "identifier": 155,
+    "atPeriod": 75,
+    "kept": 65
+   },
+   "dropped": {
+    "otherDate": 80,
+    "otherEntity": 0,
+    "subtotal": 0,
+    "cash": 0,
+    "fvOnly": 9,
+    "costOnly": 0,
+    "neither": 1
+   },
+   "extra": {
+    "costOnly": 0,
+    "cash": 0
+   }
+  },
+  "instance": null,
+  "table": {
+   "doc": "0001321741-26-000017.htm",
+   "period": "2026-06-30",
+   "tables": 4,
+   "rows": 66,
+   "subtotals": 30,
+   "scale": 1000,
+   "scaleFix": 1,
+   "totals": {
+    "cost": 1044448000,
+    "fv": 1282020000
+   },
+   "matched": 63,
+   "rate": 0.9692,
+   "stages": {
+    "numeric": 63,
+    "principal": 0,
+    "cost": 0,
+    "name": 0
+   },
+   "filled": {
+    "mat": 0,
+    "ind": 63,
+    "na": 0,
+    "lien": 34,
+    "aff": 0,
+    "rate": 0,
+    "acquired": 0,
+    "name": 0
+   },
+   "nonAccrualRows": 0,
+   "nonAccrualUnmatched": 0,
+   "unmatchedRows": 3,
+   "headers": {
+    "(unlabeled first column)": "issuer",
+    "principal/shares/ units": "principal",
+    "cost": "cost",
+    "fair value": "fv"
+   },
+   "notes": []
+  },
+  "rpage": {
+   "report": "R8.htm",
+   "longName": "0000008 - Statement - CONSOLIDATED SCHEDULE OF INVESTMENTS",
+   "period": "2026-06-30",
+   "rows": 65,
+   "fvOnly": 9,
+   "matched": 65,
+   "exact": 9,
+   "filled": {
+    "na": 5,
+    "ind": 0
+   },
+   "nonAccrualRows": 5,
+   "industries": 8,
+   "issuers": 0,
+   "notes": [
+    "identifier members are not nested under an industry; industry per position comes from the main table"
+   ],
+   "usedFor": [
+    "non-accrual"
+   ]
+  }
+ },
+ "gate": {
+  "passed": true,
+  "tolerance": 0.005,
+  "tagSource": "company file",
+  "variant": "tagged rows",
+  "cost": {
+   "sum": 1044448000,
+   "tag": 1044448000,
+   "diffPct": 0
+  },
+  "fv": {
+   "sum": 1282020000,
+   "tag": 1282020000,
+   "diffPct": 0
+  },
+  "rows": 65,
+  "subtotalRowsDropped": 9,
+  "dropped": {
+   "otherDate": 80,
+   "otherEntity": 0,
+   "subtotal": 0,
+   "cash": 0,
+   "fvOnly": 9,
+   "costOnly": 0,
+   "neither": 1
+  },
+  "tried": [
+   {
+    "variant": "tagged rows",
+    "n": 65,
+    "cost": {
+     "sum": 1044448000,
+     "tag": 1044448000,
+     "diffPct": 0
+    },
+    "fv": {
+     "sum": 1282020000,
+     "tag": 1282020000,
+     "diffPct": 0
+    },
+    "reason": null
+   }
+  ]
+ },
+ "summary": {
+  "portfolioCost": 1044448000,
+  "portfolioFv": 1282020000,
+  "holdings": 65,
+  "thirdPartyDebtCost": 737448000,
+  "thirdPartyDebtFv": 667420000,
+  "thirdPartyDebtHoldings": 34,
+  "count": 29,
+  "countAll": 30,
+  "countDebt": 28,
+  "namesUnsplit": 0,
+  "nonAccrual": {
+   "cost": 40340000,
+   "fv": 12242000,
+   "n": 5,
+   "issuers": 3,
+   "ofTotalCost": 0.0386,
+   "ofTotalFv": 0.0095,
+   "ofDebtCost": 0.0547,
+   "ofDebtFv": 0.0183,
+   "source": "rpage"
+  },
+  "wa": {
+   "yieldAtCost": null,
+   "yieldAtFv": null,
+   "spreadCostWeighted": null,
+   "floatingShare": null,
+   "pikContractual": null,
+   "n": {
+    "yield": 0,
+    "spread": 0,
+    "debt": 34
+   },
+   "yieldCoverage": 0,
+   "yieldNote": "withheld: rows with a tagged principal and rate carry 0% of accruing third-party debt cost, under the 80% floor",
+   "floatingNote": "withheld: no spread fact and no base-rate label on any debt row — rate type is unread, not fixed"
+  },
+  "lien": {
+   "classes": {
+    "first lien": {
+     "cost": 584008000,
+     "share": 0.7919,
+     "shareOfPortfolio": 0.5592
+    },
+    "second lien": {
+     "cost": 153440000,
+     "share": 0.2081,
+     "shareOfPortfolio": 0.1469
+    }
+   },
+   "total": 737448000,
+   "portfolioCost": 1044448000,
+   "firstLienShare": 0.7919,
+   "firstLienShareOfPortfolio": 0.5592,
+   "unclassifiedShare": 0
+  },
+  "industry": [
+   {
+    "name": "Machinery (Non-Agriculture, Non-Construction, and Non-Electronic)",
+    "fv": 222005000,
+    "share": 0.1732
+   },
+   {
+    "name": "Diversified/Conglomerate Services",
+    "fv": 194037000,
+    "share": 0.1514
+   },
+   {
+    "name": "Home and Office Furnishings, Housewares, and Durable Consumer Products",
+    "fv": 173346000,
+    "share": 0.1352
+   },
+   {
+    "name": "Aerospace and Defense",
+    "fv": 169054000,
+    "share": 0.1319
+   },
+   {
+    "name": "Oil and Gas",
+    "fv": 123550000,
+    "share": 0.0964
+   },
+   {
+    "name": "Leisure, Amusement, Motion Pictures, and Entertainment",
+    "fv": 110550000,
+    "share": 0.0862
+   },
+   {
+    "name": "Buildings and Real Estate",
+    "fv": 64830000,
+    "share": 0.0506
+   },
+   {
+    "name": "Electronics",
+    "fv": 62968000,
+    "share": 0.0491
+   },
+   {
+    "name": "Chemicals, Plastics, and Rubber",
+    "fv": 52499000,
+    "share": 0.041
+   },
+   {
+    "name": "Healthcare, Education, and Childcare",
+    "fv": 41823000,
+    "share": 0.0326
+   },
+   {
+    "name": "other",
+    "fv": 67358000,
+    "share": 0.0525
+   }
+  ],
+  "industrySource": "table",
+  "maturity": {
+   "2026": 0,
+   "2027": 0,
+   "2028": 0,
+   "2029": 0,
+   "2030": 0,
+   "2031-2033": 0,
+   "later": 0,
+   "n/a": 737448000,
+   "excluded": 0,
+   "total": 737448000,
+   "dated": 0,
+   "unfunded": null,
+   "shares": null
+  },
+  "maturitySource": null,
+  "vehicles": {
+   "fv": 4945000,
+   "share": 0.0039
+  },
+  "structured": {
+   "fv": 0,
+   "share": 0
+  },
+  "equity": {
+   "fv": 609655000,
+   "share": 0.4755
+  },
+  "top10": {
+   "fv": 864056000,
+   "share": 0.674
+  },
+  "affiliation": null,
+  "affiliationClasses": [],
+  "affiliationSource": null,
+  "unfunded": {
+   "total": 0,
+   "holdings": 0
+  },
+  "pik": {
+   "holdings": 0,
+   "cost": 0
+  },
+  "histogram": {
+   "byCount": {},
+   "byCost": {},
+   "n": 0,
+   "cost": 0
+  },
+  "vsProse": {
+   "yieldAtCost": null,
+   "yieldAtFv": null,
+   "floatingShare": null,
+   "floatingShareBasis": null,
+   "nonAccrualCost": 0.055,
+   "nonAccrualFv": 0.018,
+   "nonAccrualOf": "debt",
+   "portfolioCompanies": 29
+  }
+ },
+ "tableUnmatched": {
+  "rows": [
+   {
+    "issuer": "Horizon Facilities Services, Inc. - Preferred Stock",
+    "type": null,
+    "lien": "Preferred Equity",
+    "industry": "Diversified/Conglomerate Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 10080,
+    "cost": 0,
+    "fv": 0,
+    "page": 2,
+    "src": "table"
+   },
+   {
+    "issuer": "B+T Group Acquisition, Inc. (K) - Common Stock Warrants",
+    "type": null,
+    "lien": "Common Equity/Equivalents",
+    "industry": "Telecommunications",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": null,
+    "cost": 0,
+    "fv": 0,
+    "page": 4,
+    "src": "table"
+   },
+   {
+    "issuer": "Dreyfus Treasury Obligations Cash Management Fund ( 3.29 % market yield)",
+    "type": null,
+    "lien": "CASH EQUIVALENTS",
+    "industry": null,
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 25000,
+    "cost": 25000,
+    "fv": 25000,
+    "page": 4,
+    "src": "table"
+   }
+  ],
+  "nonAccrualRows": 0,
+  "note": "printed rows that matched no tagged holding, kept whole with their columns (src \"table\", non-accrual first) and never summed; the gate's sums stay the tagged sums"
+ },
+ "notes": [],
+ "keys": {
+  "holding": {
+   "id": "id",
+   "issuer": "k",
+   "name": "n",
+   "aff": "a",
+   "kind": "t",
+   "lien": "l",
+   "facility": "f",
+   "industry": "i",
+   "rate": "r",
+   "spread": "sp",
+   "floor": "fl",
+   "pik": "pk",
+   "base": "b",
+   "principal": "p",
+   "cost": "c",
+   "fv": "v",
+   "pctNav": "nv",
+   "unfunded": "u",
+   "acquired": "ad",
+   "maturity": "m",
+   "nonAccrual": "na",
+   "floating": "fr",
+   "units": "un",
+   "src": "s",
+   "fvUntagged": "fvu",
+   "costUntagged": "cu",
+   "cashEquivalent": "ce"
+  },
+  "lien": {
+   "class": "c",
+   "subclass": "s",
+   "raw": "r"
+  },
+  "src": {
+   "row": "w",
+   "table": "t",
+   "r": "r",
+   "na": "na",
+   "ind": "i",
+   "mat": "m",
+   "unf": "u",
+   "rt": "rt",
+   "ds": "ds",
+   "val": "vl",
+   "nm": "nm",
+   "af": "af"
+  },
+  "note": "short keys per blueprint 7.4; a key absent from a row is null (floating: false); src.t and src.r absent mean false, src.na absent means none; src.vl \"table\" marks a fair value the filer left untagged and the printed schedule supplied; src.nm \"table\" marks an issuer name the printed row supplied; src.af \"issuer\" marks an affiliation taken from the issuer's other tranches; the issuer key (H1 `issuer`) is not written — it is normalizeIssuer(n), which expandHolding restores"
+ },
+ "holdings": [
+{"id":"B+T Group Acquisition, Inc. Common Stock Warrants","n":"B+T Group Acquisition, Inc.","t":"equity","l":{"c":"equity","r":"Common Stock Warrants"},"c":0,"v":0,"s":{"w":"dataset","r":true}},
+{"id":"B+T Group Acquisition, Inc. Line of Credit 1","n":"B+T Group Acquisition, Inc.","t":"debt","l":{"c":"first lien","r":"Line of Credit 1"},"i":"Telecommunications","p":3080000,"c":3080000,"v":3080000,"na":true,"s":{"w":"dataset","t":true,"r":true,"na":"rpage","i":"table"}},
+{"id":"B+T Group Acquisition, Inc. Line of Credit 2","n":"B+T Group Acquisition, Inc.","t":"debt","l":{"c":"first lien","r":"Line of Credit 2"},"i":"Telecommunications","p":1050000,"c":1050000,"v":1050000,"na":true,"s":{"w":"dataset","t":true,"r":true,"na":"rpage","i":"table"}},
+{"id":"B+T Group Acquisition, Inc. Term Debt","n":"B+T Group Acquisition, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Telecommunications","p":14000000,"c":14000000,"v":3329000,"na":true,"s":{"w":"dataset","t":true,"r":true,"na":"rpage","i":"table"}},
+{"id":"B+T Group Acquisition, Inc. Preferred Stock","n":"B+T Group Acquisition, Inc.","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Telecommunications","c":4722000,"v":0,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Brunswick Bowling Products, Inc. Preferred Stock","n":"Brunswick Bowling Products, Inc.","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Home and Office Furnishings, Housewares, and Durable Consumer Products","c":6653000,"v":52374000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Brunswick Bowling Products, Inc. Term Debt 1","n":"Brunswick Bowling Products, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt 1"},"i":"Home and Office Furnishings, Housewares, and Durable Consumer Products","p":17700000,"c":17700000,"v":17700000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Brunswick Bowling Products, Inc. Term Debt 2","n":"Brunswick Bowling Products, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt 2"},"i":"Home and Office Furnishings, Housewares, and Durable Consumer Products","p":6850000,"c":6850000,"v":6850000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Dema/Mai Holdings, Inc - Preferred Stock","n":"Dema/Mai Holdings, Inc","t":"equity","l":{"c":"equity","r":"- Preferred Stock"},"i":"Buildings and Real Estate","c":21000000,"v":26580000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Dema/Mai Holdings, Inc Term Debt","n":"Dema/Mai Holdings, Inc","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Buildings and Real Estate","p":38250000,"c":38250000,"v":38250000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Detroit Defense, Inc. - Preferred Stock","n":"Detroit Defense, Inc.","t":"equity","l":{"c":"equity","r":"- Preferred Stock"},"i":"Aerospace and Defense","c":17388000,"v":1771000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Detroit Defense, Inc. Term Debt","n":"Detroit Defense, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Aerospace and Defense","p":61305000,"c":61305000,"v":61305000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Diligent Delivery Systems Common Stock Warrants","n":"Diligent Delivery Systems Common Stock","t":"equity","l":{"c":"equity","r":"Warrants"},"i":"Cargo Transport","c":500000,"v":0,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Diligent Delivery Systems Term Debt","n":"Diligent Delivery Systems","t":"debt","l":{"c":"second lien","r":"Term Debt"},"i":"Cargo Transport","p":13000000,"c":13000000,"v":4279000,"na":true,"s":{"w":"dataset","t":true,"r":true,"na":"rpage","i":"table"}},
+{"id":"Edge Adhesives Holdings, Inc - Term Debt","n":"Edge Adhesives Holdings, Inc","t":"debt","l":{"c":"first lien","r":"- Term Debt"},"i":"Diversified/Conglomerate Manufacturing","p":9210000,"c":9210000,"v":504000,"na":true,"s":{"w":"dataset","t":true,"r":true,"na":"rpage","i":"table"}},
+{"id":"Edge Adhesives Holdings, Inc. - Preferred Stock","n":"Edge Adhesives Holdings, Inc.","t":"equity","l":{"c":"equity","r":"- Preferred Stock"},"i":"Diversified/Conglomerate Manufacturing","c":8199000,"v":0,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Educators Resource, Inc. Preferred Stock","n":"Educators Resource, Inc.","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Healthcare, Education, and Childcare","c":8560000,"v":11823000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Educators Resource, Inc. Term Debt","n":"Educators Resource, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Healthcare, Education, and Childcare","p":30000000,"c":30000000,"v":30000000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Galaxy Technologies Holdings, Inc. Common Stock","n":"Galaxy Technologies Holdings, Inc.","t":"equity","l":{"c":"equity","r":"Common Stock"},"i":"Aerospace and Defense","c":11513000,"v":12648000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Galaxy Technologies Holdings, Inc. Term Debt 1","n":"Galaxy Technologies Holdings, Inc.","t":"debt","l":{"c":"second lien","r":"Term Debt 1"},"i":"Aerospace and Defense","p":6900000,"c":6900000,"v":6900000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Galaxy Technologies Holdings, Inc. Term Debt 2","n":"Galaxy Technologies Holdings, Inc.","t":"debt","l":{"c":"second lien","r":"Term Debt 2"},"i":"Aerospace and Defense","p":18796000,"c":18796000,"v":18796000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Ginsey Home Solutions, Inc. Common Stock","n":"Ginsey Home Solutions, Inc.","t":"equity","l":{"c":"equity","r":"Common Stock"},"i":"Home and Office Furnishings, Housewares, and Durable Consumer Products","c":8000,"v":0,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Ginsey Home Solutions, Inc. Preferred Stock","n":"Ginsey Home Solutions, Inc.","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Home and Office Furnishings, Housewares, and Durable Consumer Products","c":9583000,"v":13645000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Ginsey Home Solutions, Inc. Term Debt","n":"Ginsey Home Solutions, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Home and Office Furnishings, Housewares, and Durable Consumer Products","p":12200000,"c":12200000,"v":12200000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Gladstone Alternative Income Fund. Common Equity","n":"Gladstone Alternative Income Fund.","t":"vehicle","l":{"c":"equity","r":"Common Equity"},"i":"Finance","c":5000000,"v":4945000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Global GRAB Technologies, Inc. Preferred Stock","n":"Global GRAB Technologies, Inc.","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Aerospace and Defense","c":21100000,"v":21134000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Global GRAB Technologies, Inc. Term Debt","n":"Global GRAB Technologies, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Aerospace and Defense","p":46500000,"c":46500000,"v":46500000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Home Concepts Acquisition, Inc.- Preferred Stock","n":"Home Concepts Acquisition","t":"equity","l":{"c":"equity","r":"Inc.- Preferred Stock"},"i":"Printing and Publishing","c":3275000,"v":311000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Home Concepts Acquisition, Inc. - Term Debt","n":"Home Concepts Acquisition, Inc.","t":"debt","l":{"c":"first lien","r":"- Term Debt"},"i":"Printing and Publishing","p":3000000,"c":3000000,"v":3000000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Horizon Facilities Services, Inc. Preferred Stock","n":"Horizon Facilities Services, Inc.","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"c":0,"v":0,"s":{"w":"dataset","r":true}},
+{"id":"Horizon Facilities Services, Inc. Term Debt","n":"Horizon Facilities Services, Inc.","t":"debt","l":{"c":"second lien","r":"Term Debt"},"i":"Diversified/Conglomerate Services","p":57700000,"c":57700000,"v":15770000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"ImageWorks Display and Marketing Group, Inc. Preferred Stock","n":"ImageWorks Display and Marketing Group, Inc.","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Diversified/Conglomerate Services","c":6749000,"v":33537000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"ImageWorks Display and Marketing Group, Inc. Term Debt 1","n":"ImageWorks Display and Marketing Group, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt 1"},"i":"Diversified/Conglomerate Services","p":22000000,"c":22000000,"v":22000000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"J.R. Hobbs Co. Atlanta, LLC Preferred Stock","n":"J.R. Hobbs Co. Atlanta, LLC","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Diversified/Conglomerate Services","c":10920000,"v":10183000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"J.R. Hobbs Co. - Atlanta, LLC Term Debt","n":"J.R. Hobbs Co. - Atlanta, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Services","p":20000000,"c":20000000,"v":20000000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Mason West, LLC Preferred Stock","n":"Mason West, LLC","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Diversified/Conglomerate Services","c":11206000,"v":20047000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Mason West, LLC Term Debt","n":"Mason West, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Services","p":25250000,"c":25250000,"v":25250000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Nielsen-Kellerman Acquisition Corp. - Term Debt","n":"Nielsen-Kellerman Acquisition Corp. -","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Electronics","p":48082000,"c":48082000,"v":48082000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Nielsen-Kellerman Acquisition Corp. Preferred Stock","n":"Nielsen-Kellerman Acquisition Corp.","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Electronics","c":22169000,"v":14886000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Old World Christmas, Inc. Preferred Stock","n":"Old World Christmas, Inc.","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Home and Office Furnishings, Housewares, and Durable Consumer Products","c":0,"v":32577000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Old World Christmas, Inc. Term Debt","n":"Old World Christmas, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Home and Office Furnishings, Housewares, and Durable Consumer Products","p":38000000,"c":38000000,"v":38000000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Phoenix Door Systems, Inc Line of Credit","n":"Phoenix Door Systems, Inc","t":"debt","l":{"c":"first lien","r":"Line of Credit"},"i":"Diversified/Conglomerate Manufacturing","p":2950000,"c":2950000,"v":2950000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Phoenix Door Systems, Inc. Common Stock","n":"Phoenix Door Systems, Inc.","t":"equity","l":{"c":"equity","r":"Common Stock"},"i":"Diversified/Conglomerate Manufacturing","c":1830000,"v":136000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Phoenix Door Systems, Inc. Term Debt","n":"Phoenix Door Systems, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Manufacturing","p":3200000,"c":3200000,"v":3200000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"PSI Molded Plastics, Inc. Line of Credit","n":"PSI Molded Plastics, Inc.","t":"debt","l":{"c":"second lien","r":"Line of Credit"},"i":"Chemicals, Plastics, and Rubber","p":2000000,"c":2000000,"v":2000000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"PSI Molded Plastics, Inc. Preferred Stock","n":"PSI Molded Plastics, Inc.","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Chemicals, Plastics, and Rubber","c":46746000,"v":5510000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"PSI Molded Plastics, Inc. Term Debt","n":"PSI Molded Plastics, Inc.","t":"debt","l":{"c":"second lien","r":"Term Debt"},"i":"Chemicals, Plastics, and Rubber","p":400000,"c":400000,"v":400000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Pyrotek Special Effects, Inc. - Term Debt","n":"Pyrotek Special Effects, Inc.","t":"debt","l":{"c":"first lien","r":"- Term Debt"},"i":"Leisure, Amusement, Motion Pictures, and Entertainment","p":20120000,"c":20120000,"v":20120000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Pyrotek Special Effects, Inc.. Preferred Stock","n":"Pyrotek Special Effects","t":"equity","l":{"c":"equity","r":"Inc.. Preferred Stock"},"i":"Leisure, Amusement, Motion Pictures, and Entertainment","c":7060000,"v":3620000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Rowan Energy Inc. Preferred Stock","n":"Rowan Energy Inc.","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Oil and Gas","c":7298000,"v":4065000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Rowan Energy Inc. Term Debt","n":"Rowan Energy Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Oil and Gas","p":25790000,"c":25790000,"v":25790000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Schylling, Inc. Preferred Stock","n":"Schylling, Inc.","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Leisure, Amusement, Motion Pictures, and Entertainment","c":4000000,"v":69829000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Schylling, Inc. Term Debt","n":"Schylling, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Leisure, Amusement, Motion Pictures, and Entertainment","p":16981000,"c":16981000,"v":16981000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"SFEG Holdings, Inc. Common Stock","n":"SFEG Holdings, Inc.","t":"equity","l":{"c":"equity","r":"Common Stock"},"i":"Machinery (Non-Agriculture, Non-Construction, and Non-Electronic)","c":30746000,"v":167361000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"SFEG Holdings, Inc. Term Debt 1","n":"SFEG Holdings, Inc.","t":"debt","l":{"c":"second lien","r":"Term Debt 1"},"i":"Machinery (Non-Agriculture, Non-Construction, and Non-Electronic)","p":54644000,"c":54644000,"v":54644000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Smart Chemical Solutions, LLC - Preferred Stock","n":"Smart Chemical Solutions, LLC","t":"equity","l":{"c":"equity","r":"- Preferred Stock"},"i":"Chemicals, Plastics, and Rubber","c":13843000,"v":8929000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Smart Chemical Solutions, LLC Term Debt","n":"Smart Chemical Solutions, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Chemicals, Plastics, and Rubber","p":35660000,"c":35660000,"v":35660000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Sun State Nursery and Landscaping, LLC Preferred Stock","n":"Sun State Nursery and Landscaping, LLC","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Diversified/Conglomerate Services","c":3059000,"v":4271000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Sun State Nursery and Landscaping, LLC Term Debt","n":"Sun State Nursery and Landscaping, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Services","p":9520000,"c":9520000,"v":9520000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"The E3 Company, LLC Preferred Stock","n":"The E3 Company, LLC","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Oil and Gas","c":11233000,"v":59945000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"The E3 Company, LLC Term Debt","n":"The E3 Company, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Oil and Gas","p":33750000,"c":33750000,"v":33750000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"The Maids International, LLC Preferred Stock","n":"The Maids International, LLC","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Diversified/Conglomerate Services","c":6640000,"v":4899000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"The Maids International, LLC Term Debt","n":"The Maids International, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Services","p":28560000,"c":28560000,"v":28560000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"UPB Acquisition, Inc. Preferred Stock","n":"UPB Acquisition, Inc.","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Mining, Steel, Iron and Non-Precious Metals","c":6000000,"v":29574000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"UPB Acquisition, Inc. Term Debt","n":"UPB Acquisition, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Mining, Steel, Iron and Non-Precious Metals","p":11000000,"c":11000000,"v":11000000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}}
+ ]
+}
