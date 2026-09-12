@@ -1,15 +1,27 @@
 {
-  "startedAt": "2026-09-06T11:29:05.266Z",
+  "startedAt": "2026-09-12T10:55:26.343Z",
   "definitionsVersion": 2,
-  "companiesAttempted": 130,
-  "companiesWritten": 130,
+  "companiesAttempted": 137,
+  "companiesWritten": 137,
   "companiesFailed": [],
   "findings": [
+    {
+      "ticker": "APLD",
+      "severity": "warn",
+      "code": "balance_sheet_tie",
+      "message": "assets do not equal liabilities plus total equity — off by 15.79% of total assets (noncontrolling interest not reported)"
+    },
     {
       "ticker": "BLK",
       "severity": "warn",
       "code": "balance_sheet_tie",
       "message": "assets do not equal liabilities plus total equity — off by 3.81% of total assets (a balance sheet section outside the pulled concepts, typically redeemable noncontrolling interest)"
+    },
+    {
+      "ticker": "DLR",
+      "severity": "warn",
+      "code": "balance_sheet_tie",
+      "message": "assets do not equal liabilities plus total equity — off by 3.26% of total assets (a balance sheet section outside the pulled concepts, typically redeemable noncontrolling interest)"
     },
     {
       "ticker": "SPG",
@@ -25,7 +37,7 @@
     }
   ],
   "errorCount": 0,
-  "warnCount": 3,
-  "finishedAt": "2026-09-06T11:29:33.920Z",
-  "durationSeconds": 29
+  "warnCount": 5,
+  "finishedAt": "2026-09-12T10:56:45.275Z",
+  "durationSeconds": 79
 }

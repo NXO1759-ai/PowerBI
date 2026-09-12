@@ -1,0 +1,536 @@
+{
+  "ticker": "NBIS",
+  "cik": 1513845,
+  "name": "Nebius Group N.V.",
+  "keyedOn": "2026-09-11",
+  "why": "Nebius files a 20-F once a year and its quarters on Form 6-K without XBRL (every 6-K in the submissions feed carries isXBRL=0), so companyfacts holds annual USD facts only. The quarters below are hand-keyed from the interim-report exhibits, as printed, and scripts/test-nbis-interims.mjs proves that scripts/lib/interim-parse.mjs reads the same figures from the fixtures under scripts/fixtures/nbis/. One row set per interim report, three a year, keyed by accession because two 6-Ks were filed on 2026-08-12 and 'EX-99.2' alone is ambiguous.",
+  "unit": "USD millions as printed; the parser multiplies by 1,000,000",
+  "signConvention": "as printed: outflows in parentheses are negative, proceeds positive, losses negative. The interim parser keeps the printed sign (its Enlivex test pins capex at -60,000), whereas a tagged Payments* fact is positive; the capex panel (blueprint 15.0) stores outflows positive and must flip these lines.",
+  "fiscalYearEndMonth": 12,
+  "filerType": "20-F annual, 6-K interim (foreign private issuer, Netherlands N.V.; formerly Yandex N.V. to 2024-08-16)",
+  "taggedAnchors": [
+    {
+      "concept": "PaymentsToAcquirePropertyPlantAndEquipment",
+      "value": 4066.0,
+      "start": "2025-01-01",
+      "end": "2025-12-31",
+      "form": "20-F",
+      "accession": "0001104659-26-052948",
+      "filed": "2026-04-30",
+      "note": "the annual anchor for the 6-K quarters (blueprint 15.1); the 20-F/A of 2026-05-22 (0001104659-26-065681) did not replace the tagged financials in companyfacts as of 2026-09-11"
+    },
+    {
+      "concept": "NetCashProvidedByUsedInOperatingActivities",
+      "value": 384.8,
+      "start": "2025-01-01",
+      "end": "2025-12-31",
+      "form": "20-F",
+      "accession": "0001104659-26-052948",
+      "filed": "2026-04-30"
+    },
+    {
+      "concept": "ProceedsFromIssuanceOfLongTermDebt",
+      "value": 4162.5,
+      "start": "2025-01-01",
+      "end": "2025-12-31",
+      "form": "20-F",
+      "accession": "0001104659-26-052948",
+      "filed": "2026-04-30",
+      "note": "the FY2025 convertible-note proceeds sit under this tag in the 20-F; the 6-K prints them as 'Proceeds from issuance of convertible notes'"
+    },
+    {
+      "concept": "DebtInstrumentCarryingAmount",
+      "value": 4836.8,
+      "end": "2025-12-31",
+      "form": "20-F",
+      "accession": "0001104659-26-052948",
+      "filed": "2026-04-30",
+      "note": "convert principal at maturity at 2025-12-31 (the Note 12 total); the 6-K table below carries the same column at 2026-06-30"
+    }
+  ],
+  "reports": [
+    {
+      "accession": "0001104659-26-064092",
+      "form": "6-K",
+      "filed": "2026-05-20",
+      "reportDate": "2026-03-31",
+      "fiscalPeriod": "Q1",
+      "exhibit": "EX-99.2",
+      "document": "nbis-20260331xex99d2.htm",
+      "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926064092/nbis-20260331xex99d2.htm",
+      "fixture": "scripts/fixtures/nbis/nbis-20260331xex99d2-statements.htm",
+      "title": "Unaudited condensed consolidated financial statements for the three months ended March 31, 2026",
+      "statements": {
+        "cashFlow": [
+          {
+            "start": "2026-01-01",
+            "end": "2026-03-31",
+            "lines": {
+              "cfOps": 2258.0,
+              "depreciation": 208.8,
+              "amortizationIntangibles": 3.2,
+              "shareBasedComp": 35.3,
+              "deferredRevenueChange": 3198.0,
+              "capex": -2472.9,
+              "acquisitions": -170.2,
+              "cfInv": -2643.1,
+              "convertsIssued": 4337.5,
+              "debtIssuanceCosts": -43.8,
+              "warrantsIssued": 2000.0,
+              "optionsExercised": 1.8,
+              "cfFin": 6295.5
+            },
+            "asPrinted": {
+              "cfOps": "Net cash provided by / (used in) operating activities",
+              "capex": "Purchases of property and equipment and intangible assets",
+              "warrantsIssued": "Proceeds from issuance of pre-funded warrants sale",
+              "cfFin": "Net cash provided by/(used in) financing activities"
+            }
+          },
+          {
+            "start": "2025-01-01",
+            "end": "2025-03-31",
+            "lines": {
+              "cfOps": -197.5,
+              "depreciation": 48.6,
+              "amortizationIntangibles": 0.5,
+              "shareBasedComp": 17.5,
+              "deferredRevenueChange": 2.4,
+              "capex": -543.9,
+              "acquisitions": 0,
+              "cfInv": -544.0,
+              "convertsIssued": 0,
+              "debtIssuanceCosts": 0,
+              "warrantsIssued": 0,
+              "optionsExercised": 0,
+              "cfFin": -181.5
+            },
+            "note": "prior-year comparative column, headed '2025*' (recast for the Toloka deconsolidation); the cfOps total includes (13.4) from discontinued operations"
+          }
+        ],
+        "balanceSheet": [
+          {
+            "end": "2026-03-31",
+            "lines": {
+              "cash": 9298.2,
+              "receivables": 1479.2,
+              "currentAssets": 11238.3,
+              "ppe": 7131.7,
+              "intangibles": 48.3,
+              "goodwill": 163.3,
+              "operatingLeaseAsset": 1266.0,
+              "totalAssets": 22303.3,
+              "shortTermDebt": 18.4,
+              "deferredRevenue": 685.6,
+              "currentLiabilities": 1349.0,
+              "longTermDebt": 8432.0,
+              "deferredRevenueNoncurrent": 4092.5,
+              "totalLiabilities": 15061.4,
+              "equity": 7240.9,
+              "minorityInterest": 1.0,
+              "equityIncludingNci": 7241.9
+            },
+            "notParsed": {
+              "operatingLeaseLiabilityNoncurrent": 1045.8
+            },
+            "note": "'Operating lease liabilities' is printed without the ', non-current' suffix in this report; it is the non-current line (the current portion sits in accounts payable, accrued and other liabilities), so the parser leaves it and it is keyed here by hand. 'Debt, non-current' 8,432.0 is the carrying amount of the convertible notes."
+          },
+          {
+            "end": "2025-12-31",
+            "lines": {
+              "cash": 3678.1,
+              "receivables": 720.3,
+              "currentAssets": 4711.4,
+              "ppe": 5553.3,
+              "intangibles": 19.7,
+              "goodwill": 0,
+              "operatingLeaseAsset": 918.8,
+              "totalAssets": 12430.6,
+              "shortTermDebt": 24.5,
+              "deferredRevenue": 275.5,
+              "currentLiabilities": 1527.8,
+              "longTermDebt": 4103.2,
+              "deferredRevenueNoncurrent": 1302.0,
+              "totalLiabilities": 7836.6,
+              "equity": 4594.0,
+              "minorityInterest": 0,
+              "equityIncludingNci": 4594.0
+            }
+          }
+        ],
+        "incomeStatement": [
+          {
+            "start": "2026-01-01",
+            "end": "2026-03-31",
+            "lines": {
+              "revenue": 399.0,
+              "cogs": 103.8,
+              "researchDevelopment": 67.4,
+              "sellingGeneralAdmin": 143.8,
+              "depreciationAmortization": 212.0,
+              "operatingExpenses": 527.0,
+              "operatingIncome": -128.0,
+              "interestExpense": -63.7,
+              "incomeTax": -5.8,
+              "netIncome": 621.2
+            },
+            "asPrinted": {
+              "researchDevelopment": "Product development (1)",
+              "operatingExpenses": "Total operating costs and expenses",
+              "operatingIncome": "Loss from operations",
+              "incomeTax": "Income tax expense / (benefit)",
+              "netIncome": "Net income / (loss)"
+            },
+            "note": "net income carries a 780.6 gain from revaluation of the investment in equity securities (ClickHouse); loss from operations is the operating figure"
+          },
+          {
+            "start": "2025-01-01",
+            "end": "2025-03-31",
+            "lines": {
+              "revenue": 50.9,
+              "cogs": 24.7,
+              "researchDevelopment": 36.5,
+              "sellingGeneralAdmin": 60.9,
+              "depreciationAmortization": 49.1,
+              "operatingExpenses": 171.2,
+              "operatingIncome": -120.3,
+              "interestExpense": 0,
+              "incomeTax": 0.9,
+              "netIncome": -113.5
+            }
+          }
+        ]
+      }
+    },
+    {
+      "accession": "0001104659-26-094844",
+      "form": "6-K",
+      "filed": "2026-08-12",
+      "reportDate": "2026-06-30",
+      "fiscalPeriod": "Q2",
+      "exhibit": "EX-99.2",
+      "document": "nbis-20260812xex99d2.htm",
+      "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094844/nbis-20260812xex99d2.htm",
+      "fixture": "scripts/fixtures/nbis/nbis-20260812xex99d2-statements.htm",
+      "title": "Unaudited condensed consolidated financial statements for the three and six months ended June 30, 2026",
+      "sameDayFiling": {
+        "accession": "0001104659-26-094568",
+        "what": "the earnings press release (EX-99.1, tm2622968d1_ex99-1.htm) and shareholder letter (EX-99.2), filed the same morning; the press release prints three-month cash-flow columns the interim report does not (Q2 2026 capex (5,657.4), operating cash flow from continuing operations 2,246.1) and the letter carries the '$9 billion in customer prepayments in 2026' sentence. Cite this accession for those; cite 0001104659-26-094844 for the statements and Notes 11 to 14."
+      },
+      "statements": {
+        "cashFlow": [
+          {
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "lines": {
+              "cfOps": 4504.1,
+              "depreciation": 462.6,
+              "amortizationIntangibles": 9.1,
+              "shareBasedComp": 137.8,
+              "deferredRevenueChange": 4395.0,
+              "capex": -8130.3,
+              "acquisitions": -251.6,
+              "cfInv": -8288.8,
+              "convertsIssued": 4337.5,
+              "debtIssuanceCosts": -43.8,
+              "treasurySharesSold": 2846.7,
+              "equityIssuanceCosts": -35.6,
+              "warrantsIssued": 2000.0,
+              "optionsExercised": 55.6,
+              "cfFin": 9160.4
+            },
+            "asPrinted": {
+              "cfOps": "Net cash provided by / (used in) operating activities",
+              "capex": "Purchases of property and equipment and intangible assets",
+              "convertsIssued": "Proceeds from issuance of convertible notes",
+              "treasurySharesSold": "Proceeds from sale of treasury shares",
+              "warrantsIssued": "Proceeds from issuance of pre-funded warrants",
+              "cfFin": "Net cash provided by financing activities"
+            },
+            "note": "six-month only; the statement prints no three-month cash-flow columns. 'Interest paid' is not printed on the face of the statement (Note 12 gives capitalized interest of 40.2 for the quarter and 59.6 for the six months)."
+          },
+          {
+            "start": "2025-01-01",
+            "end": "2025-06-30",
+            "lines": {
+              "cfOps": -369.1,
+              "depreciation": 121.2,
+              "amortizationIntangibles": 3.1,
+              "shareBasedComp": 32.1,
+              "deferredRevenueChange": 3.0,
+              "capex": -1054.5,
+              "acquisitions": 0,
+              "cfInv": -1146.3,
+              "convertsIssued": 1000.0,
+              "debtIssuanceCosts": 0,
+              "treasurySharesSold": 0,
+              "equityIssuanceCosts": 0,
+              "warrantsIssued": 0,
+              "optionsExercised": 0,
+              "cfFin": 818.5
+            },
+            "note": "the cfOps total includes (17.1) from discontinued operations; continuing operations alone were (352.0)"
+          }
+        ],
+        "balanceSheet": [
+          {
+            "end": "2026-06-30",
+            "lines": {
+              "cash": 8042.1,
+              "receivables": 288.6,
+              "currentAssets": 9615.6,
+              "ppe": 13045.2,
+              "intangibles": 83.9,
+              "goodwill": 605.6,
+              "operatingLeaseAsset": 1855.1,
+              "totalAssets": 27961.5,
+              "shortTermDebt": 46.7,
+              "deferredRevenue": 979.4,
+              "currentLiabilities": 2386.1,
+              "operatingLeaseLiabilityNoncurrent": 1510.4,
+              "longTermDebt": 8499.0,
+              "deferredRevenueNoncurrent": 4995.8,
+              "totalLiabilities": 17621.0,
+              "equity": 10339.5,
+              "minorityInterest": 1.0,
+              "equityIncludingNci": 10340.5
+            },
+            "note": "'Debt, non-current' 8,499.0 is the carrying amount of the six convertible series (Note 12 'Total convertible debt'); principal at maturity is 10,041.8, keyed below. Deferred revenue (979.4 current + 4,995.8 non-current) is customer prepayments, the funding channel blueprint 15.2 names."
+          },
+          {
+            "end": "2025-12-31",
+            "lines": {
+              "cash": 3678.1,
+              "receivables": 720.3,
+              "currentAssets": 4711.4,
+              "ppe": 5553.3,
+              "intangibles": 19.7,
+              "goodwill": 0,
+              "operatingLeaseAsset": 918.8,
+              "totalAssets": 12430.6,
+              "shortTermDebt": 24.5,
+              "deferredRevenue": 275.5,
+              "currentLiabilities": 1527.8,
+              "operatingLeaseLiabilityNoncurrent": 760.5,
+              "longTermDebt": 4103.2,
+              "deferredRevenueNoncurrent": 1302.0,
+              "totalLiabilities": 7836.6,
+              "equity": 4594.0,
+              "minorityInterest": 0,
+              "equityIncludingNci": 4594.0
+            }
+          }
+        ],
+        "incomeStatement": [
+          {
+            "start": "2026-04-01",
+            "end": "2026-06-30",
+            "lines": {
+              "revenue": 582.3,
+              "cogs": 133.6,
+              "researchDevelopment": 191.0,
+              "sellingGeneralAdmin": 173.9,
+              "depreciationAmortization": 259.7,
+              "operatingExpenses": 758.2,
+              "operatingIncome": -175.9,
+              "interestExpense": -119.1,
+              "incomeTax": 13.7,
+              "netIncome": -190.4
+            }
+          },
+          {
+            "start": "2026-01-01",
+            "end": "2026-06-30",
+            "lines": {
+              "revenue": 981.3,
+              "cogs": 237.4,
+              "researchDevelopment": 258.4,
+              "sellingGeneralAdmin": 317.7,
+              "depreciationAmortization": 471.7,
+              "operatingExpenses": 1285.2,
+              "operatingIncome": -303.9,
+              "interestExpense": -182.8,
+              "incomeTax": 7.9,
+              "netIncome": 430.8
+            }
+          },
+          {
+            "start": "2025-04-01",
+            "end": "2025-06-30",
+            "lines": {
+              "revenue": 105.1,
+              "cogs": 30.1,
+              "researchDevelopment": 42.8,
+              "sellingGeneralAdmin": 68.2,
+              "depreciationAmortization": 75.2,
+              "operatingExpenses": 216.3,
+              "operatingIncome": -111.2,
+              "interestExpense": -4.8,
+              "incomeTax": 0.8,
+              "netIncome": 584.4
+            }
+          },
+          {
+            "start": "2025-01-01",
+            "end": "2025-06-30",
+            "lines": {
+              "revenue": 156.0,
+              "cogs": 54.8,
+              "researchDevelopment": 79.3,
+              "sellingGeneralAdmin": 129.1,
+              "depreciationAmortization": 124.3,
+              "operatingExpenses": 387.5,
+              "operatingIncome": -231.5,
+              "interestExpense": -4.8,
+              "incomeTax": 1.7,
+              "netIncome": 470.9
+            }
+          }
+        ]
+      },
+      "notes": {
+        "note12ConvertibleDebt": {
+          "asOf": "2026-06-30",
+          "columns": [
+            "maturity",
+            "statedRate",
+            "effectiveRate",
+            "principalOutstanding",
+            "unamortizedAccretion",
+            "unamortizedIssuanceCosts",
+            "carryingAmount"
+          ],
+          "series": [
+            [
+              "June 2029",
+              "2.00%",
+              "7.06%",
+              587.5,
+              -74.0,
+              -9.4,
+              504.1
+            ],
+            [
+              "September 2030",
+              "1.00%",
+              "4.15%",
+              1818.4,
+              -202.9,
+              -27.3,
+              1588.2
+            ],
+            [
+              "June 2031",
+              "3.00%",
+              "6.87%",
+              612.5,
+              -103.6,
+              -10.5,
+              498.4
+            ],
+            [
+              "September 2032",
+              "2.75%",
+              "4.88%",
+              1818.4,
+              -214.5,
+              -28.9,
+              1575.0
+            ],
+            [
+              "March 2031",
+              "1.25%",
+              "4.98%",
+              3105.0,
+              -491.6,
+              -24.8,
+              2588.6
+            ],
+            [
+              "March 2033",
+              "2.63%",
+              "5.20%",
+              2100.0,
+              -338.2,
+              -17.1,
+              1744.7
+            ]
+          ],
+          "total": [
+            10041.8,
+            -1424.8,
+            -118.0,
+            8499.0
+          ],
+          "note": "the March 2026 notes were issued for $4.34 billion aggregate original principal (Rule 144A, 2026-03-20) and accrete, so principal outstanding (3,105.0 + 2,100.0) already exceeds the original; net debt in blueprint 15.3 takes the principal-at-maturity column"
+        },
+        "note11Commitments": {
+          "asOf": "2026-06-30",
+          "sentence": "expected future fixed or minimum guaranteed commitments under these agreements amounted to $81.7 in 2026, $541.8 in 2027, $542.0 in 2028, $540.5 in 2029, $535.8 in 2030, and $3,082.3 thereafter",
+          "byYear": {
+            "2026": 81.7,
+            "2027": 541.8,
+            "2028": 542.0,
+            "2029": 540.5,
+            "2030": 535.8,
+            "thereafter": 3082.3
+          },
+          "what": "energy and power supply agreements, co-location arrangements and greenfield data-center development; the purchase-obligation equivalent, text only"
+        },
+        "note14PreFundedWarrants": {
+          "sentence": "On March 11, 2026 the Company entered into a securities purchase agreement with NVIDIA to issue Pre-Funded Warrants to purchase 21,065,936 Class A ordinary shares for aggregate gross proceeds of $2,000.0",
+          "cashFlowLine": "warrantsIssued 2,000.0 in the three months to 2026-03-31"
+        },
+        "note16SubsequentEvent": {
+          "sentence": "On July 10, 2026, the Group entered into its first senior secured debt facility in an aggregate principal amount of approximately $775. The facility bears interest at SOFR plus 2.50% and matures on October 31, 2030.",
+          "note": "collateralized by deployed GPU infrastructure and contracted cash flows under a customer agreement with an investment-grade counterparty; lender not named in the filing"
+        }
+      }
+    }
+  ],
+  "derivedQuarters": [
+    {
+      "start": "2026-04-01",
+      "end": "2026-06-30",
+      "rule": "six months to 2026-06-30 (accession 0001104659-26-094844) minus three months to 2026-03-31 (accession 0001104659-26-064092), line by line",
+      "lines": {
+        "cfOps": 2246.1,
+        "capex": -5657.4,
+        "cfInv": -5645.7,
+        "convertsIssued": 0,
+        "treasurySharesSold": 2846.7,
+        "warrantsIssued": 0,
+        "optionsExercised": 53.8,
+        "cfFin": 2864.9,
+        "deferredRevenueChange": 1197.0
+      },
+      "check": "the earnings release of 2026-08-12 (accession 0001104659-26-094568, EX-99.1) prints the three-month cash-flow statement; every line above is read from it by the parser and agrees with the arithmetic to the dollar",
+      "printedIn": "0001104659-26-094568 EX-99.1"
+    },
+    {
+      "start": "2025-04-01",
+      "end": "2025-06-30",
+      "rule": "six months to 2025-06-30 minus three months to 2025-03-31, both prior-year comparative columns",
+      "lines": {
+        "cfOps": -171.6,
+        "capex": -510.6,
+        "cfInv": -602.3,
+        "convertsIssued": 1000.0,
+        "cfFin": 1000.0
+      },
+      "check": "read from the same release's three-month column for 2025; its total operating cash flow (171.6) includes discontinued operations, while the summary table at the top of the release quotes continuing operations only, (167.7)",
+      "printedIn": "0001104659-26-094568 EX-99.1"
+    }
+  ],
+  "printedQuarters": {
+    "accession": "0001104659-26-094568",
+    "form": "6-K",
+    "filed": "2026-08-12",
+    "exhibit": "EX-99.1",
+    "document": "tm2622968d1_ex99-1.htm",
+    "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926094568/tm2622968d1_ex99-1.htm",
+    "fixture": "scripts/fixtures/nbis/tm2622968d1_ex99-1-cashflow.htm",
+    "title": "Second quarter 2026 earnings release, 'Unaudited Condensed Consolidated Statements of Cash Flows (in millions of U.S. dollars)', three and six months ended June 30, 2025 and 2026",
+    "why": "The interim report's cash-flow statement is six-month only; the same-day earnings release prints three-month columns. Every derived quarter below is read from this page by the parser and must agree with the half-year-minus-first-quarter arithmetic; the same page also carries the 2025 comparatives."
+  }
+}

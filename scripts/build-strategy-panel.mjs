@@ -21,11 +21,11 @@
  * Values are rounded to thousands and stored as arrays keyed by a field
  * order, which keeps the file near 400KB rather than several megabytes.
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { PANEL_FIELDS, STATEMENT_OF, panelYears } from "./lib/panel-row.mjs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { buildStatements } from "./lib/statements.mjs";
+import { buildStatements, trimHistory } from "./lib/statements.mjs";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const UA = { "User-Agent": process.env.SEC_USER_AGENT ||
@@ -59,6 +59,25 @@ function loadUniverse() {
   return { list: LIMIT ? list.slice(0, LIMIT) : list, map };
 }
 
+/* Where a CIK predates the company, the first period end that is the
+   company's own, from frontend/data/cohorts.json (historyStart):
+   TeraWulf's CIK is the IKONICS Corp shell it reverse-merged into in
+   December 2021, so its feed carries a photo-imaging company's 2010-2021
+   years, and Nebius's is Yandex N.V.'s. Keyed by CIK, so a ticker moving
+   between registrants cannot carry a cutoff to the wrong filer. */
+function historyStarts() {
+  const file = join(ROOT, "frontend/data/cohorts.json");
+  if (!existsSync(file)) return {};
+  const cohorts = JSON.parse(readFileSync(file, "utf8"));
+  const out = {};
+  for (const group of ["hyperscalers", "neoclouds", "landlords"]) {
+    for (const row of cohorts[group] || []) {
+      if (row.historyStart && row.cik != null) out[Number(row.cik)] = row.historyStart;
+    }
+  }
+  return out;
+}
+
 let nextSlot = 0;
 async function paced() {
   const now = Date.now();
@@ -72,6 +91,7 @@ async function paced() {
    roughly in half. */
 
 const { list, map } = loadUniverse();
+const HISTORY_START = historyStarts();
 console.log(`strategy panel: ${list.length} companies`);
 const companies = {};
 const failures = [];
@@ -98,8 +118,10 @@ for (const c of list) {
   }
   if (!facts) { failures.push(`${c.ticker} ${lastErr}`); continue; }
   try {
-    const bucket = facts && facts.facts && facts.facts["us-gaap"];
+    let bucket = facts && facts.facts && facts.facts["us-gaap"];
     if (!bucket) { failures.push(`${c.ticker} no us-gaap`); continue; }
+    /* a shell's or predecessor's years are cut before the row is built */
+    if (HISTORY_START[Number(c.cik)]) bucket = trimHistory(bucket, HISTORY_START[Number(c.cik)]);
     const s = buildStatements(bucket, { annualLimit: 25, quarterLimit: 1 });
     const years = panelYears(s);
     if (!Object.keys(years).length) { failures.push(`${c.ticker} no usable years`); continue; }

@@ -119,3 +119,38 @@ it elsewhere with `RT_DB_CONFIG` and `RT_MYSQL_BIN`.
 4. apply the SQL and refresh Power BI
 
 Steps 1 and 2 without 3 is the failure this structure exists to prevent.
+
+## Known divergences and follow-ups
+
+Recorded 2026-09-11 with the hyperscaler data layer (PR H1).
+
+1. **Duplicate-fact precedence differs between the JavaScript pull and
+   the SQL view.** `normalizeConcept` in `scripts/lib/sec-pull.mjs` now
+   keeps, per (year, period), the span whose length fits the period's
+   year to date and drops a Q1-Q3 span over 300 days, because Amazon
+   tags a trailing-twelve-month figure on every cash-flow line of a 10-Q
+   and "longest span" served the difference of two trailing windows as
+   the quarter. `sql/06_canonical_views.sql` still ranks duplicates by
+   longest duration (`DATEDIFF ... DESC`, its rule 2). The sync file only
+   carries the rows the JavaScript chose, so the view sees the older
+   rule only on rows loaded before this change, and `verify-parity`
+   skips the SQL comparison without a database. Follow-up: state the
+   span-fit rule in the view (a `CASE` on the period and the span, or a
+   filter on `DATEDIFF` for quarterly periods), bump
+   `v_definitions_version`, and run `verify-parity` against the local
+   database.
+2. **The live panel route classifies by SIC alone.** `api/panel.js`
+   calls `classify(sic, sicDescription)` without the CIK, so the
+   decision-12.18 override ("AI infrastructure" for the six neoclouds,
+   `INDUSTRY_OVERRIDES` in `scripts/lib/sic-map.mjs`) does not reach a
+   row built live. The six are in the static panel, so the live path is
+   not reached for them today. Follow-up: pass the CIK as the third
+   argument.
+3. **The live routes serve a shell's history.** `frontend/data/cohorts.json`
+   carries `historyStart` for TeraWulf (2022-01-01, the IKONICS Corp
+   shell) and Nebius (2024-01-01, Yandex N.V.), and
+   `scripts/build-strategy-panel.mjs` cuts the feed to it through
+   `trimHistory` in `scripts/lib/statements.mjs`. `api/panel.js` and
+   `api/statements.js` do not read the file, so a live panel row or the
+   statements page for those two still reaches back into the
+   predecessor's years. Follow-up: read the same start in both routes.

@@ -71,6 +71,15 @@ export const SEC_CONCEPTS = [...new Set([
 
 const QUARTERS = ["Q1", "Q2", "Q3"];
 const MIN_YEAR = new Date().getFullYear() - 6;
+/* A period cannot end after the day it is read; Oracle's feed carries one
+   fact dated 2199-12-31, a placeholder in a 10-Q/A filed 2010-09-29. */
+const TODAY = new Date().toISOString().slice(0, 10);
+/* The span, in days, that a period's year-to-date figure covers. The
+   quarter is then this figure less the prior quarter's (flowValue). */
+const EXPECTED_SPAN = { Q1: 91, Q2: 182, Q3: 273, FY: 365 };
+/* Longer than this and a Q1-Q3 row is a trailing twelve months or a
+   since-inception figure, never a quarter's year to date. */
+const YTD_MAX_DAYS = 300;
 /* Periodic reports, plus the 6-K interim reports of foreign private
    issuers, which is where a foreign filer's quarters and half-years
    actually live. statements.mjs has accepted 6-K since the Enlivex work;
@@ -217,9 +226,28 @@ const spanDays = (r) =>
 
 /* EDGAR restates: the same concept and period reappears in later filings
    and amendments. Keep exactly one per (unit, year, period) — latest
-   period_end, then longest duration (YTD over a stub), then latest filed.
-   sql/06_canonical_views.sql applies the identical precedence. */
-function normalizeConcept(payload, concept) {
+   period_end, then the duration whose (start, end) span matches the
+   period's year to date, then latest filed. sql/06_canonical_views.sql
+   still ranks duplicates by LONGEST duration (DATEDIFF DESC, its rule 2),
+   so the two paths diverge for a filer that tags trailing-twelve-month
+   spans: the view would keep Amazon's 161,403,000,000 where this keeps
+   71,419,000,000. The sync file only carries what this function chose,
+   so the view sees the divergence only for rows it holds from before;
+   the matching span-fit rule in the view is a follow-up recorded in
+   docs/PIPELINE.md, and verify-parity skips the SQL comparison without
+   a database, so CI does not see it.
+
+   The span is matched, not maximized. Amazon tags three spans on every
+   cash-flow line of a 10-Q — the quarter, the year to date and the
+   trailing twelve months (NetCashProvidedByUsedInOperatingActivities
+   45,387,000,000, 71,419,000,000 and 161,403,000,000 to 2026-06-30, in
+   the 10-Q filed 2026-07-31) — and "longest span" took the trailing
+   twelve months, so its overview showed the difference of two TTM
+   figures, 12,872,000,000, as the quarter. A span over YTD_MAX_DAYS on
+   a Q1-Q3 row is dropped outright; among the rest the one nearest the
+   period's expected length wins. A filer with only one span per line is
+   untouched: the nearest of one is itself. */
+export function normalizeConcept(payload, concept) {
   const out = [];
   const units = (payload && payload.units) || {};
   for (const [unit, rows] of Object.entries(units)) {
@@ -229,14 +257,19 @@ function normalizeConcept(payload, concept) {
       if (r.fy == null || !REPORT_FORM.test(r.form || "")) continue;
       const fp = r.fp || "FY";
       if (r.fy < MIN_YEAR) continue;
+      if (!r.end || r.end > TODAY) continue;
       if (fp === "FY" && r.start && spanDays(r) < 300) continue;
+      if (fp !== "FY" && r.start && spanDays(r) > YTD_MAX_DAYS) continue;
       const key = `${unit}|${r.fy}|${fp}`;
       (groups[key] = groups[key] || []).push(r);
     }
     for (const g of Object.values(groups)) {
       const latestEnd = g.reduce((m, r) => (r.end > m ? r.end : m), "");
+      const fp = g[0].fp || "FY";
+      const expected = EXPECTED_SPAN[fp];
+      const fit = (x) => (x.start && expected ? Math.abs(spanDays(x) - expected) : -spanDays(x));
       const r = g.filter((x) => x.end === latestEnd)
-        .sort((a, b) => (spanDays(b) - spanDays(a)) ||
+        .sort((a, b) => (fit(a) - fit(b)) ||
                         String(b.filed).localeCompare(String(a.filed)))[0];
       /* a group whose rows all lack an end date matches nothing above */
       if (!r) continue;
@@ -267,6 +300,24 @@ const usdAny = (facts, concepts, year, period) => {
 };
 const prevPeriod = (p) => ({ Q2: "Q1", Q3: "Q2" }[p] || null);
 
+/* The shown quarter is the largest (fy, fp) pair on file.
+   Deliberately NOT the latest period end. Oracle's 10-Q for the quarter
+   to 2026-08-31, the first quarter of its fiscal 2027 (filed 2026-09-11,
+   0001193125-26-389274), carries fy=2026 fp=Q1, the SLOT of the quarter
+   to 2025-08-31, so normalizeConcept holds only the 2026-08-31 fact
+   there and the 2024-08-31 facts under (2025, Q1). Showing the slot with
+   the latest end was tried and reverted: every .ly comparison still
+   resolves as (fy − 1, fp), which for Oracle is the quarter to
+   2024-08-31 — a two-year-old comparative labeled one year old (cash
+   10,616,000,000, cfOps 7,427,000,000, epsFiled 1.03, all August 2024
+   figures under a "Q1 2025" label). Under the largest (fy, fp) both
+   sides of every pair are true year-over-year (Q3 to 2026-02-28 against
+   Q3 to 2025-02-28); the shown quarter is one filing stale for Oracle
+   until EDGAR assigns its September quarter a new slot, and the cover
+   share count and latestFiling still come from the newest filing — a
+   known, smaller mismatch. A period-end-based comparison would need the
+   year-ago facts that normalizeConcept drops from the shared slot, so
+   it is a statements.mjs-style rebuild, not an overview patch. */
 function latestQuarter(facts) {
   const pairs = new Set(facts.filter((f) => QUARTERS.includes(f.fiscal_period))
     .map((f) => `${f.fiscal_year}|${f.fiscal_period}`));
@@ -277,14 +328,21 @@ function latestQuarter(facts) {
 }
 
 /* EDGAR tags cash-flow and income lines year-to-date. A single quarter is
-   the YTD figure minus the prior quarter's, or the raw value in Q1. */
+   the YTD figure minus the prior quarter's, or the raw value in Q1.
+   Without the period's own figure there is no quarter: Applied Digital's
+   10-Q for the quarter to 2026-02-28 tags ProfitLoss and no
+   NetIncomeLoss, while its second-quarter 10-Q had tagged NetIncomeLoss
+   -31,376,000 for the six months, and "0 less the prior quarter" served
+   a profit of 31,376,000 for a quarter the filer reported as a loss
+   (epsFiled -0.37). A missing prior quarter is still taken as zero: the
+   filer tagged the period, and the prior quarter's figure lives in the
+   same tag. */
 function flowValue(facts, concepts, year, period) {
   const cur = usdAny(facts, concepts, year, period);
   const pp = prevPeriod(period);
-  if (pp === null) return cur;
+  if (pp === null || cur === null) return cur;
   const prev = usdAny(facts, concepts, year, pp);
-  if (cur === null && prev === null) return null;
-  return (cur || 0) - (prev || 0);
+  return cur - (prev || 0);
 }
 
 function sharesOutstanding(facts) {
@@ -305,10 +363,9 @@ function epsFiled(facts, year, period) {
   };
   const cur = val(year, period);
   const pp = prevPeriod(period);
-  if (pp === null) return cur;
+  if (pp === null || cur === null) return cur;
   const prev = val(year, pp);
-  if (cur === null && prev === null) return null;
-  return (cur || 0) - (prev || 0);
+  return cur - (prev || 0);
 }
 
 const WANTED = new Set(SEC_CONCEPTS);
@@ -326,6 +383,13 @@ async function fetchFromCompanyFacts(padded, budget = {}) {
     `https://data.sec.gov/api/xbrl/companyfacts/CIK${padded}.json`,
     { timeoutMs: budget.timeoutMs || 45000,
       ...(budget.retries === undefined ? {} : { retries: budget.retries }) });
+  return factsFromCompanyFacts(payload);
+}
+
+/** The pull's facts from a companyfacts document already in hand — the
+    offline half of fetchFromCompanyFacts, so a fixture can be run through
+    buildPayload without the network. Null where the document is empty. */
+export function factsFromCompanyFacts(payload) {
   if (!payload || !payload.facts) return null;
   const results = [];
   for (const [taxonomy, wanted] of [["us-gaap", WANTED], ["dei", DEI_WANTED]]) {
@@ -422,8 +486,17 @@ export function buildPayload(company, facts, { source, preferLatestPeriod = fals
     isFy[k] = annualYr ? usdAny(facts, FLOW[k], annualYr, "FY") : null;
   }
 
-  const ends = facts.filter((f) => f.fiscal_year === yr &&
-    f.fiscal_period === per && f.period_end).map((f) => f.period_end);
+  /* The period end is the latest end among the FINANCIAL facts of the
+     period, USD only. The dei cover-page row (EntityCommonStockShares
+     Outstanding) shares the period's fy and fp but is dated the day the
+     shares were counted, weeks after the quarter closed, and taking it
+     labeled Microsoft's March 2026 quarter "3 mo ended Apr 23, 2026",
+     Amazon's June quarter "Jul 22, 2026" and Oracle's February quarter
+     "Mar 5, 2026". */
+  const inPeriod = facts.filter((f) => f.fiscal_year === yr &&
+    f.fiscal_period === per && f.period_end);
+  const usdEnds = inPeriod.filter((f) => f.unit === "USD").map((f) => f.period_end);
+  const ends = usdEnds.length ? usdEnds : inPeriod.map((f) => f.period_end);
   const periodEnd = ends.length ? ends.sort().pop() : null;
   const endStr = periodEnd
     ? new Date(periodEnd + "T00:00:00").toLocaleDateString("en-US",
