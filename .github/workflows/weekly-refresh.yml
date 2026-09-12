@@ -70,8 +70,31 @@ jobs:
       # keep last week's, since an EDGAR hiccup here is not a reason to
       # discard the rest of the run. The smoke suite's test-bdc-data.mjs
       # holds the committed files to the acceptance list on the push.
+      # The holdings stage streams the SEC's monthly BDC data-set zips
+      # (2-270 MB each) into .cache/bdc/datasets/ and re-downloads one
+      # only when the SEC's copy changed, so the zips are kept between
+      # runs: every run saves its own entry and the next restores the
+      # newest. The 10-Q main documents are fetched once per new
+      # accession and are not cached here. A week without a new filing
+      # downloads nothing either way. The newest entry can sit just past
+      # GitHub's seven-day unused-cache eviction when the Sunday cron
+      # drifts, so a miss is expected now and then: it costs one 266 MB
+      # download, never correctness.
+      - name: Keep the SEC data-set zips between runs
+        uses: actions/cache@v4
+        with:
+          path: .cache/bdc/datasets
+          key: bdc-datasets-${{ github.run_id }}
+          restore-keys: |
+            bdc-datasets-
+
+      # Its own timeout, inside the job's 45 minutes: a stalled zip
+      # download (ten minutes an attempt, one retry, in refresh-bdc.mjs)
+      # ends this step alone, and continue-on-error lets the commit step
+      # keep the operating-company refresh above.
       - name: Refresh the BDC layer
         continue-on-error: true
+        timeout-minutes: 25
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT || 'Research Terminal research@chineduokeke.mba' }}
         run: node scripts/refresh-bdc.mjs

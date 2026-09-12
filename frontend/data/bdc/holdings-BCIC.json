@@ -1,0 +1,840 @@
+{
+ "ticker": "BCIC",
+ "cik": 1372807,
+ "name": "BCP Investment Corp",
+ "period": "2026-06-30",
+ "form": "10-Q",
+ "accn": "0001193125-26-337959",
+ "filed": "2026-08-06",
+ "creditVersion": "1.1.0",
+ "rowSource": "dataset",
+ "sources": {
+  "dataset": {
+   "zip": "2026_08_bdc.zip",
+   "rows": 157,
+   "counts": {
+    "rows": 675,
+    "identifier": 483,
+    "atPeriod": 240,
+    "kept": 157
+   },
+   "dropped": {
+    "otherDate": 243,
+    "otherEntity": 0,
+    "subtotal": 1,
+    "cash": 0,
+    "fvOnly": 41,
+    "costOnly": 18,
+    "neither": 23
+   },
+   "extra": {
+    "costOnly": 18,
+    "cash": 0
+   }
+  },
+  "instance": null,
+  "table": {
+   "doc": "0001193125-26-337959.htm",
+   "period": "2026-06-30",
+   "tables": 4,
+   "rows": 193,
+   "subtotals": 19,
+   "scale": 1000,
+   "scaleFix": 1,
+   "totals": {
+    "cost": 536977000,
+    "fv": 452741000
+   },
+   "matched": 175,
+   "rate": 1,
+   "stages": {
+    "numeric": 175,
+    "principal": 0,
+    "cost": 0,
+    "name": 0
+   },
+   "filled": {
+    "mat": 0,
+    "ind": 175,
+    "na": 11,
+    "lien": 76,
+    "aff": 1,
+    "rate": 1,
+    "acquired": 0,
+    "name": 105,
+    "principal": 17
+   },
+   "nonAccrualRows": 11,
+   "nonAccrualUnmatched": 0,
+   "unmatchedRows": 18,
+   "headers": {
+    "(unlabeled first column)": "issuer",
+    "industry": "industry",
+    "interest rate": "rate",
+    "reference rate and spread": "spread",
+    "floor": "floor",
+    "maturity": "maturity",
+    "par/shares (++)": "principal",
+    "cost": "cost",
+    "fair value": "fv",
+    "footnotes": "footnotes"
+   },
+   "notes": []
+  },
+  "rpage": null
+ },
+ "gate": {
+  "passed": true,
+  "tolerance": 0.005,
+  "tagSource": "company file",
+  "variant": "tagged rows with cost-only rows at fair value 0",
+  "cost": {
+   "sum": 536977000,
+   "tag": 536977000,
+   "diffPct": 0
+  },
+  "fv": {
+   "sum": 452505000,
+   "tag": 452741000,
+   "diffPct": 0.000521
+  },
+  "rows": 175,
+  "subtotalRowsDropped": 42,
+  "dropped": {
+   "otherDate": 243,
+   "otherEntity": 0,
+   "subtotal": 1,
+   "cash": 0,
+   "fvOnly": 41,
+   "costOnly": 18,
+   "neither": 23
+  },
+  "tried": [
+   {
+    "variant": "tagged rows",
+    "n": 157,
+    "cost": {
+     "sum": 506704000,
+     "tag": 536977000,
+     "diffPct": 0.056377
+    },
+    "fv": {
+     "sum": 452505000,
+     "tag": 452741000,
+     "diffPct": 0.000521
+    },
+    "reason": "cost outside tolerance"
+   },
+   {
+    "variant": "tagged rows with cost-only rows at fair value 0",
+    "n": 175,
+    "cost": {
+     "sum": 536977000,
+     "tag": 536977000,
+     "diffPct": 0
+    },
+    "fv": {
+     "sum": 452505000,
+     "tag": 452741000,
+     "diffPct": 0.000521
+    },
+    "reason": null
+   }
+  ]
+ },
+ "summary": {
+  "portfolioCost": 536977000,
+  "portfolioFv": 452741000,
+  "holdings": 175,
+  "thirdPartyDebtCost": 192500000,
+  "thirdPartyDebtFv": 168519000,
+  "thirdPartyDebtHoldings": 62,
+  "count": 89,
+  "countAll": 97,
+  "countDebt": 28,
+  "namesUnsplit": 0,
+  "nonAccrual": {
+   "cost": 30361000,
+   "fv": 14109000,
+   "n": 11,
+   "issuers": 8,
+   "ofTotalCost": 0.0565,
+   "ofTotalFv": 0.0312,
+   "ofDebtCost": 0.1577,
+   "ofDebtFv": 0.0837,
+   "source": "table"
+  },
+  "wa": {
+   "yieldAtCost": 0.1115,
+   "yieldAtFv": 0.1162,
+   "spreadCostWeighted": 0.0698,
+   "floatingShare": 0.7237,
+   "pikContractual": 0.2042,
+   "n": {
+    "yield": 40,
+    "spread": 47,
+    "debt": 62
+   },
+   "yieldCoverage": 0.9252
+  },
+  "lien": {
+   "classes": {
+    "first lien": {
+     "cost": 164224000,
+     "share": 0.8531,
+     "shareOfPortfolio": 0.3058
+    },
+    "first lien incl. unitranche/last-out": {
+     "cost": 6747000,
+     "share": 0.035,
+     "shareOfPortfolio": 0.0126
+    },
+    "second lien": {
+     "cost": 15537000,
+     "share": 0.0807,
+     "shareOfPortfolio": 0.0289
+    },
+    "unsecured": {
+     "cost": 5992000,
+     "share": 0.0311,
+     "shareOfPortfolio": 0.0112
+    }
+   },
+   "total": 192500000,
+   "portfolioCost": 536977000,
+   "firstLienShare": 0.8882,
+   "firstLienShareOfPortfolio": 0.3184,
+   "unclassifiedShare": 0
+  },
+  "industry": [
+   {
+    "name": "Health Care Providers & Services",
+    "fv": 67701000,
+    "share": 0.1495
+   },
+   {
+    "name": "Software",
+    "fv": 57984000,
+    "share": 0.1281
+   },
+   {
+    "name": "Joint Venture",
+    "fv": 44833000,
+    "share": 0.099
+   },
+   {
+    "name": "Financial Services",
+    "fv": 43031000,
+    "share": 0.095
+   },
+   {
+    "name": "IT Services",
+    "fv": 35682000,
+    "share": 0.0788
+   },
+   {
+    "name": "Commercial Services & Supplies",
+    "fv": 23345000,
+    "share": 0.0516
+   },
+   {
+    "name": "Media",
+    "fv": 15799000,
+    "share": 0.0349
+   },
+   {
+    "name": "CLO Fund Securities",
+    "fv": 15542000,
+    "share": 0.0343
+   },
+   {
+    "name": "Textiles, Apparel & Luxury Goods",
+    "fv": 14659000,
+    "share": 0.0324
+   },
+   {
+    "name": "Aerospace & Defense",
+    "fv": 14549000,
+    "share": 0.0321
+   },
+   {
+    "name": "other",
+    "fv": 119380000,
+    "share": 0.2637
+   }
+  ],
+  "industrySource": "table",
+  "maturity": {
+   "2026": 27062000,
+   "2027": 58873000,
+   "2028": 29824000,
+   "2029": 52339000,
+   "2030": 4732000,
+   "2031-2033": 19670000,
+   "later": 0,
+   "n/a": 0,
+   "excluded": 0,
+   "total": 192500000,
+   "dated": 192500000,
+   "unfunded": null,
+   "shares": {
+    "2026": 0.1406,
+    "2027": 0.3058,
+    "2028": 0.1549,
+    "2029": 0.2719,
+    "2030": 0.0246,
+    "2031-2033": 0.1022,
+    "later": 0
+   }
+  },
+  "maturitySource": "axis",
+  "vehicles": {
+   "fv": 44833000,
+   "share": 0.099
+  },
+  "structured": {
+   "fv": 15542000,
+   "share": 0.0343
+  },
+  "equity": {
+   "fv": 223611000,
+   "share": 0.4939
+  },
+  "top10": {
+   "fv": 216235000,
+   "share": 0.4776
+  },
+  "affiliation": {
+   "n/a": {
+    "fv": 452505000,
+    "share": 0.9995
+   },
+   "non-controlled affiliated": {
+    "fv": 0,
+    "share": 0
+   }
+  },
+  "affiliationClasses": [
+   "non-controlled affiliated"
+  ],
+  "affiliationSource": "table",
+  "unfunded": {
+   "total": 0,
+   "holdings": 0
+  },
+  "pik": {
+   "holdings": 30,
+   "cost": 103280000
+  },
+  "histogram": {
+   "byCount": {
+    "450-500": 0.1277,
+    "500-550": 0.0638,
+    "550-600": 0.1702,
+    "600-650": 0.1277,
+    "650-700": 0.1277,
+    "700-750": 0.1064,
+    "800-850": 0.1277,
+    "850-900": 0.0213,
+    "900-950": 0.0851,
+    "1000+": 0.0426
+   },
+   "byCost": {
+    "450-500": 0.0545,
+    "500-550": 0.0811,
+    "550-600": 0.1068,
+    "600-650": 0.1585,
+    "650-700": 0.1031,
+    "700-750": 0.1457,
+    "800-850": 0.1865,
+    "850-900": 0,
+    "900-950": 0.1139,
+    "1000+": 0.05
+   },
+   "n": 47,
+   "cost": 139306000
+  },
+  "vsProse": {
+   "yieldAtCost": null,
+   "yieldAtFv": null,
+   "floatingShare": null,
+   "floatingShareBasis": null,
+   "nonAccrualCost": 0.057,
+   "nonAccrualFv": 0.031,
+   "nonAccrualOf": "total",
+   "portfolioCompanies": 107
+  }
+ },
+ "tableUnmatched": {
+  "rows": [
+   {
+    "issuer": "Shepherd Parent Holdings, LLC (Revolver)",
+    "type": null,
+    "lien": "First Lien/Senior Secured Debt",
+    "industry": "Health Care Providers & Services",
+    "nonAccrual": false,
+    "maturity": "2030-07-10",
+    "principal": 0,
+    "cost": 0,
+    "fv": 4000,
+    "page": 2,
+    "src": "table"
+   },
+   {
+    "issuer": "Catamaran CLO 2014-1 Ltd.",
+    "type": null,
+    "lien": "Collateralized Loan Obligations",
+    "industry": "CLO Fund Securities",
+    "nonAccrual": false,
+    "maturity": "2030-04-20",
+    "principal": 15161000,
+    "cost": 0,
+    "fv": 0,
+    "page": 2,
+    "src": "table"
+   },
+   {
+    "issuer": "Dryden 30 Senior Loan Fund",
+    "type": null,
+    "lien": "Collateralized Loan Obligations",
+    "industry": "CLO Fund Securities",
+    "nonAccrual": false,
+    "maturity": "2028-11-01",
+    "principal": 3250000,
+    "cost": 0,
+    "fv": 0,
+    "page": 2,
+    "src": "table"
+   },
+   {
+    "issuer": "Anthem Sports & Entertainment Inc. - Class B Warrant",
+    "type": null,
+    "lien": "Common Stock and Membership Units",
+    "industry": "Media",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 88,
+    "cost": 0,
+    "fv": 0,
+    "page": 3,
+    "src": "table"
+   },
+   {
+    "issuer": "Anthem Sports & Entertainment Inc. - Warrant for CS",
+    "type": null,
+    "lien": "Common Stock and Membership Units",
+    "industry": "Media",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 1644,
+    "cost": 0,
+    "fv": 0,
+    "page": 3,
+    "src": "table"
+   },
+   {
+    "issuer": "ATP Oil & Gas Corporation",
+    "type": null,
+    "lien": "Common Stock and Membership Units",
+    "industry": "Oil, Gas & Consumable Fuels",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 0,
+    "cost": 0,
+    "fv": 0,
+    "page": 3,
+    "src": "table"
+   },
+   {
+    "issuer": "Fusion Connect, Inc. - Warrant",
+    "type": null,
+    "lien": "Common Stock and Membership Units",
+    "industry": "Wireless Telecommunication Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 811572,
+    "cost": 0,
+    "fv": 0,
+    "page": 3,
+    "src": "table"
+   },
+   {
+    "issuer": "HDC/HW Holdings, LLC",
+    "type": null,
+    "lien": "Common Stock and Membership Units",
+    "industry": "Software",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 148826,
+    "cost": 0,
+    "fv": 0,
+    "page": 3,
+    "src": "table"
+   },
+   {
+    "issuer": "Ohene Holdings B.V. - Warrant",
+    "type": null,
+    "lien": "Common Stock and Membership Units",
+    "industry": "IT Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 4,
+    "cost": 0,
+    "fv": 0,
+    "page": 3,
+    "src": "table"
+   },
+   {
+    "issuer": "World Business Lenders, LLC",
+    "type": null,
+    "lien": "Common Stock and Membership Units",
+    "industry": "Financial Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 21430,
+    "cost": 0,
+    "fv": 0,
+    "page": 3,
+    "src": "table"
+   },
+   {
+    "issuer": "Advantage Capital Holdings LLC",
+    "type": null,
+    "lien": "Derivatives - 0.1 %",
+    "industry": "Financial Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 164000,
+    "cost": 0,
+    "fv": 227000,
+    "page": 3,
+    "src": "table"
+   },
+   {
+    "issuer": "Epilog Partners LP (Care Connectors Medical Group)",
+    "type": null,
+    "lien": "Derivatives - 0.1 %",
+    "industry": "Health Care Providers & Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 1166667000,
+    "cost": 0,
+    "fv": 0,
+    "page": 3,
+    "src": "table"
+   },
+   {
+    "issuer": "American Clinical Solutions, LLC - Class A",
+    "type": null,
+    "lien": "Preferred Stock and Units",
+    "industry": "Health Care Providers & Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 21579483,
+    "cost": 0,
+    "fv": 0,
+    "page": 4,
+    "src": "table"
+   },
+   {
+    "issuer": "MMI Holdings, LLC",
+    "type": null,
+    "lien": "Preferred Stock and Units",
+    "industry": "Health Care Providers & Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 1000,
+    "cost": 0,
+    "fv": 0,
+    "page": 4,
+    "src": "table"
+   },
+   {
+    "issuer": "Northeast Metal Works LLC - Preferred",
+    "type": null,
+    "lien": "Preferred Stock and Units",
+    "industry": "Metals & Mining",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 2368,
+    "cost": 0,
+    "fv": 0,
+    "page": 4,
+    "src": "table"
+   },
+   {
+    "issuer": "MMI Holdings, LLC",
+    "type": null,
+    "lien": "Common Stock and Membership Units",
+    "industry": "Health Care Providers & Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 45,
+    "cost": 0,
+    "fv": 0,
+    "page": 4,
+    "src": "table"
+   },
+   {
+    "issuer": "Princeton Medspa Partners, LLC - Warrant",
+    "type": null,
+    "lien": "Common Stock and Membership Units",
+    "industry": "Diversified Consumer Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 0,
+    "cost": 0,
+    "fv": 5000,
+    "page": 4,
+    "src": "table"
+   },
+   {
+    "issuer": "Princeton Medspa Partners, LLC",
+    "type": null,
+    "lien": "Derivatives - 0.0 %",
+    "industry": "Diversified Consumer Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 1000000000,
+    "cost": 0,
+    "fv": 0,
+    "page": 4,
+    "src": "table"
+   }
+  ],
+  "nonAccrualRows": 0,
+  "note": "printed rows that matched no tagged holding, kept whole with their columns (src \"table\", non-accrual first) and never summed; the gate's sums stay the tagged sums"
+ },
+ "notes": [
+  "gate passed on: tagged rows with cost-only rows at fair value 0",
+  "69 issuer name(s) read again from the member text against the filing's own industry vocabulary (src.nm \"id\")"
+ ],
+ "keys": {
+  "holding": {
+   "id": "id",
+   "issuer": "k",
+   "name": "n",
+   "aff": "a",
+   "kind": "t",
+   "lien": "l",
+   "facility": "f",
+   "industry": "i",
+   "rate": "r",
+   "spread": "sp",
+   "floor": "fl",
+   "pik": "pk",
+   "base": "b",
+   "principal": "p",
+   "cost": "c",
+   "fv": "v",
+   "pctNav": "nv",
+   "unfunded": "u",
+   "acquired": "ad",
+   "maturity": "m",
+   "nonAccrual": "na",
+   "floating": "fr",
+   "units": "un",
+   "src": "s",
+   "fvUntagged": "fvu",
+   "costUntagged": "cu",
+   "cashEquivalent": "ce"
+  },
+  "lien": {
+   "class": "c",
+   "subclass": "s",
+   "raw": "r"
+  },
+  "src": {
+   "row": "w",
+   "table": "t",
+   "r": "r",
+   "na": "na",
+   "ind": "i",
+   "mat": "m",
+   "unf": "u",
+   "rt": "rt",
+   "ds": "ds",
+   "val": "vl",
+   "nm": "nm",
+   "af": "af"
+  },
+  "note": "short keys per blueprint 7.4; a key absent from a row is null (floating: false); src.t and src.r absent mean false, src.na absent means none; src.vl \"table\" marks a fair value the filer left untagged and the printed schedule supplied; src.nm \"table\" marks an issuer name the printed row supplied; src.af \"issuer\" marks an affiliation taken from the issuer's other tranches; the issuer key (H1 `issuer`) is not written — it is normalizeIssuer(n), which expandHolding restores"
+ },
+ "holdings": [
+{"id":"Investments in Affiliate Portfolio Companies Collateralized Loan Obligations JMP Credit Advisors CLO IV LTD CLO Fund Securities Maturity 07/17/29","n":"JMP Credit Advisors CLO IV LTD","t":"structured","l":{"c":"vehicles","r":"Collateralized Loan Obligations"},"i":"CLO Fund Securities","p":26298000,"c":142000,"v":8000,"m":"2029-07-17","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies Collateralized Loan Obligations JMP Credit Advisors CLO V LTD CLO Fund Securities Maturity 07/17/30","n":"JMP Credit Advisors CLO V LTD","t":"structured","l":{"c":"vehicles","r":"Collateralized Loan Obligations"},"i":"CLO Fund Securities","p":24394000,"c":808000,"v":288000,"m":"2030-07-17","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies Collateralized Loan Obligations JNTR 2026-1 LLC CLO Class A-0 CLO Fund Securities Interest Rate 8.00% Maturity 12/31/49","n":"JNTR 2026-1 LLC CLO - Class A-0","t":"structured","l":{"c":"vehicles","r":"Collateralized Loan Obligations"},"i":"CLO Fund Securities","r":0.08,"p":10677000,"c":10718000,"v":10718000,"m":"2049-12-31","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies Collateralized Loan Obligations JNTR 2026-1 LLC CLO Class A-1 CLO Fund Securities Interest Rate 4.50% Maturity 12/31/49","n":"JNTR 2026-1 LLC CLO - Class A-1","t":"structured","l":{"c":"vehicles","r":"Collateralized Loan Obligations"},"i":"CLO Fund Securities","r":0.045,"p":807000,"c":703000,"v":703000,"m":"2049-12-31","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies Collateralized Loan Obligations JNTR 2026-1 LLC CLO Class A-2 CLO Fund Securities Interest Rate 4.50% Maturity 12/31/49","n":"JNTR 2026-1 LLC CLO - Class A-2","t":"structured","l":{"c":"vehicles","r":"Collateralized Loan Obligations"},"i":"CLO Fund Securities","r":0.045,"p":207000,"c":157000,"v":157000,"m":"2049-12-31","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies Collateralized Loan Obligations JNTR 2026-1 LLC CLO Class A-3 CLO Fund Securities Interest Rate 4.50% Maturity 12/31/49","n":"JNTR 2026-1 LLC CLO - Class A-3","t":"structured","l":{"c":"vehicles","r":"Collateralized Loan Obligations"},"i":"CLO Fund Securities","r":0.045,"p":180000,"c":125000,"v":125000,"m":"2049-12-31","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies Collateralized Loan Obligations JNTR 2026-1 LLC CLO Subordinated A CLO Fund Securities Interest Rate 15.10% Maturity 12/31/49","n":"JNTR 2026-1 LLC CLO - Subordinated A","t":"structured","l":{"c":"vehicles","r":"Collateralized Loan Obligations"},"i":"CLO Fund Securities","r":0.151,"p":17000,"c":2694000,"v":2694000,"m":"2049-12-31","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies Collateralized Loan Obligations JNTR 2026-1 LLC CLO Subordinated B CLO Fund Securities Interest Rate 25.90% Maturity 12/31/49","n":"JNTR 2026-1 LLC CLO - Subordinated B","t":"structured","l":{"c":"vehicles","r":"Collateralized Loan Obligations"},"i":"CLO Fund Securities","r":0.259,"p":17000,"c":849000,"v":849000,"m":"2049-12-31","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies Common Stock and Membership Units Burgaflex Holdings, LLC - Class A Automobile Components","n":"Common Stock and","t":"equity","l":{"c":"equity","r":"Membership Units Burgaflex Holdings, LLC | - Class A Automobile Components"},"i":"Automobile Components","c":2656000,"v":3003000,"s":{"w":"dataset","t":true,"i":"table","nm":"id"}},
+{"id":"Investments in Affiliate Portfolio Companies Common Stock and Membership Units Burgaflex Holdings, LLC - Class B Automobile Components","n":"Common Stock and","t":"equity","l":{"c":"equity","r":"Membership Units Burgaflex Holdings, LLC | - Class B Automobile Components"},"i":"Automobile Components","c":1883000,"v":2247000,"s":{"w":"dataset","t":true,"i":"table","nm":"id"}},
+{"id":"Investments in Affiliate Portfolio Companies Common Stock and Membership Units Datalink, LLC Health Care Technology","n":"Datalink, LLC","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Health Care Technology","c":2151000,"v":1090000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies Common Stock and Membership Units GreenPark Infrastructure, LLC - Series M-1 Commercial Services & Supplies","n":"Common Stock and","t":"equity","l":{"c":"equity","r":"Membership Units GreenPark Infrastructure, LLC | - Series M-1 Commercial Services & Supplies"},"i":"Commercial Services & Supplies","c":2969000,"v":3097000,"s":{"w":"dataset","t":true,"i":"table","nm":"id"}},
+{"id":"Investments in Affiliate Portfolio Companies Common Stock and Membership Units Phoenix Aviation Capital, LLC Aerospace & Defense","n":"Phoenix Aviation Capital, LLC","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Aerospace & Defense","c":387000,"v":312000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies Common Stock and Membership Units Riddell Sports Enterprises LLC Leisure Products","n":"Riddell Sports Enterprises LLC","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Leisure Products","c":1279000,"v":1279000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies Common Stock and Membership Units Sierra Hamilton Holdings Corporation Energy Equipment & Services","n":"Sierra Hamilton Holdings Corporation","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Energy Equipment & Services","c":394000,"v":329000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies First Lien/Senior Secured Debt American Clinical Solutions, LLC Health Care Providers & Services Floor 1.00% Maturity 06/30/27","n":"American Clinical Solutions, LLC","t":"debt","l":{"c":"first lien","r":"First Lien/Senior Secured Debt"},"i":"Health Care Providers & Services","fl":0.01,"p":8814000,"c":8082000,"v":6532000,"m":"2027-06-30","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies First Lien/Senior Secured Debt Datalink, LLC (Revolver) Health Care Technology Interest Rate 10.00%PIK Maturity 02/05/33","n":"First Lien/Senior","t":"equity","l":{"c":"equity","r":"Secured Debt Datalink, LLC | (Revolver) Health Care Technology Interest Rate 10.00%PIK Maturity 02/05/33"},"f":"revolver","i":"Health Care Technology","pk":0.1,"p":1000,"c":1000,"v":-76000,"m":"2033-02-05","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Affiliate Portfolio Companies First Lien/Senior Secured Debt Datalink, LLC Health Care Technology Interest Rate 10.00%PIK Maturity 02/05/33","n":"Datalink, LLC","t":"equity","l":{"c":"equity","r":"Health Care Technology Interest Rate 10.00%PIK Maturity 02/05/33"},"i":"Health Care Technology","pk":0.1,"p":2849000,"c":2628000,"v":2189000,"m":"2033-02-05","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies First Lien/Senior Secured Debt HR Pharmaceuticals, LLC (Revolver) Health Care Equipment & Supplies Interest Rate 9.70% Reference Rate and Spread SOFR + 6.00% Floor 2.00% Maturity 01/29/31","n":"First Lien/Senior","t":"equity","l":{"c":"equity","r":"Secured Debt HR Pharmaceuticals, LLC | (Revolver) Health Care Equipment & Supplies Interest Rate 9.70% Reference Rate and Spread SOFR + 6.00% Floor 2.00% Maturity 01/29/31"},"f":"revolver","i":"Health Care Equipment & Supplies","r":0.0969,"sp":0.06,"fl":0.02,"b":"SOFR","p":103000,"c":96000,"v":96000,"m":"2031-01-29","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Affiliate Portfolio Companies First Lien/Senior Secured Debt HR Pharmaceuticals, LLC Health Care Equipment & Supplies Interest Rate 9.70% Reference Rate and Spread SOFR + 6.00% Floor 2.00% Maturity 01/29/31","n":"HR Pharmaceuticals, LLC","t":"equity","l":{"c":"equity","r":"Health Care Equipment & Supplies Interest Rate 9.70% Reference Rate and Spread SOFR + 6.00% Floor 2.00% Maturity 01/29/31"},"i":"Health Care Equipment & Supplies","r":0.0965,"sp":0.06,"fl":0.02,"b":"SOFR","p":3290000,"c":3230000,"v":3222000,"m":"2031-01-29","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies First Lien/Senior Secured Debt MMI Holdings, LLC Health Care Providers & Services Maturity 09/30/26","n":"MMI Holdings, LLC","t":"debt","l":{"c":"first lien","r":"First Lien/Senior Secured Debt"},"i":"Health Care Providers & Services","p":5215000,"c":4201000,"v":4695000,"m":"2026-09-30","na":true,"s":{"w":"dataset","t":true,"na":"table","i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies First Lien/Senior Secured Debt PMP OPCO, LLC (Princeton Medspa Partners, LLC) (Revolver) Diversified Consumer Services Reference Rate and Spread SOFR + 8.50% Floor 2.00% Maturity 05/31/29","n":"First Lien/Senior","t":"debt","l":{"c":"first lien","r":"Secured Debt PMP OPCO, LLC (Princeton Medspa Partners | LLC) (Revolver) Diversified Consumer Services Reference Rate and Spread SOFR + 8.50% Floor 2.00% Maturity 05/31/29"},"f":"revolver","i":"Diversified Consumer Services","sp":0.085,"fl":0.02,"b":"SOFR","p":0,"c":-2000,"v":-15000,"m":"2029-05-31","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Affiliate Portfolio Companies First Lien/Senior Secured Debt PMP OPCO, LLC (Princeton Medspa Partners, LLC) Diversified Consumer Services Interest Rate 12.17% Reference Rate and Spread SOFR + 8.50% Floor 2.00% Maturity 05/31/29","n":"First Lien/Senior","t":"equity","l":{"c":"equity","r":"Secured Debt PMP OPCO, LLC (Princeton Medspa Partners | LLC) Diversified Consumer Services Interest Rate 12.17% Reference Rate and Spread SOFR + 8.50% Floor 2.00% Maturity 05/31/29"},"i":"Diversified Consumer Services","r":0.1214,"sp":0.085,"fl":0.02,"b":"SOFR","p":1994000,"c":1972000,"v":1820000,"m":"2029-05-31","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Affiliate Portfolio Companies First Lien/Senior Secured Debt Riddell, Inc. Leisure Products Interest Rate 9.68% Reference Rate and Spread SOFR + 6.00% Floor 1.00% Maturity 05/14/31","n":"Riddell, Inc.","t":"equity","l":{"c":"equity","r":"Leisure Products Interest Rate 9.68% Reference Rate and Spread SOFR + 6.00% Floor 1.00% Maturity 05/14/31"},"i":"Leisure Products","r":0.0864,"sp":0.05,"fl":0.01,"b":"SOFR","p":4346000,"c":4341000,"v":4341000,"m":"2031-05-14","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies Joint Ventures Series B-Great Lakes Funding II LLC Joint Venture","n":"Joint Ventures Series B-Great Lakes Funding II LLC Joint Venture","t":"vehicle","l":{},"i":"Joint Venture","p":42169000,"c":42169000,"v":37783000,"s":{"w":"dataset","t":true,"i":"table","nm":"id"}},
+{"id":"Investments in Affiliate Portfolio Companies Preferred Stock and Units GreenPark Infrastructure, LLC - Series A Commercial Services & Supplies","n":"Preferred Stock and Units GreenPark Infrastructure, LLC","t":"equity","l":{"c":"equity","r":"- Series A Commercial Services & Supplies"},"i":"Commercial Services & Supplies","c":676000,"v":817000,"s":{"w":"dataset","t":true,"i":"table","nm":"id"}},
+{"id":"Investments in Affiliate Portfolio Companies Preferred Stock and Units HR Pharmaceuticals, LLC Health Care Equipment & Supplies Interest Rate 14.00% PIK","n":"HR Pharmaceuticals, LLC","t":"equity","l":{"c":"equity","r":"Health Care Equipment & Supplies Interest Rate 14.00% PIK"},"i":"Health Care Equipment & Supplies","pk":0.14,"p":517260000,"c":517000,"v":517000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies Preferred Stock and Units Northeast Metal Works LLC - Class O Preferred Metals & Mining","n":"Northeast Metal Works LLC - Class O Preferred","t":"equity","l":{"c":"equity","r":"Preferred Stock and Units"},"i":"Metals & Mining","c":5445000,"v":259000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies Preferred Stock and Units Phoenix Aviation Capital, LLC Aerospace & Defense Interest Rate 7.00% PIK","n":"Phoenix Aviation Capital, LLC","t":"equity","l":{"c":"equity","r":"Aerospace & Defense Interest Rate 7.00% PIK"},"i":"Aerospace & Defense","pk":0.07,"p":1305594000,"c":1111000,"v":1163000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies Preferred Stock and Units Princeton Medspa Partners, LLC Diversified Consumer Services Interest Rate 12.50% PIK","n":"Princeton Medspa Partners, LLC","t":"equity","l":{"c":"equity","r":"Diversified Consumer Services Interest Rate 12.50% PIK"},"i":"Diversified Consumer Services","pk":0.125,"p":1279121000,"c":1279000,"v":621000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies Preferred Stock and Units Riddell Sports Enterprises LLC Leisure Product Interest Rate 10.00% PIK","n":"Riddell Sports Enterprises LLC","t":"equity","l":{"c":"equity","r":"Preferred Stock and Units"},"i":"Leisure Products","pk":0.1,"p":2903000,"c":2928000,"v":2928000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies Preferred Stock and Units Westshore RAM, LLC - Class A Financial Services","n":"Preferred Stock and Units Westshore RAM, LLC","t":"equity","l":{"c":"equity","r":"- Class A Financial Services"},"i":"Financial Services","c":1278000,"v":1497000,"s":{"w":"dataset","t":true,"i":"table","nm":"id"}},
+{"id":"Investments in Affiliate Portfolio Companies Second Lien/Senior Secured Debt Northeast Metal Works LLC Metals & Mining Interest Rate 8.00% Maturity 04/05/28 One","n":"Northeast Metal Works LLC","t":"debt","l":{"c":"second lien","r":"Second Lien/Senior Secured Debt"},"i":"Metals & Mining","r":0.08,"p":4500000,"c":4500000,"v":3630000,"m":"2028-04-05","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Affiliate Portfolio Companies Second Lien/Senior Secured Debt Northeast Metal Works LLC Metals & Mining Interest Rate 8.00% Maturity 04/05/28","n":"Northeast Metal Works LLC","t":"debt","l":{"c":"second lien","r":"Second Lien/Senior Secured Debt"},"i":"Metals & Mining","r":0.08,"p":500000,"c":500000,"v":403000,"m":"2028-04-05","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Controlled Affiliated Portfolio Companies Joint Ventures KCAP Freedom 3 LLC Joint Venture","n":"KCAP Freedom 3 LLC","t":"vehicle","l":{},"i":"Joint Venture","p":27220000,"c":24298000,"v":7050000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units AAPC Holdings, LLC Health Care Providers & Services","n":"AAPC Holdings, LLC","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Health Care Providers & Services","c":264000,"v":492000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units Advantage Capital Holdings LLC - Class A Units Financial Services","n":"Non-Control","t":"equity","l":{"c":"equity","r":"Non-Affiliate Portfolio Companies Common Stock and Membership Units Advantage Capital Holdings LLC - Class A Units Financial Services"},"i":"Financial Services","c":500000,"v":1773000,"s":{"w":"dataset","t":true,"i":"table","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units AIP Capital, LLC Financial Services","n":"AIP Capital, LLC","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Financial Services","c":35000,"v":35000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units BGPT Maverick, L.P. (Metrc Inc.) Communications Equipment","n":"BGPT Maverick, L.P. (Metrc Inc.)","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Communications Equipment","c":1020000,"v":1219000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units Carestream Health Holdings, Inc. Health Care Equipment & Supplies","n":"Carestream Health Holdings, Inc.","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Health Care Equipment & Supplies","c":53000,"v":94000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units Centric Brands, L.P. Textiles, Apparel & Luxury Goods","n":"Centric Brands, L.P.","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Textiles, Apparel & Luxury Goods","c":746000,"v":5085000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units DxTx Pain and Spine LLC Health Care Providers & Services","n":"Non-Control","t":"equity","l":{"c":"equity","r":"Non-Affiliate Portfolio Companies Common Stock and Membership Units DxTx Pain and Spine LLC Health Care Providers & Services"},"i":"Health Care Providers & Services","c":381000,"v":638000,"s":{"w":"dataset","t":true,"i":"table","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units Everyware Global, Inc. Household Products","n":"Everyware Global, Inc.","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Household Products","c":346000,"v":42000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units FP WRCA Coinvestment Fund VII, Ltd. - Class A Building Products","n":"Common Stock and","t":"equity","l":{"c":"equity","r":"Membership Units FP WRCA Coinvestment Fund VII, Ltd. | - Class A Building Products"},"i":"Building Products","c":1500000,"v":863000,"s":{"w":"dataset","t":true,"i":"table","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units Freedom Electronics, LLC Electronic Equipment, Instruments & Components","n":"Freedom Electronics, LLC","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Electronic Equipment, Instruments & Components","c":195000,"v":259000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units Fusion Parent, LLC (fka Franchise Group Inc.) Diversified Consumer Services","n":"Fusion Parent, LLC (fka Franchise Group Inc.)","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Diversified Consumer Services","c":847000,"v":722000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units KT Equity Holdings, LLC Commercial Services & Supplies","n":"KT Equity Holdings, LLC","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Commercial Services & Supplies","c":181000,"v":181000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units LB NewHoldCo LLC Hotels, Restaurants & Leisure","n":"LB NewHoldCo LLC","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Hotels, Restaurants & Leisure","c":1724000,"v":128000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units Middle West Spirits, LLC Beverages","n":"Middle West Spirits, LLC","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Beverages","c":14000,"v":38000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units Morae Global Holdings Inc. - Warrant IT Services","n":"Non-Control","t":"equity","l":{"c":"equity","r":"Non-Affiliate Portfolio Companies Common Stock and Membership Units Morae Global Holdings Inc. - Warrant IT Services"},"i":"IT Services","c":376000,"v":124000,"s":{"w":"dataset","t":true,"i":"table","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units Payarc LLC Warrant Financial Services","n":"Non-Control","t":"equity","l":{"c":"equity","r":"Non-Affiliate Portfolio Companies Common Stock and Membership Units Payarc LLC Warrant Financial Services"},"i":"Financial Services","c":225000,"v":225000,"s":{"w":"dataset","t":true,"i":"table","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units Revolt Media and TV, LLC Media","n":"Revolt Media and TV, LLC","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Media","c":203000,"v":203000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units South Street Securities Holdings, Inc Warrant Financial Services","n":"Common Stock and","t":"equity","l":{"c":"equity","r":"Membership Units South Street Securities Holdings, Inc | Warrant Financial Services"},"i":"Financial Services","c":514000,"v":681000,"s":{"w":"dataset","t":true,"i":"table","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units Swift Aggregator LLC (formerly GA Communications, Inc.) Media","n":"Swift Aggregator LLC (formerly GA Communications, Inc.)","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Media","c":1250000,"v":1420000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units VTX Holdings LLC - Series C IT Services","n":"Non-Control","t":"equity","l":{"c":"equity","r":"Non-Affiliate Portfolio Companies Common Stock and Membership Units VTX Holdings LLC - Series C IT Services"},"i":"IT Services","c":9000,"v":1000,"s":{"w":"dataset","t":true,"i":"table","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien /Senior Secured Debt Live Comfortably Inc. Term Loan B Household Durables Interest Rate 13.76% Reference Rate and Spread SOFR + 10.00%, 2.00% PIK Floor 3.00% Maturity 04/02/29","n":"Live Comfortably Inc. Term Loan B","t":"debt","l":{"c":"first lien","r":"2.00% PIK Floor 3.00% Maturity 04/02/29"},"i":"Household Durables","r":0.1376,"sp":0.1,"fl":0.03,"pk":0.02,"b":"SOFR","p":7165000,"c":6905000,"v":6574000,"m":"2029-04-02","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien /Senior Secured Debt Metrc Inc. (Revolver) Software Reference Rate and Spread SOFR + 5.50% Floor 1.00% Maturity 09/30/31","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien /Senior Secured Debt Metrc Inc. (Revolver) Software Reference Rate and Spread SOFR + 5.50% Floor 1.00% Maturity 09/30/31"},"f":"revolver","i":"Software","sp":0.055,"fl":0.01,"b":"SOFR","p":0,"c":-52000,"v":-25000,"m":"2031-09-30","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien /Senior Secured Debt Metrc Inc. Interest Rate 9.23% Software Reference Rate and Spread SOFR + 5.50% Floor 1.00% Maturity 09/30/31","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien /Senior Secured Debt Metrc Inc. Interest Rate 9.23% Software Reference Rate and Spread SOFR + 5.50% Floor 1.00% Maturity 09/30/31"},"i":"Software","r":0.0923,"sp":0.055,"fl":0.01,"b":"SOFR","p":4842000,"c":4672000,"v":4734000,"m":"2031-09-30","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien /Senior Secured Debt Money Transfer Acquisition Inc. Financial Services Interest Rate 11.99% Reference Rate and Spread SOFR + 8.25% Floor 1.00% Maturity 12/14/27","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien /Senior Secured Debt Money Transfer Acquisition Inc. Financial Services Interest Rate 11.99% Reference Rate and Spread SOFR + 8.25% Floor 1.00% Maturity 12/14/27"},"i":"Financial Services","r":0.1199,"sp":0.0825,"fl":0.01,"b":"SOFR","p":13662000,"c":13120000,"v":13610000,"m":"2027-12-14","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien /Senior Secured Debt Netwrix Corporation (Revolver) Software Reference Rate and Spread SOFR + 4.75% Floor 0.75% Maturity 06/11/29","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien /Senior Secured Debt Netwrix Corporation (Revolver) Software Reference Rate and Spread SOFR + 4.75% Floor 0.75% Maturity 06/11/29"},"f":"revolver","i":"Software","sp":0.0475,"fl":0.0075,"b":"SOFR","p":0,"c":-5000,"v":-12000,"m":"2029-06-11","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt 13 Scents Inc. (Revolver) Personal Care Products Interest Rate 10.44% Reference Rate and Spread SOFR + 6.75% Floor 1.00% Maturity 03/31/31","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt 13 Scents Inc. (Revolver) Personal Care Products Interest Rate 10.44% Reference Rate and Spread SOFR + 6.75% Floor 1.00% Maturity 03/31/31"},"f":"revolver","i":"Personal Care Products","r":0.1044,"sp":0.0675,"fl":0.01,"b":"SOFR","p":202000,"c":194000,"v":194000,"m":"2031-03-31","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt 13 Scents Inc. Personal Care Products Interest Rate 10.48% Reference Rate and Spread SOFR + 6.75% Floor 1.00% Maturity 03/31/31","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt 13 Scents Inc. Personal Care Products Interest Rate 10.48% Reference Rate and Spread SOFR + 6.75% Floor 1.00% Maturity 03/31/31"},"i":"Personal Care Products","r":0.1048,"sp":0.0675,"fl":0.01,"b":"SOFR","p":2820000,"c":2766000,"v":2766000,"m":"2031-03-31","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Accurate Background, LLC IT Services Interest Rate 9.99% Reference Rate and Spread SOFR + 6.00% Floor 1.00% Maturity 03/26/29","n":"Accurate Background, LLC","t":"equity","l":{"c":"equity","r":"IT Services Interest Rate 9.99% Reference Rate and Spread SOFR + 6.00% Floor 1.00% Maturity 03/26/29"},"i":"IT Services","r":0.0999,"sp":0.06,"fl":0.01,"b":"SOFR","p":8598000,"c":8064000,"v":8598000,"m":"2029-03-26","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt AIDC IntermediateCo 2, LLC (Peak Technologies) IT Services Interest Rate 9.14% Reference Rate and Spread SOFR + 5.50% Floor 1.00% Maturity 07/22/27","n":"First Lien/Senior","t":"equity","l":{"c":"equity","r":"Secured Debt AIDC IntermediateCo 2, LLC | (Peak Technologies) IT Services Interest Rate 9.14% Reference Rate and Spread SOFR + 5.50% Floor 1.00% Maturity 07/22/27"},"i":"IT Services","r":0.0914,"sp":0.055,"fl":0.01,"b":"SOFR","p":5790000,"c":5447000,"v":5752000,"m":"2027-07-22","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt AMCP Pet Holdings, Inc. (Revolver) Consumer Staples Distribution & Retail Interest Rate 12.23% Reference Rate and Spread SOFR + 7.00%, 3.00% PIK Floor 1.00% Matur","n":"AMCP Pet Holdings, Inc. (Revolver)","t":"debt","l":{"c":"first lien","r":"3.00% PIK Floor 1.00% Matur"},"i":"Consumer Staples Distribution & Retail","r":0.1223,"sp":0.07,"fl":0.01,"pk":0.03,"b":"SOFR","p":1061000,"c":1059000,"v":783000,"m":"2028-01-04","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt AMCP Pet Holdings, Inc. Consumer Staples Distribution & Retail Interest Rate 12.31% Reference Rate and Spread SOFR + 7.00%, 3.00% PIK Floor 1.00% Maturity 01/04/2","n":"AMCP Pet Holdings, Inc.","t":"debt","l":{"c":"first lien","r":"3.00% PIK Floor 1.00% Maturity 01/04/2"},"i":"Consumer Staples Distribution & Retail","r":0.1231,"sp":0.07,"fl":0.01,"pk":0.03,"b":"SOFR","p":4875000,"c":4863000,"v":3595000,"m":"2028-01-04","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt American Academy Holdings, LLC Health Care Providers & Services Interest Rate 13.01% Reference Rate and Spread SOFR + 9.25%, 5.00% PIK Floor 3.25% Maturity 06/30/","n":"American Academy Holdings, LLC","t":"debt","l":{"c":"first lien","r":"5.00% PIK Floor 3.25% Maturity 06/30/"},"i":"Health Care Providers & Services","r":0.1301,"sp":0.0925,"fl":0.0325,"pk":0.05,"b":"SOFR","p":7034000,"c":6934000,"v":7027000,"m":"2027-06-30","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Ancile Solutions, Inc. Software Interest Rate 13.94% Reference Rate and Spread SOFR + 10.00% Floor 1.00% Maturity 06/11/26","n":"Ancile Solutions, Inc.","t":"equity","l":{"c":"equity","r":"Software Interest Rate 13.94% Reference Rate and Spread SOFR + 10.00% Floor 1.00% Maturity 06/11/26"},"i":"Software","r":0.1394,"sp":0.1,"fl":0.01,"b":"SOFR","p":5635000,"c":5636000,"v":5765000,"m":"2026-06-11","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"nvestments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Anthem Sports & Entertainment Inc. (2025 Delayed Draw Term Loan) Media Interest Rate 9.49% Reference Rate and Spread SOFR + 5.50%, 9.49% PIK Floor 1.00% Maturity","n":"Anthem Sports & Entertainment Inc. (2025 Delayed Draw Term Loan)","t":"debt","l":{"c":"first lien","r":"9.49% PIK Floor 1.00% Maturity"},"i":"Media","r":0.0949,"sp":0.055,"fl":0.01,"pk":0.0949,"b":"SOFR","p":1433000,"c":1433000,"v":1433000,"m":"2027-11-15","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Anthem Sports & Entertainment Inc. (Hollywood Suites Delayed Draw Term Loan) Media Interest Rate 9.49% Reference Rate and Spread SOFR + 5.50%, 9.49% PIK Floor 1.0","n":"Anthem Sports & Entertainment Inc. (Hollywood Suites Delayed Draw Term Loan)","t":"debt","l":{"c":"first lien","r":"9.49% PIK Floor 1.0"},"i":"Media","r":0.0949,"sp":0.055,"fl":0.01,"pk":0.0949,"b":"SOFR","p":4443000,"c":4443000,"v":4442000,"m":"2027-11-15","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Anthem Sports & Entertainment Inc. (Term Loan B) Media Interest Rate 10.00% PIK Maturity 11/15/27","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Anthem Sports & Entertainment Inc. (Term Loan B) Media Interest Rate 10.00% PIK Maturity 11/15/27"},"f":"term loan","i":"Media","r":0.1,"pk":0.1,"p":9750000,"c":9751000,"v":7049000,"m":"2027-11-15","s":{"w":"dataset","t":true,"i":"table","m":"axis","rt":"table","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Appfire Technologies, LLC Software Interest Rate 8.48% Reference Rate and Spread SOFR + 4.75% Floor 1.00% Maturity 03/09/28","n":"Appfire Technologies, LLC","t":"equity","l":{"c":"equity","r":"Software Interest Rate 8.48% Reference Rate and Spread SOFR + 4.75% Floor 1.00% Maturity 03/09/28"},"i":"Software","r":0.0848,"sp":0.0475,"fl":0.01,"b":"SOFR","p":5741000,"c":5739000,"v":5741000,"m":"2028-03-09","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt BetaNXT, Inc. (Revolver) Financial Services Reference Rate and Spread SOFR + 5.75% Maturity 04/02/29","n":"First Lien/Senior","t":"debt","l":{"c":"first lien","r":"Secured Debt BetaNXT, Inc. | (Revolver) Financial Services Reference Rate and Spread SOFR + 5.75% Maturity 04/02/29"},"f":"revolver","i":"Financial Services","sp":0.0575,"b":"SOFR","p":0,"c":-32000,"v":-74000,"m":"2029-04-02","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt BetaNXT, Inc. Financial Services Interest Rate 9.48% Reference Rate and Spread SOFR + 5.75% Maturity 07/02/29","n":"BetaNXT, Inc.","t":"equity","l":{"c":"equity","r":"Financial Services Interest Rate 9.48% Reference Rate and Spread SOFR + 5.75% Maturity 07/02/29"},"i":"Financial Services","r":0.0948,"sp":0.0575,"b":"SOFR","p":12770000,"c":12223000,"v":12424000,"m":"2029-07-02","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Bradshaw International Parent Corp. (Revolver) Specialty Retail Reference Rate and Spread SOFR + 5.75% Floor 1.00% Maturity 10/21/27","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Bradshaw International Parent Corp. (Revolver) Specialty Retail Reference Rate and Spread SOFR + 5.75% Floor 1.00% Maturity 10/21/27"},"f":"revolver","i":"Specialty Retail","sp":0.0575,"fl":0.01,"b":"SOFR","p":0,"c":-7000,"v":-32000,"m":"2027-10-21","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Bradshaw International Parent Corp. Specialty Retail Interest Rate 9.49% Reference Rate and Spread SOFR + 5.75% Floor 1.00% Maturity 10/21/27","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Bradshaw International Parent Corp. Specialty Retail Interest Rate 9.49% Reference Rate and Spread SOFR + 5.75% Floor 1.00% Maturity 10/21/27"},"i":"Specialty Retail","r":0.0949,"sp":0.0575,"fl":0.01,"b":"SOFR","p":966000,"c":924000,"v":950000,"m":"2027-10-21","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Buzz Finco, LLC Interactive Media & Services Interest Rate 10.39% Reference Rate and Spread SOFR + 6.75% Floor 2.50% Maturity 04/24/30","n":"Buzz Finco, LLC","t":"equity","l":{"c":"equity","r":"Interactive Media & Services Interest Rate 10.39% Reference Rate and Spread SOFR + 6.75% Floor 2.50% Maturity 04/24/30"},"i":"Interactive Media & Services","r":0.1039,"sp":0.0675,"fl":0.025,"b":"SOFR","p":2550000,"c":2477000,"v":2474000,"m":"2030-04-24","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt CCMG Buyer, LLC (Care Connectors Medical Group) Health Care Providers & Services Interest Rate 8.39% Reference Rate and Spread SOFR + 4.75% Floor 1.00% Maturity 0","n":"First Lien/Senior","t":"equity","l":{"c":"equity","r":"Secured Debt CCMG Buyer, LLC | (Care Connectors Medical Group) Health Care Providers & Services Interest Rate 8.39% Reference Rate and Spread SOFR + 4.75% Floor 1.00% Maturity 0"},"i":"Health Care Providers & Services","r":0.0839,"sp":0.0475,"fl":0.01,"b":"SOFR","p":3103000,"c":3078000,"v":3103000,"m":"2030-05-08","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Centric Brands Inc. (Term Loan A1) Textiles, Apparel & Luxury Goods Interest Rate 10.15% Reference Rate and Spread SOFR + 6.50% Floor 1.00% Maturity 02/06/31","n":"Centric Brands Inc. (Term Loan A1)","t":"equity","l":{"c":"equity","r":"Apparel & Luxury Goods Interest Rate 10.15% Reference Rate and Spread SOFR + 6.50% Floor 1.00% Maturity 02/06/31"},"i":"Textiles, Apparel & Luxury Goods","r":0.1015,"sp":0.065,"fl":0.01,"b":"SOFR","p":1732000,"c":1732000,"v":1732000,"m":"2031-02-06","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Centric Brands Inc. (Term Loan A2) Textiles, Apparel & Luxury Goods Interest Rate 11.65% PIK Reference Rate and Spread SOFR + 8.00%, 11.65% PIK Floor 1.00% Maturi","n":"Centric Brands Inc. (Term Loan A2)","t":"debt","l":{"c":"first lien","r":"11.65% PIK Floor 1.00% Maturi"},"i":"Textiles, Apparel & Luxury Goods","sp":0.08,"fl":0.01,"pk":0.1165,"b":"SOFR","p":4153000,"c":4153000,"v":4153000,"m":"2031-02-06","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Centric Brands Inc. Textiles, Apparel & Luxury Goods Interest Rate 9.15% Reference Rate and Spread SOFR + 5.50% Floor 1.00% Maturity 08/06/29","n":"Centric Brands Inc.","t":"equity","l":{"c":"equity","r":"Apparel & Luxury Goods Interest Rate 9.15% Reference Rate and Spread SOFR + 5.50% Floor 1.00% Maturity 08/06/29"},"i":"Textiles, Apparel & Luxury Goods","r":0.0915,"sp":0.055,"fl":0.01,"b":"SOFR","p":3689000,"c":3689000,"v":3689000,"m":"2029-08-06","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Colonnade Intermediate, LLC (Revolver) Software Floor 1.00% Maturity 09/30/26","n":"First Lien/Senior","t":"debt","l":{"c":"first lien","r":"Secured Debt Colonnade Intermediate, LLC | (Revolver) Software Floor 1.00% Maturity 09/30/26"},"f":"revolver","i":"Software","fl":0.01,"p":685000,"c":685000,"v":406000,"m":"2026-09-30","na":true,"s":{"w":"dataset","t":true,"na":"table","i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Colonnade Intermediate, LLC Software Floor 1.00% Maturity 09/30/26","n":"Colonnade Intermediate, LLC","t":"debt","l":{"c":"first lien","r":"First Lien/Senior Secured Debt"},"i":"Software","fl":0.01,"p":8318000,"c":7645000,"v":4928000,"m":"2026-09-30","na":true,"s":{"w":"dataset","t":true,"na":"table","i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Dentive, LLC (Revolver) Health Care Providers & Services Interest Rate 10.98% Reference Rate and Spread SOFR + 7.25%, 4.25% PIK Floor 0.75% Maturity 12/22/28","n":"Dentive, LLC (Revolver)","t":"debt","l":{"c":"first lien","r":"4.25% PIK Floor 0.75% Maturity 12/22/28"},"i":"Health Care Providers & Services","r":0.1098,"sp":0.0725,"fl":0.0075,"pk":0.0425,"b":"SOFR","p":8000,"c":-2000,"v":2000,"m":"2028-12-22","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Dentive, LLC Health Care Providers & Services Interest Rate 10.98% Reference Rate and Spread SOFR + 7.25%, 4.25% PIK Floor 0.75% Maturity 12/22/28","n":"Dentive, LLC","t":"debt","l":{"c":"first lien","r":"4.25% PIK Floor 0.75% Maturity 12/22/28"},"i":"Health Care Providers & Services","r":0.1098,"sp":0.0725,"fl":0.0075,"pk":0.0425,"b":"SOFR","p":4751000,"c":4534000,"v":4621000,"m":"2028-12-22","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Dodge Data & Analytics LLC (Second Out) Professional Services Interest Rate 8.54% Reference Rate and Spread SOFR + 4.75% Floor 0.50% Maturity 02/28/29","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Dodge Data & Analytics LLC (Second Out) Professional Services Interest Rate 8.54% Reference Rate and Spread SOFR + 4.75% Floor 0.50% Maturity 02/28/29"},"i":"Professional Services","r":0.0854,"sp":0.0475,"fl":0.005,"b":"SOFR","p":901000,"c":810000,"v":685000,"m":"2029-02-28","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Dodge Data & Analytics LLC Professional Services Interest Rate 10.04% Reference Rate and Spread SOFR + 6.25% Floor 0.50% Maturity 01/31/29","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Dodge Data & Analytics LLC Professional Services Interest Rate 10.04% Reference Rate and Spread SOFR + 6.25% Floor 0.50% Maturity 01/31/29"},"i":"Professional Services","r":0.1004,"sp":0.0625,"fl":0.005,"b":"SOFR","p":613000,"c":609000,"v":618000,"m":"2029-01-31","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Epic Staffing Group Professional Services Interest Rate 9.67% Reference Rate and Spread SOFR + 6.00% Floor 0.50% Maturity 06/28/29","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Epic Staffing Group Professional Services Interest Rate 9.67% Reference Rate and Spread SOFR + 6.00% Floor 0.50% Maturity 06/28/29"},"i":"Professional Services","r":0.0967,"sp":0.06,"fl":0.005,"b":"SOFR","p":4823000,"c":4045000,"v":3954000,"m":"2029-06-28","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Florida Food Products, LLC First Lien, Term Loan A Food Products Interest Rate 9.23% Reference Rate and Spread SOFR + 5.50% Floor 2.00% Maturity 10/15/30","n":"First Lien/Senior","t":"equity","l":{"c":"equity","r":"Secured Debt Florida Food Products, LLC First Lien | Term Loan A Food Products Interest Rate 9.23% Reference Rate and Spread SOFR + 5.50% Floor 2.00% Maturity 10/15/30"},"f":"term loan","i":"Food Products","r":0.0923,"sp":0.055,"fl":0.02,"b":"SOFR","p":2022000,"c":1987000,"v":1994000,"m":"2030-10-15","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Florida Food Products, LLC First Lien, Term Loan B Food Products Interest Rate 9.23% Reference Rate and Spread SOFR + 5.50% Floor 2.00% Maturity 10/15/30","n":"First Lien/Senior","t":"equity","l":{"c":"equity","r":"Secured Debt Florida Food Products, LLC First Lien | Term Loan B Food Products Interest Rate 9.23% Reference Rate and Spread SOFR + 5.50% Floor 2.00% Maturity 10/15/30"},"f":"term loan","i":"Food Products","r":0.0923,"sp":0.055,"fl":0.02,"b":"SOFR","p":1265000,"c":1243000,"v":1248000,"m":"2030-10-15","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Florida Food Products, LLC First Lien, Term Loan C Food Products Interest Rate 9.23% Reference Rate and Spread SOFR + 5.50% Floor 2.00% Maturity 10/15/30","n":"First Lien/Senior","t":"equity","l":{"c":"equity","r":"Secured Debt Florida Food Products, LLC First Lien | Term Loan C Food Products Interest Rate 9.23% Reference Rate and Spread SOFR + 5.50% Floor 2.00% Maturity 10/15/30"},"f":"term loan","i":"Food Products","r":0.0923,"sp":0.055,"fl":0.02,"b":"SOFR","p":717000,"c":705000,"v":707000,"m":"2030-10-15","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"nvestments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Global Integrated Flooring Systems Inc. (Revolver) Household Products Interest Rate 12.64% Reference Rate and Spread SOFR + 9.00%, 6.00% PIK Floor 2.00% Maturity","n":"Global Integrated Flooring Systems Inc. (Revolver)","t":"debt","l":{"c":"first lien","r":"6.00% PIK Floor 2.00% Maturity"},"i":"Household Products","r":0.1264,"sp":0.09,"fl":0.02,"pk":0.06,"b":"SOFR","p":55000,"c":48000,"v":39000,"m":"2026-12-31","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Global Integrated Flooring Systems Inc. Household Products Interest Rate 12.66% Reference Rate and Spread SOFR + 9.00%, 6.00% PIK Floor 2.00% Maturity 12/31/26","n":"Global Integrated Flooring Systems Inc.","t":"debt","l":{"c":"first lien","r":"6.00% PIK Floor 2.00% Maturity 12/31/26"},"i":"Household Products","r":0.1266,"sp":0.09,"fl":0.02,"pk":0.06,"b":"SOFR","p":6626000,"c":5926000,"v":4719000,"m":"2026-12-31","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt GP Midco, LLC (Beauty by Imagination) Personal Care Products Interest Rate 8.66% Reference Rate and Spread SOFR + 5.00% Floor 1.00% Maturity 11/01/30","n":"First Lien/Senior","t":"equity","l":{"c":"equity","r":"Secured Debt GP Midco, LLC | (Beauty by Imagination) Personal Care Products Interest Rate 8.66% Reference Rate and Spread SOFR + 5.00% Floor 1.00% Maturity 11/01/30"},"i":"Personal Care Products","r":0.0866,"sp":0.05,"fl":0.01,"b":"SOFR","p":3826000,"c":3421000,"v":3826000,"m":"2030-11-01","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt HDC/HW Intermediate Holdings, LLC - Term Loan B Software Maturity 08/21/26","n":"First Lien/Senior","t":"debt","l":{"c":"first lien","r":"Secured Debt HDC/HW Intermediate Holdings, LLC | - Term Loan B Software Maturity 08/21/26"},"f":"term loan","i":"Software","p":3773000,"c":664000,"v":2358000,"m":"2026-08-21","na":true,"s":{"w":"dataset","t":true,"na":"table","i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Help Systems Holdings, Inc. Technology Hardware, Storage & Peripherals Interest Rate 9.77% Reference Rate and Spread SOFR + 6.00% Floor 2.00% Maturity 05/21/29","n":"Help Systems Holdings, Inc.","t":"equity","l":{"c":"equity","r":"Storage & Peripherals Interest Rate 9.77% Reference Rate and Spread SOFR + 6.00% Floor 2.00% Maturity 05/21/29"},"i":"Technology Hardware, Storage & Peripherals","r":0.0977,"sp":0.06,"fl":0.02,"b":"SOFR","p":1433000,"c":1406000,"v":1092000,"m":"2029-05-21","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt IDC Infusion Services LLC Health Care Providers & Services Interest Rate 8.73% Reference Rate and Spread SOFR + 5.00% Floor 1.00% Maturity 07/09/29","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt IDC Infusion Services LLC Health Care Providers & Services Interest Rate 8.73% Reference Rate and Spread SOFR + 5.00% Floor 1.00% Maturity 07/09/29"},"i":"Health Care Providers & Services","r":0.0873,"sp":0.05,"fl":0.01,"b":"SOFR","p":6833000,"c":6565000,"v":6833000,"m":"2029-07-09","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Ivanti Software, Inc. - NewCo Software Interest Rate 9.41% Reference Rate and Spread SOFR + 5.75% Floor 2.00% Maturity 06/01/29","n":"First Lien/Senior","t":"equity","l":{"c":"equity","r":"Secured Debt Ivanti Software, Inc. | - NewCo Software Interest Rate 9.41% Reference Rate and Spread SOFR + 5.75% Floor 2.00% Maturity 06/01/29"},"i":"Software","r":0.0941,"sp":0.0575,"fl":0.02,"b":"SOFR","p":731000,"c":696000,"v":710000,"m":"2029-06-01","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Ivanti Software, Inc. Software Interest Rate 8.41% Reference Rate and Spread SOFR + 4.75% Floor 0.75% Maturity 06/01/29","n":"Ivanti Software, Inc.","t":"equity","l":{"c":"equity","r":"Software Interest Rate 8.41% Reference Rate and Spread SOFR + 4.75% Floor 0.75% Maturity 06/01/29"},"i":"Software","r":0.0841,"sp":0.0475,"fl":0.0075,"b":"SOFR","p":989000,"c":906000,"v":410000,"m":"2029-06-01","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt MAG DS Corp. Aerospace & Defense Interest Rate 9.33% Reference Rate and Spread SOFR + 5.50% Floor 1.00% Maturity 04/01/27","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt MAG DS Corp. Aerospace & Defense Interest Rate 9.33% Reference Rate and Spread SOFR + 5.50% Floor 1.00% Maturity 04/01/27"},"i":"Aerospace & Defense","r":0.0933,"sp":0.055,"fl":0.01,"b":"SOFR","p":3564000,"c":3491000,"v":3560000,"m":"2027-04-01","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Morae Global Corporation (Revolver) IT Services Interest Rate 11.82% Reference Rate and Spread SOFR + 8.00% Floor 2.00% Maturity 10/31/28","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Morae Global Corporation (Revolver) IT Services Interest Rate 11.82% Reference Rate and Spread SOFR + 8.00% Floor 2.00% Maturity 10/31/28"},"f":"revolver","i":"IT Services","r":0.1182,"sp":0.08,"fl":0.02,"b":"SOFR","p":500000,"c":490000,"v":491000,"m":"2028-10-31","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Morae Global Corporation (Term Loan A) IT Services Interest Rate 11.82% Reference Rate and Spread SOFR + 8.00% Floor 2.00% Maturity 10/31/28","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Morae Global Corporation (Term Loan A) IT Services Interest Rate 11.82% Reference Rate and Spread SOFR + 8.00% Floor 2.00% Maturity 10/31/28"},"f":"term loan","i":"IT Services","r":0.1182,"sp":0.08,"fl":0.02,"b":"SOFR","p":5729000,"c":5346000,"v":5606000,"m":"2028-10-31","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Morae Global Corporation (Term Loan B) IT Services Interest Rate 11.80% Reference Rate and Spread SOFR + 8.00% Floor 2.00% Maturity 10/31/28","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Morae Global Corporation (Term Loan B) IT Services Interest Rate 11.80% Reference Rate and Spread SOFR + 8.00% Floor 2.00% Maturity 10/31/28"},"f":"term loan","i":"IT Services","r":0.118,"sp":0.08,"fl":0.02,"b":"SOFR","p":2755000,"c":2543000,"v":2707000,"m":"2028-10-31","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt MSM Acquisitions, Inc. Software Interest Rate 9.67% Reference Rate and Spread SOFR + 6.00% Floor 1.00% Maturity 12/09/26","n":"MSM Acquisitions, Inc.","t":"equity","l":{"c":"equity","r":"Software Interest Rate 9.67% Reference Rate and Spread SOFR + 6.00% Floor 1.00% Maturity 12/09/26"},"i":"Software","r":0.0967,"sp":0.06,"fl":0.01,"b":"SOFR","p":9978000,"c":9973000,"v":7447000,"m":"2026-12-09","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Netwrix Corporation Software Interest Rate 8.39% Reference Rate and Spread SOFR + 4.75% Floor 0.75% Maturity 06/11/29","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Netwrix Corporation Software Interest Rate 8.39% Reference Rate and Spread SOFR + 4.75% Floor 0.75% Maturity 06/11/29"},"i":"Software","r":0.0839,"sp":0.0475,"fl":0.0075,"b":"SOFR","p":4184000,"c":4173000,"v":4138000,"m":"2029-06-11","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Newbury Franklin Industrials, LLC Trading Companies & Distributors Interest Rate 10.62% Reference Rate and Spread SOFR + 7.00% Floor 2.00% Maturity 12/11/29","n":"Newbury Franklin Industrials, LLC","t":"equity","l":{"c":"equity","r":"Trading Companies & Distributors Interest Rate 10.62% Reference Rate and Spread SOFR + 7.00% Floor 2.00% Maturity 12/11/29"},"i":"Trading Companies & Distributors","r":0.1062,"sp":0.07,"fl":0.02,"b":"SOFR","p":7571000,"c":7248000,"v":7459000,"m":"2029-12-11","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt One Stop Mailing LLC Ground Transportation Interest Rate 10.01% Reference Rate and Spread SOFR + 6.25% Floor 1.00% Maturity 05/07/27","n":"Non-Control","t":"debt","l":{"c":"first lien","s":"incl. unitranche/last-out","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt One Stop Mailing LLC Ground Transportation Interest Rate 10.01% Reference Rate and Spread SOFR + 6.25% Floor 1.00% Maturity 05/07/27"},"i":"Ground Transportation","r":0.1001,"sp":0.0625,"fl":0.01,"b":"SOFR","p":6764000,"c":6747000,"v":6764000,"m":"2027-05-07","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Orthopaedic (ITC) Buyer, LLC Health Care Providers & Services Interest Rate 8.73% Reference Rate and Spread SOFR + 5.00% Floor 0.75% Maturity 07/31/28","n":"Orthopaedic (ITC) Buyer, LLC","t":"equity","l":{"c":"equity","r":"Health Care Providers & Services Interest Rate 8.73% Reference Rate and Spread SOFR + 5.00% Floor 0.75% Maturity 07/31/28"},"i":"Health Care Providers & Services","r":0.0873,"sp":0.05,"fl":0.0075,"b":"SOFR","p":2299000,"c":2113000,"v":2299000,"m":"2028-07-31","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Payarc LLC (Revolver) Financial Services SOFR + 6.50% Floor 2.00% Maturity 05/22/31","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Payarc LLC (Revolver) Financial Services SOFR + 6.50% Floor 2.00% Maturity 05/22/31"},"f":"revolver","i":"Financial Services","sp":0.065,"fl":0.02,"b":"SOFR","p":0,"c":-7000,"v":-7000,"m":"2031-05-22","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Payarc LLC Financial Services Interest Rate 10.15% Reference Rate and Spread SOFR + 6.50% Floor 2.00% Maturity 05/22/31","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Payarc LLC Financial Services Interest Rate 10.15% Reference Rate and Spread SOFR + 6.50% Floor 2.00% Maturity 05/22/31"},"i":"Financial Services","r":0.1015,"sp":0.065,"fl":0.02,"b":"SOFR","p":5657000,"c":5323000,"v":5319000,"m":"2031-05-22","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt PhyNet Dermatology LLC Health Care Providers & Services Interest Rate 10.18% Reference Rate and Spread SOFR + 6.50% Floor 1.00% Maturity 10/20/29","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt PhyNet Dermatology LLC Health Care Providers & Services Interest Rate 10.18% Reference Rate and Spread SOFR + 6.50% Floor 1.00% Maturity 10/20/29"},"i":"Health Care Providers & Services","r":0.1018,"sp":0.065,"fl":0.01,"b":"SOFR","p":1822000,"c":1757000,"v":1790000,"m":"2029-10-20","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt PMA Parent Holdings LLC Capital Markets Interest Rate 8.48% Reference Rate and Spread SOFR + 4.75% Floor 0.75% Maturity 01/31/31","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt PMA Parent Holdings LLC Capital Markets Interest Rate 8.48% Reference Rate and Spread SOFR + 4.75% Floor 0.75% Maturity 01/31/31"},"i":"Capital Markets","r":0.0848,"sp":0.0475,"fl":0.0075,"b":"SOFR","p":2796000,"c":2623000,"v":2791000,"m":"2031-01-31","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Pomeroy Technologies, LLC (Super Senior A) Software Interest Rate 6.00% PIK Maturity 11/30/27","n":"First Lien/Senior","t":"equity","l":{"c":"equity","r":"Secured Debt Pomeroy Technologies, LLC | (Super Senior A) Software Interest Rate 6.00% PIK Maturity 11/30/27"},"i":"Software","pk":0.06,"p":1496000,"c":1496000,"v":1284000,"m":"2027-11-30","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Premier Imaging, LLC Health Care Equipment & Supplies Interest Rate 9.99% Reference Rate and Spread SOFR + 6.00% Floor 1.00% Maturity 10/31/27","n":"Premier Imaging, LLC","t":"equity","l":{"c":"equity","r":"Health Care Equipment & Supplies Interest Rate 9.99% Reference Rate and Spread SOFR + 6.00% Floor 1.00% Maturity 10/31/27"},"i":"Health Care Equipment & Supplies","r":0.0999,"sp":0.06,"fl":0.01,"b":"SOFR","p":5644000,"c":5492000,"v":5004000,"m":"2027-10-31","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Project Castle, Inc. Machinery Interest Rate 9.19% Reference Rate and Spread SOFR + 5.50% Floor 0.50% Maturity 06/01/29","n":"Project Castle, Inc.","t":"equity","l":{"c":"equity","r":"Machinery Interest Rate 9.19% Reference Rate and Spread SOFR + 5.50% Floor 0.50% Maturity 06/01/29"},"i":"Machinery","r":0.0919,"sp":0.055,"fl":0.005,"b":"SOFR","p":3717000,"c":3401000,"v":926000,"m":"2029-06-01","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Project Leopard Holdings, Inc. Software Interest Rate 9.01% Reference Rate and Spread SOFR + 5.25% Floor 0.50% Maturity 07/20/29","n":"Project Leopard Holdings, Inc.","t":"equity","l":{"c":"equity","r":"Software Interest Rate 9.01% Reference Rate and Spread SOFR + 5.25% Floor 0.50% Maturity 07/20/29"},"i":"Software","r":0.0901,"sp":0.0525,"fl":0.005,"b":"SOFR","p":8942000,"c":7506000,"v":5490000,"m":"2029-07-20","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt PVHC Holding Corp Containers & Packaging Interest Rate 13.13% Reference Rate and Spread SOFR + 9.25%, 2.75% PIK Floor 2.50% Maturity 02/17/27","n":"PVHC Holding Corp","t":"debt","l":{"c":"first lien","r":"2.75% PIK Floor 2.50% Maturity 02/17/27"},"i":"Containers & Packaging","r":0.1313,"sp":0.0925,"fl":0.025,"pk":0.0275,"b":"SOFR","p":2966000,"c":2965000,"v":1579000,"m":"2027-02-17","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Radius Aerospace, Inc. Aerospace & Defense Interest Rate 9.63% Reference Rate and Spread SOFR + 5.75% Floor 1.00% Maturity 03/29/27","n":"Radius Aerospace, Inc.","t":"equity","l":{"c":"equity","r":"Aerospace & Defense Interest Rate 9.63% Reference Rate and Spread SOFR + 5.75% Floor 1.00% Maturity 03/29/27"},"i":"Aerospace & Defense","r":0.0963,"sp":0.0575,"fl":0.01,"b":"SOFR","p":5401000,"c":5398000,"v":5388000,"m":"2027-03-29","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Red Range Intermediate Inc. Industrial Conglomerates Interest Rate 11.76% Reference Rate and Spread SOFR + 8.00% Floor 1.00% Maturity 10/01/29","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Red Range Intermediate Inc. Industrial Conglomerates Interest Rate 11.76% Reference Rate and Spread SOFR + 8.00% Floor 1.00% Maturity 10/01/29"},"i":"Industrial Conglomerates","r":0.1176,"sp":0.08,"fl":0.01,"b":"SOFR","p":324000,"c":324000,"v":324000,"m":"2029-10-01","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Resolute Investment Managers, Inc. Capital Markets Interest Rate 10.49% Reference Rate and Spread SOFR + 6.50% Floor 1.00% Maturity 10/30/28","n":"Resolute Investment Managers, Inc.","t":"equity","l":{"c":"equity","r":"Capital Markets Interest Rate 10.49% Reference Rate and Spread SOFR + 6.50% Floor 1.00% Maturity 10/30/28"},"i":"Capital Markets","r":0.1049,"sp":0.065,"fl":0.01,"b":"SOFR","p":3959000,"c":3608000,"v":3140000,"m":"2028-10-30","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Revolt Media and TV, LLC Media Interest Rate 11.65% Reference Rate and Spread SOFR + 8.00% Floor 3.00% Maturity 07/31/29","n":"Revolt Media and TV, LLC","t":"equity","l":{"c":"equity","r":"Media Interest Rate 11.65% Reference Rate and Spread SOFR + 8.00% Floor 3.00% Maturity 07/31/29"},"i":"Media","r":0.1165,"sp":0.08,"fl":0.03,"b":"SOFR","p":1500000,"c":1252000,"v":1252000,"m":"2029-07-31","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt RN Enterprises, LLC Health Care Technology Interest Rate 7.11% Reference Rate and Spread SOFR + 5.25% Floor 0.75% Maturity 10/17/31","n":"RN Enterprises, LLC","t":"equity","l":{"c":"equity","r":"Health Care Technology Interest Rate 7.11% Reference Rate and Spread SOFR + 5.25% Floor 0.75% Maturity 10/17/31"},"i":"Health Care Technology","r":0.0711,"sp":0.0525,"fl":0.0075,"b":"SOFR","p":2593000,"c":2314000,"v":2585000,"m":"2031-10-17","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Shepherd Parent Holdings, LLC Health Care Providers & Services Interest Rate 10.93% Reference Rate and Spread SOFR + 7.25% Floor 1.00% Maturity 07/10/30","n":"Shepherd Parent Holdings, LLC","t":"equity","l":{"c":"equity","r":"Health Care Providers & Services Interest Rate 10.93% Reference Rate and Spread SOFR + 7.25% Floor 1.00% Maturity 07/10/30"},"i":"Health Care Providers & Services","r":0.1093,"sp":0.0725,"fl":0.01,"b":"SOFR","p":1726000,"c":1602000,"v":1746000,"m":"2030-07-10","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt South Street Securities Holdings, Inc Financial Services Interest Rate 9.00% Maturity 09/20/27","n":"South Street Securities Holdings, Inc","t":"equity","l":{"c":"equity","r":"Financial Services Interest Rate 9.00% Maturity 09/20/27"},"i":"Financial Services","r":0.09,"p":3600000,"c":3411000,"v":3389000,"m":"2027-09-20","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Spark Buyer, LLC Electrical Equipment Interest Rate 8.89% Reference Rate and Spread SOFR + 5.25% Floor 0.75% Maturity 10/15/31","n":"Spark Buyer, LLC","t":"equity","l":{"c":"equity","r":"Electrical Equipment Interest Rate 8.89% Reference Rate and Spread SOFR + 5.25% Floor 0.75% Maturity 10/15/31"},"i":"Electrical Equipment","r":0.0889,"sp":0.0525,"fl":0.0075,"b":"SOFR","p":1407000,"c":1252000,"v":1276000,"m":"2031-10-15","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Spinrite, Inc. (Revolver) Leisure Products Interest Rate 10.91% Reference Rate and Spread SOFR + 7.25% Maturity 12/05/30","n":"First Lien/Senior","t":"equity","l":{"c":"equity","r":"Secured Debt Spinrite, Inc. | (Revolver) Leisure Products Interest Rate 10.91% Reference Rate and Spread SOFR + 7.25% Maturity 12/05/30"},"f":"revolver","i":"Leisure Products","r":0.1091,"sp":0.0725,"b":"SOFR","p":88000,"c":80000,"v":80000,"m":"2030-12-05","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Spinrite, Inc. Leisure Products Interest Rate 10.90% Reference Rate and Spread SOFR + 7.25% Maturity 12/05/30","n":"Spinrite, Inc.","t":"equity","l":{"c":"equity","r":"Leisure Products Interest Rate 10.90% Reference Rate and Spread SOFR + 7.25% Maturity 12/05/30"},"i":"Leisure Products","r":0.109,"sp":0.0725,"b":"SOFR","p":3063000,"c":3007000,"v":3007000,"m":"2030-12-05","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt STG Distribution, LLC (STG Logistics) (Second Out) Transportation Infrastructure Floor 1.50% Maturity 10/03/29","n":"STG Distribution, LLC (STG Logistics) (Second Out)","t":"debt","l":{"c":"first lien","r":"First Lien/Senior Secured Debt"},"i":"Transportation Infrastructure","fl":0.015,"p":2972000,"c":1607000,"v":26000,"m":"2029-10-03","na":true,"s":{"w":"dataset","t":true,"na":"table","i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Tactical Air Support, Inc. Aerospace & Defense Interest Rate 12.32% Reference Rate and Spread SOFR + 8.50% Floor 1.00% Maturity 12/22/28","n":"Tactical Air Support, Inc.","t":"equity","l":{"c":"equity","r":"Aerospace & Defense Interest Rate 12.32% Reference Rate and Spread SOFR + 8.50% Floor 1.00% Maturity 12/22/28"},"i":"Aerospace & Defense","r":0.1232,"sp":0.085,"fl":0.01,"b":"SOFR","p":4193000,"c":3997000,"v":4126000,"m":"2028-12-22","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Taoglas Group Holdings Limited (Revolver) Electronic Equipment, Instruments & Components Interest Rate 9.94% Reference Rate and Spread SOFR + 6.25% Floor 1.00% Ma","n":"Taoglas Group Holdings Limited (Revolver)","t":"equity","l":{"c":"equity","r":"Instruments & Components Interest Rate 9.94% Reference Rate and Spread SOFR + 6.25% Floor 1.00% Ma"},"i":"Electronic Equipment, Instruments & Components","r":0.0994,"sp":0.0625,"fl":0.01,"b":"SOFR","p":610000,"c":550000,"v":604000,"m":"2029-02-28","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Taoglas Group Holdings Limited Electronic Equipment, Instruments & Components Interest Rate 9.98% Reference Rate and Spread SOFR + 6.25% Floor 1.00% Maturity 02/2","n":"Taoglas Group Holdings Limited","t":"equity","l":{"c":"equity","r":"Instruments & Components Interest Rate 9.98% Reference Rate and Spread SOFR + 6.25% Floor 1.00% Maturity 02/2"},"i":"Electronic Equipment, Instruments & Components","r":0.0998,"sp":0.0625,"fl":0.01,"b":"SOFR","p":2278000,"c":2057000,"v":2258000,"m":"2029-02-28","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Taoglas USA Holdings Inc. Electronic Equipment, Instruments & Components Interest Rate 9.98% Reference Rate and Spread SOFR + 6.25% Floor 1.00% Maturity 02/28/29","n":"Taoglas USA Holdings Inc.","t":"equity","l":{"c":"equity","r":"Instruments & Components Interest Rate 9.98% Reference Rate and Spread SOFR + 6.25% Floor 1.00% Maturity 02/28/29"},"i":"Electronic Equipment, Instruments & Components","r":0.0998,"sp":0.0625,"fl":0.01,"b":"SOFR","p":1623000,"c":1594000,"v":1609000,"m":"2029-02-28","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Validity, Inc. Software Interest Rate 8.68% Reference Rate and Spread SOFR + 5.00% Floor 0.50% Maturity 04/12/32","n":"Validity, Inc.","t":"equity","l":{"c":"equity","r":"Software Interest Rate 8.68% Reference Rate and Spread SOFR + 5.00% Floor 0.50% Maturity 04/12/32"},"i":"Software","r":0.0868,"sp":0.05,"fl":0.005,"b":"SOFR","p":1980000,"c":1739000,"v":1947000,"m":"2032-04-12","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt VBC Spine Opco LLC (DxTx Pain and Spine LLC) (Revolver) Health Care Providers & Services Interest Rate 9.63% Reference Rate and Spread SOFR + 6.00% Floor 2.00% Ma","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt VBC Spine Opco LLC (DxTx Pain and Spine LLC) (Revolver) Health Care Providers & Services Interest Rate 9.63% Reference Rate and Spread SOFR + 6.00% Floor 2.00% Ma"},"f":"revolver","i":"Health Care Providers & Services","r":0.0963,"sp":0.06,"fl":0.02,"b":"SOFR","p":952000,"c":925000,"v":951000,"m":"2029-06-14","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt VBC Spine Opco LLC (DxTx Pain and Spine LLC) Health Care Providers & Services Interest Rate 9.64% Reference Rate and Spread SOFR + 6.00% Floor 2.00% Maturity 06/1","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt VBC Spine Opco LLC (DxTx Pain and Spine LLC) Health Care Providers & Services Interest Rate 9.64% Reference Rate and Spread SOFR + 6.00% Floor 2.00% Maturity 06/1"},"i":"Health Care Providers & Services","r":0.0964,"sp":0.06,"fl":0.02,"b":"SOFR","p":9974000,"c":9753000,"v":9963000,"m":"2029-06-14","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt VTX Intermediate Holdings, Inc. IT Services Interest Rate 10.92% Reference Rate and Spread SOFR + 7.00%, 1.00% PIK Floor 2.00% Maturity 12/12/29","n":"VTX Intermediate Holdings, Inc.","t":"debt","l":{"c":"first lien","r":"1.00% PIK Floor 2.00% Maturity 12/12/29"},"i":"IT Services","r":0.1092,"sp":0.07,"fl":0.02,"pk":0.01,"b":"SOFR","p":10402000,"c":9838000,"v":10389000,"m":"2029-12-12","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Preferred Stock and Units AAPC Holdings, LLC Health Care Providers & Services","n":"AAPC Holdings, LLC","t":"equity","l":{"c":"equity","r":"Preferred Stock and Units"},"i":"Health Care Providers & Services","c":166000,"v":416000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Preferred Stock and Units Aperture Dodge 18 LLC Financial Services","n":"Non-Control","t":"equity","l":{"c":"equity","r":"Non-Affiliate Portfolio Companies Preferred Stock and Units Aperture Dodge 18 LLC Financial Services"},"i":"Financial Services","c":4594000,"v":3133000,"s":{"w":"dataset","t":true,"i":"table","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Preferred Stock and Units BMP Slappey Holdco, LLC Diversified Telecommunication Services","n":"BMP Slappey Holdco, LLC","t":"equity","l":{"c":"equity","r":"Preferred Stock and Units"},"i":"Diversified Telecommunication Services","c":467000,"v":550000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Preferred Stock and Units BMP Slappey Investment II Diversified Telecommunication Services","n":"Non-Control","t":"equity","l":{"c":"equity","r":"Non-Affiliate Portfolio Companies Preferred Stock and Units BMP Slappey Investment II Diversified Telecommunication Services"},"i":"Diversified Telecommunication Services","c":208000,"v":244000,"s":{"w":"dataset","t":true,"i":"table","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Preferred Stock and Units Epilog Partners SPV III, LLC (Care Connectors Medical Group) Health Care Providers & Services","n":"Epilog Partners SPV III, LLC (Care Connectors Medical Group)","t":"equity","l":{"c":"equity","r":"Preferred Stock and Units"},"i":"Health Care Providers & Services","c":1192000,"v":1426000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Preferred Stock and Units Middle West Spirits, LLC Beverages Interest Rate 10.00% PIK","n":"Middle West Spirits, LLC","t":"equity","l":{"c":"equity","r":"Beverages Interest Rate 10.00% PIK"},"i":"Beverages","pk":0.1,"p":988004000,"c":932000,"v":1119000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Preferred Stock and Units Prosper Marketplace Household Products","n":"Non-Control","t":"equity","l":{"c":"equity","r":"Non-Affiliate Portfolio Companies Preferred Stock and Units Prosper Marketplace Household Products"},"i":"Household Products","c":279000,"v":324000,"s":{"w":"dataset","t":true,"i":"table","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Preferred Stock and Units Taylor Precision Products, Inc. - Series C Household Products","n":"Preferred Stock and Units Taylor Precision Products, Inc.","t":"equity","l":{"c":"equity","r":"- Series C Household Products"},"i":"Household Products","c":667000,"v":758000,"s":{"w":"dataset","t":true,"i":"table","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Preferred Stock and Units VBC Spine Opco LLC (DxTx Pain and Spine LLC) (Class A Preferred) Health Care Providers & Services Interest Rate 14.00% Reference Rate and Spread 14.00%, 10.50% PIK","n":"VBC Spine Opco LLC (DxTx Pain and Spine LLC) (Class A Preferred)","t":"equity","l":{"c":"equity","r":"10.50% PIK"},"i":"Health Care Providers & Services","p":1026753000,"c":1017000,"v":1054000,"s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Second Lien/Senior Secured Debt American Academy Holdings, LLC Health Care Providers & Services Interest Rate 14.50% PIK Maturity 03/01/28","n":"American Academy Holdings, LLC","t":"equity","l":{"c":"equity","r":"Health Care Providers & Services Interest Rate 14.50% PIK Maturity 03/01/28"},"i":"Health Care Providers & Services","pk":0.145,"p":14328000,"c":13828000,"v":14113000,"m":"2028-03-01","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Second Lien/Senior Secured Debt Confluence Technologies, Inc. Software Interest Rate 10.30% Reference Rate and Spread SOFR + 6.50%, 6.50% PIK Floor 0.50% Maturity 07/30/29","n":"Confluence Technologies, Inc.","t":"debt","l":{"c":"second lien","r":"6.50% PIK Floor 0.50% Maturity 07/30/29"},"i":"Software","r":0.103,"sp":0.065,"fl":0.005,"pk":0.065,"b":"SOFR","p":4340000,"c":4328000,"v":3624000,"m":"2029-07-30","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Second Lien/Senior Secured Debt Dcert Buyer, Inc. Software Interest Rate 10.64% Reference Rate and Spread SOFR + 7.00% Maturity 02/19/29","n":"Dcert Buyer, Inc.","t":"equity","l":{"c":"equity","r":"Software Interest Rate 10.64% Reference Rate and Spread SOFR + 7.00% Maturity 02/19/29"},"i":"Software","r":0.1064,"sp":0.07,"b":"SOFR","p":5400000,"c":5395000,"v":4544000,"m":"2029-02-19","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Second Lien/Senior Secured Debt Florida Food Products, LLC Second Lien, Term Loan A Food Products Interest Rate 8.99% Reference Rate and Spread SOFR + 5.00%, 2.00% PIK Floor 1.00% Maturity 10/1","n":"Florida Food Products, LLC Second Lien, Term Loan A","t":"debt","l":{"c":"second lien","r":"2.00% PIK Floor 1.00% Maturity 10/1"},"i":"Food Products","r":0.0899,"sp":0.05,"fl":0.01,"pk":0.02,"b":"SOFR","p":3613000,"c":2504000,"v":2767000,"m":"2030-10-15","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Second Lien/Senior Secured Debt Florida Food Products, LLC Second Lien, Term Loan B Food Products Interest Rate 8.73% Reference Rate and Spread SOFR + 5.00%, 2.00% PIK Floor 1.00% Maturity 10/1","n":"Florida Food Products, LLC Second Lien, Term Loan B","t":"debt","l":{"c":"second lien","r":"2.00% PIK Floor 1.00% Maturity 10/1"},"i":"Food Products","r":0.0873,"sp":0.05,"fl":0.01,"pk":0.02,"b":"SOFR","p":3220000,"c":2232000,"v":2466000,"m":"2030-10-15","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Second Lien/Senior Secured Debt Ivanti Software, Inc. Software Interest Rate 11.18% Reference Rate and Spread SOFR + 7.25% Floor 0.50% Maturity 06/01/29","n":"Ivanti Software, Inc.","t":"equity","l":{"c":"equity","r":"Software Interest Rate 11.18% Reference Rate and Spread SOFR + 7.25% Floor 0.50% Maturity 06/01/29"},"i":"Software","r":0.1118,"sp":0.0725,"fl":0.005,"b":"SOFR","p":9090000,"c":7846000,"v":1632000,"m":"2029-06-01","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Second Lien/Senior Secured Debt Project Leopard Holdings, Inc. Software Interest Rate 11.41% Reference Rate and Spread SOFR + 7.75% Floor 0.50% Maturity 07/22/30","n":"Project Leopard Holdings, Inc.","t":"equity","l":{"c":"equity","r":"Software Interest Rate 11.41% Reference Rate and Spread SOFR + 7.75% Floor 0.50% Maturity 07/22/30"},"i":"Software","r":0.1141,"sp":0.0775,"fl":0.005,"b":"SOFR","p":5000000,"c":4947000,"v":2863000,"m":"2030-07-22","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Second Lien/Senior Secured Debt VTX Intermediate Holdings, Inc. IT Services Interest Rate 12.50% PIK Maturity 12/12/30","n":"VTX Intermediate Holdings, Inc.","t":"equity","l":{"c":"equity","r":"IT Services Interest Rate 12.50% PIK Maturity 12/12/30"},"i":"IT Services","pk":0.125,"p":2065000,"c":1936000,"v":2014000,"m":"2030-12-12","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Subordinated Debt DeltaDx Limited, LP (Money Transfer Acquisition Inc.) Financial Services Interest Rate 15.00% PIK Maturity 06/14/28","n":"Subordinated Debt DeltaDx Limited, LP","t":"equity","l":{"c":"equity","r":"(Money Transfer Acquisition Inc.) Financial Services Interest Rate 15.00% PIK Maturity 06/14/28"},"i":"Financial Services","pk":0.15,"p":1030000,"c":999000,"v":1026000,"m":"2028-06-14","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Subordinated Debt Eastport Holdings, LLC Commercial Services & Supplies Interest Rate 12.42% Reference Rate and Spread SOFR + 8.50% Floor 1.00% Maturity 09/29/27","n":"Eastport Holdings, LLC","t":"equity","l":{"c":"equity","r":"Commercial Services & Supplies Interest Rate 12.42% Reference Rate and Spread SOFR + 8.50% Floor 1.00% Maturity 09/29/27"},"i":"Commercial Services & Supplies","r":0.1242,"sp":0.085,"fl":0.01,"b":"SOFR","p":19250000,"c":17884000,"v":19250000,"m":"2027-09-29","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Subordinated Debt Lucky Bucks Holdings LLC Hotels, Restaurants & Leisure Maturity 05/29/28","n":"Lucky Bucks Holdings LLC","t":"debt","l":{"c":"unsecured","r":"Subordinated Debt"},"i":"Hotels, Restaurants & Leisure","p":8762000,"c":5992000,"v":1696000,"m":"2028-05-29","na":true,"s":{"w":"dataset","t":true,"na":"table","i":"table","m":"axis","nm":"table"}},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Subordinated Debt Tubular Textile Machinery, Inc. Machinery Interest Rate 5.00% PIK Maturity 10/29/27","n":"Tubular Textile Machinery, Inc.","t":"equity","l":{"c":"equity","r":"Machinery Interest Rate 5.00% PIK Maturity 10/29/27"},"i":"Machinery","pk":0.05,"p":5356000,"c":3656000,"v":2590000,"m":"2027-10-29","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Investment, Identifier [Axis] > Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Anthem Sports & Entertainment Inc. (Term Loan C) Media Maturity 11/15/27","n":"Investment, Identifier [Axis] > Investments in Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt Anthem Sports & Entertainment Inc. (Term Loan C) Media Maturity 11/15/27"},"f":"term loan","i":"Media","p":8828000,"c":935000,"v":0,"m":"2027-11-15","na":true,"s":{"w":"dataset","t":true,"na":"table","i":"table","m":"axis"},"fvu":true},
+{"id":"Investments in Affiliate Portfolio Companies Second Lien/Senior Secured Debt MMI Holdings, LLC Health Care Providers & Services Maturity 09/30/26","n":"MMI Holdings, LLC","t":"debt","l":{"c":"second lien","r":"Second Lien/Senior Secured Debt"},"i":"Health Care Providers & Services","p":480000,"c":341000,"v":0,"m":"2026-09-30","na":true,"s":{"w":"dataset","t":true,"na":"table","i":"table","m":"axis","nm":"table"},"fvu":true},
+{"id":"Investments in Controlled Affiliated Portfolio Companies Asset Manager Affiliates Asset Management Company Asset Management Company","n":"Asset Management Company","a":"non-controlled affiliated","t":"vehicle","l":{},"i":"Asset Management Company","p":0,"c":17791000,"v":0,"s":{"w":"dataset","t":true,"i":"table","nm":"table"},"fvu":true},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Collateralized Loan Obligations Catamaran CLO 2018-1 Ltd CLO Fund Securities Maturity 10/27/31","n":"Non-Control","t":"structured","l":{"c":"vehicles","r":"Non-Affiliate Portfolio Companies Collateralized Loan Obligations Catamaran CLO 2018-1 Ltd CLO Fund Securities Maturity 10/27/31"},"i":"CLO Fund Securities","p":10000000,"c":112000,"v":0,"m":"2031-10-27","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"},"fvu":true},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units Anthem Sports & Entertainment Inc. - Class A Warrant Media","n":"Non-Control","t":"equity","l":{"c":"equity","r":"Non-Affiliate Portfolio Companies Common Stock and Membership Units Anthem Sports & Entertainment Inc. - Class A Warrant Media"},"i":"Media","c":46000,"v":0,"s":{"w":"dataset","t":true,"i":"table","nm":"id"},"fvu":true},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units BLST Operating Company, LLC - Class A Broadline Retail","n":"Common Stock and","t":"equity","l":{"c":"equity","r":"Membership Units BLST Operating Company, LLC | - Class A Broadline Retail"},"i":"Broadline Retail","c":555000,"v":0,"s":{"w":"dataset","t":true,"i":"table","nm":"id"},"fvu":true},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units Fusion Connect, Inc. Wireless Telecommunication Services","n":"Fusion Connect, Inc.","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Wireless Telecommunication Services","c":866000,"v":0,"s":{"w":"dataset","t":true,"i":"table","nm":"table"},"fvu":true},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units Roscoe Investors, LLC - Class A Health Care Equipment & Supplies","n":"Common Stock and","t":"equity","l":{"c":"equity","r":"Membership Units Roscoe Investors, LLC | - Class A Health Care Equipment & Supplies"},"i":"Health Care Equipment & Supplies","c":1000000,"v":0,"s":{"w":"dataset","t":true,"i":"table","nm":"id"},"fvu":true},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Common Stock and Membership Units Workplace Holdings LLC (Pomeroy Technologies, LLC) Software","n":"Workplace Holdings LLC (Pomeroy Technologies, LLC)","t":"equity","l":{"c":"equity","r":"Common Stock and Membership Units"},"i":"Software","c":228000,"v":0,"s":{"w":"dataset","t":true,"i":"table","nm":"table"},"fvu":true},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Derivatives HDNet Holdco LLC (Anthem) Media","n":"HDNet Holdco LLC (Anthem)","t":"other","l":{},"i":"Media","p":200,"c":31000,"v":0,"s":{"w":"dataset","t":true,"i":"table","nm":"table"},"fvu":true},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien /Senior Secured Debt Live Comfortably Inc. Household Durables Interest Rate 13.76% SOFR + 10.00%, 2.00% PIK Floor 3.00% Maturity 09/20/27","n":"Live Comfortably Inc.","t":"debt","l":{"c":"first lien","r":"2.00% PIK Floor 3.00% Maturity 09/20/27"},"i":"Household Durables","r":0.1376,"sp":0.1,"fl":0.03,"pk":0.02,"b":"SOFR","p":55000,"c":55000,"v":0,"m":"2027-09-20","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"},"fvu":true},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt CCMG Buyer, LLC (Care Connectors Medical Group) (Revolver) Health Care Providers & Services Reference Rate and Spread SOFR + 4.75% Floor 1.00% Maturity 05/08/30","n":"First Lien/Senior","t":"debt","l":{"c":"first lien","r":"Secured Debt CCMG Buyer, LLC | (Care Connectors Medical Group) (Revolver) Health Care Providers & Services Reference Rate and Spread SOFR + 4.75% Floor 1.00% Maturity 05/08/30"},"f":"revolver","i":"Health Care Providers & Services","sp":0.0475,"fl":0.01,"b":"SOFR","p":0,"c":-4000,"v":0,"m":"2030-05-08","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"},"fvu":true},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt HDC/HW Intermediate Holdings, LLC - Term Loan A Software Floor 5.25% Maturity 08/21/26","n":"First Lien/Senior","t":"debt","l":{"c":"first lien","r":"Secured Debt HDC/HW Intermediate Holdings, LLC | - Term Loan A Software Floor 5.25% Maturity 08/21/26"},"f":"term loan","i":"Software","fl":0.0525,"p":6666000,"c":6420000,"v":0,"m":"2026-08-21","na":true,"s":{"w":"dataset","t":true,"na":"table","i":"table","m":"axis","nm":"id"},"fvu":true},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt PMA Parent Holdings LLC (Revolver) Capital Markets Reference Rate and Spread SOFR + 4.75% Floor 0.75% Maturity 01/31/31","n":"Non-Control","t":"debt","l":{"c":"first lien","r":"Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt PMA Parent Holdings LLC (Revolver) Capital Markets Reference Rate and Spread SOFR + 4.75% Floor 0.75% Maturity 01/31/31"},"f":"revolver","i":"Capital Markets","sp":0.0475,"fl":0.0075,"b":"SOFR","p":0,"c":-2000,"v":0,"m":"2031-01-31","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"},"fvu":true},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt STG Distribution, LLC (STG Logistics) (Third Out) Transportation Infrastructure Floor 1.50% Maturity 10/03/29","n":"STG Distribution, LLC (STG Logistics) (Third Out)","t":"debt","l":{"c":"first lien","r":"First Lien/Senior Secured Debt"},"i":"Transportation Infrastructure","fl":0.015,"p":2215000,"c":739000,"v":0,"m":"2029-10-03","na":true,"s":{"w":"dataset","t":true,"na":"table","i":"table","m":"axis","nm":"table"},"fvu":true},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies First Lien/Senior Secured Debt TA/WEG Holdings, LLC (Revolver) Financial Services Reference Rate and Spread SOFR + 6.25% Floor 1.00% Maturity 10/02/28","n":"First Lien/Senior","t":"debt","l":{"c":"first lien","r":"Secured Debt TA/WEG Holdings, LLC | (Revolver) Financial Services Reference Rate and Spread SOFR + 6.25% Floor 1.00% Maturity 10/02/28"},"f":"revolver","i":"Financial Services","sp":0.0625,"fl":0.01,"b":"SOFR","p":0,"c":-1000,"v":0,"m":"2028-10-02","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"},"fvu":true},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Preferred Stock and Units 4L Ultimate Topco Corporation Commercial Services & Supplies","n":"Non-Control","t":"equity","l":{"c":"equity","r":"Non-Affiliate Portfolio Companies Preferred Stock and Units 4L Ultimate Topco Corporation Commercial Services & Supplies"},"i":"Commercial Services & Supplies","c":29000,"v":0,"s":{"w":"dataset","t":true,"i":"table","nm":"id"},"fvu":true},
+{"id":"Investments in Non-Control, Non-Affiliate Portfolio Companies Second Lien/Senior Secured Debt BLST Operating Company, LLC Broadline Retail Floor 1.50% Maturity 05/06/26","n":"BLST Operating Company, LLC","t":"debt","l":{"c":"second lien","r":"Second Lien/Senior Secured Debt"},"i":"Broadline Retail","fl":0.015,"p":1391000,"c":1132000,"v":0,"m":"2026-05-06","na":true,"s":{"w":"dataset","t":true,"na":"table","i":"table","m":"axis","nm":"table"},"fvu":true}
+ ]
+}

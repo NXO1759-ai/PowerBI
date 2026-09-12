@@ -41,7 +41,7 @@
 })(typeof self !== "undefined" ? self : this, function () {
   "use strict";
 
-  var CREDIT_VERSION = "1.0.0";
+  var CREDIT_VERSION = "1.1.0";
 
   /* The 1940 Act §61(a)(2) floor for a BDC that made the 2018 election;
      200% for one that never did (read its 10-K). Coverage is a ratio
@@ -338,6 +338,11 @@
      the filings read so far; terms.json carries the sentence. */
   var FILER_LIEN_OVERRIDES = {
     MAIN: { "secured debt": LIEN.FIRST },
+    /* MSIF is managed by MAIN's adviser and prints MAIN's vocabulary:
+       its 10-Q for 2026-06-30 (0001535778-26-000085) heads its debt
+       "Secured Debt" with tranche numbers, first-lien by the same
+       reading as MAIN's */
+    MSIF: { "secured debt": LIEN.FIRST },
   };
 
   function normalizeLabel(raw) {
@@ -349,7 +354,10 @@
       .trim();
   }
   function lienClass(rawLabel, filerOverrides) {
-    var s = normalizeLabel(rawLabel);
+    var s = normalizeLabel(rawLabel)
+      /* a tranche number a filer hangs on the label ("Secured Debt 2",
+         MSIF and MAIN) names the same class as the label alone */
+      .replace(/\s+\d{1,3}$/, "");
     if (!s) return null;
     if (filerOverrides) {
       var keys = Object.keys(filerOverrides);
@@ -402,6 +410,10 @@
       if (h.lien === LIEN.EQUITY || h.lien === LIEN.VEHICLES) continue;
       if (/\b(clo|cmbs)\b/.test(normalizeLabel(h.rawLabel))) continue;
       var y = maturityYear(h.maturity);
+      /* an undated row with a negative cost (a receivable a filer nets
+         inside its schedule) would drag the "n/a" bucket below zero; it
+         is left out here and the caller reports it as excluded */
+      if (y === null && h.cost < 0) continue;
       if (y === null) { noMaturity += h.cost; continue; }
       any = true;
       total += h.cost;
@@ -450,6 +462,7 @@
     LIEN: LIEN, LIEN_CLASSES: LIEN_CLASSES, FILER_LIEN_OVERRIDES: FILER_LIEN_OVERRIDES,
     MATURITY_BUCKETS: MATURITY_BUCKETS, DISCLOSED_ONLY: DISCLOSED_ONLY,
     isNum: isNum, div: div, sub: sub, avg: avg, sumPresent: sumPresent, asRatio: asRatio,
+    normalizeLabel: normalizeLabel,
     mark: mark,
     priceToNav: priceToNav,
     assetCoverageCushion: assetCoverageCushion,

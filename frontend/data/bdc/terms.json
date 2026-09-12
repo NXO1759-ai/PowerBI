@@ -1,0 +1,1900 @@
+{
+ "generated": "2026-09-12T01:42:47",
+ "source": "the prose of each filer's latest 10-Q or 10-K main document, read by scripts/lib/bdc-prose.mjs",
+ "seed": {
+  "sbaExempt": [
+   "MAIN",
+   "FDUS",
+   "CSWC",
+   "GAIN",
+   "GLAD",
+   "SAR",
+   "OFS"
+  ],
+  "note": "seed filers are 'unconfirmed seed' until their own filing states the exemptive relief"
+ },
+ "coverage": {
+  "filers": 53,
+  "managementFeeRate": 42,
+  "incentiveIncomeRate": 29,
+  "hurdle": 32,
+  "catchUp": 19,
+  "capitalGainsRate": 29,
+  "internallyManaged": 6,
+  "internallyManagedStated": 43,
+  "sbaExemptConfirmed": 9,
+  "sbaExemptSeedUnconfirmed": 3,
+  "targetLeverage": 6,
+  "statutoryCoverage": 45,
+  "statutoryCoverage200": 0,
+  "statedCoverage": 47
+ },
+ "notes": [
+  "GAIN is on the SBA seed list and its document does not state the exemptive relief",
+  "GLAD is on the SBA seed list and its document does not state the exemptive relief",
+  "OFS is on the SBA seed list and its document does not state the exemptive relief",
+  "internally managed by their own sentence, outside the expected four: NSLR, PFX"
+ ],
+ "skipped": [],
+ "filers": {
+  "AFCG": {
+   "cik": 1822523,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-13",
+   "accn": "0001628280-26-056471",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001628280-26-056471"
+   },
+   "fees": {
+    "managementFeeRate": null,
+    "incentiveIncomeRate": 17.5,
+    "hurdle": null,
+    "catchUp": null,
+    "capitalGainsRate": 17.5,
+    "internallyManaged": false,
+    "sentence": "The New Catch-Up is meant to provide the Adviser with approximately 17.5% of the Company's pre-incentive fee net investment income as if a hurdle rate did not apply if this net investment income exceeds 1.8182% in any calendar quarter; and || The incentive fee on capital gains is calculated and payable in arrears in cash as of the end of each calendar year or upon the termination of the Advisory Agreement in an amount equal to 17.5% of the Company's realized capital gains, if any, on a cumulative basis from January 1, 2026 (the date on which the Company elected to be regulated as a BDC under the 1940 Act) through the end of a given calendar year or upon the termination of the Advisory Agreement, computed net of all realized capital losses and unrealized capital depreciation on a cumulative basis, less the aggregate amount of any previously paid capital gain incentive fees.",
+    "accn": "0001628280-26-056471"
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "In accordance with applicable SEC staff guidance and interpretations, effective as of January 1, 2026, we, as a BDC, are permitted to borrow amounts such that our asset coverage ratio is at least 150% after such borrowing (if certain requirements are met).",
+    "accn": "0001628280-26-056471",
+    "stated": {
+     "pct": 190,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026 and December 31, 2025, we had an aggregate amount of $207.0 million and $98.0 million, respectively, of principal debt outstanding and our asset coverage ratio was 190% and 278%, respectively."
+    }
+   }
+  },
+  "ARCC": {
+   "cik": 1287750,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-07-29",
+   "accn": "0001628280-26-050307",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001628280-26-050307"
+   },
+   "fees": {
+    "managementFeeRate": 1.5,
+    "incentiveIncomeRate": 20,
+    "hurdle": 1.75,
+    "catchUp": 100,
+    "capitalGainsRate": 20,
+    "internallyManaged": false,
+    "sentence": "For all assets financed using leverage up to 1.0x debt to equity, the annual base management fee rate is 1.5%. || The \"catch-up\" is meant to provide the Company's investment adviser with 20% of the pre-incentive fee net investment income as if a hurdle rate did not apply if this net investment income exceeded 2.1875% in any calendar quarter; and || Pre-incentive fee net investment income, expressed as a rate of return on the value of the Company's net assets (defined as total assets less indebtedness and before taking into account any income based fee and capital gains incentive fee payable during the period) at the end of the immediately preceding calendar quarter, is compared to a fixed \"hurdle rate\" of 1.75% per quarter. || •100% of the Company's pre-incentive fee net investment income with respect to that portion of such pre-incentive fee net investment income, if any, that exceeds the hurdle rate but is less than 2.1875% in any calendar quarter. || If such amount is positive at the end of such year, then the capital gains incentive fee for such year is equal to 20% of such amount, less the aggregate amount of capital gains incentive fee paid in all prior years.",
+    "accn": "0001628280-26-050307",
+    "hurdleAnnual": 7,
+    "managementFeeTier": {
+     "rate": 1,
+     "above": 1,
+     "sentence": "Effective June 21, 2019, in connection with the Company's board of directors' approval of the modification of the asset coverage requirement applicable to senior securities from 200% to 150%, the investment advisory and management agreement was amended to reduce the Company's annual base management fee rate from 1.5% to 1.0% on all assets financed using leverage over 1.0x debt to equity."
+    }
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "Effective June 21, 2019, in connection with the Company's board of directors' approval of the modification of the asset coverage requirement applicable to senior securities from 200% to 150%, the investment advisory and management agreement was amended to reduce the Company's annual base management fee rate from 1.5% to 1.0% on all assets financed using leverage over 1.0x debt to equity.",
+    "accn": "0001628280-26-050307",
+    "stated": {
+     "pct": 186,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, the aggregate principal amount outstanding of the senior securities issued by the Company was $15,924 and the Company's asset coverage was 186%."
+    }
+   }
+  },
+  "BBDC": {
+   "cik": 1379785,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-05",
+   "accn": "0001379785-26-000030",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001379785-26-000030"
+   },
+   "fees": {
+    "managementFeeRate": 1.25,
+    "incentiveIncomeRate": 20,
+    "hurdle": null,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": null,
+    "sentence": "For both the three and six months ended June 30, 2026 and 2025, the Base Management Fee rate was 1.250%. || (C) For any quarter in which the Company's aggregate Pre-Incentive Fee Net Investment Income for the Trailing Twelve Quarters exceeds the Catch-Up Amount, the Income-Based Fee shall equal 20% of the amount of the Company's aggregate Pre-Incentive Fee Net Investment Income for such Trailing Twelve Quarters, as the Hurdle Amount and Catch-Up Amount will have been achieved.",
+    "accn": "0001379785-26-000030"
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "As a result of the stockholder approval at the 2018 Special Meeting, effective July 25, 2018, our applicable asset coverage ratio under the 1940 Act has been decreased to 150% from 200%.",
+    "accn": "0001379785-26-000030",
+    "stated": {
+     "pct": 181.2,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, our asset coverage ratio was 181.2%."
+    }
+   }
+  },
+  "BCIC": {
+   "cik": 1372807,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-06",
+   "accn": "0001193125-26-337959",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001193125-26-337959"
+   },
+   "fees": {
+    "managementFeeRate": 1.5,
+    "incentiveIncomeRate": 17.5,
+    "hurdle": 1.75,
+    "catchUp": null,
+    "capitalGainsRate": 17.5,
+    "internallyManaged": false,
+    "sentence": "For the period from the date of the Advisory Agreement (the \"Effective Date\") through the end of the first calendar quarter after the Effective Date, the Base Management Fee will be calculated at an annual rate of 1.50% of the Company's gross assets, excluding cash and cash equivalents, but including assets purchased with borrowed amounts, as of the end of such calendar quarter. || The Income-Based Fee is 17.50% of pre-incentive fee net investment income with a 7.00% hurdle rate. || The second component of the incentive fee, the capital gains incentive fee, payable at the end of each calendar year in arrears, equals 17.50% of cumulative realized capital gains through the end of such calendar year commencing with the calendar year ending December 31, 2019, computed net of all realized capital losses and unrealized capital depreciation on a cumulative basis, excluding any realized capital gains, realized capital losses or unrealized capital appreciation or depreciation due to the purchase discount attributable to the adjustment made to the cost basis of acquired assets at the time of the LRFC Acquisition, in each case calculated from the Effective Date, less the aggregate ...",
+    "accn": "0001193125-26-337959",
+    "hurdleAnnual": 7
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "As a result, the Company's asset coverage requirement for senior securities changed from 200% to 150%, effective as of March 29, 2019.",
+    "accn": "0001193125-26-337959",
+    "stated": {
+     "pct": 162,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, we had approximately $286.1 million of par value of outstanding borrowings and our asset coverage ratio of total assets to total borrowings was 162%, compliant with the minimum asset coverage level of 150% generally required for a BDC by the 1940 Act."
+    }
+   }
+  },
+  "BCSF": {
+   "cik": 1655050,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-10",
+   "accn": "0001193125-26-342491",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001193125-26-342491"
+   },
+   "fees": {
+    "managementFeeRate": 1.5,
+    "incentiveIncomeRate": 17.5,
+    "hurdle": 1.5,
+    "catchUp": null,
+    "capitalGainsRate": 17.5,
+    "internallyManaged": false,
+    "sentence": "The Base Management Fee is calculated at an annual rate of 1.5% (0.375% per quarter) of the average value of the Company's gross assets (excluding cash and cash equivalents, but including assets purchased with borrowed amounts) at the end of each of the two most recently completed calendar quarters. || (iii) 17.5% of the aggregate pre-incentive fee net investment income in respect of the Trailing Twelve Quarters that exceeds the Catch-up Amount. || Pre-incentive fee net investment income in respect of the relevant Trailing Twelve Quarters is compared to a \"Hurdle Amount\" equal to the product of (i) the hurdle rate of 1.5% per quarter (6% annualized) and (ii) the sum of our net assets (defined as total assets less indebtedness and before taking into account any incentive fees payable during the period) at the beginning of each applicable calendar quarter comprising the relevant Trailing Twelve Quarters. || If this number is positive at the end of such year, then the capital gains incentive fee for such year will equal to 17.5% of such amount, less the aggregate amount of any capital gains incentive fees paid in respect of our portfolio in all prior years.",
+    "accn": "0001193125-26-342491",
+    "hurdleAnnual": 6
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "In accordance with applicable SEC staff guidance and interpretations, as a BDC, with certain exceptions, the Company is permitted to borrow amounts such that its asset coverage ratio is at least 150% after such borrowing (if certain requirements are met).",
+    "accn": "0001193125-26-342491",
+    "stated": {
+     "pct": 171,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, the Company's asset coverage was 171.0%."
+    }
+   }
+  },
+  "BXSL": {
+   "cik": 1736035,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-06",
+   "accn": "0001736035-26-000016",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001736035-26-000016"
+   },
+   "fees": {
+    "managementFeeRate": 1,
+    "incentiveIncomeRate": 17.5,
+    "hurdle": 1.5,
+    "catchUp": 100,
+    "capitalGainsRate": 17.5,
+    "internallyManaged": false,
+    "sentence": "Starting from the consummation of the IPO, the management fee pursuant to the Investment Advisory Agreement is payable quarterly in arrears at an annual rate of 1.0% of the average value of the Company's \"gross assets\" at the end of the two most recently completed calendar quarters. || Pursuant to the Investment Advisory Agreement, the Company is required to pay an income based incentive fee of 17.5%, with a 1.5% hurdle and 100% catch-up. || Pre-Incentive Fee Net Investment Income Returns, expressed as a rate of return on the value of the Company's net assets at the end of the immediately preceding quarter, is compared to a \"hurdle rate\" of return of 1.5% per quarter (6.0% annualized). || Starting from the completion of the IPO, the second part of the incentive fee, a capital gains based incentive fee, is determined and payable in arrears as of the end of each calendar year in an amount equal to 17.5% of realized capital gains, if any, on a cumulative basis from inception through the end of each calendar year, computed net of all realized capital losses and unrealized capital depreciation on a cumulative basis, less the aggregate amount of any previously paid capital gains based incentive fees as calculated in accordance with GAAP.",
+    "accn": "0001736035-26-000016",
+    "hurdleAnnual": 6
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "In accordance with the 1940 Act, with certain limitations, the Company is allowed to borrow amounts such that its asset coverage, as defined in the 1940 Act, is at least 150% after such borrowing.",
+    "accn": "0001736035-26-000016",
+    "stated": {
+     "pct": 178,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026 and December 31, 2025, the Company's asset coverage was 178.0% and 177.1%, respectively."
+    }
+   }
+  },
+  "CCAP": {
+   "cik": 1633336,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-10",
+   "accn": "0001193125-26-342351",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001193125-26-342351"
+   },
+   "fees": {
+    "managementFeeRate": 1,
+    "incentiveIncomeRate": null,
+    "hurdle": 1.75,
+    "catchUp": null,
+    "capitalGainsRate": 15,
+    "internallyManaged": false,
+    "sentence": "The base management fee is calculated and payable quarterly in arrears at an annual rate of 1.00% (1.25% prior to April 1, 2026) of the Company's gross assets, including assets acquired through the incurrence of debt but excluding any cash, cash equivalents and restricted cash. || Pre-incentive fee net investment income will be compared to a \"Hurdle Amount\" equal to the product of (i) the Hurdle rate of 1.75% per quarter, or 7.0% annualized, and (ii) our net assets (defined as total assets less indebtedness, before taking into account any incentive fees payable during the period), at the end of the immediately preceding calendar quarter, subject to a \"catch-up\" provision incurred at the end of each calendar quarter. || The second part, the capital gains incentive fee, is determined and payable in arrears as of the end of each fiscal year at a rate of 15.0% (17.5% prior to April 1, 2026) of the Company's realized capital gains, if any, on a cumulative basis from the Company's inception through the end of the fiscal year, computed net of all realized capital losses and unrealized capital depreciation on a cumulative basis, less the aggregate amount of any previously paid capital gain incentive fees.",
+    "accn": "0001193125-26-342351",
+    "hurdleAnnual": 7
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "In accordance with applicable SEC staff guidance and interpretations, effective May 5, 2020 with stockholder approval, we, as a BDC, are permitted to borrow amounts such that our asset coverage ratio is at least 150% after such borrowing (if certain requirements are met), rather than 200%, as previously required.",
+    "accn": "0001193125-26-342351",
+    "stated": {
+     "pct": 169,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026 and December 31, 2025, our asset coverage ratio was 169% and 179%, respectively."
+    }
+   }
+  },
+  "CGBD": {
+   "cik": 1544206,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-06",
+   "accn": "0001544206-26-000055",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001544206-26-000055"
+   },
+   "fees": {
+    "managementFeeRate": 1.5,
+    "incentiveIncomeRate": 17.5,
+    "hurdle": 1.5,
+    "catchUp": 100,
+    "capitalGainsRate": 17.5,
+    "internallyManaged": false,
+    "sentence": "The base management fee is calculated at an annual rate of 1.50% of the average value of the Company's gross assets at the end of the two most recently completed fiscal quarters; provided, however, the base management fee is calculated at an annual rate of 1.00% of the Company's gross assets as of the end of the two most recently completed calendar quarters that exceeds the product of (A) 200% and (B) the average value of the Company's net asset value at the end of the two most recently completed calendar quarters. || The \"catch-up\" is meant to provide the Investment Adviser with approximately 17.5% of the Company's pre-incentive fee net investment income as if a hurdle rate did not apply if this net investment income exceeds 1.82% in any calendar quarter; and || Pre-incentive fee net investment income, expressed as a rate of return on the value of the Company's net assets at the end of the immediately preceding calendar quarter, has been compared to a \"hurdle rate\" of 1.50% per quarter (6.00% annualized) or a \"catch-up rate\" of 1.82% per quarter (7.28% annualized), as applicable. || •100% of pre-incentive fee net investment income with respect to that portion of such pre-incentive fee net investment income, if any, that exceeds the hurdle rate but is less than 1.82% in any calendar quarter (7.28% annualized). || The second part of the incentive fee is determined and payable in arrears as of the end of each calendar year (or upon termination of the Investment Advisory Agreement, as of the termination date), and equals 17.5% of realized capital gains, if any, on a cumulative basis from inception through the date of determination, computed net of all realized capital losses on a cumulative basis and unrealized capital depreciation, less the aggregate amount of any previously paid capital gain incentive fees, provided that, the incentive fee determined at the end of the first calendar year of operations may be calculated for a period of shorter than twelve calendar months to take into account any ...",
+    "accn": "0001544206-26-000055",
+    "hurdleAnnual": 6
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "On March 23, 2018, an amendment to Section 61(a) of the Investment Company Act was signed into law to permit BDCs to reduce the minimum asset coverage ratio from 200% to 150%, so long as certain approval and disclosure requirements are satisfied.",
+    "accn": "0001544206-26-000055",
+    "stated": {
+     "pct": 182.3,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026 and December 31, 2025, asset coverage was 182.3% and 175.6%, respectively, and the Company was in compliance with all covenants and other requirements of the respective agreements of the Credit Facility."
+    }
+   }
+  },
+  "CION": {
+   "cik": 1534254,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-06",
+   "accn": "0001534254-26-000010",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001534254-26-000010"
+   },
+   "fees": {
+    "managementFeeRate": null,
+    "incentiveIncomeRate": 17.5,
+    "hurdle": null,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": false,
+    "sentence": "Under the second amended and restated investment advisory agreement, the Company pays to CIM 100% of pre-incentive fee net investment income once the hurdle rate is exceeded until the annualized rate of 7.879% is exceeded, at which point the Company pays to CIM 17.5% of all pre-incentive fee net investment income that exceeds the annualized rate of 7.879%.",
+    "accn": "0001534254-26-000010"
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "On December 30, 2021, the Company's shareholders approved a proposal to reduce the Company's asset coverage ratio from 200% to 150%.",
+    "accn": "0001534254-26-000010",
+    "stated": {
+     "pct": 125,
+     "sbaRelief": false,
+     "sentence": "... covenants such as (i) information reporting, (ii) maintenance of the Company's status as a business development company within the meaning of the 1940 Act, (iii) minimum shareholders' equity of $493,100, (iv) a minimum asset coverage ratio of not less than 150%, (v) a minimum interest coverage ratio of 1.25 to 1.00 and (vi) an unencumbered asset coverage ratio of 1.25 to 1.00, provided that (a) first lien senior secured loans and cash represent more than 65% of the total value of unencumbered assets used by the Company for purposes of the ratio and (b) equity interests or structured products in the aggregate represent less than 15% of the total value of unencumbered assets used by ..."
+    }
+   }
+  },
+  "CSWC": {
+   "cik": 17313,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-03",
+   "accn": "0000017313-26-000095",
+   "sbaExempt": {
+    "value": true,
+    "status": "confirmed",
+    "sentence": "On August 11, 2021, we received an exemptive order from SEC to permit us to exclude the senior securities issued by the SBIC Subsidiaries from the definition of senior securities in the asset coverage requirement applicable to the Company under the 1940 Act.",
+    "accn": "0000017313-26-000095"
+   },
+   "fees": {
+    "managementFeeRate": null,
+    "incentiveIncomeRate": null,
+    "hurdle": null,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": true,
+    "sentence": "Capital Southwest Corporation is an internally managed investment company that specializes in providing customized financing to lower middle market (\"LMM\") companies in a broad range of investment segments located primarily in the United States.",
+    "accn": "0000017313-26-000095"
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "In accordance with the 1940 Act, effective April 25, 2019, the Company is only allowed to borrow amounts such that its asset coverage (i.e., the ratio of assets less liabilities not represented by senior securities to senior securities such as borrowings), calculated pursuant to the 1940 Act, is at least 150% after such borrowing.",
+    "accn": "0000017313-26-000095",
+    "stated": {
+     "pct": 209,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, the Company's asset coverage was 209%."
+    }
+   }
+  },
+  "EQS": {
+   "cik": 878932,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-14",
+   "accn": "0001712543-26-000047",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001712543-26-000047"
+   },
+   "fees": {
+    "managementFeeRate": null,
+    "incentiveIncomeRate": null,
+    "hurdle": null,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": null,
+    "sentence": null,
+    "accn": "0001712543-26-000047"
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "14, 2019, our shareholders approved a reduction in our asset coverage ratio from 200% to 150%.",
+    "accn": "0001712543-26-000047",
+    "stated": {
+     "pct": 200,
+     "sbaRelief": false,
+     "sentence": "Coverage Ratio-Under the 1940 Act, BDCs are required to have an asset coverage ratio of 200%, meaning that the maximum debt"
+    }
+   }
+  },
+  "FDUS": {
+   "cik": 1513363,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-06",
+   "accn": "0001193125-26-337982",
+   "sbaExempt": {
+    "value": true,
+    "status": "confirmed",
+    "sentence": "We also have received exemptive relief from the U.S. Securities and Exchange Commission (\"SEC\") to allow us to exclude the senior securities issued by the SBIC Funds and any future SBIC subsidiary from the definition of senior securities in the 150% asset coverage requirement applicable to the Company under the 1940 Act, which, in turn, will enable us to fund more investments with debt capital.",
+    "accn": "0001193125-26-337982"
+   },
+   "fees": {
+    "managementFeeRate": 1.75,
+    "incentiveIncomeRate": 20,
+    "hurdle": 2,
+    "catchUp": 100,
+    "capitalGainsRate": 20,
+    "internallyManaged": false,
+    "sentence": "The base management fee is calculated at an annual rate of 1.75% based on the average value of total assets (other than restricted cash and cash or cash equivalents, but including assets purchased with borrowed amounts) at the end of the two most recently completed calendar quarters. || (3) Includes the impact of income incentive fee at 20.0% on net increase (decrease) in net interest. || Pre-incentive fee net investment income, expressed as a rate of return on the value of the Company's net assets (defined as total assets less indebtedness and before taking into account any incentive fees payable during the period) at the end of the immediately preceding calendar quarter, is compared to a fixed \"hurdle rate\" of 2.0% per quarter. || • 100.0% of the Company's pre-incentive fee net investment income with respect to that portion of such pre-incentive fee net investment income, if any, that exceeds the hurdle rate but is less than 2.5% in any calendar quarter. || The second part of the incentive fee is a capital gains incentive fee that is determined and paid in arrears as of the end of each fiscal year (or upon termination of the Investment Advisory Agreement, as of the termination date), and equals 20.0% of the net capital gains as of the end of the fiscal year.",
+    "accn": "0001193125-26-337982",
+    "hurdleAnnual": 8
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "On April 29, 2019, our Board, including a majority of the non-interested directors, approved a minimum asset coverage ratio of 150% under Sections 18(a)(1) and 18(a)(2) of the 1940 Act, effective as of April 29, 2020.",
+    "accn": "0001193125-26-337982",
+    "stated": {
+     "pct": 266.4,
+     "sbaRelief": true,
+     "sentence": "As of June 30, 2026 and December 31, 2025, the aggregate amount outstanding of the senior securities (including secured borrowings) issued by the Company was $443,799 and $420,850, respectively, for which our asset coverage was 266.4% and 276.3%, respectively."
+    }
+   }
+  },
+  "FRBP": {
+   "cik": 1825248,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-12",
+   "accn": "0001825248-26-000024",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001825248-26-000024"
+   },
+   "fees": {
+    "managementFeeRate": 1.5,
+    "incentiveIncomeRate": 17.5,
+    "hurdle": 1.5,
+    "catchUp": 100,
+    "capitalGainsRate": null,
+    "internallyManaged": false,
+    "sentence": "Effective upon the closing of the Mergers on January 24, 2024, the Management Fee payable under the Amended and Restated Investment Advisory Agreement is calculated at an annual rate of 1.50% of our average gross assets, provided, that the Management Fee will be calculated at an annual rate of 1.00% of our average gross assets purchased with borrowed funds above 1.0x debt-to-equity (equivalent to $1.0 of debt outstanding for each $1.0 of equity). || • For any quarter in which Pre-Incentive Fee Net Investment Income exceeds 1.8175% (7.27% annualized), the incentive fee on income equals 17.5% of the amount of Pre-Incentive Fee Net Investment Income, as the Preferred Return and catch-up will have been achieved. || • No incentive fee on income in any calendar quarter in which Pre-Incentive Fee Net Investment Income does not exceed the Preferred Return of 1.50%, or 6.00% annualized, on net assets; || • 100% of Pre-Incentive Fee Net Investment Income, if any, that exceeds the Preferred Return but is less than or equal to 1.8175% in any calendar quarter (7.27% annualized), which portion of the incentive fee on income is referred to as the \"catch up\" and is intended to provide the Adviser with an incentive fee of 17.5% on all of Pre-Incentive Fee Net Investment Income when Pre-Incentive Fee Net Investment Income reaches 1.8175% (7.27% annualized) in any calendar quarter; and",
+    "accn": "0001825248-26-000024",
+    "hurdleAnnual": 6,
+    "managementFeeTier": {
+     "rate": 1,
+     "above": 1,
+     "sentence": "Effective upon the closing of the Mergers on January 24, 2024, the Management Fee payable under the Amended and Restated Investment Advisory Agreement is calculated at an annual rate of 1.50% of our average gross assets, provided, that the Management Fee will be calculated at an annual rate of 1.00% of our average gross assets purchased with borrowed funds above 1.0x debt-to-equity (equivalent to $1.0 of debt outstanding for each $1.0 of equity)."
+    }
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "The Company's asset coverage requirement applicable to senior securities was reduced from 200% to 150% effective September 23, 2020.",
+    "accn": "0001825248-26-000024",
+    "stated": {
+     "pct": 178,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, the aggregate principal amount outstanding of the senior securities issued by the Company was $2.3 billion and the Company's asset coverage was 178%."
+    }
+   }
+  },
+  "FSK": {
+   "cik": 1422183,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-06",
+   "accn": "0001628280-26-053783",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001628280-26-053783"
+   },
+   "fees": {
+    "managementFeeRate": 1.5,
+    "incentiveIncomeRate": null,
+    "hurdle": 1.75,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": false,
+    "sentence": "Pursuant to the Advisory Agreement, the Adviser is entitled to a base management fee calculated at an annual rate of 1.50% of the average weekly value of the Company's gross assets excluding cash and cash equivalents (gross assets equal the total assets of the Company as set forth on the Company's consolidated balance sheets) and an incentive fee based on the Company's performance. || The subordinated income incentive fee under the Advisory Agreement, which is calculated and payable quarterly in arrears, equals 17.5% of the Company's \"pre-incentive fee net investment income\" for the immediately preceding quarter and is subject to a hurdle rate, expressed as a rate of return on the value of the Company's net assets, equal to 1.75% per quarter, or an annualized hurdle rate of 7.0%.",
+    "accn": "0001628280-26-053783",
+    "hurdleAnnual": 7,
+    "managementFeeTier": {
+     "rate": 1,
+     "above": 1,
+     "sentence": "Effective June 15, 2019, in connection with stockholder approval of the modification of the asset coverage requirement applicable to senior securities from 200% to 150%, the Adviser reduced (by permanent waiver) the annual base management fee payable under the Advisory Agreement from 1.5% to 1.0% on all assets financed using leverage over 1.0x debt-to-equity."
+    }
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "Effective June 15, 2019, in connection with stockholder approval of the modification of the asset coverage requirement applicable to senior securities from 200% to 150%, the Adviser reduced (by permanent waiver) the annual base management fee payable under the Advisory Agreement from 1.5% to 1.0% on all assets financed using leverage over 1.0x debt-to-equity.",
+    "accn": "0001628280-26-053783",
+    "stated": {
+     "pct": 179,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, our asset coverage on our \"senior securities representing indebtedness\" was 179% and our asset coverage on our \"senior securities that are stock\" was 177%."
+    }
+   }
+  },
+  "GAIN": {
+   "cik": 1321741,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-06",
+   "accn": "0001321741-26-000017",
+   "sbaExempt": {
+    "value": true,
+    "status": "unconfirmed seed",
+    "sentence": null,
+    "accn": "0001321741-26-000017"
+   },
+   "fees": {
+    "managementFeeRate": 2,
+    "incentiveIncomeRate": 20,
+    "hurdle": null,
+    "catchUp": 100,
+    "capitalGainsRate": 20,
+    "internallyManaged": false,
+    "sentence": "The base management fee is payable quarterly to the Adviser pursuant to our Advisory Agreement and is assessed at an annual rate of 2.0%, computed on the basis of the value of our average gross assets at the end of the two most recently completed quarters (inclusive of the current quarter), which are total assets, including investments made with proceeds of borrowings, less any uninvested cash or cash equivalents resulting from borrowings, valued at the end of the applicable quarters within the respective period and adjusted appropriately for any share issuances or repurchases during the period. || •20.0% of the amount of our pre-incentive fee net investment income, if any, that exceeds 2.1875% of our net assets, adjusted appropriately for any share issuances or repurchases during the period, in any calendar quarter. || •100.0% of our pre-incentive fee net investment income with respect to that portion of such pre-incentive fee net investment income, if any, that exceeds the Hurdle Rate but is less than 2.1875% of our net assets, adjusted appropriately for any share issuances or repurchases during the period, in any calendar quarter; and || If such amount is positive at the end of a reporting period, a capital gains-based incentive fee equal to 20.0% of such amount, less the aggregate amount of capital gains-based incentive fees accrued in all prior years, is recorded, regardless of whether such amount is contractually due under the terms of the Advisory Agreement.",
+    "accn": "0001321741-26-000017"
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "As a result, our asset coverage requirements for senior securities changed from 200% to 150%, effective as of April 10, 2019, one year after the date of the Board of Directors' approval.",
+    "accn": "0001321741-26-000017",
+    "stated": {
+     "pct": 208.8,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, our asset coverage ratio on our senior securities representing indebtedness was 208.8%."
+    }
+   }
+  },
+  "GBDC": {
+   "cik": 1476765,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-03",
+   "accn": "0001476765-26-000048",
+   "sbaExempt": {
+    "value": true,
+    "status": "confirmed",
+    "sentence": "(7)Effective February 6, 2019, in accordance with Section 61(a)(2) of the 1940 Act, with certain limited exceptions, the Company is allowed to borrow amounts such that its asset coverage, as defined in the 1940 Act, is at least 150% after such borrowing (excluding the Company's SBA debentures pursuant to exemptive relief received by the Company from the SEC).",
+    "accn": "0001476765-26-000048"
+   },
+   "fees": {
+    "managementFeeRate": 1,
+    "incentiveIncomeRate": 15,
+    "hurdle": 2,
+    "catchUp": 100,
+    "capitalGainsRate": 15,
+    "internallyManaged": false,
+    "sentence": "The base management fee is calculated at an annual rate equal to 1.0% of the fair value of the average adjusted gross assets of the Company at the end of the two most recently completed calendar quarters (including assets purchased with borrowed funds and securitization-related assets, leverage, unrealized depreciation or appreciation on derivative instruments and cash collateral on deposit for such derivative instruments with custodian but adjusted to exclude cash, cash equivalents, restricted cash and restricted cash equivalents, and foreign currencies so that investors do not pay the base management fee on such assets) and is payable quarterly in arrears. || •100% of the Company's Pre-Incentive Fee Net Investment Income with respect to that portion of such Pre-Incentive Fee Net Investment Income, if any, that exceeds the hurdle rate but is less than the percentage at which amounts payable to the Adviser equals 15.0% of the Company's Pre-Incentive Fee Net Investment Income as if a hurdle rate did not apply. || Pre-Incentive Fee Net Investment Income, expressed as a rate of return on the value of the Company's net assets (defined as total assets less indebtedness and before taking into account any Incentive Fees payable during the period) at the end of the immediately preceding calendar quarter, is compared to a fixed \"hurdle rate\" of 2.0% quarterly. || If the Capital Gain Incentive Fee Base, adjusted as required by GAAP to include unrealized capital appreciation, is positive at the end of a period, then GAAP requires the Company to accrue a capital gain incentive fee equal to 15% of such amount, less the aggregate amount of the actual Capital Gain Incentive Fees paid and capital gain incentive fees accrued under GAAP in all prior periods.",
+    "accn": "0001476765-26-000048",
+    "hurdleAnnual": 8
+   },
+   "targetLeverage": {
+    "low": 0.85,
+    "high": 1.25,
+    "sentence": "We currently intend to continue to target a GAAP debt-to-equity ratio between 0.85x to 1.25x.",
+    "accn": "0001476765-26-000048"
+   },
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "On February 5, 2019, the Company's stockholders voted to approve the asset coverage requirement decrease to 150% from 200% in accordance with Section 61(a)(2) of the 1940 Act.",
+    "accn": "0001476765-26-000048",
+    "stated": {
+     "pct": 180.4,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, the Company's asset coverage for borrowed amounts was 180.4%."
+    }
+   }
+  },
+  "GECC": {
+   "cik": 1675033,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-05",
+   "accn": "0001193125-26-335023",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001193125-26-335023"
+   },
+   "fees": {
+    "managementFeeRate": 1.5,
+    "incentiveIncomeRate": null,
+    "hurdle": null,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": false,
+    "sentence": "Management Fee The base management fee is calculated at an annual rate of 1.50% of the Company's average adjusted gross assets, including assets purchased with borrowed funds.",
+    "accn": "0001193125-26-335023"
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "As a result of such approval, and subject to satisfying certain ongoing disclosure requirements, effective May 4, 2018 the asset coverage ratio test applicable to the Company was decreased from 200% to 150%.",
+    "accn": "0001193125-26-335023",
+    "stated": {
+     "pct": 166.4,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, our asset coverage ratio was approximately 166.4%."
+    }
+   }
+  },
+  "GLAD": {
+   "cik": 1143513,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-04",
+   "accn": "0001143513-26-000012",
+   "sbaExempt": {
+    "value": true,
+    "status": "unconfirmed seed",
+    "sentence": null,
+    "accn": "0001143513-26-000012"
+   },
+   "fees": {
+    "managementFeeRate": 1.75,
+    "incentiveIncomeRate": 20,
+    "hurdle": null,
+    "catchUp": 100,
+    "capitalGainsRate": 20,
+    "internallyManaged": false,
+    "sentence": "The base management fee is payable quarterly to the Adviser pursuant to our Advisory Agreement and is assessed at an annual rate of 1.75%, computed on the basis of the value of our average total assets at the end of the two most recently-completed quarters (inclusive of the current quarter), which are total assets, including investments made with proceeds of borrowings, less any uninvested cash or cash equivalents resulting from borrowings and adjusted appropriately for any share issuances or repurchases during the period. || •20.0% of the amount of our pre-incentive fee net investment income, if any, that exceeds 2.1875% of our net assets, adjusted appropriately for any share issuances or repurchases during the period, in any calendar quarter. || •100.0% of our pre-incentive fee net investment income with respect to that portion of such pre-incentive fee net investment income, if any, that exceeds the hurdle rate but is less than 2.1875% of our net assets, adjusted appropriately for any share issuances or repurchases during the period, in any calendar quarter; and || If such amount is positive at the end of a period, then GAAP requires us to record a capital gains-based incentive fee equal to 20.0% of such amount, less the aggregate amount of actual capital gains-based incentive fees paid in all prior years.",
+    "accn": "0001143513-26-000012"
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "As a result, the Company's asset coverage requirements for senior securities changed from 200% to 150%, effective April 10, 2019.",
+    "accn": "0001143513-26-000012",
+    "stated": {
+     "pct": 196.2,
+     "sbaRelief": false,
+     "sentence": "The asset coverage on our \"senior securities that are stock\" as of June 30, 2026 was 196.2%, calculated in accordance with Sections 18 and 61 of the 1940 Act."
+    }
+   }
+  },
+  "GSBD": {
+   "cik": 1572694,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-06",
+   "accn": "0001193125-26-338331",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001193125-26-338331"
+   },
+   "fees": {
+    "managementFeeRate": 1,
+    "incentiveIncomeRate": null,
+    "hurdle": null,
+    "catchUp": null,
+    "capitalGainsRate": 20,
+    "internallyManaged": null,
+    "sentence": "The Management Fee is calculated at an annual rate of 1.00% (0.25% per quarter) of the average of the values of the Company's gross assets (excluding cash or cash equivalents but including assets purchased with borrowed amounts) at the end of each of the two most recently completed calendar quarters. || If such amount is positive at the end of a period, then the Company records a capital gains incentive fee equal to 20% for the periods through December 31, 2024 and 17.5% for the periods after December 31, 2024 of such amount, minus the aggregate amount of actual Incentive Fees based on capital gains paid in all prior periods.",
+    "accn": "0001193125-26-338331"
+   },
+   "targetLeverage": {
+    "low": 1.25,
+    "high": 1.25,
+    "sentence": "As of August 6, 2026, our net debt-to-equity ratio decreased below our target of 1.25x, primarily due to repayments and sales.",
+    "accn": "0001193125-26-338331"
+   },
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "The Company is permitted to borrow amounts such that its asset coverage ratio, as defined in the Investment Company Act, is at least 150% after such borrowing (if certain requirements are met).",
+    "accn": "0001193125-26-338331",
+    "stated": {
+     "pct": 172,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026 and December 31, 2025, the Company's asset coverage ratio based on the aggregate amount outstanding of senior securities was 172% and 175%."
+    }
+   }
+  },
+  "HRZN": {
+   "cik": 1487428,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-04",
+   "accn": "0001437749-26-025689",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001437749-26-025689"
+   },
+   "fees": {
+    "managementFeeRate": 2,
+    "incentiveIncomeRate": null,
+    "hurdle": 1.75,
+    "catchUp": null,
+    "capitalGainsRate": 20,
+    "internallyManaged": false,
+    "sentence": "The base management fee is calculated at an annual rate of 2.00% of the Company's gross assets (less cash and cash equivalents) including any assets acquired with the proceeds of leverage; provided, that, to the extent the Company's gross assets (less cash and cash equivalents) exceed $250 million, the base management fee on the amount of such excess over $250 million will be calculated at an annual rate of 1.60% of the Company's gross assets (less cash and cash equivalents) including any assets acquired with the proceeds of leverage. || The incentive fee with respect to the Pre-Incentive Fee Net Investment Income is 20.00% of the amount, if any, by which the Pre-Incentive Fee Net Investment Income for the immediately preceding calendar quarter exceeds a hurdle rate of 1.75% (which is 7.00% annualized) of the Company's net assets at the end of the immediately preceding calendar quarter, adjusted for any share issuances or repurchases during the relevant quarter, subject to a \"catch-up\" provision measured as of the end of each calendar quarter. || The second part of the incentive fee is determined and payable in arrears as of the end of each calendar year (or, upon termination of the Investment Management Agreement, as of the termination date), and equals 20.00% of the Company's realized capital gains, if any, on a cumulative basis from the date of the election to be a BDC through the end of each calendar year, computed net of all realized capital losses and unrealized capital depreciation on a cumulative basis through the end of such year, less all previous amounts paid in respect of the capital gain incentive fee.",
+    "accn": "0001437749-26-025689",
+    "hurdleAnnual": 7
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "In addition, as a BDC, we are required to maintain asset coverage of at least 150%.",
+    "accn": "0001437749-26-025689",
+    "stated": {
+     "pct": 203,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, the asset coverage for borrowed amounts was 203%."
+    }
+   }
+  },
+  "HTGC": {
+   "cik": 1280784,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-07-30",
+   "accn": "0001280784-26-000042",
+   "sbaExempt": {
+    "value": true,
+    "status": "confirmed",
+    "sentence": "We received an exemptive order from the SEC that allows us to exclude all SBA leverage as senior securities from our asset coverage ratio.",
+    "accn": "0001280784-26-000042"
+   },
+   "fees": {
+    "managementFeeRate": null,
+    "incentiveIncomeRate": null,
+    "hurdle": null,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": true,
+    "sentence": "The Company is an internally managed, non-diversified closed-end investment company that has elected to be regulated as a business development company (\"BDC\") under the 1940 Act.",
+    "accn": "0001280784-26-000042"
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "On September 4, 2018 and December 6, 2018, our Board, including a \"required majority\" (as such term is defined in Section 57(o) of the 1940 Act) and our stockholders, respectively, approved the application to us of the 150% minimum asset coverage ratio set forth in Section 61(a)(2) of the 1940 Act.",
+    "accn": "0001280784-26-000042",
+    "stated": {
+     "pct": 212.2,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, our asset coverage ratio under our regulatory requirements as a BDC was 212.2% excluding our SBA debentures."
+    }
+   }
+  },
+  "ICMB": {
+   "cik": 1578348,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-14",
+   "accn": "0001193125-26-352658",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001193125-26-352658"
+   },
+   "fees": {
+    "managementFeeRate": 1.75,
+    "incentiveIncomeRate": 20,
+    "hurdle": 2,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": null,
+    "sentence": "Under the Advisory Agreement, the Base Management Fee is calculated at an annual rate of 1.75% of the Company's gross assets, including assets purchased with borrowed funds or other forms of leverage and excluding cash and cash equivalents (such amount, \"Gross Assets\"). || The Income-Based Fee is equal to 20.0% of pre-incentive fee net investment income, subject to an annualized hurdle rate of 8.0% with a \"catch-up\" fee for returns between the 8.0% hurdle and 10.0%.",
+    "accn": "0001193125-26-352658",
+    "hurdleAnnual": 8
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "As a result, effective May 2, 2019, our applicable minimum asset coverage ratio under the 1940 Act was decreased to 150% from 200%.",
+    "accn": "0001193125-26-352658",
+    "stated": {
+     "pct": 145.2,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, we had $109.9 million of senior securities outstanding at par value and our asset coverage ratio based on par value was 145.2%."
+    }
+   }
+  },
+  "KBDC": {
+   "cik": 1747172,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-10",
+   "accn": "0001193125-26-342385",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001193125-26-342385"
+   },
+   "fees": {
+    "managementFeeRate": 1,
+    "incentiveIncomeRate": 15,
+    "hurdle": 1.5,
+    "catchUp": null,
+    "capitalGainsRate": 15,
+    "internallyManaged": false,
+    "sentence": "The Amended Investment Advisory Agreement is materially the same as the Investment Advisory Agreement except, following the IPO Date, the base management fee is calculated at an annual rate of 1.00% and the incentive fee on income is subject to a twelve-quarter lookback quarterly hurdle rate of 1.50% as opposed to a single quarter measurement and is subject to an Incentive Fee Cap (as defined below) based on the Company's Cumulative Pre-Incentive Fee Net Return (as defined below). || • 15.0% of the aggregate pre-incentive fee net investment income in respect of the Trailing Twelve Quarters that exceeds the Catch-up Amount. || Commencing with the quarter ended September 30, 2024, subject to the Incentive Fee Cap (described below), the pre-incentive fee net investment income in respect of the relevant Trailing Twelve Quarters is compared to a \"Hurdle Rate\" equal to the product of (i) the hurdle rate of 1.50% per quarter (6.00% annualized) and (ii) the sum of our net assets at the beginning of each applicable calendar quarter comprising the relevant Trailing Twelve Quarters. || Commencing on the IPO Date, the incentive fee on capital gains is calculated and payable in arrears in cash as 15.0% of the Company's realized capital gains, if any, on a cumulative basis from formation through the end of a given calendar year or upon termination of the Investment Advisory Agreement, computed net of all realized capital losses and unrealized capital depreciation on a cumulative basis, less the aggregate amount of any previously paid capital gain incentive fees.",
+    "accn": "0001193125-26-342385",
+    "hurdleAnnual": 6
+   },
+   "targetLeverage": {
+    "low": 1,
+    "high": 1.25,
+    "sentence": "We currently intend to target asset coverage of 200% to 180% (which equates to a debt-to-equity ratio of 1.0x to 1.25x) but may alter this target based on market conditions.",
+    "accn": "0001193125-26-342385"
+   },
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "In accordance with the 1940 Act, we are required to meet a coverage ratio of total assets (less total liabilities other than indebtedness) to total borrowings and other senior securities (and any preferred stock that we may issue in the future) of at least 150%.",
+    "accn": "0001193125-26-342385",
+    "stated": {
+     "pct": 186,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026 and December 31, 2025, our asset coverage ratios were 186% and 198%, respectively."
+    }
+   }
+  },
+  "LIEN": {
+   "cik": 1843162,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-13",
+   "accn": "0001193125-26-347342",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001193125-26-347342"
+   },
+   "fees": {
+    "managementFeeRate": 1.75,
+    "incentiveIncomeRate": null,
+    "hurdle": 1.75,
+    "catchUp": null,
+    "capitalGainsRate": 20,
+    "internallyManaged": false,
+    "sentence": "Pursuant to the investment advisory agreement between the Company and the Adviser (the \"Investment Advisory Agreement\"), fees payable to the Adviser are equal to (a) a base management fee of 1.75% of the average value of the Company's gross assets at the end of the two most recent quarters (i.e., total assets held before deduction of any liabilities), which includes investments acquired with the use of leverage and excludes cash and cash equivalents and (b) an incentive fee based on the Company's performance. || The first part is calculated and payable quarterly in arrears and equals 20% of the Company's \"Pre-Incentive Fee Net Investment Income\" for the quarter, subject to a preferred return, or \"hurdle,\" of 1.75% per quarter (7% annualized), and a \"catch-up\" feature. || The second part is determined and payable in arrears as of the end of each fiscal year (or upon termination of the Investment Advisory Agreement) and equals 20% of the Company's realized capital gains on a cumulative basis from inception through the end of the fiscal year, if any, computed net of all realized capital losses and unrealized capital depreciation on a cumulative basis, less the aggregate amount of any previously paid capital gain incentive fee (the \"Incentive Fee on Capital Gains\").",
+    "accn": "0001193125-26-347342",
+    "hurdleAnnual": 7
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "In accordance with the 1940 Act, we are allowed to borrow amounts such that our asset coverage, calculated pursuant to the 1940 Act, is at least 150% after such borrowings (i.e., we are able to borrow up to two dollars for every dollar we have in assets less all liabilities and indebtedness not represented by senior securities issued by us).",
+    "accn": "0001193125-26-347342"
+   }
+  },
+  "MAIN": {
+   "cik": 1396440,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-07",
+   "accn": "0001396440-26-000094",
+   "sbaExempt": {
+    "value": true,
+    "status": "confirmed",
+    "sentence": "In January 2008, we received exemptive relief from the SEC to exclude SBA-guaranteed debt securities issued by the Funds and any other wholly-owned subsidiaries of ours which operate as SBICs from the BDC asset coverage ratio which, in turn, enables us to fund more investments with debt capital.",
+    "accn": "0001396440-26-000094"
+   },
+   "fees": {
+    "managementFeeRate": null,
+    "incentiveIncomeRate": null,
+    "hurdle": null,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": true,
+    "sentence": "MSCC was formed in March 2007 to operate as an internally managed business development company (\"BDC\") under the Investment Company Act of 1940, as amended (the \"1940 Act\").",
+    "accn": "0001396440-26-000094"
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "Upon receipt of stockholder approval in accordance with the 1940 Act, our BDC asset coverage ratio requirement was reduced from 200% to 150% effective May 3, 2022.",
+    "accn": "0001396440-26-000094",
+    "stated": {
+     "pct": 244,
+     "sbaRelief": true,
+     "sentence": "As of June 30, 2026, our BDC asset coverage ratio was 244%."
+    }
+   }
+  },
+  "MFIC": {
+   "cik": 1278752,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-06",
+   "accn": "0001193125-26-335848",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001193125-26-335848"
+   },
+   "fees": {
+    "managementFeeRate": 1.75,
+    "incentiveIncomeRate": null,
+    "hurdle": null,
+    "catchUp": 100,
+    "capitalGainsRate": null,
+    "internallyManaged": null,
+    "sentence": "The base management fee is calculated at an annual rate of 1.75% (0.4375% per quarter) of the Company's net asset value as of the final business day of the prior calendar quarter; provided, however, that the base management fee shall not be greater than 1.50% (0.375% per quarter) of the lesser of (i) the average of the value of the Company's gross assets (excluding cash or cash equivalents but including other assets purchased with borrowed amounts) at the end of each of the two most recently completed calendar quarters and (ii) the average monthly value (measured as of the last day of each month) of the Company's gross assets (excluding cash or cash equivalents but including other assets ... || (2) 100% of our pre-incentive fee net investment income for the Trailing Twelve Quarters, if any, that exceeds the preferred return amount but is less than or equal to the catch-up amount, which shall be the sum of (i) the product of 2.1875% multiplied by the Company's net asset value at the beginning of each applicable Legacy Fee Quarter included in the relevant Trailing Twelve Quarters and (ii) the product of 2.1212% multiplied by the Company's net asset value at the beginning of each applicable Current Fee Quarter included in the relevant Trailing Twelve Quarters.",
+    "accn": "0001193125-26-335848"
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "As a result, effective on April 4, 2019, our asset coverage requirement applicable to senior securities was reduced from 200% to 150% (i.e., the revised regulatory leverage limitation permits BDCs to double the amount of borrowings, such that we would be able to borrow up to two dollars for every dollar we have in assets less all liabilities and indebtedness not represented by senior securities issued by us).",
+    "accn": "0001193125-26-335848",
+    "stated": {
+     "pct": 163,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, the Company's asset coverage was 163%."
+    }
+   }
+  },
+  "MSDL": {
+   "cik": 1782524,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-06",
+   "accn": "0001193125-26-337915",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001193125-26-337915"
+   },
+   "fees": {
+    "managementFeeRate": 1,
+    "incentiveIncomeRate": 17.5,
+    "hurdle": 1.5,
+    "catchUp": 100,
+    "capitalGainsRate": 17.5,
+    "internallyManaged": false,
+    "sentence": "The Base Management Fee is calculated at an annual rate of 1.00% of the Company's average gross assets at the end of the two most recently completed calendar quarters, including assets purchased with borrowed funds or other forms of leverage but excluding cash and cash equivalents. || The \"catch-up\" is meant to provide the Adviser with approximately 17.5% of the Company's pre-incentive fee net investment income as if a Hurdle Rate did not apply if this net investment income exceeds 1.8182% in any calendar quarter; and || Commencing with the quarter ending June 30, 2024, pre-incentive fee net investment income in respect of the relevant Trailing Twelve Quarters is compared to a \"Hurdle Rate\" equal to the product of (i) the hurdle rate of 1.5% per quarter (6.0% annualized) and (ii) the sum of the Company's net assets (defined as total assets less indebtedness and before taking into account any incentive fees payable during the period) at the beginning of each applicable calendar quarter comprising the relevant Trailing Twelve Quarters. || • 100% of pre-incentive fee net investment income in respect of the Trailing Twelve Quarters with respect to that portion of such pre-incentive fee net investment income, if any, that exceeds the Hurdle Rate but is less than 1.8182% in any calendar quarter (7.2728% annualized). || The second part of the incentive fee is determined on realized capital gains calculated and payable in arrears in cash as of the end of each calendar year or upon the termination of the Investment Advisory Agreement in an amount equal to 17.5% of realized capital gains, if any, on a cumulative basis from the date of the Company's election to be regulated as a BDC through the end of a given calendar year or upon the termination of the Investment Advisory Agreement, computed net of all realized capital losses and unrealized capital depreciation on a cumulative basis, less the aggregate amount of any previously paid capital gain incentive fees (the \"Cumulative Capital Gains\").",
+    "accn": "0001193125-26-337915",
+    "hurdleAnnual": 6
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "(6) Effective December 17, 2019, in accordance with Section 61(a)(2) of the 1940 Act, with certain limited exceptions, the Company is allowed to borrow amounts such that its asset coverage, as defined in the 1940 Act, is at least 150% after such borrowing.",
+    "accn": "0001193125-26-337915"
+   }
+  },
+  "MSIF": {
+   "cik": 1535778,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-07",
+   "accn": "0001535778-26-000085",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001535778-26-000085"
+   },
+   "fees": {
+    "managementFeeRate": 1.75,
+    "incentiveIncomeRate": 17.5,
+    "hurdle": 1.875,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": false,
+    "sentence": "The base management fee was calculated at an annual rate of 1.75% of MSC Income's average gross assets. || 3.For any quarter in which the Fund's pre-incentive fee net investment income exceeds 2.307692% (9.230769% annualized), the subordinated incentive fee on income equals 17.5% of the amount of the Fund's pre-incentive fee net investment income, as the hurdle rate and catch-up have been achieved. || •No subordinated incentive fee on income was payable to the Adviser in any calendar quarter in which MSC Income's Pre-Incentive Fee Net Investment Income did not exceed the hurdle rate of 1.875% (or 7.5% annualized) on adjusted capital;",
+    "accn": "0001535778-26-000085",
+    "hurdleAnnual": 7.5
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "As a result the BDC asset coverage ratio requirement applicable to MSC Income decreased from 200% to 150% effective January 29, 2026.",
+    "accn": "0001535778-26-000085",
+    "stated": {
+     "pct": 213,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, the Fund's BDC asset coverage ratio was 213%."
+    }
+   }
+  },
+  "NCDL": {
+   "cik": 1737924,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-06",
+   "accn": "0001737924-26-000084",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001737924-26-000084"
+   },
+   "fees": {
+    "managementFeeRate": 0.75,
+    "incentiveIncomeRate": 15,
+    "hurdle": 1.5,
+    "catchUp": null,
+    "capitalGainsRate": 15,
+    "internallyManaged": false,
+    "sentence": "Under the Advisory Agreement, for the first five quarters beginning with the calendar quarter in which the IPO was consummated (i.e., beginning with the calendar quarter ended March 31, 2024 through the calendar quarter ended March 31, 2025), the management fee was calculated at an annual rate of 0.75% of average total assets, excluding cash and cash equivalents and including assets financed using leverage (\"Average Total Assets\"), at the end of the two most recently completed calendar quarters, and thereafter, the management fee is calculated at an annual rate of 1.00% of Average Total Assets. || The catch-up is meant to provide the Adviser with 15% of the pre-incentive fee net investment income as if a hurdle rate did not apply if this net investment income exceeds 1.7647% multiplied by our NAV at the beginning of each applicable calendar quarter comprising of the relevant Trailing Twelve Quarters; and || •no incentive fee in any calendar quarter in which the aggregate pre-incentive fee net investment income (as defined below) in respect of the Trailing Twelve Quarters does not exceed the hurdle rate of 1.50% (6% annually) for such Trailing Twelve Quarters; || Under the Advisory Agreement, the second part of the incentive fee is a capital gains incentive fee that is determined and payable in arrears as of the end of each fiscal year (or upon termination of the Advisory Agreement, as of the termination date), and equals 15.0% of the Company's realized capital gains as of the end of the fiscal year following the IPO.",
+    "accn": "0001737924-26-000084",
+    "hurdleAnnual": 6
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "In accordance with the 1940 Act, the Company is currently only allowed to borrow amounts such that its asset coverage, as defined in the 1940 Act, is maintained at a level of at least 150% after such borrowings.",
+    "accn": "0001737924-26-000084",
+    "stated": {
+     "pct": 177.64,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026 and December 31, 2025, asset coverage was 177.64% and 178.55%, respectively."
+    }
+   }
+  },
+  "NMFC": {
+   "cik": 1496099,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-03",
+   "accn": "0001496099-26-000029",
+   "sbaExempt": {
+    "value": true,
+    "status": "confirmed",
+    "sentence": "(8)On November 5, 2014, the Company received exemptive relief from the SEC allowing the Company to modify the asset coverage requirement to exclude the SBA-guaranteed debentures from this calculation.",
+    "accn": "0001496099-26-000029"
+   },
+   "fees": {
+    "managementFeeRate": 1.4,
+    "incentiveIncomeRate": 20,
+    "hurdle": 2,
+    "catchUp": 100,
+    "capitalGainsRate": 20,
+    "internallyManaged": null,
+    "sentence": "Pursuant to Amendment No. 1, prior to January 29, 2025, the base management fee was calculated at an annual rate of 1.4% of the Company's gross assets, which equals the Company's total assets on the Consolidated Statements of Assets and Liabilities, less cash and cash equivalents. || •20.0% of the amount of the Company's Pre-Incentive Fee Net Investment Income, if any, that exceeds 2.5% in any calendar quarter (10.0% annualized) is payable to the Investment Adviser once the hurdle is reached and the catch-up is achieved. || Pre-Incentive Fee Net Investment Income, expressed as a rate of return on the value of the Company's net assets at the end of the immediately preceding calendar quarter, will be compared to a \"hurdle rate\" of 2.0% per quarter (8.0% annualized), subject to a \"catch-up\" provision measured as of the end of each calendar quarter. || •100.0% of the Company's Pre-Incentive Fee Net Investment Income with respect to that portion of such Pre-Incentive Fee Net Investment Income, if any, that exceeds the hurdle rate but is less than or equal to 2.5% in any calendar quarter (10.0% annualized) is payable to the Investment Adviser. || The second part of the incentive fee will be determined and payable in arrears as of the end of each calendar year (or upon termination of the Investment Management Agreement) and will equal 20.0% of the Company's realized capital gains, if any, on a cumulative basis from inception through the end of each calendar year, computed net of all realized capital losses and unrealized capital depreciation on a cumulative basis, less the aggregate amount of any previously paid capital gain incentive fee.",
+    "accn": "0001496099-26-000029",
+    "hurdleAnnual": 8
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "On June 8, 2018 the Company's shareholders approved the application of the modified asset coverage requirements set forth in Section 61(a) of the 1940 Act, which resulted in the reduction of the minimum asset coverage ratio applicable to the Company from 200.0% to 150.0% as of June 9, 2018 (which means the Company can borrow $2 for every $1 of its equity).",
+    "accn": "0001496099-26-000029",
+    "stated": {
+     "pct": 186.2,
+     "sbaRelief": true,
+     "sentence": "As of June 30, 2026, the Company's asset coverage ratio was 186.2%."
+    }
+   }
+  },
+  "NSLR": {
+   "cik": 1509470,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-06",
+   "accn": "0001493152-26-036285",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001493152-26-036285"
+   },
+   "fees": {
+    "managementFeeRate": null,
+    "incentiveIncomeRate": null,
+    "hurdle": null,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": true,
+    "sentence": "As of June 30, 2026, the Company was an internally managed, non-diversified closed-end management investment company.",
+    "accn": "0001493152-26-036285"
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": null,
+    "sentence": null,
+    "accn": "0001493152-26-036285"
+   }
+  },
+  "OBDC": {
+   "cik": 1655888,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-05",
+   "accn": "0001655888-26-000056",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001655888-26-000056"
+   },
+   "fees": {
+    "managementFeeRate": 1.5,
+    "incentiveIncomeRate": null,
+    "hurdle": null,
+    "catchUp": null,
+    "capitalGainsRate": 17.5,
+    "internallyManaged": false,
+    "sentence": "The management fee is payable at an annual rate of (x) 1.50% of the Company's average gross assets (excluding cash and cash equivalents, but including assets purchased with borrowed amounts) that is above an asset coverage ratio of 200% calculated in accordance with Sections 18 and 61 of the 1940 Act and (y) 1.00% of the Company's average gross assets (excluding cash and cash equivalents, but including assets purchased with borrowed amounts) that is below an asset coverage ratio of 200% calculated in accordance with Section 18 and 61 of the 1940 Act, in each case, at the end of the two most recently completed calendar quarters. || The second component of the incentive fee, the capital gains incentive fee, payable at the end of each calendar year in arrears, equals 17.5% of cumulative realized capital gains from the Listing Date to the end of each calendar year, less cumulative realized capital losses and unrealized capital depreciation from the Listing Date to the end of each calendar year, less the aggregate amount of any previously paid capital gains incentive fee for prior periods provided, however, that the calculation of realized capital gains, realized capital losses and unrealized capital depreciation shall not include any realized capital gains, realized capital losses or unrealized capital appreciation or ...",
+    "accn": "0001655888-26-000056"
+   },
+   "targetLeverage": {
+    "low": 0.9,
+    "high": 1.25,
+    "sentence": "Our current target leverage ratio is 0.90x-1.25x.",
+    "accn": "0001655888-26-000056"
+   },
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "As a result, effective on June 9, 2020, our asset coverage requirement applicable to senior securities was reduced from 200% to 150%.",
+    "accn": "0001655888-26-000056",
+    "stated": {
+     "pct": 187,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026 and December 31, 2025, the Company's asset coverage was 187% and 178%, respectively."
+    }
+   }
+  },
+  "OCSL": {
+   "cik": 1414932,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-05",
+   "accn": "0001414932-26-000017",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001414932-26-000017"
+   },
+   "fees": {
+    "managementFeeRate": 1,
+    "incentiveIncomeRate": 17.5,
+    "hurdle": null,
+    "catchUp": null,
+    "capitalGainsRate": 17.5,
+    "internallyManaged": false,
+    "sentence": "Effective as of July 1, 2024, the base management fee is calculated at an annual rate of 1.00% of total gross assets, including any investment made with borrowings, but excluding cash and cash equivalents; provided, however, that for the period from July 1, 2024 to January 23, 2025, the base management fee shall be calculated at such an annual rate as to cause (1) the base management fee less (2) previously agreed waivers of $750,000 of base management fees per quarter (with such amount appropriately prorated for any partial quarter) to equal 1.00% of the Company's gross assets, including any investments made with borrowings, but excluding any cash and cash equivalents. || •For any quarter in which the Company's pre-incentive fee net investment income for the Trailing Twelve Quarters exceeds 1.8182% multiplied by the Company's net asset value at the beginning of each applicable calendar quarter comprising the relevant Trailing Twelve Quarters, the incentive fee on income is 17.5% of the amount of the Company's pre-incentive fee net investment income for such Trailing Twelve Quarters, as the Preferred Return and catch-up will have been achieved. || If such amount is positive at the end of a period, then GAAP requires the Company to record a capital gains incentive fee equal to 17.5% of such cumulative amount, less the aggregate amount of actual capital gains incentive fees payable or capital gains incentive fees accrued under GAAP in all prior periods.",
+    "accn": "0001414932-26-000017"
+   },
+   "targetLeverage": {
+    "low": 0.9,
+    "high": 1.25,
+    "sentence": "As of June 30, 2026, our target debt to equity ratio was 0.90x to 1.25x (i.e., one dollar of equity for each $0.90 to $1.25 of debt outstanding) and our net debt to equity ratio was 1.02x.",
+    "accn": "0001414932-26-000017"
+   },
+   "statutoryCoverage": {
+    "value": null,
+    "sentence": null,
+    "accn": "0001414932-26-000017",
+    "stated": {
+     "pct": 194.16,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, we had $1,454.7 million in senior securities and our asset coverage ratio was 194.16%."
+    }
+   }
+  },
+  "OFS": {
+   "cik": 1487918,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-07-31",
+   "accn": "0001487918-26-000078",
+   "sbaExempt": {
+    "value": true,
+    "status": "unconfirmed seed",
+    "sentence": null,
+    "accn": "0001487918-26-000078"
+   },
+   "fees": {
+    "managementFeeRate": 1.75,
+    "incentiveIncomeRate": null,
+    "hurdle": 2,
+    "catchUp": null,
+    "capitalGainsRate": 20,
+    "internallyManaged": false,
+    "sentence": "The base management fee is calculated at an annual rate of 1.75% and based on the average value of the Company's total assets (other than cash and cash equivalents, but including assets purchased with borrowed amounts and assets owned by any consolidated entity) at the end of the two most recently completed calendar quarters, adjusted for any share issuances or repurchases during the quarter. || The incentive fee with respect to pre-incentive fee net income is 20.0% of the amount, if any, by which the pre-incentive fee net investment income for the immediately preceding calendar quarter exceeds a 2.0% hurdle rate (which is 8.0% annualized) and a \"catch-up\" provision measured as of the end of each calendar quarter. || The second part of the incentive fee (the \"Capital Gains Fee\") is determined and payable in arrears as of the end of each calendar year (or upon termination of the Investment Advisory Agreement, as of the termination date), and equals 20.0% of the Company's aggregate realized capital gains, if any, on a cumulative basis from the date of the election to be a BDC through the end of each calendar year, computed net of all realized capital losses, losses on extinguishment of debt, income taxes from realized capital gains and unrealized capital depreciation through the end of such year, less all previous amounts paid in respect of the Capital Gains Fee.",
+    "accn": "0001487918-26-000078",
+    "hurdleAnnual": 8
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "As a result, effective May 3, 2019, our minimum required asset coverage ratio decreased from 200% to 150%.",
+    "accn": "0001487918-26-000078",
+    "stated": {
+     "pct": 161,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, the aggregate amount outstanding of the senior securities issued by us was $185.8 million, for which our asset coverage ratio was 161%, exceeding the minimum asset coverage requirement of 150% under the 1940 Act."
+    }
+   }
+  },
+  "OTF": {
+   "cik": 1747777,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-05",
+   "accn": "0001747777-26-000028",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001747777-26-000028"
+   },
+   "fees": {
+    "managementFeeRate": 1.5,
+    "incentiveIncomeRate": 17.5,
+    "hurdle": 1.5,
+    "catchUp": 100,
+    "capitalGainsRate": 17.5,
+    "internallyManaged": false,
+    "sentence": "Following the Exchange Listing, the Management Fee is payable at an annual rate of (x) 1.50% of the Company's average gross assets (excluding cash and cash equivalents but including assets purchased with borrowed amounts) that is above an asset coverage ratio of 200% calculated in accordance with Sections 18 and 61 of the 1940 Act and (y) 1.00% of the Company's average gross assets (excluding cash and cash equivalents but including assets purchased with borrowed amounts) that is below an asset coverage ratio of 200% calculated in accordance with Sections 18 and 61 of the 1940 Act, in each case, at the end of the two most recently completed calendar quarters payable quarterly in arrears. || The 100% \"catch-up\" provision for pre-Incentive Fee net investment income in excess of the 1.5% \"hurdle rate\" is intended to provide the Adviser with an Incentive Fee of (i) prior to the Exchange Listing, 10% on all pre- Incentive Fee net investment income when that amount equals 1.67% in a calendar quarter (6.67% annualized), and (ii) subsequent to the Exchange Listing, 17.5% on all pre-Incentive Fee net investment income when that amount equals 1.82% in a calendar quarter (7.27% annualized), which, in each case, is the rate at which catch-up is achieved. || The second component of the Incentive Fee, the \"Capital Gains Incentive Fee,\" payable at the end of each calendar year in arrears, equals, (i) prior to the Exchange Listing, 10% of cumulative realized capital gains from the initial closing date to the end of each calendar year, less cumulative realized capital losses and unrealized capital depreciation from the initial closing date to the end of each calendar year, and (ii) subsequent to the Exchange Listing, 17.5% of cumulative realized capital gains from the Listing Date to the end of each calendar year, less cumulative realized capital losses and unrealized capital depreciation from the Listing Date to the end of each calendar year.",
+    "accn": "0001747777-26-000028",
+    "hurdleAnnual": 6
+   },
+   "targetLeverage": {
+    "low": 0.9,
+    "high": 1.25,
+    "sentence": "Our current target leverage ratio is 0.90x-1.25x.",
+    "accn": "0001747777-26-000028"
+   },
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "On August 7, 2018, we received shareholder approval that allowed us to reduce our asset coverage ratio from 200% to 150%, effective as of August 8, 2018.",
+    "accn": "0001747777-26-000028",
+    "stated": {
+     "pct": 203,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026 and December 31, 2025, the Company's asset coverage was 203% and 226%, respectively."
+    }
+   }
+  },
+  "OXSQ": {
+   "cik": 1259429,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-10",
+   "accn": "0001213900-26-087243",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001213900-26-087243"
+   },
+   "fees": {
+    "managementFeeRate": null,
+    "incentiveIncomeRate": 20,
+    "hurdle": null,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": null,
+    "sentence": "ii. 20% of the amount of the Pre-Incentive Fee Net Investment Income, if any, that exceeds one-fourth of the annual hurdle rate (8.73% for the 2026 calendar year) in any calendar quarter is payable to Oxford Square Management (i.e., once the hurdle rate is reached, 20% of all Pre-Incentive Fee Net Investment Income thereafter will be allocated to Oxford Square Management).",
+    "accn": "0001213900-26-087243"
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "In accordance with the 1940 Act, with certain limited exceptions, the Company is only allowed to borrow amounts such that its asset coverage, as defined in the 1940 Act, is at least 150%, immediately after such borrowing.",
+    "accn": "0001213900-26-087243",
+    "stated": {
+     "pct": 185,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026 and December 31, 2025, the Company's asset coverage for borrowed amounts was 185% and 191%, respectively."
+    }
+   }
+  },
+  "PFLT": {
+   "cik": 1504619,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-10",
+   "accn": "0001193125-26-342352",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001193125-26-342352"
+   },
+   "fees": {
+    "managementFeeRate": 1,
+    "incentiveIncomeRate": 20,
+    "hurdle": 1.75,
+    "catchUp": 50,
+    "capitalGainsRate": 20,
+    "internallyManaged": null,
+    "sentence": "The base management fee is calculated at an annual rate of 1.00% of our \"average adjusted gross assets,\" which equals our gross assets (net of U.S. Treasury Bills, temporary draws under any credit facility, cash and cash equivalents, repurchase agreements or other balance sheet transactions undertaken at the end of a fiscal quarter for purposes of preserving investment flexibility for the next quarter and unfunded commitments, if any) and is payable quarterly in arrears. || ... Fee Net Investment Income does not exceed the hurdle rate of 1.75%, (2) 50% of our Pre-Incentive Fee Net Investment Income with respect to that portion of such Pre-Incentive Fee Net Investment Income, if any, that exceeds the hurdle rate but is less than 2.9167% in any calendar quarter (11.67% annualized) (we refer to this portion of our Pre-Incentive Fee Net Investment Income (which exceeds the hurdle but is less than 2.9167%) as the \"catch-up,\" which is meant to provide our Investment Adviser with 20% of our Pre-Incentive Fee Net Investment Income, as if a hurdle did not apply, if this net investment income exceeds 2.9167% in any calendar quarter), and (3) 20% of the amount of our ... || Pre-Incentive Fee Net Investment Income, expressed as a percentage of the value of our net assets at the end of the immediately preceding calendar quarter, is compared to the hurdle rate of 1.75% per quarter (7.00% annualized). || quarter in which our Pre-Incentive Fee Net Investment Income does not exceed the hurdle rate of 1.75%, (2) 50% of our Pre-Incentive Fee Net Investment Income with respect to that portion of such Pre-Incentive Fee Net Investment Income, if any, that exceeds the hurdle rate but is less than 2.9167% in any calendar quarter (11.67% annualized) (we refer to this portion of our Pre-Incentive Fee Net Investment Income (which exceeds the hurdle but is less than 2.9167%) as the \"catch-up,\" which is meant to provide our Investment Adviser with 20% of our Pre-Incentive Fee Net Investment Income, as if a hurdle did not apply, if this net investment income exceeds 2.9167% in any calendar quarter), and ... || If such amount is positive at the end of a period, then we record a capital gains incentive fee equal to 20% of such amount, less the aggregate amount of actual capital gains related to incentive fees paid in all prior years.",
+    "accn": "0001193125-26-342352",
+    "hurdleAnnual": 7
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": null,
+    "sentence": null,
+    "accn": "0001193125-26-342352",
+    "stated": {
+     "pct": 164,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026 and September 30, 2025, our asset coverage ratio, as computed in accordance with the 1940 Act, was 164% and 160%, respectively."
+    }
+   }
+  },
+  "PFX": {
+   "cik": 1490349,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-05",
+   "accn": "0001213900-26-085667",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001213900-26-085667"
+   },
+   "fees": {
+    "managementFeeRate": null,
+    "incentiveIncomeRate": null,
+    "hurdle": null,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": true,
+    "sentence": "Corporation (\"PhenixFIN,\" the \"Company,\" \"we\" and \"us\") is an internally-managed non-diversified",
+    "accn": "0001213900-26-085667"
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "As a result, the asset coverage ratio test applicable to the Company will be decreased from 200% to 150%, effective",
+    "accn": "0001213900-26-085667",
+    "stated": {
+     "pct": 207,
+     "sbaRelief": false,
+     "sentence": "Company's asset coverage was 207.0% and 207.8%, respectively, after giving effect to leverage and therefore the Company's"
+    }
+   }
+  },
+  "PIAC": {
+   "cik": 845385,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-14",
+   "accn": "0001213900-26-090000",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001213900-26-090000"
+   },
+   "fees": {
+    "managementFeeRate": 1,
+    "incentiveIncomeRate": null,
+    "hurdle": null,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": false,
+    "sentence": "The House Hanover Investment base management fee is calculated at an annual rate of 1.00% of the Company's gross assets, including assets purchased with borrowed",
+    "accn": "0001213900-26-090000"
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": null,
+    "sentence": null,
+    "accn": "0001213900-26-090000"
+   }
+  },
+  "PNNT": {
+   "cik": 1383414,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-10",
+   "accn": "0001193125-26-342350",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001193125-26-342350"
+   },
+   "fees": {
+    "managementFeeRate": 1.5,
+    "incentiveIncomeRate": 17.5,
+    "hurdle": 1.75,
+    "catchUp": 100,
+    "capitalGainsRate": 17.5,
+    "internallyManaged": null,
+    "sentence": "The base management fee is calculated at an annual rate of 1.50% of our \"average adjusted gross assets,\" which equals our gross assets (exclusive of U.S. Treasury Bills, temporary draws under any credit facility, cash and cash equivalents, repurchase agreements or other balance sheet transactions undertaken at the end of a fiscal quarter for purposes of preserving investment flexibility for the next quarter and unfunded commitments, if any) and is payable quarterly in arrears. || We pay the Investment Adviser an incentive fee with respect to our Pre- Incentive Fee Net Investment Income in each calendar quarter as follows: (1) no incentive fee in any calendar quarter in which our Pre-Incentive Fee Net Investment Income does not exceed the hurdle rate of 1.75%, (2) 100% of our Pre-Incentive Fee Net Investment Income with respect to that portion of such Pre-Incentive Fee Net Investment Income, if any, that exceeds the hurdle rate but is less than 2.1212% in any calendar quarter (8.4848% annualized), and (3) 17.5% of the amount of our Pre-Incentive Fee Net Investment Income, if any, that exceeds 2.1212% in any calendar quarter. || Pre-Incentive Fee Net Investment Income, expressed as a percentage of the value of our net assets at the end of the immediately preceding calendar quarter, is compared to the hurdle rate of 1.75% per quarter (7.00% annualized). || If such amount is positive at the end of a period, then we record a capital gains incentive fee equal to 17.5% of such amount, less the aggregate amount of actual capital gains related to incentive fees paid in all prior years, if any.",
+    "accn": "0001193125-26-342350",
+    "hurdleAnnual": 7
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": null,
+    "sentence": null,
+    "accn": "0001193125-26-342350",
+    "stated": {
+     "pct": 178,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026 and September 30, 2025, our asset coverage ratio, as computed in accordance with the 1940 Act, was 178% and 163%, respectively."
+    }
+   }
+  },
+  "PSBD": {
+   "cik": 1794776,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-05",
+   "accn": "0001193125-26-333791",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001193125-26-333791"
+   },
+   "fees": {
+    "managementFeeRate": 1.75,
+    "incentiveIncomeRate": null,
+    "hurdle": 1.5,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": false,
+    "sentence": "In return for providing management services to the Company, the Company pays the Investment Advisor a base management fee, calculated and paid quarterly in arrears at an annual rate of 1.75% of the average value of the weighted average (based on the number of shares outstanding each day in the quarter) of the Company's total net assets at the end of the two most recently completed calendar quarters. || • no Income Incentive Fee in any calendar quarter in which the Company's \"adjusted net investment income\" does not exceed an amount equal to a \"hurdle rate\" of 1.5% per quarter (6% annualized) of the Company's total net assets at the end of that quarter (the \"Hurdle Amount\");",
+    "accn": "0001193125-26-333791",
+    "hurdleAnnual": 6
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "As a BDC, we are required to meet a coverage ratio of total assets to total borrowings and other senior securities, which include all of our borrowings and any preferred stock that we may issue in the future, of at least 150%.",
+    "accn": "0001193125-26-333791",
+    "stated": {
+     "pct": 158,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, the Company's asset coverage ratio was 158%."
+    }
+   }
+  },
+  "PSEC": {
+   "cik": 1287032,
+   "form": "10-K",
+   "period": "2026-06-30",
+   "filed": "2026-08-20",
+   "accn": "0001287032-26-000269",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001287032-26-000269"
+   },
+   "fees": {
+    "managementFeeRate": 2,
+    "incentiveIncomeRate": 20,
+    "hurdle": 1.75,
+    "catchUp": 100,
+    "capitalGainsRate": 20,
+    "internallyManaged": false,
+    "sentence": "The base management fee is calculated at an annual rate of 2.00% on our total assets. || Incentive fees payable under Investment Advisory Agreement (20% of realized capital gains and 20% of pre-incentive fee net investment income) (5) | 0.93 | % || Pre-incentive fee net investment income, expressed as a rate of return on the value of our net assets at the end of the immediately preceding calendar quarter, is compared to a \"hurdle rate\" of 1.75% per quarter (7.00% annualized). || •100.00% of our pre-incentive fee net investment income with respect to that portion of such pre-incentive fee net investment income, if any, that exceeds the hurdle rate but is less than 125.00% of the quarterly hurdle rate in any calendar quarter (8.75% annualized assuming a 7.00% annualized hurdle rate); and || If this number is positive, then the capital gains incentive fee payable is equal to 20.00% of such amounts, less the aggregate amount of any capital gains incentive fees paid since inception.",
+    "accn": "0001287032-26-000269",
+    "hurdleAnnual": 7
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "In March 2018, the Small Business Credit Availability Act added Section 61(a)(2) to the 1940 Act, a successor provision to Section 61(a)(1) referenced therein, which reduces the asset coverage requirement applicable to business development companies from 200% to 150% so long as the business development company meets certain disclosure requirements and obtains certain approvals.",
+    "accn": "0001287032-26-000269",
+    "stated": {
+     "pct": 339.4,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, our asset coverage ratio stood at 339.4% based on the outstanding principal amount of our senior securities representing indebtedness of $1.9 billion and our asset coverage ratio on our senior securities that are stock was 177.6%."
+    }
+   }
+  },
+  "RAND": {
+   "cik": 81955,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-05",
+   "accn": "0001193125-26-333983",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001193125-26-333983"
+   },
+   "fees": {
+    "managementFeeRate": 1.5,
+    "incentiveIncomeRate": 20,
+    "hurdle": 1.75,
+    "catchUp": 100,
+    "capitalGainsRate": 20,
+    "internallyManaged": false,
+    "sentence": "The \"Base Management Fee\" is calculated at an annual rate of 1.50% of the Corporation's total assets (other than cash and cash equivalents but including assets purchased with borrowed funds). || (iii) 20% of the amount of the Pre-Incentive Fee Net Investment Income for any calendar quarter with respect to that portion of the Pre-Incentive Fee Net Investment Income for such calendar quarter, if any, that exceeds 2.1875% (8.75% annualized). || The Income Based Fee is calculated and payable quarterly in arrears based on the \"Pre-Incentive Fee Net Investment Income\" (as defined in the Investment Management Agreement) for the immediately preceding calendar quarter, subject to a hurdle rate of 1.75% per quarter (7% annualized) and is payable promptly following the filing of the Corporation's financial statements for such quarter, to the extent the Income Based Fee exceeds Accrued Unpaid Income. || (ii) 100% of the Pre-Incentive Fee Net Investment Income for any calendar quarter with respect to that portion of the Pre-Incentive Fee Net Investment Income for such calendar quarter, if any, that exceeds the hurdle rate of 1.75% (7.00% annualized) but is less than 2.1875% (8.75% annualized); and || If the calculated amount is positive, GAAP requires the Corporation to record a capital gains incentive fee accrual equal to 20% of this cumulative amount, less the aggregate amount of actual capital gains incentive fees paid, or capital gains incentive fees accrued under GAAP, for all prior periods.",
+    "accn": "0001193125-26-333983",
+    "hurdleAnnual": 7
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "As a result, our asset coverage requirement under the 1940 Act for senior securities was changed from 200% to 150%, effective January 24, 2025.",
+    "accn": "0001193125-26-333983"
+   }
+  },
+  "RWAY": {
+   "cik": 1653384,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-06",
+   "accn": "0001193125-26-337968",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001193125-26-337968"
+   },
+   "fees": {
+    "managementFeeRate": 1.5,
+    "incentiveIncomeRate": null,
+    "hurdle": 2,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": false,
+    "sentence": "The waiver was not subject to recoupment and did not amend the Advisory Agreement, resulting in RGC earning a base management fee at an annual rate of 1.50%. || Pre-Incentive Fee NII, expressed as a rate of return on the value of the Company's net assets (defined as total assets less liabilities) at the end of the immediately preceding fiscal quarter, will be compared to a \"hurdle rate\" of 2.0% per quarter (8.0% annualized).",
+    "accn": "0001193125-26-337968",
+    "hurdleAnnual": 8
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": null,
+    "sentence": null,
+    "accn": "0001193125-26-337968",
+    "stated": {
+     "pct": 174,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026 and December 31, 2025, our asset coverage ratio was 174% and 211%, respectively."
+    }
+   }
+  },
+  "SAR": {
+   "cik": 1377936,
+   "form": "10-Q",
+   "period": "2026-05-31",
+   "filed": "2026-07-07",
+   "accn": "0001213900-26-075931",
+   "sbaExempt": {
+    "value": true,
+    "status": "confirmed",
+    "sentence": "(1) | We have excluded our SBA-guaranteed debentures from this table because the SEC has granted us exemptive relief that permits us to exclude such debentures from the definition of senior securities in the 150% asset coverage ratio we are required to maintain under the 1940 Act.",
+    "accn": "0001213900-26-075931"
+   },
+   "fees": {
+    "managementFeeRate": 1.75,
+    "incentiveIncomeRate": 20,
+    "hurdle": 1.875,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": false,
+    "sentence": "The base management fee of 1.75% per year is || 20% of the Company's pre-incentive fee net investment income, expressed as a rate of return on the value of our net assets at the || our pre-incentive fee net investment income exceeds the hurdle rate of 1.875%.",
+    "accn": "0001213900-26-075931",
+    "hurdleAnnual": 7.5
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": null,
+    "sentence": null,
+    "accn": "0001213900-26-075931",
+    "stated": {
+     "pct": 162.6,
+     "sbaRelief": false,
+     "sentence": "Our asset coverage ratio, as defined in the 1940 Act, was 162.6%"
+    }
+   }
+  },
+  "SCM": {
+   "cik": 1551901,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-10",
+   "accn": "0001104659-26-093435",
+   "sbaExempt": {
+    "value": true,
+    "status": "confirmed",
+    "sentence": "On August 12, 2014, the Company obtained exemptive relief from the SEC to permit it to exclude the debt of the SBIC subsidiaries guaranteed by the SBA from its asset coverage test under the 1940 Act.",
+    "accn": "0001104659-26-093435"
+   },
+   "fees": {
+    "managementFeeRate": 1.75,
+    "incentiveIncomeRate": null,
+    "hurdle": 2,
+    "catchUp": null,
+    "capitalGainsRate": 20,
+    "internallyManaged": false,
+    "sentence": "Pursuant to the Investment Advisory Agreement, the Company has agreed to pay to Stellus Capital an annual base management fee of 1.75% of gross assets, including assets purchased with borrowed funds or other forms of leverage and excluding cash and cash equivalents, and an incentive fee. || In other words, any Income Incentive Fee that is payable in a calendar quarter is limited to the lesser of (i) 20% of the amount by which the Company's pre-incentive fee net investment income for such calendar quarter exceeds the 2.0% hurdle, subject to the Catch-up, and (ii) (x) 20% of the cumulative net increase in net assets resulting from operations for the then-current and 11 preceding quarters minus (y) the cumulative incentive fees accrued and/or paid for the 11 preceding calendar quarters. || The Capital Gains Incentive Fee is equal to 20.0% of the Company's cumulative aggregate realized capital gains from Inception through the end of that calendar year, computed net of the cumulative aggregate realized capital losses and cumulative aggregate unrealized capital depreciation through the end of such year.",
+    "accn": "0001104659-26-093435",
+    "hurdleAnnual": 8
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "Under the provisions of the 1940 Act, the Company is permitted, as a BDC that has satisfied certain requirements, to issue senior securities in amounts such that its asset coverage ratio, as defined in the 1940 Act, equals at least 150% of its gross assets, less all liabilities and indebtedness not represented by senior securities, after each issuance of senior securities.",
+    "accn": "0001104659-26-093435",
+    "stated": {
+     "pct": 206,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, the Company's asset coverage ratio was 206%."
+    }
+   }
+  },
+  "SLRC": {
+   "cik": 1418076,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-04",
+   "accn": "0001193125-26-332726",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001193125-26-332726"
+   },
+   "fees": {
+    "managementFeeRate": null,
+    "incentiveIncomeRate": null,
+    "hurdle": 1.75,
+    "catchUp": 100,
+    "capitalGainsRate": null,
+    "internallyManaged": false,
+    "sentence": "Pre-incentive fee net investment income, expressed as a rate of return on the value of the Company's net assets at the end of the immediately preceding calendar quarter, is compared to the hurdle rate of 1.75% per quarter (7% annualized). || The Company pays the Investment Adviser a performance-based incentive fee with respect to the Company's pre-incentive fee net investment income in each calendar quarter as follows: (1) no performance-based incentive fee in any calendar quarter in which the Company's pre-incentive fee net investment income does not exceed the hurdle rate; (2) 100% of the Company's pre-incentive fee net investment income with respect to that portion of such pre-incentive fee net investment income, if any, that exceeds the hurdle rate but is less than 2.1212% (2.1875% prior to April 1, 2026) in any calendar quarter; and (3) 17.5% (20% prior to April 1, 2026) of the amount of the Company's pre-incentive fee net ...",
+    "accn": "0001193125-26-332726",
+    "hurdleAnnual": 7
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "Under the provisions of the 1940 Act, we are permitted, as a BDC, to issue senior securities in amounts such that our asset coverage ratio, as defined in the 1940 Act, equals at least 150% of gross assets less all liabilities and indebtedness not represented by senior securities, after each issuance of senior securities.",
+    "accn": "0001193125-26-332726",
+    "stated": {
+     "pct": 184.7,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, asset coverage was 184.7%."
+    }
+   }
+  },
+  "SVVC": {
+   "cik": 1495584,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-14",
+   "accn": "0001437749-26-028070",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001437749-26-028070"
+   },
+   "fees": {
+    "managementFeeRate": 2,
+    "incentiveIncomeRate": null,
+    "hurdle": null,
+    "catchUp": null,
+    "capitalGainsRate": 20,
+    "internallyManaged": false,
+    "sentence": "The base management fee will be calculated at an annual rate of 2.00% of our gross assets. || The incentive fee is determined and payable in arrears as of the end of each calendar year (or upon termination of the Investment Management Agreement, as of the termination date), commencing on April 15, 2011, and equals 20% of the Company's realized capital gains, if any, on a cumulative basis from inception through the end of each calendar year, computed net of all realized capital losses and unrealized capital depreciation on a cumulative basis, less the aggregate amount of any previously paid incentive fees, provided that the incentive fee determined as of December 31, 2025, will be calculated for a period of shorter than twelve calendar months to take into account any realized gains ...",
+    "accn": "0001437749-26-028070"
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": null,
+    "sentence": null,
+    "accn": "0001437749-26-028070"
+   }
+  },
+  "TCPC": {
+   "cik": 1370755,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-06",
+   "accn": "0001193125-26-336794",
+   "sbaExempt": {
+    "value": true,
+    "status": "confirmed",
+    "sentence": "On July 13, 2015, we obtained exemptive relief from the SEC to permit us to exclude debt outstanding under the SBA Debentures from our asset coverage test under the 1940 Act.",
+    "accn": "0001193125-26-336794"
+   },
+   "fees": {
+    "managementFeeRate": 1.5,
+    "incentiveIncomeRate": null,
+    "hurdle": null,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": false,
+    "sentence": "Accordingly, the Company's base management fee was calculated at an annual rate of 1.50% on total assets (excluding cash and cash equivalents) up to an amount equal to 200% of the net asset value of the Company, and 1.00% thereafter.",
+    "accn": "0001193125-26-336794"
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "On March 23, 2018, the Small Business Credit Availability Act (\"SBCAA\") was signed into law, which among other things, amended Section 61(a) of the 1940 Act to add a new Section 61(a)(2) that reduces the asset coverage requirement applicable to BDCs from 200% to 150% so long as the BDC meets certain disclosure requirements and obtains certain approvals.",
+    "accn": "0001193125-26-336794",
+    "stated": {
+     "pct": 160.3,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, the Company's asset coverage ratio was 160.3%."
+    }
+   }
+  },
+  "TPVG": {
+   "cik": 1580345,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-05",
+   "accn": "0001580345-26-000025",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001580345-26-000025"
+   },
+   "fees": {
+    "managementFeeRate": 1.75,
+    "incentiveIncomeRate": null,
+    "hurdle": 2,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": false,
+    "sentence": "The base management fee is calculated at an annual rate of 1.75% of the Company's average adjusted gross assets, including assets purchased with borrowed funds. || In other words, any investment income incentive fee that is payable in a calendar quarter is limited to the lesser of (i) 20.0% of the amount by which the Company's pre-incentive fee net investment income for such calendar quarter exceeds the 2.0% hurdle, subject to the \"catch-up\" provision and (ii) (x) 20.0% of the cumulative net increase in net assets resulting from operations since the effective date of the Company's election to be regulated as a BDC minus (y) the cumulative incentive fees accrued and/or paid since the effective date of the Company's election to be regulated as a BDC.",
+    "accn": "0001580345-26-000025",
+    "hurdleAnnual": 8
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "As a result of the stockholder approval at the special meeting, effective June 22, 2018, our applicable minimum asset coverage ratio under the 1940 Act has been decreased to 150% from 200%.",
+    "accn": "0001580345-26-000025",
+    "stated": {
+     "pct": 179,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, our asset coverage for borrowed amounts was 179%."
+    }
+   }
+  },
+  "TRIN": {
+   "cik": 1786108,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-05",
+   "accn": "0001193125-26-333907",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001193125-26-333907"
+   },
+   "fees": {
+    "managementFeeRate": null,
+    "incentiveIncomeRate": null,
+    "hurdle": null,
+    "catchUp": null,
+    "capitalGainsRate": null,
+    "internallyManaged": true,
+    "sentence": "Trinity Capital is an internally managed, closed-end, non-diversified management investment company that has elected to be regulated as a BDC under the Investment Company Act of 1940, as amended (the \"1940 Act\").",
+    "accn": "0001193125-26-333907"
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "On September 27, 2019, the Board, including a \"required majority\" (as such term is defined in Section 57(o) of the 1940 Act) and our initial stockholder approved the application to us of the 150% minimum asset coverage ratio set forth in Section 61(a)(2) of the 1940 Act.",
+    "accn": "0001193125-26-333907",
+    "stated": {
+     "pct": 183.7,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026, our asset coverage ratio was approximately 183.7% and our asset coverage ratio per unit was approximately $1,837."
+    }
+   }
+  },
+  "TSLX": {
+   "cik": 1508655,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-04",
+   "accn": "0001193125-26-332725",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001193125-26-332725"
+   },
+   "fees": {
+    "managementFeeRate": 1.5,
+    "incentiveIncomeRate": 17.5,
+    "hurdle": 1.5,
+    "catchUp": 100,
+    "capitalGainsRate": null,
+    "internallyManaged": null,
+    "sentence": "The Management Fee is calculated at an annual rate of 1.5% based on the average value of the Company's gross assets calculated using the values at the end of the two most recently completed calendar quarters, adjusted for any share issuances or repurchases during the period. || The 100% \"catch-up\" provision for pre-Incentive Fee net investment income in excess of the 1.5% \"hurdle rate\" is intended to provide the Adviser with an Incentive Fee of 17.5% on all pre-Incentive Fee net investment income when that amount equals 1.82% in a quarter (7.28% annualized), which is the rate at which catch-up is achieved.",
+    "accn": "0001193125-26-332725",
+    "hurdleAnnual": 6,
+    "managementFeeTier": {
+     "rate": 200,
+     "above": 1,
+     "sentence": "The Adviser intends to waive a portion of the Management Fee payable under the Investment Advisory Agreement by reducing the Management Fee on assets financed using leverage over 200% asset coverage (in other words, over 1.0x debt to equity) (the \"Leverage Waiver\")."
+    }
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "In accordance with the 1940 Act, with certain limitations, the Company is allowed to borrow amounts such that its asset coverage, as defined in the 1940 Act, is at least 150% after such borrowing.",
+    "accn": "0001193125-26-332725",
+    "stated": {
+     "pct": 179.1,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026 and December 31, 2025, the Company's asset coverage was 179.1% and 191.5%, respectively."
+    }
+   }
+  },
+  "WHF": {
+   "cik": 1552198,
+   "form": "10-Q",
+   "period": "2026-06-30",
+   "filed": "2026-08-10",
+   "accn": "0001104659-26-093465",
+   "sbaExempt": {
+    "value": null,
+    "status": "not stated",
+    "sentence": null,
+    "accn": "0001104659-26-093465"
+   },
+   "fees": {
+    "managementFeeRate": 1.75,
+    "incentiveIncomeRate": 20,
+    "hurdle": 1.75,
+    "catchUp": 100,
+    "capitalGainsRate": 20,
+    "internallyManaged": false,
+    "sentence": "Effective January 1, 2024, the base management fee is calculated at an annual rate equal to 1.75% based on the Company's consolidated gross assets (including cash and cash equivalents and assets purchased with borrowed funds); provided, however, the base management fee will be calculated at an annual rate equal to 1.25% of the Company's consolidated gross assets (including cash and cash equivalents and assets purchased with borrowed funds) at the end of the two most recently completed calendar quarters, that exceed the product of (i) 200% and (ii) the value of the Company's total net assets. || ● | 20% of the amount of such Pre-Incentive Fee Net Investment Income, if any, that exceeds 2.1875% in any calendar quarter (8.75% annualized) is payable to the Company's investment adviser (once the Hurdle Rate is reached and the catch-up is achieved, 20% of all Pre-Incentive Fee Net Investment Income). || ● | no incentive fee is payable to the Company's investment adviser in any calendar quarter in which Pre-Incentive Fee Net Investment Income does not exceed the \"Hurdle Rate\" of 1.75% (7.00% annualized); || ● | 100% of Pre-Incentive Fee Net Investment Income with respect to that portion of such Pre-Incentive Fee Net Investment Income, if any, that exceeds the Hurdle Rate but is less than 2.1875% in any calendar quarter (8.75% annualized) is payable to the Company's investment adviser. || If the Capital Gains Incentive Fee Base, adjusted as required by GAAP to include unrealized capital appreciation, is positive at the end of a reporting period, then GAAP requires the Company to accrue a Capital Gains Incentive Fee equal to 20% of such amount, less the aggregate amount of any Capital Gains Incentive Fees previously paid and Capital Gains Incentive Fees accrued under GAAP in",
+    "accn": "0001104659-26-093465",
+    "hurdleAnnual": 7,
+    "managementFeeTier": {
+     "rate": 200,
+     "above": 1,
+     "sentence": "Payments under the Investment Advisory Agreement in future periods will be equal to (1) a management fee equal to 1.75% of the value of our consolidated gross assets; provided, however, that the management fee on consolidated gross assets financed using leverage over 200% asset coverage (in other words, over 1.0x debt to equity) will be equal to 1.25% and (2) an incentive fee based on our performance."
+    }
+   },
+   "targetLeverage": null,
+   "statutoryCoverage": {
+    "value": 150,
+    "sentence": "Effective August 2, 2018 following stockholder approval, the Company's asset coverage requirements applicable to senior securities decreased from 200% to 150%, effective August 2, 2018.",
+    "accn": "0001104659-26-093465",
+    "stated": {
+     "pct": 177,
+     "sbaRelief": false,
+     "sentence": "As of June 30, 2026 and December 31, 2025, the Company's asset coverage for borrowed amounts were 177.0% and 179.1%, respectively."
+    }
+   }
+  }
+ }
+}

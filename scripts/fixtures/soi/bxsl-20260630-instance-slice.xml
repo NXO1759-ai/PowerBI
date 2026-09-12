@@ -1,0 +1,2803 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Slice of https://www.sec.gov/Archives/edgar/data/1736035/000173603526000016/bxsl-20260630_htm.xml
+     (BXSL 10-Q for the quarter ended 2026-06-30, accession 0001736035-26-000016, 16,545,199 bytes, fetched 2026-09-11):
+     40 InvestmentIdentifierAxis members with every context they carry (2026-06-30 and 2025-12-31),
+     the commitment-only members of the same issuers, the two undimensioned InvestmentOwnedAtCost /
+     InvestmentOwnedAtFairValue facts at 2026-06-30, and the unit declarations. Nothing is edited. -->
+<xbrl
+  xml:lang="en-US"
+  xmlns="http://www.xbrl.org/2003/instance"
+  xmlns:bxsl="http://www.bxsl.com/20260630"
+  xmlns:cef="http://xbrl.sec.gov/cef/2026"
+  xmlns:country="http://xbrl.sec.gov/country/2026"
+  xmlns:dei="http://xbrl.sec.gov/dei/2026"
+  xmlns:ecd="http://xbrl.sec.gov/ecd/2026"
+  xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
+  xmlns:link="http://www.xbrl.org/2003/linkbase"
+  xmlns:srt="http://fasb.org/srt/2026"
+  xmlns:us-gaap="http://fasb.org/us-gaap/2026"
+  xmlns:xbrldi="http://xbrl.org/2006/xbrldi"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <link:schemaRef xlink:href="bxsl-20260630.xsd" xlink:type="simple"/>
+    <context id="c-7">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-56">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Corfin Holdings, Inc. 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-57">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Corfin Holdings, Inc. 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-58">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Fastener Distribution Holdings, LLC 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-59">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Fastener Distribution Holdings, LLC 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-60">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Frontgrade Technologies Holdings, Inc. 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-61">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Frontgrade Technologies Holdings, Inc. 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-62">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Frontgrade Technologies Holdings, Inc. 3 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-63">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Horizon CTS Buyer, LLC | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-64">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>MAG DS Corp. | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-65">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Magneto Components BuyCo, LLC | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-66">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>West Star Aviation Acquisition, LLC 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-67">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>West Star Aviation Acquisition, LLC 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-69">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Auctane, Inc. | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-70">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>ENV Bidco, AB 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-71">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>ENV Bidco, AB 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-72">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Mode Purchaser, Inc. 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-73">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Mode Purchaser, Inc. 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-74">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>R1 Holdings, LLC | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-75">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>RWL Holdings, LLC 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-76">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>RWL Holdings, LLC 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-77">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>SEKO Global Logistics Network, LLC 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-78">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>SEKO Global Logistics Network, LLC 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-79">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>SEKO Global Logistics Network, LLC 3 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-80">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>SEKO Global Logistics Network, LLC 4 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-82">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Axsome Therapeutics, Inc. 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-83">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Axsome Therapeutics, Inc. 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-84">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>MannKind Corp. | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-86">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Fencing Supply Group Acquisition, LLC | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-87">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Jacuzzi Brands, LLC 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-88">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Jacuzzi Brands, LLC 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-89">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>L&amp;S Mechanical Acquisition, LLC | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-90">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Windows Acquisition Holdings, Inc. | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-92">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>DCG Acquisition Corp. | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-93">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Bazaarvoice, Inc. | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-94">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>CFS Brands, LLC | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-95">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Divisions Holding Corp. | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-96">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>ELK Bidco, Inc. | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-696">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Align Precision Group, LLC 1 | Non-Controlled Affiliated</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-733">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Micross Topco, Inc. - Common Equity | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-771">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Caerus Midco 2 S.&#xe0; r.l. - Vehicle Units | | Non - Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-832">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Align Precision Group, LLC | Delayed Draw Term Loan</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-851">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Axsome Therapeutics, Inc. | Delayed Draw Term Loan</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-852">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Axsome Therapeutics, Inc. | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-859">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Bazaarvoice, Inc. | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-878">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>CFS Brands, LLC | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-910">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>DCG Acquisition Corp. | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-916">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Divisions Holding Corp. | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-930">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>ELK Bidco, Inc. | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-931">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>ELK Bidco, Inc. | Delayed Draw Term Loan</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-936">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>ENV Bidco, AB | Delayed Draw Term Loan</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-944">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Fastener Distribution Holdings, LLC | Delayed Draw Term Loan</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-950">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Frontgrade Technologies Holdings, Inc. | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-980">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Horizon CTS Buyer, LLC | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-1017">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Magneto Components BuyCo, LLC | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-1019">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>MannKind Corp. | Delayed Draw Term Loan</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-1075">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>R1 Holdings, LLC | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-1092">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>SEKO Global Logistics Network, LLC | Delayed Draw Term Loan</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-1149">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>West Star Aviation Acquisition, LLC | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-1150">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>West Star Aviation Acquisition, LLC | Delayed Draw Term Loan</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2026-06-30</instant>
+        </period>
+    </context>
+    <context id="c-1243">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Corfin Holdings, Inc. 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1244">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Corfin Holdings, Inc. 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1245">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Fastener Distribution Holdings, LLC 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1246">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Fastener Distribution Holdings, LLC 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1247">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Frontgrade Technologies Holdings, Inc. 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1248">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Frontgrade Technologies Holdings, Inc. 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1249">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Frontgrade Technologies Holdings, Inc. 3 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1250">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Horizon CTS Buyer, LLC | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1251">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>MAG DS Corp. | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1252">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Magneto Components BuyCo, LLC | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1253">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>West Star Aviation Acquisition, LLC 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1254">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>West Star Aviation Acquisition, LLC 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1258">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>ENV Bidco, AB 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1259">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>ENV Bidco, AB 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1260">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Mode Purchaser, Inc. 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1261">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Mode Purchaser, Inc. 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1262">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>R1 Holdings, LLC | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1264">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>SEKO Global Logistics Network, LLC 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1265">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>SEKO Global Logistics Network, LLC 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1266">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>SEKO Global Logistics Network, LLC 3 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1269">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Axsome Therapeutics, Inc. 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1270">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Axsome Therapeutics, Inc. 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1271">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>MannKind Corp. | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1273">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Fencing Supply Group Acquisition, LLC | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1274">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Jacuzzi Brands, LLC 1 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1275">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Jacuzzi Brands, LLC 2 | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1276">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>L&amp;S Mechanical Acquisition, LLC | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1277">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Windows Acquisition Holdings, Inc. | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1279">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>DCG Acquisition Corp. | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1280">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Bazaarvoice, Inc. | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1281">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>CFS Brands, LLC | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1282">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Divisions Holding Corp. | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1283">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>ELK Bidco, Inc. | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1858">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Align Precision Group, LLC 1 | Non-Controlled Affiliated</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1890">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Micross Topco, Inc. - Common Equity | Non-Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1931">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Caerus Midco 2 S.&#xe0; r.l. - Vehicle Units | | Non - Affiliated Issuer</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-1989">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Align Precision Group, LLC | Delayed Draw Term Loan</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-2019">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Bazaarvoice, Inc. | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-2041">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>CFS Brands, LLC | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-2077">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>DCG Acquisition Corp. | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-2084">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Divisions Holding Corp. | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-2101">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>ELK Bidco, Inc. | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-2102">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>ELK Bidco, Inc. | Delayed Draw Term Loan</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-2107">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>ENV Bidco, AB | Delayed Draw Term Loan</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-2118">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Fastener Distribution Holdings, LLC | Delayed Draw Term Loan</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-2123">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Frontgrade Technologies Holdings, Inc. | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-2156">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Horizon CTS Buyer, LLC | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-2199">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>Magneto Components BuyCo, LLC | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-2201">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>MannKind Corp. | Delayed Draw Term Loan</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-2261">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>R1 Holdings, LLC | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-2279">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>SEKO Global Logistics Network, LLC | Delayed Draw Term Loan</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-2340">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>West Star Aviation Acquisition, LLC | Revolver</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <context id="c-2341">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001736035</identifier>
+            <segment>
+                <xbrldi:typedMember dimension="us-gaap:InvestmentIdentifierAxis">
+                    <us-gaap:limitedToken.domain>West Star Aviation Acquisition, LLC | Delayed Draw Term Loan</us-gaap:limitedToken.domain>
+                </xbrldi:typedMember>
+            </segment>
+        </entity>
+        <period>
+            <instant>2025-12-31</instant>
+        </period>
+    </context>
+    <unit id="shares">
+        <measure>shares</measure>
+    </unit>
+    <unit id="usd">
+        <measure>iso4217:USD</measure>
+    </unit>
+    <unit id="usdPerShare">
+        <divide>
+            <unitNumerator>
+                <measure>iso4217:USD</measure>
+            </unitNumerator>
+            <unitDenominator>
+                <measure>shares</measure>
+            </unitDenominator>
+        </divide>
+    </unit>
+    <unit id="number">
+        <measure>pure</measure>
+    </unit>
+    <unit id="eur">
+        <measure>iso4217:EUR</measure>
+    </unit>
+    <unit id="gbp">
+        <measure>iso4217:GBP</measure>
+    </unit>
+    <unit id="cad">
+        <measure>iso4217:CAD</measure>
+    </unit>
+    <unit id="sek">
+        <measure>iso4217:SEK</measure>
+    </unit>
+    <unit id="dkk">
+        <measure>iso4217:DKK</measure>
+    </unit>
+    <unit id="nok">
+        <measure>iso4217:NOK</measure>
+    </unit>
+    <unit id="aud">
+        <measure>iso4217:AUD</measure>
+    </unit>
+    <unit id="component">
+        <measure>bxsl:component</measure>
+    </unit>
+    <unit id="borrower">
+        <measure>bxsl:borrower</measure>
+    </unit>
+    <unit id="loan">
+        <measure>bxsl:loan</measure>
+    </unit>
+    <unit id="equity_distribution_agreement">
+        <measure>bxsl:equity_distribution_agreement</measure>
+    </unit>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-7" decimals="-3" id="f-38" unitRef="usd">13856590000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-7" decimals="-3" id="f-40" unitRef="usd">13364295000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-56"
+      decimals="INF"
+      id="f-434"
+      unitRef="number">0.0525</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-56" decimals="4" id="f-435" unitRef="number">0.0897</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-56" decimals="-3" id="f-436" unitRef="usd">260600000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-56" decimals="-3" id="f-437" unitRef="usd">259847000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-56" decimals="-3" id="f-438" unitRef="usd">260600000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-56" decimals="4" id="f-439" unitRef="number">0.0439</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-57"
+      decimals="INF"
+      id="f-440"
+      unitRef="number">0.0525</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-57" decimals="4" id="f-441" unitRef="number">0.0897</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-57" decimals="-3" id="f-442" unitRef="usd">1560000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-57" decimals="-3" id="f-443" unitRef="usd">1552000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-57" decimals="-3" id="f-444" unitRef="usd">1560000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-57" decimals="4" id="f-445" unitRef="number">0.0003</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-58"
+      decimals="INF"
+      id="f-446"
+      unitRef="number">0.0475</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-58" decimals="4" id="f-447" unitRef="number">0.0848</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-58" decimals="-3" id="f-448" unitRef="usd">30550000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-58" decimals="-3" id="f-449" unitRef="usd">30317000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-58" decimals="-3" id="f-450" unitRef="usd">30550000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-58" decimals="4" id="f-451" unitRef="number">0.0051</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-59"
+      decimals="INF"
+      id="f-452"
+      unitRef="number">0.0475</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-59" decimals="4" id="f-453" unitRef="number">0.0848</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-59" decimals="-3" id="f-454" unitRef="usd">4436000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-59" decimals="-3" id="f-455" unitRef="usd">4375000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-59" decimals="-3" id="f-456" unitRef="usd">4436000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-59" decimals="4" id="f-457" unitRef="number">0.0007</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-60"
+      decimals="INF"
+      id="f-458"
+      unitRef="number">0.0500</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-60" decimals="4" id="f-459" unitRef="number">0.0864</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-60" decimals="-3" id="f-460" unitRef="usd">2458000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-60" decimals="-3" id="f-461" unitRef="usd">2420000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-60" decimals="-3" id="f-462" unitRef="usd">2387000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-60" decimals="4" id="f-463" unitRef="number">0.0004</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-61"
+      decimals="INF"
+      id="f-464"
+      unitRef="number">0.0500</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-61" decimals="4" id="f-465" unitRef="number">0.0865</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-61" decimals="-3" id="f-466" unitRef="usd">353000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-61" decimals="-3" id="f-467" unitRef="usd">351000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-61" decimals="-3" id="f-468" unitRef="usd">344000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-61" decimals="4" id="f-469" unitRef="number">0.0001</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-62"
+      decimals="INF"
+      id="f-470"
+      unitRef="number">0.0500</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-62" decimals="4" id="f-471" unitRef="number">0.0868</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-62" decimals="-3" id="f-472" unitRef="usd">92000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-62" decimals="-3" id="f-473" unitRef="usd">91000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-62" decimals="-3" id="f-474" unitRef="usd">89000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-62" decimals="4" id="f-475" unitRef="number">0.0000</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-63"
+      decimals="INF"
+      id="f-476"
+      unitRef="number">0.0475</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-63" decimals="4" id="f-477" unitRef="number">0.0848</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-63" decimals="-3" id="f-478" unitRef="usd">1379000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-63" decimals="-3" id="f-479" unitRef="usd">1367000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-63" decimals="-3" id="f-480" unitRef="usd">1353000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-63" decimals="4" id="f-481" unitRef="number">0.0002</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-64"
+      decimals="INF"
+      id="f-482"
+      unitRef="number">0.0550</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-64" decimals="4" id="f-483" unitRef="number">0.0933</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-64" decimals="-3" id="f-484" unitRef="usd">78245000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-64" decimals="-3" id="f-485" unitRef="usd">77387000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-64" decimals="-3" id="f-486" unitRef="usd">78163000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-64" decimals="4" id="f-487" unitRef="number">0.0132</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-65"
+      decimals="INF"
+      id="f-488"
+      unitRef="number">0.0575</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-65" decimals="4" id="f-489" unitRef="number">0.0948</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-65" decimals="-3" id="f-490" unitRef="usd">33435000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-65" decimals="-3" id="f-491" unitRef="usd">32841000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-65" decimals="-3" id="f-492" unitRef="usd">33435000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-65" decimals="4" id="f-493" unitRef="number">0.0056</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-66"
+      decimals="INF"
+      id="f-494"
+      unitRef="number">0.0450</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-66" decimals="4" id="f-495" unitRef="number">0.0814</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-66" decimals="-3" id="f-496" unitRef="usd">2125000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-66" decimals="-3" id="f-497" unitRef="usd">2112000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-66" decimals="-3" id="f-498" unitRef="usd">2125000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-66" decimals="4" id="f-499" unitRef="number">0.0004</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-67"
+      decimals="INF"
+      id="f-500"
+      unitRef="number">0.0450</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-67" decimals="4" id="f-501" unitRef="number">0.0814</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-67" decimals="-3" id="f-502" unitRef="usd">389000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-67" decimals="-3" id="f-503" unitRef="usd">385000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-67" decimals="-3" id="f-504" unitRef="usd">389000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-67" decimals="4" id="f-505" unitRef="number">0.0001</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-69"
+      decimals="INF"
+      id="f-509"
+      unitRef="number">0.0575</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-69" decimals="4" id="f-510" unitRef="number">0.0942</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-69" decimals="-3" id="f-511" unitRef="usd">281570000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-69" decimals="-3" id="f-512" unitRef="usd">275571000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-69" decimals="-3" id="f-513" unitRef="usd">277347000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-69" decimals="4" id="f-514" unitRef="number">0.0467</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-70"
+      decimals="INF"
+      id="f-515"
+      unitRef="number">0.0500</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-70" decimals="4" id="f-516" unitRef="number">0.0873</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-70" decimals="-3" id="f-517" unitRef="usd">1115000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-70" decimals="-3" id="f-518" unitRef="usd">1104000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-70" decimals="-3" id="f-519" unitRef="usd">1107000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-70" decimals="4" id="f-520" unitRef="number">0.0002</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-71"
+      decimals="INF"
+      id="f-521"
+      unitRef="number">0.0500</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-71" decimals="4" id="f-522" unitRef="number">0.0729</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-71" decimals="-3" id="f-523" unitRef="eur">1337000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-71" decimals="-3" id="f-524" unitRef="usd">1358000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-71" decimals="-3" id="f-525" unitRef="usd">1512000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-71" decimals="4" id="f-526" unitRef="number">0.0003</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-72"
+      decimals="INF"
+      id="f-527"
+      unitRef="number">0.0625</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-72" decimals="4" id="f-528" unitRef="number">0.1004</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-72" decimals="-3" id="f-529" unitRef="usd">138170000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-72" decimals="-3" id="f-530" unitRef="usd">137917000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-72" decimals="-3" id="f-531" unitRef="usd">123662000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-72" decimals="4" id="f-532" unitRef="number">0.0208</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-73"
+      decimals="INF"
+      id="f-533"
+      unitRef="number">0.0625</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-73" decimals="4" id="f-534" unitRef="number">0.1004</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-73" decimals="-3" id="f-535" unitRef="usd">3944000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-73" decimals="-3" id="f-536" unitRef="usd">3915000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-73" decimals="-3" id="f-537" unitRef="usd">3530000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-73" decimals="4" id="f-538" unitRef="number">0.0006</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-74"
+      decimals="INF"
+      id="f-539"
+      unitRef="number">0.0675</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-74" decimals="4" id="f-540" unitRef="number">0.1041</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-74" decimals="-3" id="f-541" unitRef="usd">1315000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-74" decimals="-3" id="f-542" unitRef="usd">1298000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-74" decimals="-3" id="f-543" unitRef="usd">1221000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-74" decimals="4" id="f-544" unitRef="number">0.0002</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-75"
+      decimals="INF"
+      id="f-545"
+      unitRef="number">0.0575</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-75" decimals="4" id="f-546" unitRef="number">0.0963</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-75" decimals="-3" id="f-547" unitRef="usd">29554000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-75" decimals="-3" id="f-548" unitRef="usd">29344000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-75" decimals="-3" id="f-549" unitRef="usd">28668000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-75" decimals="4" id="f-550" unitRef="number">0.0048</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-76"
+      decimals="INF"
+      id="f-551"
+      unitRef="number">0.0575</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-76" decimals="4" id="f-552" unitRef="number">0.0963</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-76" decimals="-3" id="f-553" unitRef="usd">1359000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-76" decimals="-3" id="f-554" unitRef="usd">1347000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-76" decimals="-3" id="f-555" unitRef="usd">1318000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-76" decimals="4" id="f-556" unitRef="number">0.0002</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-77"
+      decimals="INF"
+      id="f-557"
+      unitRef="number">0.0700</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRatePaidInKind contextRef="c-77" decimals="4" id="f-558" unitRef="number">0.1067</us-gaap:InvestmentInterestRatePaidInKind>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-77" decimals="-3" id="f-559" unitRef="usd">2212000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-77" decimals="-3" id="f-560" unitRef="usd">2212000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-77" decimals="-3" id="f-561" unitRef="usd">2212000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-77" decimals="4" id="f-562" unitRef="number">0.0004</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-78"
+      decimals="INF"
+      id="f-563"
+      unitRef="number">0.1000</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRatePaidInKind contextRef="c-78" decimals="4" id="f-564" unitRef="number">0.1367</us-gaap:InvestmentInterestRatePaidInKind>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-78" decimals="-3" id="f-565" unitRef="usd">746000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-78" decimals="-3" id="f-566" unitRef="usd">739000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-78" decimals="-3" id="f-567" unitRef="usd">746000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-78" decimals="4" id="f-568" unitRef="number">0.0001</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-79"
+      decimals="INF"
+      id="f-569"
+      unitRef="number">0.1050</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-79" decimals="4" id="f-570" unitRef="number">0.1417</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentInterestRatePaidInKind
+      contextRef="c-79"
+      decimals="INF"
+      id="f-571"
+      unitRef="number">0.0950</us-gaap:InvestmentInterestRatePaidInKind>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-79" decimals="-3" id="f-572" unitRef="usd">171000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-79" decimals="-3" id="f-573" unitRef="usd">170000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-79" decimals="-3" id="f-574" unitRef="usd">171000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-79" decimals="4" id="f-575" unitRef="number">0.0000</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-80"
+      decimals="INF"
+      id="f-576"
+      unitRef="number">0.1050</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-80" decimals="4" id="f-577" unitRef="number">0.1421</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentInterestRatePaidInKind
+      contextRef="c-80"
+      decimals="INF"
+      id="f-578"
+      unitRef="number">0.0950</us-gaap:InvestmentInterestRatePaidInKind>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-80" decimals="-3" id="f-579" unitRef="usd">71000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-80" decimals="-3" id="f-580" unitRef="usd">71000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-80" decimals="-3" id="f-581" unitRef="usd">71000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-80" decimals="4" id="f-582" unitRef="number">0.0000</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-82"
+      decimals="INF"
+      id="f-586"
+      unitRef="number">0.0475</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-82" decimals="4" id="f-587" unitRef="number">0.0848</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-82" decimals="-3" id="f-588" unitRef="usd">11740000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-82" decimals="-3" id="f-589" unitRef="usd">11649000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-82" decimals="-3" id="f-590" unitRef="usd">11740000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-82" decimals="4" id="f-591" unitRef="number">0.0020</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-83"
+      decimals="INF"
+      id="f-592"
+      unitRef="number">0.0400</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-83" decimals="4" id="f-593" unitRef="number">0.0773</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-83" decimals="-3" id="f-594" unitRef="usd">6848000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-83" decimals="-3" id="f-595" unitRef="usd">6812000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-83" decimals="-3" id="f-596" unitRef="usd">6848000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-83" decimals="4" id="f-597" unitRef="number">0.0012</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-84"
+      decimals="INF"
+      id="f-598"
+      unitRef="number">0.0475</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-84" decimals="4" id="f-599" unitRef="number">0.0843</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-84" decimals="-3" id="f-600" unitRef="usd">138898000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-84" decimals="-3" id="f-601" unitRef="usd">136844000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-84" decimals="-3" id="f-602" unitRef="usd">136372000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-84" decimals="4" id="f-603" unitRef="number">0.0230</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-86"
+      decimals="INF"
+      id="f-607"
+      unitRef="number">0.0600</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-86" decimals="4" id="f-608" unitRef="number">0.0974</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-86" decimals="-3" id="f-609" unitRef="usd">54139000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-86" decimals="-3" id="f-610" unitRef="usd">54012000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-86" decimals="-3" id="f-611" unitRef="usd">51297000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-86" decimals="4" id="f-612" unitRef="number">0.0086</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-87"
+      decimals="INF"
+      id="f-613"
+      unitRef="number">0.0625</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-87" decimals="4" id="f-614" unitRef="number">0.0992</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-87" decimals="-3" id="f-615" unitRef="usd">11318000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-87" decimals="-3" id="f-616" unitRef="usd">11271000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-87" decimals="-3" id="f-617" unitRef="usd">10979000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-87" decimals="4" id="f-618" unitRef="number">0.0018</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-88"
+      decimals="INF"
+      id="f-619"
+      unitRef="number">0.0625</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-88" decimals="4" id="f-620" unitRef="number">0.0992</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-88" decimals="-3" id="f-621" unitRef="usd">77867000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-88" decimals="-3" id="f-622" unitRef="usd">77721000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-88" decimals="-3" id="f-623" unitRef="usd">75531000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-88" decimals="4" id="f-624" unitRef="number">0.0127</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-89"
+      decimals="INF"
+      id="f-625"
+      unitRef="number">0.0625</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-89" decimals="4" id="f-626" unitRef="number">0.0992</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-89" decimals="-3" id="f-627" unitRef="usd">14823000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-89" decimals="-3" id="f-628" unitRef="usd">14754000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-89" decimals="-3" id="f-629" unitRef="usd">12599000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-89" decimals="4" id="f-630" unitRef="number">0.0021</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-90"
+      decimals="INF"
+      id="f-631"
+      unitRef="number">0.0650</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-90" decimals="4" id="f-632" unitRef="number">0.1038</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-90" decimals="-3" id="f-633" unitRef="usd">52750000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-90" decimals="-3" id="f-634" unitRef="usd">52668000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-90" decimals="-3" id="f-635" unitRef="usd">41145000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-90" decimals="4" id="f-636" unitRef="number">0.0069</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-92"
+      decimals="INF"
+      id="f-640"
+      unitRef="number">0.0500</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-92" decimals="4" id="f-641" unitRef="number">0.0873</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-92" decimals="-3" id="f-642" unitRef="usd">39719000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-92" decimals="-3" id="f-643" unitRef="usd">39409000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-92" decimals="-3" id="f-644" unitRef="usd">38567000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-92" decimals="4" id="f-645" unitRef="number">0.0065</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-93"
+      decimals="INF"
+      id="f-646"
+      unitRef="number">0.0450</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-93" decimals="4" id="f-647" unitRef="number">0.0809</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-93" decimals="-3" id="f-648" unitRef="usd">238337000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-93" decimals="-3" id="f-649" unitRef="usd">238337000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-93" decimals="-3" id="f-650" unitRef="usd">236265000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-93" decimals="4" id="f-651" unitRef="number">0.0398</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-94"
+      decimals="INF"
+      id="f-652"
+      unitRef="number">0.0525</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-94" decimals="4" id="f-653" unitRef="number">0.0889</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-94" decimals="-3" id="f-654" unitRef="usd">137995000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-94" decimals="-3" id="f-655" unitRef="usd">136238000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-94" decimals="-3" id="f-656" unitRef="usd">137995000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-94" decimals="4" id="f-657" unitRef="number">0.0232</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-95"
+      decimals="INF"
+      id="f-658"
+      unitRef="number">0.0450</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-95" decimals="4" id="f-659" unitRef="number">0.0823</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-95" decimals="-3" id="f-660" unitRef="usd">1626000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-95" decimals="-3" id="f-661" unitRef="usd">1612000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-95" decimals="-3" id="f-662" unitRef="usd">1613000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-95" decimals="4" id="f-663" unitRef="number">0.0003</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-96"
+      decimals="INF"
+      id="f-664"
+      unitRef="number">0.0450</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate contextRef="c-96" decimals="4" id="f-665" unitRef="number">0.0823</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-96" decimals="-3" id="f-666" unitRef="usd">17852000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-96" decimals="-3" id="f-667" unitRef="usd">17754000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-96" decimals="-3" id="f-668" unitRef="usd">17827000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets contextRef="c-96" decimals="4" id="f-669" unitRef="number">0.0030</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-696"
+      decimals="INF"
+      id="f-4249"
+      unitRef="number">0.0675</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRatePaidInKind
+      contextRef="c-696"
+      decimals="4"
+      id="f-4250"
+      unitRef="number">0.1045</us-gaap:InvestmentInterestRatePaidInKind>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-696" decimals="-3" id="f-4251" unitRef="usd">9228000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-696" decimals="-3" id="f-4252" unitRef="usd">9228000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-696" decimals="-3" id="f-4253" unitRef="usd">8674000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-696"
+      decimals="4"
+      id="f-4254"
+      unitRef="number">0.0015</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentOwnedBalanceShares
+      contextRef="c-733"
+      decimals="0"
+      id="f-4438"
+      unitRef="shares">4767</us-gaap:InvestmentOwnedBalanceShares>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-733" decimals="-3" id="f-4439" unitRef="usd">4767000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-733" decimals="-3" id="f-4440" unitRef="usd">7878000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-733"
+      decimals="4"
+      id="f-4441"
+      unitRef="number">0.0013</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentOwnedBalanceShares
+      contextRef="c-771"
+      decimals="0"
+      id="f-4585"
+      unitRef="shares">58458</us-gaap:InvestmentOwnedBalanceShares>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-771" decimals="-3" id="f-4586" unitRef="usd">58000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-771" decimals="-3" id="f-4587" unitRef="usd">37000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-771"
+      decimals="4"
+      id="f-4588"
+      unitRef="number">0.0000</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-832" decimals="-3" id="f-4802" unitRef="usd">135000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-832" decimals="-3" id="f-4803" unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-851" decimals="-3" id="f-4840" unitRef="usd">8805000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-851" decimals="-3" id="f-4841" unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-852" decimals="-3" id="f-4842" unitRef="usd">1957000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-852" decimals="-3" id="f-4843" unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-859" decimals="-3" id="f-4856" unitRef="usd">37992000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-859" decimals="-3" id="f-4857" unitRef="usd">285000</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-878" decimals="-3" id="f-4894" unitRef="usd">7877000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-878" decimals="-3" id="f-4895" unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-910" decimals="-3" id="f-4958" unitRef="usd">5937000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-910" decimals="-3" id="f-4959" unitRef="usd">59000</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-916" decimals="-3" id="f-4970" unitRef="usd">112000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-916" decimals="-3" id="f-4971" unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-930" decimals="-3" id="f-4998" unitRef="usd">3373000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-930" decimals="-3" id="f-4999" unitRef="usd">17000</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-931" decimals="-3" id="f-5000" unitRef="usd">3747000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-931" decimals="-3" id="f-5001" unitRef="usd">8000</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-936" decimals="-3" id="f-5010" unitRef="usd">302000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-936" decimals="-3" id="f-5011" unitRef="usd">4000</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-944" decimals="-3" id="f-5026" unitRef="usd">7125000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-944" decimals="-3" id="f-5027" unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-950" decimals="-3" id="f-5038" unitRef="usd">387000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-950" decimals="-3" id="f-5039" unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-980" decimals="-3" id="f-5098" unitRef="usd">119000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-980" decimals="-3" id="f-5099" unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-1017" decimals="-3" id="f-5172" unitRef="usd">5508000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-1017" decimals="-3" id="f-5173" unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-1019" decimals="-3" id="f-5176" unitRef="usd">5435000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-1019" decimals="-3" id="f-5177" unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-1075" decimals="-3" id="f-5288" unitRef="usd">31000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-1075" decimals="-3" id="f-5289" unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-1092" decimals="-3" id="f-5322" unitRef="usd">20000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-1092" decimals="-3" id="f-5323" unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-1149" decimals="-3" id="f-5436" unitRef="usd">256000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-1149" decimals="-3" id="f-5437" unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-1150" decimals="-3" id="f-5438" unitRef="usd">105000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-1150" decimals="-3" id="f-5439" unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1243"
+      decimals="INF"
+      id="f-5661"
+      unitRef="number">0.0525</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1243"
+      decimals="4"
+      id="f-5662"
+      unitRef="number">0.0907</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1243" decimals="-3" id="f-5663" unitRef="usd">261290000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1243" decimals="-3" id="f-5664" unitRef="usd">260279000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1243" decimals="-3" id="f-5665" unitRef="usd">261290000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1243"
+      decimals="4"
+      id="f-5666"
+      unitRef="number">0.0418</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1244"
+      decimals="INF"
+      id="f-5667"
+      unitRef="number">0.0525</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1244"
+      decimals="4"
+      id="f-5668"
+      unitRef="number">0.0907</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1244" decimals="-3" id="f-5669" unitRef="usd">1564000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1244" decimals="-3" id="f-5670" unitRef="usd">1554000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1244" decimals="-3" id="f-5671" unitRef="usd">1564000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1244"
+      decimals="4"
+      id="f-5672"
+      unitRef="number">0.0003</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1245"
+      decimals="INF"
+      id="f-5673"
+      unitRef="number">0.0475</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1245"
+      decimals="4"
+      id="f-5674"
+      unitRef="number">0.0842</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1245" decimals="-3" id="f-5675" unitRef="usd">30705000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1245" decimals="-3" id="f-5676" unitRef="usd">30449000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1245" decimals="-3" id="f-5677" unitRef="usd">30705000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1245"
+      decimals="4"
+      id="f-5678"
+      unitRef="number">0.0049</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1246"
+      decimals="INF"
+      id="f-5679"
+      unitRef="number">0.0475</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1246"
+      decimals="4"
+      id="f-5680"
+      unitRef="number">0.0842</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1246" decimals="-3" id="f-5681" unitRef="usd">4458000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1246" decimals="-3" id="f-5682" unitRef="usd">4392000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1246" decimals="-3" id="f-5683" unitRef="usd">4458000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1246"
+      decimals="4"
+      id="f-5684"
+      unitRef="number">0.0007</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1247"
+      decimals="INF"
+      id="f-5685"
+      unitRef="number">0.0525</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1247"
+      decimals="4"
+      id="f-5686"
+      unitRef="number">0.0913</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentInterestRatePaidInKind
+      contextRef="c-1247"
+      decimals="INF"
+      id="f-5687"
+      unitRef="number">0.0150</us-gaap:InvestmentInterestRatePaidInKind>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1247" decimals="-3" id="f-5688" unitRef="usd">2405000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1247" decimals="-3" id="f-5689" unitRef="usd">2361000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1247" decimals="-3" id="f-5690" unitRef="usd">2355000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1247"
+      decimals="4"
+      id="f-5691"
+      unitRef="number">0.0004</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1248"
+      decimals="INF"
+      id="f-5692"
+      unitRef="number">0.0525</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1248"
+      decimals="4"
+      id="f-5693"
+      unitRef="number">0.0912</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentInterestRatePaidInKind
+      contextRef="c-1248"
+      decimals="INF"
+      id="f-5694"
+      unitRef="number">0.0150</us-gaap:InvestmentInterestRatePaidInKind>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1248" decimals="-3" id="f-5695" unitRef="usd">354000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1248" decimals="-3" id="f-5696" unitRef="usd">351000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1248" decimals="-3" id="f-5697" unitRef="usd">347000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1248"
+      decimals="4"
+      id="f-5698"
+      unitRef="number">0.0001</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1249"
+      decimals="INF"
+      id="f-5699"
+      unitRef="number">0.0500</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1249"
+      decimals="4"
+      id="f-5700"
+      unitRef="number">0.0894</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1249" decimals="-3" id="f-5701" unitRef="usd">92000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1249" decimals="-3" id="f-5702" unitRef="usd">92000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1249" decimals="-3" id="f-5703" unitRef="usd">90000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1249"
+      decimals="4"
+      id="f-5704"
+      unitRef="number">0.0000</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1250"
+      decimals="INF"
+      id="f-5705"
+      unitRef="number">0.0475</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1250"
+      decimals="4"
+      id="f-5706"
+      unitRef="number">0.0842</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1250" decimals="-3" id="f-5707" unitRef="usd">1298000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1250" decimals="-3" id="f-5708" unitRef="usd">1285000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1250" decimals="-3" id="f-5709" unitRef="usd">1291000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1250"
+      decimals="4"
+      id="f-5710"
+      unitRef="number">0.0002</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1251"
+      decimals="INF"
+      id="f-5711"
+      unitRef="number">0.0550</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1251"
+      decimals="4"
+      id="f-5712"
+      unitRef="number">0.0927</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1251" decimals="-3" id="f-5713" unitRef="usd">78684000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1251" decimals="-3" id="f-5714" unitRef="usd">77251000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1251" decimals="-3" id="f-5715" unitRef="usd">78610000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1251"
+      decimals="4"
+      id="f-5716"
+      unitRef="number">0.0126</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1252"
+      decimals="INF"
+      id="f-5717"
+      unitRef="number">0.0600</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1252"
+      decimals="4"
+      id="f-5718"
+      unitRef="number">0.0967</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1252" decimals="-3" id="f-5719" unitRef="usd">33602000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1252" decimals="-3" id="f-5720" unitRef="usd">32936000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1252" decimals="-3" id="f-5721" unitRef="usd">33308000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1252"
+      decimals="4"
+      id="f-5722"
+      unitRef="number">0.0053</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1253"
+      decimals="INF"
+      id="f-5723"
+      unitRef="number">0.0450</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1253"
+      decimals="4"
+      id="f-5724"
+      unitRef="number">0.0822</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1253" decimals="-3" id="f-5725" unitRef="usd">2147000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1253" decimals="-3" id="f-5726" unitRef="usd">2132000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1253" decimals="-3" id="f-5727" unitRef="usd">2147000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1253"
+      decimals="4"
+      id="f-5728"
+      unitRef="number">0.0003</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1254"
+      decimals="INF"
+      id="f-5729"
+      unitRef="number">0.0450</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1254"
+      decimals="4"
+      id="f-5730"
+      unitRef="number">0.0822</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1254" decimals="-3" id="f-5731" unitRef="usd">255000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1254" decimals="-3" id="f-5732" unitRef="usd">251000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1254" decimals="-3" id="f-5733" unitRef="usd">255000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1254"
+      decimals="4"
+      id="f-5734"
+      unitRef="number">0.0000</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1258"
+      decimals="INF"
+      id="f-5750"
+      unitRef="number">0.0500</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1258"
+      decimals="4"
+      id="f-5751"
+      unitRef="number">0.0869</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1258" decimals="-3" id="f-5752" unitRef="usd">1115000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1258" decimals="-3" id="f-5753" unitRef="usd">1103000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1258" decimals="-3" id="f-5754" unitRef="usd">1115000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1258"
+      decimals="4"
+      id="f-5755"
+      unitRef="number">0.0002</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1259"
+      decimals="INF"
+      id="f-5756"
+      unitRef="number">0.0500</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1259"
+      decimals="4"
+      id="f-5757"
+      unitRef="number">0.0702</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1259" decimals="-3" id="f-5758" unitRef="eur">1337000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1259" decimals="-3" id="f-5759" unitRef="usd">1355000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1259" decimals="-3" id="f-5760" unitRef="usd">1567000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1259"
+      decimals="4"
+      id="f-5761"
+      unitRef="number">0.0003</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1260"
+      decimals="INF"
+      id="f-5762"
+      unitRef="number">0.0625</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1260"
+      decimals="4"
+      id="f-5763"
+      unitRef="number">0.1024</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1260" decimals="-3" id="f-5764" unitRef="usd">138170000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1260" decimals="-3" id="f-5765" unitRef="usd">137787000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1260" decimals="-3" id="f-5766" unitRef="usd">125734000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1260"
+      decimals="4"
+      id="f-5767"
+      unitRef="number">0.0201</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1261"
+      decimals="INF"
+      id="f-5768"
+      unitRef="number">0.0625</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1261"
+      decimals="4"
+      id="f-5769"
+      unitRef="number">0.1024</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1261" decimals="-3" id="f-5770" unitRef="usd">3944000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1261" decimals="-3" id="f-5771" unitRef="usd">3909000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1261" decimals="-3" id="f-5772" unitRef="usd">3589000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1261"
+      decimals="4"
+      id="f-5773"
+      unitRef="number">0.0006</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1262"
+      decimals="INF"
+      id="f-5774"
+      unitRef="number">0.0625</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1262"
+      decimals="4"
+      id="f-5775"
+      unitRef="number">0.0995</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1262" decimals="-3" id="f-5776" unitRef="usd">1320000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1262" decimals="-3" id="f-5777" unitRef="usd">1301000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1262" decimals="-3" id="f-5778" unitRef="usd">1260000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1262"
+      decimals="4"
+      id="f-5779"
+      unitRef="number">0.0002</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1264"
+      decimals="INF"
+      id="f-5786"
+      unitRef="number">0.0700</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRatePaidInKind
+      contextRef="c-1264"
+      decimals="4"
+      id="f-5787"
+      unitRef="number">0.1082</us-gaap:InvestmentInterestRatePaidInKind>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1264" decimals="-3" id="f-5788" unitRef="usd">2097000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1264" decimals="-3" id="f-5789" unitRef="usd">2096000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1264" decimals="-3" id="f-5790" unitRef="usd">2097000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1264"
+      decimals="4"
+      id="f-5791"
+      unitRef="number">0.0003</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1265"
+      decimals="INF"
+      id="f-5792"
+      unitRef="number">0.1000</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRatePaidInKind
+      contextRef="c-1265"
+      decimals="4"
+      id="f-5793"
+      unitRef="number">0.1382</us-gaap:InvestmentInterestRatePaidInKind>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1265" decimals="-3" id="f-5794" unitRef="usd">697000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1265" decimals="-3" id="f-5795" unitRef="usd">689000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1265" decimals="-3" id="f-5796" unitRef="usd">697000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1265"
+      decimals="4"
+      id="f-5797"
+      unitRef="number">0.0001</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1266"
+      decimals="INF"
+      id="f-5798"
+      unitRef="number">0.1050</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1266"
+      decimals="4"
+      id="f-5799"
+      unitRef="number">0.1436</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentInterestRatePaidInKind
+      contextRef="c-1266"
+      decimals="INF"
+      id="f-5800"
+      unitRef="number">0.0950</us-gaap:InvestmentInterestRatePaidInKind>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1266" decimals="-3" id="f-5801" unitRef="usd">162000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1266" decimals="-3" id="f-5802" unitRef="usd">162000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1266" decimals="-3" id="f-5803" unitRef="usd">162000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1266"
+      decimals="4"
+      id="f-5804"
+      unitRef="number">0.0000</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1269"
+      decimals="INF"
+      id="f-5814"
+      unitRef="number">0.0475</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1269"
+      decimals="4"
+      id="f-5815"
+      unitRef="number">0.0842</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1269" decimals="-3" id="f-5816" unitRef="usd">11740000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1269" decimals="-3" id="f-5817" unitRef="usd">11638000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1269" decimals="-3" id="f-5818" unitRef="usd">11740000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1269"
+      decimals="4"
+      id="f-5819"
+      unitRef="number">0.0019</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1270"
+      decimals="INF"
+      id="f-5820"
+      unitRef="number">0.0400</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1270"
+      decimals="4"
+      id="f-5821"
+      unitRef="number">0.0769</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1270" decimals="-3" id="f-5822" unitRef="usd">6848000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1270" decimals="-3" id="f-5823" unitRef="usd">6818000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1270" decimals="-3" id="f-5824" unitRef="usd">6848000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1270"
+      decimals="4"
+      id="f-5825"
+      unitRef="number">0.0011</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1271"
+      decimals="INF"
+      id="f-5826"
+      unitRef="number">0.0475</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1271"
+      decimals="4"
+      id="f-5827"
+      unitRef="number">0.0853</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1271" decimals="-3" id="f-5828" unitRef="usd">138898000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1271" decimals="-3" id="f-5829" unitRef="usd">136595000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1271" decimals="-3" id="f-5830" unitRef="usd">137455000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1271"
+      decimals="4"
+      id="f-5831"
+      unitRef="number">0.0220</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1273"
+      decimals="INF"
+      id="f-5835"
+      unitRef="number">0.0600</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1273"
+      decimals="4"
+      id="f-5836"
+      unitRef="number">0.0982</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1273" decimals="-3" id="f-5837" unitRef="usd">52464000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1273" decimals="-3" id="f-5838" unitRef="usd">52311000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1273" decimals="-3" id="f-5839" unitRef="usd">50496000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1273"
+      decimals="4"
+      id="f-5840"
+      unitRef="number">0.0081</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1274"
+      decimals="INF"
+      id="f-5841"
+      unitRef="number">0.0600</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1274"
+      decimals="4"
+      id="f-5842"
+      unitRef="number">0.0982</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1274" decimals="-3" id="f-5843" unitRef="usd">11318000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1274" decimals="-3" id="f-5844" unitRef="usd">11285000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1274" decimals="-3" id="f-5845" unitRef="usd">10469000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1274"
+      decimals="4"
+      id="f-5846"
+      unitRef="number">0.0017</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1275"
+      decimals="INF"
+      id="f-5847"
+      unitRef="number">0.0600</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1275"
+      decimals="4"
+      id="f-5848"
+      unitRef="number">0.0982</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1275" decimals="-3" id="f-5849" unitRef="usd">77867000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1275" decimals="-3" id="f-5850" unitRef="usd">77673000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1275" decimals="-3" id="f-5851" unitRef="usd">72027000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1275"
+      decimals="4"
+      id="f-5852"
+      unitRef="number">0.0115</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1276"
+      decimals="INF"
+      id="f-5853"
+      unitRef="number">0.0625</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1276"
+      decimals="4"
+      id="f-5854"
+      unitRef="number">0.1009</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1276" decimals="-3" id="f-5855" unitRef="usd">14902000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1276" decimals="-3" id="f-5856" unitRef="usd">14804000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1276" decimals="-3" id="f-5857" unitRef="usd">14306000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1276"
+      decimals="4"
+      id="f-5858"
+      unitRef="number">0.0023</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1277"
+      decimals="INF"
+      id="f-5859"
+      unitRef="number">0.0650</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1277"
+      decimals="4"
+      id="f-5860"
+      unitRef="number">0.1032</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1277" decimals="-3" id="f-5861" unitRef="usd">52750000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1277" decimals="-3" id="f-5862" unitRef="usd">52587000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1277" decimals="-3" id="f-5863" unitRef="usd">43387000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1277"
+      decimals="4"
+      id="f-5864"
+      unitRef="number">0.0069</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1279"
+      decimals="INF"
+      id="f-5868"
+      unitRef="number">0.0500</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1279"
+      decimals="4"
+      id="f-5869"
+      unitRef="number">0.0867</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1279" decimals="-3" id="f-5870" unitRef="usd">39719000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1279" decimals="-3" id="f-5871" unitRef="usd">39371000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1279" decimals="-3" id="f-5872" unitRef="usd">39245000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1279"
+      decimals="4"
+      id="f-5873"
+      unitRef="number">0.0063</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1280"
+      decimals="INF"
+      id="f-5874"
+      unitRef="number">0.0450</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1280"
+      decimals="4"
+      id="f-5875"
+      unitRef="number">0.0809</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1280" decimals="-3" id="f-5876" unitRef="usd">238337000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1280" decimals="-3" id="f-5877" unitRef="usd">238337000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1280" decimals="-3" id="f-5878" unitRef="usd">238337000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1280"
+      decimals="4"
+      id="f-5879"
+      unitRef="number">0.0382</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1281"
+      decimals="INF"
+      id="f-5880"
+      unitRef="number">0.0500</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1281"
+      decimals="4"
+      id="f-5881"
+      unitRef="number">0.0872</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1281" decimals="-3" id="f-5882" unitRef="usd">138043000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1281" decimals="-3" id="f-5883" unitRef="usd">136064000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1281" decimals="-3" id="f-5884" unitRef="usd">138043000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1281"
+      decimals="4"
+      id="f-5885"
+      unitRef="number">0.0221</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1282"
+      decimals="INF"
+      id="f-5886"
+      unitRef="number">0.0450</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1282"
+      decimals="4"
+      id="f-5887"
+      unitRef="number">0.0817</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1282" decimals="-3" id="f-5888" unitRef="usd">1606000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1282" decimals="-3" id="f-5889" unitRef="usd">1590000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1282" decimals="-3" id="f-5890" unitRef="usd">1605000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1282"
+      decimals="4"
+      id="f-5891"
+      unitRef="number">0.0003</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1283"
+      decimals="INF"
+      id="f-5892"
+      unitRef="number">0.0450</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRate
+      contextRef="c-1283"
+      decimals="4"
+      id="f-5893"
+      unitRef="number">0.0850</us-gaap:InvestmentInterestRate>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1283" decimals="-3" id="f-5894" unitRef="usd">17942000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1283" decimals="-3" id="f-5895" unitRef="usd">17835000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1283" decimals="-3" id="f-5896" unitRef="usd">17871000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1283"
+      decimals="4"
+      id="f-5897"
+      unitRef="number">0.0029</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentBasisSpreadVariableRate
+      contextRef="c-1858"
+      decimals="INF"
+      id="f-9321"
+      unitRef="number">0.0675</us-gaap:InvestmentBasisSpreadVariableRate>
+    <us-gaap:InvestmentInterestRatePaidInKind
+      contextRef="c-1858"
+      decimals="4"
+      id="f-9322"
+      unitRef="number">0.1042</us-gaap:InvestmentInterestRatePaidInKind>
+    <us-gaap:InvestmentOwnedBalancePrincipalAmount contextRef="c-1858" decimals="-3" id="f-9323" unitRef="usd">8762000</us-gaap:InvestmentOwnedBalancePrincipalAmount>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1858" decimals="-3" id="f-9324" unitRef="usd">8762000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1858" decimals="-3" id="f-9325" unitRef="usd">8762000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1858"
+      decimals="4"
+      id="f-9326"
+      unitRef="number">0.0014</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentOwnedBalanceShares
+      contextRef="c-1890"
+      decimals="0"
+      id="f-9485"
+      unitRef="shares">4767</us-gaap:InvestmentOwnedBalanceShares>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1890" decimals="-3" id="f-9486" unitRef="usd">4767000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1890" decimals="-3" id="f-9487" unitRef="usd">7198000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1890"
+      decimals="4"
+      id="f-9488"
+      unitRef="number">0.0012</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentOwnedBalanceShares
+      contextRef="c-1931"
+      decimals="0"
+      id="f-9644"
+      unitRef="shares">58458</us-gaap:InvestmentOwnedBalanceShares>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-1931" decimals="-3" id="f-9645" unitRef="usd">58000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-1931" decimals="-3" id="f-9646" unitRef="usd">54000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedPercentOfNetAssets
+      contextRef="c-1931"
+      decimals="4"
+      id="f-9647"
+      unitRef="number">0.0000</us-gaap:InvestmentOwnedPercentOfNetAssets>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-1989" decimals="-3" id="f-9847" unitRef="usd">560000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-1989" decimals="-3" id="f-9848" unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-2019" decimals="-3" id="f-9907" unitRef="usd">37992000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-2019" decimals="-3" id="f-9908" unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount contextRef="c-2041" decimals="-3" id="f-9951" unitRef="usd">8483000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue contextRef="c-2041" decimals="-3" id="f-9952" unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount
+      contextRef="c-2077"
+      decimals="-3"
+      id="f-10023"
+      unitRef="usd">5937000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue
+      contextRef="c-2077"
+      decimals="-3"
+      id="f-10024"
+      unitRef="usd">59000</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount
+      contextRef="c-2084"
+      decimals="-3"
+      id="f-10037"
+      unitRef="usd">140000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue
+      contextRef="c-2084"
+      decimals="-3"
+      id="f-10038"
+      unitRef="usd">1000</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount
+      contextRef="c-2101"
+      decimals="-3"
+      id="f-10071"
+      unitRef="usd">3373000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue
+      contextRef="c-2101"
+      decimals="-3"
+      id="f-10072"
+      unitRef="usd">17000</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount
+      contextRef="c-2102"
+      decimals="-3"
+      id="f-10073"
+      unitRef="usd">3747000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue
+      contextRef="c-2102"
+      decimals="-3"
+      id="f-10074"
+      unitRef="usd">9000</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount
+      contextRef="c-2107"
+      decimals="-3"
+      id="f-10083"
+      unitRef="usd">302000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue
+      contextRef="c-2107"
+      decimals="-3"
+      id="f-10084"
+      unitRef="usd">4000</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount
+      contextRef="c-2118"
+      decimals="-3"
+      id="f-10105"
+      unitRef="usd">7125000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue
+      contextRef="c-2118"
+      decimals="-3"
+      id="f-10106"
+      unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount
+      contextRef="c-2123"
+      decimals="-3"
+      id="f-10115"
+      unitRef="usd">439000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue
+      contextRef="c-2123"
+      decimals="-3"
+      id="f-10116"
+      unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount
+      contextRef="c-2156"
+      decimals="-3"
+      id="f-10181"
+      unitRef="usd">206000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue
+      contextRef="c-2156"
+      decimals="-3"
+      id="f-10182"
+      unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount
+      contextRef="c-2199"
+      decimals="-3"
+      id="f-10267"
+      unitRef="usd">5508000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue
+      contextRef="c-2199"
+      decimals="-3"
+      id="f-10268"
+      unitRef="usd">41000</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount
+      contextRef="c-2201"
+      decimals="-3"
+      id="f-10271"
+      unitRef="usd">5435000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue
+      contextRef="c-2201"
+      decimals="-3"
+      id="f-10272"
+      unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount
+      contextRef="c-2261"
+      decimals="-3"
+      id="f-10391"
+      unitRef="usd">31000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue
+      contextRef="c-2261"
+      decimals="-3"
+      id="f-10392"
+      unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount
+      contextRef="c-2279"
+      decimals="-3"
+      id="f-10427"
+      unitRef="usd">91000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue
+      contextRef="c-2279"
+      decimals="-3"
+      id="f-10428"
+      unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount
+      contextRef="c-2340"
+      decimals="-3"
+      id="f-10549"
+      unitRef="usd">256000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue
+      contextRef="c-2340"
+      decimals="-3"
+      id="f-10550"
+      unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount
+      contextRef="c-2341"
+      decimals="-3"
+      id="f-10551"
+      unitRef="usd">241000</us-gaap:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount>
+    <bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue
+      contextRef="c-2341"
+      decimals="-3"
+      id="f-10552"
+      unitRef="usd">0</bxsl:InvestmentCompanyFinancialCommitmentToInvesteeFutureAmountFairValue>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-7" decimals="-3" id="f-10799" unitRef="usd">13856590000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-7" decimals="-3" id="f-10800" unitRef="usd">13364295000</us-gaap:InvestmentOwnedAtFairValue>
+    <us-gaap:InvestmentOwnedAtCost contextRef="c-7" decimals="-3" id="f-10911" unitRef="usd">13856590000</us-gaap:InvestmentOwnedAtCost>
+    <us-gaap:InvestmentOwnedAtFairValue contextRef="c-7" decimals="-3" id="f-10912" unitRef="usd">13364295000</us-gaap:InvestmentOwnedAtFairValue>
+</xbrl>

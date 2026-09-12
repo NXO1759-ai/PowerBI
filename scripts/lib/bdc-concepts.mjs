@@ -1875,23 +1875,35 @@ export const isFirstLien = RTCredit.isFirstLien;
 /* InvestmentIssuerAffiliationAxis member text, "Issuer name | affiliation". */
 export const AFFILIATION_CLASSES = ["non-controlled/non-affiliated", "non-controlled affiliated", "controlled"];
 
+/* The three classes of section 2(a)(9) and Rule 12-14 in every
+   spelling the schedules print: the axis members ("Non-Affiliated
+   Issuer", "Investment, Affiliated Issuer, Noncontrolled",
+   "Unaffiliated"), BXSL's "non-controlled/non-affiliated", MAIN's and
+   PSEC's "Control Investments" / "Affiliate Investments" /
+   "Non-Control/Non-Affiliate Investments", FDUS's "Non-control/Non-
+   affiliate Investments" member prefix, GAIN's "NON-CONTROL/NON-
+   AFFILIATE INVESTMENTS", BCIC's "Investments in Non-Control ...",
+   Saratoga's "Affiliate investments". The unaffiliated tests run
+   first: "Non-Affiliated" carries the word "affiliated". A bare
+   "Investments" or a company name says nothing and returns null. */
 export function classifyAffiliation(text) {
-  const t = text == null ? "" : String(text).toLowerCase();
-  if (/non[- ]?controlled/.test(t)) {
-    return /non[- ]?affiliated/.test(t) || !/affiliated/.test(t)
-      ? "non-controlled/non-affiliated" : "non-controlled affiliated";
-  }
-  if (/controlled/.test(t)) return "controlled";
-  if (/affiliated/.test(t)) return "non-controlled affiliated";
+  const t = text == null ? "" : String(text).toLowerCase().replace(/\s+/g, " ");
+  if (!/control|affiliat/.test(t)) return null;
+  if (/unaffiliat/.test(t) || /non[\s-]*affiliat/.test(t)) return "non-controlled/non-affiliated";
+  if (/non[\s-]*control/.test(t)) return /affiliat/.test(t) ? "non-controlled affiliated" : "non-controlled/non-affiliated";
+  if (/\bcontrol(?:led)?\b|controlled/.test(t)) return "controlled";
+  if (/affiliat/.test(t)) return "non-controlled affiliated";
   return null;
 }
 
 /* Holdings that are vehicles rather than loans to an operating company:
    joint ventures, senior loan programs, an asset manager, CLO equity, a
-   REIT. Shown as a share of fair value; excluded from every third-party
-   debt statistic. */
+   REIT, a filer's own lending vehicle or fund (OBDC's "Blue Owl Credit
+   SLF LLC", NMFC's "Investment Fund" and "Net Lease" membership
+   interests). Shown as a share of fair value; excluded from every
+   third-party debt statistic. */
 export const VEHICLE_PATTERN =
-  /joint venture|\bJV\b|\bSLP\b|senior (direct )?lending program|senior loan (program|fund)|asset manage(ment|r)|\bCLO\b|collateralized loan|\bREIT\b|real estate investment trust/i;
+  /joint venture|\bJV\b|\bSLP\b|\bSLF\b|senior (direct )?lending program|senior (secured )?loan (program|fund)|\b(?:credit|lending|loan|investment|income|debt|opportunit(?:y|ies)) fund\b|\bnet lease\b|asset manage(ment|r)|\bCLO\b|collateralized loan|\bREIT\b|real estate investment trust/i;
 
 export function isVehicle(text) {
   return VEHICLE_PATTERN.test(text == null ? "" : String(text));

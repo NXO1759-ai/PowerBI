@@ -1,0 +1,969 @@
+{
+ "ticker": "GLAD",
+ "cik": 1143513,
+ "name": "GLADSTONE CAPITAL CORP",
+ "period": "2026-06-30",
+ "form": "10-Q",
+ "accn": "0001143513-26-000012",
+ "filed": "2026-08-04",
+ "creditVersion": "1.1.0",
+ "rowSource": "dataset",
+ "sources": {
+  "dataset": {
+   "zip": "2026_08_bdc.zip",
+   "rows": 139,
+   "counts": {
+    "rows": 453,
+    "identifier": 265,
+    "atPeriod": 142,
+    "kept": 139
+   },
+   "dropped": {
+    "otherDate": 123,
+    "otherEntity": 0,
+    "subtotal": 0,
+    "cash": 1,
+    "fvOnly": 0,
+    "costOnly": 0,
+    "neither": 2
+   },
+   "extra": {
+    "costOnly": 0,
+    "cash": 0
+   }
+  },
+  "instance": null,
+  "table": {
+   "doc": "0001143513-26-000012.htm",
+   "period": null,
+   "tables": 6,
+   "rows": 137,
+   "subtotals": 42,
+   "scale": 1000,
+   "scaleFix": 1,
+   "totals": {
+    "cost": 968661000,
+    "fv": 953326000
+   },
+   "matched": 105,
+   "rate": 0.7554,
+   "stages": {
+    "numeric": 105,
+    "principal": 0,
+    "cost": 0,
+    "name": 0
+   },
+   "filled": {
+    "mat": 0,
+    "ind": 105,
+    "na": 0,
+    "lien": 66,
+    "aff": 0,
+    "rate": 0,
+    "acquired": 0,
+    "name": 0
+   },
+   "nonAccrualRows": 0,
+   "nonAccrualUnmatched": 0,
+   "unmatchedRows": 32,
+   "headers": {
+    "(unlabeled first column)": "issuer",
+    "principal/ shares/ units": "principal",
+    "cost": "cost",
+    "fair value": "fv"
+   },
+   "notes": [
+    "no schedule headed 2026-06-30; no heading date found"
+   ]
+  },
+  "rpage": {
+   "report": "R8.htm",
+   "longName": "0000008 - Statement - CONSOLIDATED SCHEDULE OF INVESTMENTS",
+   "period": "2026-06-30",
+   "rows": 139,
+   "fvOnly": 1,
+   "matched": 115,
+   "exact": 1,
+   "filled": {
+    "na": 9,
+    "ind": 0
+   },
+   "nonAccrualRows": 9,
+   "industries": 7,
+   "issuers": 0,
+   "notes": [
+    "identifier members are not nested under an industry; industry per position comes from the main table"
+   ],
+   "usedFor": [
+    "non-accrual"
+   ]
+  }
+ },
+ "gate": {
+  "passed": true,
+  "tolerance": 0.005,
+  "tagSource": "company file",
+  "variant": "tagged rows",
+  "cost": {
+   "sum": 968661000,
+   "tag": 968661000,
+   "diffPct": 0
+  },
+  "fv": {
+   "sum": 953326000,
+   "tag": 953326000,
+   "diffPct": 0
+  },
+  "rows": 139,
+  "subtotalRowsDropped": 0,
+  "dropped": {
+   "otherDate": 123,
+   "otherEntity": 0,
+   "subtotal": 0,
+   "cash": 1,
+   "fvOnly": 0,
+   "costOnly": 0,
+   "neither": 2
+  },
+  "tried": [
+   {
+    "variant": "tagged rows",
+    "n": 139,
+    "cost": {
+     "sum": 968661000,
+     "tag": 968661000,
+     "diffPct": 0
+    },
+    "fv": {
+     "sum": 953326000,
+     "tag": 953326000,
+     "diffPct": 0
+    },
+    "reason": null
+   }
+  ]
+ },
+ "summary": {
+  "portfolioCost": 968661000,
+  "portfolioFv": 953326000,
+  "holdings": 139,
+  "thirdPartyDebtCost": 877169000,
+  "thirdPartyDebtFv": 852034000,
+  "thirdPartyDebtHoldings": 90,
+  "count": 60,
+  "countAll": 61,
+  "countDebt": 49,
+  "namesUnsplit": 0,
+  "nonAccrual": {
+   "cost": 50485000,
+   "fv": 30554000,
+   "n": 9,
+   "issuers": 5,
+   "ofTotalCost": 0.0521,
+   "ofTotalFv": 0.032,
+   "ofDebtCost": 0.0576,
+   "ofDebtFv": 0.0359,
+   "source": "rpage"
+  },
+  "wa": {
+   "yieldAtCost": null,
+   "yieldAtFv": null,
+   "spreadCostWeighted": 0.0762,
+   "floatingShare": 0.8291,
+   "pikContractual": null,
+   "n": {
+    "yield": 0,
+    "spread": 67,
+    "debt": 90
+   },
+   "yieldCoverage": 0,
+   "yieldNote": "withheld: rows with a tagged principal and rate carry 0% of accruing third-party debt cost, under the 80% floor"
+  },
+  "lien": {
+   "classes": {
+    "first lien": {
+     "cost": 663485000,
+     "share": 0.7564,
+     "shareOfPortfolio": 0.685
+    },
+    "second lien": {
+     "cost": 185990000,
+     "share": 0.212,
+     "shareOfPortfolio": 0.192
+    },
+    "unsecured": {
+     "cost": 594000,
+     "share": 0.0007,
+     "shareOfPortfolio": 0.0006
+    },
+    "unclassified": {
+     "cost": 27100000,
+     "share": 0.0309,
+     "shareOfPortfolio": 0.028
+    }
+   },
+   "total": 877169000,
+   "portfolioCost": 968661000,
+   "firstLienShare": 0.7564,
+   "firstLienShareOfPortfolio": 0.685,
+   "unclassifiedShare": 0.0309
+  },
+  "industry": [
+   {
+    "name": "Diversified/Conglomerate Manufacturing",
+    "fv": 282954000,
+    "share": 0.2968
+   },
+   {
+    "name": "Healthcare, Education, and Childcare",
+    "fv": 213268000,
+    "share": 0.2237
+   },
+   {
+    "name": "Diversified/Conglomerate Service",
+    "fv": 130097000,
+    "share": 0.1365
+   },
+   {
+    "name": "Beverage, Food, and Tobacco",
+    "fv": 86132000,
+    "share": 0.0903
+   },
+   {
+    "name": "Cargo Transportation",
+    "fv": 50000000,
+    "share": 0.0524
+   },
+   {
+    "name": "Home and Office Furnishings, Housewares and Durable Consumer Products",
+    "fv": 34793000,
+    "share": 0.0365
+   },
+   {
+    "name": "Machinery",
+    "fv": 25018000,
+    "share": 0.0262
+   },
+   {
+    "name": "Personal, Food, and Miscellaneous Services",
+    "fv": 22493000,
+    "share": 0.0236
+   },
+   {
+    "name": "Ecological",
+    "fv": 18201000,
+    "share": 0.0191
+   },
+   {
+    "name": "Personal and Non-Durable Consumer Products (Manufacturing Only)",
+    "fv": 16246000,
+    "share": 0.017
+   },
+   {
+    "name": "other",
+    "fv": 37323000,
+    "share": 0.0392
+   },
+   {
+    "name": "n/a",
+    "fv": 36801000,
+    "share": 0.0386
+   }
+  ],
+  "industrySource": "table",
+  "maturity": {
+   "2026": 0,
+   "2027": 0,
+   "2028": 0,
+   "2029": 0,
+   "2030": 0,
+   "2031-2033": 0,
+   "later": 0,
+   "n/a": 877169000,
+   "excluded": 0,
+   "total": 877169000,
+   "dated": 0,
+   "unfunded": null,
+   "shares": null
+  },
+  "maturitySource": null,
+  "vehicles": {
+   "fv": 4945000,
+   "share": 0.0052
+  },
+  "structured": {
+   "fv": 0,
+   "share": 0
+  },
+  "equity": {
+   "fv": 96347000,
+   "share": 0.1011
+  },
+  "top10": {
+   "fv": 358730000,
+   "share": 0.3763
+  },
+  "affiliation": null,
+  "affiliationClasses": [],
+  "affiliationSource": null,
+  "unfunded": {
+   "total": 0,
+   "holdings": 0
+  },
+  "pik": {
+   "holdings": 15,
+   "cost": 159391000
+  },
+  "histogram": {
+   "byCount": {
+    "200-250": 0.0448,
+    "600-650": 0.1791,
+    "650-700": 0.2388,
+    "700-750": 0.1045,
+    "750-800": 0.0597,
+    "800-850": 0.1194,
+    "850-900": 0.0448,
+    "950-1000": 0.1045,
+    "1000+": 0.1045
+   },
+   "byCost": {
+    "200-250": 0.0107,
+    "600-650": 0.1343,
+    "650-700": 0.2896,
+    "700-750": 0.1309,
+    "750-800": 0.1661,
+    "800-850": 0.0608,
+    "850-900": 0.0048,
+    "950-1000": 0.0762,
+    "1000+": 0.1266
+   },
+   "n": 67,
+   "cost": 727278000
+  },
+  "vsProse": {
+   "yieldAtCost": null,
+   "yieldAtFv": null,
+   "floatingShare": null,
+   "floatingShareBasis": null,
+   "nonAccrualCost": 0.052,
+   "nonAccrualFv": 0.031,
+   "nonAccrualOf": "debt",
+   "portfolioCompanies": 59
+  }
+ },
+ "tableUnmatched": {
+  "rows": [
+   {
+    "issuer": "Wings &#8216;N More Restaurants LLC - Line of Credit, $ 1,500 available (S + 8.3 %, 11.9 % Cash, Due 11/2029)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Beverage, Food, and Tobacco",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 0,
+    "cost": 0,
+    "fv": 0,
+    "page": 1,
+    "src": "table"
+   },
+   {
+    "issuer": "GFRC 360, LLC - Term Debt (S + 8.0 %, 11.7 % Cash, Due 9/2026)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Buildings and Real Estate",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 1000000,
+    "cost": 1000000,
+    "fv": 1000000,
+    "page": 1,
+    "src": "table"
+   },
+   {
+    "issuer": "IMX Power Holdings Inc. - Delayed Draw Term Loan, $ 3,000 available ( 11.0 % Cash, Due 1/2031)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Diversified/Conglomerate Manufacturing",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 0,
+    "cost": 0,
+    "fv": 0,
+    "page": 1,
+    "src": "table"
+   },
+   {
+    "issuer": "NeoGraf Solutions LLC - Line of Credit, $ 3,500 available (S + 7.0 %, 10.7 % Cash, Due 1/2028)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Diversified/Conglomerate Manufacturing",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 1000000,
+    "cost": 1000000,
+    "fv": 1000000,
+    "page": 1,
+    "src": "table"
+   },
+   {
+    "issuer": "OneSource HoldCo, LLC - Line of Credit, $ 1,000 available ( 11.5 % Cash, Due 4/2031)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Diversified/Conglomerate Manufacturing",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 1000000,
+    "cost": 1000000,
+    "fv": 1000000,
+    "page": 1,
+    "src": "table"
+   },
+   {
+    "issuer": "SPC Excelus Holdings Inc. - Line of Credit, $ 4,000 available (S + 6.8 %, 10.4 % Cash, Due 5/2031)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Diversified/Conglomerate Manufacturing",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 0,
+    "cost": 0,
+    "fv": 0,
+    "page": 1,
+    "src": "table"
+   },
+   {
+    "issuer": "SWECO Worldwide, Inc. - Line of Credit, $ 6,000 available (S + 6.5 %, 10.2 % Cash, Due 4/2031)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Diversified/Conglomerate Manufacturing",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 0,
+    "cost": 0,
+    "fv": 0,
+    "page": 1,
+    "src": "table"
+   },
+   {
+    "issuer": "Torrent Photonics Holdco LLC - Delayed Draw Term Loan, $ 500 available ( 12.0 % Cash, Due 9/2026)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Diversified/Conglomerate Manufacturing",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 750000,
+    "cost": 750000,
+    "fv": 750000,
+    "page": 1,
+    "src": "table"
+   },
+   {
+    "issuer": "Viva Railings, LLC - Line of Credit, $ 4,000 available (S + 6.4 %, 10.0 % Cash, Due 11/2027)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Diversified/Conglomerate Manufacturing",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 0,
+    "cost": 0,
+    "fv": 0,
+    "page": 1,
+    "src": "table"
+   },
+   {
+    "issuer": "RF Technologies, LLC - Line of Credit, $ 3,500 available (S + 6.7 %, 10.3 % Cash, Due 6/2030)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Diversified/Conglomerate Service",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 0,
+    "cost": 0,
+    "fv": 0,
+    "page": 1,
+    "src": "table"
+   },
+   {
+    "issuer": "WorkforceQA, LLC - Line of Credit, $ 2,000 available (S + 6.5 %, 10.2 % Cash, Due 12/2029)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Diversified/Conglomerate Service",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 0,
+    "cost": 0,
+    "fv": 0,
+    "page": 2,
+    "src": "table"
+   },
+   {
+    "issuer": "ALS Education, LLC - Line of Credit, $ 3,000 available (S + 6.3 %, 9.9 % Cash, Due 12/2028)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Healthcare, Education, and Childcare",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 0,
+    "cost": 0,
+    "fv": 0,
+    "page": 2,
+    "src": "table"
+   },
+   {
+    "issuer": "ALS Education, LLC - Delayed Draw Term Loan, $ 6,000 available (S + 6.3 %, 9.9 % Cash, Due 12/2028)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Healthcare, Education, and Childcare",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 0,
+    "cost": 0,
+    "fv": 0,
+    "page": 2,
+    "src": "table"
+   },
+   {
+    "issuer": "Ascendia Autism Care Partners LLC - Line of Credit, $ 1,500 available (S + 8.5 %, 12.2 % Cash, Due 6/2031)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Healthcare, Education, and Childcare",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 0,
+    "cost": 0,
+    "fv": 0,
+    "page": 2,
+    "src": "table"
+   },
+   {
+    "issuer": "Ascendia Autism Care Partners LLC - Term Debt (S + 8.5 %, 12.2 % Cash, Due 6/2031)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Healthcare, Education, and Childcare",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 3500000,
+    "cost": 3500000,
+    "fv": 3500000,
+    "page": 2,
+    "src": "table"
+   },
+   {
+    "issuer": "Ascendia Autism Care Partners LLC - Delayed Draw Term Loan, $ 3,500 available (S + 8.5 %, 12.2 % Cash, Due 6/2031)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Healthcare, Education, and Childcare",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 0,
+    "cost": 0,
+    "fv": 0,
+    "page": 2,
+    "src": "table"
+   },
+   {
+    "issuer": "Turn Key Health Clinics, LLC - Line of Credit, $ 5,000 available (S + 6.8 %, 10.4 % Cash, Due 11/2030)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Healthcare, Education, and Childcare",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 0,
+    "cost": 0,
+    "fv": 0,
+    "page": 2,
+    "src": "table"
+   },
+   {
+    "issuer": "Arc Drilling Holdings LLC - Line of Credit, $ 4,250 available (S + 7.0 %, 10.7 % Cash, Due 9/2029)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Machinery",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 750000,
+    "cost": 750000,
+    "fv": 750000,
+    "page": 2,
+    "src": "table"
+   },
+   {
+    "issuer": "SPC Excelus Holdings Inc. - Preferred Equity",
+    "type": null,
+    "lien": "Preferred Equity",
+    "industry": "Diversified/Conglomerate Manufacturing",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 143,
+    "cost": 2000000,
+    "fv": 2000000,
+    "page": 3,
+    "src": "table"
+   },
+   {
+    "issuer": "GFRC 360, LLC - Common Stock Warrants",
+    "type": null,
+    "lien": "Common Equity",
+    "industry": "Buildings and Real Estate",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": null,
+    "cost": 0,
+    "fv": 0,
+    "page": 4,
+    "src": "table"
+   },
+   {
+    "issuer": "SWECO Worldwide, Inc. - Common Equity",
+    "type": null,
+    "lien": "Common Equity",
+    "industry": "Diversified/Conglomerate Manufacturing",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 2000000,
+    "cost": 2000000,
+    "fv": 2000000,
+    "page": 4,
+    "src": "table"
+   },
+   {
+    "issuer": "Ascendia Autism Care Partners LLC - Common Equity",
+    "type": null,
+    "lien": "Common Equity",
+    "industry": "Healthcare, Education, and Childcare",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 3500000,
+    "cost": 3500000,
+    "fv": 3500000,
+    "page": 4,
+    "src": "table"
+   },
+   {
+    "issuer": "B+T Group Acquisition, Inc. (L) - Common Stock Warrant",
+    "type": null,
+    "lien": "Common Equity",
+    "industry": "Telecommunications",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": null,
+    "cost": 0,
+    "fv": 0,
+    "page": 4,
+    "src": "table"
+   },
+   {
+    "issuer": "Zero Case Holding Inc. - Line of Credit, $ 1,000 available (S + 6.4 %, 10.1 % Cash, Due 7/2030)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Diversified/Conglomerate Manufacturing",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 0,
+    "cost": 0,
+    "fv": 0,
+    "page": 4,
+    "src": "table"
+   },
+   {
+    "issuer": "Engineering Manufacturing Technologies, LLC - Line of Credit, $ 3,000 available (S + 8.3 %, 11.9 % Cash, Due 12/2029)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Diversified/Conglomerate Manufacturing",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 0,
+    "cost": 0,
+    "fv": 0,
+    "page": 5,
+    "src": "table"
+   },
+   {
+    "issuer": "TNCP Intermediate HoldCo, LLC - Line of Credit, $ 2,000 available ( 11.0 % Cash, Due 10/2027)",
+    "type": null,
+    "lien": "Secured First Lien Debt",
+    "industry": "Printing and Publishing",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 0,
+    "cost": 0,
+    "fv": 0,
+    "page": 5,
+    "src": "table"
+   },
+   {
+    "issuer": "Lonestar EMS, LLC - Common Units",
+    "type": null,
+    "lien": "Common Equity",
+    "industry": "Diversified/Conglomerate Manufacturing",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": null,
+    "cost": 9750000,
+    "fv": 0,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "Technical Resource Management, LLC - Common Stock",
+    "type": null,
+    "lien": "Common Equity",
+    "industry": "Healthcare, Education, and Childcare",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 2000000,
+    "cost": 2000000,
+    "fv": 0,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "Technical Resource Management, LLC - Common Warrants",
+    "type": null,
+    "lien": "Common Equity",
+    "industry": "Healthcare, Education, and Childcare",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 4558041,
+    "cost": 0,
+    "fv": 0,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "Technical Resource Management, LLC - Common Warrants",
+    "type": null,
+    "lien": "Common Equity",
+    "industry": "Healthcare, Education, and Childcare",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": null,
+    "cost": 2000000,
+    "fv": 0,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "TNCP Intermediate HoldCo, LLC - Common Equity Units",
+    "type": "First Citizens Premium Money Market Savings ( 3.25 % market yield)",
+    "lien": "CASH EQUIVALENTS",
+    "industry": null,
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 1253000,
+    "cost": 1253000,
+    "fv": 1253000,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "Dreyfus Treasury Obligations Cash Management Fund ( 3.29 % market yield)",
+    "type": null,
+    "lien": "CASH EQUIVALENTS",
+    "industry": null,
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 888000,
+    "cost": 888000,
+    "fv": 888000,
+    "page": 6,
+    "src": "table"
+   }
+  ],
+  "nonAccrualRows": 0,
+  "note": "printed rows that matched no tagged holding, kept whole with their columns (src \"table\", non-accrual first) and never summed; the gate's sums stay the tagged sums"
+ },
+ "notes": [],
+ "keys": {
+  "holding": {
+   "id": "id",
+   "issuer": "k",
+   "name": "n",
+   "aff": "a",
+   "kind": "t",
+   "lien": "l",
+   "facility": "f",
+   "industry": "i",
+   "rate": "r",
+   "spread": "sp",
+   "floor": "fl",
+   "pik": "pk",
+   "base": "b",
+   "principal": "p",
+   "cost": "c",
+   "fv": "v",
+   "pctNav": "nv",
+   "unfunded": "u",
+   "acquired": "ad",
+   "maturity": "m",
+   "nonAccrual": "na",
+   "floating": "fr",
+   "units": "un",
+   "src": "s",
+   "fvUntagged": "fvu",
+   "costUntagged": "cu",
+   "cashEquivalent": "ce"
+  },
+  "lien": {
+   "class": "c",
+   "subclass": "s",
+   "raw": "r"
+  },
+  "src": {
+   "row": "w",
+   "table": "t",
+   "r": "r",
+   "na": "na",
+   "ind": "i",
+   "mat": "m",
+   "unf": "u",
+   "rt": "rt",
+   "ds": "ds",
+   "val": "vl",
+   "nm": "nm",
+   "af": "af"
+  },
+  "note": "short keys per blueprint 7.4; a key absent from a row is null (floating: false); src.t and src.r absent mean false, src.na absent means none; src.vl \"table\" marks a fair value the filer left untagged and the printed schedule supplied; src.nm \"table\" marks an issuer name the printed row supplied; src.af \"issuer\" marks an affiliation taken from the issuer's other tranches; the issuer key (H1 `issuer`) is not written — it is normalizeIssuer(n), which expandHolding restores"
+ },
+ "holdings": [
+{"id":"ALS Education, LLC Delayed Draw Term Loan","n":"ALS Education, LLC","t":"debt","l":{"r":"Delayed Draw Term Loan"},"f":"delayed draw","sp":0.063,"p":0,"c":0,"v":0,"fr":true,"s":{"w":"dataset","r":true}},
+{"id":"ALS Education, LLC Line of Credit","n":"ALS Education, LLC","t":"debt","l":{"r":"Line of Credit"},"sp":0.063,"p":0,"c":0,"v":0,"fr":true,"s":{"w":"dataset"}},
+{"id":"ALS Education, LLC Term Debt","n":"ALS Education, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Healthcare, Education, and Childcare","sp":0.063,"p":30360000,"c":30360000,"v":30360000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Alsay Incorporated Preferred Stock","n":"Alsay Incorporated","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Diversified/Conglomerate Service","p":5000000,"c":5000000,"v":7029000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Alsay Incorporated Term Debt","n":"Alsay Incorporated","t":"debt","l":{"c":"second lien","r":"Term Debt"},"i":"Diversified/Conglomerate Service","p":10000000,"c":10000000,"v":10000000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Altior Healthcare, LLC Term Debt","n":"Altior Healthcare, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Healthcare, Education, and Childcare","sp":0.065,"p":46000000,"c":46000000,"v":46460000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Arc Drilling Holdings LLC Common Stock","n":"Arc Drilling Holdings LLC","t":"equity","l":{"c":"equity","r":"Common Stock"},"i":"Machinery","c":5333000,"v":9161000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Arc Drilling Holdings LLC Line of Credit","n":"Arc Drilling Holdings LLC","t":"debt","l":{"r":"Line of Credit"},"sp":0.07,"p":750000,"c":750000,"v":750000,"fr":true,"s":{"w":"dataset"}},
+{"id":"Arc Drilling Holdings LLC Term Debt","n":"Arc Drilling Holdings LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Machinery","sp":0.07,"p":15700000,"c":15700000,"v":15857000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Ascendia Autism Care Partners LLC Delayed Draw Term Loan","n":"Ascendia Autism Care Partners LLC","t":"debt","l":{"r":"Delayed Draw Term Loan"},"f":"delayed draw","sp":0.085,"p":0,"c":0,"v":0,"fr":true,"s":{"w":"dataset"}},
+{"id":"Ascendia Autism Care Partners LLC Line of Credit","n":"Ascendia Autism Care Partners LLC","t":"debt","l":{"r":"Line of Credit"},"sp":0.085,"p":0,"c":0,"v":0,"fr":true,"s":{"w":"dataset"}},
+{"id":"Ascendia Autism Care Partners LLC Term Debt","n":"Ascendia Autism Care Partners LLC","t":"debt","l":{"r":"Term Debt"},"sp":0.085,"p":3500000,"c":3500000,"v":3500000,"fr":true,"s":{"w":"dataset"}},
+{"id":"Ascendia Autism Care Partners LLC Common Equity","n":"Ascendia Autism Care Partners LLC","t":"equity","l":{"c":"equity","r":"Common Equity"},"c":3500000,"v":3500000,"s":{"w":"dataset"}},
+{"id":"Axios Industrial Group, LLC Term Debt 1","n":"Axios Industrial Group, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt 1"},"i":"Diversified/Conglomerate Service","sp":0.116,"p":17662000,"c":17662000,"v":17662000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Axios Industrial Group, LLC Term Debt 2","n":"Axios Industrial Group, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt 2"},"i":"Diversified/Conglomerate Service","pk":0.2,"p":2956000,"c":2956000,"v":2956000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"B+T Group Acquisition, Inc Preferred Stock","n":"B+T Group Acquisition, Inc","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Telecommunications","c":2024000,"v":0,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"B+T Group Acquisition, Inc. Common Stock Warrant","n":"B+T Group Acquisition, Inc.","t":"equity","l":{"c":"equity","r":"Common Stock Warrant"},"c":0,"v":0,"s":{"w":"dataset","r":true}},
+{"id":"B+T Group Acquisition, Inc. Line of Credit 1","n":"B+T Group Acquisition, Inc.","t":"debt","l":{"c":"first lien","r":"Line of Credit 1"},"i":"Telecommunications","sp":0.02,"p":1320000,"c":1320000,"v":543000,"na":true,"fr":true,"s":{"w":"dataset","t":true,"r":true,"na":"rpage","i":"table"}},
+{"id":"B+T Group Acquisition, Inc. Line of Credit 2","n":"B+T Group Acquisition, Inc.","t":"debt","l":{"c":"first lien","r":"Line of Credit 2"},"i":"Telecommunications","sp":0.02,"p":450000,"c":450000,"v":185000,"na":true,"fr":true,"s":{"w":"dataset","t":true,"r":true,"na":"rpage","i":"table"}},
+{"id":"B+T Group Acquisition, Inc. Term Debt","n":"B+T Group Acquisition, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Telecommunications","sp":0.02,"p":6000000,"c":6000000,"v":2469000,"na":true,"fr":true,"s":{"w":"dataset","t":true,"r":true,"na":"rpage","i":"table"}},
+{"id":"Canopy Safety Brands, LLC Common Stock","n":"Canopy Safety Brands, LLC","t":"equity","l":{"c":"equity","r":"Common Stock"},"i":"Personal and Non-Durable Consumer Products (Manufacturing Only)","c":800000,"v":5487000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Canopy Safety Brands, LLC Preferred Stock","n":"Canopy Safety Brands, LLC","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Personal and Non-Durable Consumer Products (Manufacturing Only)","c":500000,"v":966000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Clean Water Environmental Services, Inc. Term Debt","n":"Clean Water Environmental Services, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Ecological","sp":0.073,"p":18000000,"c":18000000,"v":18201000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Defiance Integrated Technologies, Inc. Common Stock","n":"Defiance Integrated Technologies, Inc.","t":"equity","l":{"c":"equity","r":"Common Stock"},"i":"Automobile","c":581000,"v":0,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Defiance Integrated Technologies, Inc. Term Debt","n":"Defiance Integrated Technologies, Inc.","t":"debt","l":{"c":"second lien","r":"Term Debt"},"i":"Automobile","sp":0.096,"p":8792000,"c":8792000,"v":7446000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Dutch Gold Honey, Inc. Common Stock","n":"Dutch Gold Honey, Inc.","t":"equity","l":{"c":"equity","r":"Common Stock"},"i":"Beverage, Food, and Tobacco","c":115000,"v":9677000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Dutch Gold Honey, Inc. Term Debt","n":"Dutch Gold Honey, Inc.","t":"debt","l":{"c":"second lien","r":"Term Debt"},"i":"Beverage, Food, and Tobacco","sp":0.075,"p":24300000,"c":24300000,"v":24785000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Edge Adhesives Holdings, Inc. Preferred Stock","n":"Edge Adhesives Holdings, Inc.","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Diversified/Conglomerate Manufacturing","c":5466000,"v":0,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Edge Adhesives Holdings, Inc. Term Debt","n":"Edge Adhesives Holdings, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Manufacturing","p":6140000,"c":6140000,"v":336000,"na":true,"s":{"w":"dataset","t":true,"r":true,"na":"rpage","i":"table"}},
+{"id":"Eegee Acquisition Corp. Common Stock","n":"Eegee Acquisition Corp.","t":"equity","l":{"c":"equity","r":"Common Stock"},"i":"Beverage, Food, and Tobacco","c":8500000,"v":0,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Eegee Acquisition Corp. Line of Credit","n":"Eegee Acquisition Corp.","t":"debt","l":{"c":"first lien","r":"Line of Credit"},"i":"Beverage, Food, and Tobacco","sp":0.07,"p":15550000,"c":15550000,"v":11961000,"na":true,"fr":true,"s":{"w":"dataset","t":true,"r":true,"na":"rpage","i":"table"}},
+{"id":"Encore Dredging Holdings, LLC Preferred Stock","n":"Encore Dredging Holdings, LLC","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Diversified/Conglomerate Service","c":3840000,"v":7218000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Engineering Manufacturing Technologies, LLC Common Stock","n":"Engineering Manufacturing Technologies, LLC","t":"equity","l":{"c":"equity","r":"Common Stock"},"i":"Diversified/Conglomerate Manufacturing","c":3000000,"v":0,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Engineering Manufacturing Technologies, LLC Delayed Draw Term Loan","n":"Engineering Manufacturing Technologies, LLC","t":"debt","l":{"c":"first lien","r":"Delayed Draw Term Loan"},"f":"delayed draw","i":"Diversified/Conglomerate Manufacturing","sp":0.083,"pk":0.039,"p":4003000,"c":4003000,"v":3717000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Engineering Manufacturing Technologies, LLC Line of Credit","n":"Engineering Manufacturing Technologies, LLC","t":"debt","l":{"r":"Line of Credit"},"sp":0.083,"p":0,"c":0,"v":0,"fr":true,"s":{"w":"dataset"}},
+{"id":"Engineering Manufacturing Technologies, LLC Term Debt","n":"Engineering Manufacturing Technologies, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Manufacturing","sp":0.083,"pk":0.039,"p":26682000,"c":26682000,"v":24772000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Flexible Technology Solutions, LLC Preferred Stock","n":"Flexible Technology Solutions, LLC","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Diversified/Conglomerate Service","c":2250000,"v":2250000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Flexible Technology Solutions, LLC Term Debt","n":"Flexible Technology Solutions, LLC","t":"debt","l":{"c":"second lien","r":"Term Debt"},"i":"Diversified/Conglomerate Service","p":9000000,"c":9000000,"v":8868000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Foodservices Brand Group, LLC Line of Credit","n":"Foodservices Brand Group, LLC","t":"debt","l":{"c":"first lien","r":"Line of Credit"},"i":"Home and Office Furnishings, Housewares and Durable Consumer Products","sp":0.065,"p":5000000,"c":5000000,"v":5024000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Foodservices Brand Group, LLC Term Debt","n":"Foodservices Brand Group, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Home and Office Furnishings, Housewares and Durable Consumer Products","sp":0.065,"p":29625000,"c":29625000,"v":29769000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Freedom Dental Management, Inc. Term Debt","n":"Freedom Dental Management, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Healthcare, Education, and Childcare","sp":0.075,"p":15000000,"c":15000000,"v":15150000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Frontier Financial Group Inc. Convertible Debt","n":"Frontier Financial Group Inc. Convertible Debt","t":"debt","l":{"c":"unsecured","r":"Unsecured Debt"},"i":"Diversified/Conglomerate Service","p":198000,"c":198000,"v":16000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Frontier Financial Group Inc. Preferred Stock","n":"Frontier Financial Group Inc.","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Diversified/Conglomerate Service","c":500000,"v":0,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"GFRC 360, LLC Common Stock Warrants","n":"GFRC 360, LLC","t":"equity","l":{"c":"equity","r":"Common Stock Warrants"},"c":0,"v":0,"s":{"w":"dataset"}},
+{"id":"GFRC 360, LLC Line of Credit","n":"GFRC 360, LLC","t":"debt","l":{"c":"first lien","r":"Line of Credit"},"i":"Buildings and Real Estate","sp":0.08,"p":1355000,"c":1355000,"v":1355000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"GFRC 360, LLC Preferred Stock","n":"GFRC 360, LLC","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Buildings and Real Estate","c":1025000,"v":25000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"GFRC 360, LLC Term Debt","n":"GFRC 360, LLC","t":"debt","l":{"r":"Term Debt"},"sp":0.08,"p":1000000,"c":1000000,"v":1000000,"fr":true,"s":{"w":"dataset"}},
+{"id":"Giving Home Health Care, LLC Common Stock","n":"Giving Home Health Care, LLC","t":"equity","l":{"c":"equity","r":"Common Stock"},"i":"Healthcare, Education, and Childcare","c":0,"v":7444000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Gladstone Alternative Income Fund Common Stock","n":"Gladstone Alternative Income Fund","t":"vehicle","l":{"c":"equity","r":"Common Stock"},"i":"Finance","c":5000000,"v":4945000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"GSM MidCo LLC Common Stock","n":"GSM MidCo LLC","t":"equity","l":{"c":"equity","r":"Common Stock"},"i":"Healthcare, Education, and Childcare","c":767000,"v":2107000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"HH-Inspire Acquisition, Inc. Line of Credit","n":"HH-Inspire Acquisition, Inc.","t":"debt","l":{"c":"first lien","r":"Line of Credit"},"i":"Healthcare, Education, and Childcare","sp":0.095,"pk":0.015,"p":1887000,"c":1887000,"v":1801000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"HH-Inspire Acquisition, Inc. Preferred Stock","n":"HH-Inspire Acquisition, Inc.","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Healthcare, Education, and Childcare","c":2604000,"v":2530000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"HH-Inspire Acquisition, Inc. Term Debt","n":"HH-Inspire Acquisition, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Healthcare, Education, and Childcare","sp":0.095,"pk":0.015,"p":19961000,"c":19898000,"v":19050000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Imperative Holdings Corporation Preferred Equity Units","n":"Imperative Holdings Corporation Preferred Equity Units","t":"equity","l":{"c":"equity","r":"Preferred Equity"},"i":"Oil and Gas","c":488000,"v":1723000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Imperative Holdings Corporation Term Debt","n":"Imperative Holdings Corporation","t":"debt","l":{"c":"second lien","r":"Term Debt"},"i":"Oil and Gas","sp":0.098,"p":11765000,"c":11716000,"v":11765000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"IMX Power Holdings Inc. Delayed Draw Term Loan","n":"IMX Power Holdings Inc.","t":"debt","l":{"r":"Delayed Draw Term Loan"},"f":"delayed draw","p":0,"c":0,"v":0,"s":{"w":"dataset"}},
+{"id":"IMX Power Holdings Inc. Line of Credit","n":"IMX Power Holdings Inc.","t":"debt","l":{"c":"first lien","r":"Line of Credit"},"i":"Diversified/Conglomerate Manufacturing","p":500000,"c":500000,"v":495000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"IMX Power Holdings Inc. Term Debt","n":"IMX Power Holdings Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Manufacturing","p":6000000,"c":6000000,"v":5935000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Incodema3D Holdings, Inc. Term Debt","n":"Incodema3D Holdings, Inc.","t":"debt","l":{"c":"second lien","r":"Term Debt"},"i":"Diversified/Conglomerate Manufacturing","pk":0.02,"p":10049000,"c":10049000,"v":10148000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Lonestar EMS, LLC Term Debt","n":"Lonestar EMS, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Manufacturing","p":4450000,"c":4450000,"v":3842000,"na":true,"s":{"w":"dataset","t":true,"r":true,"na":"rpage","i":"table"}},
+{"id":"Lonestar EMS, LLC Common Units","n":"Lonestar EMS, LLC","t":"equity","l":{"c":"equity","r":"Common Units"},"i":"Diversified/Conglomerate Manufacturing","c":6750000,"v":0,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Lonestar EMS, LLC Line of Credit","n":"Lonestar EMS, LLC","t":"debt","l":{"c":"first lien","r":"Line of Credit"},"i":"Diversified/Conglomerate Manufacturing","p":1650000,"c":1650000,"v":1425000,"na":true,"s":{"w":"dataset","t":true,"r":true,"na":"rpage","i":"table"}},
+{"id":"MASSiv Brands, LLC Term Debt","n":"MASSiv Brands, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Service","pk":0.05,"p":26284000,"c":26284000,"v":25922000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"NeoGraf Solutions LLC Common Stock","n":"NeoGraf Solutions LLC","t":"equity","l":{"c":"equity","r":"Common Stock"},"i":"Diversified/Conglomerate Manufacturing","c":2083000,"v":624000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"NeoGraf Solutions LLC Line of Credit","n":"NeoGraf Solutions LLC","t":"debt","l":{"r":"Line of Credit"},"sp":0.07,"p":1000000,"c":1000000,"v":1000000,"fr":true,"s":{"w":"dataset"}},
+{"id":"NeoGraf Solutions LLC Term Debt","n":"NeoGraf Solutions LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Manufacturing","sp":0.07,"p":27263000,"c":27263000,"v":27263000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"OCI, LLC Common Units","n":"OCI, LLC","t":"equity","l":{"c":"equity","r":"Common Units"},"i":"Diversified/Conglomerate Manufacturing","c":1111000,"v":3176000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"OCI, LLC Term Debt 2","n":"OCI, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt 2"},"i":"Diversified/Conglomerate Manufacturing","sp":0.075,"p":32000000,"c":32000000,"v":32000000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"OCI, LLC Term Debt","n":"OCI, LLC","t":"debt","l":{"c":"second lien","r":"Term Debt"},"i":"Diversified/Conglomerate Manufacturing","pk":0.07,"p":2442000,"c":2442000,"v":2509000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Ohio Armor Holdings, LLC Common Equity","n":"Ohio Armor Holdings, LLC","t":"equity","l":{"c":"equity","r":"Common Equity"},"i":"Aerospace and Defense","c":1000000,"v":1829000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"OneSource HoldCo LLC Common Equity","n":"OneSource HoldCo LLC","t":"equity","l":{"c":"equity","r":"Common Equity"},"i":"Diversified/Conglomerate Manufacturing","c":213000,"v":213000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"OneSource HoldCo, LLC Line of Credit","n":"OneSource HoldCo, LLC","t":"debt","l":{"r":"Line of Credit"},"p":1000000,"c":1000000,"v":1000000,"s":{"w":"dataset"}},
+{"id":"OneSource HoldCo, LLC Term Debt","n":"OneSource HoldCo, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Manufacturing","p":12500000,"c":12500000,"v":12500000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Pan-Am Dental, LLC Preferred Stock","n":"Pan-Am Dental, LLC","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Healthcare, Education, and Childcare","c":5909000,"v":6669000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Pan-Am Dental, LLC Term Debt","n":"Pan-Am Dental, LLC","t":"debt","l":{"c":"second lien","r":"Term Debt"},"i":"Healthcare, Education, and Childcare","p":23000000,"c":23000000,"v":22823000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Quality Environmental Midco, Inc. Preferred Equity","n":"Quality Environmental Midco, Inc.","t":"equity","l":{"c":"equity","r":"Preferred Equity"},"i":"Diversified/Conglomerate Service","c":3000000,"v":3000000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Quality Environmental Midco, Inc. Line of Credit","n":"Quality Environmental Midco, Inc.","t":"debt","l":{"c":"first lien","r":"Line of Credit"},"i":"Diversified/Conglomerate Service","p":500000,"c":500000,"v":505000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Quality Environmental Midco, Inc. Term Debt","n":"Quality Environmental Midco, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Service","pk":0.008,"p":13083000,"c":13083000,"v":13213000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"RF Technologies, LLC Line of Credit","n":"RF Technologies, LLC","t":"debt","l":{"r":"Line of Credit"},"sp":0.067,"p":0,"c":0,"v":0,"fr":true,"s":{"w":"dataset"}},
+{"id":"RF Technologies, LLC Term Debt","n":"RF Technologies, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Service","sp":0.067,"p":12569000,"c":12569000,"v":12264000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"RPM Freight Systems, LLC Term Debt","n":"RPM Freight Systems, LLC","t":"debt","l":{"c":"second lien","r":"Term Debt"},"i":"Cargo Transportation","sp":0.077,"p":50000000,"c":49469000,"v":50000000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Salt & Straw, LLC Common Warrant","n":"Salt & Straw, LLC","t":"equity","l":{"c":"equity","r":"Common Warrant"},"i":"Beverage, Food, and Tobacco","c":0,"v":55000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Sea Link International IRB, Inc. Preferred Stock","n":"Sea Link International IRB, Inc.","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Automobile","c":98000,"v":303000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Sea Link International IRB, Inc. Common Equity Units","n":"Sea Link International IRB, Inc.","t":"equity","l":{"c":"equity","r":"Common Equity Units"},"i":"Automobile","c":823000,"v":350000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Sicilian Oven Restaurants LLC Preferred Stock","n":"Sicilian Oven Restaurants LLC","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Beverage, Food, and Tobacco","c":2690000,"v":3375000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Sicilian Oven Restaurants LLC Term Debt","n":"Sicilian Oven Restaurants LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Beverage, Food, and Tobacco","sp":0.064,"p":22790000,"c":22790000,"v":23171000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Snif-Snax, LLC Preferred Stock","n":"Snif-Snax, LLC","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Personal, Food, and Miscellaneous Services","c":1500000,"v":1541000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Snif-Snax, LLC Term Debt","n":"Snif-Snax, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Personal, Food, and Miscellaneous Services","sp":0.067,"p":20905000,"c":20905000,"v":20952000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"SPC Excelus Holdings Inc. Line of Credit","n":"SPC Excelus Holdings Inc.","t":"debt","l":{"r":"Line of Credit"},"sp":0.068,"p":0,"c":0,"v":0,"fr":true,"s":{"w":"dataset"}},
+{"id":"SPC Excelus Holdings Inc. Preferred Equity","n":"SPC Excelus Holdings Inc.","t":"equity","l":{"c":"equity","r":"Preferred Equity"},"c":2000000,"v":2000000,"s":{"w":"dataset"}},
+{"id":"SPC Excelus Holdings Inc. Term Debt","n":"SPC Excelus Holdings Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Manufacturing","pk":0.032,"p":11493000,"c":11493000,"v":11493000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Springfield, Inc. Term Debt","n":"Springfield, Inc.","t":"debt","l":{"c":"second lien","r":"Term Debt"},"i":"Diversified/Conglomerate Manufacturing","sp":0.111,"p":30000000,"c":29722000,"v":30000000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"SWECO Worldwide, Inc. Common Equity","n":"SWECO Worldwide, Inc.","t":"equity","l":{"c":"equity","r":"Common Equity"},"c":2000000,"v":2000000,"s":{"w":"dataset","r":true}},
+{"id":"SWECO Worldwide, Inc. Line of Credit","n":"SWECO Worldwide, Inc.","t":"debt","l":{"r":"Line of Credit"},"sp":0.065,"p":0,"c":0,"v":0,"fr":true,"s":{"w":"dataset"}},
+{"id":"SWECO Worldwide, Inc. Term Debt","n":"SWECO Worldwide, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Manufacturing","sp":0.065,"p":30500000,"c":30500000,"v":30500000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Technical Resource Management, LLC Common Stock","n":"Technical Resource Management, LLC","t":"equity","l":{"c":"equity","r":"Common Stock"},"c":2000000,"v":0,"s":{"w":"dataset","r":true}},
+{"id":"Technical Resource Management, LLC Common Warrants","n":"Technical Resource Management, LLC","t":"equity","l":{"c":"equity","r":"Common Warrants"},"c":0,"v":0,"s":{"w":"dataset","r":true}},
+{"id":"Technical Resource Management, LLC Line of Credit 1","n":"Technical Resource Management, LLC","t":"debt","l":{"c":"first lien","r":"Line of Credit 1"},"i":"Healthcare, Education, and Childcare","sp":0.105,"pk":0.045,"p":3183000,"c":3183000,"v":2730000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Technical Resource Management, LLC Line of Credit 2","n":"Technical Resource Management, LLC","t":"debt","l":{"c":"first lien","r":"Line of Credit 2"},"i":"Healthcare, Education, and Childcare","sp":0.105,"pk":0.045,"p":1661000,"c":1661000,"v":1425000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Technical Resource Management, LLC Term Debt 2","n":"Technical Resource Management, LLC","t":"debt","l":{"c":"unsecured","r":"Term Debt 2"},"i":"Healthcare, Education, and Childcare","pk":0.14,"p":396000,"c":396000,"v":340000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Technical Resource Management, LLC Term Debt","n":"Technical Resource Management, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Healthcare, Education, and Childcare","sp":0.105,"pk":0.045,"p":24947000,"c":24947000,"v":21401000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"TNCP Intermediate HoldCo, LLC Common Equity Units","n":"TNCP Intermediate HoldCo, LLC","t":"equity","l":{"c":"equity","r":"Common Equity Units"},"i":"Printing and Publishing","c":500000,"v":4385000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"TNCP Intermediate HoldCo, LLC Line of Credit","n":"TNCP Intermediate HoldCo, LLC","t":"debt","l":{"r":"Line of Credit"},"p":0,"c":0,"v":0,"s":{"w":"dataset"}},
+{"id":"Torrent Photonics Holdco LLC Delayed Draw Term Loan","n":"Torrent Photonics Holdco LLC","t":"debt","l":{"r":"Delayed Draw Term Loan"},"f":"delayed draw","p":750000,"c":750000,"v":750000,"s":{"w":"dataset"}},
+{"id":"Torrent Photonics Holdco LLC Preferred Stock","n":"Torrent Photonics Holdco LLC","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Diversified/Conglomerate Manufacturing","c":2650000,"v":2023000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Torrent Photonics Holdco LLC Term Debt 1","n":"Torrent Photonics Holdco LLC","t":"debt","l":{"c":"first lien","r":"Term Debt 1"},"i":"Diversified/Conglomerate Manufacturing","sp":0.095,"p":12497000,"c":12497000,"v":12558000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Torrent Photonics Holdco LLC Term Debt 2","n":"Torrent Photonics Holdco LLC","t":"debt","l":{"c":"first lien","r":"Term Debt 2"},"i":"Diversified/Conglomerate Manufacturing","sp":0.095,"p":517000,"c":517000,"v":517000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Torrent Photonics Holdco LLC Term Debt 3","n":"Torrent Photonics Holdco LLC","t":"debt","l":{"c":"first lien","r":"Term Debt 3"},"i":"Diversified/Conglomerate Manufacturing","sp":0.095,"p":125000,"c":125000,"v":125000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Total Access Elevator, LLC Common Stock","n":"Total Access Elevator, LLC","t":"equity","l":{"c":"equity","r":"Common Stock"},"c":750000,"v":1988000,"s":{"w":"dataset","r":true}},
+{"id":"Total Access Elevator, LLC Delayed Draw Term Loan 1","n":"Total Access Elevator, LLC","t":"debt","l":{"r":"Delayed Draw Term Loan 1"},"f":"delayed draw","sp":0.063,"p":1600000,"c":1600000,"v":1616000,"fr":true,"s":{"w":"dataset","r":true}},
+{"id":"Total Access Elevator, LLC Delayed Draw Term Loan 2","n":"Total Access Elevator, LLC","t":"debt","l":{"r":"Delayed Draw Term Loan 2"},"f":"delayed draw","sp":0.063,"p":0,"c":0,"v":0,"fr":true,"s":{"w":"dataset","r":true}},
+{"id":"Total Access Elevator, LLC Line of Credit","n":"Total Access Elevator, LLC","t":"debt","l":{"r":"Line of Credit"},"sp":0.063,"p":0,"c":0,"v":0,"fr":true,"s":{"w":"dataset"}},
+{"id":"Total Access Elevator, LLC Term Debt","n":"Total Access Elevator, LLC","t":"debt","l":{"r":"Term Debt"},"sp":0.063,"p":17500000,"c":17500000,"v":17675000,"fr":true,"s":{"w":"dataset","r":true}},
+{"id":"Total Safety Holdings, LLC Common Equity","n":"Total Safety Holdings, LLC","t":"equity","l":{"c":"equity","r":"Common Equity"},"c":499000,"v":22000,"s":{"w":"dataset","r":true}},
+{"id":"Triple H Food Processors, LLC Common Stock","n":"Triple H Food Processors, LLC","t":"equity","l":{"c":"equity","r":"Common Stock"},"i":"Beverage, Food, and Tobacco","c":250000,"v":1400000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Triple H Food Processors, LLC Preferred Stock","n":"Triple H Food Processors, LLC","t":"equity","l":{"c":"equity","r":"Preferred Stock"},"i":"Beverage, Food, and Tobacco","c":75000,"v":224000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Tube Bending Technology, LLC Term Debt","n":"Tube Bending Technology, LLC","t":"debt","l":{"c":"second lien","r":"Term Debt"},"i":"Diversified/Conglomerate Manufacturing","p":7500000,"c":7500000,"v":7500000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Turn Key Health Clinics, LLC Line of Credit","n":"Turn Key Health Clinics, LLC","t":"debt","l":{"r":"Line of Credit"},"sp":0.068,"p":0,"c":0,"v":0,"fr":true,"s":{"w":"dataset"}},
+{"id":"Turn Key Health Clinics, LLC Term Debt","n":"Turn Key Health Clinics, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Healthcare, Education, and Childcare","sp":0.068,"p":32500000,"c":32500000,"v":32978000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Unirac Holdings, Inc. Delayed Draw Term Loan","n":"Unirac Holdings, Inc.","t":"debt","l":{"c":"first lien","r":"Delayed Draw Term Loan"},"f":"delayed draw","i":"Diversified/Conglomerate Manufacturing","sp":0.065,"p":1025000,"c":1025000,"v":1025000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Unirac Holdings, Inc. Line of Credit","n":"Unirac Holdings, Inc.","t":"debt","l":{"c":"first lien","r":"Line of Credit"},"i":"Diversified/Conglomerate Manufacturing","sp":0.065,"p":444000,"c":444000,"v":444000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Unirac Holdings, Inc. Term Debt","n":"Unirac Holdings, Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Manufacturing","sp":0.065,"p":13763000,"c":13652000,"v":13763000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Viron International Corp. Common Stock","n":"Viron International Corp.","t":"equity","l":{"c":"equity","r":"Common Stock"},"i":"Diversified/Conglomerate Manufacturing","c":15000,"v":0,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Viron International Corp. Term Debt","n":"Viron International Corp.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Manufacturing","sp":0.07,"p":16950000,"c":16950000,"v":17018000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Viva Railings, LLC Line of Credit","n":"Viva Railings, LLC","t":"debt","l":{"r":"Line of Credit"},"sp":0.064,"p":0,"c":0,"v":0,"fr":true,"s":{"w":"dataset"}},
+{"id":"Viva Railings, LLC Term Debt","n":"Viva Railings, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Manufacturing","sp":0.064,"p":13439000,"c":13439000,"v":13439000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"WB Xcel Holdings, LLC - Preferred Stock","n":"WB Xcel Holdings, LLC","t":"equity","l":{"c":"equity","r":"- Preferred Stock"},"i":"Personal and Non-Durable Consumer Products (Manufacturing Only)","c":2750000,"v":0,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"WB Xcel Holdings, LLC Common Units","n":"WB Xcel Holdings, LLC","t":"equity","l":{"c":"equity","r":"Common Units"},"i":"Personal and Non-Durable Consumer Products (Manufacturing Only)","c":1000,"v":0,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"WB Xcel Holdings, LLC Line of Credit","n":"WB Xcel Holdings, LLC","t":"debt","l":{"c":"first lien","r":"Line of Credit"},"i":"Personal and Non-Durable Consumer Products (Manufacturing Only)","sp":0.105,"p":5150000,"c":5150000,"v":3379000,"na":true,"fr":true,"s":{"w":"dataset","t":true,"r":true,"na":"rpage","i":"table"}},
+{"id":"WB Xcel Holdings, LLC Term Debt","n":"WB Xcel Holdings, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Personal and Non-Durable Consumer Products (Manufacturing Only)","sp":0.105,"p":9775000,"c":9775000,"v":6414000,"na":true,"fr":true,"s":{"w":"dataset","t":true,"r":true,"na":"rpage","i":"table"}},
+{"id":"Wings N More Restaurants LLC Delayed Draw Term Loan","n":"Wings N More Restaurants LLC","t":"debt","l":{"c":"first lien","r":"Delayed Draw Term Loan"},"f":"delayed draw","i":"Beverage, Food, and Tobacco","sp":0.083,"p":750000,"c":750000,"v":765000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Wings N More Restaurants LLC Line of Credit","n":"Wings N More Restaurants LLC","t":"debt","l":{"r":"Line of Credit"},"sp":0.083,"p":0,"c":0,"v":0,"fr":true,"s":{"w":"dataset"}},
+{"id":"Wings N More Restaurants LLC Term Debt","n":"Wings N More Restaurants LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Beverage, Food, and Tobacco","sp":0.083,"pk":0.01,"p":10509000,"c":10427000,"v":10719000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"WorkforceQA, LLC Common Stock","n":"WorkforceQA, LLC","t":"equity","l":{"c":"equity","r":"Common Stock"},"i":"Diversified/Conglomerate Service","c":532000,"v":486000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"WorkforceQA, LLC Line of Credit","n":"WorkforceQA, LLC","t":"debt","l":{"r":"Line of Credit"},"sp":0.065,"p":0,"c":0,"v":0,"fr":true,"s":{"w":"dataset"}},
+{"id":"WorkforceQA, LLC Term Debt","n":"WorkforceQA, LLC","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Service","sp":0.065,"p":18463000,"c":18368000,"v":18708000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Zero Case Holding Inc. Common Stock","n":"Zero Case Holding Inc.","t":"equity","l":{"c":"equity","r":"Common Stock"},"i":"Diversified/Conglomerate Manufacturing","c":1000000,"v":1567000,"s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"Zero Case Holding Inc. Line of Credit","n":"Zero Case Holding Inc.","t":"debt","l":{"r":"Line of Credit"},"sp":0.064,"p":0,"c":0,"v":0,"fr":true,"s":{"w":"dataset"}},
+{"id":"Zero Case Holding Inc. Term Debt","n":"Zero Case Holding Inc.","t":"debt","l":{"c":"first lien","r":"Term Debt"},"i":"Diversified/Conglomerate Manufacturing","sp":0.064,"p":12000000,"c":12000000,"v":12027000,"fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table"}}
+ ]
+}

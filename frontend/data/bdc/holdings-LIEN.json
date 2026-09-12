@@ -1,0 +1,467 @@
+{
+ "ticker": "LIEN",
+ "cik": 1843162,
+ "name": "Chicago Atlantic BDC, Inc.",
+ "period": "2026-06-30",
+ "form": "10-Q",
+ "accn": "0001193125-26-347342",
+ "filed": "2026-08-13",
+ "creditVersion": "1.1.0",
+ "rowSource": "dataset",
+ "sources": {
+  "dataset": {
+   "zip": "2026_08_bdc.zip",
+   "rows": 50,
+   "counts": {
+    "rows": 377,
+    "identifier": 211,
+    "atPeriod": 105,
+    "kept": 50
+   },
+   "dropped": {
+    "otherDate": 106,
+    "otherEntity": 0,
+    "subtotal": 0,
+    "cash": 0,
+    "fvOnly": 1,
+    "costOnly": 0,
+    "neither": 54
+   },
+   "extra": {
+    "costOnly": 0,
+    "cash": 0
+   }
+  },
+  "instance": null,
+  "table": {
+   "doc": "0001193125-26-347342.htm",
+   "period": "2026-06-30",
+   "tables": 3,
+   "rows": 50,
+   "subtotals": 32,
+   "scale": 1000,
+   "scaleFix": 1,
+   "totals": {
+    "cost": 336747000,
+    "fv": 334834000
+   },
+   "matched": 50,
+   "rate": 1,
+   "stages": {
+    "numeric": 50,
+    "principal": 0,
+    "cost": 0,
+    "name": 0
+   },
+   "filled": {
+    "mat": 0,
+    "ind": 50,
+    "na": 0,
+    "lien": 43,
+    "aff": 0,
+    "rate": 0,
+    "acquired": 50,
+    "name": 1
+   },
+   "nonAccrualRows": 0,
+   "nonAccrualUnmatched": 0,
+   "unmatchedRows": 0,
+   "headers": {
+    "portfolio company": "issuer",
+    "all in rate": "rate",
+    "benchmark": "base",
+    "spread": "spread",
+    "pik": "pik",
+    "floor": "floor",
+    "initial acquisition date": "acquired",
+    "maturity": "maturity",
+    "par": "principal",
+    "amortized cost": "cost",
+    "fair value": "fv",
+    "% of net assets": "pctNav",
+    "footnotes": "footnotes",
+    "shares": "principal",
+    "cost": "cost",
+    "investment type": "type",
+    "principal balance": "principal",
+    "percentage at principal balance": "principal",
+    "rate type": "rate",
+    "time to maturity": "maturity"
+   },
+   "notes": []
+  },
+  "rpage": {
+   "report": "R7.htm",
+   "longName": "75080 - Statement - Schedule of Investments",
+   "period": "2026-06-30",
+   "rows": 50,
+   "fvOnly": 2,
+   "matched": 50,
+   "exact": 48,
+   "filled": {
+    "na": 0,
+    "ind": 0
+   },
+   "nonAccrualRows": 0,
+   "industries": 9,
+   "issuers": 0,
+   "notes": [
+    "identifier members are not nested under an industry; industry per position comes from the main table"
+   ],
+   "usedFor": [
+    "non-accrual"
+   ]
+  }
+ },
+ "gate": {
+  "passed": true,
+  "tolerance": 0.005,
+  "tagSource": "company file",
+  "variant": "tagged rows",
+  "cost": {
+   "sum": 336747000,
+   "tag": 336747389,
+   "diffPct": 0.000001
+  },
+  "fv": {
+   "sum": 334834000,
+   "tag": 334833992,
+   "diffPct": 0
+  },
+  "rows": 50,
+  "subtotalRowsDropped": 1,
+  "dropped": {
+   "otherDate": 106,
+   "otherEntity": 0,
+   "subtotal": 0,
+   "cash": 0,
+   "fvOnly": 1,
+   "costOnly": 0,
+   "neither": 54
+  },
+  "tried": [
+   {
+    "variant": "tagged rows",
+    "n": 50,
+    "cost": {
+     "sum": 336747000,
+     "tag": 336747389,
+     "diffPct": 0.000001
+    },
+    "fv": {
+     "sum": 334834000,
+     "tag": 334833992,
+     "diffPct": 0
+    },
+    "reason": null
+   }
+  ]
+ },
+ "summary": {
+  "portfolioCost": 336747389,
+  "portfolioFv": 334833992,
+  "holdings": 50,
+  "thirdPartyDebtCost": 333330000,
+  "thirdPartyDebtFv": 331589000,
+  "thirdPartyDebtHoldings": 40,
+  "count": 49,
+  "countAll": 49,
+  "countDebt": 39,
+  "namesUnsplit": 0,
+  "nonAccrual": {
+   "cost": 0,
+   "fv": 0,
+   "n": 0,
+   "issuers": 0,
+   "ofTotalCost": 0,
+   "ofTotalFv": 0,
+   "ofDebtCost": 0,
+   "ofDebtFv": 0,
+   "source": "prose"
+  },
+  "wa": {
+   "yieldAtCost": 0.1373,
+   "yieldAtFv": 0.138,
+   "spreadCostWeighted": 0.083,
+   "floatingShare": 1,
+   "pikContractual": 0.0455,
+   "n": {
+    "yield": 40,
+    "spread": 40,
+    "debt": 40
+   },
+   "yieldCoverage": 1
+  },
+  "lien": {
+   "classes": {
+    "first lien": {
+     "cost": 331985000,
+     "share": 0.996,
+     "shareOfPortfolio": 0.9859
+    },
+    "second lien": {
+     "cost": 1345000,
+     "share": 0.004,
+     "shareOfPortfolio": 0.004
+    }
+   },
+   "total": 333330000,
+   "portfolioCost": 336747389,
+   "firstLienShare": 0.996,
+   "firstLienShareOfPortfolio": 0.9859,
+   "unclassifiedShare": 0
+  },
+  "industry": [
+   {
+    "name": "Cannabis",
+    "fv": 246463000,
+    "share": 0.7361
+   },
+   {
+    "name": "Finance and Insurance",
+    "fv": 27509000,
+    "share": 0.0822
+   },
+   {
+    "name": "Information",
+    "fv": 15215000,
+    "share": 0.0454
+   },
+   {
+    "name": "Manufacturing",
+    "fv": 14694000,
+    "share": 0.0439
+   },
+   {
+    "name": "Public Administration",
+    "fv": 11193000,
+    "share": 0.0334
+   },
+   {
+    "name": "Retail Trade",
+    "fv": 8793000,
+    "share": 0.0263
+   },
+   {
+    "name": "Educational Services",
+    "fv": 4912000,
+    "share": 0.0147
+   },
+   {
+    "name": "Real Estate and Rental and Leasing",
+    "fv": 3180000,
+    "share": 0.0095
+   },
+   {
+    "name": "Administrative and Support and Waste Management and Remediation Services",
+    "fv": 2875000,
+    "share": 0.0086
+   }
+  ],
+  "industrySource": "table",
+  "maturity": {
+   "2026": 14581000,
+   "2027": 38665000,
+   "2028": 130767000,
+   "2029": 106721000,
+   "2030": 23347000,
+   "2031-2033": 19249000,
+   "later": 0,
+   "n/a": 0,
+   "excluded": 0,
+   "total": 333330000,
+   "dated": 333330000,
+   "unfunded": null,
+   "shares": {
+    "2026": 0.0437,
+    "2027": 0.116,
+    "2028": 0.3923,
+    "2029": 0.3202,
+    "2030": 0.07,
+    "2031-2033": 0.0577,
+    "later": 0
+   }
+  },
+  "maturitySource": "axis",
+  "vehicles": {
+   "fv": 0,
+   "share": 0
+  },
+  "structured": {
+   "fv": 0,
+   "share": 0
+  },
+  "equity": {
+   "fv": 3245000,
+   "share": 0.0097
+  },
+  "top10": {
+   "fv": 195251000,
+   "share": 0.5831
+  },
+  "affiliation": null,
+  "affiliationClasses": [],
+  "affiliationSource": null,
+  "unfunded": {
+   "total": 0,
+   "holdings": 0
+  },
+  "pik": {
+   "holdings": 16,
+   "cost": 79927000
+  },
+  "histogram": {
+   "byCount": {
+    "0-50": 0.025,
+    "200-250": 0.025,
+    "250-300": 0.025,
+    "300-350": 0.05,
+    "400-450": 0.025,
+    "500-550": 0.05,
+    "550-600": 0.075,
+    "600-650": 0.075,
+    "650-700": 0.1,
+    "700-750": 0.05,
+    "750-800": 0.075,
+    "800-850": 0.125,
+    "850-900": 0.05,
+    "900-950": 0.025,
+    "1000+": 0.225
+   },
+   "byCost": {
+    "0-50": 0.0026,
+    "200-250": 0.0068,
+    "250-300": 0.0178,
+    "300-350": 0.016,
+    "400-450": 0.0095,
+    "500-550": 0.0364,
+    "550-600": 0.098,
+    "600-650": 0.0632,
+    "650-700": 0.0644,
+    "700-750": 0.0255,
+    "750-800": 0.1599,
+    "800-850": 0.1549,
+    "850-900": 0.1029,
+    "900-950": 0.004,
+    "1000+": 0.2381
+   },
+   "n": 40,
+   "cost": 333330000
+  },
+  "vsProse": {
+   "yieldAtCost": null,
+   "yieldAtFv": null,
+   "floatingShare": null,
+   "floatingShareBasis": null,
+   "nonAccrualCost": 0,
+   "nonAccrualFv": 0,
+   "nonAccrualOf": "total",
+   "portfolioCompanies": null
+  }
+ },
+ "tableUnmatched": null,
+ "notes": [],
+ "keys": {
+  "holding": {
+   "id": "id",
+   "issuer": "k",
+   "name": "n",
+   "aff": "a",
+   "kind": "t",
+   "lien": "l",
+   "facility": "f",
+   "industry": "i",
+   "rate": "r",
+   "spread": "sp",
+   "floor": "fl",
+   "pik": "pk",
+   "base": "b",
+   "principal": "p",
+   "cost": "c",
+   "fv": "v",
+   "pctNav": "nv",
+   "unfunded": "u",
+   "acquired": "ad",
+   "maturity": "m",
+   "nonAccrual": "na",
+   "floating": "fr",
+   "units": "un",
+   "src": "s",
+   "fvUntagged": "fvu",
+   "costUntagged": "cu",
+   "cashEquivalent": "ce"
+  },
+  "lien": {
+   "class": "c",
+   "subclass": "s",
+   "raw": "r"
+  },
+  "src": {
+   "row": "w",
+   "table": "t",
+   "r": "r",
+   "na": "na",
+   "ind": "i",
+   "mat": "m",
+   "unf": "u",
+   "rt": "rt",
+   "ds": "ds",
+   "val": "vl",
+   "nm": "nm",
+   "af": "af"
+  },
+  "note": "short keys per blueprint 7.4; a key absent from a row is null (floating: false); src.t and src.r absent mean false, src.na absent means none; src.vl \"table\" marks a fair value the filer left untagged and the printed schedule supplied; src.nm \"table\" marks an issuer name the printed row supplied; src.af \"issuer\" marks an affiliation taken from the issuer's other tranches; the issuer key (H1 `issuer`) is not written — it is normalizeIssuer(n), which expandHolding restores"
+ },
+ "holdings": [
+{"id":"Canadian Warrants Cannabis Canopy Growth Corporation Warrants Initial Acquisition Date 1/8/2026","n":"Canopy Growth Corporation Warrants","t":"equity","l":{"c":"equity","r":"Canadian Warrants"},"i":"Cannabis","c":1328000,"v":898000,"nv":0.003,"ad":"2026-01-08","s":{"w":"dataset","t":true,"r":true,"i":"table","nm":"table"}},
+{"id":"First Lien Senior Secured Canadian Debt Cannabis Canopy Growth Corporation Facility Type Term Loan All in Rate 9.87% Benchmark S Spread 6.25% PIK 0.00% Floor 3.25% Initial Acquisition Date 1/8/2026 Maturity 1/31/2031","n":"First Lien Senior Secured Canadian Debt Cannabis Canopy Growth Corporation Facility Type Term Loan All in Rate 9.87% Benchmark S Spread 6.25% PIK 0.00% Floor 3.25% Initial Acquisition Date 1/8/2026 Maturity 1/31/2031","t":"debt","l":{"c":"first lien","r":"First Lien Senior Secured Canadian Debt"},"i":"Cannabis","r":0.0987,"sp":0.0625,"fl":0.0325,"pk":0,"b":"SOFR","p":16212000,"c":13911000,"v":13942000,"nv":0.046,"ad":"2026-01-08","m":"2031-01-31","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"First Lien Senior Secured Canadian Debt Cannabis TerrAscend Corporation Facility Type Term Loan All in Rate 12.75% Benchmark S Spread 12.75% PIK 0.00% Floor 0.00% Initial Acquisition Date 7/15/2025 Maturity 8/1/2028","n":"First Lien Senior Secured Canadian Debt Cannabis TerrAscend Corporation Facility Type Term Loan All in Rate 12.75% Benchmark S Spread 12.75% PIK 0.00% Floor 0.00% Initial Acquisition Date 7/15/2025 Maturity 8/1/2028","t":"debt","l":{"c":"first lien","r":"First Lien Senior Secured Canadian Debt"},"i":"Cannabis","r":0.1275,"sp":0.1275,"fl":0,"pk":0,"b":"other","p":2825000,"c":2729000,"v":2741000,"nv":0.009,"ad":"2025-07-15","m":"2028-08-01","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"First Lien Senior Secured Canadian Debt Information Tulip.io Inc. Facility Type Term Loan All in Rate 16.50% Benchmark P Spread 4.00% PIK 4.50% Floor 8.00% Initial Acquisition Date 11/4/2024 Maturity 11/4/2028","n":"First Lien Senior Secured Canadian Debt Information Tulip.io Inc. Facility Type Term Loan All in Rate 16.50% Benchmark P Spread 4.00% PIK 4.50% Floor 8.00% Initial Acquisition Date 11/4/2024 Maturity 11/4/2028","t":"debt","l":{"c":"first lien","r":"First Lien Senior Secured Canadian Debt"},"i":"Information","r":0.165,"sp":0.04,"fl":0.08,"pk":0.045,"b":"other","p":3156000,"c":3157000,"v":3125000,"nv":0.01,"ad":"2024-11-04","m":"2028-11-04","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"U.S. Preferred Stock Real Estate and Rental and Leasing Workbox Holdings Inc. A-1 Preferred Initial Acquisition Date 5/20/2024","n":"U.S. Preferred Stock Real Estate and Rental and Leasing Workbox Holdings Inc. A-1 Preferred Initial Acquisition Date 5/20/2024","t":"equity","l":{"c":"equity","r":"U.S. Preferred Stock"},"i":"Real Estate and Rental and Leasing","c":500000,"v":500000,"nv":0.002,"ad":"2024-05-20","s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"U.S. Warrants Educational Services Energize Holdings, Inc. (d/b/a Exos) Warrants Initial Acquisition Date 10/24/2025","n":"U.S. Warrants Educational Services Energize Holdings, Inc.","t":"equity","l":{"c":"equity","r":"(d/b/a Exos) Warrants Initial Acquisition Date 10/24/2025"},"i":"Educational Services","c":36000,"v":12000,"nv":0,"ad":"2025-10-24","s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"U.S. Warrants Information AI Software, LLC (d/b/a Capacity) Warrants Initial Acquisition Date 6/13/2025","n":"U.S. Warrants Information AI Software, LLC","t":"equity","l":{"c":"equity","r":"(d/b/a Capacity) Warrants Initial Acquisition Date 6/13/2025"},"i":"Information","c":431000,"v":487000,"nv":0.002,"ad":"2025-06-13","s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"U.S. Warrants Information Engage3 Holdings, Inc. Warrants Initial Acquisition Date 7/22/2025","n":"U.S. Warrants Information Engage3 Holdings, Inc.","t":"equity","l":{"c":"equity","r":"Warrants Initial Acquisition Date 7/22/2025"},"i":"Information","c":342000,"v":234000,"nv":0.001,"ad":"2025-07-22","s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"U.S. Warrants Manufacturing Ocular Science, Inc. Warrants Initial Acquisition Date 12/17/2025","n":"U.S. Warrants Manufacturing Ocular Science, Inc.","t":"equity","l":{"c":"equity","r":"Warrants Initial Acquisition Date 12/17/2025"},"i":"Manufacturing","c":151000,"v":223000,"nv":0.001,"ad":"2025-12-17","s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"U.S. Warrants Real Estate and Rental and Leasing Workbox Holdings Inc. A-3 Warrants Initial Acquisition Date 5/20/2024","n":"U.S. Warrants Real Estate and Rental and Leasing Workbox Holdings Inc. A-3 Warrants Initial Acquisition Date 5/20/2024","t":"equity","l":{"c":"equity","r":"U.S. Warrants"},"i":"Real Estate and Rental and Leasing","c":97000,"v":186000,"nv":0.001,"ad":"2024-05-20","s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"U.S. Warrants Real Estate and Rental and Leasing Workbox Holdings Inc. A-4 Warrants Initial Acquisition Date 5/20/2024","n":"U.S. Warrants Real Estate and Rental and Leasing Workbox Holdings Inc. A-4 Warrants Initial Acquisition Date 5/20/2024","t":"equity","l":{"c":"equity","r":"U.S. Warrants"},"i":"Real Estate and Rental and Leasing","c":231000,"v":422000,"nv":0.001,"ad":"2024-05-20","s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"U.S. Warrants Retail Trade Portofino Labs, Inc. (d/b/a Because Market) Warrants Initial Acquisition Date 4/30/2025","n":"U.S. Warrants Retail Trade Portofino Labs, Inc.","t":"equity","l":{"c":"equity","r":"(d/b/a Because Market) Warrants Initial Acquisition Date 4/30/2025"},"i":"Retail Trade","c":46000,"v":32000,"nv":0,"ad":"2025-04-30","s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"U.S. Warrants Round 2 Holdings, LLC Warrants Initial Acquisition Date 3/2/2026","n":"U.S. Warrants Round 2 Holdings, LLC","t":"equity","l":{"c":"equity","r":"Warrants Initial Acquisition Date 3/2/2026"},"i":"Manufacturing","c":255000,"v":251000,"nv":0.001,"ad":"2026-03-02","s":{"w":"dataset","t":true,"r":true,"i":"table"}},
+{"id":"US Corporate Debt First Lien Senior Secured Protect Animals With Satellites LLC (Halo Collar) Facility Type Incremental Term Loan All in Rate 12.00% Benchmark P Spread 3.25% PIK 2.00% Floor 6.75% Initial Acquisition Date 10/1/2024 Maturity 3/30/2031","n":"US Corporate Debt First Lien Senior Secured Protect Animals With Satellites LLC (Halo Collar) Facility Type Incremental Term Loan All in Rate 12.00% Benchmark P Spread 3.25% PIK 2.00% Floor 6.75% Initial Acquisition Date 10/1/2024 Maturity 3/30/2031","t":"debt","l":{"c":"first lien","r":"US Corporate Debt First Lien Senior Secured U.S. Debt"},"i":"Information","r":0.12,"sp":0.0325,"fl":0.0675,"pk":0.02,"b":"other","p":1850000,"c":1814000,"v":1868000,"nv":0.006,"ad":"2024-10-01","m":"2031-03-30","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured Protect Animals With Satellites LLC (Halo Collar) Facility Type Term Loan All in Rate 12.00% Benchmark P Spread 3.25% PIK 2.00% Floor 6.75% Initial Acquisition Date 10/1/2024 Maturity 3/30/2031","n":"US Corporate Debt First Lien Senior Secured Protect Animals With Satellites LLC (Halo Collar) Facility Type Term Loan All in Rate 12.00% Benchmark P Spread 3.25% PIK 2.00% Floor 6.75% Initial Acquisition Date 10/1/2024 Maturity 3/30/2031","t":"debt","l":{"c":"first lien","r":"US Corporate Debt First Lien Senior Secured U.S. Debt"},"i":"Information","r":0.12,"sp":0.0325,"fl":0.0675,"pk":0.02,"b":"other","p":3594000,"c":3524000,"v":3630000,"nv":0.012,"ad":"2024-10-01","m":"2031-03-30","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Aeriz Holdings Corp Facility Type Delayed Draw Term Loan All in Rate 12.75% Benchmark P Spread 5.75% PIK 0.00% Floor 7.00% Initial Acquisition Date 6/30/2025 Maturity 6/30/2028","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Aeriz Holdings Corp Facility Type Delayed Draw Term Loan All in Rate 12.75% Benchmark P Spread 5.75% PIK 0.00% Floor 7.00% Initial Acquisition Date 6/30/2025 Maturity 6/30/2028","t":"debt","l":{"c":"first lien","r":"US Corporate Debt First Lien Senior Secured U.S. Debt"},"i":"Cannabis","r":0.1275,"sp":0.0575,"fl":0.07,"pk":0,"b":"other","p":9590000,"c":9590000,"v":9158000,"nv":0.03,"ad":"2025-06-30","m":"2028-06-30","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis BeLeaf Medical, LLC Facility Type Term Loan All in Rate 13.25% Benchmark P Spread 5.75% PIK 0.00% Floor 7.50% Initial Acquisition Date 8/20/2025 Maturity 8/20/2028","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis BeLeaf Medical, LLC","t":"debt","l":{"c":"first lien","r":"Facility Type Term Loan All in Rate 13.25% Benchmark P Spread 5.75% PIK 0.00% Floor 7.50% Initial Acquisition Date 8/20/2025 Maturity 8/20/2028"},"f":"term loan","i":"Cannabis","r":0.1325,"sp":0.0575,"fl":0.075,"pk":0,"b":"other","p":12537000,"c":12537000,"v":12412000,"nv":0.041,"ad":"2025-08-20","m":"2028-08-20","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Cresco Labs, LLC Facility Type Term Loan All in Rate 12.50% Benchmark F Spread 12.50% PIK 0.00% Floor 0.00% Initial Acquisition Date 8/13/2025 Maturity 8/13/2030","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Cresco Labs, LLC","t":"debt","l":{"c":"first lien","r":"Facility Type Term Loan All in Rate 12.50% Benchmark F Spread 12.50% PIK 0.00% Floor 0.00% Initial Acquisition Date 8/13/2025 Maturity 8/13/2030"},"f":"term loan","i":"Cannabis","r":0.125,"sp":0.125,"fl":0,"pk":0,"b":"other","p":7500000,"c":7253000,"v":7013000,"nv":0.023,"ad":"2025-08-13","m":"2030-08-13","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Dreamfields Brands, Inc. (d/b/a Jeeter) Facility Type Delayed Draw Term Loan All in Rate 16.25% Benchmark P Spread 8.75% PIK 0.00% Floor 7.50% ID 5/3/2023 MD 9/30/2028","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Dreamfields Brands, Inc.","t":"debt","l":{"c":"first lien","r":"(d/b/a Jeeter) Facility Type Delayed Draw Term Loan All in Rate 16.25% Benchmark P Spread 8.75% PIK 0.00% Floor 7.50% ID 5/3/2023 MD 9/30/2028"},"f":"delayed draw","i":"Cannabis","r":0.1625,"sp":0.0875,"fl":0.075,"pk":0,"b":"other","p":31745000,"c":31719000,"v":31269000,"nv":0.103,"ad":"2023-05-03","m":"2028-09-30","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Flowery - Bill's Nursery, Inc Facility Type Delayed Draw Term Loan All in Rate 16.00% Benchmark F Spread 11.00% PIK 5.00% Floor 0.00% Initial Acquisition Date 10/1/2024 Maturity 12/31/2027","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Flowery - Bill's Nursery, Inc","t":"debt","l":{"c":"first lien","r":"Facility Type Delayed Draw Term Loan All in Rate 16.00% Benchmark F Spread 11.00% PIK 5.00% Floor 0.00% Initial Acquisition Date 10/1/2024 Maturity 12/31/2027"},"f":"delayed draw","i":"Cannabis","r":0.16,"sp":0.11,"fl":0,"pk":0.05,"b":"other","p":13636000,"c":13621000,"v":13499000,"nv":0.045,"ad":"2024-10-01","m":"2027-12-31","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis FLUENT Corp. Facility Type Term Loan All in Rate 13.00% Benchmark F Spread 0.00% PIK 13.00% Floor 0.00% Initial Acquisition Date 3/17/2026 Maturity 12/31/2026","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis FLUENT Corp. Facility Type Term Loan All in Rate 13.00% Benchmark F Spread 0.00% PIK 13.00% Floor 0.00% Initial Acquisition Date 3/17/2026 Maturity 12/31/2026","t":"debt","l":{"c":"first lien","r":"US Corporate Debt First Lien Senior Secured U.S. Debt"},"i":"Cannabis","r":0.13,"sp":0,"fl":0,"pk":0.13,"b":"other","p":862000,"c":862000,"v":1414000,"nv":0.005,"ad":"2026-03-17","m":"2026-12-31","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis FLUENT Corp. Facility Type Term Loan All in Rate 13.00% Benchmark F Spread 12.00% PIK 1.00% Floor 0.00% Initial Acquisition Date 3/31/2025 Maturity 11/24/2028","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis FLUENT Corp. Facility Type Term Loan All in Rate 13.00% Benchmark F Spread 12.00% PIK 1.00% Floor 0.00% Initial Acquisition Date 3/31/2025 Maturity 11/24/2028","t":"debt","l":{"c":"first lien","r":"US Corporate Debt First Lien Senior Secured U.S. Debt"},"i":"Cannabis","r":0.13,"sp":0.12,"fl":0,"pk":0.01,"b":"other","p":8525000,"c":8435000,"v":8610000,"nv":0.028,"ad":"2025-03-31","m":"2028-11-24","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Illicit - S1 Enterprises, Inc Facility Type Term Loan All in Rate 13.96% Benchmark S Spread 10.24% PIK 0.00% Floor 3.72% Initial Acquisition Date 12/31/2025 Maturity 12/31/2028","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Illicit - S1 Enterprises, Inc","t":"debt","l":{"c":"first lien","r":"Facility Type Term Loan All in Rate 13.96% Benchmark S Spread 10.24% PIK 0.00% Floor 3.72% Initial Acquisition Date 12/31/2025 Maturity 12/31/2028"},"f":"term loan","i":"Cannabis","r":0.1396,"sp":0.1024,"fl":0.0372,"pk":0,"b":"SOFR","p":13512000,"c":13219000,"v":13242000,"nv":0.044,"ad":"2025-12-31","m":"2028-12-31","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Kaleafa, Inc. Facility Type Term Loan All in Rate 17.00% Benchmark P Spread 8.50% PIK 0.00% Floor 8.50% Initial Acquisition Date 10/1/2024 Maturity 12/3/2027","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Kaleafa, Inc.","t":"debt","l":{"c":"first lien","r":"Facility Type Term Loan All in Rate 17.00% Benchmark P Spread 8.50% PIK 0.00% Floor 8.50% Initial Acquisition Date 10/1/2024 Maturity 12/3/2027"},"f":"term loan","i":"Cannabis","r":0.17,"sp":0.085,"fl":0.085,"pk":0,"b":"other","p":2597000,"c":2597000,"v":2597000,"nv":0.009,"ad":"2024-12-04","m":"2027-12-03","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Kapple Holdings LLC ((d/b/a Cannabis & Glass) Facility Type Delayed Draw Term Loan All in Rate 14.25% Benchmark S Spread 10.25% PIK 0.00% Floor 4.00% ID 3/28/2025 MD7/28/2028","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Kapple Holdings LLC ((d/b/a Cannabis & Glass) Facility Type Delayed Draw Term Loan All in Rate 14.25% Benchmark S Spread 10.25% PIK 0.00% Floor 4.00% ID 3/28/2025 MD7/28/2028","t":"debt","l":{"c":"first lien","r":"US Corporate Debt First Lien Senior Secured U.S. Debt"},"i":"Cannabis","r":0.1425,"sp":0.1025,"fl":0.04,"pk":0,"b":"SOFR","p":5800000,"c":5757000,"v":5742000,"nv":0.019,"ad":"2025-03-28","m":"2028-07-28","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Nova Farms, LLC Facility Type Term Loan All in Rate 15.00% Benchmark P Spread 6.50% PIK 0.00% Floor 8.50% Initial Acquisition Date 10/1/2024 Maturity 3/28/2027","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Nova Farms, LLC","t":"debt","l":{"c":"first lien","r":"Facility Type Term Loan All in Rate 15.00% Benchmark P Spread 6.50% PIK 0.00% Floor 8.50% Initial Acquisition Date 10/1/2024 Maturity 3/28/2027"},"f":"term loan","i":"Cannabis","r":0.15,"sp":0.065,"fl":0.085,"pk":0,"b":"other","p":13521000,"c":13214000,"v":13183000,"nv":0.044,"ad":"2024-10-01","m":"2027-03-28","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Oasis - AZ GOAT AZ LLC Facility Type Term Loan All in Rate 15.50% Benchmark P Spread 7.50% PIK 0.00% Floor 8.00% Initial Acquisition Date 10/1/2024 Maturity 3/31/2027","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Oasis - AZ GOAT AZ LLC Facility Type Term Loan All in Rate 15.50% Benchmark P Spread 7.50% PIK 0.00% Floor 8.00% Initial Acquisition Date 10/1/2024 Maturity 3/31/2027","t":"debt","l":{"c":"first lien","r":"US Corporate Debt First Lien Senior Secured U.S. Debt"},"i":"Cannabis","r":0.155,"sp":0.075,"fl":0.08,"pk":0,"b":"other","p":4002000,"c":3995000,"v":3922000,"nv":0.013,"ad":"2024-10-01","m":"2027-03-31","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Shangri-La Columbia, LLC Facility Type Delayed Draw Term Loan All in Rate 13.25% Benchmark P Spread 5.75% PIK 0.00% Floor 7.50% Initial Acquisition Date 6/30/2025 Maturity 6/30/2028","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Shangri-La Columbia, LLC","t":"debt","l":{"c":"first lien","r":"Facility Type Delayed Draw Term Loan All in Rate 13.25% Benchmark P Spread 5.75% PIK 0.00% Floor 7.50% Initial Acquisition Date 6/30/2025 Maturity 6/30/2028"},"f":"delayed draw","i":"Cannabis","r":0.1325,"sp":0.0575,"fl":0.075,"pk":0,"b":"other","p":10680000,"c":10537000,"v":10520000,"nv":0.035,"ad":"2025-06-30","m":"2028-06-30","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Silver Therapeutics, Inc Facility Type Delayed Draw Term Loan All in Rate 15.00% Benchmark P Spread 7.25% PIK 0.00% Floor 7.75% Initial Acquisition Date 3/26/2025 Maturity 3/24/2028","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Silver Therapeutics, Inc","t":"debt","l":{"c":"first lien","r":"Facility Type Delayed Draw Term Loan All in Rate 15.00% Benchmark P Spread 7.25% PIK 0.00% Floor 7.75% Initial Acquisition Date 3/26/2025 Maturity 3/24/2028"},"f":"delayed draw","i":"Cannabis","r":0.15,"sp":0.0725,"fl":0.0775,"pk":0,"b":"other","p":5914000,"c":5914000,"v":5795000,"nv":0.019,"ad":"2025-03-26","m":"2028-03-24","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Subsero Holdings - Illinois, Inc Facility Type Delayed Draw Term Loan All in Rate 16.00% Benchmark P Spread 7.00% PIK 2.00% Floor 7.00% Initial Acquisition Date 10/1/2024 Maturity 7/29/2026","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Subsero Holdings - Illinois, Inc","t":"debt","l":{"c":"first lien","r":"Facility Type Delayed Draw Term Loan All in Rate 16.00% Benchmark P Spread 7.00% PIK 2.00% Floor 7.00% Initial Acquisition Date 10/1/2024 Maturity 7/29/2026"},"f":"delayed draw","i":"Cannabis","r":0.16,"sp":0.07,"fl":0.07,"pk":0.02,"b":"other","p":2604000,"c":2601000,"v":2721000,"nv":0.009,"ad":"2024-10-01","m":"2026-07-29","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis TheraTrue, Inc. Facility Type Delayed Draw Term Loan All in Rate 14.50% Benchmark F Spread 14.50% PIK 0.00% Floor 0.00% Initial Acquisition Date 3/18/2025 Maturity 3/13/2027","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis TheraTrue, Inc.","t":"debt","l":{"c":"first lien","r":"Facility Type Delayed Draw Term Loan All in Rate 14.50% Benchmark F Spread 14.50% PIK 0.00% Floor 0.00% Initial Acquisition Date 3/18/2025 Maturity 3/13/2027"},"f":"delayed draw","i":"Cannabis","r":0.145,"sp":0.145,"fl":0,"pk":0,"b":"other","p":2986000,"c":2986000,"v":3031000,"nv":0.01,"ad":"2025-03-17","m":"2027-03-13","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Verano Holdings Corp. Facility Type Revolver All in Rate 12.33% Benchmark S Spread 8.33% PIK 0.00% Floor 4.00% Initial Acquisition Date 9/30/2025 Maturity 2/28/2029","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Verano Holdings Corp. Facility Type Revolver All in Rate 12.33% Benchmark S Spread 8.33% PIK 0.00% Floor 4.00% Initial Acquisition Date 9/30/2025 Maturity 2/28/2029","t":"debt","l":{"c":"first lien","r":"US Corporate Debt First Lien Senior Secured U.S. Debt"},"i":"Cannabis","r":0.1233,"sp":0.0833,"fl":0.04,"pk":0,"b":"SOFR","p":26667000,"c":26667000,"v":26400000,"nv":0.087,"ad":"2025-09-30","m":"2029-02-28","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Verano Holdings Corp. Facility Type Term Loan All in Rate 11.66% Benchmark S Spread 7.66% PIK 0.00% Floor 4.00% Initial Acquisition Date 3/11/2026 Maturity 3/11/2029","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Verano Holdings Corp. Facility Type Term Loan All in Rate 11.66% Benchmark S Spread 7.66% PIK 0.00% Floor 4.00% Initial Acquisition Date 3/11/2026 Maturity 3/11/2029","t":"debt","l":{"c":"first lien","r":"US Corporate Debt First Lien Senior Secured U.S. Debt"},"i":"Cannabis","r":0.1166,"sp":0.0766,"fl":0.04,"pk":0,"b":"SOFR","p":38181000,"c":38181000,"v":37799000,"nv":0.125,"ad":"2026-03-11","m":"2029-03-11","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Wellgreens 2.0, LLC Facility Type Term Loan All in Rate 14.00% Benchmark P Spread 6.50% PIK 0.00% Floor 7.50% Initial Acquisition Date 7/24/2025 Maturity 7/31/2029","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Wellgreens 2.0, LLC","t":"debt","l":{"c":"first lien","r":"Facility Type Term Loan All in Rate 14.00% Benchmark P Spread 6.50% PIK 0.00% Floor 7.50% Initial Acquisition Date 7/24/2025 Maturity 7/31/2029"},"f":"term loan","i":"Cannabis","r":0.14,"sp":0.065,"fl":0.075,"pk":0,"b":"other","p":4384000,"c":4418000,"v":4296000,"nv":0.014,"ad":"2025-07-24","m":"2029-07-31","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Wyld - Northwest Commonwealth, LLC (d/b/a WYLD) Facility Type Term Loan All in Rate 16.67% Benchmark P Spread 8.42% PIK 1.50% Floor 6.75% Initial Acquisition Date 1/30/2026 Maturity 1/30/2029","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Cannabis Wyld - Northwest Commonwealth, LLC","t":"debt","l":{"c":"first lien","r":"(d/b/a WYLD) Facility Type Term Loan All in Rate 16.67% Benchmark P Spread 8.42% PIK 1.50% Floor 6.75% Initial Acquisition Date 1/30/2026 Maturity 1/30/2029"},"f":"term loan","i":"Cannabis","r":0.1667,"sp":0.0842,"fl":0.0675,"pk":0.015,"b":"other","p":11620000,"c":11620000,"v":11505000,"nv":0.038,"ad":"2026-01-30","m":"2029-01-30","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Educational Services Energize Holdings, Inc. Facility Type Term Loan All in Rate 11.99% Benchmark S Spread 8.00% PIK 0.00% Floor 3.99% Initial Acquisition Date 10/24/2025 Maturity 10/24/2029","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Educational Services Energize Holdings, Inc.","t":"debt","l":{"c":"first lien","r":"Facility Type Term Loan All in Rate 11.99% Benchmark S Spread 8.00% PIK 0.00% Floor 3.99% Initial Acquisition Date 10/24/2025 Maturity 10/24/2029"},"f":"term loan","i":"Educational Services","r":0.1199,"sp":0.08,"fl":0.0399,"pk":0,"b":"SOFR","p":5000000,"c":4970000,"v":4900000,"nv":0.016,"ad":"2025-10-24","m":"2029-10-24","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Hugo Technologies, Inc. Facility Type Term Loan All in Rate 11.62% Benchmark S Spread 8.00% PIK 0.00% Floor 3.25 ID 12/11/2025 MD 12/11/2030","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Hugo Technologies, Inc.","t":"debt","l":{"c":"first lien","r":"Facility Type Term Loan All in Rate 11.62% Benchmark S Spread 8.00% PIK 0.00% Floor 3.25 ID 12/11/2025 MD 12/11/2030"},"f":"term loan","i":"Administrative and Support and Waste Management and Remediation Services","r":0.1162,"sp":0.08,"fl":0.0325,"pk":0,"b":"SOFR","p":2875000,"c":2875000,"v":2875000,"nv":0.01,"ad":"2025-12-11","m":"2030-12-11","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Information Engage3 Holdings, Inc. Facility Type Term Loan All in Rate 14.00% Benchmark P Spread 2.50% PIK 4.00% Floor 7.50% Initial Acquisition Date 7/22/2025 Maturity 7/22/2030","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Information Engage3 Holdings, Inc.","t":"debt","l":{"c":"first lien","r":"Facility Type Term Loan All in Rate 14.00% Benchmark P Spread 2.50% PIK 4.00% Floor 7.50% Initial Acquisition Date 7/22/2025 Maturity 7/22/2030"},"f":"term loan","i":"Information","r":0.14,"sp":0.025,"fl":0.075,"pk":0.04,"b":"other","p":6213000,"c":5935000,"v":5871000,"nv":0.019,"ad":"2025-07-22","m":"2030-07-22","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Manufacturing Action Target, Inc. Facility Type Term Loan All in Rate 12.00% Benchmark P Spread 2.00% PIK 1.50% Floor 8.50% Initial Acquisition Date 8/29/2025 Maturity 7/19/2027","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Manufacturing Action Target, Inc.","t":"debt","l":{"c":"first lien","r":"Facility Type Term Loan All in Rate 12.00% Benchmark P Spread 2.00% PIK 1.50% Floor 8.50% Initial Acquisition Date 8/29/2025 Maturity 7/19/2027"},"f":"term loan","i":"Manufacturing","r":0.12,"sp":0.02,"fl":0.085,"pk":0.015,"b":"other","p":2252000,"c":2252000,"v":2252000,"nv":0.007,"ad":"2025-08-29","m":"2027-07-19","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Manufacturing Ocular Science, Inc Facility Type Term Loan All in Rate 13.00% Benchmark P Spread 5.25% PIK 1.00% Floor 6.75% Initial Acquisition Date 12/17/2025 Maturity 6/17/2029","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Manufacturing Ocular Science, Inc","t":"debt","l":{"c":"first lien","r":"Facility Type Term Loan All in Rate 13.00% Benchmark P Spread 5.25% PIK 1.00% Floor 6.75% Initial Acquisition Date 12/17/2025 Maturity 6/17/2029"},"f":"term loan","i":"Manufacturing","r":0.13,"sp":0.0525,"fl":0.0675,"pk":0.01,"b":"other","p":4961000,"c":4835000,"v":4712000,"nv":0.016,"ad":"2025-12-17","m":"2029-06-17","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Manufacturing Round 2 Holdings, LLC Facility Type Term Loan All in Rate 13.00% Benchmark P Spread 5.25% PIK 1.00% Floor 6.75% Initial Acquisition Date 3/2/2026 Maturity 3/2/2030","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Manufacturing Round 2 Holdings, LLC","t":"debt","l":{"c":"first lien","r":"Facility Type Term Loan All in Rate 13.00% Benchmark P Spread 5.25% PIK 1.00% Floor 6.75% Initial Acquisition Date 3/2/2026 Maturity 3/2/2030"},"f":"term loan","i":"Manufacturing","r":0.13,"sp":0.0525,"fl":0.0675,"pk":0.01,"b":"other","p":7519000,"c":7284000,"v":7256000,"nv":0.024,"ad":"2026-03-02","m":"2030-03-02","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Public Administration Youth Opportunity Investments, LLC Facility Type Term Loan All in Rate 11.75% Benchmark S Spread 7.75% PIK 0.00% Floor 4.00% Initial Acquisition Date 10/1/2024 Maturity 9/18/2026","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Public Administration Youth Opportunity Investments, LLC","t":"debt","l":{"c":"first lien","r":"Facility Type Term Loan All in Rate 11.75% Benchmark S Spread 7.75% PIK 0.00% Floor 4.00% Initial Acquisition Date 10/1/2024 Maturity 9/18/2026"},"f":"term loan","i":"Public Administration","r":0.1175,"sp":0.0775,"fl":0.04,"pk":0,"b":"SOFR","p":11137000,"c":11118000,"v":11193000,"nv":0.037,"ad":"2024-10-01","m":"2026-09-18","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Real Estate and Rental and Leasing Workbox Holdings Inc. Facility Type Term Loan All in Rate 12.00% Benchmark F Spread 6.00% PIK 6.00% Floor 0.00% Initial Acquisition Date 5/20/2024 Maturity 5/31/2029","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Real Estate and Rental and Leasing Workbox Holdings Inc. Facility Type Term Loan All in Rate 12.00% Benchmark F Spread 6.00% PIK 6.00% Floor 0.00% Initial Acquisition Date 5/20/2024 Maturity 5/31/2029","t":"debt","l":{"c":"first lien","r":"US Corporate Debt First Lien Senior Secured U.S. Debt"},"i":"Real Estate and Rental and Leasing","r":0.12,"sp":0.06,"fl":0,"pk":0.06,"b":"other","p":2302000,"c":2090000,"v":2072000,"nv":0.007,"ad":"2024-05-20","m":"2029-05-31","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Retail Trade Aura Home, Inc Facility Type Term Loan All in Rate 10.15% Benchmark S Spread 6.50% PIK 0.00% Floor 3.50% Initial Acquisition Date 10/1/2024 Maturity 9/22/2028","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Retail Trade Aura Home, Inc","t":"debt","l":{"c":"first lien","r":"Facility Type Term Loan All in Rate 10.15% Benchmark S Spread 6.50% PIK 0.00% Floor 3.50% Initial Acquisition Date 10/1/2024 Maturity 9/22/2028"},"f":"term loan","i":"Retail Trade","r":0.1015,"sp":0.065,"fl":0.035,"pk":0,"b":"SOFR","p":3325000,"c":3325000,"v":3225000,"nv":0.011,"ad":"2024-10-01","m":"2028-09-22","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Retail Trade Aura Home, Inc Facility Type Term Loan All in Rate 10.15% Benchmark S Spread 6.50% PIK 0.00% Floor 3.50% Initial Acquisition Date 4/11/2025 Maturity 9/22/2028","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Retail Trade Aura Home, Inc","t":"debt","l":{"c":"first lien","r":"Facility Type Term Loan All in Rate 10.15% Benchmark S Spread 6.50% PIK 0.00% Floor 3.50% Initial Acquisition Date 4/11/2025 Maturity 9/22/2028"},"f":"term loan","i":"Retail Trade","r":0.1015,"sp":0.065,"fl":0.035,"pk":0,"b":"SOFR","p":519000,"c":519000,"v":503000,"nv":0.002,"ad":"2025-04-11","m":"2028-09-22","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt First Lien Senior Secured U.S. Debt Retail Trade Portofino Labs, Inc. (d/b/a Because Market) Facility Type Term Loan All in Rate 12.00% Benchmark S Spread 6.25% PIK 1.50% Floor 4.25% Initial Acquisition Date 4/30/2025 Maturity 4/30/2029","n":"US Corporate Debt First Lien Senior Secured U.S. Debt Retail Trade Portofino Labs, Inc.","t":"debt","l":{"c":"first lien","r":"(d/b/a Because Market) Facility Type Term Loan All in Rate 12.00% Benchmark S Spread 6.25% PIK 1.50% Floor 4.25% Initial Acquisition Date 4/30/2025 Maturity 4/30/2029"},"f":"term loan","i":"Retail Trade","r":0.12,"sp":0.0625,"fl":0.0425,"pk":0.015,"b":"SOFR","p":5083000,"c":5051000,"v":5033000,"nv":0.017,"ad":"2025-04-30","m":"2029-04-30","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt Second Lien Senior Secured Cannabis Remedy - Maryland Wellness, LLC Facility Type Delayed Draw Term Loan All in Rate 20.25% Benchmark P Spread 9.00% PIK 3.50% Floor 7.75% Initial Acquisition Date 10/1/2024 Maturity 8/1/2028","n":"US Corporate Debt Second Lien Senior Secured Cannabis Remedy - Maryland Wellness, LLC","t":"debt","l":{"c":"second lien","r":"Facility Type Delayed Draw Term Loan All in Rate 20.25% Benchmark P Spread 9.00% PIK 3.50% Floor 7.75% Initial Acquisition Date 10/1/2024 Maturity 8/1/2028"},"f":"delayed draw","i":"Cannabis","r":0.2025,"sp":0.09,"fl":0.0775,"pk":0.035,"b":"other","p":1345000,"c":1345000,"v":1358000,"nv":0.004,"ad":"2024-10-01","m":"2028-08-01","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt Senior Secured U.S. Notes Cannabis Ascend Wellness Holdings Inc Facility Type Senior Secured Note All in Rate 12.75% Benchmark F Spread 12.75% PIK 0.00% Floor 0.00% Initial Acquisition Date 7/16/2024 Maturity 7/16/2029","n":"US Corporate Debt Senior Secured U.S. Notes Cannabis Ascend Wellness Holdings Inc Facility Type Senior Secured Note All in Rate 12.75% Benchmark F Spread 12.75% PIK 0.00% Floor 0.00% Initial Acquisition Date 7/16/2024 Maturity 7/16/2029","t":"debt","l":{"c":"first lien","r":"Senior Secured U.S. Notes"},"i":"Cannabis","r":0.1275,"sp":0.1275,"fl":0,"pk":0,"b":"other","p":3500000,"c":3388000,"v":3396000,"nv":0.011,"ad":"2024-07-16","m":"2029-07-16","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt Senior Secured U.S. Notes Finance and Insurance RTCP, LLC Facility Type Senior Secured Note All in Rate 15.00% Benchmark F Spread 15.00% PIK 0.00% Floor 0.00% Initial Acquisition Date 10/1/2024 Maturity 10/2/2028","n":"US Corporate Debt Senior Secured U.S. Notes Finance and Insurance RTCP, LLC","t":"debt","l":{"c":"first lien","r":"Facility Type Senior Secured Note All in Rate 15.00% Benchmark F Spread 15.00% PIK 0.00% Floor 0.00% Initial Acquisition Date 10/1/2024 Maturity 10/2/2028"},"i":"Finance and Insurance","r":0.15,"sp":0.15,"fl":0,"pk":0,"b":"other","p":22000000,"c":21984000,"v":22000000,"nv":0.073,"ad":"2024-10-01","m":"2028-10-02","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}},
+{"id":"US Corporate Debt Senior Secured US Notes Finance and Insurance West Creek Financial Holdings, Inc.(d/b/a Koalafi) Facility Type Series A Senior Note All in Rate 12.65% Benchmark S Spread 8.00% PIK 1.00% Floor 3.65% ID 10/1/2024 MD 5/22/2029","n":"US Corporate Debt Senior Secured US Notes Finance and Insurance West Creek Financial Holdings","t":"debt","l":{"c":"first lien","r":"Inc.(d/b/a Koalafi) Facility Type Series A Senior Note All in Rate 12.65% Benchmark S Spread 8.00% PIK 1.00% Floor 3.65% ID 10/1/2024 MD 5/22/2029"},"i":"Finance and Insurance","r":0.1265,"sp":0.08,"fl":0.0365,"pk":0.01,"b":"other","p":5509000,"c":5501000,"v":5509000,"nv":0.018,"ad":"2024-10-01","m":"2029-05-22","fr":true,"s":{"w":"dataset","t":true,"r":true,"i":"table","m":"axis"}}
+ ]
+}

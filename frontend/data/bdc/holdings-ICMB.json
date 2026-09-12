@@ -1,0 +1,1310 @@
+{
+ "ticker": "ICMB",
+ "cik": 1578348,
+ "name": "Investcorp Credit Management BDC, Inc.",
+ "period": "2026-06-30",
+ "form": "10-Q",
+ "accn": "0001193125-26-352658",
+ "filed": "2026-08-14",
+ "creditVersion": "1.1.0",
+ "rowSource": "dataset",
+ "sources": {
+  "dataset": {
+   "zip": "2026_08_bdc.zip",
+   "rows": 49,
+   "counts": {
+    "rows": 336,
+    "identifier": 187,
+    "atPeriod": 84,
+    "kept": 49
+   },
+   "dropped": {
+    "otherDate": 103,
+    "otherEntity": 0,
+    "subtotal": 0,
+    "cash": 0,
+    "fvOnly": 7,
+    "costOnly": 0,
+    "neither": 28
+   },
+   "extra": {
+    "costOnly": 0,
+    "cash": 0
+   }
+  },
+  "instance": null,
+  "table": {
+   "doc": "0001193125-26-352658.htm",
+   "period": "2026-06-30",
+   "tables": 8,
+   "rows": 109,
+   "subtotals": 70,
+   "scale": 1,
+   "scaleFix": 1,
+   "totals": {
+    "cost": 190450759,
+    "fv": 172658862
+   },
+   "matched": 43,
+   "rate": 0.8776,
+   "stages": {
+    "numeric": 43,
+    "principal": 0,
+    "cost": 0,
+    "name": 0
+   },
+   "filled": {
+    "mat": 0,
+    "ind": 43,
+    "na": 5,
+    "lien": 28,
+    "aff": 0,
+    "rate": 4,
+    "acquired": 15,
+    "name": 28,
+    "principal": 2
+   },
+   "nonAccrualRows": 10,
+   "nonAccrualUnmatched": 5,
+   "unmatchedRows": 66,
+   "headers": {
+    "investments": "issuer",
+    "interest rate": "rate",
+    "initial acquisition date": "acquired",
+    "maturity date": "maturity",
+    "principal amount/ shares": "principal",
+    "amortized cost/ cost": "cost",
+    "fair value": "fv",
+    "% of net assets": "pctNav",
+    "amortized cost": "cost"
+   },
+   "notes": []
+  },
+  "rpage": null
+ },
+ "gate": {
+  "passed": true,
+  "tolerance": 0.005,
+  "tagSource": "company file",
+  "variant": "tagged rows",
+  "cost": {
+   "sum": 161157365,
+   "tag": 161157365,
+   "diffPct": 0
+  },
+  "fv": {
+   "sum": 135930163,
+   "tag": 135930163,
+   "diffPct": 0
+  },
+  "rows": 49,
+  "subtotalRowsDropped": 7,
+  "dropped": {
+   "otherDate": 103,
+   "otherEntity": 0,
+   "subtotal": 0,
+   "cash": 0,
+   "fvOnly": 7,
+   "costOnly": 0,
+   "neither": 28
+  },
+  "tried": [
+   {
+    "variant": "tagged rows",
+    "n": 49,
+    "cost": {
+     "sum": 161157365,
+     "tag": 161157365,
+     "diffPct": 0
+    },
+    "fv": {
+     "sum": 135930163,
+     "tag": 135930163,
+     "diffPct": 0
+    },
+    "reason": null
+   }
+  ]
+ },
+ "summary": {
+  "portfolioCost": 161157365,
+  "portfolioFv": 135930163,
+  "holdings": 49,
+  "thirdPartyDebtCost": 62914190,
+  "thirdPartyDebtFv": 60462211,
+  "thirdPartyDebtHoldings": 16,
+  "count": 32,
+  "countAll": 34,
+  "countDebt": 14,
+  "namesUnsplit": 0,
+  "nonAccrual": {
+   "cost": 16942990,
+   "fv": 8780403,
+   "n": 5,
+   "issuers": 5,
+   "ofTotalCost": 0.1051,
+   "ofTotalFv": 0.0646,
+   "ofDebtCost": 0.2693,
+   "ofDebtFv": 0.1452,
+   "source": "table"
+  },
+  "wa": {
+   "yieldAtCost": null,
+   "yieldAtFv": null,
+   "spreadCostWeighted": 0.0446,
+   "floatingShare": 0.9493,
+   "pikContractual": 1,
+   "n": {
+    "yield": 1,
+    "spread": 12,
+    "debt": 16
+   },
+   "yieldCoverage": 0.0223,
+   "yieldNote": "withheld: rows with a tagged principal and rate carry 2.2% of accruing third-party debt cost, under the 80% floor"
+  },
+  "lien": {
+   "classes": {
+    "first lien": {
+     "cost": 54433873,
+     "share": 0.8652,
+     "shareOfPortfolio": 0.3378
+    },
+    "first lien incl. unitranche/last-out": {
+     "cost": 8480317,
+     "share": 0.1348,
+     "shareOfPortfolio": 0.0526
+    }
+   },
+   "total": 62914190,
+   "portfolioCost": 161157365,
+   "firstLienShare": 1,
+   "firstLienShareOfPortfolio": 0.3904,
+   "unclassifiedShare": 0
+  },
+  "industry": [
+   {
+    "name": "Commercial Services & Supplies",
+    "fv": 18627188,
+    "share": 0.137
+   },
+   {
+    "name": "Diversified Consumer Services",
+    "fv": 14699443,
+    "share": 0.1081
+   },
+   {
+    "name": "Professional Services",
+    "fv": 13486284,
+    "share": 0.0992
+   },
+   {
+    "name": "IT Services",
+    "fv": 12854773,
+    "share": 0.0946
+   },
+   {
+    "name": "Specialty Retail",
+    "fv": 11082113,
+    "share": 0.0815
+   },
+   {
+    "name": "Containers & Packaging",
+    "fv": 10974239,
+    "share": 0.0807
+   },
+   {
+    "name": "Trading Companies & Distributors",
+    "fv": 9606049,
+    "share": 0.0707
+   },
+   {
+    "name": "Food Products",
+    "fv": 7192216,
+    "share": 0.0529
+   },
+   {
+    "name": "Insurance",
+    "fv": 6912935,
+    "share": 0.0509
+   },
+   {
+    "name": "Household Durables",
+    "fv": 5696964,
+    "share": 0.0419
+   },
+   {
+    "name": "other",
+    "fv": 24797959,
+    "share": 0.1824
+   }
+  ],
+  "industrySource": "table",
+  "maturity": {
+   "2026": 8421461,
+   "2027": 876340,
+   "2028": 32986454,
+   "2029": 4272642,
+   "2030": 16357293,
+   "2031-2033": 0,
+   "later": 0,
+   "n/a": 0,
+   "excluded": 0,
+   "total": 62914190,
+   "dated": 62914190,
+   "unfunded": null,
+   "shares": {
+    "2026": 0.1339,
+    "2027": 0.0139,
+    "2028": 0.5243,
+    "2029": 0.0679,
+    "2030": 0.26,
+    "2031-2033": 0,
+    "later": 0
+   }
+  },
+  "maturitySource": "axis",
+  "vehicles": {
+   "fv": 0,
+   "share": 0
+  },
+  "structured": {
+   "fv": 0,
+   "share": 0
+  },
+  "equity": {
+   "fv": 75467952,
+   "share": 0.5552
+  },
+  "top10": {
+   "fv": 111384766,
+   "share": 0.8194
+  },
+  "affiliation": {
+   "non-controlled affiliated": {
+    "fv": 9514365,
+    "share": 0.07
+   },
+   "non-controlled/non-affiliated": {
+    "fv": 126415798,
+    "share": 0.93
+   }
+  },
+  "affiliationClasses": [
+   "non-controlled affiliated",
+   "non-controlled/non-affiliated"
+  ],
+  "affiliationSource": "dataset,table",
+  "unfunded": {
+   "total": 0,
+   "holdings": 0
+  },
+  "pik": {
+   "holdings": 12,
+   "cost": 33116219
+  },
+  "histogram": {
+   "byCount": {
+    "100-150": 0.1667,
+    "250-300": 0.0833,
+    "450-500": 0.1667,
+    "500-550": 0.25,
+    "550-600": 0.1667,
+    "650-700": 0.0833,
+    "750-800": 0.0833
+   },
+   "byCost": {
+    "100-150": 0.1725,
+    "250-300": 0.1223,
+    "450-500": 0.1056,
+    "500-550": 0.2433,
+    "550-600": 0.2159,
+    "650-700": 0.0419,
+    "750-800": 0.0983
+   },
+   "n": 12,
+   "cost": 59727277
+  },
+  "vsProse": {
+   "yieldAtCost": null,
+   "yieldAtFv": null,
+   "floatingShare": 1,
+   "floatingShareBasis": {
+    "of": "total",
+    "at": null
+   },
+   "nonAccrualCost": null,
+   "nonAccrualFv": null,
+   "nonAccrualOf": null,
+   "portfolioCompanies": null
+  }
+ },
+ "tableUnmatched": {
+  "rows": [
+   {
+    "issuer": "Techniplas Foreign Holdco LP Exit Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments",
+    "industry": "Automobile Components",
+    "nonAccrual": true,
+    "maturity": "2027-06-18",
+    "principal": 945001,
+    "cost": 876340,
+    "fv": 747080,
+    "page": 5,
+    "src": "table"
+   },
+   {
+    "issuer": "Techniplas Foreign Holdco LP Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments",
+    "industry": "Automobile Components",
+    "nonAccrual": true,
+    "maturity": "2026-12-19",
+    "principal": 1159774,
+    "cost": 1116853,
+    "fv": 978270,
+    "page": 5,
+    "src": "table"
+   },
+   {
+    "issuer": "Easy Way Leisure Corporation Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments",
+    "industry": "Household Durables",
+    "nonAccrual": true,
+    "maturity": "2026-01-15",
+    "principal": 7593877,
+    "cost": 7585103,
+    "fv": 6094086,
+    "page": 5,
+    "src": "table"
+   },
+   {
+    "issuer": "Klein Hersh, LLC Senior Subordinated Note",
+    "type": null,
+    "lien": "Unsecured Debt Investments",
+    "industry": "Professional Services",
+    "nonAccrual": true,
+    "maturity": "2032-04-27",
+    "principal": 2184078,
+    "cost": 0,
+    "fv": 0,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "Fusion Connect, Inc. - Series A Preferred",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "IT Services",
+    "nonAccrual": true,
+    "maturity": null,
+    "principal": 500,
+    "cost": 7645189,
+    "fv": 4148090,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "ArborWorks, LLC A-1 - Common Units",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Commercial Services & Supplies",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 1035,
+    "cost": 0,
+    "fv": 0,
+    "page": 3,
+    "src": "table"
+   },
+   {
+    "issuer": "ArborWorks, LLC B-1 - Preferred Units",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Commercial Services & Supplies",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 8633,
+    "cost": 0,
+    "fv": 0,
+    "page": 3,
+    "src": "table"
+   },
+   {
+    "issuer": "Fusion Connect, Inc. - Backstop Warrants",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "IT Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 8904634,
+    "cost": 0,
+    "fv": 0,
+    "page": 3,
+    "src": "table"
+   },
+   {
+    "issuer": "Fusion Connect, Inc. - Common Stock",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "IT Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 230191,
+    "cost": 1184606,
+    "fv": 0,
+    "page": 3,
+    "src": "table"
+   },
+   {
+    "issuer": "Fusion Connect, Inc. - Equity Investor Warrants",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "IT Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 1345747,
+    "cost": 0,
+    "fv": 0,
+    "page": 3,
+    "src": "table"
+   },
+   {
+    "issuer": "Fusion Connect, Inc. - Investor Warrants",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "IT Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 8904634,
+    "cost": 0,
+    "fv": 0,
+    "page": 3,
+    "src": "table"
+   },
+   {
+    "issuer": "Arborworks Acquisition LLC - Reinstated Take Back Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments",
+    "industry": "Commercial Services & Supplies",
+    "nonAccrual": false,
+    "maturity": "2028-11-06",
+    "principal": 2375727,
+    "cost": 2375727,
+    "fv": 2375727,
+    "page": 5,
+    "src": "table"
+   },
+   {
+    "issuer": "Arborworks Acquisition LLC - Revolver",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments",
+    "industry": "Commercial Services & Supplies",
+    "nonAccrual": false,
+    "maturity": "2028-11-06",
+    "principal": 1107527,
+    "cost": 1107527,
+    "fv": 1107527,
+    "page": 5,
+    "src": "table"
+   },
+   {
+    "issuer": "Northstar Group Services, Inc. Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments",
+    "industry": "Commercial Services & Supplies",
+    "nonAccrual": false,
+    "maturity": "2030-05-31",
+    "principal": 5417500,
+    "cost": 5396108,
+    "fv": 5471675,
+    "page": 5,
+    "src": "table"
+   },
+   {
+    "issuer": "Congruex Group LLC Term Loan B",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments",
+    "industry": "Construction & Engineering",
+    "nonAccrual": false,
+    "maturity": "2029-05-03",
+    "principal": 4224541,
+    "cost": 4188783,
+    "fv": 3844332,
+    "page": 5,
+    "src": "table"
+   },
+   {
+    "issuer": "Bioplan USA, Inc. - Priority Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments",
+    "industry": "Containers & Packaging",
+    "nonAccrual": false,
+    "maturity": "2027-03-08",
+    "principal": 571998,
+    "cost": 576345,
+    "fv": 583438,
+    "page": 5,
+    "src": "table"
+   },
+   {
+    "issuer": "Bioplan USA, Inc. - Take Back Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments",
+    "industry": "Containers & Packaging",
+    "nonAccrual": false,
+    "maturity": "2028-03-08",
+    "principal": 6000500,
+    "cost": 5840378,
+    "fv": 5880490,
+    "page": 5,
+    "src": "table"
+   },
+   {
+    "issuer": "Axiom Global Inc. Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments",
+    "industry": "Diversified Consumer Services",
+    "nonAccrual": false,
+    "maturity": "2028-10-02",
+    "principal": 4873964,
+    "cost": 4836029,
+    "fv": 4825224,
+    "page": 5,
+    "src": "table"
+   },
+   {
+    "issuer": "Axiom Global Inc. Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments",
+    "industry": "Diversified Consumer Services",
+    "nonAccrual": false,
+    "maturity": "2028-10-02",
+    "principal": 1496250,
+    "cost": 1500414,
+    "fv": 1481287,
+    "page": 5,
+    "src": "table"
+   },
+   {
+    "issuer": "KNS MidCo Corp. / Wellfull Inc. Term Loan A",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments",
+    "industry": "Diversified Consumer Services",
+    "nonAccrual": false,
+    "maturity": "2030-04-19",
+    "principal": 1474678,
+    "cost": 1474678,
+    "fv": 1441498,
+    "page": 5,
+    "src": "table"
+   },
+   {
+    "issuer": "LaserAway Intermediate Holdings II, LLC Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments",
+    "industry": "Diversified Consumer Services",
+    "nonAccrual": false,
+    "maturity": "2027-10-14",
+    "principal": 7084020,
+    "cost": 7046516,
+    "fv": 7048600,
+    "page": 5,
+    "src": "table"
+   },
+   {
+    "issuer": "INW Manufacturing, LLC Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments",
+    "industry": "Food Products",
+    "nonAccrual": false,
+    "maturity": "2027-03-25",
+    "principal": 3937500,
+    "cost": 3906562,
+    "fv": 3898125,
+    "page": 5,
+    "src": "table"
+   },
+   {
+    "issuer": "Max US Bidco Inc. Term Loan B",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments",
+    "industry": "Food Products",
+    "nonAccrual": false,
+    "maturity": "2030-10-02",
+    "principal": 7889773,
+    "cost": 7682081,
+    "fv": 6232920,
+    "page": 5,
+    "src": "table"
+   },
+   {
+    "issuer": "Asurion, LLC Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments, continued",
+    "industry": "Insurance",
+    "nonAccrual": false,
+    "maturity": "2028-08-21",
+    "principal": 4910586,
+    "cost": 4890122,
+    "fv": 4922862,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "Integrity Marketing Acquisition, LLC Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments, continued",
+    "industry": "Insurance",
+    "nonAccrual": false,
+    "maturity": "2028-08-25",
+    "principal": 6948103,
+    "cost": 6930071,
+    "fv": 6948103,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "Likewize Corporation Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments, continued",
+    "industry": "Insurance",
+    "nonAccrual": false,
+    "maturity": "2029-08-27",
+    "principal": 3529167,
+    "cost": 3445912,
+    "fv": 3440937,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "Uniguest Holdings Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments, continued",
+    "industry": "Interactive Media & Services",
+    "nonAccrual": false,
+    "maturity": "2030-11-27",
+    "principal": 5500000,
+    "cost": 5418213,
+    "fv": 5445000,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "Argano, LLC Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments, continued",
+    "industry": "IT Services",
+    "nonAccrual": false,
+    "maturity": "2029-09-13",
+    "principal": 7304176,
+    "cost": 7188058,
+    "fv": 7285916,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "Accelevation, LLC Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments, continued",
+    "industry": "IT Services",
+    "nonAccrual": false,
+    "maturity": "2031-01-02",
+    "principal": 4182767,
+    "cost": 4124781,
+    "fv": 4182767,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "Accelevation, LLC - Revolver",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments, continued",
+    "industry": "IT Services",
+    "nonAccrual": false,
+    "maturity": "2031-01-02",
+    "principal": 141026,
+    "cost": 130073,
+    "fv": 141026,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "Crisis Prevention Institute, Inc. Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments, continued",
+    "industry": "Professional Services",
+    "nonAccrual": false,
+    "maturity": "2031-04-09",
+    "principal": 2970000,
+    "cost": 2957952,
+    "fv": 2970000,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "Klein Hersh, LLC Term Loan - Last Out",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments, continued",
+    "industry": "Professional Services",
+    "nonAccrual": false,
+    "maturity": "2028-04-27",
+    "principal": 11523913,
+    "cost": 7936181,
+    "fv": 10054614,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "Work Genius Holdings, Inc. Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments, continued",
+    "industry": "Professional Services",
+    "nonAccrual": false,
+    "maturity": "2027-06-07",
+    "principal": 9651923,
+    "cost": 9618129,
+    "fv": 8831510,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "Work Genius Holdings, Inc. Term Loan - Add On",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments, continued",
+    "industry": "Professional Services",
+    "nonAccrual": false,
+    "maturity": "2027-06-07",
+    "principal": 1076113,
+    "cost": 1076112,
+    "fv": 984643,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "Work Genius Holdings, Inc - Revolver",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments, continued",
+    "industry": "Professional Services",
+    "nonAccrual": false,
+    "maturity": "2027-06-07",
+    "principal": 750000,
+    "cost": 750000,
+    "fv": 686250,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "AppLogic Networks Parent LLC - Sandvine Exit TL",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments, continued",
+    "industry": "Software",
+    "nonAccrual": false,
+    "maturity": "2030-03-04",
+    "principal": 1802568,
+    "cost": 1802568,
+    "fv": 1793555,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "ALCV Purchaser, Inc. Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments, continued",
+    "industry": "Specialty Retail",
+    "nonAccrual": false,
+    "maturity": "2026-04-15",
+    "principal": 4700000,
+    "cost": 4694821,
+    "fv": 4700000,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "American Auto Auction Group, LLC Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments, continued",
+    "industry": "Specialty Retail",
+    "nonAccrual": false,
+    "maturity": "2032-05-28",
+    "principal": 6947500,
+    "cost": 6898503,
+    "fv": 6834603,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "PVI Holdings, Inc. Term Loan - Last Out",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments, continued",
+    "industry": "Trading Companies & Distributors",
+    "nonAccrual": false,
+    "maturity": "2028-01-18",
+    "principal": 3870000,
+    "cost": 3853119,
+    "fv": 3870000,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "Xenon Arc, Inc. - Term Loan",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments, continued",
+    "industry": "Trading Companies & Distributors",
+    "nonAccrual": false,
+    "maturity": "2028-12-20",
+    "principal": 8670000,
+    "cost": 8670000,
+    "fv": 8518275,
+    "page": 6,
+    "src": "table"
+   },
+   {
+    "issuer": "Techniplas Foreign Holdco LP - Equity Interest",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Automobile Components",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 879559,
+    "cost": 14336791,
+    "fv": 8092,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "Techniplas Foreign Holdco LP - Class C Preferred Units",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Automobile Components",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 2989254,
+    "cost": 46169,
+    "fv": 75644,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "ArborWorks, LLC A-1 - Common Units",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Commercial Services & Supplies",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 1035,
+    "cost": 0,
+    "fv": 0,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "ArborWorks, LLC A-1 - Preferred Units",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Commercial Services & Supplies",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 8633,
+    "cost": 4362023,
+    "fv": 4670813,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "ArborWorks, LLC B-1 - Preferred Units",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Commercial Services & Supplies",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 8633,
+    "cost": 0,
+    "fv": 0,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "Bioplan USA, Inc. - Common Stock",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Containers & Packaging",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 292150,
+    "cost": 1708942,
+    "fv": 4949021,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "4L Technologies, Inc. - Common Stock",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Electronic Equipment, Instruments & Components",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 149918,
+    "cost": 2171581,
+    "fv": 1499,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "4L Technologies, Inc. - Preferred Stock",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Electronic Equipment, Instruments & Components",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 2289,
+    "cost": 209004,
+    "fv": 58830,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "4L Technologies, Inc. - Preferred Stock",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Electronic Equipment, Instruments & Components",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 250,
+    "cost": 24964,
+    "fv": 95422,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "Discovery Behavioral Health, LLC - Preferred Equity",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Health Care Providers & Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 4000,
+    "cost": 4000000,
+    "fv": 7000000,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "Fusion Connect, Inc. - Backstop Warrants",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "IT Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 8904634,
+    "cost": 0,
+    "fv": 0,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "Fusion Connect, Inc. - Common Stock",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "IT Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 230191,
+    "cost": 1184606,
+    "fv": 0,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "Fusion Connect, Inc. - Equity Investor Warrants",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "IT Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 1345747,
+    "cost": 0,
+    "fv": 0,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "Fusion Connect, Inc. - Investor Warrants",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "IT Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 8904634,
+    "cost": 0,
+    "fv": 0,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "FWS Parent Holding, LLC - Equity Interest",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "IT Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 4405,
+    "cost": 100000,
+    "fv": 94581,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "CF Arch Holdings LLC - Equity Interest",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Professional Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 200000,
+    "cost": 200000,
+    "fv": 348000,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "Victors CCC Aggregator LP - Equity Interest",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Professional Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 500000,
+    "cost": 500000,
+    "fv": 825000,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "Work Genius, LLC - Equity Interest",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Professional Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 500,
+    "cost": 500000,
+    "fv": 117480,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "Work Genius, LLC - A-1 Equity Units",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Professional Services",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 922,
+    "cost": 674011,
+    "fv": 216707,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "AppLogic Networks Parent LLC - Equity Interest",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Software",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 130074,
+    "cost": 2744209,
+    "fv": 2636600,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "Pegasus Aggregator Holdings LP - Equity Interest",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Trading Companies & Distributors",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 9,
+    "cost": 808717,
+    "fv": 1119598,
+    "page": 7,
+    "src": "table"
+   },
+   {
+    "issuer": "American Nuts Holdings, LLC Term Loan A",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments",
+    "industry": "Consumer Staples Distribution & Retail",
+    "nonAccrual": false,
+    "maturity": "2028-03-28",
+    "principal": 2013336,
+    "cost": 2013336,
+    "fv": 1867369,
+    "page": 8,
+    "src": "table"
+   },
+   {
+    "issuer": "American Nuts Holdings, LLC Term Loan B",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments",
+    "industry": "Consumer Staples Distribution & Retail",
+    "nonAccrual": false,
+    "maturity": "2028-03-28",
+    "principal": 2013336,
+    "cost": 2013336,
+    "fv": 1827102,
+    "page": 8,
+    "src": "table"
+   },
+   {
+    "issuer": "Crafty Apes, LLC Term Loan - Second Out",
+    "type": null,
+    "lien": "Senior Secured First Lien Debt Investments",
+    "industry": "Entertainment",
+    "nonAccrual": false,
+    "maturity": "2027-06-01",
+    "principal": 2220339,
+    "cost": 2140434,
+    "fv": 2125975,
+    "page": 8,
+    "src": "table"
+   },
+   {
+    "issuer": "American Nuts Holdings, LLC Class A Units",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Consumer Staples Distribution & Retail",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 6784,
+    "cost": 2204980,
+    "fv": 928035,
+    "page": 8,
+    "src": "table"
+   },
+   {
+    "issuer": "Crafty Apes LLC - Common Stock",
+    "type": null,
+    "lien": "Equity, Warrants and Other Investments",
+    "industry": "Entertainment",
+    "nonAccrual": false,
+    "maturity": null,
+    "principal": 810,
+    "cost": 4968408,
+    "fv": 5924664,
+    "page": 8,
+    "src": "table"
+   }
+  ],
+  "nonAccrualRows": 5,
+  "note": "printed rows that matched no tagged holding, kept whole with their columns (src \"table\", non-accrual first) and never summed; the gate's sums stay the tagged sums"
+ },
+ "notes": [
+  "21 issuer name(s) read again from the member text against the filing's own industry vocabulary (src.nm \"id\")"
+ ],
+ "keys": {
+  "holding": {
+   "id": "id",
+   "issuer": "k",
+   "name": "n",
+   "aff": "a",
+   "kind": "t",
+   "lien": "l",
+   "facility": "f",
+   "industry": "i",
+   "rate": "r",
+   "spread": "sp",
+   "floor": "fl",
+   "pik": "pk",
+   "base": "b",
+   "principal": "p",
+   "cost": "c",
+   "fv": "v",
+   "pctNav": "nv",
+   "unfunded": "u",
+   "acquired": "ad",
+   "maturity": "m",
+   "nonAccrual": "na",
+   "floating": "fr",
+   "units": "un",
+   "src": "s",
+   "fvUntagged": "fvu",
+   "costUntagged": "cu",
+   "cashEquivalent": "ce"
+  },
+  "lien": {
+   "class": "c",
+   "subclass": "s",
+   "raw": "r"
+  },
+  "src": {
+   "row": "w",
+   "table": "t",
+   "r": "r",
+   "na": "na",
+   "ind": "i",
+   "mat": "m",
+   "unf": "u",
+   "rt": "rt",
+   "ds": "ds",
+   "val": "vl",
+   "nm": "nm",
+   "af": "af"
+  },
+  "note": "short keys per blueprint 7.4; a key absent from a row is null (floating: false); src.t and src.r absent mean false, src.na absent means none; src.vl \"table\" marks a fair value the filer left untagged and the printed schedule supplied; src.nm \"table\" marks an issuer name the printed row supplied; src.af \"issuer\" marks an affiliation taken from the issuer's other tranches; the issuer key (H1 `issuer`) is not written — it is normalizeIssuer(n), which expandHolding restores"
+ },
+ "holdings": [
+{"id":"Non-Controlled/Affiliated Investments, Equity, Warrants and Other Investments, Consumer Staples Distribution & Retail, American Nuts Holdings, LLC Class A Units, Initial Acquisition Date 3/28/2025","n":"American Nuts Holdings, LLC Class A Units","a":"non-controlled affiliated","t":"equity","l":{"c":"equity","r":"Equity, Warrants and Other Investments"},"i":"Consumer Staples Distribution & Retail","c":2204980,"v":544745,"nv":0.011,"ad":"2025-03-28","s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Non-Controlled/Affiliated Investments, Equity, Warrants and Other Investments, Entertainment, Crafty Apes LLC - Common Stock, Initial Acquisition Date 11/20/2024","n":"Crafty Apes LLC - Common Stock","a":"non-controlled affiliated","t":"equity","l":{"c":"equity","r":"Equity, Warrants and Other Investments"},"i":"Entertainment","c":4968408,"v":2787655,"nv":0.0561,"ad":"2024-11-20","s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Non-Controlled/Affiliated Investments, Senior Secured First Lien Debt Investments, Consumer Staples Distribution & Retail, American Nuts Holdings, LLC Term Loan A, Interest Rate 3M S + 8.50% PIK (1.00% Floor), Maturity Date 3/28/2028","n":"Investments","a":"non-controlled affiliated","t":"equity","l":{"c":"equity","r":"Senior Secured First Lien Debt Investments, Consumer Staples Distribution & Retail, American Nuts Holdings, LLC | Term Loan A, Interest Rate 3M S + 8.50% PIK (1.00% Floor), Maturity Date 3/28/2028"},"f":"term loan","i":"Consumer Staples Distribution & Retail","fl":0.01,"pk":0.085,"b":"SOFR","p":2142329,"c":2142329,"v":1954875,"nv":0.0393,"m":"2028-03-28","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Controlled/Affiliated Investments, Senior Secured First Lien Debt Investments, Consumer Staples Distribution & Retail, American Nuts Holdings, LLC Term Loan B, Interest Rate 3M S + 8.50% PIK (1.00% Floor), Maturity Date 3/28/2028","n":"Investments","a":"non-controlled affiliated","t":"equity","l":{"c":"equity","r":"Senior Secured First Lien Debt Investments, Consumer Staples Distribution & Retail, American Nuts Holdings, LLC | Term Loan B, Interest Rate 3M S + 8.50% PIK (1.00% Floor), Maturity Date 3/28/2028"},"f":"term loan","i":"Consumer Staples Distribution & Retail","fl":0.01,"pk":0.085,"b":"SOFR","p":2142329,"c":2142329,"v":1987010,"nv":0.04,"m":"2028-03-28","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Controlled/Affiliated Investments, Senior Secured First Lien Debt Investments, Consumer Staples Distribution & Retail, American Nuts Holdings, LLC Term Loan C, Interest Rate 3M S + 8.50% PIK (1.00% Floor), Maturity Date 12/31/1899","n":"Investments","a":"non-controlled affiliated","t":"equity","l":{"c":"equity","r":"Senior Secured First Lien Debt Investments, Consumer Staples Distribution & Retail, American Nuts Holdings, LLC | Term Loan C, Interest Rate 3M S + 8.50% PIK (1.00% Floor), Maturity Date 12/31/1899"},"f":"term loan","i":"Consumer Staples Distribution & Retail","fl":0.01,"pk":0.085,"b":"SOFR","p":79281,"c":79281,"v":77299,"nv":0.0016,"m":"2028-03-28","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Controlled/Affiliated Investments, Senior Secured First Lien Debt Investments, Entertainment, Crafty Apes, LLC Term Loan - Second Out, Interest Rate 1M S + 6.50% PIK (1.00% Floor), Maturity Date 6/1/2027","n":"Investments","a":"non-controlled affiliated","t":"equity","l":{"c":"equity","r":"Senior Secured First Lien Debt Investments, Entertainment, Crafty Apes, LLC | Term Loan - Second Out, Interest Rate 1M S + 6.50% PIK (1.00% Floor), Maturity Date 6/1/2027"},"f":"term loan","i":"Entertainment","fl":0.01,"pk":0.065,"b":"SOFR","p":2338141,"c":2285158,"v":2162781,"nv":0.0435,"m":"2027-06-01","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, Automobile Components, Techniplas Foreign Holdco LP - Class C Preferred Units, Initial Acquisition Date 12/5/2024","n":"Techniplas Foreign Holdco LP - Class C Preferred Units","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Equity, Warrants and Other Investments"},"i":"Automobile Components","c":46169,"v":1786,"nv":0,"ad":"2024-12-05","s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, Automobile Components, Techniplas Foreign Holdco LP - Equity Interest, Initial Acquisition Date 6/19/2020","n":"Techniplas Foreign Holdco LP - Equity Interest","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Equity, Warrants and Other Investments"},"i":"Automobile Components","c":14336791,"v":0,"nv":0,"ad":"2020-06-19","s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, Commercial Services & Supplies, ArborWorks, LLC A-1 - Common Units, Initial Acquisition Date 11/24/2021","n":"Investments, Equity, Warrants and Other Investments, Commercial Services & Supplies, ArborWorks, LLC A-1","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Common Units, Initial Acquisition Date 11/24/2021"},"c":0,"v":0,"nv":0,"s":{"w":"dataset","nm":"id"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, Commercial Services & Supplies, ArborWorks, LLC A-1 - Preferred Units, Initial Acquisition Date 11/24/2021","n":"ArborWorks, LLC A-1 - Preferred Units","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Equity, Warrants and Other Investments"},"i":"Commercial Services & Supplies","c":4362023,"v":9504469,"nv":0.1913,"ad":"2021-11-24","s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, Commercial Services & Supplies, ArborWorks, LLC B-1 - Preferred Units, Initial Acquisition Date 11/24/2021","n":"Investments, Equity, Warrants and Other Investments, Commercial Services & Supplies, ArborWorks, LLC B-1","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Preferred Units, Initial Acquisition Date 11/24/2021"},"c":0,"v":0,"nv":0,"s":{"w":"dataset","nm":"id"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, Containers & Packaging, Bioplan USA, Inc. - Common Stock, Initial Acquisition Date 3/8/2023","n":"Bioplan USA, Inc. - Common Stock","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Equity, Warrants and Other Investments"},"i":"Containers & Packaging","c":1708942,"v":5033744,"nv":0.1013,"ad":"2023-03-08","s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, Electronic Equipment, Instruments & Components, 4L Technologies, Inc. - Common Stock, Initial Acquisition Date 2/4/2020","n":"4L Technologies, Inc. - Common Stock","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Equity, Warrants and Other Investments"},"i":"Electronic Equipment, Instruments & Components","c":2171581,"v":2549,"nv":0.0001,"ad":"2020-02-04","s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, Electronic Equipment, Instruments & Components, 4L Technologies, Inc. - Preferred Stock, Initial Acquisition Date 5/28/2020","n":"4L Technologies, Inc. - Preferred Stock","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Equity, Warrants and Other Investments"},"i":"Electronic Equipment, Instruments & Components","c":209004,"v":126564,"nv":0.0025,"ad":"2020-05-28","s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, Electronic Equipment, Instruments & Components, 4L Technologies, Inc. - Preferred Stock, Initial Acquisition Date 7/2/2025","n":"4L Technologies, Inc. - Preferred Stock","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Equity, Warrants and Other Investments"},"i":"Electronic Equipment, Instruments & Components","c":24964,"v":205279,"nv":0.0041,"ad":"2025-07-02","s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, Health Care Providers & Services, Discovery Behavioral Health, LLC - Preferred Equity, Interest Rate +13.50% PIK, Initial Acquisition Date 10/10/2023","n":"Discovery Behavioral Health, LLC - Preferred Equity","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Equity, Warrants and Other Investments"},"i":"Health Care Providers & Services","pk":0.135,"p":4000,"c":4000000,"v":0,"nv":0,"ad":"2023-10-10","s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, IT Services, Fusion Connect, Inc - Equity Investor Warrants, Initial Acquisition Date 1/18/2022","n":"Investments, Equity, Warrants and Other Investments, IT Services, Fusion Connect, Inc - Equity Investor Warrants, Initial Acquisition Date 1/18/2022","a":"non-controlled/non-affiliated","t":"equity","l":{},"c":0,"v":0,"nv":0,"s":{"w":"dataset","nm":"id"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, IT Services, Fusion Connect, Inc. - Backstop Warrants, Initial Acquisition Date 1/12/2022","n":"Investments, Equity, Warrants and Other Investments, IT Services, Fusion Connect, Inc. - Backstop Warrants, Initial Acquisition Date 1/12/2022","a":"non-controlled/non-affiliated","t":"equity","l":{},"c":0,"v":0,"nv":0,"s":{"w":"dataset","nm":"id"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, IT Services, Fusion Connect, Inc. - Common Stock, Initial Acquisition Date 1/18/2022","n":"Investments, Equity, Warrants and Other Investments, IT Services, Fusion Connect, Inc.","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Common Stock, Initial Acquisition Date 1/18/2022"},"c":1184606,"v":0,"nv":0,"s":{"w":"dataset","nm":"id"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, IT Services, Fusion Connect, Inc. - Investor Warrants, Initial Acquisition Date 1/12/2022","n":"Investments, Equity, Warrants and Other Investments, IT Services, Fusion Connect, Inc. - Investor Warrants, Initial Acquisition Date 1/12/2022","a":"non-controlled/non-affiliated","t":"equity","l":{},"c":0,"v":0,"nv":0,"s":{"w":"dataset","nm":"id"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, IT Services, Fusion Connect, Inc. - Series A Preferred, Interest Rate + 12.50% PIK, Initial Acquisition Date 1/12/2022","n":"Fusion Connect, Inc. - Series A Preferred","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Equity, Warrants and Other Investments"},"i":"IT Services","pk":0.125,"p":500,"c":7645189,"v":1526140,"nv":0.0307,"ad":"2022-01-12","na":true,"s":{"w":"dataset","t":true,"na":"table","i":"table","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, Professional Services, CF Arch Holdings LLC - Equity Interest Initial Acquisition Date 8/11/2022","n":"Investments, Equity, Warrants and Other Investments, Professional Services","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"CF Arch Holdings LLC - Equity Interest Initial Acquisition Date 8/11/2022"},"i":"Professional Services","c":200000,"v":428000,"nv":0.0086,"ad":"2022-08-11","s":{"w":"dataset","t":true,"i":"table","nm":"id"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, Professional Services, Victors CCC Aggregator LP - Equity Interest, Initial Acquisition Date 5/27/2022","n":"Victors CCC Aggregator LP - Equity Interest","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Equity, Warrants and Other Investments"},"i":"Professional Services","c":500000,"v":880000,"nv":0.0177,"ad":"2022-05-27","s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, Software, AppLogic Networks Parent LLC - Equity Interest, Initial Acquisition Date 3/3/2025","n":"AppLogic Networks Parent LLC - Equity Interest","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Equity, Warrants and Other Investments"},"i":"Software","c":2744209,"v":2373850,"nv":0.0478,"ad":"2025-03-03","s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Equity, Warrants and Other Investments, Trading Companies & Distributors, Pegasus Aggregator Holdings LP - Equity Interest, Initial Acquisition Date 2/28/2022","n":"Pegasus Aggregator Holdings LP - Equity Interest","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Equity, Warrants and Other Investments"},"i":"Trading Companies & Distributors","c":808717,"v":1131986,"nv":0.0228,"ad":"2022-02-28","s":{"w":"dataset","t":true,"i":"table","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Automobile Components, Techniplas Foreign Holdco LP Exit Term Loan, Interest Rate 10.00% PIK, Maturity Date 6/18/2027","n":"Techniplas Foreign Holdco LP Exit Term Loan","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured First Lien Debt Investments"},"i":"Automobile Components","r":0.1,"pk":0.1,"p":993111,"c":876340,"v":626145,"nv":0.0126,"m":"2027-06-18","na":true,"s":{"w":"dataset","t":true,"na":"table","i":"table","m":"axis","nm":"table","rt":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Automobile Components, Techniplas Foreign Holdco LP Term Loan, Interest Rate 17.00% PIK, Maturity Date 12/19/2026","n":"Techniplas Foreign Holdco LP Term Loan","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured First Lien Debt Investments"},"i":"Automobile Components","r":0.17,"pk":0.17,"p":1159774,"c":1116853,"v":811030,"nv":0.0163,"m":"2026-12-19","na":true,"s":{"w":"dataset","t":true,"na":"table","i":"table","m":"axis","nm":"table","rt":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Commercial Services & Supplies, Arborworks Acquisition LLC - Reinstated Take Back Term Loan, Interest Rate 1M S + 6.50% PIK (1.00% Floor), Maturity Date 11/6/2028","n":"Arborworks Acquisition LLC - Reinstated Take Back Term Loan","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured First Lien Debt Investments"},"i":"Commercial Services & Supplies","sp":0.065,"fl":0.01,"pk":0.065,"b":"SOFR","p":2505312,"c":2505312,"v":2505312,"nv":0.0504,"m":"2028-11-06","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table","rt":"dropped"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Commercial Services & Supplies, Arborworks Acquisition LLC - Revolver, Interest Rate 15.00% PIK, Maturity Date 11/6/2028","n":"Arborworks Acquisition LLC - Revolver","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured First Lien Debt Investments"},"i":"Commercial Services & Supplies","r":0.15,"pk":0.15,"p":1193720,"c":1193720,"v":1193720,"nv":0.024,"m":"2028-11-06","s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table","rt":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Commercial Services & Supplies, Northstar Group Services, Inc. Term Loan, Interest Rate 3M S + 4.75% (0.50% Floor), Maturity Date 5/31/2030","n":"Investments","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Senior Secured First Lien Debt Investments, Commercial Services & Supplies, Northstar Group Services, Inc. | Term Loan, Interest Rate 3M S + 4.75% (0.50% Floor), Maturity Date 5/31/2030"},"f":"term loan","i":"Commercial Services & Supplies","sp":0.0475,"fl":0.005,"b":"SOFR","p":5390000,"c":5370686,"v":5423687,"nv":0.1091,"m":"2030-05-31","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Construction & Engineering, Congruex Group LLC Term Loan B, Interest Rate 3M S + 5.75% (1.50% Floor), Maturity Date 5/3/2029","n":"Congruex Group LLC Term Loan B","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured First Lien Debt Investments"},"i":"Construction & Engineering","sp":0.0575,"fl":0.015,"b":"SOFR","p":4303556,"c":4272642,"v":3948513,"nv":0.0795,"m":"2029-05-03","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Containers & Packaging, Bioplan USA, Inc. - Take Back Term Loan, Interest Rate 3M S + 7.75% (4.00% Floor), Maturity Date 3/8/2028","n":"Bioplan USA, Inc. - Take Back Term Loan","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured First Lien Debt Investments"},"i":"Containers & Packaging","sp":0.0775,"fl":0.04,"b":"SOFR","p":6000500,"c":5872272,"v":5940495,"nv":0.1195,"m":"2028-03-08","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Diversified Consumer Services, Axiom Global Inc. Term Loan, Interest Rate 3M S + 4.50% (0.75% Floor), Maturity Date 10/2/2028 One","n":"Axiom Global Inc. Term Loan","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured First Lien Debt Investments"},"i":"Diversified Consumer Services","sp":0.045,"fl":0.0075,"b":"SOFR","p":1488750,"c":1492223,"v":1470141,"nv":0.0296,"m":"2028-10-02","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Diversified Consumer Services, Axiom Global Inc. Term Loan, Interest Rate 3M S + 4.50% (0.75% Floor), Maturity Date 10/2/2028","n":"Axiom Global Inc. Term Loan","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured First Lien Debt Investments"},"i":"Diversified Consumer Services","sp":0.045,"fl":0.0075,"b":"SOFR","p":4849223,"c":4817610,"v":4788607,"nv":0.0964,"m":"2028-10-02","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Diversified Consumer Services, KNS MidCo Corp. / Wellfull Inc. Term Loan A, Interest Rate 1M S + 5.00% (1.00% Floor), Maturity Date 4/19/2030","n":"KNS MidCo Corp. / Wellfull Inc. Term Loan A","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured First Lien Debt Investments"},"i":"Diversified Consumer Services","sp":0.05,"fl":0.01,"b":"SOFR","p":1474678,"c":1474678,"v":1393571,"nv":0.028,"m":"2030-04-19","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Diversified Consumer Services, LaserAway Intermediate Holdings II, LLC Term Loan, Interest Rate 3M S + 5.75% (0.75% Floor), Maturity Date 10/14/2027","n":"Investments","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Senior Secured First Lien Debt Investments, Diversified Consumer Services, LaserAway Intermediate Holdings II, LLC | Term Loan, Interest Rate 3M S + 5.75% (0.75% Floor), Maturity Date 10/14/2027"},"f":"term loan","i":"Diversified Consumer Services","sp":0.0575,"fl":0.0075,"b":"SOFR","p":7047124,"c":7019416,"v":7047124,"nv":0.1418,"m":"2027-10-14","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Food Products, Max US Bidco Inc. Term Loan B, Interest Rate 3M S + 5.00%, Maturity Date 10/2/2030","n":"Max US Bidco Inc. Term Loan B","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured First Lien Debt Investments"},"i":"Food Products","sp":0.05,"b":"SOFR","p":7849621,"c":7660007,"v":7192216,"nv":0.1447,"m":"2030-10-02","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Household Durables, Easy Way Leisure Corporation Term Loan, Interest Rate 3M S + 2.50% + 5.00% PIK (1.00% Floor), Maturity Date 10/15/2026","n":"Easy Way Leisure Corporation Term Loan","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured First Lien Debt Investments"},"i":"Household Durables","sp":0.025,"fl":0.01,"pk":0.05,"b":"SOFR","p":7795858,"c":7304608,"v":5696964,"nv":0.1146,"m":"2026-10-15","na":true,"fr":true,"s":{"w":"dataset","t":true,"na":"table","i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Insurance, Integrity Marketing Acquisition, LLC Term Loan, Interest Rate 3M S + 5.00% (0.75% Floor), Maturity Date 8/25/2028","n":"Investments","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Senior Secured First Lien Debt Investments, Insurance, Integrity Marketing Acquisition, LLC | Term Loan, Interest Rate 3M S + 5.00% (0.75% Floor), Maturity Date 8/25/2028"},"f":"term loan","i":"Insurance","sp":0.05,"fl":0.0075,"b":"SOFR","p":6912935,"c":6898023,"v":6912935,"nv":0.1391,"m":"2028-08-25","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Interactive Media & Services, Uniguest Holdings Term Loan, Interest Rate 1M S + 5.00% (1.00% Floor), Maturity Date 11/27/2030","n":"Uniguest Holdings Term Loan","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured First Lien Debt Investments, continued"},"i":"Interactive Media & Services","sp":0.05,"fl":0.01,"b":"SOFR","p":5472222,"c":5397508,"v":5362778,"nv":0.1079,"m":"2030-11-27","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, IT Services, Accelevation, LLC Term Loan, Interest Rate 1M S + 4.50% (0.75% Floor), Maturity Date 1/2/2031","n":"Investments","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Senior Secured First Lien Debt Investments, IT Services, Accelevation, LLC | Term Loan, Interest Rate 1M S + 4.50% (0.75% Floor), Maturity Date 1/2/2031"},"f":"term loan","i":"IT Services","sp":0.045,"fl":0.0075,"b":"SOFR","p":4161757,"c":4098562,"v":4057713,"nv":0.0817,"m":"2031-01-02","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, IT Services, Argano, LLC Term Loan, Interest Rate 1M S + 5.50% (1.00% Floor), Maturity Date 9/13/2029","n":"Investments","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Senior Secured First Lien Debt Investments, IT Services, Argano, LLC | Term Loan, Interest Rate 1M S + 5.50% (1.00% Floor), Maturity Date 9/13/2029"},"f":"term loan","i":"IT Services","sp":0.055,"fl":0.01,"b":"SOFR","p":7270920,"c":7168431,"v":7270920,"nv":0.1463,"m":"2029-09-13","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Professional Services, Crisis Prevention Institute, Inc. Term Loan, Interest Rate 3M S + 4.00% (0.50% Floor), Maturity Date 4/9/2031","n":"Investments","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Senior Secured First Lien Debt Investments, Professional Services, Crisis Prevention Institute, Inc. | Term Loan, Interest Rate 3M S + 4.00% (0.50% Floor), Maturity Date 4/9/2031"},"f":"term loan","i":"Professional Services","sp":0.04,"fl":0.005,"b":"SOFR","p":2944728,"c":2933689,"v":2944728,"nv":0.0593,"m":"2031-04-09","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Professional Services, Klein Hersh, LLC Term Loan - Last Out, Interest Rate 3M S + 1.06%, Maturity Date 4/27/2028","n":"Investments","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","s":"incl. unitranche/last-out","r":"Senior Secured First Lien Debt Investments, Professional Services, Klein Hersh, LLC | Term Loan - Last Out, Interest Rate 3M S + 1.06%, Maturity Date 4/27/2028"},"f":"term loan","i":"Professional Services","sp":0.0106,"b":"SOFR","p":11463437,"c":8480317,"v":9113432,"nv":0.1834,"m":"2028-04-27","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Software, AppLogic Networks Parent LLC - Sandvine Exit TL, Interest Rate 3M S + 1.00% + 5.00% PIK, Maturity Date 3/4/2030","n":"AppLogic Networks Parent LLC - Sandvine Exit TL","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured First Lien Debt Investments, continued"},"i":"Software","sp":0.01,"pk":0.05,"b":"SOFR","p":1825100,"c":1825100,"v":1825100,"nv":0.0367,"m":"2030-03-04","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Specialty Retail, ALCV Purchaser, Inc. Term Loan, Interest Rate 1M S + 6.75% (1.00% Floor), Maturity Date 4/15/2026","n":"Investments","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Senior Secured First Lien Debt Investments, Specialty Retail, ALCV Purchaser, Inc. | Term Loan, Interest Rate 1M S + 6.75% (1.00% Floor), Maturity Date 4/15/2026"},"f":"term loan","i":"Specialty Retail","sp":0.0675,"fl":0.01,"b":"SOFR","p":4160972,"c":4123110,"v":4160972,"nv":0.0837,"m":"2028-04-17","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Specialty Retail, American Auto Auction Group, LLC Term Loan, Interest Rate 3M S + 4.50%, Maturity Date 5/28/2032","n":"Investments","a":"non-controlled/non-affiliated","t":"equity","l":{"c":"equity","r":"Senior Secured First Lien Debt Investments, Specialty Retail, American Auto Auction Group, LLC | Term Loan, Interest Rate 3M S + 4.50%, Maturity Date 5/28/2032"},"f":"term loan","i":"Specialty Retail","sp":0.045,"b":"SOFR","p":6912500,"c":6866578,"v":6921141,"nv":0.1393,"m":"2032-05-28","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"id"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Trading Companies & Distributors, Xenon Arc, Inc. - Term Loan, Interest Rate 3M S + 5.75% (0.75% Floor), Maturity Date 12/20/2028","n":"Xenon Arc, Inc. - Term Loan","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"first lien","r":"Senior Secured First Lien Debt Investments, continued"},"i":"Trading Companies & Distributors","sp":0.0575,"fl":0.0075,"b":"SOFR","p":8625000,"c":8625000,"v":8474063,"nv":0.1705,"m":"2028-12-20","fr":true,"s":{"w":"dataset","t":true,"i":"table","m":"axis","nm":"table"}},
+{"id":"Non-Controlled/Non-Affiliated Investments, Senior Secured First Lien Debt Investments, Unsecured Debt Investments Professional Services, Klein Hersh, LLC Senior Subordinated Note, Maturity Date 4/27/2032","n":"Investments","a":"non-controlled/non-affiliated","t":"debt","l":{"c":"unsecured","r":"Senior Secured First Lien Debt Investments, Unsecured Debt Investments Professional Services, Klein Hersh, LLC | Senior Subordinated Note, Maturity Date 4/27/2032"},"i":"Professional Services","p":2184078,"c":0,"v":120124,"nv":0.0024,"m":"2032-04-27","na":true,"s":{"w":"dataset","t":true,"na":"table","i":"table","m":"axis","nm":"id"}}
+ ]
+}

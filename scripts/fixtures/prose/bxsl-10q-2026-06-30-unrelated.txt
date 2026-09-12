@@ -1,0 +1,18 @@
+Fixture for scripts/test-bdc-prose.mjs: lines cut from the main document bxsl-20260630.htm of the Form 10-Q of Blackstone Secured Lending Fund for the period ended June 30, 2026, filed 2026-08-06, accession number 0001736035-26-000016, as converted to text by htmlToText in scripts/lib/bdc-prose.mjs.
+The windows below are the lines named, in document order; each window opens with a line that names it. Nothing between the windows is present and nothing has been edited.
+--- lines 4969 to 4983: Item 4, Controls and Procedures, and the opening of Part II: prose that states none of the figures the reader looks for.
+Item 4. Controls and Procedures.
+(a) Evaluation of Disclosure Controls and Procedures
+The Company maintains disclosure controls and procedures (as that term is defined in Rules 13a-15(e) and 15d-15(e) under the Exchange Act) that are designed to ensure that information required to be disclosed in the Company's reports under the Exchange Act is recorded, processed, summarized and reported within the time periods specified in the SEC's rules and forms, and that such information is accumulated and communicated to the Company's management, including its Chief Executive Officer and Chief Financial Officer, as appropriate, to allow timely decisions regarding required disclosures. Any controls and procedures, no matter how well designed and operated, can provide only reasonable assurance of achieving the desired control objectives. An evaluation of the effectiveness of our disclosure controls and procedures as of the end of the period covered by this Quarterly Report on Form 10-Q was made under the supervision and with the participation of our management, including our Chief Executive Officer and Chief Financial Officer.
+152
+Table of Contents
+Based upon this evaluation, our Chief Executive Officer and Chief Financial Officer have concluded that the design and operation of our disclosure controls and procedures are (a) effective at the reasonable assurance level to ensure that information required to be disclosed by us in reports filed or submitted under the Exchange Act is recorded, processed, summarized and reported within the time periods specified by SEC rules and forms and (b) include, without limitation, controls and procedures designed to ensure that information required to be disclosed by us in reports filed or submitted under the Exchange Act is accumulated and communicated to our management, including our Chief Executive Officer and Chief Financial Officer, as appropriate, to allow timely decisions regarding required disclosure.
+(b) Changes in Internal Controls Over Financial Reporting
+There have been no changes in our internal control over financial reporting that occurred during our most recently completed fiscal quarter that have materially affected, or are reasonably likely to materially affect, our internal control over financial reporting.
+153
+Table of Contents
+PART II - OTHER INFORMATION
+Item 1. Legal Proceedings.
+We are not currently subject to any material legal proceedings. From time to time, we may be a party to certain legal proceedings in the ordinary course of business, including proceedings relating to the enforcement of our rights under contracts with our portfolio companies. Our business is also subject to extensive regulation, which may result in regulatory proceedings against us.
+Item 1A. Risk Factors.
+There have been no material changes to the risk factors discussed in Part I, Item 1A. "Risk Factors" in our Annual Report on Form 10-K for the year ended December 31, 2025.
