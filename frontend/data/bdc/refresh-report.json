@@ -1,5 +1,5 @@
 {
- "startedAt": "2026-09-12T03:22:46.303Z",
+ "startedAt": "2026-09-13T12:33:48.635Z",
  "quarter": "CY2026Q2",
  "universe": {
   "framesCandidates": 229,
@@ -26,9 +26,9 @@
  "flagCount": 565,
  "framesFetched": 21,
  "rateLimitHits": 0,
- "bytesWritten": 15350839,
+ "bytesWritten": 15349778,
  "holdings": {
-  "startedAt": "2026-09-12T13:55:52.110Z",
+  "startedAt": "2026-09-13T12:34:37.803Z",
   "attempted": 4,
   "written": 0,
   "unchanged": [
@@ -1533,7 +1533,7 @@
   "zips": [
    {
     "month": "2026_08",
-    "status": "cached",
+    "status": "downloaded",
     "bytes": 265631488,
     "filings": 174
    },
@@ -1554,14 +1554,14 @@
   },
   "prose": 4,
   "downloads": {
-   "bytes": 0,
-   "files": 0,
-   "checks": 5,
-   "requests": 7
+   "bytes": 283123983,
+   "files": 9,
+   "checks": 0,
+   "requests": 11
   },
   "notes": [],
-  "finishedAt": "2026-09-12T13:56:17.646Z",
-  "durationSeconds": 26
+  "finishedAt": "2026-09-13T12:34:48.736Z",
+  "durationSeconds": 11
  },
  "composite": {
   "members": 32,
@@ -1608,20 +1608,6 @@
    "universe": 53
   }
  },
- "finishedAt": "2026-09-12T03:25:17.996Z",
- "durationSeconds": 152,
- "partialRun": {
-  "kind": "holdings-only",
-  "startedAt": "2026-09-12T13:55:51.943Z",
-  "finishedAt": "2026-09-12T13:56:18.857Z",
-  "durationSeconds": 27,
-  "rateLimitHits": 0,
-  "findings": [
-   {
-    "severity": "warn",
-    "code": "holdings_refusals",
-    "message": "21 refused and 0 failed of 53 schedules"
-   }
-  ]
- }
+ "finishedAt": "2026-09-13T12:34:49.155Z",
+ "durationSeconds": 61
 }
