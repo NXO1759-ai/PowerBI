@@ -1,5 +1,5 @@
 {
- "startedAt": "2026-09-13T12:33:48.635Z",
+ "startedAt": "2026-09-20T12:01:46.267Z",
  "quarter": "CY2026Q2",
  "universe": {
   "framesCandidates": 229,
@@ -26,9 +26,9 @@
  "flagCount": 565,
  "framesFetched": 21,
  "rateLimitHits": 0,
- "bytesWritten": 15349778,
+ "bytesWritten": 15349464,
  "holdings": {
-  "startedAt": "2026-09-13T12:34:37.803Z",
+  "startedAt": "2026-09-20T12:02:35.673Z",
   "attempted": 4,
   "written": 0,
   "unchanged": [
@@ -1533,9 +1533,7 @@
   "zips": [
    {
     "month": "2026_08",
-    "status": "downloaded",
-    "bytes": 265631488,
-    "filings": 174
+    "status": "absent"
    },
    {
     "month": "2026_09",
@@ -1554,14 +1552,14 @@
   },
   "prose": 4,
   "downloads": {
-   "bytes": 283123983,
-   "files": 9,
+   "bytes": 17492931,
+   "files": 8,
    "checks": 0,
-   "requests": 11
+   "requests": 10
   },
   "notes": [],
-  "finishedAt": "2026-09-13T12:34:48.736Z",
-  "durationSeconds": 11
+  "finishedAt": "2026-09-20T12:02:40.188Z",
+  "durationSeconds": 5
  },
  "composite": {
   "members": 32,
@@ -1608,6 +1606,6 @@
    "universe": 53
   }
  },
- "finishedAt": "2026-09-13T12:34:49.155Z",
- "durationSeconds": 61
+ "finishedAt": "2026-09-20T12:02:40.553Z",
+ "durationSeconds": 54
 }
