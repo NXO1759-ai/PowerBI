@@ -7,6 +7,12 @@
  * return with a price toggle — so both series travel together:
  *   GET /api/price-history?ticker=BIZD            five years
  *   GET /api/price-history?ticker=BIZD&range=max  everything Yahoo holds
+ *   GET /api/price-history?ticker=BIZD&force=1    skips the cache read,
+ *                                                  still writes it; gated
+ *                                                  tightly (the
+ *                                                  api/credit-macro.js
+ *                                                  pattern), Cache-Control
+ *                                                  no-store on this path
  *
  * Providers, in order:
  *   FINNHUB_API_KEY  monthly candles, when the plan allows them (the
@@ -30,6 +36,7 @@
  */
 
 import { jsonSafe } from "../scripts/lib/handler.mjs";
+import { gate } from "../scripts/lib/ratelimit.mjs";
 
 export const maxDuration = 30;
 
@@ -153,9 +160,29 @@ export default jsonSafe(async function handler(req, res) {
     return res.status(400).json({ error: "range must be 5y or max" });
   }
 
+  /* the api/credit-macro.js pattern: skip the cache read, still fetch,
+     still write the cache, gated tightly so a refresh button cannot
+     become a Finnhub/Yahoo hammer. Named so this endpoint's bucket is its
+     own: the credit page's Refresh button fires this gate twice in one
+     click (BIZD and the loan ETF) alongside a forced /api/credit-macro
+     call, and an unnamed bucket shared across all three would empty a
+     burst of 3 on the very first click, 429-ing the second click of an
+     ordinary Refresh. burst/ratePerMin are unchanged from what this
+     endpoint was asked to use — only the bucket is now this endpoint's
+     own, the same isolation api/rebuild.js and api/bdc-pull.js already
+     rely on. */
+  const force = q.force === "1" || q.force === "true";
+  if (force) {
+    const refused = gate(req, { name: "price-history-force", burst: 3, ratePerMin: 4, cost: 0, sameOrigin: true });
+    if (refused) {
+      res.setHeader("Cache-Control", "no-store");
+      return res.status(refused.status).json(refused.body);
+    }
+  }
+
   const key = ticker + ":" + range;
   const hit = cache.get(key);
-  if (hit && Date.now() - hit.at < CACHE_TTL_MS) {
+  if (!force && hit && Date.now() - hit.at < CACHE_TTL_MS) {
     res.setHeader("Cache-Control", "s-maxage=21600, stale-while-revalidate=86400");
     return res.status(200).json(hit.payload);
   }
@@ -199,6 +226,6 @@ export default jsonSafe(async function handler(req, res) {
     const now = Date.now();
     for (const [k, v] of cache) if (now - v.at > CACHE_TTL_MS) cache.delete(k);
   }
-  res.setHeader("Cache-Control", "s-maxage=21600, stale-while-revalidate=86400");
+  res.setHeader("Cache-Control", force ? "no-store" : "s-maxage=21600, stale-while-revalidate=86400");
   return res.status(200).json(payload);
 }, { name: "price history" });

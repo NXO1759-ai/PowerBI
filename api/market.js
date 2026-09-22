@@ -19,6 +19,11 @@
 
 import { jsonSafe } from "../scripts/lib/handler.mjs";
 
+/* The candle fallback chain (Finnhub, then Yahoo, then Alpha Vantage) can
+   take about 60 seconds worst case (blueprint 7.6), same ceiling as
+   api/credit-macro.js and api/price-history.js. */
+export const maxDuration = 60;
+
 const DAY = 24 * 60 * 60;
 const CANDLE_DAYS = 220; // covers the 6-month chart with margin
 const NEWS_DAYS = 185;   // 6 months of headlines for spike matching

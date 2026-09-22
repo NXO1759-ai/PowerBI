@@ -42,6 +42,7 @@
       <a class="nav-tab" href="strategy.html"><span class="tab-long">Strategy Analysis</span><span class="tab-short">Strategy</span></a>
     </nav>
     <div class="topbar-right">
+      <button type="button" id="owner-btn" class="owner-btn" title="Owner tools" hidden>Owner</button>
       <button type="button" id="about-btn">About</button>
     </div>
   </div>
@@ -239,6 +240,35 @@
     </ul>
     <h4>Beyond the Numbers</h4>
     <p>Duke Fuqua MBA &rsquo;26 | SIE (in view); Certified Treasury Professional (in view) | Amateur boxer &amp; nature enthusiast.</p>
+  </div>
+</div>
+
+<!-- Owner tools (blueprint 7.6, tier 2): the owner-only "Rebuild the credit
+     layer" control. Almost nobody who opens this page should ever open
+     this modal, which is why the affordance next to About carries no more
+     visual weight than a footnote. The shared secret pasted below never
+     leaves this browser except as the X-Rebuild-Secret header on a
+     request to this site's own /api/rebuild — see credit.js. -->
+<div class="modal-overlay" id="owner-modal" hidden>
+  <div class="modal owner-modal" role="dialog" aria-modal="true" aria-labelledby="owner-title" tabindex="-1">
+    <button type="button" class="modal-close" id="owner-close" aria-label="Close">×</button>
+    <h3 id="owner-title">Owner tools</h3>
+    <p class="owner-intro">The shared secret below is kept only in this browser tab, for this tab's session — closing the tab clears it — and is sent only as a request header when you dispatch or check a rebuild — never in a URL, never logged.</p>
+    <label class="owner-field">
+      <span>Shared secret</span>
+      <input type="password" id="owner-secret" autocomplete="off" spellcheck="false" placeholder="Paste the rebuild secret" />
+    </label>
+    <div class="owner-row">
+      <label class="owner-field owner-layer">
+        <span>Layer</span>
+        <select id="owner-layer">
+          <option value="all" selected>All (operating companies + BDCs)</option>
+          <option value="bdc">BDCs only</option>
+        </select>
+      </label>
+      <button type="button" id="owner-rebuild-btn" class="refresh-btn">Rebuild the credit layer</button>
+    </div>
+    <p class="owner-status" id="owner-status" role="status"></p>
   </div>
 </div>
 

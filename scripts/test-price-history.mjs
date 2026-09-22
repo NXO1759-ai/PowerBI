@@ -195,5 +195,60 @@ res = await call({ ticker: "BIZD" });
 check("a dropped connection answers 502, not a crash", res.code === 502 && /unreachable/.test(res.body.error), res.body && res.body.error);
 yahooReply = () => ({ status: 200, body: FIXTURE });
 
+/* --- force=1: the api/credit-macro.js pattern --------------------------- *
+ * Skips the cache read, still fetches, still writes the cache, and is
+ * gated (burst 3, 4 a minute) so a refresh button cannot become a
+ * Yahoo/Finnhub hammer. The gate keeps its bucket on globalThis, the same
+ * way the price-history cache does, so a fresh run starts unthrottled. */
+const resetGate = () => { if (globalThis.__rlBuckets) globalThis.__rlBuckets.clear(); };
+reset();
+resetGate();
+res = await call({ ticker: "SRLN" });
+check("an unforced call is served and cached", res.code === 200 && calls.length === 1, String(calls.length));
+res = await call({ ticker: "SRLN", force: "1" });
+check("a forced call skips the cache read and fetches again", res.code === 200 && calls.length === 2, String(calls.length));
+check("a forced reply is not cached for the CDN", res.headers["Cache-Control"] === "no-store", res.headers["Cache-Control"]);
+res = await call({ ticker: "SRLN" });
+check("the unforced path still serves from the cache the forced call rewrote",
+  res.code === 200 && calls.length === 2, String(calls.length));
+
+resetGate();
+reset();
+for (let i = 0; i < 3; i++) {
+  const r = await call({ ticker: "SRLN", force: "1" });
+  check("forced call " + (i + 1) + " of 3 is inside the burst, not gated", r.code !== 429, String(r.code));
+}
+check("all three forced calls in the burst actually fetched (no cache read on the forced path)",
+  calls.length === 3, String(calls.length));
+const gated = await call({ ticker: "SRLN", force: "1" });
+check("a forced call past the burst (burst 3) is gated with a 429 JSON error",
+  gated.code === 429 && typeof gated.body === "object" && gated.body !== null &&
+  /too many/.test(String(gated.body.error)),
+  JSON.stringify(gated.body));
+check("a gated forced call never reached the network", calls.length === 3, String(calls.length));
+
+/* --- the forced gate is this endpoint's own bucket, not shared with any
+   other gated route (scripts/lib/ratelimit.mjs's `name` option) --------- *
+ * The credit page fires /api/credit-macro (unnamed gate, burst 3) and two
+ * /api/price-history?force=1 calls (BIZD and the loan ETF) in one Refresh
+ * click. Before this endpoint's gate carried its own `name`, all three
+ * shared one unnamed bucket keyed on the client address, so one Refresh
+ * click could empty the whole burst and 429 the very next click. */
+resetGate();
+reset();
+{
+  const { gate } = await import("./lib/ratelimit.mjs");
+  /* spend a differently-named endpoint's own bucket at the same client
+     key first: with the old shared, unnamed bucket this would have
+     starved price-history's forced burst before this endpoint ever saw
+     a request */
+  gate({ headers: {} }, { name: "credit-macro-force", burst: 3, ratePerMin: 2, cost: 0, sameOrigin: false });
+  gate({ headers: {} }, { name: "credit-macro-force", burst: 3, ratePerMin: 2, cost: 0, sameOrigin: false });
+  gate({ headers: {} }, { name: "credit-macro-force", burst: 3, ratePerMin: 2, cost: 0, sameOrigin: false });
+}
+res = await call({ ticker: "SRLN", force: "1" });
+check("a burst spent against a differently-named endpoint's gate does not touch price-history's own forced bucket",
+  res.code === 200, JSON.stringify(res.body));
+
 console.log(failed ? "\n" + failed + " failed" : "\nall price-history checks pass");
 process.exit(failed ? 1 : 0);
