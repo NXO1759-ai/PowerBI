@@ -49,8 +49,16 @@ jobs:
       - name: Navigation on four pages and the credit captions
         run: node scripts/test-nav.mjs
 
+      - name: Owner-tools rebuild control (secret storage, request shape, polling; force refresh, PR G)
+        run: node scripts/test-owner-tools.mjs
+
       - name: BDC series builder against ARCC and PSEC fixtures
         run: node scripts/test-bdc-series.mjs
+
+      - name: Live one-BDC force refresh against SEC EDGAR (force refresh, PR G)
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT || 'Research Terminal research@chineduokeke.mba' }}
+        run: node scripts/test-bdc-pull.mjs
 
       - name: Credit formulas against BXSL and MAIN pins
         run: node scripts/test-credit-ratios.mjs
@@ -111,6 +119,9 @@ jobs:
 
       - name: API replies are read without leaking a parser error
         run: node scripts/test-http.mjs
+
+      - name: Owner rebuild dispatch/poll endpoint (503/401/409/202 gates; force refresh, PR G)
+        run: node scripts/test-rebuild.mjs
 
       - name: Endpoints against awkward companies
         env:

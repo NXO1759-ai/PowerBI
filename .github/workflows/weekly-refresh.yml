@@ -14,6 +14,25 @@ on:
         description: "Only refresh the first N companies (0 = all)"
         required: false
         default: "0"
+      layer:
+        # Blueprint 7.6 names a third option, "pc" — deliberately not
+        # offered here yet: the PitchBook/LCD ingest (7.5) has no step in
+        # this workflow at all, it runs on the owner's own machine
+        # (data-sources/README.md, .github/workflows/ingest-pc.yml), so a
+        # "pc" layer would have nothing here to select. Add it back once
+        # that ingest gains a step in this workflow.
+        description: >-
+          Which layers to refresh. "all" runs everything; "bdc" skips the
+          operating-company steps (Refresh fundamentals, Verify metric
+          parity, Rebuild segment data, Rebuild the risk registers,
+          Rebuild the strategy panel) and only touches the listed-BDC
+          layer, the cache, chunking and the commit.
+        required: false
+        default: "all"
+        type: choice
+        options:
+          - all
+          - bdc
 
 permissions:
   contents: write
@@ -33,32 +52,45 @@ jobs:
         with:
           node-version: "20"
 
+      # These five steps are the operating-company layer. A scheduled run
+      # carries no inputs at all — `inputs.layer` is then null, which the
+      # expression below coerces to "" for the comparison — so the
+      # condition is written as "run unless layer is exactly bdc" rather
+      # than "run when layer is exactly all": null, "", "all" and any
+      # value this workflow does not recognize all take the safe branch
+      # and run the full refresh; only an explicit "bdc" skips it.
+      #
       # No dependencies to install: refresh.mjs and metrics.js are plain
       # JavaScript on the standard library.
       - name: Refresh fundamentals from SEC EDGAR
         id: refresh
+        if: ${{ inputs.layer != 'bdc' }}
         env:
           # SEC throttles traffic without a real contact address.
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT || 'Research Terminal research@chineduokeke.mba' }}
         run: node scripts/refresh.mjs --limit ${{ github.event.inputs.limit || 0 }}
 
       - name: Verify metric parity between JavaScript and SQL
+        if: ${{ inputs.layer != 'bdc' }}
         run: node scripts/verify-parity.mjs
 
       # Segment, product and geographic revenue come from each filing
       # itself rather than the companyfacts feed, so a fresh 10-K shows
       # up here the week after it is filed.
       - name: Rebuild segment data from annual filings
+        if: ${{ inputs.layer != 'bdc' }}
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT || 'Research Terminal research@chineduokeke.mba' }}
         run: node scripts/build-segments.mjs
 
       - name: Rebuild the risk registers from annual filings
+        if: ${{ inputs.layer != 'bdc' }}
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
         run: node scripts/build-risks.mjs
 
       - name: Rebuild the strategy panel
+        if: ${{ inputs.layer != 'bdc' }}
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT || 'Research Terminal research@chineduokeke.mba' }}
         run: node scripts/build-strategy-panel.mjs
@@ -104,10 +136,31 @@ jobs:
       - name: Chunk the data files for lazy loading
         run: node scripts/chunk-data.mjs
 
+      # frontend/data/quality-report.json is written only by the
+      # operating-company steps above, which a layer:bdc run skips
+      # entirely — reading it unconditionally on a bdc-only run would
+      # pick up the committed copy from the PREVIOUS full run and report
+      # that run's numbers for one that refreshed no companies at all.
       - name: Summarise the run
         if: always()
+        env:
+          LAYER: ${{ inputs.layer || 'all' }}
         run: |
-          if [ -f frontend/data/quality-report.json ]; then
+          if [ "$LAYER" = "bdc" ]; then
+            if [ -f frontend/data/bdc/refresh-report.json ]; then
+              node -e "
+                const r = require('./frontend/data/bdc/refresh-report.json');
+                const line = (s) => process.stdout.write(s + '\n');
+                line('## Weekly refresh — BDC layer only');
+                line('');
+                line('| | |');
+                line('|---|---|');
+                line('| BDC companies written | ' + r.companiesWritten + ' / ' + r.companiesAttempted + ' |');
+                line('| Errors | ' + r.errorCount + ' |');
+                line('| Warnings | ' + r.warnCount + ' |');
+              " >> "$GITHUB_STEP_SUMMARY"
+            fi
+          elif [ -f frontend/data/quality-report.json ]; then
             node -e "
               const r = require('./frontend/data/quality-report.json');
               const line = (s) => process.stdout.write(s + '\n');
@@ -129,6 +182,8 @@ jobs:
           fi
 
       - name: Commit refreshed data
+        env:
+          LAYER: ${{ inputs.layer || 'all' }}
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -146,8 +201,18 @@ jobs:
             echo "Staged deletions:"
             echo "$DELETED"
           fi
-          WRITTEN=$(node -p "require('./frontend/data/quality-report.json').companiesWritten")
-          git commit -m "chore(data): weekly refresh — ${WRITTEN} companies from SEC EDGAR
+          # On a bdc-only run, frontend/data/quality-report.json was never
+          # rewritten this run — reading it here would report the
+          # PREVIOUS full run's operating-company count against a commit
+          # that refreshed none. The subject line says which layer ran
+          # instead of a number this run did not produce.
+          if [ "$LAYER" = "bdc" ]; then
+            SUBJECT="chore(data): weekly refresh — BDC layer only"
+          else
+            WRITTEN=$(node -p "require('./frontend/data/quality-report.json').companiesWritten")
+            SUBJECT="chore(data): weekly refresh — ${WRITTEN} companies from SEC EDGAR"
+          fi
+          git commit -m "$SUBJECT
 
           Generated by .github/workflows/weekly-refresh.yml.
           Apply sql/sync/facts-*.sql to bring finance_db and Power BI in step."

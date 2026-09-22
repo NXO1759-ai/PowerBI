@@ -173,6 +173,44 @@
 /* ---- the workbook's hidden data tables ---- */
 .export-tables[hidden] { display: none; }
 
+/* ---- owner tools: an admin affordance almost nobody opens ----
+   Scoped to this page only (credit.css is not linked from the other
+   three dashboards), so the shared .topbar-right rule stays untouched
+   for them. The button reads as a footnote next to About: no border
+   until hover, smaller and dimmer than the button beside it. */
+.topbar-right { display: flex; align-items: center; gap: 6px; }
+.owner-btn {
+  font: inherit; font-size: 11px; font-weight: 500;
+  color: var(--kimi-color-text-quaternary); background: transparent;
+  border: 1px solid transparent; border-radius: 7px;
+  padding: 6px 10px; cursor: pointer; min-block-size: 30px;
+}
+.owner-btn:hover, .owner-btn:focus-visible { color: var(--kimi-color-text-tertiary); border-color: var(--kimi-color-border); }
+.owner-btn:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 2px; }
+
+.owner-modal .owner-intro { font-size: 12px; line-height: 1.6; color: var(--kimi-color-text-tertiary); margin-top: 4px; }
+.owner-field { display: block; margin-top: 14px; }
+.owner-field span { display: block; font-size: 10.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--kimi-color-text-tertiary); margin-bottom: 5px; }
+.owner-field input, .owner-field select {
+  font: inherit; font-size: 13px; color: var(--kimi-color-text-primary);
+  background: var(--input-bg); border: 1px solid var(--kimi-color-border-strong);
+  border-radius: 7px; padding: 7px 10px; min-block-size: 34px; inline-size: 100%;
+}
+.owner-field input:focus-visible, .owner-field select:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 2px; }
+.owner-row { display: flex; align-items: flex-end; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+.owner-row .owner-layer { flex: 1 1 220px; margin-top: 0; }
+.owner-row .refresh-btn { min-block-size: 34px; white-space: nowrap; }
+.owner-status {
+  font-size: 12px; line-height: 1.6; color: var(--kimi-color-text-secondary);
+  margin: 12px 0 0; min-block-size: 18px; overflow-wrap: anywhere;
+}
+.owner-status a { color: var(--rt-gold); }
+
+@media (max-width: 680px) {
+  .owner-row { flex-direction: column; align-items: stretch; }
+  .owner-row .refresh-btn { inline-size: 100%; min-block-size: 42px; }
+}
+
 @media (max-width: 680px) {
   .fsa-controls { flex-direction: column; align-items: stretch; gap: 10px; }
   .fsa-controls .seg { inline-size: 100%; }

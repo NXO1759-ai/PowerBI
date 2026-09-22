@@ -1613,6 +1613,336 @@
     if (ev.key === "Escape" && !aboutModal.hidden) closeAbout();
   });
 
+  /* ---------- owner tools: the shared secret and the Rebuild control ----------
+     Blueprint 7.6, tier 2. "Rebuild the credit layer" is the owner's own
+     control — almost nobody who opens this page should ever open this
+     modal, which is why the affordance next to About carries no more
+     visual weight than a footnote (credit.css's .owner-btn).
+
+     The shared secret pasted below never leaves this browser except as
+     the X-Rebuild-Secret header on a request to this site's own
+     /api/rebuild: never a query string, never a log line, never any
+     other header or endpoint. api/rebuild.js is the only thing that ever
+     reads it, compares it in constant time, and never echoes it back —
+     this file holds up its half of that contract by construction: every
+     request built below carries a literal "/api/rebuild" URL with no
+     query string on either verb, and the secret rides in exactly one
+     header.
+
+     This block is deliberately self-contained (its own $ and esc, no
+     borrowing from the rest of this file's closure) between the START/END
+     markers so scripts/test-owner-tools.mjs can lift it out and evaluate
+     it on its own against a mocked document, sessionStorage and fetch,
+     the same way test-pc-page.mjs evaluates a section file against a
+     window stub. Do not move code across the markers without checking
+     that test.
+
+     Wiring note for whoever builds the Lenders drill-down (a sibling PR,
+     not this one, and not on this branch): that view's per-BDC panel
+     should give its own "Refresh" control a plain
+     GET /api/bdc-pull?ticker=<row.ticker> call — a public, rate-gated
+     endpoint with no owner secret involved, already complete and
+     independently testable (see api/bdc-pull.js) — and merge the
+     returned { values, liveOverlaySkipped, liveOverlay, quarter } into
+     that row's rendered quarter the way this file already merges a
+     forced /api/credit-macro or /api/price-history reply. Nothing here
+     calls it, since the Lenders view itself is still the placeholder
+     above (id="lenders-view"). */
+  /* >>> OWNER-TOOLS-BLOCK-START (scripts/test-owner-tools.mjs extracts between these markers) */
+  (function () {
+    "use strict";
+    function $(id) { return document.getElementById(id); }
+    function esc(s) {
+      return String(s === null || s === undefined ? "" : s)
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    }
+
+    /* a clearly-named key, distinct from every other storage key this
+       site writes (strategy.js's localStorage "rt.terminalGrowth" is the
+       only precedent); the value is never anything but this one secret
+       string. sessionStorage rather than localStorage on purpose: a
+       future third-party script or a stored-XSS on this origin could
+       still read whatever storage holds while it runs, so the shorter
+       lifetime is the safer default on its own merits, independent of
+       whatever other defenses this site does or does not carry.
+       sessionStorage confines the credential to this one tab's own
+       lifetime — closing the tab clears it — trading the owner having to
+       re-paste it next session for a real cap on how long a compromise
+       could keep using it. */
+    var STORAGE_KEY = "rt.rebuildSecret";
+    /* the page's own poll cadence (blueprint 7.6): every 30 seconds while
+       a run is queued or in progress */
+    var POLL_MS = 30000;
+    /* 40 checks at 30s = 20 minutes: past the 15-25 minute full run the
+       blueprint states (7.4) and short of the 45-minute job ceiling, so a
+       healthy run is seen through to completion and a stuck one is not
+       polled forever from an open tab */
+    var MAX_POLLS = 40;
+    var TERMINAL_STATUSES = ["completed"];
+
+    function readSecret() {
+      try { return window.sessionStorage.getItem(STORAGE_KEY) || ""; }
+      catch (e) { return ""; }
+    }
+    function writeSecret(v) {
+      try {
+        if (v) window.sessionStorage.setItem(STORAGE_KEY, v);
+        else window.sessionStorage.removeItem(STORAGE_KEY);
+      } catch (e) { /* a private window or blocked storage: the field still works this page-load */ }
+    }
+
+    /* Almost nobody who opens this page should ever see this control, so
+       it stays out of the DOM's visible state until the owner has
+       already established themselves in this tab (a secret already
+       saved this session) or asks for it directly (#owner in the URL).
+       Both reads are wrapped defensively — a stub window in a test
+       harness, or a browser with window.location or addEventListener
+       missing entirely, degrades to "not revealed" rather than
+       throwing. */
+    function isOwnerRevealed() {
+      try { if (readSecret()) return true; } catch (e) { /* ignore */ }
+      try { if (window && window.location && window.location.hash === "#owner") return true; } catch (e) { /* ignore */ }
+      return false;
+    }
+
+    /* Every request this control ever makes. The secret rides in exactly
+       one header, on both verbs, never in the URL. A GET needs the
+       header too — api/rebuild.js's 503 config gate runs first on both
+       verbs, but the 401 secret check also runs on GET, since GET
+       exposes this site's own run status.
+
+       The third argument is the POST body's layer, or (GET only) the
+       dispatch timestamp this poll should ignore anything older than —
+       api/rebuild.js's own `since`, so the very first poll right after a
+       dispatch never reads last week's cron run, or an earlier dispatch,
+       as this run's own result. Omitted, a GET's URL carries no query
+       string at all, exactly as before. */
+    function rebuildRequest(secret, method, layerOrSince) {
+      var opts = { method: method, headers: { "X-Rebuild-Secret": secret || "" } };
+      if (method === "POST") {
+        opts.headers["Content-Type"] = "application/json";
+        opts.body = JSON.stringify({ layer: layerOrSince || "all" });
+        return { url: "/api/rebuild", options: opts };
+      }
+      var url = "/api/rebuild";
+      if (layerOrSince) url += "?since=" + encodeURIComponent(layerOrSince);
+      return { url: url, options: opts };
+    }
+
+    function elapsedFrom(iso) {
+      var ms = Date.now() - new Date(iso).getTime();
+      if (!isFinite(ms) || ms < 0) return "—";
+      var s = Math.floor(ms / 1000);
+      return Math.floor(s / 60) + "m " + (s % 60) + "s";
+    }
+
+    /* The polling state machine. Every dependency is injected — the real
+       fetch and timers from the page, or a simulated sequence and an
+       immediate clock from scripts/test-owner-tools.mjs — so the same
+       function is what runs in the browser and what the offline test
+       exercises. It calls onUpdate(state) after every check and stops
+       itself on a terminal run status, on a non-200 answer that retrying
+       blind cannot fix (a wrong secret, the config gate closed, an
+       unexpected error), or once MAX_POLLS is reached; the caller never
+       has to remember to cancel a timer by hand, only to call the
+       returned stop() if it wants to cancel early (the owner closing the
+       modal, or dispatching again).
+
+       A 429 and a failed-to-reach-the-server answer (status 0) are the
+       two exceptions: both are transient — the shared rate gate (or a
+       network hiccup) closing for a moment, not this run's own status —
+       so both keep polling up to MAX_POLLS rather than ending the poll on
+       the spot. A page's own ordinary use of Refresh sharing this site's
+       rate gate is exactly the case this covers: it should cost the
+       owner a delayed status line, never the rebuild poll itself. */
+    function pollRun(deps) {
+      var fetchImpl = deps.fetchImpl, secret = deps.secret, onUpdate = deps.onUpdate, since = deps.since;
+      var setTimeoutImpl = deps.setTimeoutImpl || window.setTimeout;
+      var clearTimeoutImpl = deps.clearTimeoutImpl || window.clearTimeout;
+      var polls = 0, timer = null, stopped = false;
+      function stop() { stopped = true; if (timer !== null) clearTimeoutImpl(timer); }
+      function tick() {
+        if (stopped) return;
+        polls += 1;
+        var req = rebuildRequest(secret, "GET", since);
+        fetchImpl(req.url, req.options).then(function (r) {
+          return r.json().then(function (body) { return { status: r.status, body: body || {} }; },
+            function () { return { status: r.status, body: {} }; });
+        }, function () { return { status: 0, body: {} }; }).then(function (res) {
+          if (stopped) return;
+          if (res.status !== 200) {
+            var note = res.body.error || (res.status ? "the status check answered HTTP " + res.status : "the status check failed to reach the server");
+            var retryable = res.status === 429 || res.status === 0;
+            if (retryable && polls < MAX_POLLS) {
+              onUpdate({ done: false, waiting: true, polls: polls, note: note });
+              timer = setTimeoutImpl(tick, POLL_MS);
+              return;
+            }
+            onUpdate({ done: true, polls: polls, error: note });
+            return stop();
+          }
+          var run = res.body.run || null;
+          var status = res.body.status || null;
+          if (!run) {
+            if (polls >= MAX_POLLS) {
+              onUpdate({ done: true, polls: polls, error: "No run appeared after " + MAX_POLLS + " checks." });
+              return stop();
+            }
+            onUpdate({ done: false, waiting: true, polls: polls });
+            timer = setTimeoutImpl(tick, POLL_MS);
+            return;
+          }
+          var finishedAt = res.body.finishedAt || null;
+          var finishedAtStale = !!res.body.finishedAtStale;
+          var finishedAtUnavailable = !!res.body.finishedAtUnavailable;
+          var runCompleted = TERMINAL_STATUSES.indexOf(status) !== -1;
+          /* GitHub's own run status turning "completed" is not the signal
+             this poll actually waits on: api/rebuild.js's own commit step
+             can still be a few seconds (or, on a failed data step, forever
+             — see finishedAtStale) behind the run finishing. A run that
+             is completed with neither finishedAt nor finishedAtStale is
+             "finished, data not confirmed landed yet" — kept non-terminal,
+             bounded the same as any other case by MAX_POLLS below — so a
+             reload right after this fires never risks serving stale data
+             as if the rebuild were fully done. finishedAtStale means the
+             data step will never produce one for THIS run (its own step
+             failed or timed out — see api/rebuild.js's finishedAtFor), so
+             there is nothing left to wait for; that is terminal too, just
+             not a plain success. */
+          var dataConfirmed = runCompleted && !!finishedAt;
+          var dataWillNeverArrive = runCompleted && finishedAtStale;
+          var terminal = dataConfirmed || dataWillNeverArrive;
+          var timedOut = !terminal && polls >= MAX_POLLS;
+          onUpdate({ done: terminal || timedOut, run: run, status: status, finishedAt: finishedAt,
+            finishedAtStale: finishedAtStale, finishedAtUnavailable: finishedAtUnavailable,
+            runCompleted: runCompleted, timedOut: timedOut, polls: polls });
+          if (terminal || timedOut) return stop();
+          timer = setTimeoutImpl(tick, POLL_MS);
+        });
+      }
+      tick();
+      return { stop: stop };
+    }
+
+    function renderStatus(state) {
+      var el = $("owner-status");
+      if (!el) return;
+      var prefix = state.note ? state.note + " — " : "";
+      if (state.error) { el.textContent = prefix + state.error; return; }
+      if (!state.run) { el.textContent = prefix + (state.waiting ? "checking for the run…" : ""); return; }
+      /* The run's own GitHub status is not the same question as "has the
+         data it rebuilt actually landed" — see pollRun's own comment.
+         completed-but-not-yet-confirmed and completed-but-never-will-be
+         (finishedAtStale) each get their own sentence rather than being
+         folded into a bare "Rebuild success" the moment GitHub marks the
+         run done. */
+      var label;
+      if (state.status === "completed") {
+        if (state.finishedAt) label = "Rebuild " + (state.run.conclusion || "finished") + " · data confirmed live";
+        else if (state.finishedAtStale) label = "Rebuild " + (state.run.conclusion || "finished") + ", but the data commit could not be confirmed — check the run";
+        else label = "Rebuild " + (state.run.conclusion || "finished") + " · waiting for the data to land…";
+      } else {
+        label = "Rebuild " + (state.status || "queued");
+      }
+      var line = prefix + label + " · run #" + state.run.number + " · elapsed " + elapsedFrom(state.run.createdAt);
+      var html = esc(line) + (state.run.htmlUrl ? " · <a href=\"" + esc(state.run.htmlUrl) + "\" target=\"_blank\" rel=\"noopener\">open the run</a>" : "");
+      if (state.timedOut) html += esc(" · stopped checking after " + MAX_POLLS + " checks (" + Math.round(MAX_POLLS * POLL_MS / 60000) + " min); open the run to keep watching");
+      el.innerHTML = html;
+    }
+
+    var activePoll = null;
+    /* `since` is the dispatch's own timestamp, threaded through to
+       api/rebuild.js so its very first poll never reads an older run
+       (last week's cron, or an earlier dispatch) as this one's result.
+       Omitted for the 409 case below, where the conflicting run is
+       already in hand and any run is the one worth watching. */
+    function startPolling(secret, since) {
+      if (activePoll) activePoll.stop();
+      activePoll = pollRun({
+        fetchImpl: window.fetch.bind(window), secret: secret, since: since,
+        onUpdate: function (state) { renderStatus(state); if (state.done) activePoll = null; }
+      });
+    }
+
+    function doRebuild() {
+      var secret = readSecret();
+      var layer = ($("owner-layer") || {}).value || "all";
+      var btn = $("owner-rebuild-btn");
+      if (activePoll) { activePoll.stop(); activePoll = null; }
+      renderStatus({ waiting: true });
+      if (btn) { btn.disabled = true; btn.textContent = "Dispatching…"; }
+      var req = rebuildRequest(secret, "POST", layer);
+      window.fetch(req.url, req.options).then(function (r) {
+        return r.json().then(function (body) { return { status: r.status, body: body || {} }; },
+          function () { return { status: r.status, body: {} }; });
+      }, function () { return { status: 0, body: {} }; }).then(function (res) {
+        if (btn) { btn.disabled = false; btn.textContent = "Rebuild the credit layer"; }
+        /* 503 not configured, 401 wrong secret, 400 bad layer, 409
+           already running (its own run is in the body), 502 GitHub did
+           not answer, or a network failure that never reached the
+           server — every one of these is the server's own sentence,
+           never a wording of ours that could drift from it */
+        var body = res.body || {};
+        if (res.status === 202) { startPolling(secret, body.at); return; }
+        if (res.status === 409 && body.run) {
+          renderStatus({ note: body.error, run: body.run, status: body.run.status });
+          startPolling(secret);
+          return;
+        }
+        renderStatus({ done: true, error: body.error || (res.status ? "HTTP " + res.status : "could not reach /api/rebuild") });
+      });
+    }
+
+    var ownerModal = $("owner-modal"), ownerOpener = null;
+    var secretInput = $("owner-secret");
+    var ownerBtnEl = $("owner-btn");
+    if (ownerBtnEl) {
+      /* hidden in the markup by default (frontend/credit.html); shown
+         only once this tab already has a reason to see it */
+      ownerBtnEl.hidden = !isOwnerRevealed();
+      try {
+        if (window && window.addEventListener) {
+          window.addEventListener("hashchange", function () {
+            if (isOwnerRevealed()) ownerBtnEl.hidden = false;
+          });
+        }
+      } catch (e) { /* ignore */ }
+    }
+    if (ownerBtnEl && ownerModal) {
+      ownerBtnEl.addEventListener("click", function () {
+        ownerOpener = document.activeElement;
+        if (secretInput) secretInput.value = readSecret();
+        ownerModal.hidden = false;
+        ownerModal.querySelector(".modal").focus();
+      });
+      function closeOwner() {
+        ownerModal.hidden = true;
+        if (ownerOpener && ownerOpener.focus) ownerOpener.focus();
+        ownerOpener = null;
+      }
+      var ownerClose = $("owner-close");
+      if (ownerClose) ownerClose.addEventListener("click", closeOwner);
+      ownerModal.addEventListener("click", function (ev) { if (ev.target === ownerModal) closeOwner(); });
+      document.addEventListener("keydown", function (ev) {
+        if (ev.key === "Escape" && !ownerModal.hidden) closeOwner();
+      });
+    }
+    /* saved on every keystroke — a text field with no separate "Save"
+       step to forget, and nothing here ever logs the value */
+    if (secretInput) secretInput.addEventListener("input", function () { writeSecret(secretInput.value); });
+    var rebuildBtn = $("owner-rebuild-btn");
+    if (rebuildBtn) rebuildBtn.addEventListener("click", doRebuild);
+
+    /* what a console or scripts/test-owner-tools.mjs can reach */
+    window.RTOwnerTools = {
+      STORAGE_KEY: STORAGE_KEY, POLL_MS: POLL_MS, MAX_POLLS: MAX_POLLS,
+      readSecret: readSecret, writeSecret: writeSecret,
+      rebuildRequest: rebuildRequest, pollRun: pollRun, elapsedFrom: elapsedFrom,
+      isOwnerRevealed: isOwnerRevealed
+    };
+  })();
+  /* <<< OWNER-TOOLS-BLOCK-END */
+
   /* ---------- export ---------- */
   (function () {
     var xb = $("export-xlsx");

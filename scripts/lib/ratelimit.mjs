@@ -15,10 +15,26 @@
  * origin, and a request from anywhere else does not get to spend the
  * model budget. Server-to-server callers (the smoke suite) send no
  * origin and are allowed, since they cannot be a browser hijack.
+ *
+ * `name` (optional): every call site that omits it keeps sharing one
+ * bucket and one daily counter per client address across every endpoint,
+ * exactly as before — the original behavior, unchanged. A call site that
+ * passes `name` gets its own bucket and its own daily counter, so its
+ * burst/ratePerMin/dailyCap mean what they say regardless of what else
+ * the same caller does elsewhere on the site. This exists because
+ * api/rebuild.js's door (burst 2, 1/min) shared its bucket with the
+ * page's own Refresh traffic and with looser public endpoints before a
+ * name was threaded through: an owner's own page use could 429 their own
+ * rebuild poll, and a caller could refill the rebuild bucket faster by
+ * spending a more generous endpoint first. Endpoints that gate real
+ * money (SEC/FRED/GitHub calls an unauthenticated caller should not be
+ * able to run up) should pass a `name` distinct from every other gated
+ * endpoint's.
  */
 
 const buckets = globalThis.__rlBuckets || (globalThis.__rlBuckets = new Map());
 const daily = globalThis.__rlDaily || (globalThis.__rlDaily = { day: "", count: 0 });
+const dailyByName = globalThis.__rlDailyByName || (globalThis.__rlDailyByName = new Map());
 
 const ALLOWED_ORIGINS = [
   "https://www.chineduokeke.mba",
@@ -39,7 +55,7 @@ export function clientKey(req) {
  * requests that will actually reach the paid provider — a cache hit
  * should pass cost 0.
  */
-export function gate(req, { burst = 12, ratePerMin = 6, dailyCap = 600, cost = 1, sameOrigin = true } = {}) {
+export function gate(req, { burst = 12, ratePerMin = 6, dailyCap = 600, cost = 1, sameOrigin = true, name = null } = {}) {
   const h = req.headers || {};
   const origin = String(h.origin || "");
   const referer = String(h.referer || "");
@@ -54,7 +70,9 @@ export function gate(req, { burst = 12, ratePerMin = 6, dailyCap = 600, cost = 1
     }
   }
   const now = Date.now();
-  const key = clientKey(req);
+  /* an unnamed call keeps the original shared-bucket key, byte for byte,
+     so every existing call site's behavior is unchanged */
+  const key = name ? `${name}|${clientKey(req)}` : clientKey(req);
   let b = buckets.get(key);
   if (!b) { b = { tokens: burst, at: now }; buckets.set(key, b); }
   b.tokens = Math.min(burst, b.tokens + ((now - b.at) / 60000) * ratePerMin);
@@ -65,11 +83,22 @@ export function gate(req, { burst = 12, ratePerMin = 6, dailyCap = 600, cost = 1
   b.tokens -= 1;
   if (cost > 0) {
     const day = new Date().toISOString().slice(0, 10);
-    if (daily.day !== day) { daily.day = day; daily.count = 0; }
-    if (daily.count + cost > dailyCap) {
+    /* a named caller gets its own daily counter, so a tight budget (e.g.
+       a companyfacts pull's) cannot be spent by a looser endpoint's
+       traffic, and vice versa; an unnamed caller keeps the one global
+       counter every pre-existing call site already shares */
+    let d;
+    if (name) {
+      d = dailyByName.get(name);
+      if (!d) { d = { day: "", count: 0 }; dailyByName.set(name, d); }
+    } else {
+      d = daily;
+    }
+    if (d.day !== day) { d.day = day; d.count = 0; }
+    if (d.count + cost > dailyCap) {
       return { status: 429, body: { error: "the daily budget for this endpoint is spent — cached answers still serve" } };
     }
-    daily.count += cost;
+    d.count += cost;
   }
   /* keep the map from growing without bound */
   if (buckets.size > 5000) {
