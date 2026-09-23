@@ -1,0 +1,60 @@
+/* ==========================================================================
+   credit-buildout.css — the Build-out view (credit-buildout.js): the
+   hyperscaler and neocloud capex, sources-and-uses and debt/lease
+   monitor (blueprint section 15.1-15.3, charts H1-H8).
+
+   Extends credit.css and credit-stress.css, which already carry the
+   small-multiple grid (.m6-grid, .m6-panel, .m6-chart, .m6-caption,
+   .m6-foot, .m6-empty, .m6-key), the segmented control (.seg) and the
+   chart heading with a catalog popup (.h-pop) — this file adds only
+   what those do not: the cohort toggle's own scope, a full-width chart
+   frame for the single wide charts (H1, H8), the heat table (H3) and
+   its stripe colors, and the two-column layout for H5's pair of
+   cohort charts. Every color is a token from styles.css.
+   ========================================================================== */
+
+#buildout-view .fsa-section + .fsa-section { margin-top: 16px; }
+#buildout-view .m6-panel > h3 { margin: 0; }
+
+.bo-seg { margin: 0; }
+
+/* ---- H1 / H8: single wide charts, not small multiples ---- */
+.bo-chart-wide { inline-size: 100%; margin: 6px 0 2px; overflow-x: auto; }
+.bo-chart-wide svg { display: block; min-inline-size: 480px; inline-size: 100%; block-size: auto; }
+.bo-chart-wide svg text { font-family: var(--rt-font-mono); }
+
+.bo-footnote {
+  font-size: 10.5px; color: var(--kimi-color-text-quaternary); margin: 4px 0 0; font-family: var(--rt-font-mono);
+}
+
+/* ---- H3: the intensity heat table ---- */
+.bo-heat-wrap { overflow-x: auto; margin-top: 8px; }
+table.bo-heat { border-collapse: collapse; font-size: 11.5px; min-inline-size: 520px; }
+table.bo-heat th, table.bo-heat td { padding: 5px 8px; text-align: end; white-space: nowrap; }
+table.bo-heat thead th { color: var(--kimi-color-text-tertiary); font-weight: 500; font-family: var(--rt-font-mono); font-size: 10.5px; border-bottom: 1px solid var(--kimi-color-border); }
+table.bo-heat tbody th {
+  text-align: start; color: var(--kimi-color-text-primary); font-weight: 500;
+  border-bottom: 1px solid var(--kimi-color-surface-muted); position: sticky; inset-inline-start: 0; background: var(--kimi-color-surface);
+}
+table.bo-heat tbody td { border-bottom: 1px solid var(--kimi-color-surface-muted); font-variant-numeric: tabular-nums; font-family: var(--rt-font-mono); }
+.bo-ratio { display: inline-block; padding: 2px 6px; border-radius: 4px; color: var(--kimi-color-text-secondary); }
+.bo-ratio.bo-cell-hot { background: rgba(255, 138, 128, .18); color: #ffb3ab; font-weight: 600; }
+.bo-ratio.bo-cell-growth { background: rgba(245, 197, 24, .16); color: var(--rt-gold); font-weight: 600; }
+.m6-key i.bo-cell-hot { border-radius: 3px; background: rgba(255, 138, 128, .5); }
+.m6-key i.bo-cell-growth { border-radius: 3px; background: rgba(245, 197, 24, .5); }
+
+/* ---- H4: funding mix legend swatches ---- */
+.chart-legend i.outline { background: transparent; border: 1.5px dashed var(--rt-gold); block-size: 8px; inline-size: 12px; border-radius: 2px; }
+
+/* ---- H5: two cohort charts side by side ---- */
+.bo-grid-2 { display: grid; gap: 16px; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--kimi-color-border); padding-top: 4px; margin-top: 4px; }
+.bo-grid-2 .m6-panel { border-bottom: 0; padding-bottom: 0; }
+
+/* ---- H8: the "not tagged" italic line inside the wide SVG ---- */
+.bo-chart-wide svg text[font-style="italic"] { font-family: var(--rt-font-sans); }
+
+@media (max-width: 680px) {
+  .bo-grid-2 { grid-template-columns: 1fr; }
+  table.bo-heat { font-size: 10.5px; }
+  table.bo-heat th, table.bo-heat td { padding: 4px 6px; }
+}

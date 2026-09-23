@@ -142,6 +142,20 @@ jobs:
         env:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT || 'Research Terminal research@chineduokeke.mba' }}
         run: node scripts/build-underwriting-panel.mjs
+      # The hyperscaler and neocloud build-out monitor (blueprint section
+      # 15, PR H2): frontend/data/capex/{hyperscalers,neoclouds,landlords}.json
+      # for the 13 filers of frontend/data/cohorts.json. Its own
+      # companyfacts pulls are paced and independent of the layers above,
+      # and writeIfChanged already keeps an unchanged week byte-identical,
+      # so an EDGAR hiccup here is no reason to discard the rest of the
+      # run, the same as the BDC layer above.
+      - name: Refresh the build-out capex panel
+        if: ${{ inputs.layer != 'bdc' }}
+        continue-on-error: true
+        timeout-minutes: 10
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT || 'Research Terminal research@chineduokeke.mba' }}
+        run: node scripts/build-capex-panel.mjs
 
       # The pages fetch the panel by industry and segments and risks by
       # company, so the monolithic files are split after every rebuild.

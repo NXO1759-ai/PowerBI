@@ -31,6 +31,7 @@
 <link rel="stylesheet" href="lenders-scorecard.css" />
 <link rel="stylesheet" href="credit-lenders-drilldown.css" />
 <link rel="stylesheet" href="credit-lenders.css" />
+<link rel="stylesheet" href="credit-buildout.css" />
 <style>[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -68,6 +69,7 @@
         <button type="button" id="view-market" data-view="market" aria-pressed="true">Market</button>
         <button type="button" id="view-lenders" data-view="lenders" aria-pressed="false">Lenders</button>
         <button type="button" id="view-underwriting" data-view="underwriting" aria-pressed="false">Underwriting</button>
+        <button type="button" id="view-buildout" data-view="buildout" aria-pressed="false">Build-out</button>
         <button type="button" id="view-glossary" data-view="glossary" aria-pressed="false">Glossary</button>
       </div>
       <button type="button" id="refresh-btn" class="refresh-btn" title="Re-fetch every feed on this page, skipping the six-hour cache">Refresh</button>
@@ -191,6 +193,15 @@
        and renders the loading, error and ready states itself. -->
   <div id="underwriting-view" hidden></div>
 
+  <!-- ============ BUILD-OUT (PR H2) ============ -->
+  <!-- Empty on load; credit-buildout.js fills #buildout-root the first
+       time this view is opened (the lazy-mount pattern credit.js's own
+       renderGlossary() uses for the Glossary view) and re-renders it on
+       every cohort-toggle click after that. -->
+  <div id="buildout-view" hidden>
+    <div id="buildout-root"><p class="hint" role="status">Loading the build-out monitor&hellip;</p></div>
+  </div>
+
   <!-- ============ GLOSSARY ============ -->
   <div id="glossary-view" hidden>
     <section class="panel-card fsa-section" aria-labelledby="h-glossary">
@@ -274,6 +285,10 @@
 <script src="lib/valuation.js"></script>
 <script src="vendor/chart.umd.min.js"></script>
 <script src="lib/pc-series.js"></script>
+<!-- loaded before credit.js so window.RTBuildout exists if the page opens
+     directly on ?view=buildout, when credit.js's own init runs setView()
+     synchronously at the bottom of its script tag -->
+<script src="credit-buildout.js"></script>
 <script src="credit.js"></script>
 <!-- the ingested sections register themselves on window.RTCreditSections; credit.js mounts them after the feeds load -->
 <script src="credit-stress.js"></script>
