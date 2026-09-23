@@ -257,16 +257,25 @@ export function freqOf(id) {
 }
 
 /* What the percentile window is called on the tile. FRED serves the
-   six ICE BofA spread and yield series from September 2023 only (the
-   series notes: "Starting in April 2026, this series will only include
-   3 years of observations"), SOFR from 2018-04-03 and its 90-day
-   average from 2018-07-02; the SLOOS and delinquency series are
-   quarterly, so ten years is about forty points. Everything else
-   carries a full ten years. */
-const THREE_YEAR = ["BAMLH0A0HYM2", "BAMLC0A0CM", "BAMLH0A1HYBB", "BAMLH0A2HYB", "BAMLH0A3HYC", "BAMLH0A0HYM2EY"];
+   ten ICE BofA spread and yield series (the six from PR B plus the four
+   rating-band OAS ids added for the build-out monitor's chart H16) from
+   September 2023 only (the series notes: "Starting in April 2026, this
+   series will only include 3 years of observations"), SOFR from
+   2018-04-03 and its 90-day average from 2018-07-02; the SLOOS and
+   delinquency series are quarterly, so ten years is about forty points.
+   Everything else carries a full ten years. */
+const THREE_YEAR = ["BAMLH0A0HYM2", "BAMLC0A0CM", "BAMLH0A1HYBB", "BAMLH0A2HYB", "BAMLH0A3HYC", "BAMLH0A0HYM2EY",
+  "BAMLC0A1CAAA", "BAMLC0A2CAA", "BAMLC0A3CA", "BAMLC0A4CBBB"];
+
+/* The five build-out FX series (DEXUSEU, DEXUSUK, DEXSZUS, DEXCAUS,
+   DEXJPUS) are spot-rate levels, not spreads or percentiles read as a
+   percent: the window label says "level" so the tile and any caption
+   built from it cannot describe one as a spread. */
+const FX_LEVEL = ["DEXUSEU", "DEXUSUK", "DEXSZUS", "DEXCAUS", "DEXJPUS"];
 
 export function windowLabelOf(id) {
   if (THREE_YEAR.includes(id)) return "3-year";
+  if (FX_LEVEL.includes(id)) return "10-year (level)";
   if (id === "SOFR" || id === "SOFR90DAYAVG") return "since 2018";
   if (freqOf(id) === "quarterly") return "quarterly";
   return "10-year";

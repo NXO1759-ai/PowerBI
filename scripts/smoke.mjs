@@ -170,16 +170,22 @@ await run("macro", "../api/macro.js", { query: { force: "1" } }, (res) =>
    the run; the assertions are ranges, since the values move daily. */
 const CREDIT_IDS = ["BAMLH0A0HYM2", "BAMLC0A0CM", "BAMLH0A1HYBB", "BAMLH0A2HYB", "BAMLH0A3HYC", "BAMLH0A0HYM2EY",
   "SOFR", "SOFR90DAYAVG", "BAA10Y", "DRTSCILM", "DRBLACBS", "CORBLACBS", "BUSLOANS", "DRSDCILM", "DRTSCIS",
-  "NFCI", "STLFSI4", "T10Y2Y", "DPRIME", "LNFACBW027SBOG", "TOTBKCR", "USREC"];
+  "NFCI", "STLFSI4", "T10Y2Y", "DPRIME", "LNFACBW027SBOG", "TOTBKCR", "USREC",
+  /* the four rating-band OAS ids and five FX spot-rate ids added for the
+     build-out monitor (chart H16 and its FX conversion); kept in this
+     same list, not a separate stale count, so a regression in either
+     addition fails this check too */
+  "BAMLC0A1CAAA", "BAMLC0A2CAA", "BAMLC0A3CA", "BAMLC0A4CBBB",
+  "DEXUSEU", "DEXUSUK", "DEXSZUS", "DEXCAUS", "DEXJPUS"];
 const TILE_IDS = ["BAMLH0A0HYM2", "BAMLC0A0CM", "BAMLH0A1HYBB", "BAMLH0A2HYB", "BAMLH0A3HYC", "BAMLH0A0HYM2EY",
   "SOFR", "SOFR90DAYAVG", "BAA10Y", "DRTSCILM", "DRBLACBS", "CORBLACBS"];
-const creditRes = await run("credit-macro — 22 FRED series, percentiles, recessions, the H.8 share", "../api/credit-macro.js",
+const creditRes = await run("credit-macro — " + CREDIT_IDS.length + " FRED series, percentiles, recessions, the H.8 share", "../api/credit-macro.js",
   { query: { force: "1" } }, (res) => {
     if (res.code !== 200) return "expected 200, got " + res.code + ": " + ((res.body && res.body.error) || "");
     const b = res.body;
     if (!isObj(b.series) || b.source !== "FRED" || typeof b.keyed !== "boolean") return "shape wrong";
     const present = CREDIT_IDS.filter((id) => isObj(b.series[id]) && !b.series[id].error && isObj(b.series[id].latest));
-    if (present.length < 20) return "only " + present.length + " of 22 series answered: missing " +
+    if (present.length < CREDIT_IDS.length - 2) return "only " + present.length + " of " + CREDIT_IDS.length + " series answered: missing " +
       CREDIT_IDS.filter((id) => !present.includes(id)).join(", ");
     const cutoff = new Date(Date.now() - 45 * 864e5).toISOString().slice(0, 10);
     for (const id of present) {

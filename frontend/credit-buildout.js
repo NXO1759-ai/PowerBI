@@ -1214,6 +1214,14 @@
       h6.html + h7.html + h8.html +
       "</section>";
 
+    /* PR H3 (blueprint 15.4-15.8, charts H9-H18): an empty mount point,
+       the same "empty div, own controller" pattern credit.html already
+       uses for #sec-stress/#lenders-root/#underwriting-view.
+       credit-buildout-ledgers.js owns everything rendered inside it —
+       this file never reaches into it beyond appending the container
+       and calling its render() from mount() below. */
+    out += "<div id='buildout-ledgers-root'></div>";
+
     return out;
   }
 
@@ -1266,6 +1274,16 @@
     if (!STATE.panels) { host.innerHTML = "<section class='panel-card fsa-section'><p class='hint' role='status'>Loading the build-out monitor…</p></section>"; return; }
     host.innerHTML = buildHtml(STATE.panels, STATE);
     bindEvents(host);
+    /* PR H3: the second group of panels (charts H9-H18) mounts itself
+       into the '#buildout-ledgers-root' container buildHtml() just
+       appended — every cohort-toggle click above rebuilds this host's
+       innerHTML from scratch, so that container is recreated each time
+       and this render() must be re-armed here; RTBuildoutLedgers keeps
+       its own fetched data cached across calls, so this never re-fetches
+       on a cohort toggle. */
+    if (window.RTBuildoutLedgers && typeof window.RTBuildoutLedgers.render === "function") {
+      try { window.RTBuildoutLedgers.render(); } catch (e) { /* never take the page down */ }
+    }
     if (window.RTTerms && typeof window.RTTerms.wrap === "function") {
       try { window.RTTerms.wrap(document.getElementById("buildout-view"), { perSection: "section" }); } catch (e) { /* never take the page down */ }
     }

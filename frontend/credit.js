@@ -1,5 +1,7 @@
 /* Private Credit Terminal — renderer.
-   Reads /api/credit-macro (22 FRED series and the USREC bands),
+   Reads /api/credit-macro (whatever FRED series its own SERIES table
+   carries, plus the USREC bands — the status line reads the payload's
+   own series count, never a literal here),
    /api/price-history (BIZD against a loan ETF) and /api/macro (the two
    Treasury yields it already serves), draws the Market view, and reuses
    the tile, caption and popup patterns from the Statement Analysis and
@@ -1626,16 +1628,22 @@
          own and never holds the status line */
       SECTION_SCRIPTS_READY.then(mountSections);
       var cm = DATA.cm;
+      /* the denominator is the payload's own series count, never a
+         literal — api/credit-macro.js's SERIES table has grown twice
+         since this line was first written (22, then 31 with the
+         rating-band OAS and FX ids the build-out monitor added), and a
+         literal here silently goes stale on the next addition too */
+      var total = cm && cm.series ? Object.keys(cm.series).length : 22;
       var n = cm && cm.series ? Object.keys(cm.series).filter(function (k) { return fromCredit(cm, k); }).length : 0;
       var refused = problems.filter(function (p) { return p.e && (p.e.status === 429 || p.e.status === 403); });
       if (force && refused.length) {
         statusLine("The forced refresh was not accepted (" + HTTP.message(refused[0].e) + "); it is limited to a few a minute and to the terminal's own pages. " +
           "The series already on the page stay as they were.");
       } else if (problems.length) {
-        statusLine((cm ? n + " of 22 FRED series answered" + (cm.generated ? ", built " + cm.generated.slice(0, 16).replace("T", " ") + " UTC" : "") + ". " : "") +
+        statusLine((cm ? n + " of " + total + " FRED series answered" + (cm.generated ? ", built " + cm.generated.slice(0, 16).replace("T", " ") + " UTC" : "") + ". " : "") +
           "Not available: " + problems.map(function (p) { return p.what + " (" + HTTP.message(p.e) + ")"; }).join("; ") + ".");
       } else {
-        statusLine(n + " of 22 FRED series answered" + (cm && cm.generated ? ", built " + cm.generated.slice(0, 16).replace("T", " ") + " UTC" : "") +
+        statusLine(n + " of " + total + " FRED series answered" + (cm && cm.generated ? ", built " + cm.generated.slice(0, 16).replace("T", " ") + " UTC" : "") +
           (cm && cm.keyed === false ? ", keyless" : "") + (FIXTURE ? " · fixture data" : "") + ".");
       }
     });

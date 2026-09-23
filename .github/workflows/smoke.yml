@@ -136,6 +136,15 @@ jobs:
       - name: Build-out view - capex, funding, debt
         run: node scripts/test-buildout-view.mjs
 
+      - name: Build-out ledgers - deal timeline, ratings, private-credit ties
+        run: node scripts/test-buildout-ledgers.mjs
+
+      - name: Ledger row schema and exclusion rules (URLs, Hyperion/El Paso dedupe)
+        run: node scripts/test-ledgers.mjs
+
+      - name: Derived 15.8 series - FX arithmetic against live FRED rates
+        run: node scripts/test-ledger-series.mjs
+
       - name: Nebius interim reports against the hand-keyed table
         run: node scripts/test-nbis-interims.mjs
 

@@ -32,6 +32,10 @@
 <link rel="stylesheet" href="credit-lenders-drilldown.css" />
 <link rel="stylesheet" href="credit-lenders.css" />
 <link rel="stylesheet" href="credit-buildout.css" />
+<!-- PR H3: the deal ledger, ratings and private-credit-ties panels
+     (charts H9-H18) that credit-buildout.js mounts into
+     #buildout-ledgers-root -->
+<link rel="stylesheet" href="credit-buildout-ledgers.css" />
 <style>[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -289,6 +293,10 @@
      directly on ?view=buildout, when credit.js's own init runs setView()
      synchronously at the bottom of its script tag -->
 <script src="credit-buildout.js"></script>
+<!-- PR H3: charts H9-H18, mounted by credit-buildout.js into
+     #buildout-ledgers-root; must load before credit-buildout.js's own
+     mount() can call window.RTBuildoutLedgers.render() -->
+<script src="credit-buildout-ledgers.js"></script>
 <script src="credit.js"></script>
 <!-- the ingested sections register themselves on window.RTCreditSections; credit.js mounts them after the feeds load -->
 <script src="credit-stress.js"></script>
