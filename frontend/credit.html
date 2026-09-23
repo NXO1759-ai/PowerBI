@@ -25,6 +25,7 @@
 <link rel="stylesheet" href="credit-stress.css" />
 <link rel="stylesheet" href="credit-capital.css" />
 <link rel="stylesheet" href="credit-dealflow.css" />
+<link rel="stylesheet" href="credit-underwriting.css" />
 <style>[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -182,22 +183,12 @@
   </div>
 
   <!-- ============ UNDERWRITING (PR F) ============ -->
-  <div id="underwriting-view" hidden>
-    <section class="panel-card fsa-section" aria-labelledby="h-underwriting">
-      <div class="section-head">
-        <h2 id="h-underwriting">Underwriting — the covered companies as borrowers</h2>
-        <p class="section-blurb">Would a credit committee lend to this company, and on what terms? This view lands in a later release and reuses the statements feed; what it will carry is listed below.</p>
-      </div>
-      <ul class="plan-list">
-        <li><strong>Financial-risk bands.</strong> Every covered operating company placed in the rating agencies' published leverage and coverage bands, from the same filings the Statement Analysis page reads.</li>
-        <li><strong>The leveraged-lending ladder.</strong> Leverage through EBITDA against the regulatory guidance line and the buyout structure norms, as a sub-investment-grade ladder.</li>
-        <li><strong>Debt structure.</strong> The maturity schedule by year, undrawn revolver capacity, lease payments due, the fair value of the debt and interest actually paid — new concepts read from the filings.</li>
-        <li><strong>Charts U1 to U4.</strong> Leverage and coverage against the bands, the maturity wall, liquidity runway, and where the company sits among the covered borrowers.</li>
-        <li><strong>The credit note.</strong> A note in the credit-committee voice written by the research model from the figures on the page, and only those figures.</li>
-      </ul>
-      <p class="tile-foot">Sources when it ships: SEC EDGAR XBRL filings through the statements feed; the published rating-agency bands and the leveraged-lending guidance as reference lines.</p>
-    </section>
-  </div>
+  <!-- frontend/credit-underwriting.js owns everything inside this container.
+       credit.js's lazy-mount hook calls window.RTCreditUnderwriting.mount()
+       on this element the first time the tab is shown; the module fetches
+       frontend/data/underwriting.json (one file, all covered companies)
+       and renders the loading, error and ready states itself. -->
+  <div id="underwriting-view" hidden></div>
 
   <!-- ============ GLOSSARY ============ -->
   <div id="glossary-view" hidden>
@@ -285,5 +276,6 @@
 <script src="credit-stress.js"></script>
 <script src="credit-capital.js"></script>
 <script src="credit-dealflow.js"></script>
+<script src="credit-underwriting.js"></script>
 </body>
 </html>

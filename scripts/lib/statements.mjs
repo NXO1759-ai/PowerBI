@@ -28,7 +28,7 @@
  *                 proceeds line came out negative (NEVER_NEGATIVE)
  */
 
-import { INCOME, BALANCE, CASHFLOW, PERSHARE, SHARE_COUNTS, COMPOSITES,
+import { INCOME, BALANCE, CASHFLOW, PERSHARE, SHARE_COUNTS, COMPOSITES, PURE,
          FILL_ONLY, FILL_COMPOSITES, FILL_CONTINUES, END_DATED_BALANCE, REPORTED_AS_BALANCE,
          MIXABLE, ABSENT_IS_ZERO, NEVER_NEGATIVE, ZERO_YIELDS, SUM_FIRST } from "./concepts.mjs";
 
@@ -417,6 +417,34 @@ function instantSeries(bucket, tags, fill, screen, sumFirst = []) {
   return out;
 }
 
+/**
+ * A PURE-unit instant reader (concepts.mjs PURE), modeled on
+ * instantSeries: the tag's value is a ratio already expressed as a
+ * fraction — a coupon rate, never a dollar amount — so it is read from
+ * the "pure" unit bucket via unitRows rather than usdRows, and the value
+ * is never scaled or rounded to a whole number. DebtWeightedAverageInterestRate
+ * is the one tag Underwriting reads this way (blueprint section 5): rare
+ * among operating companies and, where a filer does tag it, annual-only
+ * (RTX 0.045 at 2025-12-31, tagged in the 10-K, absent from both 2026
+ * 10-Qs), so the card falls back to interest expense over average debt
+ * wherever this reads null.
+ */
+function pureInstantSeries(bucket, tags, fill = []) {
+  const reader = (b, tag) => unitRows(b, tag, "pure");
+  const rows = pickRows(bucket, tags, reader, fill)
+    .filter((r) => REPORT_FORM.test(r.form || "") && r.end && !r.start);
+  const out = new Map();
+  for (const r of keepLatestFiled(rows)) {
+    out.set(r.end, { value: r.val, end: r.end, filed: r.filed,
+                     form: r.form, fy: r.fy, fp: r.fp, accn: r.accn || null, tag: r.tag });
+  }
+  return out;
+}
+
+/** The raw reader, for a builder that needs a pure-unit tag's series with
+    its provenance rather than a resolved statement line. */
+export { pureInstantSeries as readPureInstant };
+
 /* A balance read by END DATE whether the filer tagged it as an instant or
    over the period (END_DATED_BALANCE). Where a period end carries more
    than one row the ladder rank decides first (the earlier tag wins), then
@@ -648,6 +676,13 @@ export function buildStatementSeries(bucket, { annual, limit = 20, fyEndMonth, s
   for (const [k, tags] of Object.entries(SHARE_COUNTS)) {
     shares[k] = shareSeries(bucket, tags, opts);
   }
+  /* concepts.mjs PURE: an instant ratio tag (DebtWeightedAverageInterestRate)
+     read from the "pure" unit bucket, kept apart from balance so a reader
+     never mistakes a fraction for a dollar figure. */
+  const pure = {};
+  for (const [k, tags] of Object.entries(PURE)) {
+    pure[k] = pureInstantSeries(bucket, tags);
+  }
 
   /* Which periods exist is the union of the periods in which ANY core
      duration item was reported. Anchoring on revenue alone loses
@@ -702,6 +737,7 @@ export function buildStatementSeries(bucket, { annual, limit = 20, fyEndMonth, s
       cashFlow: {},
       perShare: {},
       shares: {},
+      pure: {},
       restated: {},
       /* the tag each line resolved from, keyed "statement.key", for
          every line that carries a value; a composite reads "A+B" */
@@ -716,6 +752,7 @@ export function buildStatementSeries(bucket, { annual, limit = 20, fyEndMonth, s
     for (const k of Object.keys(balance)) take("balanceSheet", k, nearest(balance[k], end));
     for (const k of Object.keys(perShare)) period.perShare[k] = val(perShare[k].get(end));
     for (const k of Object.keys(shares)) period.shares[k] = val(nearest(shares[k], end, 40));
+    for (const k of Object.keys(pure)) take("pure", k, nearest(pure[k], end));
     for (const [path, map] of Object.entries(revisions)) {
       const p = map.get(end);
       if (p && p.restated) period.restated[path] = p.restated;
@@ -795,10 +832,13 @@ function deriveFourthQuarters(annual, quarterly) {
       cashFlow: {},
       perShare: {},
       shares: { ...year.shares },
+      /* an instant ratio, like a balance: the year-end reading IS the Q4
+         reading, never a subtraction */
+      pure: { ...year.pure },
       tags: {},
     };
     for (const [path, tag] of Object.entries(year.tags || {})) {
-      if (path.startsWith("balanceSheet.")) q4.tags[path] = tag;
+      if (path.startsWith("balanceSheet.") || path.startsWith("pure.")) q4.tags[path] = tag;
     }
 
     const subtract = (statement, key) => {
@@ -901,7 +941,7 @@ function deriveFromYearToDate(bucket, quarterly, fyEndMonth) {
     const period = { periodEnd: derivedEnd, periodStart: null, label: null,
       fiscalYear: null, fiscalPeriod: null, derived: true,
       incomeStatement: {}, balanceSheet: {}, cashFlow: {},
-      perShare: {}, shares: {}, tags: {} };
+      perShare: {}, shares: {}, pure: {}, tags: {} };
     for (const k of Object.keys(span.perShare || {})) period.perShare[k] = null;
     for (const k of Object.keys(span.shares || {})) period.shares[k] = null;
     let anyValue = false;
@@ -932,8 +972,10 @@ function deriveFromYearToDate(bucket, quarterly, fyEndMonth) {
       }
     }
     /* A balance sheet is a point in time and cannot be subtracted; the
-       derived quarter carries none rather than a wrong one. */
+       derived quarter carries none rather than a wrong one. A pure-unit
+       instant ratio belongs to the span's own end for the same reason. */
     for (const key of Object.keys(span.balanceSheet || {})) period.balanceSheet[key] = null;
+    for (const key of Object.keys(span.pure || {})) period.pure[key] = null;
     if (!anyValue || (period.incomeStatement.revenue === null && period.incomeStatement.netIncome === null)) continue;
     period.fiscalYear = fiscalYearFor(derivedEnd, fyEndMonth);
     period.fiscalPeriod = "Q" + fiscalQuarterFor(derivedEnd, fyEndMonth, null);
@@ -1095,7 +1137,7 @@ function buildLtm(quarterly) {
       basis: "ltm",
       derived: win.some((q) => q.derived),
       form: last.form, filed: last.filed, accession: last.accession,
-      incomeStatement: {}, balanceSheet: {}, cashFlow: {}, perShare: {}, shares: {},
+      incomeStatement: {}, balanceSheet: {}, cashFlow: {}, perShare: {}, shares: {}, pure: {},
       restated: {},
       tags: {},
     };
@@ -1126,6 +1168,12 @@ function buildLtm(quarterly) {
     for (const k of Object.keys(last.balanceSheet)) {
       period.balanceSheet[k] = last.balanceSheet[k];
       if (last.tags && last.tags["balanceSheet." + k]) period.tags["balanceSheet." + k] = last.tags["balanceSheet." + k];
+    }
+    /* an instant ratio, like a balance sheet figure: the latest quarter's
+       reading stands for the trailing year, never a sum of four */
+    for (const k of Object.keys(last.pure || {})) {
+      period.pure[k] = last.pure[k];
+      if (last.tags && last.tags["pure." + k]) period.tags["pure." + k] = last.tags["pure." + k];
     }
     for (const k of Object.keys(last.perShare)) period.perShare[k] = sum("perShare", k);
     for (const k of Object.keys(last.shares)) period.shares[k] = last.shares[k];

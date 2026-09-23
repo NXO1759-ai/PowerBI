@@ -131,6 +131,18 @@ jobs:
           SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT || 'Research Terminal research@chineduokeke.mba' }}
         run: node scripts/refresh-bdc.mjs
 
+      # The Underwriting view (blueprint section 5, PR F): the same 137
+      # covered tickers read as a lender would read them, off the same
+      # companyfacts feed the strategy panel above already pulls. It exits
+      # 1 only when every single row came back null (a wholesale EDGAR
+      # outage), never for one filer's own gap, so continue-on-error keeps
+      # the rest of this run's commit either way.
+      - name: Refresh the underwriting panel
+        continue-on-error: true
+        env:
+          SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT || 'Research Terminal research@chineduokeke.mba' }}
+        run: node scripts/build-underwriting-panel.mjs
+
       # The pages fetch the panel by industry and segments and risks by
       # company, so the monolithic files are split after every rebuild.
       - name: Chunk the data files for lazy loading
