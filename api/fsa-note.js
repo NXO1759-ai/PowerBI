@@ -13,10 +13,12 @@
  *
  * kind picks the voice (PROMPTS below): "statements" (the default),
  * "strategy", "credit" (the Private Credit Terminal's Market view,
- * posted with ticker "PCMARKET" and the facts drawn on the view) and
- * "bdc" (one listed business development company, the Lenders view).
- * The two credit kinds write in the credit-committee voice from the
- * facts posted and nothing else, and are signed "the research model".
+ * posted with ticker "PCMARKET" and the facts drawn on the view), "bdc"
+ * (one listed business development company, the Lenders view) and
+ * "underwriting" (one covered operating company as a borrower, the
+ * Underwriting view). The three credit kinds write in the credit-
+ * committee voice from the facts posted and nothing else, and are signed
+ * "the research model".
  *
  * Requires DEEPSEEK_API_KEY. Notes cache for seven days per
  * kind+ticker+period; a forced refresh rewrites the cached note for
@@ -120,11 +122,43 @@ export const PROMPTS = {
     "to the vehicle. Read every ratio against the peer or composite figure " +
     "given, never against a remembered norm; a figure marked disclosed-only or " +
     "one observation is read as such. " + SIGN,
+  /* FIXER ROUND 2 (Underwriting view, PR F): the Underwriting page used to
+     post its single-borrower scorecard facts under kind "credit", which is
+     the MARKET view's cycle-and-population prompt (FRED conditions, the
+     spread ladder, PitchBook/LCD readings) — none of which exist in an
+     underwriting payload, so a model asked to write that note would have
+     nothing to argue "where the cycle sits" or "capital against deals"
+     from. Modeled on "bdc" (the other single-issuer committee-memo voice)
+     rather than widening "credit" to branch on shape, since the two are
+     genuinely different notes about different subjects. */
+  underwriting:
+    "You are the credit officer writing the committee memo on one company " +
+    "your desk covers as a potential borrower, for a bright reader with a " +
+    "finance degree but no professional training. " + RULES +
+    "The facts are the company's own filed figures and the site's derived " +
+    "readings, each with its period: debt/EBITDA and net debt/EBITDA, " +
+    "FFO/debt and the S&P financial-risk band each places the company in, " +
+    "interest coverage and fixed-charge coverage, the liquidity runway " +
+    "against next-twelve-month obligations, synthetic covenant headroom to " +
+    "the next band, loan-to-value against a live enterprise value where " +
+    "given, and the debt's fair value against carrying value. " +
+    "Structure: exactly three paragraphs. " +
+    "First — the credit: how much this company has borrowed against what it " +
+    "earns and how comfortably it services that debt, arguing from " +
+    "leverage and coverage together rather than listing them. Second — " +
+    "near-term risk: what the maturity wall and liquidity runway say about " +
+    "refinancing risk in the next two years, and whether the company can " +
+    "meet its obligations from what it already has. Third — the tests: the " +
+    "two or three figures whose next filing would confirm or break the " +
+    "reading, and what each would mean for a lender's terms. Every figure " +
+    "you cite must appear in the facts with its period; a band, ratio or " +
+    "note marked synthetic, proxied or not disclosed is read with that " +
+    "qualifier, never as a precise figure. " + SIGN,
 };
-/* the two credit kinds always end on the signature line, whether or not
+/* the three credit kinds always end on the signature line, whether or not
    the model remembered to write it */
 function signed(kind, note) {
-  if (kind !== "credit" && kind !== "bdc") return note;
+  if (kind !== "credit" && kind !== "bdc" && kind !== "underwriting") return note;
   const t = note.trim();
   if (t.endsWith(SIGNATURE)) return t;
   return t + "\n\n" + SIGNATURE;
@@ -161,7 +195,7 @@ export default jsonSafe(async function handler(req, res) {
   }
 
   const system = PROMPTS[kind];
-  const subject = kind === "credit" ? "Dashboard" : kind === "bdc" ? "Business development company" : "Company";
+  const subject = kind === "credit" ? "Dashboard" : "Company";
   const user = subject + ": " + ticker + ". Period: " + period + ".\nComputed facts:\n- " +
     facts.join("\n- ");
 

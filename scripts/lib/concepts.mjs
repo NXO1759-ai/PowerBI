@@ -295,9 +295,22 @@ export const BALANCE = {
   financeLeaseDueYearFour: ["FinanceLeaseLiabilityPaymentsDueYearFour"],
   financeLeaseDueYearFive: ["FinanceLeaseLiabilityPaymentsDueYearFive"],
   financeLeaseDueAfterYearFive: ["FinanceLeaseLiabilityPaymentsDueAfterYearFive"],
-  /* undiscounted operating-lease payments (MSFT 24,706,000,000 at
-     2026-06-30; AMZN 116,350,000,000) */
+  /* undiscounted operating-lease payments, the WHOLE remaining schedule
+     (MSFT 24,706,000,000 at 2026-06-30; AMZN 116,350,000,000; AT&T
+     27,556,000,000 at 2025-12-31) — a lifetime total, not a one-year
+     figure. FIXER ROUND 2: this used to be the liquidity runway's lease
+     term on its own, which overstated the denominator by the ratio of a
+     filer's lifetime lease schedule to its next twelve months (AT&T's own
+     lifetime figure is 5.6x its discounted OperatingLeaseLiability).
+     Still kept for the maturity-ladder-adjacent detail views that want
+     the full schedule; the runway now reads opLeaseDueNextTwelveMonths
+     below instead. */
   opLeaseDue: ["LesseeOperatingLeaseLiabilityPaymentsDue"],
+  /* the one-year row of the same schedule (HD 1,792,000,000; AMZN
+     15,380,000,000; T 4,956,000,000, all at CY2025Q4I per SEC frames,
+     3,607 filers tag it) — the correct denominator term for a liquidity
+     runway covering next-twelve-month obligations. */
+  opLeaseDueNextTwelveMonths: ["LesseeOperatingLeaseLiabilityPaymentsDueNextTwelveMonths"],
   /* the debt maturity ladder as the note tags it. Year one is either the
      remainder of the fiscal year (a 10-Q: CRWV 4,413,000,000 at
      2026-06-30) or the next twelve months (MSFT 9,250,000,000; ORCL
@@ -410,6 +423,37 @@ export const BALANCE = {
   debtFairValue: ["LongTermDebtFairValue", "NotesPayableFairValueDisclosure"],
   /* accrued interest (CRWV 410,000,000 at 2026-06-30) */
   interestPayable: ["InterestPayableCurrent"],
+
+  /* ---- Underwriting view (blueprint section 5): the liquidity-runway
+     numerator. Rare among operating companies (11 of the 130 covered
+     names per the blueprint's probe) and annual-only where a filer does
+     tag it: RTX 600,000,000 at 2025-12-31, tagged only in its 10-K, not
+     re-tagged in either 2026 10-Q. Never confused with the BDC concept of
+     the same name in bdc-concepts.mjs, which reads the same tag for a
+     different universe. */
+  revolverCapacity: ["LineOfCreditFacilityRemainingBorrowingCapacity"],
+};
+
+/* ---------- pure-unit ratios (instant) ----------
+ * A handful of tags carry a ratio already expressed as a fraction — never
+ * dollars — and so live in the companyfacts "pure" unit bucket rather
+ * than "USD" or "USD/shares". statements.mjs's usual readers (usdRows,
+ * unitRows for "USD/shares") never look there, so these need their own
+ * reader (readPureInstant, modeled on instantSeries but over the "pure"
+ * bucket).
+ *
+ * DebtWeightedAverageInterestRate is the one Underwriting reads this way
+ * (blueprint section 5, "the credit cycle" card): the filer's own stated
+ * cost of debt. Confirmed live 2026-09-11 via the frames API
+ * (frames/us-gaap/DebtWeightedAverageInterestRate/pure/CY2025Q4I.json):
+ * 206 filers tag it for fiscal 2025, against roughly 8,000 in the SEC
+ * index — rare, as the blueprint says, and annual-only for the ones
+ * checked (RTX 0.045 at 2025-12-31, tagged only in the 10-K filed
+ * 2026-02-06, not carried into either 2026 10-Q; FCX 0.039 at
+ * 2025-12-31). AT&T and NVIDIA do not tag it at all. The page falls back
+ * to interest expense over average debt wherever this reads null. */
+export const PURE = {
+  costOfDebtTagged: ["DebtWeightedAverageInterestRate"],
 };
 
 /* ---------- cash flow (duration) ---------- */
@@ -852,6 +896,7 @@ export const ALL_CONCEPTS = [...new Set([
   ...Object.values(CASHFLOW).flat(),
   ...Object.values(PERSHARE).flat(),
   ...Object.values(SHARE_COUNTS).flat(),
+  ...Object.values(PURE).flat(),
 ])];
 
 /* Which map a line item belongs to decides how it is aggregated: duration

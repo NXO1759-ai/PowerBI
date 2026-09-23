@@ -1493,6 +1493,29 @@
   }
   $("glossary-q").addEventListener("input", renderGlossary);
 
+  /* ---------- Underwriting view lazy mount (PR F) ----------
+     frontend/credit-underwriting.js owns everything inside #underwriting-view
+     (its own fetch of data/underwriting.json, its own render, error and
+     note-writing states). This is the one line credit.js contributes: the
+     first time the view is shown, hand it the container, the same way
+     renderGlossary() below lazy-loads the glossary's own data on first
+     view. mount() is idempotent — a second switch to the tab re-renders
+     from state already in memory rather than re-fetching the panel. */
+  function mountUnderwriting() {
+    if (window.RTCreditUnderwriting && typeof window.RTCreditUnderwriting.mount === "function") {
+      window.RTCreditUnderwriting.mount($("underwriting-view"));
+      return;
+    }
+    /* a direct ?view=underwriting load reaches here before its own
+       parser-blocking script tag (after this one) has run; SECTION_SCRIPTS_READY
+       already resolves at DOMContentLoaded for exactly this reason */
+    SECTION_SCRIPTS_READY.then(function () {
+      if (state.view === "underwriting" && window.RTCreditUnderwriting && typeof window.RTCreditUnderwriting.mount === "function") {
+        window.RTCreditUnderwriting.mount($("underwriting-view"));
+      }
+    });
+  }
+
   /* ---------- views ---------- */
   var VIEWS = ["market", "lenders", "underwriting", "glossary"];
   var state = { view: "market" };
@@ -1504,6 +1527,7 @@
       $("view-" + k).setAttribute("aria-pressed", k === v ? "true" : "false");
     });
     if (v === "glossary") renderGlossary();
+    if (v === "underwriting") mountUnderwriting();
     if (push !== false) {
       var u = new URL(location.href);
       u.searchParams.set("view", v);

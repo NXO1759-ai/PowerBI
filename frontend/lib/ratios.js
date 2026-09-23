@@ -719,6 +719,150 @@
     };
   }
 
+  /* ================= Underwriting (blueprint section 5) =================
+   *
+   * The covered companies read as a lender would read them, through the
+   * same reformulation above plus three pieces the Statement Analysis
+   * dashboard never needed: a fixed-charge test that nets out capital
+   * spending and cash taxes before the debt service line, an FFO-based
+   * leverage measure the rating agencies use beside debt/EBITDA, and the
+   * distance from a company's own ratio to the next tier of a band table
+   * — the synthetic covenant headroom, since the site never computes a
+   * real covenant. These take plain numbers, not a period object: the
+   * underwriting page sources EBITDA, capex and the rest from the LTM
+   * period itself (EBITDA there is operating income plus D&A, stated as
+   * such — never an adjusted figure — per the house rule against
+   * computing a real covenant or an adjusted EBITDA).
+   */
+
+  /**
+   * Fixed-charge coverage, the non-GAAP form blueprint section 5 names:
+   *
+   *   (EBITDA − capex − cash taxes) ÷ (cash interest + mandatory amortization)
+   *
+   * Null-refusing on every input: a missing capex or tax figure is not
+   * silently treated as zero, because doing so would flatter the coverage
+   * of a company whose capex line the feed simply never resolved. This is
+   * therefore stricter than ratios like ebitdaMargin above, which use
+   * add() to tolerate a missing term — a fixed-charge test built on a
+   * silently-zeroed input is worse than none at all.
+   */
+  function fixedChargeCoverage(ebitda, capex, cashTaxes, cashInterest, mandatoryAmortization) {
+    if (!isNum(ebitda) || !isNum(capex) || !isNum(cashTaxes) ||
+        !isNum(cashInterest) || !isNum(mandatoryAmortization)) return null;
+    return div(ebitda - capex - cashTaxes, cashInterest + mandatoryAmortization);
+  }
+
+  /**
+   * FFO to total debt, the S&P ratio that anchors the financial-risk
+   * matrix's FFO/debt column beside debt/EBITDA.
+   *
+   * FFO has no single GAAP definition — S&P's own is a longer bridge from
+   * net income through several add-backs a filing does not tag uniformly
+   * across companies — so the site proxies it as
+   *
+   *   FFO ≈ net income + depreciation and amortization
+   *
+   * and the caller states that proxy is what it passed in. This function
+   * only divides; it does not compute the proxy itself, so a caller using
+   * the fuller S&P bridge where the tags support it can pass that figure
+   * through the same division. Null-refusing, like the coverage measure
+   * above.
+   */
+  function ffoToDebt(ffo, totalDebt) {
+    if (!isNum(ffo) || !isNum(totalDebt)) return null;
+    return div(ffo, totalDebt);
+  }
+
+  /**
+   * S&P's financial-risk matrix for net debt/EBITDA (the 2009 matrix,
+   * Table 2, carried into the 2013 corporate methodology; blueprint
+   * section 5): minimal under 1.5x, modest 1.5–2x, intermediate 2–3x,
+   * significant 3–4x, aggressive 4–5x, highly leveraged over 5x.
+   *
+   * Declared once here rather than in the underwriting page or the
+   * weekly panel builder that reads it, per the blueprint's instruction
+   * not to duplicate the table: ratios.js is already loaded by both (the
+   * browser page directly, the builder through the same UMD export), so
+   * one array serves the U1 scatter's quadrant lines, the scorecard band
+   * label and bandDistance below without three copies of the breakpoints
+   * drifting apart. `min` is inclusive, `max` exclusive except the last
+   * band's, which is unbounded.
+   */
+  var SP_FINANCIAL_RISK_BANDS = [
+    { key: "minimal", label: "Minimal", min: 0, max: 1.5 },
+    { key: "modest", label: "Modest", min: 1.5, max: 2 },
+    { key: "intermediate", label: "Intermediate", min: 2, max: 3 },
+    { key: "significant", label: "Significant", min: 3, max: 4 },
+    { key: "aggressive", label: "Aggressive", min: 4, max: 5 },
+    { key: "highlyLeveraged", label: "Highly leveraged", min: 5, max: Infinity },
+  ];
+
+  /**
+   * The synthetic covenant headroom: how far a debt/EBITDA-style ratio
+   * (ascending risk — higher is worse, `bands` ordered lowest risk first
+   * with touching edges) sits from the next, worse band of a table like
+   * SP_FINANCIAL_RISK_BANDS above, plus — once the company sits at or
+   * above the 4.0x sub-investment-grade line blueprint section 5 draws a
+   * second ladder from — its distance to the 6.0x leveraged-lending
+   * guidance line.
+   *
+   *   currentBand              the band `value` falls in
+   *   nextBand                 the next-worse band, or null at the top
+   *   turnsToNext               turns of leverage to the next band's edge
+   *   ebitdaDeclinePctToNext    the EBITDA decline that would produce it,
+   *                             debt held fixed: since value = debt / EBITDA,
+   *                             reaching the edge needs
+   *                             EBITDA' = debt / edge = EBITDA x value / edge,
+   *                             a decline of (edge − value) / edge
+   *   guidanceLine, turnsToGuidanceLine, ebitdaDeclinePctToGuidanceLine
+   *                             the same two figures against the 6.0x
+   *                             line, populated only at or above
+   *                             `guidanceThreshold` (4.0 by default) —
+   *                             below it the sub-investment-grade ladder
+   *                             does not apply and all three are null. A
+   *                             negative distance means the company has
+   *                             already crossed the guidance line.
+   *
+   * Every field this labels "synthetic": no credit agreement is read, and
+   * the real covenant, if the company has one, is very likely set at a
+   * different level than a published guideline. null-refusing: a
+   * non-numeric value or an empty or non-array band table returns null
+   * rather than guessing a band.
+   */
+  function bandDistance(value, bands, opts) {
+    if (!isNum(value) || !Array.isArray(bands) || !bands.length) return null;
+    opts = opts || {};
+    var guidanceLine = isNum(opts.guidanceLine) ? opts.guidanceLine : 6.0;
+    var guidanceThreshold = isNum(opts.guidanceThreshold) ? opts.guidanceThreshold : 4.0;
+
+    var idx = -1;
+    for (var i = 0; i < bands.length; i++) {
+      var b = bands[i];
+      if (!isNum(b.min) || typeof b.max !== "number") continue;
+      if (value >= b.min && (value < b.max || !isFinite(b.max))) { idx = i; break; }
+    }
+    if (idx === -1) return null;
+
+    var currentBand = bands[idx];
+    var nextBand = idx + 1 < bands.length ? bands[idx + 1] : null;
+    var edge = nextBand && isFinite(currentBand.max) ? currentBand.max : null;
+    var turnsToNext = edge !== null ? edge - value : null;
+    var ebitdaDeclinePctToNext = (edge !== null && edge > 0) ? (edge - value) / edge : null;
+
+    var atOrAboveThreshold = value >= guidanceThreshold;
+    return {
+      currentBand: currentBand,
+      nextBand: nextBand,
+      turnsToNext: turnsToNext,
+      ebitdaDeclinePctToNext: ebitdaDeclinePctToNext,
+      guidanceLine: atOrAboveThreshold ? guidanceLine : null,
+      turnsToGuidanceLine: atOrAboveThreshold ? (guidanceLine - value) : null,
+      ebitdaDeclinePctToGuidanceLine: (atOrAboveThreshold && guidanceLine > 0)
+        ? (guidanceLine - value) / guidanceLine : null,
+    };
+  }
+
   /** Compound annual growth rate across an annual series. */
   function cagr(periods, pick, years) {
     if (!periods || periods.length < 2) return null;
@@ -755,5 +899,9 @@
     totalNetIncome: totalNetIncome,
     growth: growth,
     cagr: cagr,
+    fixedChargeCoverage: fixedChargeCoverage,
+    ffoToDebt: ffoToDebt,
+    bandDistance: bandDistance,
+    SP_FINANCIAL_RISK_BANDS: SP_FINANCIAL_RISK_BANDS,
   };
 });

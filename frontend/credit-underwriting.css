@@ -1,0 +1,99 @@
+/* ==========================================================================
+   credit-underwriting.css — the Underwriting view (blueprint section 5,
+   PR F). Extends styles.css, statements.css and credit.css; every color
+   comes from their tokens. frontend/credit-underwriting.js is the only
+   file that writes markup into these classes.
+   ========================================================================== */
+
+.uw-controls {
+  display: flex; align-items: center; gap: 10px 16px; flex-wrap: wrap; margin-top: 4px;
+}
+.uw-select-label { font-size: 11.5px; color: var(--kimi-color-text-tertiary); }
+#uw-company-select {
+  font: inherit; font-size: 13px; color: var(--kimi-color-text-primary);
+  background: var(--input-bg); border: 1px solid var(--kimi-color-border-strong);
+  border-radius: 7px; padding: 6px 9px; min-block-size: 34px; max-inline-size: 100%;
+}
+#uw-company-select:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 2px; }
+
+/* ---- U1: the scatter ---- */
+.uw-scatter-box { position: relative; inline-size: 100%; block-size: 380px; }
+.uw-scatter-box svg { display: block; inline-size: 100%; block-size: 100%; overflow: visible; }
+.uw-pt { cursor: pointer; }
+.uw-pt circle.uw-pt, .uw-pt:focus-visible circle:nth-child(2) { outline: none; }
+.uw-pt:focus-visible circle:nth-child(1) { fill: rgba(245, 197, 24, .15); }
+.uw-pt.is-selected text, .uw-pt.is-selected { font-weight: 600; }
+
+/* ---- U2: the maturity bars ---- */
+.uw-bars { display: grid; gap: 7px; max-inline-size: 900px; padding: 4px 0 2px; }
+.uw-bar-row { display: grid; grid-template-columns: minmax(7em, 10em) 1fr 5.5em; align-items: center; gap: 10px; }
+.uw-bar-label { font-size: 12px; color: var(--kimi-color-text-secondary); text-align: end; }
+.uw-bar-track { position: relative; block-size: 14px; background: var(--kimi-color-surface-muted); border-radius: 3px; }
+.uw-bar-track i { position: absolute; inset-block: 0; inset-inline-start: 0; block-size: 100%; background: var(--rt-gold); border-radius: 3px; min-inline-size: 2px; }
+.uw-bar-val { font-family: var(--rt-font-mono); font-size: 12.5px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--kimi-color-text-primary); text-align: end; }
+
+/* ---- U3: the liquidity runway bar ---- */
+.uw-runway { max-inline-size: 640px; }
+.uw-runway-track { position: relative; block-size: 20px; background: var(--kimi-color-surface-muted); border-radius: 4px; margin-top: 4px; }
+.uw-runway-track i { position: absolute; inset-block: 0; inset-inline-start: 0; block-size: 100%; background: var(--rt-gold); border-radius: 4px; min-inline-size: 2px; }
+.uw-runway-track b { position: absolute; inset-block: -3px; inline-size: 2px; background: var(--kimi-color-text-primary); }
+.uw-runway-val { font-family: var(--rt-font-mono); font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; margin: 6px 0 0; color: var(--kimi-color-text-primary); }
+.uw-runway-line { font-family: var(--rt-font-sans); font-size: 11.5px; font-weight: 400; color: var(--kimi-color-text-tertiary); margin-inline-start: 8px; }
+
+/* ---- U4: the covenant-headroom gauges ---- */
+.uw-gauges { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); }
+.uw-gauge-card h4 { font-size: 12.5px; font-weight: 600; margin: 0 0 6px; color: var(--kimi-color-text-primary); }
+.uw-gauge-track { position: relative; display: block; block-size: 12px; background: var(--kimi-color-surface-muted); border-radius: 3px; }
+.uw-gauge-track i { position: absolute; inset-block: 0; inset-inline-start: 0; block-size: 100%; background: var(--rt-gold); border-radius: 3px; min-inline-size: 2px; }
+
+/* ---- empty states, matching credit.css's .chart-empty voice but sized for an inline block rather than an absolute overlay ---- */
+.uw-empty {
+  padding: 16px 0; color: var(--kimi-color-text-tertiary); font-size: 12.5px;
+  display: flex; flex-direction: column; gap: 4px; max-inline-size: 72ch;
+}
+.uw-empty > span { color: var(--kimi-color-text-secondary); font-weight: 500; }
+.uw-empty > small { font-size: 11.5px; line-height: 1.5; overflow-wrap: anywhere; }
+
+.uw-note { font-size: 12px; line-height: 1.55; color: var(--kimi-color-text-secondary); margin: 8px 0 0; overflow-wrap: anywhere; }
+
+/* ---- the six-card scorecard ---- */
+.uw-summary { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)); margin-top: 6px; }
+.uw-card {
+  border: 1px solid var(--kimi-color-border); border-radius: 8px; padding: 12px 14px;
+  display: flex; flex-direction: column; gap: 2px; min-inline-size: 0;
+}
+.uw-card h4 { margin: 0 0 4px; font-size: 12.5px; font-weight: 600; }
+.uw-line {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+  font-size: 12px; margin: 2px 0; color: var(--kimi-color-text-secondary);
+}
+.uw-line span:first-child { flex: 0 1 auto; min-inline-size: 0; }
+.uw-line b {
+  font-family: var(--rt-font-mono); font-weight: 600; font-variant-numeric: tabular-nums;
+  color: var(--kimi-color-text-primary); text-align: end; flex: 1 1 auto; min-inline-size: 0;
+  overflow-wrap: break-word;
+}
+.uw-card > .uw-note { margin-top: 8px; }
+
+/* ---- FIXER ROUND 1: the row's own data-caveat notes, rendered under the
+   scorecard (previously discarded except for the one maturity-schedule
+   note) ---- */
+.uw-data-notes { margin-top: 10px; }
+.uw-data-notes ul { margin: 6px 0 2px; padding-left: 18px; max-width: 74ch; }
+.uw-data-notes li { font-size: 13px; line-height: 1.55; color: var(--kimi-color-text-secondary); margin: 0 0 4px; }
+
+/* ---- the independent note control ---- */
+.uw-note-block { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--kimi-color-border); }
+#uw-analyst-note-body { margin-top: 8px; }
+#uw-analyst-note-body p { font-size: 13px; line-height: 1.6; color: var(--kimi-color-text-secondary); margin: 0 0 10px; }
+#uw-analyst-note-body .note-meta { font-size: 11px; color: var(--kimi-color-text-quaternary); font-family: var(--rt-font-mono); }
+
+@media (max-width: 680px) {
+  .uw-controls { flex-direction: column; align-items: stretch; gap: 8px; }
+  #uw-company-select { inline-size: 100%; }
+  .uw-scatter-box { block-size: 300px; }
+  .uw-bar-row { grid-template-columns: minmax(5.5em, 7em) 1fr 4.4em; gap: 8px; }
+  .uw-bar-label { font-size: 11px; }
+  .uw-summary { grid-template-columns: 1fr; }
+  .uw-gauges { grid-template-columns: 1fr; }
+}

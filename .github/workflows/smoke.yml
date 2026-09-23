@@ -91,6 +91,25 @@ jobs:
       - name: Private credit page layer, sections and captions
         run: node scripts/test-pc-page.mjs
 
+      # The Underwriting view's page controller (blueprint section 5, PR F):
+      # evaluated in credit.html's own script order so a catalog-key
+      # collision with the Market view's section files would fail here;
+      # a stubbed fetch of a company slice drives selection through U1-U4
+      # and the six-card scorecard offline.
+      - name: Underwriting view - bands, ladder, runway, headroom
+        run: node scripts/test-underwriting-view.mjs
+
+      # The Underwriting concept ladder (blueprint section 5, PR F): the
+      # maturity ladder, revolver capacity and pure-unit cost-of-debt reader
+      # against the AT&T, NVIDIA and RTX companyfacts fixtures.
+      - name: Underwriting concepts - maturity ladder, revolver, cost of debt
+        run: node scripts/test-underwriting-concepts.mjs
+
+      # The Underwriting weekly panel's buildRow() scoring (blueprint
+      # section 5, PR F), offline against the same three fixtures.
+      - name: Underwriting panel - S&P bands, headroom, liquidity runway
+        run: node scripts/test-underwriting-panel.mjs
+
       - name: Feed durations and labels against Amazon, Microsoft and Oracle slices
         run: node scripts/test-feed-durations.mjs
 
