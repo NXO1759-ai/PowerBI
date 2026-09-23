@@ -1,0 +1,146 @@
+/* ==========================================================================
+   credit-lenders-drilldown.css — the per-BDC drill-down modal (blueprint
+   4.3). Extends styles.css and lenders-scorecard.css (table.grid,
+   .how-to-read, .ls-na-style tokens); only what the drill-down needs
+   beyond those lives here: the overlay/panel shell, the panel grid, the
+   chart legends and tiles, the severity/limitation notes, and the
+   hidden export-only tables.
+   ========================================================================== */
+
+.ld-overlay {
+  /* 55, not 60: statements.css's shared #metric-pop (the catalog/hover-term
+     popup every [data-metric] on this page opens) is also z-index: 60, and
+     because the overlay is created at runtime it always sits later in
+     document order, winning every tie. Every popup inside this modal must
+     paint above it, so the overlay stays below that shared layer while
+     still sitting above the page's own sticky header (40) and its other
+     modal (styles.css, 50). */
+  position: fixed; inset: 0; z-index: 55;
+  background: rgba(0, 0, 0, 0.66);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 28px 16px; overflow-y: auto;
+}
+.ld-overlay[hidden] { display: none; }
+body.ld-open { overflow: hidden; }
+
+.ld-panel-shell {
+  position: relative;
+  inline-size: min(1080px, 100%);
+  background: var(--kimi-color-surface);
+  border: 1px solid var(--kimi-color-border-strong);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.65);
+  padding: 22px 22px 28px;
+  outline: none;
+}
+.ld-close {
+  position: absolute; top: 12px; right: 12px;
+  width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--kimi-color-border-strong);
+  background: transparent; color: var(--kimi-color-text-secondary); font-size: 18px; line-height: 1;
+  cursor: pointer;
+}
+.ld-close:hover { color: var(--rt-gold); border-color: var(--rt-gold-border); }
+.ld-close:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 2px; }
+
+.ld-head { padding-right: 40px; margin-bottom: 14px; }
+.ld-head h2 { font-size: 18px; font-weight: 600; margin: 0; }
+.ld-head p { font-size: 12px; color: var(--kimi-color-text-tertiary); margin: 4px 0 0; }
+
+.ld-refusal {
+  font-size: 12.5px; line-height: 1.5; color: var(--kimi-color-text-secondary);
+  background: rgba(224, 108, 96, .08); border: 1px solid rgba(224, 108, 96, .3);
+  border-radius: 8px; padding: 10px 14px; margin: 0 0 14px;
+}
+
+.ld-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+@media (max-width: 860px) { .ld-grid, .ld-grid-2 { grid-template-columns: 1fr; } }
+
+.ld-panel {
+  border: 1px solid var(--kimi-color-border-strong); border-radius: 10px;
+  background: var(--kimi-color-surface-raised); padding: 14px 16px; margin: 0;
+}
+.ld-panel h3 { font-size: 13px; font-weight: 600; margin: 0 0 8px; }
+.ld-panel h3 .h-pop { cursor: help; border-bottom: 1px dotted var(--kimi-color-text-tertiary); }
+
+.ld-chart { width: 100%; }
+.ld-chart svg { width: 100%; height: auto; display: block; }
+
+.ld-legend { display: flex; flex-wrap: wrap; gap: 12px; font-size: 10.5px; color: var(--kimi-color-text-tertiary); margin-top: 6px; }
+.ld-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.ld-legend i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; }
+
+.ld-ref { font-size: 11px; color: var(--kimi-color-text-tertiary); margin: 6px 0 0; }
+
+.ld-caption { font-size: 12px; line-height: 1.5; color: var(--kimi-color-text-secondary); margin: 8px 0 0; }
+
+.how-to-read { margin-top: 8px; }
+.how-to-read summary { font-size: 11px; color: var(--kimi-color-text-tertiary); cursor: pointer; }
+.how-to-read p { font-size: 11.5px; line-height: 1.55; color: var(--kimi-color-text-secondary); margin: 6px 0 0; }
+
+.ld-empty, .ld-empty-page {
+  font-size: 12.5px; color: var(--kimi-color-text-tertiary); text-align: center;
+  padding: 28px 10px; border: 1px dashed var(--kimi-color-border-strong); border-radius: 8px;
+}
+.ld-empty span { display: block; font-weight: 500; color: var(--kimi-color-text-secondary); }
+.ld-empty small { display: block; margin-top: 4px; }
+
+.ld-limitation {
+  font-size: 11.5px; line-height: 1.5; color: var(--kimi-color-text-tertiary);
+  margin: 8px 0 0; padding-top: 6px; border-top: 1px dashed var(--kimi-color-border-strong);
+}
+.ld-note { font-size: 11px; color: var(--kimi-color-text-tertiary); margin: 6px 0 0; }
+
+.ld-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin: 4px 0; }
+.ld-tile { display: flex; flex-direction: column; gap: 3px; }
+.ld-tile span { font-size: 10px; color: var(--kimi-color-text-tertiary); }
+.ld-tile b { font-size: 14px; font-variant-numeric: tabular-nums; color: var(--kimi-color-text-primary); }
+
+.ld-na { font-style: italic; color: var(--kimi-color-text-quaternary, var(--kimi-color-text-tertiary)); }
+
+.ld-hbars { display: flex; flex-direction: column; gap: 6px; }
+.ld-hbar-row { display: grid; grid-template-columns: 130px 1fr 56px; align-items: center; gap: 8px; font-size: 11px; }
+.ld-hbar-label { color: var(--kimi-color-text-secondary); }
+.ld-hbar-track { background: var(--kimi-color-surface-muted); border-radius: 4px; height: 8px; overflow: hidden; }
+.ld-hbar-track i { display: block; height: 100%; }
+.ld-hbar-val { text-align: right; font-variant-numeric: tabular-nums; }
+
+.ld-sector-grid { display: flex; flex-direction: column; gap: 4px; }
+.ld-sector-row { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1.3fr; gap: 8px; font-size: 11.5px; padding: 3px 0; }
+.ld-sector-row.ld-sector-head { font-size: 10px; color: var(--kimi-color-text-tertiary); border-bottom: 1px solid var(--kimi-color-border-strong); padding-bottom: 4px; }
+.ld-sector-name { color: var(--kimi-color-text-secondary); }
+.ld-sector-val { font-variant-numeric: tabular-nums; text-align: right; }
+
+.ld-table-scroll { overflow-x: auto; border-radius: 8px; margin-top: 8px; }
+table.ld-holdings, table.ld-watchlist { font-size: 11.5px; min-inline-size: 980px; }
+table.ld-holdings td, table.ld-watchlist td, table.ld-holdings th, table.ld-watchlist th { white-space: nowrap; padding-inline-end: 12px; }
+.ld-num { font-variant-numeric: tabular-nums; text-align: right; }
+.ld-sort-btn { font: inherit; font-size: 11px; background: none; border: 0; color: inherit; cursor: pointer; padding: 0; }
+.ld-sort-btn:hover { color: var(--rt-gold); }
+tr.ld-row-na { background: rgba(224, 108, 96, .06); }
+
+.ld-pager { display: flex; align-items: center; gap: 10px; font-size: 11.5px; color: var(--kimi-color-text-tertiary); margin-top: 8px; }
+.ld-pager button { font: inherit; font-size: 11px; padding: 5px 12px; border-radius: 6px; border: 1px solid var(--kimi-color-border-strong); background: transparent; color: var(--kimi-color-text-secondary); cursor: pointer; }
+.ld-pager button:hover:not(:disabled) { color: var(--rt-gold); border-color: var(--rt-gold-border); }
+.ld-pager button:disabled { opacity: .4; cursor: default; }
+
+.ld-export-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; margin: -1px;
+}
+
+.ld-sba { font-size: 11.5px; line-height: 1.5; margin: 10px 0 0; padding-top: 8px; border-top: 1px solid var(--kimi-color-border-strong); }
+.ld-sba small { display: block; color: var(--kimi-color-text-tertiary); margin-top: 3px; }
+.ld-sba-confirmed b { color: var(--rt-gold); }
+.ld-sba-unconfirmed-seed b { color: var(--kimi-color-text-secondary); font-style: italic; }
+
+.ld-internally-managed { font-size: 12.5px; color: var(--kimi-color-text-secondary); margin: 4px 0; }
+.ld-sentence { font-size: 11.5px; line-height: 1.5; color: var(--kimi-color-text-tertiary); margin: 6px 0 0; }
+
+table.ld-rate-table { font-size: 11.5px; margin-top: 8px; }
+table.ld-rate-table caption { text-align: left; font-size: 10.5px; color: var(--kimi-color-text-tertiary); margin-bottom: 4px; caption-side: top; }
+table.ld-rate-table td, table.ld-rate-table th { padding: 3px 10px 3px 0; }
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .ld-overlay { background: rgba(0, 0, 0, 0.4); }
+}
+:root[data-theme="light"] .ld-overlay { background: rgba(0, 0, 0, 0.4); }

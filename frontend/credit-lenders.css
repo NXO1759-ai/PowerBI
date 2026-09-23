@@ -1,0 +1,98 @@
+/* ==========================================================================
+   credit-lenders.css — the Lenders view controller (PR D).
+   Extends styles.css and credit.css (.panel-card, .section-head, .tile,
+   .tile-grid, .tile-value, .tile-foot, .chart-caption, .chart-empty,
+   .how-to-read, table.grid) — only what this file's own panels need
+   beyond those live here: the dispersion rows/dots/tick and the peers
+   panel's subject picker. The scorecard and drill-down style themselves
+   (lenders-scorecard.css, credit-lenders-drilldown.css).
+   ========================================================================== */
+
+.lv-gap-note {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--kimi-color-border-strong);
+}
+
+/* ---------- L11: dispersion rows ---------- */
+.lv-disp-grid {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-top: 4px;
+}
+.lv-disp-row {
+  display: grid;
+  grid-template-columns: minmax(9em, 14ch) 1fr minmax(9em, auto);
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+}
+.lv-disp-label {
+  color: var(--kimi-color-text-secondary);
+  font-family: var(--rt-font-mono);
+  font-size: 11.5px;
+}
+.lv-disp-track {
+  position: relative;
+  block-size: 20px;
+  border-radius: 4px;
+  background: var(--kimi-color-surface-muted);
+}
+.lv-disp-dot {
+  position: absolute;
+  top: 50%;
+  inline-size: 7px; block-size: 7px;
+  margin-inline-start: -3.5px; margin-block-start: -3.5px;
+  border-radius: 50%;
+  background: var(--kimi-color-text-tertiary);
+  opacity: .75;
+}
+.lv-disp-dot-open {
+  background: var(--rt-gold);
+  opacity: 1;
+  inline-size: 10px; block-size: 10px;
+  margin-inline-start: -5px; margin-block-start: -5px;
+  box-shadow: 0 0 0 2px rgba(245, 197, 24, .25);
+  z-index: 2;
+}
+.lv-disp-tick {
+  position: absolute;
+  top: -3px;
+  inline-size: 2px;
+  block-size: 26px;
+  margin-inline-start: -1px;
+  background: var(--kimi-color-text-primary);
+  opacity: .8;
+}
+.lv-disp-range {
+  font-family: var(--rt-font-mono);
+  font-size: 10.5px;
+  font-variant-numeric: tabular-nums;
+  color: var(--kimi-color-text-tertiary);
+  white-space: nowrap;
+  text-align: end;
+}
+.lv-disp-empty { opacity: .65; }
+.lv-disp-na {
+  font-size: 11px;
+  color: var(--kimi-color-text-quaternary);
+  font-style: italic;
+  grid-column: 2 / span 2;
+}
+
+/* ---------- peers panel ---------- */
+.lv-peers-controls {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.lv-peers-controls select {
+  font: inherit; font-size: 12.5px;
+  background: var(--input-bg, var(--kimi-color-surface-raised));
+  border: 1px solid var(--kimi-color-border-strong); border-radius: 7px;
+  color: var(--kimi-color-text-primary); padding: 6px 10px; min-block-size: 30px;
+}
+.lv-peers-controls select:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 1px; }
+
+@media (max-width: 640px) {
+  .lv-disp-row { grid-template-columns: 1fr; gap: 4px; }
+  .lv-disp-range { text-align: start; }
+}

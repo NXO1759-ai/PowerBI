@@ -26,6 +26,11 @@
 <link rel="stylesheet" href="credit-capital.css" />
 <link rel="stylesheet" href="credit-dealflow.css" />
 <link rel="stylesheet" href="credit-underwriting.css" />
+<!-- the Lenders view (PR D): the scorecard, the drill-down and this
+     file's own controller each style their own panels -->
+<link rel="stylesheet" href="lenders-scorecard.css" />
+<link rel="stylesheet" href="credit-lenders-drilldown.css" />
+<link rel="stylesheet" href="credit-lenders.css" />
 <style>[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -164,22 +169,18 @@
     </div>
   </div>
 
-  <!-- ============ LENDERS (PR D) ============ -->
+  <!-- ============ LENDERS (PR D) ============
+       An empty mount point, exactly like #sec-stress/#sec-capital/#sec-
+       dealflow: frontend/credit-lenders.js (window.RTLendersView) owns
+       everything drawn inside #lenders-root — the loading state, the
+       page-level error state, the scorecard, the composite strip, the
+       dispersion dots, the peers panel and the per-BDC drill-down it
+       mounts on a row click. credit.js's setView() calls
+       window.RTLendersView.mount() the first time this view is opened
+       (lazy, cached, re-fetched on Refresh), the same pattern it uses
+       for the Glossary view's renderGlossary(). -->
   <div id="lenders-view" hidden>
-    <section class="panel-card fsa-section" aria-labelledby="h-lenders">
-      <div class="section-head">
-        <h2 id="h-lenders">Lenders — the listed BDCs</h2>
-        <p class="section-blurb">How healthy are the vehicles that hold these loans? This view lands in a later release; what it will carry is listed below, and no figure is shown until it is computed from a filing.</p>
-      </div>
-      <ul class="plan-list">
-        <li><strong>Universe.</strong> Every listed business development company, found by its 814- file number in the SEC's submissions index, with its fiscal year end, listing date, merger history and the day it entered the universe.</li>
-        <li><strong>Scorecard.</strong> One row per BDC: net asset value per share and price to NAV, net investment income and dividend coverage, asset coverage and its cushion, non-accruals at cost and at fair value, PIK share, the mark (fair value to cost), leverage, fees, dividend yield — each with its catalog popup and a severity stripe where the reading rule fires.</li>
-        <li><strong>Per-BDC drill-down.</strong> NAV against price from the listing date, the maturity wall, lien and industry mix, the spread histogram over base, the liability card and the fee card, with the industry's series drawn as outlines where a comparison exists.</li>
-        <li><strong>The composite and dispersion.</strong> The site's own private credit index across the universe, weighted by cost of third-party debt, every figure carrying its n, with the quarter's distribution around it.</li>
-        <li><strong>Peers and the sector line.</strong> Comparables chosen by the course rule, price to NAV against the sector median, and the listed-BDC index as the sector line behind the price charts.</li>
-      </ul>
-      <p class="tile-foot">Sources when it ships: SEC EDGAR companyfacts and frames, the SEC's BDC data set, 10-Q schedules of investments, the market feed.</p>
-    </section>
+    <div id="lenders-root"></div>
   </div>
 
   <!-- ============ UNDERWRITING (PR F) ============ -->
@@ -269,6 +270,8 @@
 <script src="lib/export.js"></script>
 <script src="lib/metric-catalog.js"></script>
 <script src="lib/credit-terms.js"></script>
+<script src="lib/credit.js"></script>
+<script src="lib/valuation.js"></script>
 <script src="vendor/chart.umd.min.js"></script>
 <script src="lib/pc-series.js"></script>
 <script src="credit.js"></script>
@@ -277,5 +280,14 @@
 <script src="credit-capital.js"></script>
 <script src="credit-dealflow.js"></script>
 <script src="credit-underwriting.js"></script>
+<!-- the Lenders view (PR D): the scorecard and the drill-down each
+     register their own RTCatalog entries at evaluation, as the sections
+     above do; credit-lenders.js is the view's controller and is loaded
+     last so window.RTLendersScorecard/RTLendersDrilldown/RTValuation
+     already exist whenever it mounts (lazily, on first entry to the
+     view — see credit.js's setView()). -->
+<script src="lib/lenders-scorecard.js"></script>
+<script src="credit-lenders-drilldown.js"></script>
+<script src="credit-lenders.js"></script>
 </body>
 </html>

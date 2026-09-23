@@ -75,10 +75,21 @@
    * candidate missing either figure ranks after every complete one.
    *
    * subject / candidates: { ticker, name, sic, industry, sector, size, roe }
+   *
+   * opts.distance(subject, candidate), when given, replaces the size/ROE
+   * ranking rule above with a caller-supplied one — same pool selection
+   * (still by SIC/industry/sector), only the ranking changes. It may
+   * return either a plain number (null when the candidate cannot be
+   * ranked at all) or a { distance, complete } pair when the caller wants
+   * to distinguish "ranked on partial information" from "fully ranked",
+   * the same distinction the size/ROE rule draws between a candidate
+   * missing one figure and one missing both. Leaving opts.distance out
+   * runs the size/ROE rule exactly as before — no numeric change.
    */
   function selectComparables(subject, candidates, opts) {
     opts = opts || {};
     var minPool = opts.minPool || 6, keep = opts.keep || 8;
+    var customDistance = typeof opts.distance === "function" ? opts.distance : null;
     var others = candidates.filter(function (c) { return c && c.ticker !== subject.ticker; });
     var sic = String(subject.sic || "");
     var levels = [
@@ -97,13 +108,26 @@
     if (!chosen) chosen = levels[levels.length - 1];
     var lnS = isNum(subject.size) && subject.size > 0 ? Math.log(subject.size) : null;
     var ranked = pool.map(function (c) {
-      var dSize = (lnS !== null && isNum(c.size) && c.size > 0) ? Math.abs(Math.log(c.size) - lnS) / Math.LN2 : null;
-      var dRoe = (isNum(subject.roe) && isNum(c.roe)) ? Math.abs(c.roe - subject.roe) / 0.10 : null;
-      var complete = dSize !== null && dRoe !== null;
-      var d = complete ? Math.sqrt(dSize * dSize + dRoe * dRoe)
-        : (dSize !== null ? dSize : (dRoe !== null ? dRoe : null));
+      var d, complete;
+      if (customDistance) {
+        var r = customDistance(subject, c);
+        if (r && typeof r === "object") {
+          d = isNum(r.distance) ? r.distance : null;
+          complete = !!r.complete;
+        } else {
+          d = isNum(r) ? r : null;
+          complete = d !== null;
+        }
+      } else {
+        var dSize = (lnS !== null && isNum(c.size) && c.size > 0) ? Math.abs(Math.log(c.size) - lnS) / Math.LN2 : null;
+        var dRoe = (isNum(subject.roe) && isNum(c.roe)) ? Math.abs(c.roe - subject.roe) / 0.10 : null;
+        complete = dSize !== null && dRoe !== null;
+        d = complete ? Math.sqrt(dSize * dSize + dRoe * dRoe)
+          : (dSize !== null ? dSize : (dRoe !== null ? dRoe : null));
+      }
       return { ticker: c.ticker, name: c.name, sic: c.sic, industry: c.industry, sector: c.sector,
-        size: c.size, roe: c.roe, distance: d, complete: complete };
+        size: c.size, roe: c.roe, fv: c.fv, firstLienShare: c.firstLienShare, nonAccrualRate: c.nonAccrualRate,
+        distance: d, complete: complete };
     }).sort(function (a, b) {
       if (a.complete !== b.complete) return a.complete ? -1 : 1;
       if (a.distance === null) return 1;
@@ -114,9 +138,40 @@
       peers: ranked.slice(0, keep),
       passedOver: ranked.slice(keep),
       pool: { level: chosen.level, count: pool.length, steps: steps },
-      rule: "Same industry by SIC, widened until at least " + minPool + " other firms, then the " +
-        Math.min(keep, ranked.length) + " closest on size and return on equity (Alford 1992)."
+      rule: customDistance
+        ? "Same industry by SIC, widened until at least " + minPool + " other firms, then the " +
+          Math.min(keep, ranked.length) + " closest by the caller's distance."
+        : "Same industry by SIC, widened until at least " + minPool + " other firms, then the " +
+          Math.min(keep, ranked.length) + " closest on size and return on equity (Alford 1992)."
     };
+  }
+
+  /**
+   * BDC peer distance (blueprint §4.5): sqrt(dSize² + dLien² + dNonAccrual²)
+   * with dSize the absolute log2 ratio of portfolio fair value, dLien the
+   * absolute difference in first-lien share over 0.10, and dNonAccrual the
+   * absolute difference in the non-accrual rate over 0.01 — the same unit
+   * convention as the size/ROE rule (a doubling, ten points and one point
+   * are each one unit). Each term is null on its own when either side
+   * lacks that figure, exactly as the size/ROE rule's dSize and dRoe are;
+   * `complete` is true only when all three are present, so a candidate
+   * ranked on fewer than three still sorts after one ranked on all three
+   * (see selectComparables's sort comparator). subject / candidate:
+   * { fv, firstLienShare, nonAccrualRate }.
+   */
+  function bdcDistance(subject, candidate) {
+    var dSize = (isNum(subject.fv) && subject.fv > 0 && isNum(candidate.fv) && candidate.fv > 0)
+      ? Math.abs(Math.log(candidate.fv / subject.fv) / Math.LN2) : null;
+    var dLien = (isNum(subject.firstLienShare) && isNum(candidate.firstLienShare))
+      ? Math.abs(candidate.firstLienShare - subject.firstLienShare) / 0.10 : null;
+    var dNonAccrual = (isNum(subject.nonAccrualRate) && isNum(candidate.nonAccrualRate))
+      ? Math.abs(candidate.nonAccrualRate - subject.nonAccrualRate) / 0.01 : null;
+    var terms = [dSize, dLien, dNonAccrual].filter(function (x) { return x !== null; });
+    var complete = dSize !== null && dLien !== null && dNonAccrual !== null;
+    var distance = terms.length
+      ? Math.sqrt(terms.reduce(function (s, x) { return s + x * x; }, 0))
+      : null;
+    return { distance: distance, complete: complete, dSize: dSize, dLien: dLien, dNonAccrual: dNonAccrual };
   }
 
   /* ---------- enterprise value ---------- */
@@ -357,7 +412,7 @@
 
   return {
     isNum: isNum, div: div, median: median, mean: mean, harmonicMean: harmonicMean, aggregate: aggregate,
-    selectComparables: selectComparables,
+    selectComparables: selectComparables, bdcDistance: bdcDistance,
     evBridge: evBridge, ownMultiples: ownMultiples,
     costOfEquity: costOfEquity, costOfDebt: costOfDebt, wacc: wacc,
     impliedGrowthFromPE: impliedGrowthFromPE, impliedGrowthFromFcf: impliedGrowthFromFcf,

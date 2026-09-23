@@ -108,5 +108,53 @@ const check = (name, ok, detail) => {
   check("no perpetuity when r ≤ g", bad.earnings === null && bad.justifiedPE === null);
 }
 
+/* selectComparables: opts.distance replaces the ranking rule, pool selection untouched */
+{
+  const subject = { ticker: "S", sic: "3674", industry: "Semiconductors", sector: "IT", size: 100, roe: 0.30 };
+  const mk = (t, sic, ind, sec, size, roe) => ({ ticker: t, name: t, sic, industry: ind, sector: sec, size, roe });
+  const cands = [
+    mk("A", "3674", "Semiconductors", "IT", 110, 0.28), mk("B", "3674", "Semiconductors", "IT", 20, 0.05),
+    mk("C", "3672", "Boards", "IT", 90, 0.31), mk("D", "3670", "Components", "IT", 400, 0.10),
+    mk("E", "3572", "Storage", "IT", 95, 0.29), mk("F", "3571", "Computers", "IT", 3000, 0.60),
+    mk("G", "7372", "Software", "IT", 100, 0.30), mk("H", "2834", "Pharma", "HC", 100, 0.30),
+    mk("I", "3674", "Semiconductors", "IT", null, null),
+  ];
+  /* a plain-number distance (ROE gap only, ignoring size): a caller may return
+     a number, with completeness inferred as "not null" */
+  const roeOnly = (s, c) => (typeof c.roe === "number" && typeof s.roe === "number") ? Math.abs(c.roe - s.roe) : null;
+  const r = V.selectComparables(subject, cands, { minPool: 6, keep: 4, distance: roeOnly });
+  check("custom distance reaches the same pool as the default rule", r.pool.level === "sector: IT" && r.pool.count === 8, r.pool.level + " " + r.pool.count);
+  check("custom distance reorders the peers by its own rule", r.peers.map((p) => p.ticker).join("") === "GCEA", r.peers.map((p) => p.ticker).join(""));
+  check("a candidate the custom distance cannot rank (null) still sorts last", r.passedOver[r.passedOver.length - 1].ticker === "I", r.passedOver.map((p) => p.ticker).join(""));
+  check("the rule text names the caller's distance", /caller's distance/.test(r.rule), r.rule);
+  /* leaving opts.distance out runs the size/ROE rule exactly as before */
+  const base = V.selectComparables(subject, cands, { minPool: 6, keep: 4 });
+  check("no opts.distance: unchanged from the pre-existing numeric result", base.peers.map((p) => p.ticker).join("") !== r.peers.map((p) => p.ticker).join(""),
+    base.peers.map((p) => p.ticker).join(""));
+}
+
+/* bdcDistance: sqrt(dSize² + dLien² + dNonAccrual²), each term null on its own,
+   complete only when all three are present */
+{
+  const subject = { fv: 2000, firstLienShare: 0.80, nonAccrualRate: 0.02 };
+  const same = V.bdcDistance(subject, { fv: 2000, firstLienShare: 0.80, nonAccrualRate: 0.02 });
+  check("bdcDistance of an identical candidate is zero and complete", same.complete && near(same.distance, 0, 1e-9), same.distance);
+  const c = V.bdcDistance(subject, { fv: 4000, firstLienShare: 0.70, nonAccrualRate: 0.03 });
+  /* dSize = |log2(4000/2000)| = 1; dLien = |0.70-0.80|/0.10 = 1; dNonAccrual = |0.03-0.02|/0.01 = 1 */
+  check("bdcDistance combines all three terms in quadrature", c.complete && near(c.distance, Math.sqrt(3), 1e-9), c.distance.toFixed(4));
+  const missingLien = V.bdcDistance(subject, { fv: 4000, firstLienShare: null, nonAccrualRate: 0.03 });
+  check("a missing input contributes null to that one term only", missingLien.dLien === null && missingLien.dSize !== null && missingLien.dNonAccrual !== null);
+  check("a candidate missing one input is not complete but still has a distance", !missingLien.complete && missingLien.distance !== null, missingLien.distance);
+  const missingAll = V.bdcDistance(subject, { fv: null, firstLienShare: null, nonAccrualRate: null });
+  check("a candidate with no usable input has no distance at all", !missingAll.complete && missingAll.distance === null);
+  /* partial completeness ranks after complete ones, via selectComparables's own comparator */
+  const pool = [
+    { ticker: "COMPLETE", fv: 2100, firstLienShare: 0.79, nonAccrualRate: 0.021 },
+    { ticker: "PARTIAL", fv: 2050, firstLienShare: null, nonAccrualRate: 0.02 }
+  ];
+  const sel = V.selectComparables(Object.assign({ ticker: "SUBJECT" }, subject), pool, { minPool: 1, keep: 2, distance: V.bdcDistance });
+  check("a partially-ranked BDC candidate sorts after a fully-ranked one", sel.peers.map((p) => p.ticker).join(",") === "COMPLETE,PARTIAL", sel.peers.map((p) => p.ticker).join(","));
+}
+
 console.log(failed ? "\n" + failed + " failed" : "\nall valuation checks pass");
 process.exit(failed ? 1 : 0);
