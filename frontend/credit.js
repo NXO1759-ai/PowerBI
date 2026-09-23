@@ -1532,7 +1532,7 @@
   }
 
   /* ---------- views ---------- */
-  var VIEWS = ["market", "lenders", "underwriting", "glossary"];
+  var VIEWS = ["market", "lenders", "underwriting", "buildout", "glossary"];
   var state = { view: "market" };
   function setView(v, push) {
     if (VIEWS.indexOf(v) < 0) v = "market";
@@ -1552,6 +1552,10 @@
        has run) covers that case for free, and costs nothing on a later
        click, where the promise is already settled. */
     if (v === "lenders") SECTION_SCRIPTS_READY.then(function () { mountLendersView(false); });
+    /* the Build-out view mounts itself (credit-buildout.js), the same
+       lazy pattern the Glossary view above uses: it fetches its own
+       data on first entry and re-renders in place on later visits */
+    if (v === "buildout" && window.RTBuildout && typeof window.RTBuildout.render === "function") window.RTBuildout.render();
     if (push !== false) {
       var u = new URL(location.href);
       u.searchParams.set("view", v);

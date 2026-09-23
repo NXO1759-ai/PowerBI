@@ -130,6 +130,12 @@ jobs:
       - name: Build-out monitor concepts against the cohort slices
         run: node scripts/test-hs-concepts.mjs
 
+      - name: Capex panel builder against the PR H2 acceptance figures
+        run: node scripts/test-capex-panel.mjs
+
+      - name: Build-out view - capex, funding, debt
+        run: node scripts/test-buildout-view.mjs
+
       - name: Nebius interim reports against the hand-keyed table
         run: node scripts/test-nbis-interims.mjs
 
