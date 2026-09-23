@@ -110,6 +110,20 @@ jobs:
       - name: Underwriting panel - S&P bands, headroom, liquidity runway
         run: node scripts/test-underwriting-panel.mjs
 
+      # PR D, the Lenders view: the scorecard (frontend/lib/lenders-
+      # scorecard.js), the per-BDC drill-down (frontend/credit-lenders-
+      # drilldown.js), the BDC-distance peer selection (frontend/lib/
+      # valuation.js) and the view's own controller (frontend/credit-
+      # lenders.js — the composite strip, dispersion dots, peers panel,
+      # fetch/caching strategy and page-level error state). All four are
+      # offline, against the real committed frontend/data/bdc files.
+      - name: Lenders view - scorecard, drilldown, peers
+        run: |
+          node scripts/test-lenders-scorecard.mjs
+          node scripts/test-lenders-drilldown.mjs
+          node scripts/test-bdc-peers.mjs
+          node scripts/test-lenders-view.mjs
+
       - name: Feed durations and labels against Amazon, Microsoft and Oracle slices
         run: node scripts/test-feed-durations.mjs
 

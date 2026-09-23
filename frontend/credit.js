@@ -1516,6 +1516,21 @@
     });
   }
 
+  /* ---------- the Lenders view's lazy-mount hook (PR D) ----------
+     Modeled on renderGlossary()/loadGlossary() above: the view's own
+     controller (frontend/credit-lenders.js, window.RTLendersView) does
+     every fetch and every render; this hook only calls it, the same
+     load-bearing line renderGlossary() is for the Glossary view. A
+     deployment or a local dev server missing that script (or loaded out
+     of order — see credit.html's own comment on the load order) leaves
+     the view's static shell (#lenders-root, empty) rather than throwing,
+     exactly as a missing ingested section leaves its container in a
+     "did not load" state instead of taking the page down. */
+  function mountLendersView(force) {
+    if (!window.RTLendersView || typeof window.RTLendersView.mount !== "function") return;
+    window.RTLendersView.mount({ catalog: C, terms: TERMS, wrapTerms: wrapTerms, esc: esc, apiBase: API_BASE, fixture: FIXTURE }, { force: !!force });
+  }
+
   /* ---------- views ---------- */
   var VIEWS = ["market", "lenders", "underwriting", "glossary"];
   var state = { view: "market" };
@@ -1528,6 +1543,15 @@
     });
     if (v === "glossary") renderGlossary();
     if (v === "underwriting") mountUnderwriting();
+    /* the Lenders view (PR D): frontend/credit-lenders.js owns everything
+       drawn under #lenders-root. Its script tag sits after this file's,
+       so on the very first paint (a ?view=lenders deep link, called
+       synchronously from init() below) window.RTLendersView may not
+       exist yet; waiting on SECTION_SCRIPTS_READY (already used to defer
+       the three ingested sections until every parser-blocking script tag
+       has run) covers that case for free, and costs nothing on a later
+       click, where the promise is already settled. */
+    if (v === "lenders") SECTION_SCRIPTS_READY.then(function () { mountLendersView(false); });
     if (push !== false) {
       var u = new URL(location.href);
       u.searchParams.set("view", v);
@@ -1615,6 +1639,10 @@
   $("refresh-btn").addEventListener("click", function () {
     var b = $("refresh-btn");
     b.disabled = true; b.textContent = "Refreshing…";
+    /* the Lenders view re-fetches on Refresh too (its own cache, forced),
+       whether or not it is the view currently showing; a stale-shown
+       Lenders view is a defect exactly like a stale Market view would be */
+    if (window.RTLendersView && window.RTLendersView.getData()) mountLendersView(true);
     load(true).then(function () { b.disabled = false; b.textContent = "Refresh"; },
       function () { b.disabled = false; b.textContent = "Refresh"; });
   });
@@ -1980,7 +2008,13 @@
   /* what a console or a test can reach: re-mount the sections, build the
      ctx, list the facts the note would post, read each section's state */
   window.RTCreditPage = { remount: mountSections, ctx: sectionCtx, noteFacts: collectNoteFacts,
-    status: function () { var o = {}; Object.keys(SECTIONS.status).forEach(function (k) { o[k] = SECTIONS.status[k]; }); return o; } };
+    status: function () { var o = {}; Object.keys(SECTIONS.status).forEach(function (k) { o[k] = SECTIONS.status[k]; }); return o; },
+    /* the Lenders view's own fetched data (universe, coverage, composite,
+       terms, companies, holdings, prices, the built scorecard rows), for
+       a console or a test harness — window.RTLendersView.getData() is
+       the source of truth; this is only a shorter, discoverable alias
+       alongside the Market view's own state above. */
+    lenders: function () { return window.RTLendersView ? window.RTLendersView.getData() : null; } };
 
   /* ---------- init ---------- */
   /* ?view= picks the view; ?t=TICKER is reserved for the Lenders view's

@@ -1,0 +1,91 @@
+/* ==========================================================================
+   lenders-scorecard.css — the Lenders view's BDC scorecard.
+   Extends styles.css (table.grid, .panel-card, .seg) so the scorecard
+   stays one system with the rest of the terminal; only what the table
+   needs beyond table.grid lives here: the filter/toggle row, sortable
+   header buttons, the severity stripe (a dot, not a row wash), tabular
+   figures and the not-disclosed/not-yet-parsed cell state.
+   ========================================================================== */
+
+.ls-controls {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.ls-filter-label {
+  display: flex; flex-direction: column; gap: 2px; font-size: 10.5px;
+  color: var(--kimi-color-text-tertiary);
+}
+.ls-filter {
+  font: inherit; font-size: 12.5px; min-inline-size: 190px;
+  background: var(--input-bg, var(--kimi-color-surface-raised));
+  border: 1px solid var(--kimi-color-border-strong); border-radius: 7px;
+  color: var(--kimi-color-text-primary); padding: 6px 10px; min-block-size: 30px;
+}
+.ls-filter:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 1px; }
+.ls-showall {
+  font: inherit; font-size: 12px; padding: 6px 12px; min-block-size: 30px;
+  background: transparent; color: var(--kimi-color-text-secondary);
+  border: 1px solid var(--kimi-color-border-strong); border-radius: 7px; cursor: pointer;
+}
+.ls-showall:hover { color: var(--rt-gold); border-color: var(--rt-gold-border); }
+.ls-showall:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 1px; }
+.ls-count { font-size: 11.5px; color: var(--kimi-color-text-tertiary); margin-inline-start: auto; }
+
+.ls-table-scroll { overflow-x: auto; border-radius: 8px; }
+table.ls-scorecard { font-size: 12px; min-inline-size: 1180px; }
+table.ls-scorecard th { white-space: nowrap; padding-inline-end: 14px; }
+table.ls-scorecard td { padding-inline-end: 14px; white-space: nowrap; }
+table.ls-scorecard td.ls-bdc { white-space: normal; }
+
+/* sortable header: the whole cell is a button so a click anywhere sorts */
+.ls-th-btn {
+  font: inherit; font-size: 10px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--kimi-color-text-tertiary); background: none; border: 0; padding: 3px 0 6px;
+  cursor: pointer; display: inline-flex; align-items: baseline; gap: 3px; text-align: end;
+}
+th:first-child .ls-th-btn { text-align: start; }
+.ls-th-btn:hover { color: var(--kimi-color-text-primary); }
+.ls-th-btn:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 2px; border-radius: 3px; }
+.ls-th-btn[data-metric] { cursor: help; }
+.ls-sort-arrow { color: var(--rt-gold); font-size: 8px; }
+
+/* the BDC identity cell: ticker button, an OTC pill, the name beneath */
+.ls-bdc { min-inline-size: 190px; }
+.ls-ticker-btn {
+  font: inherit; font-family: var(--rt-font-mono); font-weight: 600; font-size: 12.5px;
+  background: none; border: 0; padding: 0; color: var(--kimi-color-text-primary);
+  cursor: pointer; display: inline-flex; align-items: center; gap: 5px;
+}
+.ls-ticker-btn:hover { color: var(--rt-gold); }
+.ls-ticker-btn:focus-visible { outline: 2px solid var(--rt-focus); outline-offset: 2px; border-radius: 3px; }
+.ls-name { display: block; font-size: 11px; color: var(--kimi-color-text-tertiary); margin-top: 1px; overflow-wrap: anywhere; white-space: normal; }
+.ls-otc {
+  font-size: 9px; font-weight: 700; letter-spacing: .04em; color: var(--kimi-color-warning);
+  border: 1px solid currentColor; border-radius: 4px; padding: 0 4px; margin-inline-start: 6px;
+}
+
+/* the severity stripe: a dot beside the ticker, never a full-row wash */
+.ls-flag-dot {
+  display: inline-block; inline-size: 7px; block-size: 7px; border-radius: 50%;
+  background: var(--kimi-color-danger); flex: none;
+}
+tr.ls-flagged { border-inline-start: 2px solid var(--kimi-color-danger); }
+tr.ls-flagged td:first-child { padding-inline-start: 8px; }
+tr.ls-stale td.ls-bdc .ls-ticker-btn { color: var(--kimi-color-text-tertiary); }
+/* a note, never a flag (blueprint §4.3 L2: total-only coverage under
+   1.0x for two quarters is a note, not the regular-coverage flag this
+   data set cannot confirm) and a tag/prose disagreement withheld from
+   the cushion flag: both italicized, neither gets the danger-colored dot. */
+table.ls-scorecard td.ls-note, table.ls-scorecard td.ls-disputed { font-style: italic; }
+
+/* figures: tabular by default (table.grid already sets it on td, kept
+   explicit here since a scorecard is read at speed) */
+table.ls-scorecard td.ls-num { font-variant-numeric: tabular-nums; font-family: var(--rt-font-mono); color: var(--kimi-color-text-primary); }
+table.ls-scorecard td.ls-fees { font-variant-numeric: tabular-nums; font-family: var(--rt-font-mono); font-size: 11.5px; }
+table.ls-scorecard td.ls-na { color: var(--kimi-color-text-quaternary); font-style: italic; font-family: var(--rt-font-sans); cursor: help; }
+
+@media (max-width: 680px) {
+  .ls-count { margin-inline-start: 0; flex-basis: 100%; }
+  .ls-filter { min-inline-size: 0; flex: 1 1 auto; }
+  table.ls-scorecard { font-size: 11.5px; }
+}
