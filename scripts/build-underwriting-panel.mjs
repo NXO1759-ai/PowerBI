@@ -781,7 +781,10 @@ async function main() {
 
   const payload = {
     schemaVersion: 1,
-    source: "SEC EDGAR XBRL companyfacts, via scripts/build-underwriting-panel.mjs (blueprint section 5)",
+    /* The Underwriting view prints this string in a tile footer, so it
+       names the source a reader cares about and nothing else: no builder
+       script path, no internal blueprint section number. */
+    source: "SEC EDGAR XBRL companyfacts",
     n: list.length,
     /* FIXER ROUND 2: the frontend's own catalog popups used to quote the
        130-company probe's tag-coverage counts (lease payments due "103",
