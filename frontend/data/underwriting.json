@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "source": "SEC EDGAR XBRL companyfacts, via scripts/build-underwriting-panel.mjs (blueprint section 5)",
+ "source": "SEC EDGAR XBRL companyfacts",
  "n": 137,
  "coverage": {
   "total": 137,
