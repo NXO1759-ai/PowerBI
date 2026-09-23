@@ -1,0 +1,55 @@
+/* ==========================================================================
+   credit-buildout-ledgers.css — the deal ledger, ratings and private-
+   credit-ties panels (credit-buildout-ledgers.js): charts H9-H18
+   (blueprint sections 15.4-15.8, PR H3).
+
+   Extends credit.css, credit-stress.css and credit-buildout.css, which
+   already carry the small-multiple grid (.m6-grid, .m6-panel,
+   .m6-chart, .m6-caption, .m6-empty, .m6-key), the segmented control
+   (.seg / .bo-seg), the wide chart frame (.bo-chart-wide) and the
+   footnote/legend styles (.bo-footnote, .chart-legend). This file adds
+   only what those do not: the subhead inside a section, the quoted-
+   filing block on a neocloud leverage card, and the four-tile strip on
+   H14's cards and H18's both-ways private-credit-share readout. Every
+   color is a token from styles.css or one of credit-buildout.js's own
+   inline series colors, reused here for visual consistency between the
+   two build-out files.
+   ========================================================================== */
+
+#buildout-ledgers-root .fsa-section + .fsa-section { margin-top: 16px; }
+#buildout-ledgers-root .m6-panel > h3 { margin: 0; }
+
+.bo-subhead {
+  margin: 14px 0 4px; font-size: 11px; font-weight: 600; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--kimi-color-text-tertiary);
+}
+
+/* ---- H14: quoted filing sentence on a leverage card ---- */
+.bo-quote {
+  margin: 8px 0 0; padding: 8px 10px; border-inline-start: 2px solid var(--rt-gold-border);
+  background: var(--kimi-color-surface-muted); border-radius: 0 4px 4px 0;
+  font-size: 11.5px; line-height: 1.5; color: var(--kimi-color-text-secondary);
+}
+.bo-quote cite { display: block; margin-top: 3px; font-style: normal; font-size: 10.5px; color: var(--kimi-color-text-quaternary); }
+/* a paraphrase, never a verbatim filing sentence — no quotation styling,
+   a plain border so it never reads as "the filing said this" */
+.bo-quote-summary { border-inline-start-color: var(--kimi-color-border); font-style: italic; }
+
+/* ---- H14 tiles / H18 both-ways private-credit-share tiles ---- */
+.bo-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 10px; margin: 8px 0 0; }
+.bo-tile { display: flex; flex-direction: column; gap: 2px; padding: 6px 8px; background: var(--kimi-color-surface-muted); border-radius: 4px; }
+.bo-tile-label { font-size: 9.5px; letter-spacing: .03em; text-transform: uppercase; color: var(--kimi-color-text-tertiary); }
+.bo-tile-value { font-family: var(--rt-font-mono); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--kimi-color-text-primary); }
+
+/* ---- H11: the deal timeline's lane labels and linked bubbles ---- */
+#buildout-ledgers-root .bo-chart-wide svg a circle { cursor: pointer; }
+#buildout-ledgers-root .bo-chart-wide svg a:focus circle,
+#buildout-ledgers-root .bo-chart-wide svg a:focus path { outline: 2px solid var(--rt-focus); outline-offset: 1px; }
+
+/* ---- H12: the structure/lender-type toggle sits right above its chart ---- */
+#buildout-ledgers-root .bo-seg { margin: 0 0 6px; }
+
+@media (max-width: 680px) {
+  .bo-tiles { grid-template-columns: 1fr 1fr; }
+  .bo-tile-value { font-size: 12.5px; }
+}

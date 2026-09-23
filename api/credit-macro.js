@@ -19,6 +19,17 @@
  * financial institutions, and the recession bands from USREC so the
  * charts can shade them.
  *
+ * Four rating-band ICE BofA OAS ids (AAA, AA, single-A, BBB) and five
+ * FX spot-rate ids (DEXUSEU, DEXUSUK, DEXSZUS, DEXCAUS, DEXJPUS) were
+ * added for the hyperscaler/neocloud build-out monitor's chart H16 (new
+ * issue spreads against the OAS lines) and its FX conversion of foreign
+ * deal-ledger tranches to USD on the pricing date. The OAS ids are
+ * percent series on the same rolling three-year window as the other ICE
+ * BofA ids. The FX ids are LEVELS — a spot rate, not a percentage — and
+ * are never a spread: DEXUSEU and DEXUSUK are US dollars per one euro
+ * or pound (a rate near 1–1.5), DEXSZUS, DEXCAUS and DEXJPUS are the
+ * foreign currency per one US dollar (DEXJPUS runs in the hundreds).
+ *
  *   GET /api/credit-macro          — cached for six hours
  *   GET /api/credit-macro?force=1  — skips the cache read, still writes
  *                                    it; gated tightly (three calls,
@@ -76,6 +87,20 @@ const SERIES = {
   LNFACBW027SBOG: ["Other Loans and Leases: All Other Loans and Leases: Loans to Nondepository Financial Institutions, All Commercial Banks", "billions"],
   TOTBKCR:        ["Bank Credit, All Commercial Banks", "billions"],
   USREC:          ["NBER based Recession Indicators for the United States from the Period following the Peak through the Trough", "level"],
+  /* the four rating-band OAS ids chart H16 draws new-issue spreads
+     against (build-out monitor, blueprint 15.7) */
+  BAMLC0A1CAAA:   ["ICE BofA AAA US Corporate Index Option-Adjusted Spread", "percent"],
+  BAMLC0A2CAA:    ["ICE BofA AA US Corporate Index Option-Adjusted Spread", "percent"],
+  BAMLC0A3CA:     ["ICE BofA Single-A US Corporate Index Option-Adjusted Spread", "percent"],
+  BAMLC0A4CBBB:   ["ICE BofA BBB US Corporate Index Option-Adjusted Spread", "percent"],
+  /* spot-rate levels for converting foreign deal-ledger tranches to USD
+     on the pricing date (build-out monitor, blueprint 15.5/15.8); a
+     rate, never a percent or a spread */
+  DEXUSEU:        ["U.S. Dollars to Euro Spot Exchange Rate", "USD per EUR"],
+  DEXUSUK:        ["U.S. Dollars to U.K. Pound Sterling Spot Exchange Rate", "USD per GBP"],
+  DEXSZUS:        ["Switzerland Francs to U.S. Dollar Spot Exchange Rate", "CHF per USD"],
+  DEXCAUS:        ["Canada Dollars to U.S. Dollar Spot Exchange Rate", "CAD per USD"],
+  DEXJPUS:        ["Japan Yen to U.S. Dollar Spot Exchange Rate", "JPY per USD"],
 };
 
 const RECESSIONS_FROM = "1986-01-01";

@@ -152,5 +152,58 @@ check("ratioOf refuses a missing side", ratioOf(null, fixture("TOTBKCR")) === nu
   }
 }
 
+/* ---- the nine build-out ids: the four rating-band OAS ids and the
+   five FX levels, added to api/credit-macro.js for chart H16 and the
+   deal ledger's FX conversion -----------------------------------------
+   These answer over the live keyless CSV path (no fixture: DEXUSUK,
+   DEXSZUS, DEXCAUS and DEXJPUS run since 1971, tens of thousands of
+   rows, too large to fixture for what this section checks), so a run
+   with no network reachable to fred.stlouisfed.org fails loudly here
+   rather than silently skipping — the same as the handler in
+   production, which has no fallback key either. */
+{
+  const handlerMod = await import("../api/credit-macro.js");
+  const handler = handlerMod.default;
+  const mockRes = () => {
+    const res = { _status: 200, _json: null };
+    res.status = (c) => { res._status = c; return res; };
+    res.json = (j) => { res._json = j; return res; };
+    res.setHeader = () => {};
+    return res;
+  };
+  const res = mockRes();
+  await handler({ query: {} }, res);
+  const out = res._json;
+  check("the handler answers 200 with at least one series keyed off the CSV path", res._status === 200 && out && out.series && Object.keys(out.series).length > 0);
+
+  const OAS_BANDS = {
+    BAMLC0A1CAAA: [0, 3], BAMLC0A2CAA: [0, 3], BAMLC0A3CA: [0, 4], BAMLC0A4CBBB: [0, 6],
+  };
+  for (const [id, [lo, hi]] of Object.entries(OAS_BANDS)) {
+    const s = out.series[id];
+    check(id + " answers with no error", s && !s.error, s && s.error);
+    check(id + " is a percent series on the 3-year window", s && s.unit === "percent" && s.percentile && s.percentile.windowLabel === "3-year", s && JSON.stringify({ unit: s.unit, windowLabel: s.percentile && s.percentile.windowLabel }));
+    check(id + "'s latest OAS is a sane percentage-point band (" + lo + "–" + hi + ")", s && near((lo + hi) / 2, s.latest.v, (hi - lo) / 2), s && JSON.stringify(s.latest));
+  }
+
+  /* dollars per one euro or pound (near 1–1.5), the foreign currency per
+     one dollar otherwise (yen in the hundreds) — wide bands, not a
+     pinned value, since these move every trading day */
+  const FX_BANDS = {
+    DEXUSEU: { unit: "USD per EUR", lo: 0.7, hi: 1.6 },
+    DEXUSUK: { unit: "USD per GBP", lo: 0.9, hi: 2.0 },
+    DEXSZUS: { unit: "CHF per USD", lo: 0.5, hi: 1.3 },
+    DEXCAUS: { unit: "CAD per USD", lo: 0.9, hi: 1.8 },
+    DEXJPUS: { unit: "JPY per USD", lo: 50, hi: 300 },
+  };
+  for (const [id, { unit, lo, hi }] of Object.entries(FX_BANDS)) {
+    const s = out.series[id];
+    check(id + " answers with no error", s && !s.error, s && s.error);
+    check(id + " is a level in " + unit + ", not a percent or a spread", s && s.unit === unit && s.unit !== "percent");
+    check(id + "'s window label says it is a level, not a spread window", s && s.percentile && s.percentile.windowLabel === "10-year (level)", s && s.percentile && s.percentile.windowLabel);
+    check(id + "'s latest rate is a plausible level (" + lo + "–" + hi + "), not a pinned value", s && typeof s.latest.v === "number" && s.latest.v >= lo && s.latest.v <= hi, s && JSON.stringify(s.latest));
+  }
+}
+
 console.log(failed ? "\n" + failed + " failed" : "\nall fred checks pass");
 process.exit(failed ? 1 : 0);
