@@ -1,11 +1,11 @@
 {
- "startedAt": "2026-09-20T12:01:46.267Z",
+ "startedAt": "2026-09-27T12:43:34.325Z",
  "quarter": "CY2026Q2",
  "universe": {
-  "framesCandidates": 229,
+  "framesCandidates": 230,
   "rosterRows": 212,
   "rosterUnanswered": false,
-  "withTicker": 126,
+  "withTicker": 127,
   "rows": 53,
   "submissionsUnanswered": [],
   "noListingDate": []
@@ -26,10 +26,10 @@
  "flagCount": 565,
  "framesFetched": 21,
  "rateLimitHits": 0,
- "bytesWritten": 15349464,
+ "bytesWritten": 15348942,
  "holdings": {
-  "startedAt": "2026-09-20T12:02:35.673Z",
-  "attempted": 4,
+  "startedAt": "2026-09-27T12:44:23.552Z",
+  "attempted": 5,
   "written": 0,
   "unchanged": [
    "AFCG",
@@ -60,7 +60,6 @@
    "MSIF",
    "NCDL",
    "NMFC",
-   "NSLR",
    "OBDC",
    "OCSL",
    "OFS",
@@ -613,54 +612,6 @@
        "diffPct": 0.049914
       },
       "reason": "cost and fair value both outside tolerance"
-     }
-    ],
-    "unchanged": true
-   },
-   {
-    "ticker": "NSLR",
-    "accn": "0001493152-26-036285",
-    "reason": "no rows kept",
-    "cost": {
-     "sum": 0,
-     "tag": null,
-     "diffPct": null
-    },
-    "fv": {
-     "sum": 0,
-     "tag": 405851701,
-     "diffPct": 1
-    },
-    "tried": [
-     {
-      "variant": "tagged rows",
-      "n": 0,
-      "cost": {
-       "sum": 0,
-       "tag": null,
-       "diffPct": null
-      },
-      "fv": {
-       "sum": 0,
-       "tag": 405851701,
-       "diffPct": 1
-      },
-      "reason": "no rows kept"
-     },
-     {
-      "variant": "table rows",
-      "n": 60,
-      "cost": {
-       "sum": 262840450,
-       "tag": null,
-       "diffPct": null
-      },
-      "fv": {
-       "sum": 405851701,
-       "tag": 405851701,
-       "diffPct": 0
-      },
-      "reason": "no tagged total to reconcile against"
      }
     ],
     "unchanged": true
@@ -1377,6 +1328,42 @@
     "tagSource": "company file"
    },
    {
+    "ticker": "NSLR",
+    "accn": "0001493152-26-043924",
+    "period": "2025-12-31",
+    "reason": "no rows kept",
+    "rows": 0,
+    "cost": {
+     "sum": 0,
+     "tag": null,
+     "diffPct": null
+    },
+    "fv": {
+     "sum": 0,
+     "tag": 225511505,
+     "diffPct": 1
+    },
+    "source": "instance",
+    "tried": [
+     {
+      "variant": "tagged rows",
+      "n": 0,
+      "cost": {
+       "sum": 0,
+       "tag": null,
+       "diffPct": null
+      },
+      "fv": {
+       "sum": 0,
+       "tag": 225511505,
+       "diffPct": 1
+      },
+      "reason": "no rows kept"
+     }
+    ],
+    "tagSource": "instance (the company file lacks the period)"
+   },
+   {
     "ticker": "RAND",
     "accn": "0001193125-26-333983",
     "period": "2026-06-30",
@@ -1527,16 +1514,22 @@
   "failed": [],
   "sources": {
    "dataset": 0,
-   "instance": 4,
+   "instance": 5,
    "table": 0
   },
   "zips": [
    {
     "month": "2026_08",
-    "status": "absent"
+    "status": "downloaded",
+    "bytes": 75870583,
+    "filings": 174
    },
    {
     "month": "2026_09",
+    "status": "absent"
+   },
+   {
+    "month": "2026_10",
     "status": "absent"
    }
   ],
@@ -1550,16 +1543,16 @@
    "used": 0,
    "failed": 0
   },
-  "prose": 4,
+  "prose": 5,
   "downloads": {
-   "bytes": 17492931,
-   "files": 8,
+   "bytes": 93443813,
+   "files": 11,
    "checks": 0,
-   "requests": 10
+   "requests": 14
   },
   "notes": [],
-  "finishedAt": "2026-09-20T12:02:40.188Z",
-  "durationSeconds": 5
+  "finishedAt": "2026-09-27T12:44:32.231Z",
+  "durationSeconds": 9
  },
  "composite": {
   "members": 32,
@@ -1606,6 +1599,6 @@
    "universe": 53
   }
  },
- "finishedAt": "2026-09-20T12:02:40.553Z",
- "durationSeconds": 54
+ "finishedAt": "2026-09-27T12:44:32.624Z",
+ "durationSeconds": 58
 }

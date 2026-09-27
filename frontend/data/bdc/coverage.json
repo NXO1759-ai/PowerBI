@@ -1080,7 +1080,7 @@
    },
    {
     "ticker": "NSLR",
-    "accn": "0001493152-26-036285",
+    "accn": "0001493152-26-043924",
     "reason": "no rows kept"
    },
    {
@@ -2017,9 +2017,9 @@
    },
    "NSLR": {
     "status": "refused",
-    "accn": "0001493152-26-036285",
-    "period": "2026-06-30",
-    "form": "10-Q",
+    "accn": "0001493152-26-043924",
+    "period": "2025-12-31",
+    "form": "10-K/A",
     "reason": "no rows kept",
     "rows": 0,
     "cost": {
@@ -2029,10 +2029,10 @@
     },
     "fv": {
      "sum": 0,
-     "tag": 405851701,
+     "tag": 225511505,
      "diffPct": 1
     },
-    "source": "dataset",
+    "source": "instance",
     "tried": [
      {
       "variant": "tagged rows",
@@ -2044,29 +2044,13 @@
       },
       "fv": {
        "sum": 0,
-       "tag": 405851701,
+       "tag": 225511505,
        "diffPct": 1
       },
       "reason": "no rows kept"
-     },
-     {
-      "variant": "table rows",
-      "n": 60,
-      "cost": {
-       "sum": 262840450,
-       "tag": null,
-       "diffPct": null
-      },
-      "fv": {
-       "sum": 405851701,
-       "tag": 405851701,
-       "diffPct": 0
-      },
-      "reason": "no tagged total to reconcile against"
      }
     ],
-    "acSource": null,
-    "unchanged": true
+    "acSource": null
    },
    "OBDC": {
     "status": "written",
