@@ -1,24 +1,24 @@
 {
- "startedAt": "2026-09-27T12:43:34.325Z",
+ "startedAt": "2026-10-04T13:03:43.629Z",
  "quarter": "CY2026Q2",
  "universe": {
-  "framesCandidates": 230,
+  "framesCandidates": 231,
   "rosterRows": 212,
   "rosterUnanswered": false,
-  "withTicker": 127,
-  "rows": 53,
+  "withTicker": 128,
+  "rows": 54,
   "submissionsUnanswered": [],
   "noListingDate": []
  },
- "companiesAttempted": 53,
- "companiesWritten": 53,
+ "companiesAttempted": 54,
+ "companiesWritten": 54,
  "companiesFailed": [],
  "companiesRemoved": [],
  "findings": [
   {
    "severity": "warn",
    "code": "holdings_refusals",
-   "message": "21 refused and 0 failed of 53 schedules"
+   "message": "21 refused and 0 failed of 54 schedules"
   }
  ],
  "errorCount": 0,
@@ -26,11 +26,11 @@
  "flagCount": 565,
  "framesFetched": 21,
  "rateLimitHits": 0,
- "bytesWritten": 15348942,
+ "bytesWritten": 15414210,
  "holdings": {
-  "startedAt": "2026-09-27T12:44:23.552Z",
-  "attempted": 5,
-  "written": 0,
+  "startedAt": "2026-10-04T13:04:48.620Z",
+  "attempted": 6,
+  "written": 1,
   "unchanged": [
    "AFCG",
    "ARCC",
@@ -1514,13 +1514,13 @@
   "failed": [],
   "sources": {
    "dataset": 0,
-   "instance": 5,
+   "instance": 6,
    "table": 0
   },
   "zips": [
    {
     "month": "2026_08",
-    "status": "downloaded",
+    "status": "cached",
     "bytes": 75870583,
     "filings": 174
    },
@@ -1534,34 +1534,34 @@
    }
   ],
   "table": {
-   "used": 0,
+   "used": 1,
    "unusable": 0,
    "none": 0
   },
   "rpage": {
-   "fetched": 0,
-   "used": 0,
+   "fetched": 1,
+   "used": 1,
    "failed": 0
   },
-  "prose": 5,
+  "prose": 6,
   "downloads": {
-   "bytes": 93443813,
-   "files": 11,
-   "checks": 0,
-   "requests": 14
+   "bytes": 19316480,
+   "files": 14,
+   "checks": 1,
+   "requests": 18
   },
   "notes": [],
-  "finishedAt": "2026-09-27T12:44:32.231Z",
-  "durationSeconds": 9
+  "finishedAt": "2026-10-04T13:04:58.516Z",
+  "durationSeconds": 10
  },
  "composite": {
-  "members": 32,
-  "changed": false,
+  "members": 33,
+  "changed": true,
   "totals": {
-   "fv": 136192193777,
-   "cost": 138139962647,
+   "fv": 136211793777,
+   "cost": 138159562647,
    "thirdPartyDebtCost": 107503442188,
-   "holdings": 13925,
+   "holdings": 14004,
    "thirdPartyDebtHoldings": 9525
   },
   "weighted": {
@@ -1581,7 +1581,7 @@
    "tiiYieldOnAvgCost": 0.0999
   },
   "n": {
-   "filers": 32,
+   "filers": 33,
    "yieldAtCost": 18,
    "yieldAtFv": 18,
    "spreadCostWeighted": 30,
@@ -1591,14 +1591,14 @@
    "pikShareOfTotal": 18,
    "pikShareOfInterest": 0,
    "pikShareOfInterestContractual": 27,
-   "fvOverCost": 32,
+   "fvOverCost": 33,
    "debtToEquity": 28,
    "assetCoverage": 30,
    "opexRatio": 29,
    "tiiYieldOnAvgCost": 40,
-   "universe": 53
+   "universe": 54
   }
  },
- "finishedAt": "2026-09-27T12:44:32.624Z",
- "durationSeconds": 58
+ "finishedAt": "2026-10-04T13:04:58.831Z",
+ "durationSeconds": 75
 }

@@ -10397,43 +10397,43 @@
    "name": "NIKE, Inc.",
    "basis": "ltm",
    "sectorCaveat": null,
-   "periodEnd": "2026-05-31",
-   "fiscalYear": 2025,
+   "periodEnd": "2026-08-31",
+   "fiscalYear": 2026,
    "fiscalPeriod": "LTM",
-   "form": "10-K",
-   "filed": "2026-07-15",
-   "accession": "0000320187-26-000088",
+   "form": "10-Q",
+   "filed": "2026-10-02",
+   "accession": "0000320187-26-000193",
    "leverage": {
     "ebitda": null,
     "ebit": null,
-    "debtTotal": 7942000000,
-    "netDebt": 379000000,
-    "bookEquity": 14865000000,
+    "debtTotal": 7893000000,
+    "netDebt": 990000000,
+    "bookEquity": 15220000000,
     "debtToEbitda": null,
     "netDebtToEbitda": null,
-    "ffo": 3855000000,
-    "ffoToDebt": 0.4853941072777638,
+    "ffo": 3843000000,
+    "ffoToDebt": 0.4868871151653364,
     "interestExpense": null,
     "interestCoverage": null,
     "fixedChargeCoverage": {
      "value": null,
      "inputs": {
       "ebitda": null,
-      "capex": 684000000,
-      "cashTaxes": 792000000,
+      "capex": 676000000,
+      "cashTaxes": 806000000,
       "cashInterest": null,
       "mandatoryAmortization": 2000000000
      }
     },
-    "fcf": 2184000000,
-    "fcfToDebt": 0.27499370435658527,
+    "fcf": 2105000000,
+    "fcfToDebt": 0.26669200557455974,
     "leverageNotComputableReason": "EBITDA is not computable this period (operating income and depreciation & amortization not both tagged)"
    },
    "spBand": {
     "debtToEbitda": null,
     "netDebtToEbitda": null,
     "ffoToDebt": {
-     "value": 0.4853941072777638,
+     "value": 0.4868871151653364,
      "band": {
       "key": "modest",
       "label": "Modest",
@@ -10466,17 +10466,17 @@
     "asOf": "2026-05-31"
    },
    "liquidity": {
-    "cash": 7563000000,
+    "cash": 6903000000,
     "revolverCapacity": null,
-    "ltmFcf": 2184000000,
+    "ltmFcf": 2105000000,
     "nextTwelveMonthMaturities": 2000000000,
     "leasePaymentsDue": 564000000,
-    "runwayCoverage": 3.8014820592823715
+    "runwayCoverage": 3.513260530421217
    },
    "debtFairValue": {
-    "fairValue": null,
-    "carryingValue": 5942000000,
-    "markPct": null
+    "fairValue": 6700000000,
+    "carryingValue": 5893000000,
+    "markPct": 1.1369421347361277
    },
    "costOfDebt": {
     "value": null,
@@ -10487,8 +10487,10 @@
     "EBITDA is not computable this period: operating income (or pretax income plus interest expense) and depreciation & amortization are not both tagged, even against the latest 10-K",
     "FFO is proxied as net income plus depreciation and amortization, not S&P's own fuller bridge, which the tagged data cannot rebuild",
     "cost of debt: not disclosed — interest expense is not tagged, so neither DebtWeightedAverageInterestRate nor the interest-over-average-debt fallback is available",
+    "maturity ladder is from the latest 10-K (2026-05-31); not retagged in the 2026-08-31 quarter",
     "fixed-charge coverage's cash taxes are proxied by the accrual income-tax provision (IncomeTaxExpenseBenefit); no cash-taxes-paid tag exists in the concept ladder",
-    "revolver capacity not tagged (rare among operating companies); treated as 0 in the liquidity-runway numerator"
+    "revolver capacity not tagged (rare among operating companies); treated as 0 in the liquidity-runway numerator",
+    "next-twelve-month operating lease payments due is from the latest 10-K (2026-05-31); not retagged in the 2026-08-31 quarter"
    ]
   },
   "NOW": {
