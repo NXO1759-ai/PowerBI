@@ -7336,10 +7336,10 @@
      "label": "Q1 FY2026",
      "derived": false,
      "form": "10-Q",
-     "filed": "2025-10-09",
-     "accession": "0001144879-25-000069",
+     "filed": "2026-10-07",
+     "accession": "0001144879-26-000059",
      "tags": {
-      "incomeStatement.revenue": "RevenueFromContractWithCustomerExcludingAssessedTax",
+      "incomeStatement.revenue": "Revenues",
       "incomeStatement.cogs": "CostOfRevenue",
       "incomeStatement.sellingGeneralAdmin": "SellingGeneralAndAdministrativeExpense",
       "incomeStatement.operatingExpenses": "CostsAndExpenses",
@@ -7348,7 +7348,7 @@
       "incomeStatement.pretaxIncome": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
       "incomeStatement.incomeTax": "IncomeTaxExpenseBenefit",
       "incomeStatement.netIncome": "NetIncomeLoss",
-      "incomeStatement.netIncomeIncludingNci": "ProfitLoss",
+      "incomeStatement.netIncomeIncludingNci": "NetIncomeLoss",
       "cashFlow.cfOps": "NetCashProvidedByUsedInOperatingActivities",
       "cashFlow.cfInv": "NetCashProvidedByUsedInInvestingActivities",
       "cashFlow.cfFin": "NetCashProvidedByUsedInFinancingActivities",
@@ -7357,11 +7357,14 @@
       "cashFlow.capex": "PaymentsToAcquireProductiveAssets",
       "cashFlow.debtIssued": "ProceedsFromIssuanceOfMediumTermNotes",
       "cashFlow.debtRepaid": "RepaymentsOfMediumTermNotes",
+      "cashFlow.shortTermDebtProceeds": "ProceedsFromLinesOfCredit",
       "cashFlow.financeLeasePrincipal": "FinanceLeasePrincipalPayments",
       "cashFlow.financeLeaseAdditions": "RightOfUseAssetObtainedInExchangeForFinanceLeaseLiability",
       "cashFlow.equityIssued": "ProceedsFromIssuanceOfCommonStock",
       "cashFlow.preferredIssued": "ProceedsFromIssuanceOfPreferredStockAndPreferenceStock",
+      "cashFlow.jvPartnerFunding": "ProceedsFromMinorityShareholders",
       "cashFlow.interestPaid": "InterestPaidNet",
+      "cashFlow.interestCapitalized": "InterestCostsCapitalized",
       "cashFlow.capexAccrued": "CapitalExpendituresIncurredButNotYetPaid",
       "balanceSheet.cash": "CashAndCashEquivalentsAtCarryingValue",
       "balanceSheet.receivables": "AccountsReceivableNetCurrent",
@@ -7402,39 +7405,135 @@
      },
      "notDerivable": [],
      "inferredZero": [
-      "cashFlow.convertsIssued",
-      "cashFlow.jvPartnerFunding"
+      "cashFlow.convertsIssued"
      ],
      "derivedFields": [],
-     "restated": null,
+     "restated": {
+      "incomeStatement.revenue": {
+       "original": {
+        "value": 64216000,
+        "filed": "2025-10-09",
+        "form": "10-Q"
+       },
+       "latest": {
+        "value": 80934000,
+        "filed": "2026-10-07",
+        "form": "10-Q"
+       }
+      },
+      "incomeStatement.cogs": {
+       "original": {
+        "value": 55606000,
+        "filed": "2025-10-09",
+        "form": "10-Q"
+       },
+       "latest": {
+        "value": 58831000,
+        "filed": "2026-10-07",
+        "form": "10-Q"
+       }
+      },
+      "incomeStatement.sellingGeneralAdmin": {
+       "original": {
+        "value": 29152000,
+        "filed": "2025-10-09",
+        "form": "10-Q"
+       },
+       "latest": {
+        "value": 29482000,
+        "filed": "2026-10-07",
+        "form": "10-Q"
+       }
+      },
+      "incomeStatement.operatingExpenses": {
+       "original": {
+        "value": 86509000,
+        "filed": "2025-10-09",
+        "form": "10-Q"
+       },
+       "latest": {
+        "value": 90696000,
+        "filed": "2026-10-07",
+        "form": "10-Q"
+       }
+      },
+      "incomeStatement.operatingIncome": {
+       "original": {
+        "value": -22293000,
+        "filed": "2025-10-09",
+        "form": "10-Q"
+       },
+       "latest": {
+        "value": -9762000,
+        "filed": "2026-10-07",
+        "form": "10-Q"
+       }
+      },
+      "incomeStatement.interestExpense": {
+       "original": {
+        "value": 3946000,
+        "filed": "2025-10-09",
+        "form": "10-Q"
+       },
+       "latest": {
+        "value": 8013000,
+        "filed": "2026-10-07",
+        "form": "10-Q"
+       }
+      },
+      "incomeStatement.pretaxIncome": {
+       "original": {
+        "value": -26239000,
+        "filed": "2025-10-09",
+        "form": "10-Q"
+       },
+       "latest": {
+        "value": -16918000,
+        "filed": "2026-10-07",
+        "form": "10-Q"
+       }
+      },
+      "cashFlow.cfOps": {
+       "original": {
+        "value": -82023000,
+        "filed": "2025-10-09",
+        "form": "10-Q"
+       },
+       "latest": {
+        "value": -81531000,
+        "filed": "2026-10-07",
+        "form": "10-Q"
+       }
+      }
+     },
      "capex": {
-      "tagged": 249420000,
+      "tagged": 249914000,
       "capexOther": null,
       "adjustment": null,
-      "total": 249420000
+      "total": 249914000
      },
      "ratios": {
-      "capexToOperatingCashFlow": -3.040854394499104,
-      "capexToRevenue": 3.8840787342718324,
-      "capexToDepreciation": 60.07225433526011
+      "capexToOperatingCashFlow": -3.0652635193975297,
+      "capexToRevenue": 3.087874070230064,
+      "capexToDepreciation": 60.19123314065511
      },
      "freeCashFlow": {
-      "afterCapex": -331443000,
+      "afterCapex": -331445000,
       "afterCapexBuybacksDividends": null
      },
      "fundingGap": null,
      "cashFlow": {
-      "cfOps": -82023000,
+      "cfOps": -81531000,
       "buybacks": null,
       "dividendsPaid": null,
       "depreciationAmortization": 4152000,
-      "revenue": 64216000
+      "revenue": 80934000
      },
      "sourcesAndUses": {
       "debtIssued": 65000,
       "debtRepaid": 2416000,
       "otherDebtRepaid": null,
-      "shortTermDebtProceeds": null,
+      "shortTermDebtProceeds": 0,
       "shortTermDebtRepaid": null,
       "convertsIssued": 0,
       "convertsRepaid": null,
@@ -7461,12 +7560,12 @@
       "convertibles": null,
       "netDebt": null,
       "netDebtToEbitda": "n/m",
-      "ebitdaLtm": 14957000
+      "ebitdaLtm": 27488000
      },
      "interest": {
-      "interestExpense": 3946000,
+      "interestExpense": 8013000,
       "interestPaid": 9039000,
-      "interestCapitalized": null,
+      "interestCapitalized": 8700000,
       "interestCoverage": "n/m"
      },
      "leases": {
@@ -7517,7 +7616,7 @@
       "maturityAfterYearFive": null
      },
      "capexRunRate": {
-      "value": 876225000,
+      "value": 876719000,
       "quarters": 4,
       "checkValue": null
      }
@@ -7618,23 +7717,23 @@
      ],
      "restated": null,
      "capex": {
-      "tagged": 552070000,
+      "tagged": 551576000,
       "capexOther": null,
       "adjustment": null,
-      "total": 552070000
+      "total": 551576000
      },
      "ratios": {
-      "capexToOperatingCashFlow": -34.84190596402651,
-      "capexToRevenue": 4.361121424452362,
-      "capexToDepreciation": 64.2988586070347
+      "capexToOperatingCashFlow": -33.76237987390586,
+      "capexToRevenue": 4.357219031669418,
+      "capexToDepreciation": 64.24132308409038
      },
      "freeCashFlow": {
-      "afterCapex": -567915000,
+      "afterCapex": -567913000,
       "afterCapexBuybacksDividends": null
      },
      "fundingGap": null,
      "cashFlow": {
-      "cfOps": -15845000,
+      "cfOps": -16337000,
       "buybacks": null,
       "dividendsPaid": null,
       "depreciationAmortization": 8586000,
@@ -7671,7 +7770,7 @@
       "convertibles": null,
       "netDebt": null,
       "netDebtToEbitda": "n/m",
-      "ebitdaLtm": 688000
+      "ebitdaLtm": 13219000
      },
      "interest": {
       "interestExpense": 11484000,
@@ -7878,7 +7977,7 @@
       "convertibles": null,
       "netDebt": null,
       "netDebtToEbitda": "n/m",
-      "ebitdaLtm": -64001000
+      "ebitdaLtm": -51470000
      },
      "interest": {
       "interestExpense": -2387000,
@@ -7965,13 +8064,13 @@
       "balanceSheet.shortTermDebt": "NotesPayableCurrent",
       "balanceSheet.currentLiabilities": "LiabilitiesCurrent",
       "balanceSheet.longTermDebt": "LongTermNotesPayable",
-      "balanceSheet.operatingLeaseLiability": "OperatingLeaseLiability",
+      "balanceSheet.operatingLeaseLiability": "OperatingLeaseLiabilityNoncurrent",
       "balanceSheet.totalLiabilities": "Liabilities",
       "balanceSheet.equity": "StockholdersEquity",
       "balanceSheet.minorityInterest": "MinorityInterest",
       "balanceSheet.equityIncludingNci": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
       "balanceSheet.retainedEarnings": "RetainedEarningsAccumulatedDeficit",
-      "balanceSheet.financeLeaseLiability": "FinanceLeaseLiability",
+      "balanceSheet.financeLeaseLiability": "FinanceLeaseLiabilityNoncurrent",
       "balanceSheet.financeLeaseAsset": "FinanceLeaseRightOfUseAsset",
       "balanceSheet.financeLeaseDue": "FinanceLeaseLiabilityPaymentsDue",
       "balanceSheet.financeLeaseDueNextTwelveMonths": "FinanceLeaseLiabilityPaymentsDueNextTwelveMonths",
@@ -8016,13 +8115,11 @@
       "cashFlow.preferredIssued": "ProceedsFromIssuanceOfPreferredStockAndPreferenceStock",
       "cashFlow.warrantsIssued": "ProceedsFromIssuanceOfWarrants",
       "cashFlow.jvPartnerFunding": "ProceedsFromMinorityShareholders",
-      "cashFlow.interestPaid": "InterestPaidNet",
-      "cashFlow.interestCapitalized": "InterestCostsCapitalizedAdjustment"
+      "cashFlow.interestPaid": "InterestPaidNet"
      },
      "notDerivable": [],
      "inferredZero": [
-      "cashFlow.warrantsIssued",
-      "cashFlow.interestCapitalized"
+      "cashFlow.warrantsIssued"
      ],
      "derivedFields": [],
      "restated": null,
@@ -8034,7 +8131,7 @@
      },
      "ratios": {
       "capexToOperatingCashFlow": 9.725512090233506,
-      "capexToRevenue": 4.386539580561407,
+      "capexToRevenue": 4.651139631464436,
       "capexToDepreciation": 38.095277498670136
      },
      "freeCashFlow": {
@@ -8047,7 +8144,7 @@
       "buybacks": null,
       "dividendsPaid": null,
       "depreciationAmortization": 33838000,
-      "revenue": 293869000
+      "revenue": 277151000
      },
      "sourcesAndUses": {
       "debtIssued": 2450464000,
@@ -8083,13 +8180,13 @@
       "ebitdaLtm": -169073000
      },
      "interest": {
-      "interestExpense": 16473000,
+      "interestExpense": 12406000,
       "interestPaid": 169947000,
-      "interestCapitalized": 39574000,
+      "interestCapitalized": null,
       "interestCoverage": "n/m"
      },
      "leases": {
-      "financeLeaseLiability": 58316000,
+      "financeLeaseLiability": 10731000,
       "financeLeaseAsset": 122523000,
       "financeLeaseDue": 62037000,
       "financeLeaseDueNextTwelveMonths": 51069000,
@@ -8098,7 +8195,7 @@
       "financeLeaseDueYearFour": 0,
       "financeLeaseDueYearFive": 0,
       "financeLeaseDueAfterYearFive": 0,
-      "operatingLeaseLiability": 65662000,
+      "operatingLeaseLiability": 47178000,
       "opLeaseDue": 75142000,
       "uncommencedLeases": {
        "value": null,
@@ -8137,6 +8234,201 @@
      },
      "capexRunRate": {
       "value": 2865765000,
+      "quarters": 4,
+      "checkValue": null
+     }
+    },
+    {
+     "periodEnd": "2026-08-31",
+     "periodStart": "2026-06-01",
+     "grain": "quarter",
+     "calendarQuarter": "2026-Q3",
+     "fiscalYear": 2026,
+     "fiscalPeriod": "Q1",
+     "filerFiscalYear": 2027,
+     "label": "Q1 FY2027",
+     "derived": false,
+     "form": "10-Q",
+     "filed": "2026-10-07",
+     "accession": "0001144879-26-000059",
+     "tags": {
+      "incomeStatement.revenue": "Revenues",
+      "incomeStatement.cogs": "CostOfRevenue",
+      "incomeStatement.sellingGeneralAdmin": "SellingGeneralAndAdministrativeExpense",
+      "incomeStatement.operatingExpenses": "CostsAndExpenses",
+      "incomeStatement.operatingIncome": "OperatingIncomeLoss",
+      "incomeStatement.interestExpense": "InterestExpenseNonoperating",
+      "incomeStatement.pretaxIncome": "IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest",
+      "incomeStatement.incomeTax": "IncomeTaxExpenseBenefit",
+      "incomeStatement.netIncome": "NetIncomeLoss",
+      "incomeStatement.netIncomeIncludingNci": "NetIncomeLoss",
+      "cashFlow.cfOps": "NetCashProvidedByUsedInOperatingActivities",
+      "cashFlow.cfInv": "NetCashProvidedByUsedInInvestingActivities",
+      "cashFlow.cfFin": "NetCashProvidedByUsedInFinancingActivities",
+      "cashFlow.depreciationAmortization": "DepreciationDepletionAndAmortization",
+      "cashFlow.shareBasedComp": "ShareBasedCompensation",
+      "cashFlow.capex": "PaymentsToAcquireProductiveAssets",
+      "cashFlow.debtIssued": "ProceedsFromIssuanceOfMediumTermNotes",
+      "cashFlow.debtRepaid": "RepaymentsOfMediumTermNotes",
+      "cashFlow.shortTermDebtProceeds": "ProceedsFromLinesOfCredit",
+      "cashFlow.financeLeasePrincipal": "FinanceLeasePrincipalPayments",
+      "cashFlow.financeLeaseAdditions": "RightOfUseAssetObtainedInExchangeForFinanceLeaseLiability",
+      "cashFlow.equityIssued": "ProceedsFromIssuanceOfCommonStock",
+      "cashFlow.preferredIssued": "ProceedsFromIssuanceOfPreferredStockAndPreferenceStock",
+      "cashFlow.jvPartnerFunding": "ProceedsFromMinorityShareholders",
+      "cashFlow.interestPaid": "InterestPaidNet",
+      "cashFlow.interestCapitalized": "InterestCostsCapitalized",
+      "balanceSheet.cash": "CashAndCashEquivalentsAtCarryingValue",
+      "balanceSheet.receivables": "AccountsReceivableNetCurrent",
+      "balanceSheet.currentAssets": "AssetsCurrent",
+      "balanceSheet.ppe": "PropertyPlantAndEquipmentNet",
+      "balanceSheet.goodwill": "Goodwill",
+      "balanceSheet.operatingLeaseAsset": "OperatingLeaseRightOfUseAsset",
+      "balanceSheet.totalAssets": "Assets",
+      "balanceSheet.payables": "AccountsPayableCurrent",
+      "balanceSheet.deferredRevenue": "ContractWithCustomerLiabilityCurrent",
+      "balanceSheet.shortTermDebt": "NotesPayableCurrent",
+      "balanceSheet.currentLiabilities": "LiabilitiesCurrent",
+      "balanceSheet.longTermDebt": "LongTermNotesPayable",
+      "balanceSheet.operatingLeaseLiability": "OperatingLeaseLiability",
+      "balanceSheet.totalLiabilities": "Liabilities",
+      "balanceSheet.equity": "StockholdersEquity",
+      "balanceSheet.minorityInterest": "MinorityInterest",
+      "balanceSheet.equityIncludingNci": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
+      "balanceSheet.retainedEarnings": "RetainedEarningsAccumulatedDeficit",
+      "balanceSheet.financeLeaseLiability": "FinanceLeaseLiability",
+      "balanceSheet.financeLeaseAsset": "FinanceLeaseRightOfUseAsset",
+      "balanceSheet.financeLeaseDue": "FinanceLeaseLiabilityPaymentsDue",
+      "balanceSheet.financeLeaseDueNextTwelveMonths": "FinanceLeaseLiabilityPaymentsDueNextTwelveMonths",
+      "balanceSheet.financeLeaseDueYearTwo": "FinanceLeaseLiabilityPaymentsDueYearTwo",
+      "balanceSheet.financeLeaseDueYearThree": "FinanceLeaseLiabilityPaymentsDueYearThree",
+      "balanceSheet.financeLeaseDueYearFour": "FinanceLeaseLiabilityPaymentsDueYearFour",
+      "balanceSheet.opLeaseDue": "LesseeOperatingLeaseLiabilityPaymentsDue",
+      "balanceSheet.opLeaseDueNextTwelveMonths": "LesseeOperatingLeaseLiabilityPaymentsDueNextTwelveMonths",
+      "balanceSheet.lessorBacklog": "LessorOperatingLeasePaymentsToBeReceived",
+      "balanceSheet.lessorBacklogNextTwelveMonths": "LessorOperatingLeasePaymentsToBeReceivedNextTwelveMonths",
+      "balanceSheet.lessorBacklogYearTwo": "LessorOperatingLeasePaymentsToBeReceivedTwoYears",
+      "balanceSheet.lessorBacklogYearThree": "LessorOperatingLeasePaymentsToBeReceivedThreeYears",
+      "balanceSheet.lessorBacklogYearFour": "LessorOperatingLeasePaymentsToBeReceivedFourYears",
+      "balanceSheet.restrictedCash": "RestrictedCashCurrent+RestrictedCashNoncurrent",
+      "balanceSheet.redeemableNci": "RedeemableNoncontrollingInterestEquityCarryingAmount",
+      "balanceSheet.interestPayable": "InterestPayableCurrent"
+     },
+     "notDerivable": [],
+     "inferredZero": [],
+     "derivedFields": [],
+     "restated": null,
+     "capex": {
+      "tagged": 2074698000,
+      "capexOther": null,
+      "adjustment": null,
+      "total": 2074698000
+     },
+     "ratios": {
+      "capexToOperatingCashFlow": 32.45722063171728,
+      "capexToRevenue": 6.06858647166362,
+      "capexToDepreciation": 49.50128841381943
+     },
+     "freeCashFlow": {
+      "afterCapex": -2010777000,
+      "afterCapexBuybacksDividends": null
+     },
+     "fundingGap": null,
+     "cashFlow": {
+      "cfOps": 63921000,
+      "buybacks": null,
+      "dividendsPaid": null,
+      "depreciationAmortization": 41912000,
+      "revenue": 341875000
+     },
+     "sourcesAndUses": {
+      "debtIssued": 1648500000,
+      "debtRepaid": 315932000,
+      "otherDebtRepaid": null,
+      "shortTermDebtProceeds": 82390000,
+      "shortTermDebtRepaid": null,
+      "convertsIssued": null,
+      "convertsRepaid": null,
+      "equityIssued": 0,
+      "ipoProceeds": null,
+      "preferredIssued": 274999000,
+      "warrantsIssued": null,
+      "jvPartnerFunding": 1349000,
+      "jvInvestment": null,
+      "financeLeaseAdditions": 0,
+      "capexAccrued": null
+     },
+     "cash": {
+      "cash": 2949909000,
+      "restrictedCash": 728034000,
+      "liquidity": null,
+      "liquidityIncludesCash": false,
+      "drawdown": -1357921000
+     },
+     "debt": {
+      "grossDebt": null,
+      "longTermDebt": 6263947000,
+      "shortTermDebt": 112645000,
+      "convertibles": null,
+      "netDebt": null,
+      "netDebtToEbitda": "n/m",
+      "ebitdaLtm": -183930000
+     },
+     "interest": {
+      "interestExpense": 77383000,
+      "interestPaid": 242852000,
+      "interestCapitalized": 35700000,
+      "interestCoverage": "n/m"
+     },
+     "leases": {
+      "financeLeaseLiability": 45947000,
+      "financeLeaseAsset": 109887000,
+      "financeLeaseDue": 48342000,
+      "financeLeaseDueNextTwelveMonths": 10968000,
+      "financeLeaseDueYearTwo": 0,
+      "financeLeaseDueYearThree": 0,
+      "financeLeaseDueYearFour": 0,
+      "financeLeaseDueYearFive": null,
+      "financeLeaseDueAfterYearFive": null,
+      "operatingLeaseLiability": 60869000,
+      "opLeaseDue": 69074000,
+      "uncommencedLeases": {
+       "value": null,
+       "label": "Unrecorded unconditional purchase obligation"
+      }
+     },
+     "obligations": {
+      "purchaseObligations": null,
+      "contractualObligationRemainderOfFiscalYear": null,
+      "contractualObligationNextTwelveMonths": null,
+      "contractualObligationYearTwo": null,
+      "contractualObligationYearThree": null,
+      "contractualObligationYearFour": null,
+      "contractualObligationYearFive": null,
+      "contractualObligationAfterYearFive": null,
+      "lessorBacklog": 35731035000,
+      "lessorBacklogNextTwelveMonths": 1579517000,
+      "lessorBacklogYearTwo": 2360558000,
+      "lessorBacklogYearThree": 2371420000,
+      "lessorBacklogYearFour": 2371420000,
+      "lessorBacklogYearFive": null,
+      "lessorBacklogThereafter": null,
+      "remainingPerformanceObligation": null
+     },
+     "obligationsRatios": {
+      "backlogToDebt": null
+     },
+     "maturities": {
+      "maturityRemainderOfFiscalYear": null,
+      "maturityNextTwelveMonths": null,
+      "maturityYearTwo": null,
+      "maturityYearThree": null,
+      "maturityYearFour": null,
+      "maturityYearFive": null,
+      "maturityAfterYearFive": null
+     },
+     "capexRunRate": {
+      "value": 4690549000,
       "quarters": 4,
       "checkValue": null
      }
@@ -9744,13 +10036,13 @@
       "balanceSheet.shortTermDebt": "NotesPayableCurrent",
       "balanceSheet.currentLiabilities": "LiabilitiesCurrent",
       "balanceSheet.longTermDebt": "LongTermNotesPayable",
-      "balanceSheet.operatingLeaseLiability": "OperatingLeaseLiability",
+      "balanceSheet.operatingLeaseLiability": "OperatingLeaseLiabilityNoncurrent",
       "balanceSheet.totalLiabilities": "Liabilities",
       "balanceSheet.equity": "StockholdersEquity",
       "balanceSheet.minorityInterest": "MinorityInterest",
       "balanceSheet.equityIncludingNci": "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest",
       "balanceSheet.retainedEarnings": "RetainedEarningsAccumulatedDeficit",
-      "balanceSheet.financeLeaseLiability": "FinanceLeaseLiability",
+      "balanceSheet.financeLeaseLiability": "FinanceLeaseLiabilityNoncurrent",
       "balanceSheet.financeLeaseAsset": "FinanceLeaseRightOfUseAsset",
       "balanceSheet.financeLeaseDue": "FinanceLeaseLiabilityPaymentsDue",
       "balanceSheet.financeLeaseDueNextTwelveMonths": "FinanceLeaseLiabilityPaymentsDueNextTwelveMonths",
@@ -9775,7 +10067,44 @@
      "notDerivable": [],
      "inferredZero": [],
      "derivedFields": [],
-     "restated": null,
+     "restated": {
+      "balanceSheet.operatingLeaseLiability": {
+       "original": {
+        "value": 65662000,
+        "filed": "2026-07-29",
+        "form": "10-K"
+       },
+       "latest": {
+        "value": 47178000,
+        "filed": "2026-10-07",
+        "form": "10-Q"
+       }
+      },
+      "balanceSheet.financeLeaseLiability": {
+       "original": {
+        "value": 58316000,
+        "filed": "2026-07-29",
+        "form": "10-K"
+       },
+       "latest": {
+        "value": 10731000,
+        "filed": "2026-10-07",
+        "form": "10-Q"
+       }
+      },
+      "balanceSheet.restrictedCash": {
+       "original": {
+        "value": 10500000,
+        "filed": "2026-07-29",
+        "form": "10-K"
+       },
+       "latest": {
+        "value": 2381027000,
+        "filed": "2026-10-07",
+        "form": "10-Q"
+       }
+      }
+     },
      "capex": {
       "tagged": 2865765000,
       "capexOther": null,
@@ -9839,7 +10168,7 @@
       "interestCoverage": "n/m"
      },
      "leases": {
-      "financeLeaseLiability": 58316000,
+      "financeLeaseLiability": 10731000,
       "financeLeaseAsset": 122523000,
       "financeLeaseDue": 62037000,
       "financeLeaseDueNextTwelveMonths": 51069000,
@@ -9848,7 +10177,7 @@
       "financeLeaseDueYearFour": 0,
       "financeLeaseDueYearFive": 0,
       "financeLeaseDueAfterYearFive": 0,
-      "operatingLeaseLiability": 65662000,
+      "operatingLeaseLiability": 47178000,
       "opLeaseDue": 75142000,
       "uncommencedLeases": {
        "value": null,

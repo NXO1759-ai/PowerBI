@@ -1,47 +1,47 @@
 {
- "generated": "2026-10-04T13:04:58.652Z",
+ "generated": "2026-10-11T13:48:40.387Z",
  "quarter": "CY2026Q2",
  "creditVersion": "1.1.0",
  "weighting": "every dollar figure is pooled across the members (Σ numerators ÷ Σ denominators, the cost-weighted mean); assetCoverage and opexRatio are means weighted by each member's cost of third-party debt",
  "n": {
-  "filers": 33,
-  "yieldAtCost": 18,
-  "yieldAtFv": 18,
-  "spreadCostWeighted": 30,
-  "floatingShare": 30,
-  "nonAccrualCost": 29,
-  "nonAccrualFv": 29,
+  "filers": 34,
+  "yieldAtCost": 19,
+  "yieldAtFv": 19,
+  "spreadCostWeighted": 31,
+  "floatingShare": 31,
+  "nonAccrualCost": 30,
+  "nonAccrualFv": 30,
   "pikShareOfTotal": 18,
   "pikShareOfInterest": 0,
-  "pikShareOfInterestContractual": 27,
-  "fvOverCost": 33,
-  "debtToEquity": 28,
-  "assetCoverage": 30,
-  "opexRatio": 29,
+  "pikShareOfInterestContractual": 28,
+  "fvOverCost": 34,
+  "debtToEquity": 29,
+  "assetCoverage": 31,
+  "opexRatio": 30,
   "tiiYieldOnAvgCost": 40,
   "universe": 54
  },
  "totals": {
-  "fv": 136211793777,
-  "cost": 138159562647,
-  "thirdPartyDebtCost": 107503442188,
-  "holdings": 14004,
-  "thirdPartyDebtHoldings": 9525
+  "fv": 137361984121,
+  "cost": 139368648247,
+  "thirdPartyDebtCost": 108474833180,
+  "holdings": 14156,
+  "thirdPartyDebtHoldings": 9589
  },
  "weighted": {
-  "yieldAtCost": 0.0949,
-  "yieldAtFv": 0.0968,
-  "spreadCostWeighted": 0.0533,
-  "floatingShare": 0.9488,
-  "nonAccrualCost": 0.0274,
-  "nonAccrualFv": 0.0127,
+  "yieldAtCost": 0.095,
+  "yieldAtFv": 0.0969,
+  "spreadCostWeighted": 0.0534,
+  "floatingShare": 0.9492,
+  "nonAccrualCost": 0.0273,
+  "nonAccrualFv": 0.0126,
   "pikShareOfTotal": 0.1232,
   "pikShareOfInterest": null,
-  "pikShareOfInterestContractual": 0.078,
-  "fvOverCost": 0.9859,
-  "debtToEquity": 1.1182,
-  "assetCoverage": 1.9255,
-  "opexRatio": 0.0479,
+  "pikShareOfInterestContractual": 0.0769,
+  "fvOverCost": 0.9856,
+  "debtToEquity": 1.1262,
+  "assetCoverage": 1.9236,
+  "opexRatio": 0.0485,
   "tiiYieldOnAvgCost": 0.0999
  },
  "tiiYieldSeries": [
@@ -160,56 +160,56 @@
  ],
  "histogram": {
   "byCount": {
-   "<0": 0.0008,
+   "<0": 0.0007,
    "0-50": 0.002,
    "50-100": 0.0011,
-   "100-150": 0.0048,
+   "100-150": 0.0047,
    "150-200": 0.0035,
-   "200-250": 0.0069,
-   "250-300": 0.0108,
-   "300-350": 0.0138,
-   "350-400": 0.0168,
-   "400-450": 0.045,
-   "450-500": 0.2431,
-   "500-550": 0.2495,
-   "550-600": 0.1384,
-   "600-650": 0.0925,
-   "650-700": 0.0626,
-   "700-750": 0.0354,
+   "200-250": 0.0068,
+   "250-300": 0.0107,
+   "300-350": 0.0137,
+   "350-400": 0.0166,
+   "400-450": 0.0451,
+   "450-500": 0.2417,
+   "500-550": 0.2484,
+   "550-600": 0.1385,
+   "600-650": 0.0927,
+   "650-700": 0.0631,
+   "700-750": 0.0369,
    "750-800": 0.0264,
-   "800-850": 0.0174,
-   "850-900": 0.0086,
-   "900-950": 0.0053,
-   "950-1000": 0.0043,
-   "1000+": 0.0114
+   "800-850": 0.0176,
+   "850-900": 0.0089,
+   "900-950": 0.0052,
+   "950-1000": 0.0042,
+   "1000+": 0.0113
   },
   "byCost": {
    "<0": 0.0022,
-   "0-50": 0.0042,
+   "0-50": 0.0041,
    "50-100": 0.0034,
    "100-150": 0.0054,
-   "150-200": 0.0062,
-   "200-250": 0.0112,
-   "250-300": 0.0188,
-   "300-350": 0.0198,
-   "350-400": 0.0123,
-   "400-450": 0.04,
-   "450-500": 0.2115,
-   "500-550": 0.2506,
-   "550-600": 0.1562,
-   "600-650": 0.0783,
-   "650-700": 0.0685,
-   "700-750": 0.0332,
+   "150-200": 0.0061,
+   "200-250": 0.0111,
+   "250-300": 0.0186,
+   "300-350": 0.0196,
+   "350-400": 0.0121,
+   "400-450": 0.0397,
+   "450-500": 0.21,
+   "500-550": 0.2487,
+   "550-600": 0.1563,
+   "600-650": 0.0795,
+   "650-700": 0.0689,
+   "700-750": 0.0358,
    "750-800": 0.0341,
-   "800-850": 0.0158,
-   "850-900": 0.0096,
+   "800-850": 0.0161,
+   "850-900": 0.0098,
    "900-950": 0.0048,
    "950-1000": 0.0031,
-   "1000+": 0.0106
+   "1000+": 0.0105
   },
-  "n": 7993,
-  "cost": 99803397445,
-  "filers": 30
+  "n": 8055,
+  "cost": 100769399497,
+  "filers": 31
  },
  "maturityWall": {
   "2026": 2185907842,
@@ -219,9 +219,9 @@
   "2030": 17511683620,
   "2031-2033": 33426016657,
   "later": 200548714,
-  "n/a": 6461947756,
-  "excluded": -3690000,
-  "total": 107503442188,
+  "n/a": 7433362478,
+  "excluded": -3713730,
+  "total": 108474833180,
   "dated": 101045184432,
   "unfunded": 10643049000,
   "shares": {
@@ -239,23 +239,23 @@
   "classes": {
    "first lien": {
     "cost": 88407510730,
-    "share": 0.8224,
-    "shareOfPortfolio": 0.6399
+    "share": 0.815,
+    "shareOfPortfolio": 0.6343
    },
    "first lien incl. unitranche/last-out": {
     "cost": 7323137117,
-    "share": 0.0681,
-    "shareOfPortfolio": 0.053
+    "share": 0.0675,
+    "shareOfPortfolio": 0.0525
    },
    "second lien": {
     "cost": 5155468107,
-    "share": 0.048,
-    "shareOfPortfolio": 0.0373
+    "share": 0.0475,
+    "shareOfPortfolio": 0.037
    },
    "unsecured": {
     "cost": 3426920543,
-    "share": 0.0319,
-    "shareOfPortfolio": 0.0248
+    "share": 0.0316,
+    "shareOfPortfolio": 0.0246
    },
    "equity": {
     "cost": 1500000,
@@ -263,16 +263,16 @@
     "shareOfPortfolio": 0
    },
    "unclassified": {
-    "cost": 3188905691,
-    "share": 0.0297,
-    "shareOfPortfolio": 0.0231
+    "cost": 4160296683,
+    "share": 0.0384,
+    "shareOfPortfolio": 0.0299
    }
   },
-  "total": 107503442188,
-  "portfolioCost": 138159562647,
-  "firstLienShare": 0.8905,
-  "firstLienShareOfPortfolio": 0.6929,
-  "unclassifiedShare": 0.0297,
+  "total": 108474833180,
+  "portfolioCost": 139368648247,
+  "firstLienShare": 0.8825,
+  "firstLienShareOfPortfolio": 0.6869,
+  "unclassifiedShare": 0.0384,
   "filers": 30
  },
  "sectorMix": {
@@ -280,147 +280,147 @@
    {
     "name": "Software",
     "fv": 6740051031,
-    "share": 0.0495
+    "share": 0.0491
    },
    {
     "name": "Insurance",
     "fv": 4501518941,
-    "share": 0.033
+    "share": 0.0328
    },
    {
     "name": "Application Software",
     "fv": 4067543000,
-    "share": 0.0299
+    "share": 0.0296
    },
    {
     "name": "Software and Services",
     "fv": 3948300000,
-    "share": 0.029
+    "share": 0.0287
    },
    {
     "name": "Financial Services",
-    "fv": 3423859000,
-    "share": 0.0251
+    "fv": 3455875399,
+    "share": 0.0252
    },
    {
     "name": "Professional Services",
     "fv": 3312997182,
-    "share": 0.0243
+    "share": 0.0241
    },
    {
     "name": "Health Care Providers & Services",
     "fv": 2768715000,
-    "share": 0.0203
+    "share": 0.0202
    },
    {
     "name": "Systems Software",
     "fv": 2702463000,
-    "share": 0.0198
+    "share": 0.0197
    },
    {
     "name": "Health Care Technology",
     "fv": 2691055582,
-    "share": 0.0198
+    "share": 0.0196
    },
    {
     "name": "Health Care Equipment and Services",
     "fv": 2050100000,
-    "share": 0.0151
+    "share": 0.0149
    },
    {
     "name": "other",
-    "fv": 95055023775,
-    "share": 0.6978
+    "fv": 96173197720,
+    "share": 0.7001
    },
    {
     "name": "n/a",
     "fv": 4985764274,
-    "share": 0.0366
+    "share": 0.0363
    }
   ],
-  "filers": 31,
+  "filers": 32,
   "note": "industry labels are each filer's own; a sector named two ways counts twice"
  },
  "dispersion": {
   "yieldAtCost": {
    "min": 0.0854,
-   "p25": 0.0928,
-   "median": 0.1013,
-   "p75": 0.1107,
+   "p25": 0.0929,
+   "median": 0.1024,
+   "p75": 0.1099,
    "max": 0.1373,
-   "n": 18
+   "n": 19
   },
   "yieldAtFv": {
    "min": 0.0863,
-   "p25": 0.0944,
-   "median": 0.1021,
-   "p75": 0.1147,
+   "p25": 0.0948,
+   "median": 0.1032,
+   "p75": 0.1144,
    "max": 0.138,
-   "n": 18
+   "n": 19
   },
   "spreadCostWeighted": {
    "min": 0.0277,
-   "p25": 0.0508,
+   "p25": 0.0513,
    "median": 0.0551,
-   "p75": 0.063,
+   "p75": 0.0641,
    "max": 0.083,
-   "n": 30
+   "n": 31
   },
   "floatingShare": {
    "min": 0.5658,
-   "p25": 0.8695,
-   "median": 0.937,
-   "p75": 0.9816,
+   "p25": 0.871,
+   "median": 0.9382,
+   "p75": 0.9845,
    "max": 1,
-   "n": 30
+   "n": 31
   },
   "nonAccrualCost": {
    "min": 0,
-   "p25": 0.0253,
-   "median": 0.0297,
-   "p75": 0.0462,
+   "p25": 0.0242,
+   "median": 0.0296,
+   "p75": 0.0455,
    "max": 0.1595,
-   "n": 29
+   "n": 30
   },
   "nonAccrualFv": {
    "min": 0,
-   "p25": 0.0085,
+   "p25": 0.0084,
    "median": 0.0152,
-   "p75": 0.0211,
+   "p75": 0.0208,
    "max": 0.0718,
-   "n": 29
+   "n": 30
   },
   "fvOverCost": {
    "min": 0.4046,
-   "p25": 0.9397,
+   "p25": 0.9426,
    "median": 0.9785,
-   "p75": 0.9958,
+   "p75": 0.9956,
    "max": 1.2275,
-   "n": 33
+   "n": 34
   },
   "debtToEquity": {
    "min": 0.6414,
-   "p25": 1.0259,
-   "median": 1.2156,
-   "p75": 1.3198,
-   "max": 2.2116,
-   "n": 28
+   "p25": 1.039,
+   "median": 1.2171,
+   "p75": 1.3509,
+   "max": 2.5594,
+   "n": 29
   },
   "assetCoverage": {
    "min": 1.45,
-   "p25": 1.7491,
-   "median": 1.8185,
-   "p75": 2.0125,
+   "p25": 1.7295,
+   "median": 1.81,
+   "p75": 1.995,
    "max": 3.394,
-   "n": 30
+   "n": 31
   },
   "opexRatio": {
    "min": 0.0245,
-   "p25": 0.0446,
-   "median": 0.0533,
-   "p75": 0.0679,
+   "p25": 0.0447,
+   "median": 0.0534,
+   "p75": 0.069,
    "max": 0.1663,
-   "n": 29
+   "n": 30
   },
   "firstLienShare": {
    "min": 0,
@@ -449,10 +449,10 @@
   "vehicleShare": {
    "min": 0,
    "p25": 0,
-   "median": 0.0007,
-   "p75": 0.0141,
+   "median": 0.0011,
+   "p75": 0.0157,
    "max": 0.165,
-   "n": 33
+   "n": 34
   },
   "pikShareOfTotal": {
    "min": 0,
@@ -464,11 +464,11 @@
   },
   "pikContractual": {
    "min": 0,
-   "p25": 0.0354,
-   "median": 0.0692,
-   "p75": 0.1508,
+   "p25": 0.0284,
+   "median": 0.0691,
+   "p75": 0.1506,
    "max": 1,
-   "n": 27
+   "n": 28
   },
   "priceToNav": {
    "min": null,
@@ -511,6 +511,7 @@
   "PSEC",
   "RVII",
   "RWAY",
+  "SAR",
   "TCPC",
   "TPVG",
   "TRIN"
@@ -1115,6 +1116,26 @@
    "opexRatio": 0.0496,
    "pikShareOfTotal": null,
    "pikContractual": 0.5916
+  },
+  {
+   "ticker": "SAR",
+   "thirdPartyDebtCost": 971390992,
+   "yieldAtCost": 0.1033,
+   "yieldAtFv": 0.1064,
+   "spreadCostWeighted": 0.065,
+   "floatingShare": 0.9945,
+   "nonAccrualCost": 0.0125,
+   "nonAccrualFv": 0,
+   "fvOverCost": 0.9513,
+   "firstLienShare": null,
+   "firstLienShareOfPortfolio": null,
+   "top10": null,
+   "vehicleShare": 0.017,
+   "debtToEquity": 2.5594,
+   "assetCoverage": 1.719,
+   "opexRatio": 0.1073,
+   "pikShareOfTotal": null,
+   "pikContractual": 0.005
   },
   {
    "ticker": "TCPC",

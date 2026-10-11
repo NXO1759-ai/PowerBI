@@ -4,7 +4,7 @@
  "n": 137,
  "coverage": {
   "total": 137,
-  "leasePaymentsDueTagged": 118,
+  "leasePaymentsDueTagged": 117,
   "revolverCapacityTagged": 6,
   "maturityLadderTagged": 101
  },
@@ -2049,36 +2049,36 @@
    "name": "Applied Digital Corp.",
    "basis": "ltm",
    "sectorCaveat": null,
-   "periodEnd": "2026-05-31",
-   "fiscalYear": 2025,
+   "periodEnd": "2026-08-31",
+   "fiscalYear": 2026,
    "fiscalPeriod": "LTM",
-   "form": "10-K",
-   "filed": "2026-07-29",
-   "accession": "0001144879-26-000048",
+   "form": "10-Q",
+   "filed": "2026-10-07",
+   "accession": "0001144879-26-000059",
    "leverage": {
-    "ebitda": -169073000,
-    "ebit": -236462000,
-    "debtTotal": 4975938000,
-    "netDebt": 3383950000,
-    "bookEquity": 1724508000,
+    "ebitda": -183930000,
+    "ebit": -289079000,
+    "debtTotal": 6376592000,
+    "netDebt": 3426683000,
+    "bookEquity": 1608156000,
     "debtToEbitda": null,
     "netDebtToEbitda": null,
     "ffo": null,
     "ffoToDebt": null,
-    "interestExpense": 29516000,
-    "interestCoverage": -8.011315896462936,
+    "interestExpense": 98886000,
+    "interestCoverage": -2.92335618793358,
     "fixedChargeCoverage": {
      "value": null,
      "inputs": {
-      "ebitda": -169073000,
-      "capex": 2865765000,
-      "cashTaxes": 1787000,
-      "cashInterest": 263402000,
+      "ebitda": -183930000,
+      "capex": 4690549000,
+      "cashTaxes": 3665000,
+      "cashInterest": 497215000,
       "mandatoryAmortization": null
      }
     },
-    "fcf": -2776080000,
-    "fcfToDebt": -0.557900842012099,
+    "fcf": -4455412000,
+    "fcfToDebt": -0.6987136702489355,
     "leverageNotComputableReason": "EBITDA is zero or negative this period, so leverage through EBITDA is not meaningful and is not computed"
    },
    "spBand": {
@@ -2105,20 +2105,20 @@
     "asOf": null
    },
    "liquidity": {
-    "cash": 1591988000,
+    "cash": 2949909000,
     "revolverCapacity": null,
-    "ltmFcf": -2776080000,
+    "ltmFcf": -4455412000,
     "nextTwelveMonthMaturities": null,
-    "leasePaymentsDue": 22218000,
+    "leasePaymentsDue": 23967000,
     "runwayCoverage": null
    },
    "debtFairValue": {
     "fairValue": null,
-    "carryingValue": 4959516000,
+    "carryingValue": 6263947000,
     "markPct": null
    },
    "costOfDebt": {
-    "value": 0.007697871831581539,
+    "value": 0.017420962551959785,
     "source": "fallback: interest expense over average debt",
     "tag": null
    },
@@ -4188,43 +4188,43 @@
    "sic": "5331",
    "ticker": "COST",
    "name": "COSTCO WHOLESALE CORP /NEW",
-   "basis": "ltm",
+   "basis": "annual",
    "sectorCaveat": null,
-   "periodEnd": "2026-05-10",
+   "periodEnd": "2026-08-30",
    "fiscalYear": 2026,
-   "fiscalPeriod": "LTM",
-   "form": "10-Q",
-   "filed": "2026-06-03",
-   "accession": "0000909832-26-000051",
+   "fiscalPeriod": "FY",
+   "form": "10-K",
+   "filed": "2026-10-07",
+   "accession": "0000909832-26-000093",
    "leverage": {
-    "ebitda": 13790000000,
-    "ebit": 11225000000,
-    "debtTotal": 5670000000,
-    "netDebt": -14326000000,
-    "bookEquity": 33509000000,
-    "debtToEbitda": 0.41116751269035534,
-    "netDebtToEbitda": -1.0388687454677303,
-    "ffo": 11403000000,
-    "ffoToDebt": 2.011111111111111,
-    "interestExpense": 146000000,
-    "interestCoverage": 76.88356164383562,
+    "ebitda": 14359000000,
+    "ebit": 11685000000,
+    "debtTotal": 6162000000,
+    "netDebt": -15139000000,
+    "bookEquity": 35803000000,
+    "debtToEbitda": 0.4291385193955011,
+    "netDebtToEbitda": -1.0543213315690507,
+    "ffo": 11900000000,
+    "ffoToDebt": 1.9311911716975008,
+    "interestExpense": 145000000,
+    "interestCoverage": 80.58620689655173,
     "fixedChargeCoverage": {
-     "value": 26.303370786516854,
+     "value": 2.0820229494262645,
      "inputs": {
-      "ebitda": 13790000000,
-      "capex": 6194000000,
-      "cashTaxes": 2914000000,
+      "ebitda": 14359000000,
+      "capex": 6435000000,
+      "cashTaxes": 3025000000,
       "cashInterest": 103000000,
-      "mandatoryAmortization": 75000000
+      "mandatoryAmortization": 2250000000
      }
     },
-    "fcf": 8806000000,
-    "fcfToDebt": 1.5530864197530865,
+    "fcf": 9382000000,
+    "fcfToDebt": 1.5225576111652062,
     "leverageNotComputableReason": null
    },
    "spBand": {
     "debtToEbitda": {
-     "value": 0.41116751269035534,
+     "value": 0.4291385193955011,
      "band": {
       "key": "minimal",
       "label": "Minimal",
@@ -4233,11 +4233,11 @@
      }
     },
     "netDebtToEbitda": {
-     "value": -1.0388687454677303,
+     "value": -1.0543213315690507,
      "band": null
     },
     "ffoToDebt": {
-     "value": 2.011111111111111,
+     "value": 1.9311911716975008,
      "band": {
       "key": "minimal",
       "label": "Minimal",
@@ -4270,49 +4270,47 @@
      "min": 1.5,
      "max": 2
     },
-    "turnsToNext": 1.0888324873096447,
-    "ebitdaDeclinePctToNext": 0.7258883248730964,
+    "turnsToNext": 1.070861480604499,
+    "ebitdaDeclinePctToNext": 0.7139076537363326,
     "guidanceLine": null,
     "turnsToGuidanceLine": null,
     "ebitdaDeclinePctToGuidanceLine": null
    },
    "maturityLadder": {
     "remainderOfFiscalYear": null,
-    "nextTwelveMonths": 75000000,
-    "yearTwo": 2250000000,
-    "yearThree": 0,
-    "yearFour": 148000000,
-    "yearFive": 1750000000,
-    "afterYearFive": 1582000000,
+    "nextTwelveMonths": 2250000000,
+    "yearTwo": 0,
+    "yearThree": 136000000,
+    "yearFour": 1750000000,
+    "yearFive": 161000000,
+    "afterYearFive": 1878000000,
     "tagged": true,
-    "asOf": "2025-08-31"
+    "asOf": "2026-08-30"
    },
    "liquidity": {
-    "cash": 18946000000,
+    "cash": 20207000000,
     "revolverCapacity": null,
-    "ltmFcf": 8806000000,
-    "nextTwelveMonthMaturities": 75000000,
-    "leasePaymentsDue": 267000000,
-    "runwayCoverage": 81.14619883040936
+    "ltmFcf": 9382000000,
+    "nextTwelveMonthMaturities": 2250000000,
+    "leasePaymentsDue": 252000000,
+    "runwayCoverage": 11.826139088729017
    },
    "debtFairValue": {
-    "fairValue": 5259000000,
-    "carryingValue": 5670000000,
-    "markPct": 0.9275132275132275
+    "fairValue": 5689000000,
+    "carryingValue": 3914000000,
+    "markPct": 1.4535002554931016
    },
    "costOfDebt": {
-    "value": 0.025248594898400346,
+    "value": 0.024267782426778243,
     "source": "fallback: interest expense over average debt",
     "tag": null
    },
    "notes": [
     "EBITDA is operating income plus D&A, stated as such — never an adjusted figure",
     "FFO is proxied as net income plus depreciation and amortization, not S&P's own fuller bridge, which the tagged data cannot rebuild",
-    "cost of debt: DebtWeightedAverageInterestRate not tagged; computed as interest expense over average quarter-over-quarter debt",
-    "maturity ladder is from the latest 10-K (2025-08-31); not retagged in the 2026-05-10 quarter",
+    "cost of debt: DebtWeightedAverageInterestRate not tagged; computed as interest expense over average year-over-year debt",
     "fixed-charge coverage's cash taxes are proxied by the accrual income-tax provision (IncomeTaxExpenseBenefit); no cash-taxes-paid tag exists in the concept ladder",
-    "revolver capacity not tagged (rare among operating companies); treated as 0 in the liquidity-runway numerator",
-    "next-twelve-month operating lease payments due is from the latest 10-K (2025-08-31); not retagged in the 2026-05-10 quarter"
+    "revolver capacity not tagged (rare among operating companies); treated as 0 in the liquidity-runway numerator"
    ]
   },
   "CRM": {
@@ -9820,43 +9818,43 @@
    "sic": "3674",
    "ticker": "MU",
    "name": "MICRON TECHNOLOGY INC",
-   "basis": "ltm",
+   "basis": "annual",
    "sectorCaveat": null,
-   "periodEnd": "2026-05-28",
-   "fiscalYear": 2026,
-   "fiscalPeriod": "LTM",
-   "form": "10-Q",
-   "filed": "2026-06-25",
-   "accession": "0000723125-26-000015",
+   "periodEnd": "2026-09-03",
+   "fiscalYear": 2027,
+   "fiscalPeriod": "FY",
+   "form": "10-K",
+   "filed": "2026-10-09",
+   "accession": "0000723125-26-000023",
    "leverage": {
-    "ebitda": 68254000000,
-    "ebit": 59243000000,
-    "debtTotal": 5722000000,
-    "netDebt": -20300000000,
-    "bookEquity": 100724000000,
-    "debtToEbitda": 0.08383391449585373,
-    "netDebtToEbitda": -0.2974184663169924,
-    "ffo": 59480000000,
-    "ffoToDebt": 10.394966794826983,
-    "interestExpense": 230000000,
-    "interestCoverage": 257.5782608695652,
+    "ebitda": 108843000000,
+    "ebit": 99340000000,
+    "debtTotal": 5179000000,
+    "netDebt": -38255000000,
+    "bookEquity": 138378000000,
+    "debtToEbitda": 0.047582297437593596,
+    "netDebtToEbitda": -0.3514695478808927,
+    "ffo": 94472000000,
+    "ffoToDebt": 18.24135933577911,
+    "interestExpense": 106000000,
+    "interestCoverage": 937.1698113207547,
     "fixedChargeCoverage": {
-     "value": null,
+     "value": 321.6751269035533,
      "inputs": {
-      "ebitda": 68254000000,
-      "capex": 25260000000,
-      "cashTaxes": 8607000000,
-      "cashInterest": null,
+      "ebitda": 108843000000,
+      "capex": 30712000000,
+      "cashTaxes": 14761000000,
+      "cashInterest": 197000000,
       "mandatoryAmortization": 0
      }
     },
-    "fcf": 26172000000,
-    "fcfToDebt": 4.573925200978679,
+    "fcf": 58963000000,
+    "fcfToDebt": 11.385016412434833,
     "leverageNotComputableReason": null
    },
    "spBand": {
     "debtToEbitda": {
-     "value": 0.08383391449585373,
+     "value": 0.047582297437593596,
      "band": {
       "key": "minimal",
       "label": "Minimal",
@@ -9865,11 +9863,11 @@
      }
     },
     "netDebtToEbitda": {
-     "value": -0.2974184663169924,
+     "value": -0.3514695478808927,
      "band": null
     },
     "ffoToDebt": {
-     "value": 10.394966794826983,
+     "value": 18.24135933577911,
      "band": {
       "key": "minimal",
       "label": "Minimal",
@@ -9902,8 +9900,8 @@
      "min": 1.5,
      "max": 2
     },
-    "turnsToNext": 1.4161660855041462,
-    "ebitdaDeclinePctToNext": 0.9441107236694308,
+    "turnsToNext": 1.4524177025624063,
+    "ebitdaDeclinePctToNext": 0.9682784683749376,
     "guidanceLine": null,
     "turnsToGuidanceLine": null,
     "ebitdaDeclinePctToGuidanceLine": null
@@ -9912,40 +9910,38 @@
     "remainderOfFiscalYear": null,
     "nextTwelveMonths": 0,
     "yearTwo": 0,
-    "yearThree": 542000000,
-    "yearFour": 1684000000,
-    "yearFive": 1955000000,
-    "afterYearFive": 7400000000,
+    "yearThree": 0,
+    "yearFour": 0,
+    "yearFive": 0,
+    "afterYearFive": 2808000000,
     "tagged": true,
-    "asOf": "2025-08-28"
+    "asOf": "2026-09-03"
    },
    "liquidity": {
-    "cash": 24995000000,
+    "cash": 38364000000,
     "revolverCapacity": null,
-    "ltmFcf": 26172000000,
+    "ltmFcf": 58963000000,
     "nextTwelveMonthMaturities": 0,
-    "leasePaymentsDue": 92000000,
-    "runwayCoverage": 556.1630434782609
+    "leasePaymentsDue": null,
+    "runwayCoverage": null
    },
    "debtFairValue": {
     "fairValue": null,
-    "carryingValue": 5140000000,
+    "carryingValue": 4688000000,
     "markPct": null
    },
    "costOfDebt": {
-    "value": 0.028996469994957134,
+    "value": 0.010730917189714518,
     "source": "fallback: interest expense over average debt",
     "tag": null
    },
    "notes": [
     "EBITDA is operating income plus D&A, stated as such — never an adjusted figure",
     "FFO is proxied as net income plus depreciation and amortization, not S&P's own fuller bridge, which the tagged data cannot rebuild",
-    "cost of debt: DebtWeightedAverageInterestRate not tagged; computed as interest expense over average quarter-over-quarter debt",
-    "maturity ladder is from the latest 10-K (2025-08-28); not retagged in the 2026-05-28 quarter",
+    "cost of debt: DebtWeightedAverageInterestRate not tagged; computed as interest expense over average year-over-year debt",
     "fixed-charge coverage's cash taxes are proxied by the accrual income-tax provision (IncomeTaxExpenseBenefit); no cash-taxes-paid tag exists in the concept ladder",
-    "fixed-charge coverage not computed: cash interest paid (InterestPaidNet/InterestPaid) is tagged in some periods, but the trailing-twelve-month sum used here is incomplete because at least one of the four quarters does not carry it",
     "revolver capacity not tagged (rare among operating companies); treated as 0 in the liquidity-runway numerator",
-    "next-twelve-month operating lease payments due is from the latest 10-K (2025-08-28); not retagged in the 2026-05-28 quarter"
+    "operating lease payments due not tagged; liquidity runway is not computed without it"
    ]
   },
   "NBIS": {
@@ -11237,52 +11233,52 @@
    "sic": "2080",
    "ticker": "PEP",
    "name": "PEPSICO INC",
-   "basis": "annual",
+   "basis": "ltm",
    "sectorCaveat": null,
-   "periodEnd": "2025-12-27",
-   "fiscalYear": 2025,
-   "fiscalPeriod": "FY",
-   "form": "10-K",
-   "filed": "2026-02-03",
-   "accession": "0000077476-26-000007",
+   "periodEnd": "2026-09-05",
+   "fiscalYear": 2026,
+   "fiscalPeriod": "LTM",
+   "form": "10-Q",
+   "filed": "2026-10-08",
+   "accession": "0000077476-26-000048",
    "leverage": {
-    "ebitda": 14949000000,
-    "ebit": 11498000000,
-    "debtTotal": 49182000000,
-    "netDebt": 39652000000,
-    "bookEquity": 20547000000,
-    "debtToEbitda": 3.289985952237608,
-    "netDebtToEbitda": 2.652485116061275,
-    "ffo": 11691000000,
-    "ffoToDebt": 0.23770891789679152,
-    "interestExpense": 1121000000,
-    "interestCoverage": 10.256913470115968,
+    "ebitda": 18720000000,
+    "ebit": 15053000000,
+    "debtTotal": 51881000000,
+    "netDebt": 40718000000,
+    "bookEquity": 22487000000,
+    "debtToEbitda": 2.77142094017094,
+    "netDebtToEbitda": 2.1751068376068377,
+    "ffo": 14563000000,
+    "ffoToDebt": 0.28070006360710087,
+    "interestExpense": 1106000000,
+    "interestCoverage": 13.610307414104883,
     "fixedChargeCoverage": {
      "value": null,
      "inputs": {
-      "ebitda": 14949000000,
-      "capex": 4415000000,
-      "cashTaxes": 1949000000,
-      "cashInterest": 1748000000,
+      "ebitda": 18720000000,
+      "capex": 4098000000,
+      "cashTaxes": 2759000000,
+      "cashInterest": null,
       "mandatoryAmortization": null
      }
     },
-    "fcf": 7672000000,
-    "fcfToDebt": 0.1559920296043268,
+    "fcf": 10471000000,
+    "fcfToDebt": 0.2018272585339527,
     "leverageNotComputableReason": null
    },
    "spBand": {
     "debtToEbitda": {
-     "value": 3.289985952237608,
+     "value": 2.77142094017094,
      "band": {
-      "key": "significant",
-      "label": "Significant",
-      "min": 3,
-      "max": 4
+      "key": "intermediate",
+      "label": "Intermediate",
+      "min": 2,
+      "max": 3
      }
     },
     "netDebtToEbitda": {
-     "value": 2.652485116061275,
+     "value": 2.1751068376068377,
      "band": {
       "key": "intermediate",
       "label": "Intermediate",
@@ -11291,7 +11287,7 @@
      }
     },
     "ffoToDebt": {
-     "value": 0.23770891789679152,
+     "value": 0.28070006360710087,
      "band": {
       "key": "significant",
       "label": "Significant",
@@ -11300,32 +11296,32 @@
      }
     },
     "worse": {
-     "basis": "debtToEbitda",
+     "basis": "ffoToDebt",
      "band": {
       "key": "significant",
       "label": "Significant",
-      "min": 3,
-      "max": 4
+      "min": 0.2,
+      "max": 0.3
      },
-     "agree": true,
-     "note": null
+     "agree": false,
+     "note": "debt/EBITDA places the company Intermediate while FFO/debt places it Significant; this page's convention is that the worse (Significant) governs"
     }
    },
    "covenantHeadroom": {
     "currentBand": {
+     "key": "intermediate",
+     "label": "Intermediate",
+     "min": 2,
+     "max": 3
+    },
+    "nextBand": {
      "key": "significant",
      "label": "Significant",
      "min": 3,
      "max": 4
     },
-    "nextBand": {
-     "key": "aggressive",
-     "label": "Aggressive",
-     "min": 4,
-     "max": 5
-    },
-    "turnsToNext": 0.710014047762392,
-    "ebitdaDeclinePctToNext": 0.177503511940598,
+    "turnsToNext": 0.2285790598290598,
+    "ebitdaDeclinePctToNext": 0.07619301994301993,
     "guidanceLine": null,
     "turnsToGuidanceLine": null,
     "ebitdaDeclinePctToGuidanceLine": null
@@ -11342,31 +11338,32 @@
     "asOf": null
    },
    "liquidity": {
-    "cash": 9159000000,
+    "cash": 10675000000,
     "revolverCapacity": null,
-    "ltmFcf": 7672000000,
+    "ltmFcf": 10471000000,
     "nextTwelveMonthMaturities": null,
     "leasePaymentsDue": 858000000,
     "runwayCoverage": null
    },
    "debtFairValue": {
     "fairValue": null,
-    "carryingValue": 42321000000,
+    "carryingValue": 42658000000,
     "markPct": null
    },
    "costOfDebt": {
-    "value": 0.02398168748930344,
+    "value": 0.02229973587112124,
     "source": "fallback: interest expense over average debt",
     "tag": null
    },
    "notes": [
     "EBITDA is operating income plus D&A, stated as such — never an adjusted figure",
     "FFO is proxied as net income plus depreciation and amortization, not S&P's own fuller bridge, which the tagged data cannot rebuild",
-    "cost of debt: DebtWeightedAverageInterestRate not tagged; computed as interest expense over average year-over-year debt",
+    "cost of debt: DebtWeightedAverageInterestRate not tagged; computed as interest expense over average quarter-over-quarter debt",
     "no maturity schedule tagged",
     "fixed-charge coverage's cash taxes are proxied by the accrual income-tax provision (IncomeTaxExpenseBenefit); no cash-taxes-paid tag exists in the concept ladder",
-    "fixed-charge coverage not computed: next-twelve-months debt maturities are not tagged",
-    "revolver capacity not tagged (rare among operating companies); treated as 0 in the liquidity-runway numerator"
+    "fixed-charge coverage not computed: cash interest paid (InterestPaidNet/InterestPaid) is tagged in some periods, but the trailing-twelve-month sum used here is incomplete because at least one of the four quarters does not carry it; next-twelve-months debt maturities are not tagged",
+    "revolver capacity not tagged (rare among operating companies); treated as 0 in the liquidity-runway numerator",
+    "next-twelve-month operating lease payments due is from the latest 10-K (2025-12-27); not retagged in the 2026-09-05 quarter"
    ]
   },
   "PFE": {

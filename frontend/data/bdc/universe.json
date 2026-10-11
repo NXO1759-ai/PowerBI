@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-04T13:03:43.629Z",
+ "generated": "2026-10-11T13:47:30.223Z",
  "quarter": "CY2026Q2",
  "rule": "814-",
  "notes": {
@@ -20,7 +20,7 @@
    "fyEndMonth": 12,
    "sic": "0000",
    "listedSince": "2021-03-15",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -43,7 +43,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2004-11-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
@@ -65,7 +65,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2007-03-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -88,7 +88,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2007-01-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -111,7 +111,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2018-11-12",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -134,7 +134,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2021-10-25",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
@@ -157,7 +157,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2020-02-03",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -180,7 +180,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2017-06-12",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
@@ -203,7 +203,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2021-10-04",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
@@ -226,7 +226,7 @@
    "fyEndMonth": 3,
    "sic": null,
    "listedSince": "1984-12-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": true,
    "foundIn": [
@@ -249,7 +249,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "1992-10-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -271,7 +271,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2011-07-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": true,
    "foundIn": [
@@ -317,7 +317,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2014-05-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
@@ -340,7 +340,7 @@
    "fyEndMonth": 3,
    "sic": null,
    "listedSince": "2005-07-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": true,
    "foundIn": [
@@ -363,7 +363,7 @@
    "fyEndMonth": 9,
    "sic": null,
    "listedSince": "2010-05-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": true,
    "foundIn": [
@@ -386,7 +386,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2016-12-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -408,7 +408,7 @@
    "fyEndMonth": 9,
    "sic": null,
    "listedSince": "2002-09-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": true,
    "foundIn": [
@@ -430,7 +430,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2015-04-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -453,7 +453,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2010-11-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -476,7 +476,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2005-07-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": true,
    "foundIn": [
@@ -499,7 +499,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2014-03-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -522,7 +522,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2024-05-20",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
@@ -545,7 +545,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2022-01-31",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": null,
    "sbaExempt": null,
    "foundIn": [
@@ -568,7 +568,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2007-11-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": true,
    "foundIn": [
@@ -591,7 +591,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2004-05-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
@@ -614,7 +614,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2024-01-22",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
@@ -637,7 +637,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2025-01-29",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -660,7 +660,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2024-01-22",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
@@ -684,7 +684,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2011-06-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": true,
    "foundIn": [
@@ -707,7 +707,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2011-05-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": null,
    "sbaExempt": null,
    "foundIn": [
@@ -730,7 +730,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2019-07-15",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
@@ -753,7 +753,7 @@
    "fyEndMonth": 9,
    "sic": null,
    "listedSince": "2008-07-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
@@ -776,7 +776,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2012-12-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": true,
    "foundIn": [
@@ -799,7 +799,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2025-06-12",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
@@ -822,7 +822,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2003-12-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -845,7 +845,7 @@
    "fyEndMonth": 9,
    "sic": null,
    "listedSince": "2011-05-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -868,7 +868,7 @@
    "fyEndMonth": 9,
    "sic": null,
    "listedSince": "2011-02-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
@@ -890,7 +890,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "1994-08-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": null,
    "sbaExempt": null,
    "foundIn": [
@@ -914,7 +914,7 @@
    "fyEndMonth": 9,
    "sic": null,
    "listedSince": "2007-05-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -937,7 +937,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2024-01-15",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -960,7 +960,7 @@
    "fyEndMonth": 6,
    "sic": null,
    "listedSince": "2004-08-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": null,
    "foundIn": [
@@ -983,7 +983,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "1984-12-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-08",
    "acSource": null,
    "sbaExempt": null,
    "foundIn": [
@@ -1006,7 +1006,7 @@
    "fyEndMonth": 3,
    "sic": null,
    "listedSince": "2026-08-13",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": null,
    "sbaExempt": null,
    "foundIn": [
@@ -1027,7 +1027,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2021-10-18",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -1051,7 +1051,7 @@
    "fyEndMonth": 2,
    "sic": null,
    "listedSince": "2007-04-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "tag",
    "sbaExempt": true,
    "foundIn": [
@@ -1074,7 +1074,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2012-12-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": true,
    "foundIn": [
@@ -1097,7 +1097,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2010-03-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -1120,7 +1120,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2011-05-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": null,
    "sbaExempt": null,
    "foundIn": [
@@ -1143,7 +1143,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2012-05-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": true,
    "foundIn": [
@@ -1166,7 +1166,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2014-04-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -1190,7 +1190,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2021-01-25",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -1212,7 +1212,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2014-04-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [
@@ -1234,7 +1234,7 @@
    "fyEndMonth": 12,
    "sic": null,
    "listedSince": "2013-01-01",
-   "priceHistoryEnds": "2026-10-02",
+   "priceHistoryEnds": "2026-10-09",
    "acSource": "prose",
    "sbaExempt": null,
    "foundIn": [

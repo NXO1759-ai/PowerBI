@@ -64,7 +64,7 @@
    "tickers_flagged": []
   },
   "niiTax": {
-   "n": 29,
+   "n": 30,
    "tickers_missing": [
     "CCAP",
     "EQS",
@@ -81,7 +81,6 @@
     "PSBD",
     "PSEC",
     "RVII",
-    "SAR",
     "SCM",
     "SLRC",
     "TCPC",
@@ -1049,8 +1048,8 @@
   }
  },
  "holdings": {
-  "n": 33,
-  "refused": 21,
+  "n": 34,
+  "refused": 20,
   "failed": 0,
   "tickers_refused": [
    {
@@ -1126,11 +1125,6 @@
    {
     "ticker": "RAND",
     "accn": "0001193125-26-333983",
-    "reason": "cost and fair value both outside tolerance"
-   },
-   {
-    "ticker": "SAR",
-    "accn": "0001213900-26-075931",
     "reason": "cost and fair value both outside tolerance"
    },
    {
@@ -2569,7 +2563,7 @@
     "period": "2026-06-30",
     "form": "10-Q",
     "rows": 79,
-    "source": "instance",
+    "source": "dataset",
     "variant": "tagged rows",
     "cost": {
      "sum": 19600000,
@@ -2599,117 +2593,29 @@
     "nonAccrualSource": "rpage"
    },
    "SAR": {
-    "status": "refused",
-    "accn": "0001213900-26-075931",
-    "period": "2026-05-31",
+    "status": "written",
+    "accn": "0001213900-26-107187",
+    "period": "2026-08-31",
     "form": "10-Q",
-    "reason": "cost and fair value both outside tolerance",
-    "rows": 123,
+    "rows": 152,
+    "source": "table",
+    "variant": "table rows: the tagged rows (0, Σ cost 0) do not reconcile; the printed schedule does",
     "cost": {
-     "sum": 1114428284,
-     "tag": 1168765135,
-     "diffPct": 0.046491
+     "sum": 1209085600,
+     "tag": 1209085600,
+     "diffPct": 0
     },
     "fv": {
-     "sum": 1113300705,
-     "tag": 1126333942,
-     "diffPct": 0.011571
+     "sum": 1150190344,
+     "tag": 1150190344,
+     "diffPct": 0
     },
-    "source": "dataset",
-    "tried": [
-     {
-      "variant": "tagged rows",
-      "n": 123,
-      "cost": {
-       "sum": 1114428284,
-       "tag": 1168765135,
-       "diffPct": 0.046491
-      },
-      "fv": {
-       "sum": 1113300705,
-       "tag": 1126333942,
-       "diffPct": 0.011571
-      },
-      "reason": "cost and fair value both outside tolerance"
-     },
-     {
-      "variant": "tagged rows with cost-only rows at fair value 0",
-      "n": 134,
-      "cost": {
-       "sum": 1149567274,
-       "tag": 1168765135,
-       "diffPct": 0.016426
-      },
-      "fv": {
-       "sum": 1113300705,
-       "tag": 1126333942,
-       "diffPct": 0.011571
-      },
-      "reason": "cost and fair value both outside tolerance"
-     },
-     {
-      "variant": "tagged rows with cost-only rows at the printed fair value (11 of 11 filled from the table)",
-      "n": 134,
-      "cost": {
-       "sum": 1149567274,
-       "tag": 1168765135,
-       "diffPct": 0.016426
-      },
-      "fv": {
-       "sum": 1113300705,
-       "tag": 1126333942,
-       "diffPct": 0.011571
-      },
-      "reason": "cost and fair value both outside tolerance"
-     },
-     {
-      "variant": "tagged rows + 26 table-only rows",
-      "n": 149,
-      "cost": {
-       "sum": 1168765135,
-       "tag": 1168765135,
-       "diffPct": 0
-      },
-      "fv": {
-       "sum": 1118104623,
-       "tag": 1126333942,
-       "diffPct": 0.007306
-      },
-      "reason": "fair value outside tolerance"
-     },
-     {
-      "variant": "tagged rows with cost-only rows at fair value 0 + 26 table-only rows",
-      "n": 160,
-      "cost": {
-       "sum": 1203904125,
-       "tag": 1168765135,
-       "diffPct": 0.030065
-      },
-      "fv": {
-       "sum": 1118104623,
-       "tag": 1126333942,
-       "diffPct": 0.007306
-      },
-      "reason": "cost and fair value both outside tolerance"
-     },
-     {
-      "variant": "table rows",
-      "n": 147,
-      "cost": {
-       "sum": 1135362129,
-       "tag": 1168765135,
-       "diffPct": 0.02858
-      },
-      "fv": {
-       "sum": 1084721327,
-       "tag": 1126333942,
-       "diffPct": 0.036945
-      },
-      "reason": "cost and fair value both outside tolerance"
-     }
-    ],
-    "acSource": "tag",
-    "unchanged": true
+    "table": "source (0 tagged joined)",
+    "rpage": null,
+    "nonAccrualSource": "table",
+    "industrySource": "table",
+    "maturitySource": null,
+    "acSource": "tag"
    },
    "SCM": {
     "status": "refused",
@@ -3068,7 +2974,7 @@
  "RAND":{"portfolioFairValue":{"tag":"InvestmentOwnedAtFairValue","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-12-31"},"portfolioCost":{"tag":"InvestmentOwnedAtCost","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-12-31"},"navPerShare":{"tag":"NetAssetValuePerShare","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2018-12-31"},"niiAfterTax":{"tag":"InvestmentIncomeOperatingAfterExpenseAndTax","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-03-31"},"niiPreTax":{"tag":"NetInvestmentIncome","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-03-31"},"niiTax":{"tag":"InvestmentIncomeOperatingTaxExpenseBenefit","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2024-03-31"},"niiPerShare":{"tag":"InvestmentCompanyInvestmentIncomeLossPerShare","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-03-31","derived":"ytd-differenced","differenced":true},"distributionsPerShare":{"tag":"InvestmentCompanyDistributionToShareholdersPerShare","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-03-31","derived":"ytd-differenced","differenced":true},"distributionsDollars":{"tag":"InvestmentCompanyDividendDistribution","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2024-09-30"},"distributionsCommon":{"tag":"DividendsCommonStock","periodType":"3M","end":"2025-06-30","source":"companyfacts","firstPeriod":"2022-03-31"},"totalReturn":{"tag":"InvestmentCompanyTotalReturn","periodType":"YTD","end":"2026-06-30","source":"companyfacts","firstPeriod":"2019-12-31"},"netAssets":{"tag":"StockholdersEquity","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2019-12-31"},"liabilities":{"tag":"Liabilities","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-12-31"},"lineOfCredit":{"tag":"LineOfCredit","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-12-31"},"totalAssets":{"tag":"Assets","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-12-31"},"cash":{"tag":"CashAndCashEquivalentsAtCarryingValue","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2020-12-31"},"assetCoverage":{"tag":"InvestmentCompanySeniorSecurityIndebtednessAssetCoverageRatio","periodType":"instant","end":"2024-09-30","source":"companyfacts","firstPeriod":"2024-09-30"},"weightedShares":{"tag":"WeightedAverageNumberOfSharesOutstandingBasic","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"sharesOutstanding":{"tag":"CommonStockSharesOutstanding","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-12-31"},"managementFee":{"tag":"ManagementFeeExpense","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-03-31"},"incentiveFeeIncome":{"tag":"IncentiveFeeExpenseIncomeBased","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2024-06-30"},"incentiveFeeCapitalGains":{"tag":"IncentiveFeeExpenseCapitalGainBased","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-03-31","derived":"ytd-differenced","differenced":true},"pikInterestIncome":{"tag":"InterestIncomeOperatingPaidInKind","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-12-31","derived":"ytd-differenced","differenced":true},"totalInvestmentIncome":{"tag":"GrossInvestmentIncomeOperating","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-03-31"},"totalExpenses":{"tag":"OperatingExpenses","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-03-31"},"interestExpense":{"tag":"InterestExpenseDebt","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-09-30"},"realizedGains":{"tag":"RealizedInvestmentGainsLosses","periodType":"3M","end":"2025-09-30","source":"companyfacts","firstPeriod":"2022-03-31","derived":"ytd-differenced","differenced":true},"unrealizedGains":{"tag":"UnrealizedGainLossOnInvestments","periodType":"3M","end":"2025-09-30","source":"companyfacts","firstPeriod":"2022-03-31","derived":"ytd-differenced","differenced":true},"netIncreaseInNetAssets":{"tag":"NetIncomeLoss","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-03-31"}},
  "RVII":{"portfolioFairValue":{"tag":"InvestmentOwnedAtFairValue","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-03-31"},"portfolioCost":{"tag":"InvestmentOwnedAtCost","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-03-31"},"navPerShare":{"tag":"NetAssetValuePerShare","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-03-31"},"niiAfterTax":{"tag":"InvestmentIncomeOperatingAfterExpenseAndTax","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-06-30"},"niiPerShare":{"tag":"InvestmentCompanyInvestmentIncomeLossPerShare","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-06-30"},"distributionsPerShare":{"tag":"InvestmentCompanyDistributionToShareholdersPerShare","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-06-30"},"netAssets":{"tag":"StockholdersEquity","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-03-31"},"liabilities":{"tag":"Liabilities","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-03-31"},"totalAssets":{"tag":"Assets","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-03-31"},"cash":{"tag":"Cash","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-03-31"},"weightedShares":{"tag":"WeightedAverageNumberOfSharesOutstandingBasic","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-06-30"},"sharesOutstanding":{"tag":"CommonStockSharesOutstanding","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-03-31"},"totalExpenses":{"tag":"InvestmentIncomeInvestmentExpense","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-06-30"},"netIncreaseInNetAssets":{"tag":"NetIncomeLoss","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2026-06-30"}},
  "RWAY":{"portfolioFairValue":{"tag":"InvestmentOwnedAtFairValue","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"portfolioCost":{"tag":"InvestmentOwnedAtCost","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"navPerShare":{"tag":"NetAssetValuePerShare","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2015-12-31"},"niiAfterTax":{"tag":"NetInvestmentIncome","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30","flagged":true},"niiPreTax":{"tag":"NetInvestmentIncome","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"niiTax":{"tag":"InvestmentIncomeOperatingTaxExpenseBenefit","periodType":"3M","end":"2025-06-30","source":"companyfacts","firstPeriod":"2022-06-30"},"niiPerShare":{"tag":"NetInvestmentIncome/WeightedAverageNumberOfSharesOutstandingBasic","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30","derived":"nii-over-shares","flagged":true},"distributionsPerShare":{"tag":"InvestmentCompanyDistributionToShareholdersPerShare","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30","derived":"ytd-differenced","differenced":true},"distributionsDollars":{"tag":"InvestmentCompanyDividendDistribution","periodType":"derivedQ4","end":"2024-12-31","source":"companyfacts","firstPeriod":"2021-09-30","derived":"annual-less-ytd","differenced":true},"distributionsCommon":{"tag":"DividendsCommonStock","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"totalReturn":{"tag":"InvestmentCompanyTotalReturn","periodType":"YTD","end":"2026-06-30","source":"companyfacts","firstPeriod":"2016-12-31"},"netAssets":{"tag":"StockholdersEquity","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2015-12-31"},"debt":{"tag":"LongTermDebt","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2017-12-31"},"liabilities":{"tag":"Liabilities","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"lineOfCredit":{"tag":"LineOfCredit","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"totalAssets":{"tag":"Assets","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"cash":{"tag":"CashAndCashEquivalentsAtCarryingValue","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2019-12-31"},"weightedShares":{"tag":"WeightedAverageNumberOfSharesOutstandingBasic","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2019-12-31"},"sharesOutstanding":{"tag":"CommonStockSharesOutstanding","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2020-12-31"},"managementFee":{"tag":"ManagementFeeExpense","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"incentiveFeeIncome":{"tag":"IncentiveFeeExpense","periodType":"3M","end":"2026-03-31","source":"companyfacts","firstPeriod":"2021-09-30","flagged":true},"expenseRatio":{"tag":"InvestmentCompanyExpenseRatioIncludingIncentiveFee","periodType":"YTD","end":"2026-06-30","source":"companyfacts","firstPeriod":"2016-12-31"},"totalInvestmentIncome":{"tag":"GrossInvestmentIncomeOperating","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-03-31"},"totalExpenses":{"tag":"OperatingExpenses","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"interestExpense":{"tag":"InterestExpense","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"realizedGains":{"tag":"RealizedInvestmentGainsLosses","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30","derived":"ytd-differenced","differenced":true},"unrealizedGains":{"tag":"UnrealizedGainLossOnInvestments","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30","derived":"ytd-differenced","differenced":true},"netIncreaseInNetAssets":{"tag":"NetIncomeLoss","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"debtMaturitiesNext12M":{"tag":"LongTermDebtMaturitiesRepaymentsOfPrincipalInNextTwelveMonths","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2025-06-30"},"unfundedCommitments":{"tag":"InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"}},
- "SAR":{"portfolioFairValue":{"tag":"InvestmentOwnedAtFairValue","periodType":"instant","end":"2026-05-31","source":"companyfacts","firstPeriod":"2022-02-28"},"portfolioCost":{"tag":"InvestmentOwnedAtCost","periodType":"instant","end":"2026-05-31","source":"companyfacts","firstPeriod":"2022-02-28"},"navPerShare":{"tag":"NetAssetValuePerShare","periodType":"instant","end":"2026-05-31","source":"companyfacts","firstPeriod":"2018-02-28"},"niiAfterTax":{"tag":"NetInvestmentIncome","periodType":"3M","end":"2026-05-31","source":"companyfacts","firstPeriod":"2021-08-31"},"niiPreTax":{"tag":"NetInvestmentIncome","periodType":"3M","end":"2026-05-31","source":"companyfacts","firstPeriod":"2021-08-31"},"niiPerShare":{"tag":"InvestmentCompanyInvestmentIncomeLossPerShare","periodType":"3M","end":"2026-05-31","source":"companyfacts","firstPeriod":"2021-11-30"},"distributionsPerShare":{"tag":"InvestmentCompanyDistributionToShareholdersPerShare","periodType":"3M","end":"2026-05-31","source":"companyfacts","firstPeriod":"2021-11-30"},"distributionsDollars":{"tag":"InvestmentCompanyDividendDistribution","periodType":"3M","end":"2026-05-31","source":"companyfacts","firstPeriod":"2023-05-31"},"totalReturn":{"tag":"InvestmentCompanyTotalReturn","periodType":"3M","end":"2026-05-31","source":"companyfacts","firstPeriod":"2019-02-28"},"netAssets":{"tag":"StockholdersEquity","periodType":"instant","end":"2026-05-31","source":"companyfacts","firstPeriod":"2020-02-29"},"debt":{"tag":"LongTermDebt","periodType":"instant","end":"2026-05-31","source":"companyfacts","firstPeriod":"2022-08-31"},"liabilities":{"tag":"Liabilities","periodType":"instant","end":"2026-05-31","source":"companyfacts","firstPeriod":"2022-02-28"},"lineOfCredit":{"tag":"LineOfCredit","periodType":"instant","end":"2026-05-31","source":"companyfacts","firstPeriod":"2022-02-28"},"totalAssets":{"tag":"Assets","periodType":"instant","end":"2026-05-31","source":"companyfacts","firstPeriod":"2022-02-28"},"cash":{"tag":"CashAndCashEquivalentsAtCarryingValue","periodType":"instant","end":"2026-05-31","source":"companyfacts","firstPeriod":"2020-02-29"},"assetCoverage":{"tag":"InvestmentCompanySeniorSecurityIndebtednessAssetCoverageRatio","periodType":"instant","end":"2026-05-31","source":"companyfacts","firstPeriod":"2024-02-29"},"weightedShares":{"tag":"WeightedAverageNumberOfSharesOutstandingBasic","periodType":"3M","end":"2026-05-31","source":"companyfacts","firstPeriod":"2021-02-28"},"sharesOutstanding":{"tag":"CommonStockSharesOutstanding","periodType":"instant","end":"2026-05-31","source":"companyfacts","firstPeriod":"2020-02-29"},"managementFee":{"tag":"ManagementFeeExpense","periodType":"3M","end":"2026-05-31","source":"companyfacts","firstPeriod":"2021-08-31"},"incentiveFeeIncome":{"tag":"IncentiveFeeExpense","periodType":"3M","end":"2026-05-31","source":"companyfacts","firstPeriod":"2021-08-31"},"costOfDebt":{"tag":"DebtWeightedAverageInterestRate","periodType":"instant","end":"2022-11-30","source":"companyfacts","firstPeriod":"2022-08-31"},"totalExpenses":{"tag":"OperatingExpenses","periodType":"3M","end":"2026-05-31","source":"companyfacts","firstPeriod":"2021-08-31"},"interestExpense":{"tag":"InterestAndDebtExpense","periodType":"3M","end":"2026-05-31","source":"companyfacts","firstPeriod":"2021-08-31"},"realizedGains":{"tag":"DebtAndEquitySecuritiesRealizedGainLoss","periodType":"3M","end":"2026-05-31","source":"companyfacts","firstPeriod":"2021-08-31"},"unrealizedGains":{"tag":"DebtAndEquitySecuritiesUnrealizedGainLoss","periodType":"3M","end":"2026-05-31","source":"companyfacts","firstPeriod":"2023-05-31"},"netIncreaseInNetAssets":{"tag":"NetIncomeLoss","periodType":"3M","end":"2026-05-31","source":"companyfacts","firstPeriod":"2021-11-30"},"revolverCapacity":{"tag":"LineOfCreditFacilityRemainingBorrowingCapacity","periodType":"instant","end":"2026-05-31","source":"companyfacts","firstPeriod":"2024-05-31"},"debtMaturitiesNext12M":{"tag":"LongTermDebtMaturitiesRepaymentsOfPrincipalInNextTwelveMonths","periodType":"instant","end":"2026-05-31","source":"companyfacts","firstPeriod":"2024-11-30"}},
+ "SAR":{"portfolioFairValue":{"tag":"InvestmentOwnedAtFairValue","periodType":"instant","end":"2026-08-31","source":"companyfacts","firstPeriod":"2022-02-28"},"portfolioCost":{"tag":"InvestmentOwnedAtCost","periodType":"instant","end":"2026-08-31","source":"companyfacts","firstPeriod":"2022-02-28"},"navPerShare":{"tag":"NetAssetValuePerShare","periodType":"instant","end":"2026-08-31","source":"companyfacts","firstPeriod":"2018-02-28"},"niiAfterTax":{"tag":"NetInvestmentIncome-InvestmentIncomeOperatingTaxExpenseBenefit","periodType":"3M","end":"2026-08-31","source":"companyfacts","firstPeriod":"2021-08-31"},"niiPreTax":{"tag":"NetInvestmentIncome","periodType":"3M","end":"2026-08-31","source":"companyfacts","firstPeriod":"2021-08-31"},"niiTax":{"tag":"InvestmentIncomeOperatingTaxExpenseBenefit","periodType":"3M","end":"2026-08-31","source":"companyfacts","firstPeriod":"2026-08-31"},"niiPerShare":{"tag":"InvestmentCompanyInvestmentIncomeLossPerShare","periodType":"3M","end":"2026-08-31","source":"companyfacts","firstPeriod":"2021-11-30","derived":"ytd-differenced","differenced":true},"distributionsPerShare":{"tag":"InvestmentCompanyDistributionToShareholdersPerShare","periodType":"3M","end":"2026-08-31","source":"companyfacts","firstPeriod":"2021-11-30","derived":"ytd-differenced","differenced":true},"distributionsDollars":{"tag":"InvestmentCompanyDividendDistribution","periodType":"3M","end":"2026-08-31","source":"companyfacts","firstPeriod":"2023-05-31","derived":"ytd-differenced","differenced":true},"totalReturn":{"tag":"InvestmentCompanyTotalReturn","periodType":"YTD","end":"2026-08-31","source":"companyfacts","firstPeriod":"2019-02-28"},"netAssets":{"tag":"StockholdersEquity","periodType":"instant","end":"2026-08-31","source":"companyfacts","firstPeriod":"2020-02-29"},"debt":{"tag":"LongTermDebt","periodType":"instant","end":"2026-08-31","source":"companyfacts","firstPeriod":"2022-08-31"},"liabilities":{"tag":"Liabilities","periodType":"instant","end":"2026-08-31","source":"companyfacts","firstPeriod":"2022-02-28"},"lineOfCredit":{"tag":"LineOfCredit","periodType":"instant","end":"2026-08-31","source":"companyfacts","firstPeriod":"2022-02-28"},"totalAssets":{"tag":"Assets","periodType":"instant","end":"2026-08-31","source":"companyfacts","firstPeriod":"2022-02-28"},"cash":{"tag":"CashAndCashEquivalentsAtCarryingValue","periodType":"instant","end":"2026-08-31","source":"companyfacts","firstPeriod":"2020-02-29"},"assetCoverage":{"tag":"InvestmentCompanySeniorSecurityIndebtednessAssetCoverageRatio","periodType":"instant","end":"2026-08-31","source":"companyfacts","firstPeriod":"2024-02-29"},"weightedShares":{"tag":"WeightedAverageNumberOfSharesOutstandingBasic","periodType":"3M","end":"2026-08-31","source":"companyfacts","firstPeriod":"2021-02-28"},"sharesOutstanding":{"tag":"CommonStockSharesOutstanding","periodType":"instant","end":"2026-08-31","source":"companyfacts","firstPeriod":"2020-02-29"},"managementFee":{"tag":"ManagementFeeExpense","periodType":"3M","end":"2026-08-31","source":"companyfacts","firstPeriod":"2021-08-31"},"incentiveFeeIncome":{"tag":"IncentiveFeeExpense","periodType":"3M","end":"2026-08-31","source":"companyfacts","firstPeriod":"2021-08-31","derived":"ytd-differenced","differenced":true},"costOfDebt":{"tag":"DebtWeightedAverageInterestRate","periodType":"instant","end":"2022-11-30","source":"companyfacts","firstPeriod":"2022-08-31"},"totalExpenses":{"tag":"OperatingExpenses","periodType":"3M","end":"2026-08-31","source":"companyfacts","firstPeriod":"2021-08-31"},"interestExpense":{"tag":"InterestAndDebtExpense","periodType":"3M","end":"2026-08-31","source":"companyfacts","firstPeriod":"2021-08-31"},"realizedGains":{"tag":"DebtAndEquitySecuritiesRealizedGainLoss","periodType":"3M","end":"2026-08-31","source":"companyfacts","firstPeriod":"2021-08-31"},"unrealizedGains":{"tag":"DebtAndEquitySecuritiesUnrealizedGainLoss","periodType":"3M","end":"2026-08-31","source":"companyfacts","firstPeriod":"2023-05-31"},"netIncreaseInNetAssets":{"tag":"NetIncomeLoss","periodType":"3M","end":"2026-08-31","source":"companyfacts","firstPeriod":"2021-11-30"},"revolverCapacity":{"tag":"LineOfCreditFacilityRemainingBorrowingCapacity","periodType":"instant","end":"2026-05-31","source":"companyfacts","firstPeriod":"2024-05-31"},"debtMaturitiesNext12M":{"tag":"LongTermDebtMaturitiesRepaymentsOfPrincipalInNextTwelveMonths","periodType":"instant","end":"2026-08-31","source":"companyfacts","firstPeriod":"2024-11-30"}},
  "SCM":{"portfolioFairValue":{"tag":"InvestmentOwnedAtFairValue","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"portfolioCost":{"tag":"InvestmentOwnedAtCost","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"navPerShare":{"tag":"NetAssetValuePerShare","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2012-12-31"},"niiAfterTax":{"tag":"InvestmentIncomeOperatingAfterExpenseAndTax","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"niiPreTax":{"tag":"NetInvestmentIncome","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"niiPerShare":{"tag":"InvestmentCompanyInvestmentIncomeLossPerShare","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31","derived":"ytd-differenced","differenced":true},"distributionsPerShare":{"tag":"InvestmentCompanyDistributionToShareholdersPerShare","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31","derived":"ytd-differenced","differenced":true},"distributionsDollars":{"tag":"InvestmentCompanyDividendDistribution","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2024-03-31"},"totalReturn":{"tag":"InvestmentCompanyTotalReturn","periodType":"YTD","end":"2026-06-30","source":"companyfacts","firstPeriod":"2013-12-31"},"netAssets":{"tag":"StockholdersEquity","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2013-12-31"},"liabilities":{"tag":"Liabilities","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"lineOfCredit":{"tag":"LineOfCredit","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2013-12-31"},"totalAssets":{"tag":"Assets","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"cash":{"tag":"CashAndCashEquivalentsAtCarryingValue","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"weightedShares":{"tag":"WeightedAverageNumberOfSharesOutstandingBasic","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2013-12-31"},"sharesOutstanding":{"tag":"CommonStockSharesOutstanding","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"managementFee":{"tag":"ManagementFeeExpense","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"incentiveFeeIncome":{"tag":"IncentiveFeeExpense","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"pikInterestIncome":{"tag":"InterestIncomeOperatingPaidInKind","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-06-30"},"pikNonCashAdjustment":{"tag":"PaidInKindInterest","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-12-31","derived":"ytd-differenced","differenced":true},"totalInvestmentIncome":{"tag":"GrossInvestmentIncomeOperating","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"totalExpenses":{"tag":"OperatingExpenses","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"interestExpense":{"tag":"InterestExpenseOperating","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"realizedGains":{"tag":"RealizedInvestmentGainsLosses","periodType":"3M","end":"2025-03-31","source":"companyfacts","firstPeriod":"2021-09-30"},"unrealizedGains":{"tag":"UnrealizedGainLossOnInvestments","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"netIncreaseInNetAssets":{"tag":"NetIncomeLoss","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"}},
  "SLRC":{"portfolioFairValue":{"tag":"InvestmentOwnedAtFairValue","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-12-31"},"portfolioCost":{"tag":"InvestmentOwnedAtCost","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"navPerShare":{"tag":"NetAssetValuePerShare","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2017-12-31"},"niiAfterTax":{"tag":"NetInvestmentIncome","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-06-30"},"niiPreTax":{"tag":"NetInvestmentIncome","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-06-30"},"niiPerShare":{"tag":"InvestmentCompanyInvestmentIncomeLossPerShare","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30","derived":"ytd-differenced","differenced":true},"distributionsPerShare":{"tag":"InvestmentCompanyDistributionToShareholdersPerShare","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-06-30","derived":"ytd-differenced","differenced":true},"distributionsDollars":{"tag":"InvestmentCompanyDividendDistribution","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-06-30"},"totalReturn":{"tag":"InvestmentCompanyTotalReturn","periodType":"YTD","end":"2026-06-30","source":"companyfacts","firstPeriod":"2018-12-31"},"netAssets":{"tag":"AssetsNet","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2018-12-31"},"debt":{"tag":"DebtInstrumentCarryingAmount","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"liabilities":{"tag":"Liabilities","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"totalAssets":{"tag":"Assets","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"cash":{"tag":"Cash","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2019-12-31"},"weightedShares":{"tag":"WeightedAverageNumberOfSharesOutstandingBasic","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2020-12-31"},"sharesOutstanding":{"tag":"CommonStockSharesOutstanding","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2018-12-31"},"managementFee":{"tag":"ManagementFeeExpense","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-06-30"},"expenseRatio":{"tag":"InvestmentCompanyExpenseRatioExcludingIncentiveFee","periodType":"YTD","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-06-30"},"totalInvestmentIncome":{"tag":"GrossInvestmentIncomeOperating","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-06-30"},"totalExpenses":{"tag":"InvestmentIncomeInvestmentExpense","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-06-30"},"interestExpense":{"tag":"InterestExpense","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2023-03-31"},"realizedGains":{"tag":"RealizedInvestmentGainsLosses","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-06-30"},"unrealizedGains":{"tag":"UnrealizedGainLossOnInvestments","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-06-30"},"netIncreaseInNetAssets":{"tag":"NetIncomeLoss","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-06-30"},"unfundedCommitments":{"tag":"InvestmentCompanyFinancialCommitmentToInvesteeFutureAmount","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2023-12-31"}},
  "SVVC":{"portfolioFairValue":{"tag":"InvestmentOwnedAtFairValue","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2022-12-31"},"portfolioCost":{"tag":"InvestmentOwnedAtCost","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"navPerShare":{"tag":"NetAssetValuePerShare","periodType":"instant","end":"2025-09-30","source":"companyfacts","firstPeriod":"2016-12-31","flagged":true},"niiAfterTax":{"tag":"InvestmentIncomeOperatingAfterExpenseAndTax","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"niiPreTax":{"tag":"NetInvestmentIncome","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"niiTax":{"tag":"InvestmentIncomeOperatingTaxExpenseBenefit","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2025-03-31"},"niiPerShare":{"tag":"InvestmentCompanyInvestmentIncomeLossPerShare","periodType":"derivedQ4","end":"2024-12-31","source":"companyfacts","firstPeriod":"2024-03-31","derived":"annual-less-ytd","differenced":true},"distributionsPerShare":{"tag":"InvestmentCompanyDistributionToShareholdersPerShare","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-03-31","derived":"ytd-differenced","differenced":true},"totalReturn":{"tag":"InvestmentCompanyTotalReturn","periodType":"YTD","end":"2026-06-30","source":"companyfacts","firstPeriod":"2019-12-31"},"netAssets":{"tag":"AssetsNet","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2019-12-31"},"liabilities":{"tag":"Liabilities","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"totalAssets":{"tag":"Assets","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"cash":{"tag":"CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents","periodType":"instant","end":"2023-09-30","source":"companyfacts","firstPeriod":"2020-12-31"},"sharesOutstanding":{"tag":"CommonStockSharesOutstanding","periodType":"instant","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-12-31"},"totalExpenses":{"tag":"InvestmentIncomeInvestmentExpense","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"},"realizedGains":{"tag":"DebtAndEquitySecuritiesRealizedGainLoss","periodType":"derivedQ4","end":"2023-12-31","source":"companyfacts","firstPeriod":"2022-12-31","derived":"annual-less-ytd","differenced":true},"netIncreaseInNetAssets":{"tag":"NetIncomeLoss","periodType":"3M","end":"2026-06-30","source":"companyfacts","firstPeriod":"2021-09-30"}},

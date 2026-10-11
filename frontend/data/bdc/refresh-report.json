@@ -1,5 +1,5 @@
 {
- "startedAt": "2026-10-04T13:03:43.629Z",
+ "startedAt": "2026-10-11T13:47:30.223Z",
  "quarter": "CY2026Q2",
  "universe": {
   "framesCandidates": 231,
@@ -18,7 +18,7 @@
   {
    "severity": "warn",
    "code": "holdings_refusals",
-   "message": "21 refused and 0 failed of 54 schedules"
+   "message": "20 refused and 0 failed of 54 schedules"
   }
  ],
  "errorCount": 0,
@@ -26,11 +26,11 @@
  "flagCount": 565,
  "framesFetched": 21,
  "rateLimitHits": 0,
- "bytesWritten": 15414210,
+ "bytesWritten": 15471538,
  "holdings": {
-  "startedAt": "2026-10-04T13:04:48.620Z",
-  "attempted": 6,
-  "written": 1,
+  "startedAt": "2026-10-11T13:48:22.704Z",
+  "attempted": 7,
+  "written": 2,
   "unchanged": [
    "AFCG",
    "ARCC",
@@ -72,7 +72,6 @@
    "PSBD",
    "PSEC",
    "RWAY",
-   "SAR",
    "SCM",
    "SLRC",
    "TCPC",
@@ -896,114 +895,6 @@
     "unchanged": true
    },
    {
-    "ticker": "SAR",
-    "accn": "0001213900-26-075931",
-    "reason": "cost and fair value both outside tolerance",
-    "cost": {
-     "sum": 1114428284,
-     "tag": 1168765135,
-     "diffPct": 0.046491
-    },
-    "fv": {
-     "sum": 1113300705,
-     "tag": 1126333942,
-     "diffPct": 0.011571
-    },
-    "tried": [
-     {
-      "variant": "tagged rows",
-      "n": 123,
-      "cost": {
-       "sum": 1114428284,
-       "tag": 1168765135,
-       "diffPct": 0.046491
-      },
-      "fv": {
-       "sum": 1113300705,
-       "tag": 1126333942,
-       "diffPct": 0.011571
-      },
-      "reason": "cost and fair value both outside tolerance"
-     },
-     {
-      "variant": "tagged rows with cost-only rows at fair value 0",
-      "n": 134,
-      "cost": {
-       "sum": 1149567274,
-       "tag": 1168765135,
-       "diffPct": 0.016426
-      },
-      "fv": {
-       "sum": 1113300705,
-       "tag": 1126333942,
-       "diffPct": 0.011571
-      },
-      "reason": "cost and fair value both outside tolerance"
-     },
-     {
-      "variant": "tagged rows with cost-only rows at the printed fair value (11 of 11 filled from the table)",
-      "n": 134,
-      "cost": {
-       "sum": 1149567274,
-       "tag": 1168765135,
-       "diffPct": 0.016426
-      },
-      "fv": {
-       "sum": 1113300705,
-       "tag": 1126333942,
-       "diffPct": 0.011571
-      },
-      "reason": "cost and fair value both outside tolerance"
-     },
-     {
-      "variant": "tagged rows + 26 table-only rows",
-      "n": 149,
-      "cost": {
-       "sum": 1168765135,
-       "tag": 1168765135,
-       "diffPct": 0
-      },
-      "fv": {
-       "sum": 1118104623,
-       "tag": 1126333942,
-       "diffPct": 0.007306
-      },
-      "reason": "fair value outside tolerance"
-     },
-     {
-      "variant": "tagged rows with cost-only rows at fair value 0 + 26 table-only rows",
-      "n": 160,
-      "cost": {
-       "sum": 1203904125,
-       "tag": 1168765135,
-       "diffPct": 0.030065
-      },
-      "fv": {
-       "sum": 1118104623,
-       "tag": 1126333942,
-       "diffPct": 0.007306
-      },
-      "reason": "cost and fair value both outside tolerance"
-     },
-     {
-      "variant": "table rows",
-      "n": 147,
-      "cost": {
-       "sum": 1135362129,
-       "tag": 1168765135,
-       "diffPct": 0.02858
-      },
-      "fv": {
-       "sum": 1084721327,
-       "tag": 1126333942,
-       "diffPct": 0.036945
-      },
-      "reason": "cost and fair value both outside tolerance"
-     }
-    ],
-    "unchanged": true
-   },
-   {
     "ticker": "SCM",
     "accn": "0001104659-26-093435",
     "reason": "cost and fair value both outside tolerance",
@@ -1513,28 +1404,34 @@
   ],
   "failed": [],
   "sources": {
-   "dataset": 0,
+   "dataset": 1,
    "instance": 6,
-   "table": 0
+   "table": 1
   },
   "zips": [
    {
     "month": "2026_08",
-    "status": "cached",
+    "status": "downloaded",
     "bytes": 75870583,
     "filings": 174
    },
    {
     "month": "2026_09",
-    "status": "absent"
+    "status": "downloaded",
+    "bytes": 417557,
+    "filings": 2
    },
    {
     "month": "2026_10",
     "status": "absent"
+   },
+   {
+    "month": "2026_11",
+    "status": "absent"
    }
   ],
   "table": {
-   "used": 1,
+   "used": 2,
    "unusable": 0,
    "none": 0
   },
@@ -1543,62 +1440,62 @@
    "used": 1,
    "failed": 0
   },
-  "prose": 6,
+  "prose": 7,
   "downloads": {
-   "bytes": 19316480,
-   "files": 14,
-   "checks": 1,
-   "requests": 18
+   "bytes": 103189245,
+   "files": 17,
+   "checks": 0,
+   "requests": 21
   },
   "notes": [],
-  "finishedAt": "2026-10-04T13:04:58.516Z",
-  "durationSeconds": 10
+  "finishedAt": "2026-10-11T13:48:40.251Z",
+  "durationSeconds": 18
  },
  "composite": {
-  "members": 33,
+  "members": 34,
   "changed": true,
   "totals": {
-   "fv": 136211793777,
-   "cost": 138159562647,
-   "thirdPartyDebtCost": 107503442188,
-   "holdings": 14004,
-   "thirdPartyDebtHoldings": 9525
+   "fv": 137361984121,
+   "cost": 139368648247,
+   "thirdPartyDebtCost": 108474833180,
+   "holdings": 14156,
+   "thirdPartyDebtHoldings": 9589
   },
   "weighted": {
-   "yieldAtCost": 0.0949,
-   "yieldAtFv": 0.0968,
-   "spreadCostWeighted": 0.0533,
-   "floatingShare": 0.9488,
-   "nonAccrualCost": 0.0274,
-   "nonAccrualFv": 0.0127,
+   "yieldAtCost": 0.095,
+   "yieldAtFv": 0.0969,
+   "spreadCostWeighted": 0.0534,
+   "floatingShare": 0.9492,
+   "nonAccrualCost": 0.0273,
+   "nonAccrualFv": 0.0126,
    "pikShareOfTotal": 0.1232,
    "pikShareOfInterest": null,
-   "pikShareOfInterestContractual": 0.078,
-   "fvOverCost": 0.9859,
-   "debtToEquity": 1.1182,
-   "assetCoverage": 1.9255,
-   "opexRatio": 0.0479,
+   "pikShareOfInterestContractual": 0.0769,
+   "fvOverCost": 0.9856,
+   "debtToEquity": 1.1262,
+   "assetCoverage": 1.9236,
+   "opexRatio": 0.0485,
    "tiiYieldOnAvgCost": 0.0999
   },
   "n": {
-   "filers": 33,
-   "yieldAtCost": 18,
-   "yieldAtFv": 18,
-   "spreadCostWeighted": 30,
-   "floatingShare": 30,
-   "nonAccrualCost": 29,
-   "nonAccrualFv": 29,
+   "filers": 34,
+   "yieldAtCost": 19,
+   "yieldAtFv": 19,
+   "spreadCostWeighted": 31,
+   "floatingShare": 31,
+   "nonAccrualCost": 30,
+   "nonAccrualFv": 30,
    "pikShareOfTotal": 18,
    "pikShareOfInterest": 0,
-   "pikShareOfInterestContractual": 27,
-   "fvOverCost": 33,
-   "debtToEquity": 28,
-   "assetCoverage": 30,
-   "opexRatio": 29,
+   "pikShareOfInterestContractual": 28,
+   "fvOverCost": 34,
+   "debtToEquity": 29,
+   "assetCoverage": 31,
+   "opexRatio": 30,
    "tiiYieldOnAvgCost": 40,
    "universe": 54
   }
  },
- "finishedAt": "2026-10-04T13:04:58.831Z",
- "durationSeconds": 75
+ "finishedAt": "2026-10-11T13:48:40.575Z",
+ "durationSeconds": 70
 }

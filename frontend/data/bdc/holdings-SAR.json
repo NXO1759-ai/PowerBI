@@ -1,0 +1,556 @@
+{
+ "ticker": "SAR",
+ "cik": 1377936,
+ "name": "SARATOGA INVESTMENT CORP.",
+ "period": "2026-08-31",
+ "form": "10-Q",
+ "accn": "0001213900-26-107187",
+ "filed": "2026-10-06",
+ "creditVersion": "1.1.0",
+ "rowSource": "table",
+ "sources": {
+  "dataset": null,
+  "instance": {
+   "doc": "0001213900-26-107187.htm",
+   "rows": 0,
+   "members": 0,
+   "contexts": 0,
+   "dropped": {},
+   "period": "2026-08-31",
+   "extra": {
+    "costOnly": 0,
+    "cash": 0
+   }
+  },
+  "table": {
+   "doc": "0001213900-26-107187.htm",
+   "period": "2026-08-31",
+   "tables": 16,
+   "rows": 157,
+   "subtotals": 55,
+   "scale": 1,
+   "scaleFix": 1,
+   "totals": {
+    "cost": 1209085600,
+    "fv": 1150190344
+   },
+   "asSource": true,
+   "cashRowsLeftOut": 5,
+   "emptyRowsLeftOut": 0,
+   "taggedJoined": 0,
+   "taggedRate": 0,
+   "stages": {
+    "numeric": 0,
+    "principal": 0,
+    "cost": 0,
+    "name": 0
+   },
+   "nonAccrualRows": 5,
+   "headers": {
+    "company": "issuer",
+    "industry": "industry",
+    "investment interest rate/ maturity": "rate",
+    "original acquisition date": "acquired",
+    "principal/ number of shares": "principal",
+    "cost": "cost",
+    "fair value": "fv",
+    "% of net assets": "pctNav",
+    "(unlabeled first column)": "issuer",
+    "number of shares": "principal",
+    "issuer name": "issuer",
+    "asset type": "type",
+    "reference rate/spread": "spread",
+    "sofr floor": "floor",
+    "current rate (all in)": "rate",
+    "maturity date": "maturity",
+    "sofr/libor floor": "floor",
+    "principal/number of shares": "principal"
+   },
+   "notes": [
+    "no equity section seen"
+   ]
+  },
+  "rpage": null
+ },
+ "gate": {
+  "passed": true,
+  "tolerance": 0.005,
+  "tagSource": "company file",
+  "variant": "table rows: the tagged rows (0, Σ cost 0) do not reconcile; the printed schedule does",
+  "cost": {
+   "sum": 1209085600,
+   "tag": 1209085600,
+   "diffPct": 0
+  },
+  "fv": {
+   "sum": 1150190344,
+   "tag": 1150190344,
+   "diffPct": 0
+  },
+  "rows": 152,
+  "subtotalRowsDropped": 0,
+  "dropped": {},
+  "tried": [
+   {
+    "variant": "tagged rows",
+    "n": 0,
+    "cost": {
+     "sum": 0,
+     "tag": 1209085600,
+     "diffPct": 1
+    },
+    "fv": {
+     "sum": 0,
+     "tag": 1150190344,
+     "diffPct": 1
+    },
+    "reason": "no rows kept"
+   },
+   {
+    "variant": "table rows",
+    "n": 152,
+    "cost": {
+     "sum": 1209085600,
+     "tag": 1209085600,
+     "diffPct": 0
+    },
+    "fv": {
+     "sum": 1150190344,
+     "tag": 1150190344,
+     "diffPct": 0
+    },
+    "reason": null
+   }
+  ]
+ },
+ "summary": {
+  "portfolioCost": 1209085600,
+  "portfolioFv": 1150190344,
+  "holdings": 152,
+  "thirdPartyDebtCost": 971390992,
+  "thirdPartyDebtFv": 942722928,
+  "thirdPartyDebtHoldings": 64,
+  "count": null,
+  "countAll": 92,
+  "countDebt": 38,
+  "namesUnsplit": 0,
+  "nonAccrual": {
+   "cost": 15075000,
+   "fv": 0,
+   "n": 5,
+   "issuers": 2,
+   "ofTotalCost": 0.0125,
+   "ofTotalFv": 0,
+   "ofDebtCost": 0.0155,
+   "ofDebtFv": 0,
+   "source": "table"
+  },
+  "wa": {
+   "yieldAtCost": 0.1033,
+   "yieldAtFv": 0.1064,
+   "spreadCostWeighted": 0.065,
+   "floatingShare": 0.9945,
+   "pikContractual": 0.005,
+   "n": {
+    "yield": 64,
+    "spread": 62,
+    "debt": 64
+   },
+   "yieldCoverage": 1
+  },
+  "lien": {
+   "classes": {
+    "unclassified": {
+     "cost": 971390992,
+     "share": 1,
+     "shareOfPortfolio": 0.8034
+    }
+   },
+   "total": 971390992,
+   "portfolioCost": 1209085600,
+   "firstLienShare": null,
+   "firstLienShareOfPortfolio": null,
+   "unclassifiedShare": 1
+  },
+  "industry": [
+   {
+    "name": "Healthcare Services",
+    "fv": 97142897,
+    "share": 0.0845
+   },
+   {
+    "name": "Structured Finance Securities",
+    "fv": 70472280,
+    "share": 0.0613
+   },
+   {
+    "name": "Consumer Services",
+    "fv": 66712357,
+    "share": 0.058
+   },
+   {
+    "name": "Restaurant",
+    "fv": 59684216,
+    "share": 0.0519
+   },
+   {
+    "name": "Real Estate Services",
+    "fv": 52689577,
+    "share": 0.0458
+   },
+   {
+    "name": "HVAC Services and Sales",
+    "fv": 49325714,
+    "share": 0.0429
+   },
+   {
+    "name": "Healthcare Software",
+    "fv": 44980984,
+    "share": 0.0391
+   },
+   {
+    "name": "Education Services",
+    "fv": 40170795,
+    "share": 0.0349
+   },
+   {
+    "name": "Dental Practice Management",
+    "fv": 39877888,
+    "share": 0.0347
+   },
+   {
+    "name": "Surgical Benefits Management",
+    "fv": 35073500,
+    "share": 0.0305
+   },
+   {
+    "name": "other",
+    "fv": 594060136,
+    "share": 0.5165
+   }
+  ],
+  "industrySource": "table",
+  "maturity": {
+   "2026": 0,
+   "2027": 0,
+   "2028": 0,
+   "2029": 0,
+   "2030": 0,
+   "2031-2033": 0,
+   "later": 0,
+   "n/a": 971414722,
+   "excluded": -23730,
+   "total": 971390992,
+   "dated": 0,
+   "unfunded": null,
+   "shares": null,
+   "unread": true
+  },
+  "maturitySource": null,
+  "vehicles": {
+   "fv": 19561386,
+   "share": 0.017
+  },
+  "structured": {
+   "fv": 70472280,
+   "share": 0.0613
+  },
+  "equity": {
+   "fv": 0,
+   "share": 0
+  },
+  "top10": {
+   "fv": null,
+   "share": null
+  },
+  "affiliation": {
+   "non-controlled/non-affiliated": {
+    "fv": 1056184544,
+    "share": 0.9183
+   },
+   "non-controlled affiliated": {
+    "fv": 49257789,
+    "share": 0.0428
+   },
+   "controlled": {
+    "fv": 44748011,
+    "share": 0.0389
+   }
+  },
+  "affiliationClasses": [
+   "controlled",
+   "non-controlled affiliated",
+   "non-controlled/non-affiliated"
+  ],
+  "affiliationSource": "table",
+  "unfunded": {
+   "total": 0,
+   "holdings": 0
+  },
+  "pik": {
+   "holdings": 8,
+   "cost": 21600019
+  },
+  "histogram": {
+   "byCount": {
+    "400-450": 0.0484,
+    "450-500": 0.0645,
+    "500-550": 0.1129,
+    "550-600": 0.1613,
+    "600-650": 0.129,
+    "650-700": 0.129,
+    "700-750": 0.2258,
+    "750-800": 0.0323,
+    "800-850": 0.0484,
+    "850-900": 0.0484
+   },
+   "byCost": {
+    "400-450": 0.0091,
+    "450-500": 0.0536,
+    "500-550": 0.0522,
+    "550-600": 0.158,
+    "600-650": 0.1985,
+    "650-700": 0.1081,
+    "700-750": 0.3037,
+    "750-800": 0.0381,
+    "800-850": 0.0472,
+    "850-900": 0.0316
+   },
+   "n": 62,
+   "cost": 966002052
+  },
+  "vsProse": {
+   "yieldAtCost": null,
+   "yieldAtFv": null,
+   "floatingShare": 0.01,
+   "floatingShareBasis": {
+    "of": "debt",
+    "at": null
+   },
+   "nonAccrualCost": null,
+   "nonAccrualFv": 0.002,
+   "nonAccrualOf": "total",
+   "portfolioCompanies": 50
+  },
+  "flags": [
+   {
+    "figure": "count",
+    "computed": 92,
+    "disclosed": 50,
+    "note": "withheld with top10: more than 25% from the filing's stated portfolio-company count (compared over every issuer, controlled ones included)"
+   }
+  ]
+ },
+ "tableUnmatched": null,
+ "notes": [
+  "instance: no XBRL instance in 0001213900-26-107187-xbrl.zip and the inline document tags no InvestmentIdentifierAxis member",
+  "no monthly data set carries this filing yet; read from the instance",
+  "gate passed on: table rows: the tagged rows (0, Σ cost 0) do not reconcile; the printed schedule does",
+  "maturity wall unread: the schedule prints a maturity column the reader mapped, but no date parsed — the wall is unknown, not empty"
+ ],
+ "keys": {
+  "holding": {
+   "id": "id",
+   "issuer": "k",
+   "name": "n",
+   "aff": "a",
+   "kind": "t",
+   "lien": "l",
+   "facility": "f",
+   "industry": "i",
+   "rate": "r",
+   "spread": "sp",
+   "floor": "fl",
+   "pik": "pk",
+   "base": "b",
+   "principal": "p",
+   "cost": "c",
+   "fv": "v",
+   "pctNav": "nv",
+   "unfunded": "u",
+   "acquired": "ad",
+   "maturity": "m",
+   "nonAccrual": "na",
+   "floating": "fr",
+   "units": "un",
+   "src": "s",
+   "fvUntagged": "fvu",
+   "costUntagged": "cu",
+   "cashEquivalent": "ce"
+  },
+  "lien": {
+   "class": "c",
+   "subclass": "s",
+   "raw": "r"
+  },
+  "src": {
+   "row": "w",
+   "table": "t",
+   "r": "r",
+   "na": "na",
+   "ind": "i",
+   "mat": "m",
+   "unf": "u",
+   "rt": "rt",
+   "ds": "ds",
+   "val": "vl",
+   "nm": "nm",
+   "af": "af"
+  },
+  "note": "short keys per blueprint 7.4; a key absent from a row is null (floating: false); src.t and src.r absent mean false, src.na absent means none; src.vl \"table\" marks a fair value the filer left untagged and the printed schedule supplied; src.nm \"table\" marks an issuer name the printed row supplied; src.af \"issuer\" marks an affiliation taken from the issuer's other tranches; the issuer key (H1 `issuer`) is not written — it is normalizeIssuer(n), which expandHolding restores"
+ },
+ "holdings": [
+{"id":"Altvia MidCo, LLC. | investment","n":"Altvia MidCo, LLC.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Alternative Investment Management Software","r":0.1188,"sp":0.0808,"b":"SOFR","p":11198115,"c":11164070,"v":10798343,"nv":0.031,"ad":"2022-07-18","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Altvia MidCo, LLC. | investment 2","n":"Altvia MidCo, LLC.","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Alternative Investment Management Software","p":2083939,"c":2083939,"v":1426553,"nv":0.004,"ad":"2022-07-18","s":{"w":"table","t":true,"i":"table"}},
+{"id":"BQE Software, Inc. | investment","n":"BQE Software, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Architecture & Engineering Software","r":0.093,"sp":0.055,"b":"SOFR","p":23000000,"c":22905761,"v":22956300,"nv":0.065,"ad":"2023-04-13","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Golden TopCo LP | investment","n":"Golden TopCo LP","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Association Management Software","p":1072394,"c":1072394,"v":1788830,"nv":0.005,"ad":"2023-05-10","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Artemis Wax Corp. | investment","n":"Artemis Wax Corp.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Consumer Services","r":0.1046,"sp":0.0675,"b":"SOFR","p":65000000,"c":64902821,"v":65000000,"nv":0.184,"ad":"2021-05-20","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Artemis Wax Corp. | investment 2","n":"Artemis Wax Corp.","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Consumer Services","p":934463,"c":1500000,"v":0,"nv":0,"ad":"2021-05-20","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Artemis Wax Corp. | investment 3","n":"Artemis Wax Corp.","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Consumer Services","p":331640,"c":1711866,"v":1712357,"nv":0.005,"ad":"2022-12-22","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Schoox, Inc. | investment","n":"Schoox, Inc.","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Corporate Education Software","p":1050,"c":560899,"v":4213947,"nv":0.012,"ad":"2020-12-08","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Innergy, Inc. | investment","n":"Innergy, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Custom Millwork Software","r":0.1109,"sp":0.0729,"b":"SOFR","p":22472000,"c":22472000,"v":22238291,"nv":0.063,"ad":"2026-05-20","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Innergy, Inc. | investment 2","n":"Innergy, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Custom Millwork Software","r":0.1109,"sp":0.0729,"b":"SOFR","p":0,"c":0,"v":0,"nv":0,"ad":"2026-05-20","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"GreyHeller LLC | investment","n":"GreyHeller LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Cyber Security","p":7857689,"c":1906275,"v":3199141,"nv":0.009,"ad":"2021-11-10","s":{"w":"table","t":true,"i":"table"}},
+{"id":"SGA Dental Partners Sub Holdings LLC | investment","n":"SGA Dental Partners Sub Holdings LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Dental Practice Management","r":0.098,"sp":0.06,"b":"SOFR","p":35000000,"c":34674693,"v":34650000,"nv":0.098,"ad":"2026-06-15","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"SGA Dental Partners TopCo, LLC | investment","n":"SGA Dental Partners TopCo, LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Dental Practice Management","p":6262394,"c":6262394,"v":5227888,"nv":0.015,"ad":"2026-06-15","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Exigo, LLC | investment","n":"Exigo, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Direct Selling Software","r":0.1006,"sp":0.0625,"b":"SOFR","p":23690038,"c":23655663,"v":8573425,"nv":0.024,"ad":"2022-03-16","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Exigo, LLC | investment 2","n":"Exigo, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Direct Selling Software","r":0.1006,"sp":0.0625,"b":"SOFR","p":0,"c":0,"v":0,"nv":0,"ad":"2022-03-16","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Exigo, LLC | investment 3","n":"Exigo, LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Direct Selling Software","p":1041667,"c":1041667,"v":0,"nv":0,"ad":"2022-03-16","s":{"w":"table","t":true,"i":"table"}},
+{"id":"C2 Educational Systems, Inc. | investment","n":"C2 Educational Systems, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Education Services","r":0.123,"sp":0.085,"b":"SOFR","p":23000000,"c":23000000,"v":23000000,"nv":0.065,"ad":"2017-05-31","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"C2 Educational Systems, Inc. | investment 2","n":"C2 Educational Systems, Inc.","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Education Services","p":3127,"c":499904,"v":308662,"nv":0.001,"ad":"2021-05-18","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Ready Education | investment","n":"Ready Education","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Education Software","r":0.108,"sp":0.07,"b":"SOFR","p":32000000,"c":31919636,"v":31801600,"nv":0.09,"ad":"2022-08-05","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Haystack Team Inc. | investment","n":"Haystack Team Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Employee Collaboration Software","r":0.093,"pk":0.093,"p":5432809,"c":5388940,"v":5409448,"nv":0.015,"ad":"2025-12-31","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Haystack Team Inc. | investment 2","n":"Haystack Team Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Employee Collaboration Software","r":0.093,"pk":0.093,"p":0,"c":0,"v":0,"nv":0,"ad":"2025-12-31","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Haystack Team Inc. | investment 3","n":"Haystack Team Inc.","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Employee Collaboration Software","p":1250000,"c":1421890,"v":1298685,"nv":0.004,"ad":"2025-12-31","s":{"w":"table","t":true,"i":"table"}},
+{"id":"GDS Software Holdings, LLC | investment","n":"GDS Software Holdings, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Financial Services","r":0.108,"sp":0.07,"b":"SOFR","p":28713926,"c":28691898,"v":28504314,"nv":0.081,"ad":"2021-12-30","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"GDS Software Holdings, LLC | investment 2","n":"GDS Software Holdings, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Financial Services","r":0.108,"sp":0.07,"b":"SOFR","p":3286073,"c":3258380,"v":3262085,"nv":0.009,"ad":"2021-12-30","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"GDS Software Holdings, LLC | investment 3","n":"GDS Software Holdings, LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Financial Services","p":250000,"c":250000,"v":250000,"nv":0.001,"ad":"2018-08-23","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Inspect Point Holdings, LLC | investment","n":"Inspect Point Holdings, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Fire Inspection Business Software","r":0.0921,"sp":0.055,"b":"SOFR","p":20000000,"c":19879899,"v":19800000,"nv":0.056,"ad":"2023-07-19","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Inspect Point Holdings, LLC | investment 2","n":"Inspect Point Holdings, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Fire Inspection Business Software","r":0.0921,"sp":0.055,"b":"SOFR","p":2000000,"c":1983799,"v":1980000,"nv":0.006,"ad":"2023-07-19","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Stretch Zone Franchising, LLC | investment","n":"Stretch Zone Franchising, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Health/Fitness Franchisor","r":0.108,"sp":0.07,"b":"SOFR","p":24967271,"c":24869902,"v":23678960,"nv":0.067,"ad":"2023-03-31","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Stretch Zone Franchising, LLC | investment 2","n":"Stretch Zone Franchising, LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Health/Fitness Franchisor","p":20000,"c":2000000,"v":458868,"nv":0.001,"ad":"2023-03-31","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Alpha Aesthetics Partners OpCo, LLC | investment","n":"Alpha Aesthetics Partners OpCo, LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Healthcare Services","p":3675000,"c":3675000,"v":3642897,"nv":0.01,"ad":"2023-03-20","s":{"w":"table","t":true,"i":"table"}},
+{"id":"ComForCare Health Care | investment","n":"ComForCare Health Care","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Healthcare Services","r":0.1005,"sp":0.0625,"b":"SOFR","p":93500000,"c":93183909,"v":93500000,"nv":0.265,"ad":"2020-12-04","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Procurement Partners, LLC | investment","n":"Procurement Partners, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Healthcare Software","r":0.093,"sp":0.055,"b":"SOFR","p":35125000,"c":35125000,"v":34555975,"nv":0.098,"ad":"2020-11-12","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Procurement Partners, LLC | investment 2","n":"Procurement Partners, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Healthcare Software","r":0.093,"sp":0.055,"b":"SOFR","p":10300000,"c":10309937,"v":10133140,"nv":0.029,"ad":"2020-11-12","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Procurement Partners Holdings LLC | investment","n":"Procurement Partners Holdings LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Healthcare Software","p":571219,"c":571219,"v":231815,"nv":0.001,"ad":"2020-11-12","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Procurement Partners Holdings LLC | investment 2","n":"Procurement Partners Holdings LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Healthcare Software","p":220385,"c":30994,"v":60054,"nv":0,"ad":"2020-11-12","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Granite Comfort, LP | investment","n":"Granite Comfort, LP","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"HVAC Services and Sales","r":0.1118,"sp":0.0738,"b":"SOFR","p":43000000,"c":42930021,"v":41894900,"nv":0.119,"ad":"2020-11-16","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Granite Comfort, LP | investment 2","n":"Granite Comfort, LP","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"HVAC Services and Sales","r":0.1118,"sp":0.0738,"b":"SOFR","p":7626823,"c":7604901,"v":7430814,"nv":0.021,"ad":"2020-11-16","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Vector Controls Holding Co., LLC | investment","n":"Vector Controls Holding Co., LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Industrial Products","p":329,"c":0,"v":8865812,"nv":0.025,"ad":"2015-05-31","s":{"w":"table","t":true,"i":"table"}},
+{"id":"AgencyBloc, LLC | investment","n":"AgencyBloc, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Insurance Software","r":0.1002,"sp":0.0631,"b":"SOFR","p":17346477,"c":17315077,"v":17346477,"nv":0.049,"ad":"2021-10-01","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Panther ParentCo LLC | investment","n":"Panther ParentCo LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Insurance Software","p":2500000,"c":2500000,"v":3923485,"nv":0.011,"ad":"2021-10-01","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Avantra | investment","n":"Avantra","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"IT Services","r":0.1177,"sp":0.0797,"b":"SOFR","p":17000000,"c":16869123,"v":17000000,"nv":0.048,"ad":"2024-09-19","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Maple Holdings Midco Limited | investment","n":"Maple Holdings Midco Limited","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"IT Services","p":2000000,"c":2000000,"v":1612814,"nv":0.005,"ad":"2024-09-19","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Madison Logic, Inc. | investment","n":"Madison Logic, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Marketing Orchestration Software","r":0.1071,"sp":0.07,"b":"SOFR","p":19213185,"c":19085509,"v":14404125,"nv":0.041,"ad":"2022-12-30","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"ARC Health OpCo LLC | investment","n":"ARC Health OpCo LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Mental Healthcare Services","p":3818403,"c":4169599,"v":502623,"nv":0.001,"ad":"2022-08-05","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Chronus LLC | investment","n":"Chronus LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Mentoring Software","r":0.092,"sp":0.0525,"b":"SOFR","p":15000000,"c":15000000,"v":12456000,"nv":0.035,"ad":"2021-08-26","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Chronus LLC | investment 2","n":"Chronus LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Mentoring Software","r":0.0995,"sp":0.06,"b":"SOFR","p":5000000,"c":5000000,"v":4152000,"nv":0.012,"ad":"2021-08-26","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Chronus LLC | investment 3","n":"Chronus LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Mentoring Software","p":3000,"c":3000000,"v":0,"nv":0,"ad":"2021-08-26","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Cloudpermit | investment","n":"Cloudpermit","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Municipal Government Software","r":0.0955,"sp":0.0575,"b":"SOFR","p":31500000,"c":31282860,"v":31194450,"nv":0.088,"ad":"2024-09-05","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Cloudpermit | investment 2","n":"Cloudpermit","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Municipal Government Software","r":0.0955,"sp":0.0575,"b":"SOFR","p":500000,"c":495306,"v":495150,"nv":0.001,"ad":"2024-09-05","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Cloudpermit | investment 3","n":"Cloudpermit","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Municipal Government Software","p":2000,"c":2000000,"v":1898498,"nv":0.005,"ad":"2024-09-05","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Emily Street Enterprises, L.L.C. | investment","n":"Emily Street Enterprises, L.L.C.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Office Supplies","r":0.11,"sp":0.0675,"b":"SOFR","p":5300000,"c":5293036,"v":5300000,"nv":0.015,"ad":"2012-12-28","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Ludi, Inc. | investment","n":"Ludi, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Physician Compensation Management Software","r":0.088,"sp":0.05,"b":"SOFR","p":3150000,"c":3126828,"v":3136140,"nv":0.009,"ad":"2026-02-17","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Vitana DSO, LLC | investment","n":"Vitana DSO, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Pediatric and Orthodontic Dentistry Platform","r":0.108,"sp":0.07,"b":"SOFR","p":25000000,"c":24814507,"v":24812500,"nv":0.07,"ad":"2026-05-28","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Vitana DSO, LLC | investment 2","n":"Vitana DSO, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Pediatric and Orthodontic Dentistry Platform","r":0.108,"sp":0.07,"b":"SOFR","p":455000,"c":451638,"v":451588,"nv":0.001,"ad":"2026-05-28","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Breezeway Homes, Inc. | investment","n":"Breezeway Homes, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Property Operations Management Software","r":0.1034,"sp":0.0663,"b":"SOFR","p":22000000,"c":21797063,"v":21969200,"nv":0.062,"ad":"2026-02-23","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Breezeway Homes, Inc. | investment 2","n":"Breezeway Homes, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Property Operations Management Software","r":0.1034,"sp":0.0663,"b":"SOFR","p":0,"c":0,"v":0,"nv":0,"ad":"2026-02-23","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Breezeway Homes, Inc. | investment 3","n":"Breezeway Homes, Inc.","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Property Operations Management Software","p":1000000,"c":1000000,"v":1023032,"nv":0.003,"ad":"2026-02-23","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Source 44 LLC | investment","n":"Source 44 LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Product Compliance Software","r":0.0905,"sp":0.0525,"b":"SOFR","p":3000000,"c":2968872,"v":2979600,"nv":0.008,"ad":"2025-10-17","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Source 44 LLC | investment 2","n":"Source 44 LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Product Compliance Software","r":0.0905,"sp":0.0525,"b":"SOFR","p":1500000,"c":1488549,"v":1489800,"nv":0.004,"ad":"2025-10-17","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Source 44 LLC | investment 3","n":"Source 44 LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Product Compliance Software","r":0.0905,"sp":0.0525,"b":"SOFR","p":0,"c":0,"v":0,"nv":0,"ad":"2025-10-17","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"PG Source Investments, LLC | investment","n":"PG Source Investments, LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Product Compliance Software","p":705,"c":1500000,"v":1604754,"nv":0.005,"ad":"2025-10-17","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Buildout, Inc. | investment","n":"Buildout, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Real Estate Services","r":0.109,"sp":0.07,"b":"SOFR","p":14000000,"c":14000000,"v":13832000,"nv":0.039,"ad":"2020-07-09","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Buildout, Inc. | investment 2","n":"Buildout, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Real Estate Services","r":0.109,"sp":0.07,"b":"SOFR","p":38500000,"c":38500000,"v":38038000,"nv":0.108,"ad":"2021-02-12","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Buildout, Inc. | investment 3","n":"Buildout, Inc.","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Real Estate Services","p":1250,"c":1372557,"v":819577,"nv":0.002,"ad":"2020-07-09","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Archimedes Parent LLC | investment","n":"Archimedes Parent LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Research Software","p":2475160,"c":2475160,"v":781972,"nv":0.002,"ad":"2022-06-27","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Wellspring Worldwide Inc. | investment","n":"Wellspring Worldwide Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Research Software","r":0.1222,"sp":0.0842,"b":"SOFR","p":9372000,"c":9329053,"v":9109584,"nv":0.026,"ad":"2022-06-27","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Wellspring Worldwide Inc. | investment 2","n":"Wellspring Worldwide Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Research Software","r":0.1222,"sp":0.0842,"b":"SOFR","p":25310000,"c":25122064,"v":24601320,"nv":0.07,"ad":"2022-06-27","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Rewind Intermediate Inc. | investment","n":"Rewind Intermediate Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Residential Remediation Services","r":0.0805,"sp":0.0425,"b":"SOFR","p":8900000,"c":8826023,"v":8822570,"nv":0.025,"ad":"2026-03-05","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Rewind Intermediate Inc. | investment 2","n":"Rewind Intermediate Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Residential Remediation Services","r":0.0805,"sp":0.0425,"b":"SOFR","p":0,"c":0,"v":0,"nv":0,"ad":"2026-03-05","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Rewind Intermediate Inc. | investment 3","n":"Rewind Intermediate Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Residential Remediation Services","r":0.0805,"sp":0.0425,"b":"SOFR","p":0,"c":-23730,"v":0,"nv":0,"ad":"2026-03-05","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Rewind Intermediate Inc. | investment 4","n":"Rewind Intermediate Inc.","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Residential Remediation Services","p":500000,"c":500000,"v":500000,"nv":0.001,"ad":"2026-03-05","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Angry Chickz, Inc. | investment","n":"Angry Chickz, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Restaurant","r":0.0996,"sp":0.0625,"b":"SOFR","p":7900000,"c":7899999,"v":7965570,"nv":0.023,"ad":"2025-10-09","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Angry Chickz, Inc. | investment 2","n":"Angry Chickz, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Restaurant","r":0.0996,"sp":0.0625,"b":"SOFR","p":10000000,"c":9980187,"v":10083000,"nv":0.029,"ad":"2025-10-09","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"LFR Chicken LLC | investment","n":"LFR Chicken LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Restaurant","r":0.0821,"sp":0.045,"b":"SOFR","p":22000000,"c":21895915,"v":21773400,"nv":0.062,"ad":"2021-11-19","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"LFR Chicken LLC | investment 2","n":"LFR Chicken LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Restaurant","r":0.0821,"sp":0.045,"b":"SOFR","p":18000000,"c":17955567,"v":17814600,"nv":0.051,"ad":"2021-11-19","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"LFR Chicken LLC | investment 3","n":"LFR Chicken LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Restaurant","p":497183,"c":1000000,"v":2047646,"nv":0.006,"ad":"2021-11-19","s":{"w":"table","t":true,"i":"table"}},
+{"id":"SAI Systems Health, LLC | investment","n":"SAI Systems Health, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Revenue Cycle Management & Related Services","r":0.088,"sp":0.05,"b":"SOFR","p":28000000,"c":27847087,"v":28372400,"nv":0.08,"ad":"2025-11-24","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"SAI Systems Health, LLC | investment 2","n":"SAI Systems Health, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Revenue Cycle Management & Related Services","r":0.088,"sp":0.05,"b":"SOFR","p":0,"c":0,"v":0,"nv":0,"ad":"2025-11-24","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"SAI Systems Health Topco, LLC | investment","n":"SAI Systems Health Topco, LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Revenue Cycle Management & Related Services","p":350000,"c":350000,"v":425940,"nv":0.001,"ad":"2025-11-24","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Yumi Ice Cream Company, LLC | investment","n":"Yumi Ice Cream Company, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Specialty Distribution","r":0.103,"sp":0.065,"b":"SOFR","p":6250000,"c":6203247,"v":6203125,"nv":0.018,"ad":"2026-08-25","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Yumi Ice Cream Company, LLC | investment 2","n":"Yumi Ice Cream Company, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Specialty Distribution","r":0.103,"sp":0.065,"b":"SOFR","p":6250000,"c":6203248,"v":6203125,"nv":0.018,"ad":"2026-08-25","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Yumi Ice Cream Company, LLC | investment 3","n":"Yumi Ice Cream Company, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Specialty Distribution","r":0.103,"sp":0.065,"b":"SOFR","p":0,"c":0,"v":0,"nv":0,"ad":"2026-08-25","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Yumi Ice Cream Company, LLC | investment 4","n":"Yumi Ice Cream Company, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Specialty Distribution","r":0.103,"sp":0.065,"b":"SOFR","p":0,"c":0,"v":0,"nv":0,"ad":"2026-08-25","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Yumi Ice Cream Company, LLC | investment 5","n":"Yumi Ice Cream Company, LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Specialty Distribution","p":714286,"c":714286,"v":714286,"nv":0.002,"ad":"2026-08-25","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Avionte Holdings, LLC | investment","n":"Avionte Holdings, LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Staffing Services","p":100000,"c":100000,"v":1504336,"nv":0.004,"ad":"2014-01-08","s":{"w":"table","t":true,"i":"table"}},
+{"id":"AIMCO 2025-24A E | investment","n":"AIMCO 2025-24A E","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.099,"sp":0.061,"b":"SOFR","p":1500000,"c":1500000,"v":1513479,"nv":0.004,"ad":"2025-04-30","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"AIMCO 2024-21A ER | investment","n":"AIMCO 2024-21A ER","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.092,"sp":0.054,"b":"SOFR","p":2000000,"c":2000000,"v":2018258,"nv":0.006,"ad":"2026-04-01","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"APID 2023-45A ER | investment","n":"APID 2023-45A ER","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.0895,"sp":0.0515,"b":"SOFR","p":2800000,"c":2800000,"v":2803363,"nv":0.008,"ad":"2025-06-05","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"APID 2017-28A DR | investment","n":"APID 2017-28A DR","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.088,"sp":0.05,"b":"SOFR","p":2500000,"c":2500000,"v":2493463,"nv":0.007,"ad":"2025-07-25","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"BGCLO 2025-13A D2 | investment","n":"BGCLO 2025-13A D2","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.0785,"sp":0.0405,"b":"SOFR","p":2000000,"c":2000000,"v":2005740,"nv":0.006,"ad":"2025-08-07","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"BGCLO 2024-9A E | investment","n":"BGCLO 2024-9A E","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.1005,"sp":0.0625,"b":"SOFR","p":1000000,"c":1000500,"v":1004018,"nv":0.003,"ad":"2026-03-31","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"BSP 2016-10A C2R3 | investment","n":"BSP 2016-10A C2R3","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.079,"sp":0.041,"b":"SOFR","p":2000000,"c":2000000,"v":2003988,"nv":0.006,"ad":"2025-07-10","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"BSP 2020-21A ER2 | investment","n":"BSP 2020-21A ER2","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.0875,"sp":0.0495,"b":"SOFR","p":1500000,"c":1500000,"v":1503498,"nv":0.004,"ad":"2025-11-04","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"BSP 2025-40A E | investment","n":"BSP 2025-40A E","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.0905,"sp":0.0525,"b":"SOFR","p":3000000,"c":3000000,"v":3010919,"nv":0.009,"ad":"2025-05-22","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"DCLO 2024-7A DR | investment","n":"DCLO 2024-7A DR","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.0905,"sp":0.0525,"b":"SOFR","p":2000000,"c":2000000,"v":2006000,"nv":0.006,"ad":"2026-06-30","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"ELM27 2024-3A D2R | investment","n":"ELM27 2024-3A D2R","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.084,"sp":0.046,"b":"SOFR","p":2500000,"c":2500000,"v":2513135,"nv":0.007,"ad":"2026-04-28","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"HLM 2025-26A D2 | investment","n":"HLM 2025-26A D2","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.079,"sp":0.041,"b":"SOFR","p":2000000,"c":2000000,"v":1987480,"nv":0.005,"ad":"2025-07-18","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"NMC CLO-4A ER | investment","n":"NMC CLO-4A ER","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.088,"sp":0.05,"b":"SOFR","p":1000000,"c":980000,"v":1004995,"nv":0.003,"ad":"2025-03-13","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"NMC CLO-7A E | investment","n":"NMC CLO-7A E","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.1071,"sp":0.0691,"b":"SOFR","p":1000000,"c":1000000,"v":967599,"nv":0.003,"ad":"2025-04-17","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"NMC CLO-5A ER | investment","n":"NMC CLO-5A ER","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.0965,"sp":0.0585,"b":"SOFR","p":3000000,"c":3000000,"v":2928000,"nv":0.008,"ad":"2025-06-30","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"NMC CLO-3A D2R | investment","n":"NMC CLO-3A D2R","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.079,"sp":0.041,"b":"SOFR","p":2250000,"c":2250000,"v":2226994,"nv":0.006,"ad":"2025-08-04","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"OAKC 2016-13A ER2 | investment","n":"OAKC 2016-13A ER2","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.0955,"sp":0.0575,"b":"SOFR","p":1000000,"c":976250,"v":995244,"nv":0.003,"ad":"2025-04-10","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"OAKC 2025-22A E | investment","n":"OAKC 2025-22A E","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.0935,"sp":0.0555,"b":"SOFR","p":1250000,"c":1250000,"v":1254639,"nv":0.004,"ad":"2025-05-09","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"OAKC 2020-7A D2R2 | investment","n":"OAKC 2020-7A D2R2","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.0785,"sp":0.0405,"b":"SOFR","p":3250000,"c":3250000,"v":3254310,"nv":0.009,"ad":"2025-06-18","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"OCP 2025-43A E | investment","n":"OCP 2025-43A E","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.103,"sp":0.065,"b":"SOFR","p":1000000,"c":1000000,"v":1014240,"nv":0.003,"ad":"2025-04-23","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"OCP 2023-28A | investment","n":"OCP 2023-28A","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.0905,"sp":0.0525,"b":"SOFR","p":3000000,"c":3000000,"v":3020079,"nv":0.009,"ad":"2025-06-18","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"OCP 2016-11A D2R3 | investment","n":"OCP 2016-11A D2R3","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.079,"sp":0.041,"b":"SOFR","p":1500000,"c":1500000,"v":1502643,"nv":0.004,"ad":"2025-06-26","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"OCP 2016-12A D2R3 | investment","n":"OCP 2016-12A D2R3","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.0805,"sp":0.0425,"b":"SOFR","p":1000000,"c":998500,"v":1000128,"nv":0.003,"ad":"2026-05-05","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"POST 2023-1A D2R | investment","n":"POST 2023-1A D2R","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.0775,"sp":0.0395,"b":"SOFR","p":1000000,"c":1000000,"v":999321,"nv":0.003,"ad":"2025-10-17","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"POST 2024-1A D2R | investment","n":"POST 2024-1A D2R","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.0815,"sp":0.0435,"b":"SOFR","p":2500000,"c":2500000,"v":2496520,"nv":0.007,"ad":"2026-05-06","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"REGT6 2016-1A ER3 | investment","n":"REGT6 2016-1A ER3","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.0925,"sp":0.0545,"b":"SOFR","p":1500000,"c":1500000,"v":1438050,"nv":0.004,"ad":"2025-09-12","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"REG23 2021-4A D3R | investment","n":"REG23 2021-4A D3R","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.078,"sp":0.04,"b":"SOFR","p":2000000,"c":2000000,"v":1970624,"nv":0.006,"ad":"2025-10-30","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"TREST 2017-1A ER3 | investment","n":"TREST 2017-1A ER3","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.0905,"sp":0.0525,"b":"SOFR","p":1675000,"c":1675000,"v":1679474,"nv":0.005,"ad":"2026-07-21","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"TREST 2018-2A D2RR | investment","n":"TREST 2018-2A D2RR","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.0805,"sp":0.0425,"b":"SOFR","p":2000000,"c":2000000,"v":2005609,"nv":0.006,"ad":"2026-05-08","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"VOYA 2024-3A ER | investment","n":"VOYA 2024-3A ER","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.093,"sp":0.055,"b":"SOFR","p":2000000,"c":2000000,"v":2005142,"nv":0.006,"ad":"2026-07-23","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"WBOX 2023-4A ER2 | investment","n":"WBOX 2023-4A ER2","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.0895,"sp":0.0515,"b":"SOFR","p":3500000,"c":3500000,"v":3517486,"nv":0.01,"ad":"2026-06-18","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"WBOX 2025-5A D2 | investment","n":"WBOX 2025-5A D2","a":"non-controlled/non-affiliated","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.079,"sp":0.041,"b":"SOFR","p":2000000,"c":2000000,"v":2003350,"nv":0.006,"ad":"2025-06-24","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"StockIQ Technologies, LLC | investment","n":"StockIQ Technologies, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Supply Chain Planning Software","r":0.093,"sp":0.055,"b":"SOFR","p":10000000,"c":9930912,"v":9796000,"nv":0.028,"ad":"2025-03-26","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"StockIQ Technologies, LLC | investment 2","n":"StockIQ Technologies, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Supply Chain Planning Software","r":0.093,"sp":0.055,"b":"SOFR","p":2000000,"c":1985218,"v":1923500,"nv":0.005,"ad":"2025-03-26","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"StockIQ Technologies, LLC | investment 3","n":"StockIQ Technologies, LLC","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Supply Chain Planning Software","p":200000,"c":200000,"v":166272,"nv":0,"ad":"2025-03-26","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Employer Direct Healthcare, LLC (Lantern) | investment","n":"Employer Direct Healthcare, LLC (Lantern)","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Surgical Benefits Management","r":0.1105,"sp":0.0725,"b":"SOFR","p":35000000,"c":34731190,"v":35073500,"nv":0.099,"ad":"2026-01-20","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"JDXpert | investment","n":"JDXpert","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Talent Acquisition Software","r":0.1256,"sp":0.085,"b":"SOFR","p":6000000,"c":5986799,"v":6000000,"nv":0.017,"ad":"2022-05-02","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"JDXpert | investment 2","n":"JDXpert","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Talent Acquisition Software","r":0.123,"sp":0.085,"b":"SOFR","p":1500000,"c":1495986,"v":1500000,"nv":0.004,"ad":"2022-05-02","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Jobvite, Inc. | investment","n":"Jobvite, Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Talent Acquisition Software","r":0.113,"sp":0.075,"b":"SOFR","p":20000000,"c":19942401,"v":18416000,"nv":0.052,"ad":"2022-08-05","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"VetnCare MSO, LLC | investment","n":"VetnCare MSO, LLC","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Veterinary Services","r":0.0955,"sp":0.0575,"b":"SOFR","p":18835655,"c":18748969,"v":19001409,"nv":0.054,"ad":"2023-05-12","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Better Impact USA Inc. | investment","n":"Better Impact USA Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Volunteer Program Management Software","r":0.0855,"sp":0.0475,"b":"SOFR","p":12000000,"c":11921259,"v":11839200,"nv":0.034,"ad":"2026-01-08","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Better Impact USA Inc. | investment 2","n":"Better Impact USA Inc.","a":"non-controlled/non-affiliated","t":"debt","l":{"r":"investment"},"i":"Volunteer Program Management Software","r":0.0855,"sp":0.0475,"b":"SOFR","p":0,"c":0,"v":0,"nv":0,"ad":"2026-01-08","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Better Impact USA Inc. | investment 3","n":"Better Impact USA Inc.","a":"non-controlled/non-affiliated","t":"other","l":{"r":"investment"},"i":"Volunteer Program Management Software","p":708821,"c":1050713,"v":1103084,"nv":0.003,"ad":"2026-01-08","s":{"w":"table","t":true,"i":"table"}},
+{"id":"ETU Holdings, Inc. | investment","n":"ETU Holdings, Inc.","a":"non-controlled affiliated","t":"debt","l":{"r":"investment"},"i":"Corporate Education Software","r":0.1295,"sp":0.09,"b":"SOFR","p":7100000,"c":7082347,"v":7100000,"nv":0.02,"ad":"2022-08-18","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"ETU Holdings, Inc. | investment 2","n":"ETU Holdings, Inc.","a":"non-controlled affiliated","t":"debt","l":{"r":"investment"},"i":"Corporate Education Software","r":0.15,"pk":0.15,"p":8908743,"c":8894698,"v":8342147,"nv":0.024,"ad":"2022-08-18","s":{"w":"table","t":true,"i":"table"}},
+{"id":"ETU Holdings, Inc. | investment 3","n":"ETU Holdings, Inc.","a":"non-controlled affiliated","t":"other","l":{"r":"investment"},"i":"Corporate Education Software","p":854300,"c":3000000,"v":0,"nv":0,"ad":"2025-11-21","s":{"w":"table","t":true,"i":"table"}},
+{"id":"ETU Holdings, Inc. | investment 4","n":"ETU Holdings, Inc.","a":"non-controlled affiliated","t":"other","l":{"r":"investment"},"i":"Corporate Education Software","p":730280,"c":730280,"v":668028,"nv":0.002,"ad":"2025-11-21","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Axero Holdings, LLC | investment","n":"Axero Holdings, LLC","a":"non-controlled affiliated","t":"debt","l":{"r":"investment"},"i":"Employee Collaboration Software","sp":0.07,"b":"SOFR","p":17325860,"c":17317819,"v":17074635,"nv":0.048,"ad":"2021-06-30","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Axero Holdings, LLC | investment 2","n":"Axero Holdings, LLC","a":"non-controlled affiliated","t":"debt","l":{"r":"investment"},"i":"Employee Collaboration Software","sp":0.07,"b":"SOFR","p":1229577,"c":1227460,"v":1211748,"nv":0.003,"ad":"2021-06-30","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Axero Holdings, LLC | investment 3","n":"Axero Holdings, LLC","a":"non-controlled affiliated","t":"other","l":{"r":"investment"},"i":"Employee Collaboration Software","p":2055609,"c":2055609,"v":4028994,"nv":0.012,"ad":"2021-06-30","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Axero Holdings, LLC | investment 4","n":"Axero Holdings, LLC","a":"non-controlled affiliated","t":"other","l":{"r":"investment"},"i":"Employee Collaboration Software","p":2055609,"c":2055609,"v":3586333,"nv":0.01,"ad":"2021-06-30","s":{"w":"table","t":true,"i":"table"}},
+{"id":"SmartAC.com, LLC | investment","n":"SmartAC.com, LLC","a":"non-controlled affiliated","t":"debt","l":{"r":"investment"},"i":"HVAC Monitoring Devices","r":0.113,"sp":0.075,"b":"SOFR","p":4574116,"c":4546691,"v":4527460,"nv":0.013,"ad":"2025-04-07","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"SmartAC.com, LLC | investment 2","n":"SmartAC.com, LLC","a":"non-controlled affiliated","t":"debt","l":{"r":"investment"},"i":"HVAC Monitoring Devices","r":0.113,"sp":0.075,"b":"SOFR","p":0,"c":0,"v":0,"nv":0,"ad":"2025-04-07","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"SmartAC.com, LLC | investment 3","n":"SmartAC.com, LLC","a":"non-controlled affiliated","t":"other","l":{"r":"investment"},"i":"HVAC Monitoring Devices","p":1262201,"c":2999999,"v":2718444,"nv":0.008,"ad":"2025-04-07","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Zollege PBC | investment","n":"Zollege PBC","a":"controlled","t":"debt","l":{"r":"investment"},"i":"Education Services","r":0.0484,"pk":0.0484,"p":1616381,"c":1616381,"v":1472200,"nv":0.004,"ad":"2021-05-11","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Zollege PBC | investment 2","n":"Zollege PBC","a":"controlled","t":"debt","l":{"r":"investment"},"i":"Education Services","r":0.1,"p":0,"c":0,"v":0,"nv":0,"ad":"2021-05-11","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Zollege PBC | investment 3","n":"Zollege PBC","a":"controlled","t":"other","l":{"r":"investment"},"i":"Education Services","p":7731294,"c":558799,"v":15389933,"nv":0.044,"ad":"2021-05-11","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Pepper Palace, Inc. | investment","n":"Pepper Palace, Inc.","a":"controlled","t":"debt","l":{"r":"investment"},"i":"Specialty Food Retailer","r":0.0442,"pk":0.0442,"p":2400000,"c":2400000,"v":0,"nv":0,"ad":"2021-06-30","na":true,"s":{"w":"table","t":true,"na":"table","i":"table"}},
+{"id":"Pepper Palace, Inc. | investment 2","n":"Pepper Palace, Inc.","a":"controlled","t":"debt","l":{"r":"investment"},"i":"Specialty Food Retailer","r":0.0442,"pk":0.0442,"p":400000,"c":400000,"v":0,"nv":0,"ad":"2021-06-30","na":true,"s":{"w":"table","t":true,"na":"table","i":"table"}},
+{"id":"Pepper Palace, Inc. | investment 3","n":"Pepper Palace, Inc.","a":"controlled","t":"debt","l":{"r":"investment"},"i":"Specialty Food Retailer","r":0.0442,"pk":0.0442,"p":1900000,"c":1900000,"v":0,"nv":0,"ad":"2021-06-30","na":true,"s":{"w":"table","t":true,"na":"table","i":"table"}},
+{"id":"Pepper Palace, Inc. | investment 4","n":"Pepper Palace, Inc.","a":"controlled","t":"debt","l":{"r":"investment"},"i":"Specialty Food Retailer","r":0.0442,"pk":0.0442,"p":1000000,"c":1000000,"v":0,"nv":0,"ad":"2021-06-30","na":true,"s":{"w":"table","t":true,"na":"table","i":"table"}},
+{"id":"Pepper Palace, Inc. | investment 5","n":"Pepper Palace, Inc.","a":"controlled","t":"other","l":{"r":"investment"},"i":"Specialty Food Retailer","p":100000,"c":163561,"v":0,"nv":0,"ad":"2021-06-30","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Saratoga Investment Corp. CLO 2013-1, Ltd. | investment","n":"Saratoga Investment Corp. CLO 2013-1, Ltd.","a":"controlled","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0,"p":111000000,"c":14408784,"v":0,"nv":0,"ad":"2008-01-22","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Saratoga Investment Corp. CLO 2013-1, Ltd. Class F-2-R-3 Note | investment","n":"Saratoga Investment Corp. CLO 2013-1, Ltd. Class F-2-R-3 Note","a":"controlled","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.1406,"sp":0.1,"b":"SOFR","p":9375000,"c":9375000,"v":0,"nv":0,"ad":"2021-08-09","na":true,"fr":true,"s":{"w":"table","t":true,"na":"table","i":"table"}},
+{"id":"Saratoga Investment Corp. Senior Loan Fund 2022-1, Ltd. Class E-R Note | investment","n":"Saratoga Investment Corp. Senior Loan Fund 2022-1, Ltd. Class E-R Note","a":"controlled","t":"structured","l":{"r":"investment"},"i":"Structured Finance Securities","r":0.1115,"sp":0.0735,"b":"SOFR","p":8750000,"c":8443750,"v":8324492,"nv":0.024,"ad":"2025-09-24","fr":true,"s":{"w":"table","t":true,"i":"table"}},
+{"id":"Saratoga Senior Loan Fund I JV, LLC | investment","n":"Saratoga Senior Loan Fund I JV, LLC","a":"controlled","t":"vehicle","l":{"r":"investment"},"i":"Investment Fund","r":0.1,"p":17618954,"c":17618954,"v":15469441,"nv":0.044,"ad":"2021-12-17","s":{"w":"table","t":true,"i":"table"}},
+{"id":"Saratoga Senior Loan Fund I JV, LLC | investment 2","n":"Saratoga Senior Loan Fund I JV, LLC","a":"controlled","t":"vehicle","l":{"r":"investment"},"i":"Investment Fund","p":19197861,"c":19197861,"v":4091945,"nv":0.012,"ad":"2021-12-17","s":{"w":"table","t":true,"i":"table"}}
+ ]
+}

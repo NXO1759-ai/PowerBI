@@ -1,5 +1,5 @@
 {
-  "startedAt": "2026-10-04T13:00:34.607Z",
+  "startedAt": "2026-10-11T13:43:55.845Z",
   "definitionsVersion": 2,
   "companiesAttempted": 137,
   "companiesWritten": 137,
@@ -9,7 +9,7 @@
       "ticker": "APLD",
       "severity": "warn",
       "code": "balance_sheet_tie",
-      "message": "assets do not equal liabilities plus total equity — off by 15.79% of total assets (noncontrolling interest not reported)"
+      "message": "assets do not equal liabilities plus total equity — off by 18.73% of total assets (a balance sheet section outside the pulled concepts, typically redeemable noncontrolling interest)"
     },
     {
       "ticker": "BLK",
@@ -38,6 +38,6 @@
   ],
   "errorCount": 0,
   "warnCount": 5,
-  "finishedAt": "2026-10-04T13:00:59.143Z",
-  "durationSeconds": 25
+  "finishedAt": "2026-10-11T13:44:39.408Z",
+  "durationSeconds": 44
 }
