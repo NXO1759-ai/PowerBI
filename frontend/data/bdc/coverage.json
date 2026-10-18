@@ -2562,25 +2562,10 @@
     "accn": "0002131040-26-000008",
     "period": "2026-06-30",
     "form": "10-Q",
+    "unchanged": true,
     "rows": 79,
     "source": "dataset",
-    "variant": "tagged rows",
-    "cost": {
-     "sum": 19600000,
-     "tag": 19600000,
-     "diffPct": 0
-    },
-    "fv": {
-     "sum": 19600000,
-     "tag": 19600000,
-     "diffPct": 0
-    },
-    "table": "1/79",
-    "rpage": "79/79",
-    "nonAccrualSource": null,
-    "industrySource": "rpage totals",
-    "maturitySource": null,
-    "acSource": null
+    "nonAccrualSource": null
    },
    "RWAY": {
     "status": "written",

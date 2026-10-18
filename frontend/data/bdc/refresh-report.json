@@ -1,11 +1,11 @@
 {
- "startedAt": "2026-10-11T13:47:30.223Z",
+ "startedAt": "2026-10-18T11:58:26.854Z",
  "quarter": "CY2026Q2",
  "universe": {
   "framesCandidates": 231,
   "rosterRows": 212,
   "rosterUnanswered": false,
-  "withTicker": 128,
+  "withTicker": 129,
   "rows": 54,
   "submissionsUnanswered": [],
   "noListingDate": []
@@ -26,11 +26,11 @@
  "flagCount": 565,
  "framesFetched": 21,
  "rateLimitHits": 0,
- "bytesWritten": 15471538,
+ "bytesWritten": 15468825,
  "holdings": {
-  "startedAt": "2026-10-11T13:48:22.704Z",
-  "attempted": 7,
-  "written": 2,
+  "startedAt": "2026-10-18T11:59:17.151Z",
+  "attempted": 6,
+  "written": 1,
   "unchanged": [
    "AFCG",
    "ARCC",
@@ -71,6 +71,7 @@
    "PNNT",
    "PSBD",
    "PSEC",
+   "RVII",
    "RWAY",
    "SCM",
    "SLRC",
@@ -1404,20 +1405,20 @@
   ],
   "failed": [],
   "sources": {
-   "dataset": 1,
+   "dataset": 0,
    "instance": 6,
    "table": 1
   },
   "zips": [
    {
     "month": "2026_08",
-    "status": "downloaded",
+    "status": "cached",
     "bytes": 75870583,
     "filings": 174
    },
    {
     "month": "2026_09",
-    "status": "downloaded",
+    "status": "cached",
     "bytes": 417557,
     "filings": 2
    },
@@ -1431,29 +1432,29 @@
    }
   ],
   "table": {
-   "used": 2,
+   "used": 1,
    "unusable": 0,
    "none": 0
   },
   "rpage": {
-   "fetched": 1,
-   "used": 1,
+   "fetched": 0,
+   "used": 0,
    "failed": 0
   },
-  "prose": 7,
+  "prose": 6,
   "downloads": {
-   "bytes": 103189245,
-   "files": 17,
-   "checks": 0,
-   "requests": 21
+   "bytes": 25338998,
+   "files": 12,
+   "checks": 2,
+   "requests": 18
   },
   "notes": [],
-  "finishedAt": "2026-10-11T13:48:40.251Z",
-  "durationSeconds": 18
+  "finishedAt": "2026-10-18T11:59:26.641Z",
+  "durationSeconds": 9
  },
  "composite": {
   "members": 34,
-  "changed": true,
+  "changed": false,
   "totals": {
    "fv": 137361984121,
    "cost": 139368648247,
@@ -1496,6 +1497,6 @@
    "universe": 54
   }
  },
- "finishedAt": "2026-10-11T13:48:40.575Z",
- "durationSeconds": 70
+ "finishedAt": "2026-10-18T11:59:26.996Z",
+ "durationSeconds": 60
 }
